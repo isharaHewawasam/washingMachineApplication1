@@ -20,7 +20,7 @@ var cloudant;
 var fileToUpload;
 
 var dbCredentials = {
-	dbName : 'my_sample_db'
+	dbName : 'erpsalesdata'
 };
 
 var bodyParser = require('body-parser');
