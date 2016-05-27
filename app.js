@@ -51,8 +51,9 @@ if ('development' == app.get('env')) {
 }
 
 function initDBConnection() {
+	is_running_locally = true;
 	
-	if(process.env.VCAP_SERVICES) {
+	if(!is_running_locally) {
 		var vcapServices = JSON.parse(process.env.VCAP_SERVICES);
 		if(vcapServices.cloudantNoSQLDB) {
 			dbCredentials.host = vcapServices.cloudantNoSQLDB[0].credentials.host;
@@ -74,19 +75,21 @@ function initDBConnection() {
 			console.warn('Could not find Cloudant credentials in VCAP_SERVICES environment variable - data will be unavailable to the UI');
 		}
 	} else{
+		console.warn("fsdfds");
 		console.warn('VCAP_SERVICES environment variable not set - data will be unavailable to the UI');
 		// For running this app locally you can get your Cloudant credentials 
 		// from Bluemix (VCAP_SERVICES in "cf env" output or the Environment 
 		// Variables section for an app in the Bluemix console dashboard).
 		// Alternately you could point to a local database here instead of a 
 		// Bluemix service.
-		//dbCredentials.host = "REPLACE ME";
-		//dbCredentials.port = REPLACE ME;
-		//dbCredentials.user = "REPLACE ME";
-		//dbCredentials.password = "REPLACE ME";
-		//dbCredentials.url = "REPLACE ME";
+		dbCredentials.host = "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com";
+		dbCredentials.port = 443;
+		dbCredentials.user = "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix";
+		dbCredentials.password = "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4";
+		dbCredentials.url = "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com";
 	}
 }
+
 
 initDBConnection();
 
