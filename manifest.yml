@@ -6,5 +6,5 @@ applications:
   name: IotElectronicAppliances
   host: iotelectronicappliances
   disk_quota: 50G
- services:
+services:
   - HelloNodeJs-cloudantNoSQLDB
