@@ -284,7 +284,7 @@ app.put('/api/favorites', function(request, response) {
 	});
 });
 
-app.get('/api/favorites', function(request, response) {
+app.get('/api/cities', function(request, response) {
 
 	console.log("Get method invoked.. ")
 	
