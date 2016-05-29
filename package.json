@@ -19,7 +19,7 @@
     "debug": "*",
     "ee-first": "*",
     "escape-html": "*",
-    "ms": "*",
+    "ms": "*"
   },
   "repository": {},
   "engines": {
