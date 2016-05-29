@@ -6,7 +6,7 @@
  */
 //===============================================================================
 
-var Cloudant = require('Cloudant');
+var Cloudant = require('cloudant');
 
 var state = {
   db: null
