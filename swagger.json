@@ -6,7 +6,7 @@
     "version": "1.0"
   },
   "produces": ["application/json"],  
-  "host": "washing-machines-api.mybluemix.net"
+  "host": "washing-machines-api.mybluemix.net",
   "basePath": "/api/v1",
   "paths": {
     "/config/states": {
