@@ -29,17 +29,30 @@ exports.getDocuments = function(collection_name, callback) {
 	    callback(err, collection_name);
 	  });*/
 
+  var collection;
+  
   if(collection_name == 'states') {	
-	  var collections = [{name:'California'},
-	                     {name:'Hawaii'},
-	                     {name:'Texas'} ];
-  } else {
-	  var collections = [{name:'Los Angeles'},
-	                     {name:'San Diego'},
-	                     {name:'San Jose'} ];
+	  collection = [{"state": "California"},
+	                {"state": "Hawaii"},
+	                {"state": "Texas"}
+	               ];
+  } else if (collection_name == 'cities') {
+	  collection = [ {"California": [{"city": "Los Angeles"},
+	                                 {"city": "San Diego"}, 
+	                                 {"city": "San Jose"} 
+	                                ]
+	                 }
+	               ];	  
+  } else if (collection_name == 'zip_codes') {
+	  collection = [ {"California": [{"Los Angeles": [{"zip": 1001}] },
+	                                 {"San Diego": [{"zip": 1001}]}, 
+	                                 {"San Jose": [{"zip": 1001}]} 
+	                                ]
+	                 }
+	               ];	 	  
   }
 
-  callback(null, collections);
+  callback(null, collection);
   
   
 };

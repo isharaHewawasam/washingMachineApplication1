@@ -1,0 +1,151 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Washing Machines API's",
+    "description": "APIs for getting washing machines sales and usage information.",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],  
+  "host": "washing-machines-api.mybluemix.net"
+  "basePath": "/api/v1",
+  "paths": {
+    "/config/states": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllStates",
+        "tags": ["/States"],
+        "description": "Returns all states where washing machines are available for sale",        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/State"
+            }
+          }
+        }
+      }
+    },
+    "/config/states/{state_name}/cities": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllCities",
+        "tags": ["/Cities"],
+        "description": "Returns all cities in a state where washing machine is sold", 
+        "parameters": [
+          {
+            "name": "state_name",
+            "in": "path",
+            "description": "State name",
+            "required": true,
+            "type": "string"
+          }
+        ],        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Cities"
+            }
+          }
+        }
+      }
+    },
+    "/config/states/{state_name}/cities/{city_name}/zipcodes": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllZipCodes",
+        "tags": ["/Zip Codes"],
+        "description": "Returns all zip codes where washing machines are available for sell", 
+        "parameters": [
+          {
+            "name": "state_name",
+            "in": "path",
+            "description": "State name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "city_name",
+            "in": "path",
+            "description": "City name",
+            "required": true,
+            "type": "string"
+          }
+        ],        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/ZipCodes"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "State": {
+      "properties": {
+        "state_name": {
+          "type": "string"
+        }
+      }
+    },
+    "City": {
+      "properties": {
+        "city_name": {
+          "type": "string"
+        }
+      }
+    },  
+    "Cities": {
+      "properties": {
+        "state_name": {
+          "type": "array",
+          "items": {            
+            "type": "string"
+          }          
+        }
+      }
+    },
+    "ZipCodes": {
+      "properties": {
+        "state_name": {
+          "type": "array",
+          "items": {            
+            "type": "string"
+          }          
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": ["message"]
+    }
+  }
+}

@@ -14,7 +14,12 @@
     "morgan": "1.6.1",
     "errorhandler": "1.4.1",
     "connect-multiparty": "1.2.5",
-    "swagger-tools": "*"
+    "swagger-tools": "*",    
+    "connect": "*",
+    "debug": "*",
+    "ee-first": "*",
+    "escape-html": "*",
+    "ms": "*",
   },
   "repository": {},
   "engines": {
