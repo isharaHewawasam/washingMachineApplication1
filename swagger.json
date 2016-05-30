@@ -35,7 +35,7 @@
     "/config/states/{state_name}/cities": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllCities",
+        "operationId": "getAllCitiesByState",
         "tags": ["/Cities"],
         "description": "Returns all cities in a state where washing machine is sold", 
         "parameters": [
@@ -67,7 +67,7 @@
     "/config/states/{state_name}/cities/{city_name}/zipcodes": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllZipCodes",
+        "operationId": "getAllZipCodesByCity",
         "tags": ["/Zip Codes"],
         "description": "Returns all zip codes where washing machines are available for sell", 
         "parameters": [
@@ -102,6 +102,100 @@
           }
         }
       }
+    },
+    "/config/makes": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllMakes",
+        "tags": ["/Makes"],
+        "description": "Returns all makes/brand names.",        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Makes"
+            }
+          }
+        }
+      }
+    },
+    "/config/makes/{make_name}/models": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllModelsByMake",
+        "tags": ["/Models"],
+        "description": "Returns all makes/brand names.",
+        "parameters": [
+              {
+                "name": "make_name",
+                "in": "path",
+                "description": "Make/Brand Name",
+                "required": true,
+                "type": "string"
+              }
+            ],               
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Models"
+            }
+          }
+        }
+      }
+    },
+    "/config/makes/{make_name}/models/{model_name}/sku": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllSKUsByMakeAndModelName",
+        "tags": ["/SKUs"],
+        "description": "Returns all SKU's for make and mode name",
+        "parameters": [
+              {
+                "name": "make_name",
+                "in": "path",
+                "description": "Make/Brand Name",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "model_name",
+                "in": "path",
+                "description": "Model Name",
+                "required": true,
+                "type": "string"
+              }
+            ],               
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Models"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -132,6 +226,33 @@
     "ZipCodes": {
       "properties": {
         "state_name": {
+          "type": "array",
+          "items": {            
+            "type": "string"
+          }          
+        }
+      }
+    },
+    "Makes": {
+      "properties": {
+        "make_name": {
+          "type": "string"
+        }
+      }
+    },
+    "Models": {
+      "properties": {
+        "make_name": {
+          "type": "array",
+          "items": {            
+            "type": "string"
+          }          
+        }
+      }
+    },
+    "SKUs": {
+      "properties": {
+        "sku_name": {
           "type": "array",
           "items": {            
             "type": "string"

@@ -17,11 +17,15 @@ var options = {
 var swaggerDoc = require('./swagger.json');
 
 function exitHandler(reason) {	
-  console.log(reason);
+  if(reason)
+	console.log(reason);
   process.exit(0);
-  db.close(function(){	
-    process.exit(0);
-  }); 
+  
+  if(db !== undefined) {
+    db.close(function(){	
+      process.exit(0);
+    }); 
+  }
 }
 
 process.on('SIGINT', exitHandler);
@@ -44,8 +48,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
   //connect to database
   db.open(config.SalesDatabase, function(err) {
-	if(err) {
+	if(err) {	  	
 	  console.log("Database connection failed");
+	  console.log(err);
 	} else {
       http.createServer(app).listen(serverPort, '0.0.0.0', function() {   			
 	    console.log('Express server listening on port ' + serverPort);

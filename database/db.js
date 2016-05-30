@@ -76,7 +76,16 @@ exports.getDocuments = function(collection_name, callback) {
 	                 }
 	               ];	 	  
   }
-
+  
+  else if (collection_name == 'zip_codes') {
+	  collection = [ {"California": [{"Los Angeles": [{"zip": 1001}] },
+	                                 {"San Diego": [{"zip": 1001}]}, 
+	                                 {"San Jose": [{"zip": 1001}]} 
+	                                ]
+	                 }
+	               ];	 	  
+  }
+  
   callback(null, collection);
   
   
