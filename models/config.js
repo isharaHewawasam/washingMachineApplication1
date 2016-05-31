@@ -20,17 +20,47 @@ exports.getAllStates = function(callback) {
   });
 };
 
-exports.getAllCitiesByState = function(state_name, callback) {	
-	var opts = { q: 'State:' + state_name, counts: ['City'], limit:0 };  
+exports.getAllSalesYears = function(callback) {
+	  var opts = { q: '*:*', counts: ['SoldYear'], limit:0 };  
 	  
-	db.search('all-states', 'allStates', opts, function(err, result) {
+	  db.search('yearsBySoldDate', 'yearsBySoldDate', opts, function(err, result) {
+	    if(err) {
+	    	callback(err, null)
+	    } else {  
+		  var all_sales_years = {'sales_years': []};
+			
+		  for(var year in result.counts.SoldYear) {	  	
+			  all_sales_years.sales_years.push({'year': year});
+		  }	
+		
+	      callback(err, all_sales_years);
+	    }
+	  });
+	};
+
+
+exports.getAllCitiesByState = function(state_names, callback) {	    
+	var opts = { q: 'State:' + state_names, counts: ['CityState'], limit:0 };  
+	  
+	db.search('CitiesByStates', 'CitiesByStates', opts, function(err, result) {
+		//console.log(result);
 		if(err) {
 	    	callback(err, null)
 	    } else {  
-		  var all_cities = {'cities': []};
-			
-		  for(var city in result.counts.City) {	  	
-		    all_cities.cities.push({'name': city});
+		  var all_cities = {};
+		  
+		  var arr = [];
+		  for(var city in result.counts.CityState) {	  	
+			    arr = city.split(",");
+			    all_cities[arr[1]] = [];
+			  }	
+		  
+		  //console.log(all_cities);
+		  for(var city in result.counts.CityState) {	  	
+		    //all_cities.cities.push({'name': city});
+			  arr = city.split(",");
+			  
+			  all_cities[arr[1]].push({'city': arr[0]});
 		  }	
 		
 	      callback(err, all_cities);
@@ -38,10 +68,33 @@ exports.getAllCitiesByState = function(state_name, callback) {
 	});	  
 };
 
-exports.getAllZipCodesByCity = function(callback) {
-  db.getDocuments('zip_codes', function(err, result) {
-    callback(err, result);
-  });
+exports.getAllZipCodesByCities = function(cities_names, callback) {
+	var opts = { q: 'CityState:' + cities_names, counts: ['CityZip'], limit:0 };  
+	  
+	db.search('CitiesByStates', 'CitiesByStates', opts, function(err, result) {
+		//console.log(result);
+		if(err) {
+	    	callback(err, null)
+	    } else {  
+		  var all_zipcodes = {};
+		  
+		  var arr = [];
+		  for(var zip in result.counts.CityZip) {	  	
+			    arr = zip.split(",");
+			    all_zipcodes[arr[1]] = [];
+			  }	
+		  
+		  //console.log(all_zipcodes);
+		  for(var zip in result.counts.CityZip) {	  	
+		    //all_cities.cities.push({'name': city});
+			  arr = zip.split(",");
+			  
+			  all_zipcodes[arr[1]].push({'zip_code': arr[0]});
+		  }	
+		
+	      callback(err, all_zipcodes);
+	    }
+	});	  
 };
 
 exports.getAllMakes = function(callback) {
@@ -62,20 +115,61 @@ exports.getAllMakes = function(callback) {
   });
 };
 
-exports.getAllModelsByMake = function(make_name, callback) {
-	  var opts = { q: 'Makes:' + make_name, counts: ['Models'], limit:0 };
+exports.getAllModelsByMakes = function(make_names, callback) {
+	  var opts = { q: 'Makes:' + make_names, counts: ['ModelMake'], limit:0 };	   
 	  
-	  db.search('Makes', 'allMakes', opts, function(err, result) {	
-		if(err) {
-			callback(err, null);
-		} else {
-	      var all_models = {'models': []};
-		
-		  for(var model in result.counts.Models) {	  	
-			  all_models.models.push({'name': model});
-		  }	
+		db.search('ModelsByMakes', 'ModelsByMakes', opts, function(err, result) {
+			//console.log(result);
+			if(err) {
+		    	callback(err, null)
+		    } else {  
+			  var all_models = {};
+			  
+			  var arr = [];
+			  for(var model in result.counts.ModelMake) {	  	
+				    arr = model.split(",");
+				    all_models[arr[1]] = [];
+				  }	
+			  
+			  //console.log(all_cities);
+			  for(var model in result.counts.ModelMake) {	  	
+			    //all_cities.cities.push({'name': city});
+				  arr = model.split(",");
+				  
+				  all_models[arr[1]].push({'model': arr[0]});
+			  }	
 			
-		   callback(err, all_models);
-	    } 
-	  });
-	};
+		      callback(err, all_models);
+		    }
+		});	  
+};
+
+exports.getAllSKUsByModels = function(model_names, callback) {
+	var opts = { q: 'ModelMake:' + model_names, counts: ['Modelsku'], limit:0 };	   
+	  
+	db.search('ModelsByMakes', 'ModelsByMakes', opts, function(err, result) {
+		//console.log(result);
+		if(err) {
+	    	callback(err, null)
+	    } else {  
+		  var all_skus = {};
+		  
+		  var arr = [];
+		  for(var sku in result.counts.Modelsku) {	  	
+			    arr = sku.split(",");
+			    all_skus[arr[1]] = [];
+			  }	
+		  
+		  //console.log(all_cities);
+		  for(var sku in result.counts.Modelsku) {	  	
+		    //all_cities.cities.push({'name': city});
+			  arr = sku.split(",");
+			  
+			  all_skus[arr[1]].push({'sku': arr[0]});
+		  }	
+		
+	      callback(err, all_skus);
+	    }
+	});	  
+};
+	

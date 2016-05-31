@@ -32,20 +32,46 @@
         }
       }
     },
-    "/config/states/{state_name}/cities": {
+    "/config/years": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllCitiesByState",
+        "operationId": "getAllSalesYears",
+        "tags": ["/Sales"],
+        "description": "Returns all sales years",        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/SalesYears"
+            }
+          }
+        }
+      }
+    },
+    "/config/states/cities": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllCitiesByStates",
         "tags": ["/Cities"],
         "description": "Returns all cities in a state where washing machine is sold", 
         "parameters": [
           {
-            "name": "state_name",
-            "in": "path",
-            "description": "State name",
+            "name": "state_names",
+            "in": "query",
+            "description": "State names",
             "required": true,
-            "type": "string"
-          }
+            "type": "array",
+            "items": {
+                      "type": "string"                      
+                    }
+          }          
         ],        
         "responses": {
           "default": {
@@ -64,28 +90,24 @@
         }
       }
     },
-    "/config/states/{state_name}/cities/{city_name}/zipcodes": {
+    "/config/cities/zipcodes": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllZipCodesByCity",
+        "operationId": "getAllZipCodesByCities",
         "tags": ["/Zip Codes"],
         "description": "Returns all zip codes where washing machines are available for sell", 
         "parameters": [
           {
-            "name": "state_name",
-            "in": "path",
-            "description": "State name",
+            "name": "cities_names",
+            "in": "query",
+            "description": "Cities names",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "city_name",
-            "in": "path",
-            "description": "City name",
-            "required": true,
-            "type": "string"
-          }
-        ],        
+            "type": "array",
+            "items": {
+                      "type": "string"                      
+                    }
+          }          
+        ],          
         "responses": {
           "default": {
             "description": "Invalid request.",
@@ -126,21 +148,24 @@
         }
       }
     },
-    "/config/makes/{make_name}/models": {
+    "/config/makes/models": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllModelsByMake",
+        "operationId": "getAllModelsByMakes",
         "tags": ["/Models"],
-        "description": "Returns all makes/brand names.",
+        "description": "Returns all modles by make/brand name",
         "parameters": [
-              {
-                "name": "make_name",
-                "in": "path",
-                "description": "Make/Brand Name",
-                "required": true,
-                "type": "string"
-              }
-            ],               
+          {
+            "name": "make_names",
+            "in": "query",
+            "description": "Makes/Brand Names",
+            "required": true,
+            "type": "array",
+            "items": {
+                      "type": "string"                      
+                    }
+          }          
+        ],                 
         "responses": {
           "default": {
             "description": "Invalid request.",
@@ -158,28 +183,24 @@
         }
       }
     },
-    "/config/makes/{make_name}/models/{model_name}/sku": {
+    "/config/models/skus": {
       "get": {
         "x-swagger-router-controller": "config",
-        "operationId": "getAllSKUsByMakeAndModelName",
+        "operationId": "getAllSKUsByModels",
         "tags": ["/SKUs"],
-        "description": "Returns all SKU's for make and mode name",
+        "description": "Returns all SKU's for given model(s)",
         "parameters": [
-              {
-                "name": "make_name",
-                "in": "path",
-                "description": "Make/Brand Name",
-                "required": true,
-                "type": "string"
-              },
-              {
-                "name": "model_name",
-                "in": "path",
-                "description": "Model Name",
-                "required": true,
-                "type": "string"
-              }
-            ],               
+          {
+            "name": "model_names",
+            "in": "query",
+            "description": "Model(s) names",
+            "required": true,
+            "type": "array",
+            "items": {
+                      "type": "string"                      
+                    }
+          }          
+        ],               
         "responses": {
           "default": {
             "description": "Invalid request.",
@@ -202,6 +223,13 @@
     "State": {
       "properties": {
         "state_name": {
+          "type": "string"
+        }
+      }
+    },
+    "SalesYears": {
+      "properties": {
+        "year": {
           "type": "string"
         }
       }

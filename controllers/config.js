@@ -10,14 +10,22 @@ module.exports.getAllStates = function(req, res, next) {
 	  });
 };
 
-module.exports.getAllCitiesByState = function(req, res, next) {	
-	config.getAllCitiesByState(req.swagger.params.state_name.value, function(err, result){  	  
+module.exports.getAllSalesYears = function(req, res, next) {
+	config.getAllSalesYears(function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	  });
 };
 
-exports.getAllZipCodesByCity = function(req, res, next) {
-	config.getAllZipCodesByCity(function(err, result){  	  
+module.exports.getAllCitiesByStates = function(req, res, next) {	
+	//console.log(req.query.state_names);
+	config.getAllCitiesByState(req.query.state_names, function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	  });
+};
+
+exports.getAllZipCodesByCities = function(req, res, next) {
+	
+	config.getAllZipCodesByCities(req.query.cities_names, function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	  });
 };
@@ -28,14 +36,14 @@ exports.getAllMakes = function(req, res, next) {
 	  });
 };
 
-exports.getAllModelsByMake = function(req, res, next) {
-	config.getAllModelsByMake(req.swagger.params.make_name.value, function(err, result){  	  
+exports.getAllModelsByMakes = function(req, res, next) {
+	config.getAllModelsByMakes(req.swagger.params.make_names.value, function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	  });
 };
 
-exports.getAllSKUsByMakeAndModel = function(req, res, next) {
-	config.getAllZipCodesByCity(function(err, result){  	  
+exports.getAllSKUsByModels = function(req, res, next) {
+	config.getAllSKUsByModels(req.query.model_names, function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	  });
 };
