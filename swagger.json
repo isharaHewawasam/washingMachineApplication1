@@ -13,7 +13,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllStates",
-        "tags": ["/States"],
+        "tags": ["States"],
         "description": "Returns all states where washing machines are available for sale",        
         "responses": {
           "default": {
@@ -36,7 +36,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllSalesYears",
-        "tags": ["/Sales"],
+        "tags": ["Sales"],
         "description": "Returns all sales years",        
         "responses": {
           "default": {
@@ -59,7 +59,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllCitiesByStates",
-        "tags": ["/Cities"],
+        "tags": ["Cities"],
         "description": "Returns all cities in a state where washing machine is sold", 
         "parameters": [
           {
@@ -94,7 +94,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllZipCodesByCities",
-        "tags": ["/Zip Codes"],
+        "tags": ["Zip Codes"],
         "description": "Returns all zip codes where washing machines are available for sell", 
         "parameters": [
           {
@@ -129,7 +129,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllMakes",
-        "tags": ["/Makes"],
+        "tags": ["Makes"],
         "description": "Returns all makes/brand names.",        
         "responses": {
           "default": {
@@ -152,7 +152,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllModelsByMakes",
-        "tags": ["/Models"],
+        "tags": ["Models"],
         "description": "Returns all modles by make/brand name",
         "parameters": [
           {
@@ -187,7 +187,7 @@
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllSKUsByModels",
-        "tags": ["/SKUs"],
+        "tags": ["SKUs"],
         "description": "Returns all SKU's for given model(s)",
         "parameters": [
           {
