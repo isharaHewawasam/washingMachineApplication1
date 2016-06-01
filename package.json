@@ -33,7 +33,8 @@
     "inherits": "*",    
     "setprototypeof": "*",
     "http-errors": "*",
-    "serve-static": "*"   
+    "serve-static": "*" ,
+    "swagger-tools": "*"   
   },
   "repository": {},
   "engines": {
