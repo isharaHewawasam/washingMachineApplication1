@@ -249,7 +249,41 @@
         "description": "Returns washing machines usage paramters like water load, detergent, power etc.)",
         "parameters": [
           {
-            "name": "usage",
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      }
+    },
+    "/sensors": {
+      "post": {
+        "x-swagger-router-controller": "sensor",
+        "operationId": "getUsage",
+        "tags": ["Sensors"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.)",
+        "parameters": [
+          {
+            "name": "Payload",
             "in": "body",
             "description": "Washing Machine, Date and Region information",
             "required": true,
@@ -318,10 +352,37 @@
         }
       }
     },
-    "Makes": {
+    "Make": {
       "properties": {
         "make_name": {
           "type": "string"
+        }
+      }
+    },
+    "DateRange": {
+      "properties": {
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        }
+      }
+    },
+    "Model": {
+      "properties": {
+        "model_name": {
+          "type": "string"
+        }
+      }
+    },      
+    "Makes": {
+      "properties": {
+        "makes": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/Make"
+          }          
         }
       }
     },
@@ -335,24 +396,133 @@
         }
       }
     },
+    "SKU": {
+      "properties": {
+        "sku_name": {
+          "type": "string"
+        }
+      }
+    },   
     "SKUs": {
       "properties": {
         "sku_name": {
           "type": "array",
           "items": {            
-            "type": "string"
+            "$ref": "#/definitions/SKU"
           }          
         }
       }
     },
-    "Usage": {
+    "ProductAttr": {
       "properties": {
-        "productAttrs": {
+        "makes": {
           "type": "array",
           "items": {            
-            "type": "string"
+            "$ref": "#/definitions/Make" 
+          }          
+        },
+        "models": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/Model" 
+          }          
+        },
+        "skus": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/SKU" 
+          }          
+        },
+        "mfg_date": {                    
+          "$ref": "#/definitions/DateRange"                  
+        }
+      }
+    },
+    "TemplateString": {
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    }, 
+    "TemplateNumber": {
+      "properties": {
+        "value": {
+          "type": "integer"
+        }
+      }
+    }, 
+    "relative": {
+      "properties": {
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer"
+        }
+      }
+    }, 
+    "timescale": {
+      "properties": {
+        "years": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateString" 
+          }          
+        },
+        "quarters": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateNumber" 
+          }          
+        },
+        "months": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateNumber" 
+          }          
+        },
+        "date": {                    
+          "$ref": "#/definitions/DateRange"                  
+        },
+        "relative": {                    
+          "$ref": "#/definitions/relative"                  
+        }
+      }  
+    },
+    "region": {
+      "properties": {
+        "states": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateString" 
+          }          
+        },
+        "cities": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateString" 
+          }          
+        },
+        "zip_codes": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/TemplateString" 
           }          
         }
+      }  
+    },    
+    "Usage": {
+      "properties": {
+        "productAttrs": {                   
+           "$ref": "#/definitions/ProductAttr"                    
+         },
+         "timescale": {                   
+           "$ref": "#/definitions/timescale"                    
+         },
+         "region": {                   
+           "$ref": "#/definitions/region"                    
+         }
       }
     },
     "Error": {
