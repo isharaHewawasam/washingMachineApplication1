@@ -6,7 +6,7 @@
     "version": "1.0"
   },
   "produces": ["application/json"],  
-  "host": "washing-machines-api.mybluemix.net",
+  "host": "localhost:3000",
   "basePath": "/api/v1",
   "paths": {
     "/config/states": {
@@ -32,7 +32,7 @@
         }
       }
     },
-    "/config/years": {
+    "/config/sales/years": {
       "get": {
         "x-swagger-router-controller": "config",
         "operationId": "getAllSalesYears",
@@ -49,7 +49,30 @@
             "description": "Successful request.",
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/SalesYears"
+              "$ref": "#/definitions/Years"
+            }
+          }
+        }
+      }
+    },
+    "/config/manufacture/years": {
+      "get": {
+        "x-swagger-router-controller": "manufacture",
+        "operationId": "getAllMfgYears",
+        "tags": ["Manufacture"],
+        "description": "Returns all manufacture years",        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Years"
             }
           }
         }
@@ -217,6 +240,41 @@
           }
         }
       }
+    },
+    "/config/models/usage": {
+      "post": {
+        "x-swagger-router-controller": "usage",
+        "operationId": "getUsage",
+        "tags": ["Usage"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.)",
+        "parameters": [
+          {
+            "name": "model_names",
+            "in": "query",
+            "description": "Model(s) names",
+            "required": true,
+            "type": "array",
+            "items": {
+                      "type": "string"                      
+                    }
+          }          
+        ],               
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Models"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -227,7 +285,7 @@
         }
       }
     },
-    "SalesYears": {
+    "Years": {
       "properties": {
         "year": {
           "type": "string"
