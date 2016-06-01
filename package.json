@@ -6,23 +6,39 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "4.12.x",
-    "ejs": "*",
-    "cloudant": "*",
     "body-parser": "1.13.2",
+    "cloudant": "*",
+    "connect": "*",
+    "connect-multiparty": "1.2.5",
+    "debug": "*",
+    "depd": "^1.1.0",
+    "destroy": "^1.0.4",
+    "ee-first": "*",
+    "ejs": "*",
+    "errorhandler": "1.4.1",
+    "escape-html": "*",
+    "express": "4.12.x",
+    "inherits": "^2.0.1",
     "method-override": "2.3.3",
     "morgan": "1.6.1",
-    "errorhandler": "1.4.1",
-    "connect-multiparty": "1.2.5",
-    "swagger-tools": "*",    
-    "connect": "*",
-    "debug": "*",
-    "ee-first": "*",
-    "escape-html": "*",
-    "ms": "*"
+    "ms": "*",
+    "server-static": "*",
+    "statuses": "^1.3.0",
+    "on-finished": "*",
+    "etag": "*",
+    "fresh": "*",
+    "mime": "*",
+    "range-parser": "*",
+    "destroy": "*",
+    "depd": "*",
+    "inherits": "*",
+    "statuses": "*",
+    "setprototypeof": "*",
+    "http-erros": "*",
+    "serve-static": "*"   
   },
   "repository": {},
   "engines": {
-  	"node": "0.12.x"  	
+    "node": "0.12.x"
   }
 }

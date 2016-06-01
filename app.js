@@ -6,7 +6,9 @@ var swaggerTools = require('swagger-tools');
 var config = require('./config/config');
 var db = require('./database/db')
 var serverPort = process.env.PORT || 3000;
+var serveStatic = require('serve-static');
 
+app.use(serveStatic("./UI/WebContent"));
 // swaggerRouter configuration
 var options = {
   controllers: './controllers',
