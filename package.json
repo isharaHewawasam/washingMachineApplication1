@@ -32,7 +32,7 @@
     "depd": "*",
     "inherits": "*",    
     "setprototypeof": "*",
-    "http-erros": "*",
+    "http-errors": "*",
     "serve-static": "*"   
   },
   "repository": {},
