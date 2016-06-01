@@ -249,16 +249,15 @@
         "description": "Returns washing machines usage paramters like water load, detergent, power etc.)",
         "parameters": [
           {
-            "name": "model_names",
-            "in": "query",
-            "description": "Model(s) names",
+            "name": "usage",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
             "required": true,
-            "type": "array",
-            "items": {
-                      "type": "string"                      
-                    }
-          }          
-        ],               
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        ],      
         "responses": {
           "default": {
             "description": "Invalid request.",
@@ -270,7 +269,7 @@
             "description": "Successful request.",            
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/Models"
+              "$ref": "#/definitions/Usage"
             }
           }
         }
@@ -339,6 +338,16 @@
     "SKUs": {
       "properties": {
         "sku_name": {
+          "type": "array",
+          "items": {            
+            "type": "string"
+          }          
+        }
+      }
+    },
+    "Usage": {
+      "properties": {
+        "productAttrs": {
           "type": "array",
           "items": {            
             "type": "string"
