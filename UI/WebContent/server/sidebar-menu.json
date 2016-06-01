@@ -1,0 +1,94 @@
+[
+  
+  {
+    "text": "Dashboard",
+    "sref": "app.singleview",
+    "img": "app/img/Dashboardassets/dashboard.png",
+    "translate": "sidebar.nav.SINGLEVIEW"
+  },
+   {
+    "text": "Filter",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/machine.png",
+    "submenu": [
+      { "text": "Search by Product", 
+      	          
+		        "submenu": [
+		      { "text": "Make"
+		     	
+		      },
+		      { "text": "Type"
+		     
+		      },
+		      { "text": "MFG Date"
+		     
+		      },
+		      { "text": "SKU"
+		     
+		      }             
+		      ] 
+      },
+      { 
+      	"text": "Demographics",           
+		        "submenu": [
+		      { "text": "Income Range"
+		     
+		      } ,
+		      { "text": "Occupation"
+		     
+		      } ,
+		      { "text": "Age Group"
+		     
+		      } ,
+		      { "text": "Product Name"
+		     
+		      }    
+		      ] 
+      }        
+    ],
+    "translate": "Products"
+  },
+  {
+    "text": "Calendar",
+    "sref": "app.myownview",
+    "img": "app/img/Dashboardassets/calendar.png",
+    "translate": "sidebar.own"
+  },
+  {
+    "text": "Machine",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/machine.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+  {
+    "text": "Reports",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/reports.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+  {
+    "text": "Setting",
+    "sref": "singleview",
+    "img": "app/img/Dashboardassets/settings.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  }
+  
+]
