@@ -12,5 +12,5 @@ module.exports = {
 	  "dbName": "erpsalesdata"
    },
    
-   "host": "washing-machines-api.mybluemix.net"
+   "host": "localhost:3000"
 };
