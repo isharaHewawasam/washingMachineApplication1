@@ -32,12 +32,12 @@
         }
       }
     },
-    "/config/sales": {
+    "/sales/charts": {
       "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllSalesYears",
+        "x-swagger-router-controller": "sales",
+        "operationId": "getCharts",
         "tags": ["Sales"],
-        "description": "Returns all sales years",        
+        "description": "Returns washing machines charting details.",        
         "responses": {
           "default": {
             "description": "Invalid request.",
