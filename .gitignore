@@ -4,4 +4,4 @@ node_modules
 .cfignore
 jshintrc
 .project
-config/config.js
+#config/config.js
