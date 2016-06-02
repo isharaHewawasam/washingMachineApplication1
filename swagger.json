@@ -49,7 +49,7 @@
             "description": "Successful request.",
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/Years"
+              "$ref": "#/definitions/Chart"
             }
           }
         }
@@ -75,7 +75,7 @@
             "description": "Washing Machine, Date and Region information",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SalesByChardPayload"
+              "$ref": "#/definitions/SalesByChartPayload"
             }
           }
         ],         
@@ -90,7 +90,7 @@
             "description": "Successful request.",
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/SalesByChardPayResponse"
+              "$ref": "#/definitions/SalesByChartResponse"
             }
           }
         }
@@ -630,7 +630,7 @@
          }
       }
     },
-    "SalesByChardPayload": {
+    "SalesByChartPayload": {
       "properties": {
         "xaxis": {                   
            "type": "string"                    
@@ -695,7 +695,7 @@
         }
       }
     },    
-    "SalesByChardPayResponse": {
+    "SalesByChartResponse": {
       "properties": {
         "xAxisUnit": {                   
            "type": "string"                    
@@ -710,6 +710,26 @@
           }          
         }
       }
+    },
+    "Chart": {
+      "properties": {
+        "id": {                   
+           "type": "string"                    
+        },
+        "name": {                   
+           "type": "string"                    
+        },
+         "description": {                   
+           "type": "string"                    
+        },
+         "chartType": {                   
+           "type": "string"                    
+        }
+      }
+    },
+    "Charts": {
+      
+       
     },    
     "Error": {
       "properties": {
