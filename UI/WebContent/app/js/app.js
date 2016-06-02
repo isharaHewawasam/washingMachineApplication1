@@ -472,7 +472,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
          }).success(function(data, status) {
            
        	  			$rootScope.griddata=data; 
-       	  			alert(data);
+       	  			//alert(data);
        	  			console.log(JSON.stringify(data));
          }). error(function(data, status) {
                   //alert("error");
