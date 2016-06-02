@@ -389,7 +389,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 
 	
 	
-	/*
+	//start
 	
 	  $scope.json = {
 	          
@@ -398,7 +398,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 					
 				    "makes": [
 				      {
-				        "make_name": "LG"
+				        "make_name": "LG"  
 				      }
 				    ],
 				    "models": [
@@ -466,8 +466,9 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	  console.log($scope.json);
 	  $http({url:'http://washing-machines-api.mybluemix.net/api/v1/usage', 
           method: "POST",
-          headers: { 'Content-Type': 'application/json','Accept':'text/plain'    },
+          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
            data: $scope.json
+          
          }).success(function(data, status) {
            
        	  			$rootScope.griddata=data; 
@@ -479,7 +480,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
         	 console.log("status code  :"+status);
          });
 	
-	*/
+	//end
 	
 	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {

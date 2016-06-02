@@ -29,7 +29,7 @@ ng-click="toggleCollapse(pIndex)">
 <div style=" "><img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"></img>
  <div ng-if="item.text !='Submit'" style=" padding-bottom:8px ;font:16px Roboto Regular; padding-top: 9px; margin: -5px;"> {{item.text}}
  </div>
-<button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:250px;   	font:12px Roboto Light; padding-top: 9px; margin: -5px;">{{item.text}} 
+<button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:210px;   	font:12px Roboto Light; padding-top: 9px; margin: -5px;">{{item.text}} 
  </button>
 </div>
 <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
@@ -93,12 +93,12 @@ ng-click="toggleCollapse(pIndex)">
 				</select>
                
 
-				<div class="option-text-style"class="input-group col-lg-2" ng-if="item.text=='from_date'" style="width=100px;  padding:10px;  ">
+				<div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'"    ">
           			 <input class="option-text-style" type="date"  name="bday"> 
          			</div>
 
 
-		<div class="input-group col-lg-2" ng-if="item.text=='to_date'" style="width=100px;  padding:10px; ">
+		<div class="input-group col-lg-1" ng-if="item.text=='to_date'"  ">
             <input class="option-text-style" type="date"  name="bday"> 
          </div>
  </div>
@@ -116,7 +116,7 @@ ng-click="toggleCollapse(pIndex)">
 		
       
       
-      <ul class="nav"   >
+      <ul class="nav"  style="padding-top: 10px;" >
          <!-- Iterates over all sidebar items-->
          <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"  ng-include="'sidebar-renderer.html'" ng-click="toggleCollapse(pIndex, true)">
    					<div style="position:absolute; width:100%; height:100% ;font-size: 11px;" ng-click="$state.go(item.sref)"> 

@@ -728,8 +728,7 @@
       }
     },
     "Charts": {
-      
-       
+      ["$ref": "#/definitions/Sale" ];       
     },    
     "Error": {
       "properties": {
