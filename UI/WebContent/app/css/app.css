@@ -11909,7 +11909,7 @@ body {
 }
 .close-image-size {
 	height: 11px !important;
-	width: 10px ;
+	width:auto !important;
 	padding-left:20px !important;
 }
 .image-margin{
@@ -12027,7 +12027,10 @@ display : block;
 	/* margin-left: 22px; */
 	background-image:url('../img/Dashboardassets/dropdown_arrow.png') repeat-x 0 0;
    	background-repeat: no-repeat;
-	background-position: right center; 
+	background-position: right 5px center;
+	background-position-x: 95%;
+	background-position-y: 50%; 
+
 	-moz-appearance:none; /* Firefox */
 	-webkit-appearance:none; /* Safari and Chrome */
 	-ms-appearance:none;

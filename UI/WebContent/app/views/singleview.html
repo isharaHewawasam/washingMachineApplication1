@@ -83,12 +83,10 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" >
+                  <select name="" class="form-control filter-selectStyle" ng-model="selectedQuarter" ng-change="quarterMonths()">
                     <option class="option-text-style" value="" selected disabled>Quarter
-					<option class="option-text-style" value="Quarter1" >Quarter1
-					<option class="option-text-style" value="Quarter2" >Quarter2
-					<option class="option-text-style" value="Quarter3" >Quarter3
-					<option class="option-text-style" value="Quarter4" >Quarter4
+                    <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter}} >{{quarter}}
+					
                   </select>
                                    
                </div>
@@ -97,18 +95,8 @@
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle" >
                    <option class="option-text-style" value="" selected disabled>Month
-					<option class="option-text-style" value="Jan" >Jan
-					<option class="option-text-style" value="Feb" >Feb
-					<option class="option-text-style" value="Mar" >Mar
-					<option class="option-text-style" value="Apr" >Apr
-					<option class="option-text-style" value="May" >May
-					<option class="option-text-style" value="Jun" >Jun
-					<option class="option-text-style" value="Jul" >Jul
-					<option class="option-text-style" value="Aug" >Aug
-					<option class="option-text-style" value="Sep" >Sep
-					<option class="option-text-style" value="Oct" >Oct
-					<option class="option-text-style" value="Nov" >Nov
-					<option class="option-text-style" value="Dec" >Dec
+                   <option class="option-text-style" ng-repeat="month in months" value={{month}} >{{month}}
+					
                   </select>
                                    
                </div>
@@ -128,209 +116,7 @@
       <!-- </form>    -->
    <!-- </div> -->
 
-<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">
-   
-   <div class="panel-body" style="padding: 0px;">
-      <form role="form" class="form-inline">
-          <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px ">
-            <div class="form-group" ng-app="App" ng-controller="DashboardController" >
-              
-               <div class="col-sm-1"  >
-                  <select name="account" class="form-control"  style=" min-width: 136px;"  ng-model="selected_state" ng-change="selectCities()" >
-                     <option class="option-text-style" ng-repeat="state in states"   value="state.name">{{state.name}}</option> 
-                  </select>
-                  
-                  <select name="statename" class="form-control filter-selectStyle"  multiple="multiple" ng-model="selected_state" >
-                  	<option class="option-text-style" ng-repeat="state in states"    value={{state.name}}  >  {{state.name}} 
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px; ">
-               
-                 
-                 
-                  <select name="account" class="form-control" style=" min-width: 136px;"  ng-model="selected_city" ng-change="selectZip()">
-                   <option class="option-text-style" value="" disabled selected>Cities
-					  <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
-					
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;" >
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px; " >
-                  <select name="account" class="form-control" style=" min-width: 136px;" >
-                     <option class="option-text-style" value="" >Zip Code
-					<option class="option-text-style" value="" >Zip Code1
-					<option class="option-text-style" value="" >Zip Code2
-					<option class="option-text-style" value="" >Zip Code3
-					<option class="option-text-style" value="" >Zip Code4
-					<option class="option-text-style" value="" >Zip Code5
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-                <div class="col-sm-1" style="padding-left: 10px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;">
-                     <option class="option-text-style" value="" >Year
-					<option class="option-text-style" value="" >Year1
-					<option class="option-text-style" value="" >Year2
-					<option class="option-text-style" value="" >Year3
-					<option class="option-text-style" value="" >Year4
-					<option class="option-text-style" value="" >Year5
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;">
-                    <option class="option-text-style" value="" >Quarter
-					<option class="option-text-style" value="" >Quarter1
-					<option class="option-text-style" value="" >Quarter2
-					<option class="option-text-style" value="" >Quarter3
-					<option class="option-text-style" value="" >Quarter4
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 8px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;"	>
-                    <option class="option-text-style" value="" >Month
-					<option class="option-text-style" value="" >Month1
-					<option class="option-text-style" value="" >Month2
-					<option class="option-text-style" value="" >Month3
-					<option class="option-text-style" value="" >Month4
-					<option class="option-text-style" value="" >Month5
-                  </select>
-                                   
-               </div>
-               
-             	<div class="col-lg-1 " style="padding-left: 5%;">
-             		<button type="submit" class="btn btn-default"  style="background-color: #91AED3;    font-family: Roboto; font-size: 15px;    color: #FFFFFF;  padding-right: 3px;  " id="applyFilter">Apply Filter</button>
-             		
-				</div>
-               
-            </div>
-         </fieldset>
-         
-           
-         
-      </form>
-   </div>
-</div>
- -->
 
-
-<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">
-   
-   <div class="panel-body" style="padding: 0px;">
-      <form role="form" class="form-inline">
-          <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px ">
-            <div class="form-group" ng-app="App" ng-controller="DashboardController">
-              
-               <div class="col-sm-1"  >
-                  <select name="account" class="form-control"  style=" min-width: 136px;"  ng-model="selected_state" ng-change="selectCities()" >
-                  <option class="option-text-style" value="" disabled selected>States
-                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
-                  </select>
-                  
-                  <select name="statename" class="form-control filter-selectStyle"  multiple="multiple" ng-model="selected_state" >
-                  	<option class="option-text-style" ng-repeat="state in states"    value={{state.name}}  >  {{state.name}} 
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px; ">
-               <select name="" class="form-control filter-selectStyle"  ng-model="selected_city" ng-change="selectZip()">
-                    <option class="option-text-style" value="" disabled selected>Cities
-					 <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
-					<option class="option-text-style" value="" >San Diego
-					<option class="option-text-style" value="" >San Jose
-                  </select> 
-                  <select name="account" class="form-control" style=" min-width: 136px;" >
-                    <option class="option-text-style" value="" >Cities
-					<option class="option-text-style" value="" >Cities1
-					<option class="option-text-style" value="" >Cities2
-					<option class="option-text-style" value="" >Cities3
-					<option class="option-text-style" value="" >Cities4
-					<option class="option-text-style" value="" >Cities5
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;" >
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px; " >
-                  <select name="account" class="form-control" style=" min-width: 136px;" ng-model="selected_zip">
-                     <option class="option-text-style" value="" disabled selected >Zip Code
-                     <option class="option-text-style" ng-repeat="zip in zips" value={{zip.zip_code}} >{{zip.zip_code}}
-					<option class="option-text-style" value="" >Zip Code1
-					<option class="option-text-style" value="" >Zip Code2
-					<option class="option-text-style" value="" >Zip Code3
-					<option class="option-text-style" value="" >Zip Code4
-					<option class="option-text-style" value="" >Zip Code5
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-                <div class="col-sm-1" style="padding-left: 10px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;">
-                     <option class="option-text-style" value="" >Year
-                      <option class="option-text-style" ng-repeat="sales_year in sales_years" value={{sales_year.year}} >{{sales_year.year}}
-					<option class="option-text-style" value="" >Year1
-					<option class="option-text-style" value="" >Year2
-					<option class="option-text-style" value="" >Year3
-					<option class="option-text-style" value="" >Year4
-					<option class="option-text-style" value="" >Year5
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 10px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;">
-                    <option class="option-text-style" value="" >Quarter
-					<option class="option-text-style" value="" >Quarter1
-					<option class="option-text-style" value="" >Quarter2
-					<option class="option-text-style" value="" >Quarter3
-					<option class="option-text-style" value="" >Quarter4
-                  </select>
-                                   
-               </div>
-               <div class="col-sm-1" style="padding-left: 3px;">
-               </div>
-               <div class="col-sm-1" style="padding-left: 8px;">
-                  <select name="account" class="form-control" style=" min-width: 136px;"	>
-                    <option class="option-text-style" value="" >Month
-					<option class="option-text-style" value="" >Month1
-					<option class="option-text-style" value="" >Month2
-					<option class="option-text-style" value="" >Month3
-					<option class="option-text-style" value="" >Month4
-					<option class="option-text-style" value="" >Month5
-                  </select>
-                                   
-               </div>
-               
-             	<div class="col-lg-1 " style="padding-left: 5%;">
-             		<button type="submit" class="btn btn-default"  style="background-color: #91AED3;    font-family: Roboto; font-size: 15px;    color: #FFFFFF;  padding-right: 3px;  " id="applyFilter">Apply Filter</button>
-             		
-				</div>
-               
-            </div>
-         </fieldset>
-         
-           
-         
-      </form>
-   </div>
-</div>
- -->
 
 
 

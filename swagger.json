@@ -55,6 +55,47 @@
         }
       }
     },
+    "/sales/{chart_id}": {
+      "post": {
+        "x-swagger-router-controller": "sales",
+        "operationId": "getChartById",
+        "tags": ["Sales"],
+        "description": "Returns washing machines charting details.",
+         "parameters": [
+          {
+            "name": "chart_id",
+            "in": "path",
+            "description": "Domain id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SalesByChardPayload"
+            }
+          }
+        ],         
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/SalesByChardPayResponse"
+            }
+          }
+        }
+      }
+    },
     "/config/sales/years": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -589,6 +630,32 @@
          }
       }
     },
+    "SalesByChardPayload": {
+      "properties": {
+        "productAttrs": {                   
+           "$ref": "#/definitions/ProductAttr"                    
+         },
+         "timescale": {                   
+           "$ref": "#/definitions/timescale"                    
+         },
+         "region": {                   
+           "$ref": "#/definitions/region"                    
+         }
+      }
+    },
+    "SalesByChardPayResponse": {
+      "properties": {
+        "productAttrs": {                   
+           "$ref": "#/definitions/ProductAttr"                    
+         },
+         "timescale": {                   
+           "$ref": "#/definitions/timescale"                    
+         },
+         "region": {                   
+           "$ref": "#/definitions/region"                    
+         }
+      }
+    },    
     "Error": {
       "properties": {
         "message": {

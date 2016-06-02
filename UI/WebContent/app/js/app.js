@@ -368,6 +368,119 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	//shekhar changes
 	
+	
+		var quarterMonthMapping = JSON.parse('{'
+										+'"Quarter1":["Jan","Feb","Mar"],'
+										+'"Quarter2":["Apr","May","Jun"],'
+										+'"Quarter3":["Jul","Aug","Sep"],'
+										+'"Quarter4":["Oct","Nov","Dec"]'
+										+'}');	
+			
+			
+			
+			$scope.quarters = [];
+			for(var keyName in quarterMonthMapping){        
+				$scope.quarters.push(keyName);
+			}
+			
+			$scope.quarterMonths=function(){
+				$scope.months = quarterMonthMapping[$scope.selectedQuarter];
+		    } 
+
+	
+	
+	/*
+	
+	  $scope.json = {
+	          
+			  
+				  "productAttrs": {
+					
+				    "makes": [
+				      {
+				        "make_name": "LG"
+				      }
+				    ],
+				    "models": [
+				      {
+				        "model_name": "WD100CW"
+				      }
+				    ],
+				    "skus": [
+				      {
+				        "sku_name": "00043D-FBC8"
+				      }
+				    ],
+				    "mfg_date": {
+				      "start_date": "01/01/2015",
+				      "end_date": "01/01/2016"
+				    }
+					  
+				  },
+				  "timescale": {
+				    "years": [
+				      {
+				        "value": "2001"
+				      }
+				    ],
+				    "quarters": [
+				      {
+				        "value": 0
+				      }
+				    ],
+				    "months": [
+				      {
+				        "value": 0
+				      }
+				    ],
+				    "date": {
+				      "start_date": "01/01/2015",
+				      "end_date": "01/01/2016"
+				    },
+				    "relative": {
+				      "unit": "2",
+				      "value": 0
+				    }
+				  },
+				  "region": {
+				    "states": [
+				      {
+				        "value": "Florida"
+				      }
+				    ],
+				    "cities": [
+				      {
+				        "value": "Miami"
+				      }
+				    ],
+				    "zip_codes": [
+				      {
+				        "value": "33147"
+				      }
+				    ]
+				  }
+
+	  		};  
+	  
+	  
+	  console.log($scope.json);
+	  $http({url:'http://washing-machines-api.mybluemix.net/api/v1/usage', 
+          method: "POST",
+          headers: { 'Content-Type': 'application/json','Accept':'text/plain'    },
+           data: $scope.json
+         }).success(function(data, status) {
+           
+       	  			$rootScope.griddata=data; 
+       	  			alert(data);
+       	  			console.log(JSON.stringify(data));
+         }). error(function(data, status) {
+                  //alert("error");
+        	 //console.log($scope.json);
+        	 console.log("status code  :"+status);
+         });
+	
+	*/
+	
 	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               

@@ -9,3 +9,9 @@ module.exports.getCharts = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	});
 };
+
+module.exports.getChartById = function(req, res, next) {
+	usage.getChartById(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};

@@ -12,7 +12,7 @@
 
 </a>
 <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-<li class="sidebar-subnav-header"  style="font:15px Roboto Bold;" >{{(item.translate | translate) || item.text}}</li>
+<li class="sidebar-subnav-header"  style="font:20px Roboto Bold;" >{{(item.translate | translate) || item.text}}</li>
 <li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer2.html'"  style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
 ng-click="toggleCollapse(pIndex)">
 		
@@ -29,11 +29,11 @@ ng-click="toggleCollapse(pIndex)">
 <div style=" "><img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"></img>
  <div ng-if="item.text !='Submit'" style=" padding-bottom:8px ;font:16px Roboto Regular; padding-top: 9px; margin: -5px;"> {{item.text}}
  </div>
-<button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:150px;   	font:12px Roboto Light; padding-top: 9px; margin: -5px;">{{item.text}} 
+<button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:250px;   	font:12px Roboto Light; padding-top: 9px; margin: -5px;">{{item.text}} 
  </button>
 </div>
 <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-<li class="sidebar-subnav-header"  style="font:15px Roboto Bold;" >{{(item.translate | translate) || item.text}}</li>
+
 <li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer3.html'"  ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
 ng-click="toggleCollapse(pIndex)">
 		
@@ -52,54 +52,54 @@ ng-click="toggleCollapse(pIndex)">
 	 
 
   
-                <select   name="account" ng-if="item.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px; font-size:12px;font:Roboto Regular;"  ng-model="selected_make" ng-change="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+                <select  class="option-text-style" name="account" ng-if="item.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px; "  ng-model="selected_make" ng-change="selectCities()" >
+                    <option class="option-text-style" value=""   disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
 				</select>
 
-				<select   name="account1" ng-if="item.text=='Type'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_model" ng-change="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select  class="option-text-style" name="account1" ng-if="item.text=='Type'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_model" ng-change="selectCities()" >
+                    <option  class="option-text-style" value="" disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value={{itm.model}}>{{itm.model}}</option>
 				</select>
 
-				<select   name="account2" ng-if="item.text=='MFG Date'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_mfg" ng-change="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style"  name="account2" ng-if="item.text=='MFG Date'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_mfg" ng-change="selectCities()" >
+                    <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in years"   value="itm.year">{{itm.year}}</option>
 				</select>
 
-				<select name="account3" ng-if="item.text=='SKU'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_sku" onchange="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style" name="account3" ng-if="item.text=='SKU'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_sku" onchange="selectCities()" >
+                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
 				</select>
 
-				<select name="account" ng-if="item.text=='Income Range'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_model" onchange="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style" name="account" ng-if="item.text=='Income Range'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_model" onchange="selectCities()" >
+                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
 				</select>
 
-				<select name="account" ng-if="item.text=='Occupation'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_mfg" onchange="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style" name="account" ng-if="item.text=='Occupation'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_mfg" onchange="selectCities()" >
+                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
 				</select>
 
-				<select name="account" ng-if="item.text=='Age Group'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_sku" onchange="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style" name="account" ng-if="item.text=='Age Group'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_sku" onchange="selectCities()" >
+                    <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
 				</select>
 
-				<select  name="account" ng-if="item.text=='Product Name'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_product" onchange="selectCities()" >
-                    <option value="" disabled selected>{{item.text}}</option>
+				<select class="option-text-style"  name="account" ng-if="item.text=='Product Name'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;"  ng-model="selected_product" onchange="selectCities()" >
+                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
 				</select>
                
 
-				<div class="input-group col-lg-2" ng-if="item.text=='from_date'" style="width=100px;  padding:10px;  ">
-          			 <input type="date" name="bday"> 
+				<div class="option-text-style"class="input-group col-lg-2" ng-if="item.text=='from_date'" style="width=100px;  padding:10px;  ">
+          			 <input class="option-text-style" type="date"  name="bday"> 
          			</div>
 
 
 		<div class="input-group col-lg-2" ng-if="item.text=='to_date'" style="width=100px;  padding:10px; ">
-            <input type="date" name="bday"> 
+            <input class="option-text-style" type="date"  name="bday"> 
          </div>
  </div>
 
