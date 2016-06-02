@@ -36,7 +36,13 @@ process.on('uncaughtException', exitHandler);
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
-  // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
+  if((config.host == undefined) || (config.host == null)) {
+    console.log("Error : Host name is not set in config.");
+    process.exit(1);
+  }
+    
+  swaggerDoc.host = config.host;
+  // Interpret Swagger resources and attach metadata to request - must be first .in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
   // Validate Swagger requests
