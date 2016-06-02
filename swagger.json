@@ -65,7 +65,7 @@
           {
             "name": "chart_id",
             "in": "path",
-            "description": "Domain id",
+            "description": "Char id",
             "required": true,
             "type": "string"
           },
@@ -632,28 +632,83 @@
     },
     "SalesByChardPayload": {
       "properties": {
+        "xaxis": {                   
+           "type": "string"                    
+        }, 
+        "yaxis": {                   
+           "type": "string"                    
+        }, 
         "productAttrs": {                   
            "$ref": "#/definitions/ProductAttr"                    
-         },
+        },
          "timescale": {                   
            "$ref": "#/definitions/timescale"                    
          },
          "region": {                   
            "$ref": "#/definitions/region"                    
-         }
+         },
+         "sortOrder": {                   
+           "type": "string"                    
+        }, 
+        "limit": {                   
+           "type": "integer"                    
+        }
       }
     },
+    "Sale": {
+      "properties": {
+        "sold": {                   
+           "type": "integer"                    
+        },
+        "state": {                   
+           "type": "string"                    
+        },
+        "city": {                   
+           "type": "string"                    
+        },
+        "zipcode": {                   
+           "type": "string"                    
+        },
+        "make": {                   
+           "type": "string"                    
+        },
+        "model": {                   
+           "type": "string"                    
+        },
+        "sku": {                   
+           "type": "string"                    
+        },
+        "day": {                   
+           "type": "integer"                    
+        },
+        "month": {                   
+           "type": "string"                    
+        },
+        "quarter": {                   
+           "type": "string"                    
+        },
+        "year": {                   
+           "type": "integer"                    
+        },
+        "connected": {                   
+           "type": "integer"                    
+        }
+      }
+    },    
     "SalesByChardPayResponse": {
       "properties": {
-        "productAttrs": {                   
-           "$ref": "#/definitions/ProductAttr"                    
-         },
-         "timescale": {                   
-           "$ref": "#/definitions/timescale"                    
-         },
-         "region": {                   
-           "$ref": "#/definitions/region"                    
-         }
+        "xAxisUnit": {                   
+           "type": "string"                    
+        },
+        "yAxixUnit": {                   
+           "type": "string"                    
+        },
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/Sale" 
+          }          
+        }
       }
     },    
     "Error": {
