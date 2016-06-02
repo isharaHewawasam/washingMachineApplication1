@@ -32,6 +32,29 @@
         }
       }
     },
+    "/config/sales": {
+      "get": {
+        "x-swagger-router-controller": "config",
+        "operationId": "getAllSalesYears",
+        "tags": ["Sales"],
+        "description": "Returns all sales years",        
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Years"
+            }
+          }
+        }
+      }
+    },
     "/config/sales/years": {
       "get": {
         "x-swagger-router-controller": "config",
