@@ -11,6 +11,10 @@
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
+
+
+//  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+
 // APP START
 // ----------------------------------- 
 
@@ -97,6 +101,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.submenu', {
         url: '/submenu',
         title: 'Submenu',
+       
         templateUrl: helper.basepath('submenu.html')
     })
     // 
@@ -254,7 +259,7 @@ App.controller('AppController',
 
     $rootScope.currTitle = $state.current.title;
     $rootScope.pageTitle = function() {
-      var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+      var title = 'IoT for Elctronic';
       document.title = title;
       return title; 
     };
@@ -406,14 +411,14 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	 
 	 
 	 $scope.selectMake=function(){
-		 alert($scope.selected_make);
+		// alert($scope.selected_make);
 		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		    	 $scope.models=data[$scope.selected_make];
 		    	 
-		    	 alert(JSON.stringify($scope.models));
+		    //	 alert(JSON.stringify($scope.models));
 		    	 console.log(JSON.stringify($scope.models));
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
@@ -439,13 +444,13 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    });
 	 
 	 $scope.selectCities=function(){
-		 alert($scope.selected_make);
+		 //alert($scope.selected_make);
 		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.selected_state, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		    	 $scope.cities=data[$scope.selected_state];
-		    	 console.log(JSON.stringify($scope.cities));
+		    	 //console.log(JSON.stringify($scope.cities));
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
 		       //console.log(JSON.stringify(data));

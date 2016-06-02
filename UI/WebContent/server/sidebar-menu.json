@@ -9,7 +9,7 @@
    {
     "text": "Filter",
     "sref": "#",
-    "img": "app/img/Dashboardassets/machine.png",
+    "img": "app/img/Dashboardassets/filter.png",
     "submenu": [
       { "text": "Search by Product", 
       	          
@@ -52,7 +52,30 @@
     "text": "Calendar",
     "sref": "app.myownview",
     "img": "app/img/Dashboardassets/calendar.png",
-    "translate": "sidebar.own"
+    "submenu": [
+      { "text": "Search by from date", 
+      	          
+		        "submenu": [
+		      { "text": "from_date"
+		     	
+		      }           
+		      ] 
+      },
+      { 
+      	"text": "Search by to date",           
+		        "submenu": [
+		      { "text": "to_date"
+		     
+		      }  
+		      ] 
+      },
+      { 
+      	"text": "Submit"           
+		     
+      }     
+          
+    ],
+    "translate": "Filter by Dates"
   },
   {
     "text": "Machine",

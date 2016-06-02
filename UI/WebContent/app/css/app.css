@@ -1,6 +1,15 @@
 @charset "UTF-8";
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,400italic);
-
+/*!
+ * 
+ * Angle - Bootstrap Admin App + AngularJS
+ * 
+ * Author: @themicon_co
+ * Website: http://themicon.co
+ * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
+ * 
+ */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -4997,7 +5006,6 @@ a.thumbnail.active {
   line-height: 21px;
   color: #ffffff;
   text-align: center;
-  background-color: #5d9cec;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
@@ -11845,14 +11853,27 @@ body {
 	/* margin-left: 22px; */
 	background-image:url('../img/Dashboardassets/dropdown.png') repeat-x 0 0;
    	background-repeat: no-repeat;
-	background-position: right center;
+	background-position: right 5px center;
+	background-position-x: 95%;
+	background-position-y: 50%;
 	-moz-appearance:none; /* Firefox */
 	-webkit-appearance:none; /* Safari and Chrome */
 	-ms-appearance:none;
 	appearance:none;
+	overflow: hidden;
+	text-overflow:hidden;
+	white-space:nowrap;
+	padding:0 15px 0 10px !important;
+    -webkit-padding-end: 20px !important;
+    -webkit-padding-start: 5px !important;
 }
 
-.chart-selectStyle::-ms-expand {	display: none; }
+.chart-selectStyle::-ms-expand {
+	display: none;
+	text-overflow:hidden;
+	overflow: hidden;
+	white-space:nowrap;
+}
 
 .chart-border{
 	border-left: 1px solid #D4D4D4;
@@ -11883,19 +11904,21 @@ body {
 	z-index:99;
 }
 .image-size {
-	height: 15px;
-	width: 15px;
+	height: 15px ;
+	width: 15px ;
 }
 .close-image-size {
-	height: 11px ;
+	height: 11px !important;
 	width: 10px ;
+	padding-left:20px !important;
 }
 .image-margin{
 	position:right;
 	/* margin-left: 10px; */
 	/* margin-right:10px; */
-	padding-right:0px;
+	padding-right:5px;
 	margin-top: 10px;
+	padding-left:10px !important;
 	padding:0px;
 }
 .chartDiv-maximize{
@@ -11923,11 +11946,14 @@ body {
 
 .chart-filterDiv > #maximize,
 .chart-filterDiv > #close{
-	padding-right: 0px;
+	padding-right: 5px;
 }
 
 .chart-selectStyle{
 	background-image:url('../img/Dashboardassets/dropdown.png') !important;
+	text-overflow:hidden;
+	overflow: hidden;
+	white-space:nowrap;
 }
 
 

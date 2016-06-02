@@ -16,7 +16,7 @@
    </div>
    <!-- END Language list    -->
   
-   <a href="#" >Machine Monitor System </a>  > <a href="#">  Dashboard</a>
+   <a href="#"  style="font-size:14pt;font:Roboto Light; color: #0F64BC " >Machine Monitor System </a> <span style="font-size:14pt;font:Roboto; color: #222222 ; padding-left: 15px; padding-right: 15px;" > ></span>  <a href="#" style="font-size:14pt;font:Roboto Light; color: #222222 ">   Dashboard</a>
   
 </h3>
 
@@ -31,7 +31,7 @@
             <div class="form-group filter-filterDiv col-lg-12" style=" width:1287px;" id="filterDivId" ng-app="App" ng-controller="DashboardController">
               
                <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
-                  <select name="" class="form-control filter-selectStyle"   ng-model="selected_state" ng-change="selectCities()" >
+                  <select name="" class="form-control filter-selectStyle"   ng-model="selected_state" ng-change="selectCities()"   >
                   <option class="option-text-style" value="" disabled selected>States
                      <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
                   </select>
@@ -50,7 +50,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle"  ng-model="selected_city" ng-change="selectZip()">
+                  <select name="" class="form-control filter-selectStyle"  ng-model="selected_city" ng-change="selectZip()"  >
                     <option class="option-text-style" value="" disabled selected>Cities
 					 <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
 					<!--<option class="option-text-style" value="" >San Diego
@@ -61,7 +61,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;" >
                </div> -->
                <div class="col-lg-2"  style="max-width: 150px;margin-left:22px !important ;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" ng-model="selected_zip">
+                  <select name="" class="form-control filter-selectStyle" ng-model="selected_zip" >
                  <option class="option-text-style" value="" disabled selected >Zip Code
                      <option class="option-text-style" ng-repeat="zip in zips" value={{zip.zip_code}} >{{zip.zip_code}}
                      <!-- <option class="option-text-style" value="" disabled selected>Zip Code
@@ -551,7 +551,7 @@
             <div infinite-scroll="loadMore()" infinite-scroll-distance="1" >
             <div ng-repeat="image in images" >
             <a href="#" class="list-group-item">
-               <div class="media-box" >
+               <div class="media-box" style="height: 90px" >
                   <div class="pull-left " >
                     <!--  <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" /> -->
                   		
@@ -660,10 +660,10 @@
    </div> 
    <!-- END dashboard main content-->
    <!-- START dashboard sidebar-->
-   <aside class="col-lg-4"  style=" width: 374px; height:373px ">
+   <aside class="col-lg-4"  style=" width: 374px; height:150px ">
      
       <!-- START messages and activity-->
-      <div class="panel panel-default" style=" width: 374px; height:373px ">
+      <div class="panel panel-default" style=" width: 374px; height:150px ">
          <div class="panel-heading">
             <div class="panel-title">Notification</div>
             
@@ -673,8 +673,8 @@
          <!-- START list group-->
          <div class="list-group">
       <!-- START list group item-->
-            <div class="list-group-item">
-               <div class="media-box">
+            <div class="list-group-item" style="height: 60px">
+               <div class="media-box" >
 <!--                   <div class="pull-left"> -->
 <!--                      <span class="fa-stack"> -->
 <!--                         <em class="fa fa-circle fa-stack-2x text-warning"></em> -->
@@ -693,7 +693,7 @@
             </div>
             <!-- END list group item-->
              <!-- START list group item-->
-            <div class="list-group-item">
+            <div class="list-group-item" style="height: 60px">
                <div class="media-box">
 <!--                   <div class="pull-left"> -->
 <!--                      <span class="fa-stack"> -->
@@ -711,7 +711,7 @@
             </div>
             <!-- END list group item-->
             <!-- START list group item-->
-            <div class="list-group-item">
+            <div class="list-group-item" style="height: 60px">
                <div class="media-box">
 <!--                   <div class="pull-left"> -->
 <!--                      <span class="fa-stack"> -->
