@@ -49,7 +49,10 @@
             "description": "Successful request.",
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/Chart"
+              "items": {
+                      "$ref": "#/definitions/Chart"                      
+                    }
+              
             }
           }
         }

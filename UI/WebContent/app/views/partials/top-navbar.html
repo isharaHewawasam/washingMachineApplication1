@@ -1,288 +1,108 @@
 <!-- START Top Navbar-->
-<nav role="navigation" class="navbar topnavbar">
-   <!-- START navbar header-->
-   <div class="navbar-header">
-     <!--  <a href="#/" class="navbar-brand">
-         <div class="brand-logo">
-         
-            <img src="app/img/logo.png" alt="App Logo" class="img-responsive" />
-         </div>
-         <div style="padding:20px; height:200% ; width: 200%;">
-             <img src="app/img/logo.png"  alt="App Logo" class="img-responsive" /> 
-         </div>
-      </a> -->
-   </div>
-   <!-- END navbar header-->
-   <!-- START Nav wrapper-->
-   <div class="nav-wrapper" style="padding-top: 15px; padding-bottom:10px">
-      <!-- START Left navbar-->
-   <!--    <ul class="nav navbar-nav" >
-          <li>
-            
-            <a ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" class="hidden-xs">
-               <em class="fa fa-navicon"></em>
-            </a>
-           
-            <a toggle-state="aside-toggled" no-persist="no-persist" class="visible-xs sidebar-toggle">
-               <em class="fa fa-navicon"></em>
-            </a>
-         </li>
-      </ul> -->
-      <!-- END Left navbar-->
-      <!-- START Right Navbar-->
-      <ul class="nav navbar-nav navbar-right">
-         <!-- Search icon-->
-        
-          
-         <li>
-         
-           <div class="navbar-header" class="col-sm-1" style="float: Left; padding-right: 18px; padding-top: -15px; ">
-      <a href="#/" class="navbar-brand">
-         <!-- <div class="brand-logo">
-         
-            <img src="app/img/logo.png" alt="App Logo" class="img-responsive" />
-         </div> -->
-         <div style="padding-left:20px; padding-top:5px; height:200% ; width: 200%;">
-             <img src="app/img/logo.png"  alt="App Logo" class="img-responsive" /> 
-         </div>
-      </a>
-   </div>
-         
-         
-                  <!-- START Alert menu-->
-         <div dropdown="" class="dropdown dropdown-list" class="col-sm-1" style="float: right; padding-right: 25px; ">
-            <a dropdown-toggle="">
-              <!--  <em class="icon-user"></em> -->
-                <img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" />
-            </a>
-            <!-- START Dropdown menu-->
-            <ul class="dropdown-menu animated flipInX">
-               <li>
-                  <!-- START list group-->
-                  <div class="list-group">
-                     <!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Setting</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                     <!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Change Password</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                     <!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Edit Profile</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                      <!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                           
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Logout</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                    
-                  </div>
-                  <!-- END list group-->
-               </li>
-            </ul>
-            <!-- END Dropdown menu-->
-         </div>
-         
-         <div style="width:100px; padding-left: 0px;float: right; ">
-         <span class="media-box-body" >
-            <span class="media-heading" >
-               <strong style="font-size:14px; font:Roboto Light; color: #FEFEFE;  " >John Smith</strong>
-               
-            </span>
-         </span>
-         </div>
-         
-            <div  style=" float: right; width: 80px; " >
-           
-             <a href="#" class="media-box p mt0 ">
-       
-         <span class="pull-right" >
-            <span class="circle circle-success circle-lg"></span>
-         </span>
-         <span class="pull-left" >
-            <!-- Contact avatar-->
-            <img src="app/img/Dashboardassets/user_pic.png" alt="Image" class="media-box-object img-circle thumb48" />
-         </span>
+<nav role="navigation" class="navbar topnavbar" style="height: 60px; border:0px; margin:0px; padding:0px; ">
+	<!-- START navbar header-->
+	<div class="navbar-header"></div>
+	<!-- END navbar header-->
+	<!-- START Nav wrapper-->
+	<div class="nav-wrapper" style="height: 100%; vertical-align: middle;">
+		<ul class="nav navbar-nav pull-left" style="  ">
+			<!-- Search icon-->
+			<li style="padding-top: 8px">
+				<div class="navbar-header "
+					style="float: Left; padding-right: 18px; padding-top: -15px;">
+					<a href="#/" class="navbar-brand">				
+						<div style="padding-left: 20px; padding-top: 5px; height: auto; width: 200%;">
+							<img src="app/img/logo.png" alt="App Logo" class="img-responsive" />
+						</div>
+					</a>
+				</div> <!-- START Alert menu-->
+			</li>
+		</ul>
+		
+		<ul class="nav navbar-nav pull-right" style="">
+			<li style="padding-left: 10px; padding-top: 12px">
+				<div class="input-group" style="border: 1px solid #5195DD; width: 305px; height: 33px">
+				  <span class="input-group-addon" style="background-color: #0A427D; padding:0px; margin: 0px; border: 0px;">
+				  	<img type="button" style=""	ng-src="app/img/Dashboardassets/menu_icon.png" />
+				  </span>
+				  <input type="text" class="form-control" style="font-size: 14px; color: #AFD6FF; background-color: #0A427D; border: 0px;">
+				  <span class="input-group-addon" style="padding:0px; margin: 0px; border:0px;background-color: #0A427D;">
+				  	<button type="button" class="btn btn-default" style="background-color: #0A427D; border-left: 1px solid #5195DD; border-right:0px;border-bottom:0px;border-top:0px">
+						<img  ng-src="app/img/Dashboardassets/search.png" style=""/>
+					</button>
+				  </span>
+				</div>
+					
+			</li>
+			<li style="padding-left: 10px;padding-top: 16px">
+				<img alt="" src="app/img/Dashboardassets/alert.png">
+				<span class="badge" style="background-color: #FEBD2D">4</span>
+			</li>
+			<li style="padding-left: 25px;padding-top: 8px">
+				<div dropdown="" class="dropdown dropdown-list " class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
+				
+					<a dropdown-toggle="" style="display:block;  text-decoration: none;"> 
+						<div >
+							<span class="media-box-body">
+								<span class="media-heading">
+									<img src="app/img/Dashboardassets/user_pic.png" alt="Image"	class="media-box-object img-circle thumb48" style="display:inline;"/>
+									<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">John Smith</strong>
+								</span>
+							</span>
+							<img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" style="display:inline;"/>
+						</div>
+					</a>
+					<!-- START Dropdown menu-->
+					<ul class="dropdown-menu animated flipInX dropdown-menu.pull-right">
+						<li>
+							<!-- START list group-->
+							<div class="list-group">
+								<!-- list item-->
+								<a href="#" class="list-group-item">
+									<div class="media-box">
 
-         <!-- Contact info-->
-         
-      </a>
-      </div>
-      
-      
-    
-          
-               
-               <div  style="float: right; padding-right: 10px;  width: 60px; height: 40px;">
-      		<a dropdown-toggle="" >
-               <em  class="icon-bell"></em>
-               <div class="label label-yellow">7</div>
-            </a>
-            
-           </div>
-             
-               <div class="form-group">
-               
-               <div class="col-sm-3" style="float: right;">
-                
-                  <div class="input-group">
-                  <span class="input-group-addon" style="background-color: #0A427D; border: 1px solid #5195DD"><img type="button" style="height: 65%;" ng-src="app/img/Dashboardassets/menu_icon.png"/></span>
-                     <input type="text" placeholder="Search..." class="form-control" style="font-size: 14px; color: #AFD6FF; background-color: #0A427D; border: 1px solid #5195DD;" />
-                     <span class="input-group-btn">
-                        <button type="button"  class="btn btn-default" style="background-color: #0A427D; border: 1px solid #5195DD"><img style="height: 65%;" ng-src="app/img/Dashboardassets/search.png"/></button>
-                     </span>
-                  </div>
-               </div>
-            </div>
-      	
-      		 
-      
-         </li>
-         
-         
-           
-           
-           <!-- START Alert menu-->
-       <!--   <li dropdown="" class="dropdown dropdown-list">
-            <a dropdown-toggle="" >
-               <em  class="icon-bell"></em>
-               <div class="label label-yellow">7</div>
-            </a>
-           
-         </li>
-         END Alert menu
-         
-         <li>
-             <a href="#" class="media-box p mt0">
-       
-         <span class="pull-right">
-            <span class="circle circle-success circle-lg"></span>
-         </span>
-         <span class="pull-left">
-            Contact avatar
-            <img src="app/img/Dashboardassets/user_pic.png" alt="Image" class="media-box-object img-circle thumb48" />
-         </span>
+										<div class="media-box-body clearfix">
+											<p class="m0">Setting</p>
 
-         Contact info
-         <div style="width:100%; padding-left: 50%">
-         <span class="media-box-body">
-            <span class="media-heading">
-               <strong style="font-size:14px;font:Roboto Light;" >John Simth</strong>
-               
-            </span>
-         </span>
-         </div>
-      </a>
-         </li>
-          -->
-         
- <!--          START Alert menu
-         <li dropdown="" class="dropdown dropdown-list">
-            <a dropdown-toggle="">
-               <em class="icon-user"></em>
-                <img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" />
-            </a>
-            START Dropdown menu
-            <ul class="dropdown-menu animated flipInX">
-               <li>
-                  START list group
-                  <div class="list-group">
-                     list item
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Setting</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                     list item
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Change Password</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                     list item
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                          
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Edit Profile</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                      list item
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                           
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Logout</p>
-                              
-                           </div>
-                        </div>
-                     </a>
-                    
-                  </div>
-                  END list group
-               </li>
-            </ul>
-            END Dropdown menu
-         </li> -->
-         <!-- END Alert menu-->
-         
-         
-         
-         
-        <!--  START Offsidebar button -->
-         <!-- <li>
-            <a toggle-state="offsidebar-open" no-persist="no-persist">
-               <em class="icon-notebook"></em>
-            </a>
-         </li> -->
-         <!-- END Offsidebar menu-->
-      </ul>
-      <!-- END Right Navbar-->
-   </div>
-   <!-- END Nav wrapper-->
-   <!-- START Search form-->
-   <form role="search" action="search.html" class="navbar-form">
-      <div class="form-group has-feedback">
-         <input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control" />
-         <div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>
-      </div>
-      <button type="submit" class="hidden btn btn-default">Submit</button>
-   </form>
-   <!-- END Search form-->
+										</div>
+									</div>
+								</a>
+								<!-- list item-->
+								<a href="#" class="list-group-item">
+									<div class="media-box">
+
+										<div class="media-box-body clearfix">
+											<p class="m0">Change Password</p>
+
+										</div>
+									</div>
+								</a>
+								<!-- list item-->
+								<a href="#" class="list-group-item">
+									<div class="media-box">
+
+										<div class="media-box-body clearfix">
+											<p class="m0">Edit Profile</p>
+
+										</div>
+									</div>
+								</a>
+								<!-- list item-->
+								<a href="#" class="list-group-item">
+									<div class="media-box">
+
+										<div class="media-box-body clearfix">
+											<p class="m0">Logout</p>
+
+										</div>
+									</div>
+								</a>
+
+							</div> <!-- END list group-->
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
 </nav>
-<!-- END Top Navbar-->

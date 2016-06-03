@@ -7,6 +7,7 @@ var config = require('./config/config');
 var db = require('./database/db')
 var serverPort = process.env.PORT || 3000;
 var serveStatic = require('serve-static');
+var cors = require('cors');
 
 app.use(serveStatic("./UI/WebContent"));
 // swaggerRouter configuration
@@ -44,6 +45,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   swaggerDoc.host = config.host;
   // Interpret Swagger resources and attach metadata to request - must be first .in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
+  app.use(cors());
 
   // Validate Swagger requests
   app.use(middleware.swaggerValidator());

@@ -4763,6 +4763,8 @@ a.label:focus {
 .label-yellow {
   background-color: #F8C500;
 }
+
+
 .label-success[href]:hover,
 .label-success[href]:focus {
   background-color: #1e983b;
@@ -11881,7 +11883,7 @@ body {
 }
 .chart-option-text-style{ 
 	font-family: Roboto;light;
-	font-size:14px;
+	font-size:13px !important;
 	color:#222222;
 	border-bottom: 1px solid black;
 	height: 32px;
@@ -12038,6 +12040,18 @@ display : block;
 	padding: 6px;
 }
 
+
+
+.filter-filterDiv  select,
+.filter-filterDiv  button{
+	 -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+     -ms--border-radius: 0 !important;
+     border-radius: 0 !important;	
+} 
+
+
+
 .filter-selectStyle::-ms-expand {	display: none; }
 
 #filterDivId .form-control{
@@ -12099,4 +12113,10 @@ display : block;
 	margin-left:-20px;
 }
 
+// shekhar css changes
+
+.orange-badge{
+                color:"#ffffff";
+                background-color: "#FEBD2D";
+}
 

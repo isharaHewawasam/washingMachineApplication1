@@ -473,11 +473,13 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
            
        	  			$rootScope.griddata=data; 
        	  			//alert(data);
-       	  			console.log(JSON.stringify(data));
+       	  		console.log("gopal"+JSON.stringify(data));
          }). error(function(data, status) {
                   //alert("error");
         	 //console.log($scope.json);
-        	 console.log("status code  :"+status);
+        	// alert("error");
+        	 console.log("gopalerror:"+status);
+        	 
          });
 	
 	//end
