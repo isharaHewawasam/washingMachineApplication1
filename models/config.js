@@ -42,8 +42,7 @@ exports.getAllSalesYears = function(callback) {
 exports.getAllCitiesByState = function(state_names, callback) {	    
 	var opts = { q: 'State:' + state_names, counts: ['CityState'], limit:0 };  
 	  
-	db.search('CitiesByStates', 'CitiesByStates', opts, function(err, result) {
-		//console.log(result);
+	db.search('CitiesByStates', 'CitiesByStates', opts, function(err, result) {		
 		if(err) {
 	    	callback(err, null)
 	    } else {  
@@ -54,10 +53,8 @@ exports.getAllCitiesByState = function(state_names, callback) {
 			    arr = city.split(",");
 			    all_cities[arr[1]] = [];
 			  }	
-		  
-		  //console.log(all_cities);
-		  for(var city in result.counts.CityState) {	  	
-		    //all_cities.cities.push({'name': city});
+		  		  
+		  for(var city in result.counts.CityState) {			    
 			  arr = city.split(",");
 			  
 			  all_cities[arr[1]].push({'city': arr[0]});
