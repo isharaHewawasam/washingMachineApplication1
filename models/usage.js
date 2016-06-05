@@ -58,7 +58,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
 
 var isItemPresent = function(array, item){
   for(var array_item in array) {   
-    if(array[array_item].value == item)
+    if(array[array_item].value.toUpperCase() === item.toUpperCase())
       return true
   }
   
