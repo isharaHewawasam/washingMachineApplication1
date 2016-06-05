@@ -39,17 +39,30 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
-  if(getGroupLevel(payload) == 1) {    
-    for(var state in payload.region.states) {      
-      if(payload.region.states[state].value == keys[0])
-        return true     
-    }      
+  if(getGroupLevel(payload) == 1) {   
+    return isItemPresent(payload.region.states, keys[0]);       
   }
+  
+  if(getGroupLevel(payload) == 2) {   
+    return isItemPresent(payload.region.states, keys[0]) && 
+           isItemPresent(payload.region.cities, keys[1]);       
+  }
+  
+  if(getGroupLevel(payload) == 3) {   
+    return isItemPresent(payload.region.states, keys[0]) && 
+           isItemPresent(payload.region.cities, keys[1]) &&  
+           isItemPresent(payload.region.zip_codes, keys[2]);            
+  }  
   return false;
 };
 
-var get_filter_keys = function(payload) {
+var isItemPresent = function(array, item){
+  for(var array_item in array) {   
+    if(array[array_item].value == item)
+      return true
+  }
   
+  return false;
 };
 
 var getGroupLevel = function(payload) {
@@ -62,7 +75,7 @@ var getGroupLevel = function(payload) {
     group_level = 2;
   
   if(payload.region.zip_codes.length > 0)
-    group_level = 3;
+    group_level = 3;  
   
   return group_level;
 };  
