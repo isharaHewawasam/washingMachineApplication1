@@ -23,7 +23,7 @@ var fillRecord = function(result) {
   
   record.make = "";
   record.model = "";
-  record.totalLoad = (result.value[0].sum / result.value[0].count);
+  record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
   
@@ -79,3 +79,4 @@ var getGroupLevel = function(payload) {
   
   return group_level;
 };  
+
