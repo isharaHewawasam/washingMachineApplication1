@@ -2,7 +2,7 @@
 var db = require('../database/dbWashDailyAggregate');
 var COLLECTION_NAME = 'stores';
 
-exports.getUsage = function(payload, callback) {
+exports.getUsageByFilter = function(payload, callback) {
 	  getData(payload, function(err, result) {
 	    if(err) {
 	    	callback(err, null);
@@ -11,6 +11,21 @@ exports.getUsage = function(payload, callback) {
        
         for(var row in result.rows) { 
           if(doesRecordFallsInFilter(payload, result.rows[row].key))
+            usage.data.push(fillRecord(result.rows[row]));
+        }        
+	      callback(err, usage);
+	    }
+	  });
+};
+
+exports.getAllUsage = function(payload, callback) {
+	  getData(null, function(err, result) {
+	    if(err) {
+	    	callback(err, null);
+	    } else {  		  	  	
+        var usage = {'data': []};    
+       
+        for(var row in result.rows) {           
             usage.data.push(fillRecord(result.rows[row]));
         }        
 	      callback(err, usage);
@@ -30,8 +45,14 @@ var fillRecord = function(result) {
   return record;
 }
 
-var getData = function(payload, callback) {  
-  var params = { reduce: true, group: true, group_level: getGroupLevel(payload) };    
+var getData = function(payload, callback) { 
+  var params;
+  
+  if(payload === null || payload === undefined) { 
+     params = { reduce: true, group: true };  
+  } else {
+    params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
+  }    
   
   db.view('averages', 'averages', params, function(err, result) {
     callback(err, result);

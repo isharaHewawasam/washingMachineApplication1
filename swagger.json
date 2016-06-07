@@ -311,9 +311,9 @@
     "/usage": {
       "post": {
         "x-swagger-router-controller": "usage",
-        "operationId": "getUsage",
+        "operationId": "getUsageByFilter",
         "tags": ["Usage"],
-        "description": "Returns washing machines usage paramters like water load, detergent, power etc.)",
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc. You can specify State, City, Zip code etc to filter data.",
         "parameters": [
           {
             "name": "Payload",
@@ -325,6 +325,27 @@
             }
           }
         ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      },
+      "get": {
+        "x-swagger-router-controller": "usage",
+        "operationId": "getAllUsage",
+        "tags": ["Usage"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc",          
         "responses": {
           "default": {
             "description": "Invalid request.",
