@@ -7,8 +7,8 @@ exports.getUsage = function(payload, callback) {
 	    if(err) {
 	    	callback(err, null);
 	    } else {  		  	  	
-        var usage = {'data': []};      
-
+        var usage = {'data': []};    
+       
         for(var row in result.rows) { 
           if(doesRecordFallsInFilter(payload, result.rows[row].key))
             usage.data.push(fillRecord(result.rows[row]));
@@ -21,8 +21,8 @@ exports.getUsage = function(payload, callback) {
 var fillRecord = function(result) {
   var record = {};
   
-  record.make = "";
-  record.model = "";
+  record.make = result.key[0];
+  record.model = result.key[1];
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
@@ -39,19 +39,19 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
-  if(getGroupLevel(payload) == 1) {   
-    return isItemPresent(payload.region.states, keys[0]);       
-  }
-  
-  if(getGroupLevel(payload) == 2) {   
-    return isItemPresent(payload.region.states, keys[0]) && 
-           isItemPresent(payload.region.cities, keys[1]);       
-  }
-  
   if(getGroupLevel(payload) == 3) {   
-    return isItemPresent(payload.region.states, keys[0]) && 
-           isItemPresent(payload.region.cities, keys[1]) &&  
-           isItemPresent(payload.region.zip_codes, keys[2]);            
+    return isItemPresent(payload.region.states, keys[2]);       
+  }
+  
+  if(getGroupLevel(payload) == 4) {   
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]);       
+  }
+  
+  if(getGroupLevel(payload) == 5) {   
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]);            
   }  
   return false;
 };
@@ -69,13 +69,13 @@ var getGroupLevel = function(payload) {
   var group_level = 0;  
   
   if(payload.region.states.length > 0)
-    group_level = 1;
+    group_level = 3;
   
   if(payload.region.cities.length > 0)
-    group_level = 2;
+    group_level = 4;
   
   if(payload.region.zip_codes.length > 0)
-    group_level = 3;  
+    group_level = 5;  
   
   return group_level;
 };  

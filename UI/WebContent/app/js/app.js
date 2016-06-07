@@ -366,9 +366,188 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scop
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
 	
 	
-	//shekhar changes
 	
 	
+	$scope.timescale= [];
+	$scope.region= [];
+	
+	$scope.tryit = function() {
+		
+		
+		console.log("region form data  : "+$scope.region);	
+		console.log("states form data  : "+$scope.region.states);	
+		console.log("cities form data  : "+$scope.region.cities);	
+		console.log("codes form data  : "+$scope.region.zip_codes);	
+
+		$scope.usagedata={
+  				  "productAttrs": {
+  	    		    "makes": [  ],
+  	    		    "models": [],
+  	    		    "skus": [],
+  	    		    "mfg_date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    }
+  	    		  },
+  	    		"timescale": {
+  	      		    "years": [{
+  	    		        "value": parseInt($scope.timescale.years)
+  	    		      } ],
+  	      		    "quarters": [ {
+  	    		        "value": parseInt($scope.timescale.quarters)
+  	    		      }],
+  	      		    "months": [{
+  	    		        "value": parseInt($scope.timescale.months)
+  	    		      } ],
+  	    		    "date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    },
+  	    		    "relative": {
+  	    		      "unit": "2",
+  	    		      "value": 0
+  	    		    }
+  	    		  },
+  	    		  "region": {
+  	    		    "states": [
+  	    		      {
+  	    		        "value": $scope.region.states
+  	    		      }
+  	    		    ],
+  	    		    "cities": [
+  	    		               {
+  	    		            	   "value": $scope.region.cities
+  	 	   
+  	    		               }
+  	    		               ],
+  	    		    "zip_codes": [
+  						{
+  							   "value": $scope.region.zip_codes
+  						
+  						}
+  	    		                  ]
+  	    		  }
+  	    		};
+		
+
+		console.log("timescale form data  : "+$scope.timescale);	
+		console.log("years form data  : "+$scope.timescale.years);	
+		console.log("quaters form data  : "+$scope.timescale.quarters);	
+		console.log("month form data  : "+$scope.timescale.months);	
+
+		
+		
+	
+		$scope.griddata=[];
+		  
+		
+		console.log(JSON.stringify($scope.usagedata));
+		
+		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+	          method: "POST",
+	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	           data: $scope.usagedata
+	          
+	         }).success(function(data, status) {
+	           
+	       	  			$scope.griddata=data.data; 
+	       	  			//alert(data);
+	       	  		console.log("data from server  :"+JSON.stringify(data));
+	         }). error(function(data, status) {
+	                  //alert("error");
+	        	 //console.log($scope.json);
+	        	// alert("error");
+	        	 console.log("error:"+status);
+	        	 
+	         });
+		
+		
+		
+		
+		  $scope.firstname=$scope.name;
+	};
+	
+    // calling our submit function.
+      $scope.submit = function() {
+    		
+    	
+    	  
+    		$scope.usagedata={
+  				  "productAttrs": {
+  	    		    "makes": [  ],
+  	    		    "models": [],
+  	    		    "skus": [],
+  	    		    "mfg_date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    }
+  	    		  },
+  	    		  "timescale": {
+  	    		    "years": [ ],
+  	    		    "quarters": [ ],
+  	    		    "months": [ ],
+  	    		    "date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    },
+  	    		    "relative": {
+  	    		      "unit": "2",
+  	    		      "value": 0
+  	    		    }
+  	    		  },
+  	    		  "region": {
+  	    		    "states": [
+  	    		      {
+  	    		        "value": "Arizona"
+  	    		      }
+  	    		    ],
+  	    		    "cities": [
+  	    		               {
+  	    		            	   "value": "Chandler"
+  	 	   
+  	    		               }
+  	    		               ],
+  	    		    "zip_codes": [
+  						{
+  							   "value": "85225"
+  						
+  						}
+  	    		                  ]
+  	    		  }
+  	    		};
+    				
+    		
+    		$scope.griddata=[];
+    		
+    		//alert($scope.griddatatemp);
+    		  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
+
+    		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+    	          method: "POST",
+    	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+    	           data: $scope.usagedata
+    	          
+    	         }).success(function(data, status) {
+    	           
+    	       	  			$scope.griddata=data.data; 
+    	       	  			//alert(data);
+    	       	  			
+    	       	  		console.log("gopal"+JSON.stringify(data));
+    	       	  		console.log("Griddata"+JSON.stringify($scope.griddata));
+    	       	  		
+    	         }). error(function(data, status) {
+    	              	 console.log("usageerror:"+status);
+    	        	 
+    	         });
+    						
+
+    	  
+    	  
+    	  
+    	    };
+    	    
+    	    
+    	    
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'
 										+'"Quarter2":["Apr","May","Jun"],'
@@ -378,113 +557,56 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 			
 			
 			
-			$scope.quarters = [];
+		
+		
+			/*$scope.quarters = [];
 			for(var keyName in quarterMonthMapping){        
 				$scope.quarters.push(keyName);
 			}
 			
 			$scope.quarterMonths=function(){
-				$scope.months = quarterMonthMapping[$scope.selectedQuarter];
-		    } 
+				$scope.months = quarterMonthMapping[$scope.timescale.quarters];
+		    } */
+
+		
+		var quartersNew = JSON.parse(
+				'{"0":[{'+
+					'"id": 1,'+
+					'"value": "Quarter1"'+
+				'}, {'+
+					'"id": 2,'+
+					'"value": "Quarter2"'+
+				'}, {'+
+					'"id": 3,'+
+					'"value": "Quarter3"'+
+				'}, {'+
+					'"id": 4,'+
+					'"value": "Quarter4"'+
+				'}]}'
+		);
+		var quarterMonthMap = JSON.parse(
+				'{'+
+				'"1":[{"id":1,"value":"Jan"},{"id":2,"value":"Feb"},{"id":3,"value":"Mar"}],'+
+				'"2":[{"id":4,"value":"Apr"},{"id":5,"value":"May"},{"id":6,"value":"Jun"}],'+
+				'"3":[{"id":7,"value":"Jul"},{"id":8,"value":"Aug"},{"id":9,"value":"Sep"}],'+
+				'"4":[{"id":10,"value":"Oct"},{"id":11,"value":"Nov"},{"id":12,"value":"Dec"}]'+
+			'}'
+		);
+		
+		
+		$scope.quarters = [];
+		
+		$scope.quarters=(quartersNew[0]);
+		
+		$scope.quarterMonths=function(){
+			//$scope.months = quarterMonthMapping[$scope.timescale.quarters];
+			$scope.months=[];
+			$scope.timescale.months=undefined;
+			$scope.months=quarterMonthMap[$scope.timescale.quarters];
+	    } 
 
 	
-	
-	//start
-	
-	  $scope.json = {
-	          
-			  
-				  "productAttrs": {
-					
-				    "makes": [
-				      {
-				        "make_name": "LG"  
-				      }
-				    ],
-				    "models": [
-				      {
-				        "model_name": "WD100CW"
-				      }
-				    ],
-				    "skus": [
-				      {
-				        "sku_name": "00043D-FBC8"
-				      }
-				    ],
-				    "mfg_date": {
-				      "start_date": "01/01/2015",
-				      "end_date": "01/01/2016"
-				    }
-					  
-				  },
-				  "timescale": {
-				    "years": [
-				      {
-				        "value": "2001"
-				      }
-				    ],
-				    "quarters": [
-				      {
-				        "value": 0
-				      }
-				    ],
-				    "months": [
-				      {
-				        "value": 0
-				      }
-				    ],
-				    "date": {
-				      "start_date": "01/01/2015",
-				      "end_date": "01/01/2016"
-				    },
-				    "relative": {
-				      "unit": "2",
-				      "value": 0
-				    }
-				  },
-				  "region": {
-				    "states": [
-				      {
-				        "value": "Florida"
-				      }
-				    ],
-				    "cities": [
-				      {
-				        "value": "Miami"
-				      }
-				    ],
-				    "zip_codes": [
-				      {
-				        "value": "33147"
-				      }
-				    ]
-				  }
-
-	  		};  
-	  
-	  
-	  console.log($scope.json);
-	  $http({url:'http://washing-machines-api.mybluemix.net/api/v1/usage', 
-          method: "POST",
-          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-           data: $scope.json
-          
-         }).success(function(data, status) {
-           
-       	  			$rootScope.griddata=data; 
-       	  			//alert(data);
-       	  		console.log("gopal"+JSON.stringify(data));
-         }). error(function(data, status) {
-                  //alert("error");
-        	 //console.log($scope.json);
-        	// alert("error");
-        	 console.log("gopalerror:"+status);
-        	 
-         });
-	
-	//end
-	
-	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/states', 
+	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
@@ -497,7 +619,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	
 	 
-	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/manufacture/years', 
+	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
@@ -511,49 +633,17 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    });
 	 
 	 
-	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/makes', 
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
-	    	 $scope.makes=data.makes;
-	    	 
-				       
-				           
-				           
-	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	       console.log(JSON.stringify(data));
-	    });
-	 
-	 
-	 
-	 $scope.selectMake=function(){
-		// alert($scope.selected_make);
-		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
-		     	method: "get",
-		     	Accept: "text/plain"})
-		     	.success(function(data, status) {
-		    	 $scope.models=data[$scope.selected_make];
-		    	 
-		    //	 alert(JSON.stringify($scope.models));
-		    	 console.log(JSON.stringify($scope.models));
-		    }). error(function(data, status) {
-		      // alert("error"  +status);
-		       //console.log(JSON.stringify(data));
-		    });
-		    
-		    }
-	 
-	 
+	  
 	 
 	 //sanket changes
 	 
-	 $http({url:'http://washing-machines-api.mybluemix.net/api/v1/config/sales/years', 
+	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/sales/years', 
 	     	method: "get",
 	     	Accept: "text/plain"
 	     	})
 	     .success(function(data, status) {
 	    	 $scope.sales_years=data.sales_years;
-	    	 console.log($scope.sales_years);
+//	    	 console.log($scope.sales_years);
 	     })
 	    . error(function(data, status) {
 	       console.log(JSON.stringify(data));
@@ -561,12 +651,12 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	 
 	 $scope.selectCities=function(){
 		 //alert($scope.selected_make);
-		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.selected_state, 
+		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.region.states, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
-		    	 $scope.cities=data[$scope.selected_state];
-		    	 //console.log(JSON.stringify($scope.cities));
+		    	 $scope.cities=data[$scope.region.states];
+		    //	 console.log(JSON.stringify($scope.cities));
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
 		       //console.log(JSON.stringify(data));
@@ -575,11 +665,11 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		    }
 	 $scope.selectZip=function(){
 		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
-		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.selected_city,
+		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
-		     	$scope.zips = data[$scope.selected_city];
+		     	$scope.zips = data[$scope.region.cities];
 		     	
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
@@ -600,9 +690,10 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 
 App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils',
   function($rootScope, $scope, $state, $http, $timeout, Utils){
-
+	
     var collapseList = [];
-
+    
+    $rootScope.name="";
     // demo: when switch from collapse to hover, close all items
     $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
       if ( newVal === false && oldVal === true) {
@@ -641,7 +732,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       $http.get(menuURL)
         .success(function(items) {
            $rootScope.menuItems = items;
-           console.log(JSON.stringify( $rootScope.menuItems ));
+//           console.log(JSON.stringify( $rootScope.menuItems ));
         })
         .error(function(data, status, headers, config) {
           alert('Failure loading menu');
@@ -696,6 +787,44 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
+    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes', 
+	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+	               
+	    	 $scope.makes=data.makes;
+	    	 
+				       
+				           
+				           
+	    }). error(function(data, status) {
+	      // alert("error"  +status);
+	       console.log(JSON.stringify(data));
+	    });
+	 
+    function selectMake(){
+    	
+    	alert("SELECTED");
+    }
+	 
+	 /*$scope.selectMake=function(){
+		
+		console.log("in select make"); 
+		 // alert($scope.selected_make);
+		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
+		     	method: "get",
+		     	Accept: "text/plain"})
+		     	.success(function(data, status) {
+		    	 $scope.models=data[$scope.selected_make];
+		    	 
+		    //	 alert(JSON.stringify($scope.models));
+		    	 console.log(JSON.stringify($scope.models));
+		    }). error(function(data, status) {
+		      // alert("error"  +status);
+		       //console.log(JSON.stringify(data));
+		    });
+		    
+		    }*/
+	 
+	
 }]);
 
 
@@ -948,7 +1077,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
 
     subNav.on('mouseleave', function() {
       toggleTouchItem($listItem);
-      subNav.remove();
+     /* subNav.remove();*/
     });
 
     return subNav;

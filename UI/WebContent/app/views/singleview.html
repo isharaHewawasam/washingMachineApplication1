@@ -13,6 +13,7 @@
 </h3>
 
 
+
 <div class="row"  >
 
 <!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
@@ -20,10 +21,13 @@
    <!-- <div class="panel-body" style="padding: 0px;"> -->
      <!--  <form role="form" class="form-inline"> -->
           <!-- <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px "> --> 
-            <div class="form-group filter-filterDiv col-lg-12" style=" width:1287px;" id="filterDivId" ng-app="App" ng-controller="DashboardController">
+            
+            
+            
+            <div class="form-group filter-filterDiv col-lg-12" style=" width:1287px;" id="filterDivId" >
               
                <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
-                  <select name="" class="form-control filter-selectStyle"   ng-model="selected_state" ng-change="selectCities()"   >
+                  <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
                   <option class="option-text-style" value="" disabled selected>States
                      <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
                   </select>
@@ -42,7 +46,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle"  ng-model="selected_city" ng-change="selectZip()"  >
+                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities" ng-change="selectZip()"  >
                     <option class="option-text-style" value="" disabled selected>Cities
 					 <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
 					<!--<option class="option-text-style" value="" >San Diego
@@ -53,7 +57,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;" >
                </div> -->
                <div class="col-lg-2"  style="max-width: 150px;margin-left:22px !important ;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" ng-model="selected_zip" >
+                  <select name="" class="form-control filter-selectStyle" ng-model="region.zip_codes" >
                  <option class="option-text-style" value="" disabled selected >Zip Code
                      <option class="option-text-style" ng-repeat="zip in zips" value={{zip.zip_code}} >{{zip.zip_code}}
                      <!-- <option class="option-text-style" value="" disabled selected>Zip Code
@@ -66,7 +70,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                 <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" >
+                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.years" >
                     <option class="option-text-style" value=""  disabled selected >Year
 					<option class="option-text-style" ng-repeat="sales_year in sales_years" value={{sales_year.year}} >{{sales_year.year}}
                   </select>
@@ -75,9 +79,9 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" ng-model="selectedQuarter" ng-change="quarterMonths()">
+                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.quarters" ng-change="quarterMonths()">
                     <option class="option-text-style" value="" selected disabled>Quarter
-                    <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter}} >{{quarter}}
+                    <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter.id}} >{{quarter.value}}
 					
                   </select>
                                    
@@ -85,30 +89,32 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" >
+                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.months">
                    <option class="option-text-style" value="" selected disabled>Month
-                   <option class="option-text-style" ng-repeat="month in months" value={{month}} >{{month}}
+                   <option class="option-text-style" ng-repeat="month in months" value={{month.id}} >{{month.value}}
 					
                   </select>
                                    
                </div>
                
              	<div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
-             		<button type="submit" class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter">Apply Filter</button>
+             		<button class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">Apply Filter</button>
              		
 				</div>
-               	
+               
+               
+               
            
             </div>
                
         <!-- </fieldset> -->
-        
-           
+       
+     </div>      
          
       <!-- </form>    -->
    <!-- </div> -->
 
-</div>
+
 
 
 
@@ -116,6 +122,7 @@
 <div class="row"  >
    <!-- START dashboard main content-->
    
+  
    <div class="col-lg-4 " ng-controller="myController" ng-init="plotChartFunction('container')">
      <div class="chart-chartDiv" id="chartParent">
 		<div class="chart-filterDiv " id="chartFilterDivId">
@@ -150,7 +157,7 @@
 	    <div id="show-transparent" class="map-mapDiv showhim">
 			<div id="googleMap"  class="map-mapDiv"></div>
 			<div class="semi-transparent-div showme" id="trn-div">
-				<img src="app/img/Dashboardassets/icon_maximize.png" class="pull-right image-position"  id="maximize">
+				<img src="../img/Dashboardassets/icon_maximize.png" class="pull-right image-position"  id="maximize">
 			</div>
 			
 			<script type="text/javascript">
@@ -307,8 +314,8 @@
             <div class="pull-right "><img class="col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></img></div>
             <div class="pull-right " style="padding-right: 10px; padding-top:-5px; padding-left: 3px; padding-bottom:10px ">
             
-            <select class="chart-selectStyle col-md-3  " name="Days"
-				style=" width: 70px; background-color: transparent;">
+            <select  name="Days"
+				style=" width: 70px; background-color: transparent;   border: none">
 				<option class="chart-option-text-style" value="" selected="selected">Today
 				<option class="chart-option-text-style" value="">Last 1 day
 				<option class="chart-option-text-style" value="">Last 7 days
@@ -320,10 +327,10 @@
 			</select>
             
             </div>
-            <div class="panel-title">Insights</div>
+            <div class="panel-title" style="font-family: Roboto; Medium; font-size: 15px;">Insights</div>
          </div>
          <!-- START list group-->
-         <scrollable height="230"  class="list-group"  ng-app="App" ng-controller="InfiniteScrollController">
+         <scrollable height="230"  class="list-group"   ng-controller="InfiniteScrollController">
             <!-- START list group item-->
             
             <div infinite-scroll="loadMore()" infinite-scroll-distance="1" >
@@ -376,18 +383,22 @@
 <div class="row" style="padding-top: 20px" >
    <!-- START dashboard main content-->
    
+  
+
+
    
-   
-   <div class="col-lg-8"  >
+   <div class="col-lg-8"   >
      <!--  START panel -->
-      <div class="panel panel-default" style=" width :880px	; height: 240px; ">
+   
+      <div class="panel panel-default" style="  height: 240px; ">
          <div class="panel-heading">Washing Machines status    <img class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></img></div>
-         
+      
+        
          <div class="panel-body">
            <!--  START table-responsive -->
             <div class="table-responsive">
                <table class="table table-striped table-bordered table-hover">
-                  <thead>
+                  <thead><!--
                      <tr>
                         <th>Make</th>
                         <th>Model</th>
@@ -398,19 +409,26 @@
                         <th>Temperature(f)</th>
                         <th>Detergent used(gms)</th>
                      </tr>
+                  -->
+                  	<tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Total Load</th>
+                        <th>Popular Day</th>
+                        <th>Popular Time</th>
+                     </tr>
+                  
+                  
                   </thead>
                   <tbody>
-                     <tr>
-                        <td>2</td>
-                        <td>#1201</td>
-                        <td>20</td>
-                        <td>40</td>
-                        <td>30</td>
-                        <td>02</td>
-                        <td>100</td>
-                        <td>90</td>
+                      <tr ng-repeat="itm in griddata">
+                        <td>{{itm.make}}</td>
+                        <td>{{itm.model}}</td>
+                        <td>{{itm.totalLoad}}</td>
+                        <td>{{itm.popularDay}}</td>
+                        <td>{{itm.popularTime}}</td>
                      </tr>
-                     <tr>
+                     <!--<tr>
                         <td>4</td>
                         <td>#1205</td>
                         <td>30</td>
@@ -430,7 +448,7 @@
                         <td>100</td>
                         <td>70</td>
                     </tr>
-                  </tbody>
+                  --></tbody>
                </table>
             </div>
            <!--  END table-responsive -->
@@ -443,10 +461,10 @@
   <!--  <aside class="col-lg-4"  style=" width: 374px; "> -->
   
   <!-- START dashboard sidebar-->
-   <aside class="col-lg-4" >
+   <aside class="col-lg-4" style="">
      
       <!-- START messages and activity-->
-      <div class="panel panel-default" style=" width: 374px; height: 240px; ">
+      <div class="panel panel-default" style="width: 374px; height: 240px; ">
          <div class="panel-heading">
             <div class="panel-title">Notification<img class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></div>
             
