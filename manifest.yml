@@ -3,6 +3,6 @@ applications:
   memory: 4G
   instances: 1
   domain: mybluemix.net
-  name: washing-machines-api
-  host: washing-machines-api
+  name: ibm-iot
+  host: ibm-iot
   disk_quota: 2G
