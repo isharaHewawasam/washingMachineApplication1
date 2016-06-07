@@ -5,4 +5,4 @@ applications:
   domain: mybluemix.net
   name: iot-ibm
   host: iot-ibm
-  disk_quota: 20G
+  disk_quota: 2G
