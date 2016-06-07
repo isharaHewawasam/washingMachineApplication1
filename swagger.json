@@ -575,7 +575,7 @@
         "years": {
           "type": "array",
           "items": {            
-            "$ref": "#/definitions/TemplateString" 
+            "$ref": "#/definitions/TemplateNumber" 
           }          
         },
         "quarters": {
