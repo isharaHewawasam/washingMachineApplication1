@@ -21,18 +21,14 @@ exports.getUsageByFilter = function(payload, callback) {
 	  });
 };
 
-var fillFavouriteDays = function(usage, callback) {  
-  var usage_ = usage;  
-  
+var fillFavouriteDays = function(usage, callback) {    
   fav_days.getAllDays(null, function(err, result) {      
-    for(var item in usage_.data) {      
-      usage_.data[item].popularDay = "Monday";      
+    for(var item in usage.data) {      
+      usage.data[item].popularDay = fav_days.search(usage.data[item]);;      
     }  
-  });
-  
-  console.log(usage_.data[1]);  
-  callback(null, usage_);
-  return usage_;
+    
+    callback(null, usage);
+  });  
 };
 
 exports.getAllUsage = function(payload, callback) {  

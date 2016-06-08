@@ -264,7 +264,7 @@ App.controller('AppController',
 
     $rootScope.currTitle = $state.current.title;
     $rootScope.pageTitle = function() {
-      var title = 'IoT for Elctronic';
+      var title = 'IoT for Electronic';
       document.title = title;
       return title; 
     };

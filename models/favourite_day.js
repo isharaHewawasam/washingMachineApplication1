@@ -32,6 +32,32 @@ exports.getAllDays = function(payload, callback) {
 };
 
 exports.search = function(usage, callback) {
+  var days = {};
+  
+  days.Sunday = 3;
+  days.Monday = 0;
+  days.Tuesday = 4;
+  days.Wednesday = 0;
+  days.Thursday = 7;
+  days.Friday = 0;
+  days.Saturday = 0;
+    
+  for(var key in response.rows) {
+    console.log("Day : " + response.rows[1]);
+    //days[key] = days[key] + 1;
+  }
+  
+ 
+  console.log(days);
+  var fav_day = "NA";
+  var max = 0;
+  for(var day in days) {
+    if(days[day] > max) {
+      max = days[day];
+      fav_day = day;      
+    }      
+  }
+  return fav_day;
 }
 
 var fillRecord = function(result) {
@@ -55,7 +81,9 @@ var getData = function(payload, callback) {
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
   
-  db.view('favouriteWashDay', 'favouriteWashDay', params, function(err, result) {
+  db.view('favouriteWashDay', 'favouriteWashDay', params, function(err, result) {    
+    response = result;
+    console.log(response);
     callback(err, result);
   });
 };  
