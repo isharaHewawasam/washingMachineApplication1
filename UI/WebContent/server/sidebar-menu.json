@@ -48,7 +48,32 @@
     ],
     "translate": "Products"
   },
+ 
   {
+    "text": "Machine",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/machine.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+  {
+    "text": "Reports",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/reports.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+   {
     "text": "Calendar",
     "sref": "app.myownview",
     "img": "app/img/Dashboardassets/calendar.png",
@@ -76,30 +101,6 @@
           
     ],
     "translate": "Filter by Dates"
-  },
-  {
-    "text": "Machine",
-    "sref": "#",
-    "img": "app/img/Dashboardassets/machine.png",
-    "submenu": [
-      { "text": "Sub Menu", 
-        "sref": "app.submenu", 
-        "translate": "sidebar.nav.menu.SUBMENU" 
-      }    
-    ],
-    "translate": "sidebar.nav.menu.MENU"
-  },
-  {
-    "text": "Reports",
-    "sref": "#",
-    "img": "app/img/Dashboardassets/reports.png",
-    "submenu": [
-      { "text": "Sub Menu", 
-        "sref": "app.submenu", 
-        "translate": "sidebar.nav.menu.SUBMENU" 
-      }    
-    ],
-    "translate": "sidebar.nav.menu.MENU"
   },
   {
     "text": "Setting",

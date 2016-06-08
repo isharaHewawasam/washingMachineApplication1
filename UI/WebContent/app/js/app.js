@@ -431,24 +431,30 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	$scope.tryit = function() {
 		
-		
+	
 		if($scope.region.states==undefined)
 			{
-			$scope.region.states="";
+			
+			console.log("states undefined");
+			$scope.usagedata.region.states=[];
 			}
 		
 		if($scope.region.cities==undefined)
 		{
-			$scope.region.cities="";
+
+			console.log("cities undefined");
+			$scope.usagedata.region.cities=[];
 		}
 		
 		if($scope.region.zip_codes==undefined)
 		{
-			$scope.region.zip_codes="";
+
+			console.log("zip_codes undefined");
+			$scope.usagedata.region.zip_codes=[];
 		}
 		
 		
-		console.log("region form data  : "+$scope.region);	
+		/*console.log("region form data  : "+$scope.region);	
 		console.log("states form data  : "+$scope.region.states);	
 		console.log("cities form data  : "+$scope.region.cities);	
 		console.log("codes form data  : "+$scope.region.zip_codes);	
@@ -515,16 +521,16 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		console.log("years form data  : "+$scope.timescale.years);	
 		console.log("quaters form data  : "+$scope.timescale.quarters);	
 		console.log("month form data  : "+$scope.timescale.months);	
-
+*/
 		
 		
 	
 		$scope.griddata=[];
 		  
 		
-		console.log(JSON.stringify($scope.usagedata));
+		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
 		
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+		  /*$http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -541,51 +547,37 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	       	  			//alert(data);
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
-	                  //alert("error");
-	        	 //console.log($scope.json);
+	                
 	        	// alert("error");
 	        	 console.log("error:"+status);
 	        	 
-	         });
+	         });*/
 		
-		
-		
-		
-		  $scope.firstname=$scope.name;
 	};
 	
-    // calling our submit function.
+ 
   
     		
-    		
+    // load all usage data on dashboard		
     		$scope.griddata=[];
     		
-    		//alert($scope.griddatatemp);
-    		  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
+    	
+    		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
 
     		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
     	       	  			$scope.griddata=data.data; 
-    	       	  			//alert(data);
-    	       	  			
-    	       	  	//	console.log("gopal"+JSON.stringify(data));
-    	       	  		console.log("Griddata"+JSON.stringify($scope.griddata));
+    	       	
+    	       	  	//	console.log("Griddata"+JSON.stringify($scope.griddata));
     	       	  		
     	         }). error(function(data, status) {
     	              	 console.log("usageerror:"+status);
     	        	 
     	         });
     						
-
-    	  
-    	  
-    	  
-    	 
-    	    
-    	    
-    	    
+  	    
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'
 										+'"Quarter2":["Apr","May","Jun"],'

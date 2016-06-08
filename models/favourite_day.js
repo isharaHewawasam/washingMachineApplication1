@@ -1,24 +1,6 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
-var COLLECTION_NAME = 'stores';
-
 var response;
-
-exports.getUsageByFilter = function(payload, callback) {
-	  getData(payload, function(err, result) {
-	    if(err) {
-	    	callback(err, null);
-	    } else {  		  	  	
-        var usage = {'data': []};    
-       
-        for(var row in result.rows) { 
-          if(doesRecordFallsInFilter(payload, result.rows[row].key))
-            usage.data.push(fillRecord(result.rows[row]));
-        }        
-	      callback(err, usage);
-	    }
-	  });
-};
 
 exports.getAllDays = function(payload, callback) {
 	  getData(null, function(err, result) {
@@ -31,8 +13,8 @@ exports.getAllDays = function(payload, callback) {
 	  });
 };
 
-exports.search = function(usage, callback) {
-  var days = {};
+var week_days = function(){
+  var days = week_days;
  
   days.Sunday = 0;
   days.Monday = 0;
@@ -41,12 +23,24 @@ exports.search = function(usage, callback) {
   days.Thursday = 0;
   days.Friday = 0;
   days.Saturday = 0;
-           
-  var usage_keys = usage.make + "," + usage.model + "," + usage.sku + "," +
-                   usage.state + "," + usage.city + "," + usage.zip_code;
+  
+  return week_days;
+};
+
+var usage_keys_in_csv = function(usage){
+  var usage_keys = usage.make + "," + usage.model;  
+  
+  if(usage.state)
+    usage_keys = usage_keys + "," + usage.state;
+  return usage_keys;
+};
+
+exports.search = function(usage, callback) {
+  var days = week_days();           
+  var usage_keys = usage_keys_in_csv(usage);
   
   for(var row in response.rows) {  
-    if(usage_keys.toUpperCase() === response.rows[row].key[0].join().toUpperCase());    
+    if(usage_keys.toUpperCase() == response.rows[row].key[0].join().toUpperCase().substring(0, usage_keys.length))    
       days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count    
   }
     
@@ -65,7 +59,7 @@ var getData = function(payload, callback) {
   var params;
   
   if(payload === null || payload === undefined) { 
-     params = { reduce: true, group: true };  
+     params = { reduce: true, group: true, group_level: 2 };  
   } else {
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
@@ -82,13 +76,13 @@ var getGroupLevel = function(payload) {
   var group_level = 0;  
   
   if(payload.region.states.length > 0)
-    group_level = 4;
+    group_level = 3;
   
   if(payload.region.cities.length > 0)
-    group_level = 5;
+    group_level = 4;
   
   if(payload.region.zip_codes.length > 0)
-    group_level = 6;  
+    group_level = 5;  
   
   return group_level;
 };  

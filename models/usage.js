@@ -17,7 +17,9 @@ exports.getUsageByFilter = function(payload, callback) {
             usage.data.push(fillRecord(result.rows[row]));
         }         
         
-        callback(err, usage);
+        fillFavourites(usage, function(err, result_) {          
+	        callback(err, result_);
+        }); 
 	    }
 	  });
 };
@@ -56,11 +58,10 @@ var fillRecord = function(result) {
   var record = {};
    
   record.make = result.key[0];
-  record.model = result.key[1];
-  record.sku = result.key[2];
-  record.state = result.key[3];
-  record.city = result.key[4];
-  record.zip_code = result.key[5];
+  record.model = result.key[1];  
+  record.state = result.key[2];
+  record.city = result.key[3];
+  record.zip_code = result.key[4];
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
@@ -72,7 +73,7 @@ var getData = function(payload, callback) {
   var params;
   
   if(payload === null || payload === undefined) { 
-     params = { reduce: true, group: true };  
+     params = { reduce: true, group: true, group_level: 2 };  
   } else {
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
@@ -83,19 +84,19 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
+  if(getGroupLevel(payload) == 3) {   
+    return isItemPresent(payload.region.states, keys[2]);       
+  }
+  
   if(getGroupLevel(payload) == 4) {   
-    return isItemPresent(payload.region.states, keys[3]);       
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]);       
   }
   
   if(getGroupLevel(payload) == 5) {   
-    return isItemPresent(payload.region.states, keys[3]) && 
-           isItemPresent(payload.region.cities, keys[4]);       
-  }
-  
-  if(getGroupLevel(payload) == 6) {   
-    return isItemPresent(payload.region.states, keys[3]) && 
-           isItemPresent(payload.region.cities, keys[4]) &&  
-           isItemPresent(payload.region.zip_codes, keys[5]);            
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]);            
   }  
   return false;
 };
@@ -110,16 +111,11 @@ var isItemPresent = function(array, item){
 };
 
 var getGroupLevel = function(payload) {
-  var group_level = 0;  
+  var group_level = 2;  
   
-  if(payload.region.states.length > 0)
-    group_level = 4;
-  
-  if(payload.region.cities.length > 0)
-    group_level = 5;
-  
-  if(payload.region.zip_codes.length > 0)
-    group_level = 6;  
+  if(payload.region.states.length > 0) group_level = 3;  
+  if(payload.region.cities.length > 0) group_level = 4;  
+  if(payload.region.zip_codes.length > 0) group_level = 5;  
   
   return group_level;
 };  

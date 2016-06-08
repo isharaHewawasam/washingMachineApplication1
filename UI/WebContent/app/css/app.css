@@ -12128,3 +12128,23 @@ display : block;
                 background-color: "#FEBD2D";
 }
 
+
+
+#userOptionList .list-group{
+            margin-bottom: 0px;
+}
+
+#userOptionListUl{
+            padding-top:0px;
+            padding-bottom:0px;
+}
+
+#userInfoLink:hover, #userInfoLink:active{
+            background-color:"#0A437D";
+}
+
+
+/* 
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #E7EEF6;
+} */

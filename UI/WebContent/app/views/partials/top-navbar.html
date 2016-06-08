@@ -12,7 +12,7 @@
 					style="float: Left; padding-right: 18px; padding-top: -15px;">
 					<a href="#/" class="navbar-brand">				
 						<div style="padding-left: 20px; padding-top: 5px; height: auto; width: 200%;">
-							<img src="app/img/Dashboardassets/logo.png" alt="App Logo" class="img-responsive" />
+							<img src="app/img/logo.png" alt="App Logo" class="img-responsive" />
 						</div>
 					</a>
 				</div> <!-- START Alert menu-->
@@ -20,20 +20,7 @@
 		</ul>
 		
 		<ul class="nav navbar-nav pull-right" style="">
-			<!-- <li style="padding-left: 10px; padding-top: 12px">
-				<div class="input-group" style="border: 1px solid #5195DD; width: 305px; height: 33px">
-				  <span class="input-group-addon" style="background-color: #0A427D; padding:0px; margin: 0px; border: 0px;">
-				  	<img type="button" style=""	ng-src="app/img/Dashboardassets/menu_icon.png" />
-				  </span>
-				  <input type="text" class="form-control" style="font-size: 14px; color: #AFD6FF; background-color: #0A427D; border: 0px;">
-				  <span class="input-group-addon" style="padding:0px; margin: 0px; border:0px;background-color: #0A427D;">
-				  	<button type="button" class="btn btn-default" style="background-color: #0A427D; border-left: 1px solid #5195DD; border-right:0px;border-bottom:0px;border-top:0px">
-						<img  ng-src="app/img/Dashboardassets/search.png" style=""/>
-					</button>
-				  </span>
-				</div>
-					
-			</li> -->
+			
 			<li style="padding-left: 10px;padding-top: 16px">
 				<img alt="" src="app/img/Dashboardassets/alert.png">
 				<span class="badge" style="background-color: #FEBD2D;margin-top: -22px;margin-left: -15px;">4</span>
@@ -41,7 +28,7 @@
 			<li style="padding-left: 25px;padding-top: 8px">
 				<div dropdown="" class="dropdown dropdown-list " class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
 				
-					<a dropdown-toggle="" style="display:block;  text-decoration: none;"> 
+					<a id="userInfoLink" dropdown-toggle="" style="  text-decoration: none;"> 
 						<div >
 							<span class="media-box-body">
 								<span class="media-heading">
@@ -53,10 +40,10 @@
 						</div>
 					</a>
 					<!-- START Dropdown menu-->
-					<ul class="dropdown-menu animated flipInX dropdown-menu.pull-right">
-						<li>
+					<ul id="userOptionListUl" class="dropdown-menu animated flipInX dropdown-menu.pull-right">
+						<li id="userOptionList">
 							<!-- START list group-->
-							<div class="list-group">
+							<div class="list-group" >
 								<!-- list item-->
 								<a href="#" class="list-group-item">
 									<div class="media-box">
