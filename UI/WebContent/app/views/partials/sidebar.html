@@ -53,7 +53,7 @@ ng-click="toggleCollapse(pIndex)">
  <div style="font:12px Roboto Light;"> 
 	 
 			
-                <select  class="option-text-style" name="account" ng-if="item.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_make" ng-change="selectCities()" >
+                <select  class="option-text-style" name="account" ng-if="item.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_make" ng-change="selectMake()" >
                     <option class="option-text-style" value=""   disabled selected>{{item.text}}</option>
 					 <option  class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
 				</select>

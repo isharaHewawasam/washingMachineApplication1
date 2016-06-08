@@ -86,6 +86,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         controller: 'AppController',
         resolve: helper.resolveFor('modernizr', 'icons')
     })
+     
     .state('app.singleview', {
         url: '/singleview',
         title: 'Single View',
@@ -201,6 +202,10 @@ App
     },
     // Angular based script (use the right module name)
     modules: [
+             	
+              
+              
+              
       // { name: 'toaster', files: ['vendor/angularjs-toaster/toaster.js','vendor/angularjs-toaster/toaster.css'] }
     ]
 
@@ -333,6 +338,58 @@ App.controller('AppController',
 
 
 
+App.controller('DataTableController', ['$scope', '$timeout', function($scope, $timeout) {
+	  'use strict';
+
+	  // Define global instance we'll use to destroy later
+	  var dtInstance1;
+	 
+
+	  console.log("IN datatablecontroller");
+	  
+	  $timeout(function(){
+
+	    if ( ! $.fn.dataTable ) return;
+
+	    //
+	    // Zero configuration
+	    // 
+
+	    dtInstance1 = $('#datatable1').dataTable({
+	    	
+	    	
+	        'paging':   true,  // Table pagination
+	        'ordering': true,  // Column ordering 
+	        'info':     true,  // Bottom left status text
+	        // Text translation options
+	        // Note the required keywords between underscores (e.g _MENU_)
+	        oLanguage: {
+	            sSearch:      'Search all columns:',
+	            sLengthMenu:  '_MENU_ records per page',
+	            info:         'Showing page _PAGE_ of _PAGES_',
+	            zeroRecords:  'Nothing found - sorry',
+	            infoEmpty:    'No records available',
+	            infoFiltered: '(filtered from _MAX_ total records)'
+	        }
+	    
+	    });
+
+
+
+	  });
+	  
+	  // When scope is destroyed we unload all DT instances 
+	  // Also ColVis requires special attention since it attaches
+	  // elements to body and will not be removed after unload DT
+	  $scope.$on('$destroy', function(){
+	    dtInstance1.fnDestroy();
+	  
+	    $('[class*=ColVis]').remove();
+	  });
+
+	}]);
+
+
 App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scope, $timeout) {
 
 	  $scope.images = [1, 2, 3];
@@ -367,11 +424,28 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	
 	
+	$scope.region=[];
+	$scope.timescale=[];
 	
-	$scope.timescale= [];
-	$scope.region= [];
+	
 	
 	$scope.tryit = function() {
+		
+		
+		if($scope.region.states==undefined)
+			{
+			$scope.region.states="";
+			}
+		
+		if($scope.region.cities==undefined)
+		{
+			$scope.region.cities="";
+		}
+		
+		if($scope.region.zip_codes==undefined)
+		{
+			$scope.region.zip_codes="";
+		}
 		
 		
 		console.log("region form data  : "+$scope.region);	
@@ -428,6 +502,13 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		                  ]
   	    		  }
   	    		};
+		if($scope.region.cities==undefined)
+				$scope.usagedata.region.cities=[];
+		if($scope.region.states==undefined)
+			$scope.usagedata.region.states=[];
+		if($scope.region.zip_codes==undefined)
+			$scope.usagedata.region.zip_codes=[];
+		
 		
 
 		console.log("timescale form data  : "+$scope.timescale);	
@@ -450,7 +531,13 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	          
 	         }).success(function(data, status) {
 	           
-	       	  			$scope.griddata=data.data; 
+	        	 if(!data || data.data.length === 0){
+	                 //$('<p>no updates found</p>').appendTo('#rr');
+	        		 console.log("empty data");
+	        		alert("No data found");
+	              }
+	        	 else	        	 
+	       	  		$scope.griddata=data.data; 
 	       	  			//alert(data);
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
@@ -468,71 +555,22 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	};
 	
     // calling our submit function.
-      $scope.submit = function() {
+  
     		
-    	
-    	  
-    		$scope.usagedata={
-  				  "productAttrs": {
-  	    		    "makes": [  ],
-  	    		    "models": [],
-  	    		    "skus": [],
-  	    		    "mfg_date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    }
-  	    		  },
-  	    		  "timescale": {
-  	    		    "years": [ ],
-  	    		    "quarters": [ ],
-  	    		    "months": [ ],
-  	    		    "date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    },
-  	    		    "relative": {
-  	    		      "unit": "2",
-  	    		      "value": 0
-  	    		    }
-  	    		  },
-  	    		  "region": {
-  	    		    "states": [
-  	    		      {
-  	    		        "value": "Arizona"
-  	    		      }
-  	    		    ],
-  	    		    "cities": [
-  	    		               {
-  	    		            	   "value": "Chandler"
-  	 	   
-  	    		               }
-  	    		               ],
-  	    		    "zip_codes": [
-  						{
-  							   "value": "85225"
-  						
-  						}
-  	    		                  ]
-  	    		  }
-  	    		};
-    				
     		
     		$scope.griddata=[];
     		
     		//alert($scope.griddatatemp);
     		  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
 
-    		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
-    	          method: "POST",
-    	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-    	           data: $scope.usagedata
-    	          
-    	         }).success(function(data, status) {
+    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+  		     	method: "GET",
+  		     	Accept: "text/plain"}).success(function(data, status) {
     	           
     	       	  			$scope.griddata=data.data; 
     	       	  			//alert(data);
     	       	  			
-    	       	  		console.log("gopal"+JSON.stringify(data));
+    	       	  	//	console.log("gopal"+JSON.stringify(data));
     	       	  		console.log("Griddata"+JSON.stringify($scope.griddata));
     	       	  		
     	         }). error(function(data, status) {
@@ -544,7 +582,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
     	  
     	  
     	  
-    	    };
+    	 
     	    
     	    
     	    
@@ -650,7 +688,9 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    });
 	 
 	 $scope.selectCities=function(){
-		 //alert($scope.selected_make);
+		 $scope.region.cities=undefined;
+		 $scope.region.zip_codes=undefined;
+		 $scope.zips=[];
 		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.region.states, 
 		     	method: "get",
 		     	Accept: "text/plain"})
@@ -664,6 +704,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		    
 		    }
 	 $scope.selectZip=function(){
+		
+		 $scope.region.zip_codes=undefined;
 		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
 		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
@@ -983,10 +1025,13 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
     transclude: true,
     replace: true,
     link: function(scope, element, attrs) {
+    	
+    	
       
       $scope   = scope;
       $sidebar = element;
 
+     
       var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
       var subNav = $();
       $sidebar.on( eventName, '.nav > li', function() {

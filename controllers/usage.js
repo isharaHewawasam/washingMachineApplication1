@@ -10,7 +10,7 @@ module.exports.getUsageByFilter = function(req, res, next) {
 	});
 };
 
-module.exports.getAllUsage = function(req, res, next) {
+module.exports.getAllUsage = function(req, res, next) {  
 	usage.getAllUsage(req.body, function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	});

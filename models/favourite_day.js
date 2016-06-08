@@ -1,8 +1,8 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
-var fav_days = require('../models/favourite_day');
-
 var COLLECTION_NAME = 'stores';
+
+var response;
 
 exports.getUsageByFilter = function(payload, callback) {
 	  getData(payload, function(err, result) {
@@ -14,59 +14,37 @@ exports.getUsageByFilter = function(payload, callback) {
         for(var row in result.rows) { 
           if(doesRecordFallsInFilter(payload, result.rows[row].key))
             usage.data.push(fillRecord(result.rows[row]));
-        }         
-        
-        callback(err, usage);
+        }        
+	      callback(err, usage);
 	    }
 	  });
 };
 
-var fillFavouriteDays = function(usage, callback) {  
-  var usage_ = usage;  
-  
-  fav_days.getAllDays(null, function(err, result) {      
-    for(var item in usage_.data) {      
-      usage_.data[item].popularDay = "Monday";      
-    }  
-  });
-  
-  console.log(usage_.data[1]);  
-  callback(null, usage_);
-  return usage_;
-};
-
-exports.getAllUsage = function(payload, callback) {  
+exports.getAllDays = function(payload, callback) {
 	  getData(null, function(err, result) {
 	    if(err) {
 	    	callback(err, null);
-	    } else {  		  	  	
-        var usage = {'data': []};    
-       
-        for(var row in result.rows) {           
-            usage.data.push(fillRecord(result.rows[row]));
-        }  
-        
-        fillFavouriteDays(usage, function(err, result_) {          
-	        callback(err, result_);
-        });  
+	    } else {             
+        response = result;         
+	      callback(err, result);
 	    }
 	  });
 };
 
+exports.search = function(usage, callback) {
+}
+
 var fillRecord = function(result) {
   var record = {};
-   
+  
   record.make = result.key[0];
   record.model = result.key[1];
-  record.state = result.key[2];
-  record.city = result.key[3];
-  record.zip_code = result.key[4];
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
   
   return record;
-};
+}
 
 var getData = function(payload, callback) { 
   var params;
@@ -77,7 +55,7 @@ var getData = function(payload, callback) {
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
   
-  db.view('averages', 'averages', params, function(err, result) {
+  db.view('favouriteWashDay', 'favouriteWashDay', params, function(err, result) {
     callback(err, result);
   });
 };  
