@@ -46,8 +46,13 @@ exports.search = function(usage, callback) {
                    usage.state + "," + usage.city + "," + usage.zip_code;
   
   for(var row in response.rows) {  
-    if(usage_keys.toUpperCase() === response.rows[row].key[0].join().toUpperCase());    
-      days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count    
+    if(usage_keys.toUpperCase() === response.rows[row].key[0].join().toUpperCase()) { 
+      if(days.hasOwnProperty(response.rows[row].key[1])) {
+        days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count; 
+      } else {  
+        days[response.rows[row].key[1]] = response.rows[row].value.count; 
+      }
+    }        
   }
     
   var fav_day = "NA";
@@ -70,7 +75,7 @@ var getData = function(payload, callback) {
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
   
-  db.view('favouriteWashDay', 'favouriteWashDay', params, function(err, result) {    
+  db.view('favouriteWashDay', 'favouriteWashTime', params, function(err, result) {    
     response = result;    
     callback(err, result);
   });

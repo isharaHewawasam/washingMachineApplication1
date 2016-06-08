@@ -1,6 +1,7 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
 var fav_days = require('../models/favourite_day');
+var fav_times = require('../models/favourite_time');
 
 var COLLECTION_NAME = 'stores';
 
@@ -21,13 +22,15 @@ exports.getUsageByFilter = function(payload, callback) {
 	  });
 };
 
-var fillFavouriteDays = function(usage, callback) {    
-  fav_days.getAllDays(null, function(err, result) {      
-    for(var item in usage.data) {      
-      usage.data[item].popularDay = fav_days.search(usage.data[item]);;      
-    }  
-    
-    callback(null, usage);
+var fillFavourites = function(usage, callback) {    
+  fav_days.getAllDays(null, function(err, result) {
+    fav_times.getAllDays(null, function(err, result) {    
+      for(var item in usage.data) {      
+        usage.data[item].popularDay = fav_days.search(usage.data[item]);  
+        usage.data[item].popularTime = fav_times.search(usage.data[item]);      
+      } 
+      callback(null, usage);
+    });        
   });  
 };
 
@@ -42,7 +45,7 @@ exports.getAllUsage = function(payload, callback) {
             usage.data.push(fillRecord(result.rows[row]));
         }  
         
-        fillFavouriteDays(usage, function(err, result_) {          
+        fillFavourites(usage, function(err, result_) {          
 	        callback(err, result_);
         });  
 	    }
@@ -54,9 +57,10 @@ var fillRecord = function(result) {
    
   record.make = result.key[0];
   record.model = result.key[1];
-  record.state = result.key[2];
-  record.city = result.key[3];
-  record.zip_code = result.key[4];
+  record.sku = result.key[2];
+  record.state = result.key[3];
+  record.city = result.key[4];
+  record.zip_code = result.key[5];
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
@@ -79,19 +83,19 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
-  if(getGroupLevel(payload) == 3) {   
-    return isItemPresent(payload.region.states, keys[2]);       
-  }
-  
   if(getGroupLevel(payload) == 4) {   
-    return isItemPresent(payload.region.states, keys[2]) && 
-           isItemPresent(payload.region.cities, keys[3]);       
+    return isItemPresent(payload.region.states, keys[3]);       
   }
   
   if(getGroupLevel(payload) == 5) {   
-    return isItemPresent(payload.region.states, keys[2]) && 
-           isItemPresent(payload.region.cities, keys[3]) &&  
-           isItemPresent(payload.region.zip_codes, keys[4]);            
+    return isItemPresent(payload.region.states, keys[3]) && 
+           isItemPresent(payload.region.cities, keys[4]);       
+  }
+  
+  if(getGroupLevel(payload) == 6) {   
+    return isItemPresent(payload.region.states, keys[3]) && 
+           isItemPresent(payload.region.cities, keys[4]) &&  
+           isItemPresent(payload.region.zip_codes, keys[5]);            
   }  
   return false;
 };
@@ -109,13 +113,13 @@ var getGroupLevel = function(payload) {
   var group_level = 0;  
   
   if(payload.region.states.length > 0)
-    group_level = 3;
-  
-  if(payload.region.cities.length > 0)
     group_level = 4;
   
+  if(payload.region.cities.length > 0)
+    group_level = 5;
+  
   if(payload.region.zip_codes.length > 0)
-    group_level = 5;  
+    group_level = 6;  
   
   return group_level;
 };  
