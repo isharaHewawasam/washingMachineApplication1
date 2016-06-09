@@ -4,6 +4,7 @@ var fav_days = require('../models/favourite_day');
 var fav_times = require('../models/favourite_time');
 
 var COLLECTION_NAME = 'stores';
+var group_level = 0;
 
 exports.getUsageByFilter = function(payload, callback) {  
 	  getData(payload, function(err, result) {         
@@ -13,8 +14,8 @@ exports.getUsageByFilter = function(payload, callback) {
         var usage = {'data': []};    
        
         for(var row in result.rows) { 
-          if(doesRecordFallsInFilter(payload, result.rows[row].key)) {                      
-            usage.data.push(fillRecord(result.rows[row]));
+          if(doesRecordFallsInFilter(payload, result.rows[row].key)) {            
+            addOrUpdateUsages(payload, usage.data, fillRecord(result.rows[row]));
           }  
         }         
         
@@ -23,6 +24,22 @@ exports.getUsageByFilter = function(payload, callback) {
         }); 
 	    }
 	  });
+};
+
+var addOrUpdateUsages = function(payload, usages, new_usage) {
+  if(usageExists(payload, usages, new_usage, group_level)) {    
+    for(var each_usage in usages) {
+      //console.log("Beforexxx");
+      if( (each_usage.make == new_usage.make) && (each_usage.model == new_usage.model) ) {
+        console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
+        usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
+        console.log("After " + JSON.stringify(new_usage));
+        return;
+      }
+    }
+  } else { 
+    usages.push(new_usage);
+  }
 };
 
 var fillFavourites = function(usage, callback) {    
@@ -44,8 +61,8 @@ exports.getAllUsage = function(payload, callback) {
 	    } else {  		  	  	
         var usage = {'data': []};    
        
-        for(var row in result.rows) {           
-            usage.data.push(fillRecord(result.rows[row]));
+        for(var row in result.rows) {                     
+          usage.data.push(fillRecord(result.rows[row]));
         }  
         
         fillFavourites(usage, function(err, result_) {          
@@ -55,21 +72,138 @@ exports.getAllUsage = function(payload, callback) {
 	  });
 };
 
+var usageExists = function(payload, usages, usage_to_find, group_level) {  
+  for(var each_usage in usages) {    
+    if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
+    
+    var all_match;
+    
+    if(payload.timescale.years.length) {        
+      all_match = (usages[each_usage].sold.year == usage_to_find.sold.year);
+    }
+    
+    if (all_match) return true;
+  }
+};
+
+var do_make_and_model_match = function(usage1, usage2) {
+  return (usage1.make == usage2.make) && 
+         (usage1.model == usage2.model);
+};
+
+var usageExists_old = function(payload, usages, usage_to_find, group_level) {
+  for(var usage in usages) {
+    if(group_level == 1) {
+      return usages[usage].make == usage_to_find.make;
+    }
+    
+    if(group_level == 2) {
+      return usages[usage].make == usage_to_find.make && 
+             usages[usage].model == usage_to_find.model;
+    }
+    
+    if(group_level == 3) {
+      return usages[usage].make == usage_to_find.make && 
+             usages[usage].model == usage_to_find.model &&
+             usages[usage].state == usage_to_find.state;
+    }
+    
+    if(group_level == 4) {
+      return usages[usage].make == usage_to_find.make && 
+             usages[usage].model == usage_to_find.model &&
+             usages[usage].state == usage_to_find.state &&
+             usages[usage].city == usage_to_find.city;
+    }
+    
+    if(group_level == 5) {
+      return usages[usage].make == usage_to_find.make && 
+             usages[usage].model == usage_to_find.model &&
+             usages[usage].state == usage_to_find.state &&
+             usages[usage].city == usage_to_find.city &&
+             usages[usage].zip_code == usage_to_find.zip_code;
+    }
+    
+    if(group_level == 6) { 
+      var all_match = false;      
+      //console.log("1 : " + JSON.stringify(usages[usage]));
+      //console.log("2 : " + JSON.stringify(usage_to_find));
+      //console.log(usages[usage].sold.year + " " + usage_to_find.sold.year);
+      if( !( (usages[usage].make == usage_to_find.make) &&  (usages[usage].model == usage_to_find.model) ) )
+          return false;        
+           
+      //if(payload.region.states > 0) { all_match = (usages[usage].state == usage_to_find.state); }
+      //if(payload.region.cities > 0) { all_match = all_match && (usages[usage].city == usage_to_find.city); }
+      //if(payload.region.zip_codes > 0) { all_match = all_match && (usages[usage].zip_code == usage_to_find.zip_cde); }
+      if(payload.timescale.years.length > 0) { 
+        
+        all_match = (usages[usage].sold.year == usage_to_find.sold.year);
+      }
+      
+      console.log("Matched : " + all_match);       
+      return all_match;          
+    }
+    
+    if(group_level == 7) {
+      if( !( (usages[usage].make == usage_to_find.make) && 
+             (usages[usage].model == usage_to_find.model)
+           ) 
+        ) return;
+      
+      if( !( (payload.region.states > 0) && 
+             (usages[usage].state == usage_to_find.state)
+           ) 
+      ) return;
+      
+      if( !( (payload.region.cities > 0) && 
+             (usages[usage].city == usage_to_find.city)
+           ) 
+      ) return;      
+      
+      if( !( (payload.region.zip_codes > 0) && 
+             (usages[usage].zip_code == usage_to_find.zip_code)
+           ) 
+      ) return; 
+
+      if( !( (payload.region.years > 0) && 
+             (usages[usage].sold.year == usage_to_find.sold.year)
+           ) 
+      ) return; 
+      
+      if( !( (payload.region.months > 0) && 
+             (usages[usage].sold.month == usage_to_find.sold.month)
+           ) 
+      ) return;       
+    }   
+        
+    if(group_level == 8) {
+      return usages[usage].make == usage_to_find.make && 
+             usages[usage].model == usage_to_find.model &&
+             usages[usage].state == usage_to_find.state &&
+             usages[usage].city == usage_to_find.city &&
+             usages[usage].zip_code == usage_to_find.zip_code &&
+             usages[usage].sold.year == usage_to_find.sold.year &&
+             usages[usage].sold.quarter == usage_to_find.sold.quarter &&
+             usages[usage].sold.quarter == usage_to_find.sold.month;
+    }
+  }
+};
+
 var fillRecord = function(result) {
-  var record = {};
+  var record = { "sold": {"year": 0, "quarter": 0, "month": 0} };
    
   record.make = result.key[0];
   record.model = result.key[1];  
   record.state = result.key[2];
   record.city = result.key[3];
   record.zip_code = result.key[4];  
-  record.sold = {"year": result.key[5]}; 
-  record.sold = {"quarter": result.key[6]};
-  record.sold = {"month": result.key[7]};
+  record.sold.year = result.key[5]; 
+  record.sold.quarter = result.key[6];
+  record.sold.month = result.key[7];
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
-    
+   
+  //console.log("Yearsxxx " + record.sold.year);   
   return record;
 };
 
@@ -143,7 +277,7 @@ var isItemPresent = function(array, item){
 };
 
 var getGroupLevel = function(payload) {
-  var group_level = 2;  
+  //var group_level = 2;  
   
   if(payload.region.states.length > 0) group_level = 3;  
   if(payload.region.cities.length > 0) group_level = 4;  
