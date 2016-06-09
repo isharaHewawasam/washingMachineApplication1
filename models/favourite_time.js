@@ -18,6 +18,13 @@ var usage_keys_in_csv = function(usage){
   
   if(usage.state)
     usage_keys = usage_keys + "," + usage.state;
+  
+  if(usage.city)
+    usage_keys = usage_keys + "," + usage.city
+  
+  if(usage.zip_code)
+    usage_keys = usage_keys + "," + usage.zip_code;
+  
   return usage_keys;
 };
 

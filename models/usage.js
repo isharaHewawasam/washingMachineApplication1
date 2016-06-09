@@ -5,16 +5,17 @@ var fav_times = require('../models/favourite_time');
 
 var COLLECTION_NAME = 'stores';
 
-exports.getUsageByFilter = function(payload, callback) {
-	  getData(payload, function(err, result) {
+exports.getUsageByFilter = function(payload, callback) {  
+	  getData(payload, function(err, result) {         
 	    if(err) {
 	    	callback(err, null);
 	    } else {  		  	  	
         var usage = {'data': []};    
        
         for(var row in result.rows) { 
-          if(doesRecordFallsInFilter(payload, result.rows[row].key))
+          if(doesRecordFallsInFilter(payload, result.rows[row].key)) {                      
             usage.data.push(fillRecord(result.rows[row]));
+          }  
         }         
         
         fillFavourites(usage, function(err, result_) {          
@@ -61,11 +62,14 @@ var fillRecord = function(result) {
   record.model = result.key[1];  
   record.state = result.key[2];
   record.city = result.key[3];
-  record.zip_code = result.key[4];
+  record.zip_code = result.key[4];  
+  record.sold = {"year": result.key[5]}; 
+  record.sold = {"quarter": result.key[6]};
+  record.sold = {"month": result.key[7]};
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
-  
+    
   return record;
 };
 
@@ -98,13 +102,41 @@ var doesRecordFallsInFilter = function(payload, keys) {
            isItemPresent(payload.region.cities, keys[3]) &&  
            isItemPresent(payload.region.zip_codes, keys[4]);            
   }  
+  
+  if(getGroupLevel(payload) == 6) {   
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]) &&
+           isItemPresent(payload.timescale.years, keys[5]); 
+             
+  }  
+  
+  if(getGroupLevel(payload) == 7) {   
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]) &&
+           isItemPresent(payload.timescale.years, keys[5]) &&
+           isItemPresent(payload.timescale.quarters, keys[6]);
+             
+  }  
+  
+  if(getGroupLevel(payload) == 8) {   
+    return isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]) &&
+           isItemPresent(payload.timescale.years, keys[5]) &&
+           isItemPresent(payload.timescale.quarters, keys[6]) &&
+           isItemPresent(payload.timescale.months, keys[7]);
+             
+  }  
   return false;
 };
 
 var isItemPresent = function(array, item){
-  for(var array_item in array) {   
-    if(array[array_item].value.toUpperCase() === item.toUpperCase())
-      return true
+  if(array.length == 0) return true;
+  
+  for(var array_item in array) {       
+    if(array[array_item].value.toString().toUpperCase() === item.toUpperCase()) return true
   }
   
   return false;
@@ -116,6 +148,9 @@ var getGroupLevel = function(payload) {
   if(payload.region.states.length > 0) group_level = 3;  
   if(payload.region.cities.length > 0) group_level = 4;  
   if(payload.region.zip_codes.length > 0) group_level = 5;  
+  if(payload.timescale.years.length > 0) group_level = 6;  
+  if(payload.timescale.quarters.length > 0) group_level = 7;  
+  if(payload.timescale.months.length > 0) group_level = 8;  
   
   return group_level;
 };  
