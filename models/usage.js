@@ -315,8 +315,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
            isItemPresent(payload.region.cities, keys[3]) &&  
            isItemPresent(payload.region.zip_codes, keys[4]) &&
            isItemPresent(payload.timescale.years, keys[5]) &&
-           isItemPresent(payload.timescale.quarters, keys[6]);
-             
+           isItemPresent(payload.timescale.quarters, keys[6]);             
   }  
   
   if(getGroupLevel(payload) == 8) {   
