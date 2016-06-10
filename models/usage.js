@@ -286,14 +286,14 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
-  return isItemPresent(payload.productAttrs.makes, keys[0]) && 
-           isItemPresent(payload.productAttrs.models, keys[1]) && 
-           isItemPresent(payload.region.states, keys[2]) && 
-           isItemPresent(payload.region.cities, keys[3]) &&  
-           isItemPresent(payload.region.zip_codes, keys[4]) &&
-           isItemPresent(payload.timescale.years, keys[5]) &&
-           isItemPresent(payload.timescale.quarters, keys[6]) &&
-           isItemPresent(payload.timescale.months, keys[7]);  
+  return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
+          isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+          isItemPresent(payload.region.states, "value", keys[2]) && 
+          isItemPresent(payload.region.cities, "value", keys[3]) &&  
+          isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
+          isItemPresent(payload.timescale.years, "value", keys[5]) &&
+          isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
+          isItemPresent(payload.timescale.months, "value", keys[7]);  
 }
 
 var doesRecordFallsInFilter_old = function(payload, keys) {
@@ -343,11 +343,11 @@ var doesRecordFallsInFilter_old = function(payload, keys) {
   return false;
 };
 
-var isItemPresent = function(array, item){
+var isItemPresent = function(array, key_name, item){  
   if(array.length == 0) return true;
   
-  for(var array_item in array) {       
-    if(array[array_item].value.toString().toUpperCase() === item.toUpperCase()) return true
+  for(var array_item in array) {    
+    if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true    
   }
   
   return false;
