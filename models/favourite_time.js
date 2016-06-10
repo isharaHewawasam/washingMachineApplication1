@@ -3,7 +3,7 @@ var db = require('../database/dbWashDailyAggregate');
 var response;
 
 exports.getAllDays = function(payload, callback) {
-	  getData(null, function(err, result) {
+	  getData(payload, function(err, result) {
 	    if(err) {
 	    	callback(err, null);
 	    } else {             
@@ -53,16 +53,19 @@ exports.search = function(usage, callback) {
   return fav_day;
 }
 
-var getData = function(payload, callback) { 
+var getData = function(payload, callback) {   
+  var view_name;
   var params;
   
-  if(payload === null || payload === undefined) { 
-     params = { reduce: true, group: true };  
-  } else {
+  if(payload === null || payload === undefined) {
+    view_name = "WashTimeByMakeAndModel";  
+    params = { group: true, reduce: true };  
+  } else { 
+    view_name = "favouriteWashTime";
     params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
   }    
   
-  db.view('favouriteWashDay', 'favouriteWashTime', params, function(err, result) {    
+  db.view('favouriteWashDay', view_name, params, function(err, result) {    
     response = result;    
     callback(err, result);
   });

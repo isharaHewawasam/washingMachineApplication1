@@ -1,9 +1,10 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
 var response;
+var group_level = 0;
 
 exports.getAllDays = function(payload, callback) {
-	  getData(null, function(err, result) {
+	  getData(payload, function(err, result) {
 	    if(err) {
 	    	callback(err, null);
 	    } else {             
@@ -34,13 +35,10 @@ var usage_keys_in_csv = function(usage){
   return usage_keys;
 };
 
-exports.search = function(usage, callback) {
+exports.search = function(usage, callback) {  
   var days = week_days();           
-  //var usage_keys = usage_keys_in_csv(usage);  
-  for(var row in response.rows) {  
-    //if(usage_keys.toUpperCase() == response.rows[row].key[0].join().toUpperCase().substring(0, usage_keys.length)) 
-    //console.log(JSON.stringify(usage));     
-    //console.log(JSON.stringify(response.rows[row].key[0]));
+    
+  for(var row in response.rows) {      
     if(doesRecordFallsInFilter(usage, response.rows[row].key[0])) {            
       days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count
     }      
@@ -57,22 +55,42 @@ exports.search = function(usage, callback) {
   return fav_day;
 }
 
-var getData = function(payload, callback) { 
+var getData = function(payload, callback) {   
+  var view_name;
   var params;
   
-  if(payload === null || payload === undefined) { 
-     params = { reduce: true, group: true, group_level: 8 };  
-  } else {
-    params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
+  if((payload == null) || (payload == undefined)){       
+    view_name = "WashDayByMakeAndModel";  
+    params = { group: true, reduce: true };  
+    group_level = 2;
+  } else {   
+    view_name = "favouriteWashDay";
+    params = { reduce: true, group: true, group_level: getGroupLevel(payload) };
   }    
   
-  db.view('favouriteWashDay', 'favouriteWashDay', params, function(err, result) {    
+  db.view('favouriteWashDay', view_name, params, function(err, result) {      
     response = result;    
     callback(err, result);
   });
 };  
 
-var getGroupLevel = function(usage) {
+var getGroupLevel = function(payload) {
+  if((payload == null) || (payload == undefined)){
+    group_level = 2;
+    return group_level;
+  }    
+  
+  if(payload.region.states.length > 0) group_level = 3;  
+  if(payload.region.cities.length > 0) group_level = 4;  
+  if(payload.region.zip_codes.length > 0) group_level = 5;  
+  if(payload.timescale.years.length > 0) group_level = 6;  
+  if(payload.timescale.quarters.length > 0) group_level = 7;  
+  if(payload.timescale.months.length > 0) group_level = 8;  
+  
+  return group_level;
+};  
+
+var getGroupLevelold = function(usage) {  
   var group_level = 2;   
            
   if(usage.state) group_level = 3;  
@@ -85,30 +103,30 @@ var getGroupLevel = function(usage) {
   return group_level;
 };  
 
-var doesRecordFallsInFilter = function(usage, keys) {
-  if(getGroupLevel(usage) == 1) {   
+var doesRecordFallsInFilter = function(usage, keys) { 
+  if(group_level == 1) {   
     return isItemPresent(usage.make, keys[0]);       
   }
   
-  if(getGroupLevel(usage) == 2) {       
+  if(group_level == 2) {       
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]);
   }
   
-  if(getGroupLevel(usage) == 3) {   
+  if(group_level == 3) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&  
            match(usage.state, keys[2]);           
   }
   
-  if(getGroupLevel(usage) == 4) {   
+  if(group_level == 4) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
            match(usage.city, keys[3]);       
   }
   
-  if(getGroupLevel(usage) == 5) {   
+  if(group_level == 5) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -116,7 +134,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.zip_code, keys[4]);            
   }  
   
-  if(getGroupLevel(usage) == 6) {   
+  if(group_level == 6) {
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -125,7 +143,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.sold.year, keys[5]);              
   }  
   
-  if(getGroupLevel(usage) == 7) {     
+  if(group_level == 7) {     
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -135,7 +153,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.sold.quarter, keys[6]);             
   }  
   
-  if(getGroupLevel(usage) == 8) {   
+  if(group_level == 8) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -149,7 +167,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
   return false;
 };
 
-var match = function(item1, item2) {
+var match = function(item1, item2) { 
   return item1.toString().toUpperCase() === item2.toString().toUpperCase();
 }
 

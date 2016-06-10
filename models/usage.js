@@ -7,19 +7,19 @@ var COLLECTION_NAME = 'stores';
 var group_level = 0;
 
 exports.getUsageByFilter = function(payload, callback) {  
-	  getData(payload, function(err, result) {         
+	  getData(payload, function(err, result) {           
 	    if(err) {
 	    	callback(err, null);
 	    } else {  		  	  	
         var usage = {'data': []};    
        
-        for(var row in result.rows) { 
+        for(var row in result.rows) {                    
           if(doesRecordFallsInFilter(payload, result.rows[row].key)) {            
             addOrUpdateUsages(payload, usage.data, fillRecord(result.rows[row]));
-          }  
+          }                    
         }         
         
-        fillFavourites(usage, function(err, result_) {          
+        fillFavourites(payload, usage, function(err, result_) {          
 	        callback(err, result_);
         }); 
 	    }
@@ -42,30 +42,41 @@ var addOrUpdateUsages = function(payload, usages, new_usage) {
   }
 };
 
-var fillFavourites = function(usage, callback) {    
+/*var fillFavourites = function(usage, callback) {    
   fav_days.getAllDays(null, function(err, result) {
-    fav_times.getAllDays(null, function(err, result) {    
       for(var item in usage.data) {      
-        usage.data[item].popularDay = fav_days.search(usage.data[item]);  
+        usage.data[item].popularDay = fav_days.search(usage.data[item]);             
+      } 
+      callback(null, usage);
+  });  
+};*/
+
+var fillFavourites = function(payload, usage, callback) { 
+  fav_days.getAllDays(payload, function(err, result) {   
+    fav_times.getAllDays(payload, function(err, result) {    
+      for(var item in usage.data) {                
+        usage.data[item].popularDay = fav_days.search(usage.data[item]);                
         usage.data[item].popularTime = fav_times.search(usage.data[item]);      
       } 
       callback(null, usage);
-    });        
+    });     
   });  
 };
 
 exports.getAllUsage = function(payload, callback) {  
 	  getData(null, function(err, result) {
+      console.log("got data " + result.rows.length); 
 	    if(err) {
 	    	callback(err, null);
 	    } else {  		  	  	
         var usage = {'data': []};    
        
-        for(var row in result.rows) {                     
+        var row;
+        for(row in result.rows) {                     
           usage.data.push(fillRecord(result.rows[row]));
         }  
         
-        fillFavourites(usage, function(err, result_) {          
+        fillFavourites(null, usage, function(err, result_) {                
 	        callback(err, result_);
         });  
 	    }
@@ -267,7 +278,7 @@ var fillRecord = function(result) {
   record.popularDay = "";
   record.popularTime = "";
    
-  //console.log("Yearsxxx " + record.sold.year);   
+  //console.log(record);   
   return record;
 };
 
