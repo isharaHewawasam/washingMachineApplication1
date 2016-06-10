@@ -72,7 +72,7 @@ exports.getAllUsage = function(payload, callback) {
 	  });
 };
 
-var usageExists = function(payload, usages, usage_to_find, group_level) {  
+var usageExists_working = function(payload, usages, usage_to_find, group_level) {  
   for(var each_usage in usages) {    
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
@@ -81,6 +81,46 @@ var usageExists = function(payload, usages, usage_to_find, group_level) {
     if(payload.timescale.years.length) {        
       all_match = (usages[each_usage].sold.year == usage_to_find.sold.year);
     }
+    
+    if (all_match) return true;
+  }
+};
+
+var usageExists = function(payload, usages, usage_to_find, group_level) {  
+  for(var each_usage in usages) {    
+    if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
+    
+    var all_match;
+    
+    if(payload.region.states.length > 0) {         
+        all_match = (usages[each_usage].state == usage_to_find.state);
+        if(!all_match) return;
+      }
+      
+      if(payload.region.cities.length > 0) {         
+        all_match = (usages[each_usage].city == usage_to_find.city);
+        if(!all_match) return;
+      }
+      
+      if(payload.region.zip_codes.length > 0) {         
+        all_match = (usages[each_usage].city == usage_to_find.city);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.years.length > 0) {         
+        all_match = (usages[each_usage].sold.year == usage_to_find.sold.year);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.quarters.length > 0) {         
+        all_match = (usages[each_usage].sold.quarter == usage_to_find.sold.quarter);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.months.length > 0) {         
+        all_match = (usages[each_usage].sold.month == usage_to_find.sold.month);
+        if(!all_match) return;
+      }
     
     if (all_match) return true;
   }

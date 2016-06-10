@@ -434,7 +434,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	$scope.tryit = function() {
 		
-	
+	/*
 		if($scope.region.states==undefined)
 			{
 			
@@ -455,14 +455,14 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 			console.log("zip_codes undefined");
 			$scope.usagedata.region.zip_codes=[];
 		}
-		
-		
-		/*console.log("region form data  : "+$scope.region);	
+		*/
+		/*
+		console.log("region form data  : "+$scope.region);	
 		console.log("states form data  : "+$scope.region.states);	
 		console.log("cities form data  : "+$scope.region.cities);	
-		console.log("codes form data  : "+$scope.region.zip_codes);	
+		console.log("codes form data  : "+$scope.region.zip_codes);	*/
 
-		$scope.usagedata={
+		/*$scope.usagedata={
   				  "productAttrs": {
   	    		    "makes": [  ],
   	    		    "models": [],
@@ -494,7 +494,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		  "region": {
   	    		    "states": [
   	    		      {
-  	    		        "value": $scope.region.states
+  	    		        
+  	    		    	  "value": $scope.region.states
   	    		      }
   	    		    ],
   	    		    "cities": [
@@ -511,12 +512,98 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		                  ]
   	    		  }
   	    		};
-		if($scope.region.cities==undefined)
+		*/
+		
+		$scope.usagedata={
+				  "productAttrs": {
+	    		    "makes": [  ],
+	    		    "models": [],
+	    		    "skus": [],
+	    		    "mfg_date": {
+	    		      "start_date": "01/01/2015",
+	    		      "end_date": "01/01/2016"
+	    		    }
+	    		  },
+	    		"timescale": {
+	      		    "years": [{
+	    		        "value": parseInt($scope.timescale.years)
+	    		      } ],
+	      		    "quarters": [ {
+	    		        "value": parseInt($scope.timescale.quarters)
+	    		      }],
+	      		    "months": [{
+	    		        "value": parseInt($scope.timescale.months)
+	    		      } ],
+	    		    "date": {
+	    		      "start_date": "01/01/2015",
+	    		      "end_date": "01/01/2016"
+	    		    },
+	    		    "relative": {
+	    		      "unit": "2",
+	    		      "value": 0
+	    		    }
+	    		  },
+	    		  "region": {
+	    		    "states": [
+	    		      {
+	    		        
+	    		    	  "value": $scope.region.states
+	    		      }
+	    		    ],
+	    		    "cities": [
+	    		               {
+	    		            	   "value": $scope.region.cities
+	 	   
+	    		               }
+	    		               ],
+	    		    "zip_codes": [
+						{
+							   "value": $scope.region.zip_codes
+						
+						}
+	    		                  ]
+	    		  }
+	    		};
+		
+		//////////start gopal
+		if($scope.region.states==undefined || $scope.region.states=="")
+		{
+		
+		console.log("states undefined");
+		$scope.usagedata.region.states=[];
+		}
+		console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
+		if($scope.region.cities==undefined || $scope.region.cities=="")
+		{
+			
+			console.log("cities undefined");
+			$scope.usagedata.region.cities=[];
+		}
+		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
+		{
+
+			console.log("zip_codes undefined");
+			$scope.usagedata.region.zip_codes=[];
+		}
+		if($scope.timescale.years==undefined)
+		{
+			$scope.usagedata.timescale.years=[];
+		}	
+		if($scope.timescale.quarters==undefined)
+		{
+			$scope.usagedata.timescale.quarters=[];
+		}
+		
+		if($scope.timescale.months==undefined)
+		{
+			$scope.usagedata.timescale.months=[];
+		}
+		/*if($scope.region.cities==undefined)
 				$scope.usagedata.region.cities=[];
 		if($scope.region.states==undefined)
 			$scope.usagedata.region.states=[];
 		if($scope.region.zip_codes==undefined)
-			$scope.usagedata.region.zip_codes=[];
+			$scope.usagedata.region.zip_codes=[];*/
 		
 		
 
@@ -524,7 +611,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		console.log("years form data  : "+$scope.timescale.years);	
 		console.log("quaters form data  : "+$scope.timescale.quarters);	
 		console.log("month form data  : "+$scope.timescale.months);	
-*/
+
 		
 		
 	
@@ -533,7 +620,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		
 		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
 		
-		  /*$http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -551,10 +638,10 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
 	                
-	        	// alert("error");
+	        	 alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
-	         });*/
+	         });
 		
 	};
 	
