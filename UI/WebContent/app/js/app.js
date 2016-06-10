@@ -264,7 +264,7 @@ App.controller('AppController',
 
     $rootScope.currTitle = $state.current.title;
     $rootScope.pageTitle = function() {
-      var title = 'IoT for Electronic';
+      var title = 'IoT for Electronics - Usage Dashboard';
       document.title = title;
       return title; 
     };
@@ -421,6 +421,9 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scop
 	    }]);
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
+	
+	
+	
 	
 	
 	
@@ -734,6 +737,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         closeAllBut(-1);
       }
     });
+    
+   
 
     // Check item and children active state
     var isActive = function(item) {
@@ -834,7 +839,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	       console.log(JSON.stringify(data));
 	    });
 	 
-    function selectMake(){
+    $scope.selectMake=function()
+    {
     	
     	alert("SELECTED");
     }
@@ -1011,6 +1017,8 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
   var $sidebar;
   var currentState = $rootScope.$state.current.name;
 
+  
+  
   return {
     restrict: 'EA',
     template: '<nav class="sidebar" ng-transclude></nav>',
@@ -1032,15 +1040,18 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
 
           subNav.trigger('mouseleave');
           subNav = toggleMenuItem( $(this) );
-
+          	console.log("inside sidebar directive");
           // Used to detect click and touch events outside the sidebar          
           sidebarAddBackdrop();
 
         }
 
       });
+      
+     
 
       scope.$on('closeSidebarMenu', function() {
+    	  console.log("inside sidebar directive");
         removeFloatingNav();
       });
 
@@ -1126,6 +1137,13 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
     $('.sidebar li.open').removeClass('open');
   }
 
+  
+  $scope.selectMake=function()
+  {
+  	
+  	alert("SELECTED");
+  }
+  
 }]);
 /**=========================================================
  * Module: toggle-state.js

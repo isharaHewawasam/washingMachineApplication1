@@ -131,27 +131,28 @@
    <div class="col-lg-4 " ng-controller="myController" ng-init="plotChartFunction('container')">
      <div class="chart-chartDiv" id="chartParent">
 		<div class="chart-filterDiv " id="chartFilterDivId">
-			<select class="chart-selectStyle col-md-4 " style="padding-right: 0px; padding-left: 3px;">
-				<option class="chart-option-text-style" value="">Top 3 models
-				<option class="chart-option-text-style" value="">Sold vs Connected
-			</select> <select class="chart-selectStyle col-md-3 chart-border "
-				style="padding-right: 0px; padding-left: 3px;">
-				<option class="chart-option-text-style" value="">Last 1 day
-				<option class="chart-option-text-style" value="" selected>Last 7 days
-				<option class="chart-option-text-style" value="">Last 30 days
-				<option class="chart-option-text-style" value="">Last 3 months
-				<option class="chart-option-text-style" value="">Last 6 months
-				<option class="chart-option-text-style" value="">Last 1 year
-				<option class="chart-option-text-style" value="">Last 3 years
-			</select> <select class="chart-selectStyle col-md-4 "
-				style="padding-right: 0px; padding-left: 3px;">
-				<option class="chart-option-text-style" value="">Line Chart
-				<option class="chart-option-text-style" value="">Bar Chart
-				<option class="chart-option-text-style" value="">Pie Chart
-			</select> 
-			<img id="maximize" class=" col-md-1 image-margin image-size pull-right" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
-			<img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
-		</div>
+                                    <select id="first-chart-select" class="chart-selectStyle col-md-4 " style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                                <option class="chart-option-text-style" value="">Top 3 models
+                                                <option class="chart-option-text-style" value="">Sold vs Connected
+                                    </select> <select class="chart-selectStyle col-md-3 chart-border "
+                                                style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                                <option class="chart-option-text-style" value="">Last 1 day
+                                                <option class="chart-option-text-style" value="" selected>Last 7 days
+                                                <option class="chart-option-text-style" value="">Last 30 days
+                                                <option class="chart-option-text-style" value="">Last 3 months
+                                                <option class="chart-option-text-style" value="">Last 6 months
+                                                <option class="chart-option-text-style" value="">Last 1 year
+                                                <option class="chart-option-text-style" value="">Last 3 years
+                                    </select> <select class="chart-selectStyle col-md-4 "
+                                                style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                                <option class="chart-option-text-style" value="">Line Chart
+                                                <option class="chart-option-text-style" value="">Bar Chart
+                                                <option class="chart-option-text-style" value="">Pie Chart
+                                    </select> 
+                                    <img id="maximize" class=" col-md-1 image-margin image-size pull-right" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
+                                    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
+                        </div>
+
 		<div id="container" class="graphDiv"></div>
 	</div>
 	

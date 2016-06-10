@@ -1,30 +1,32 @@
- <!-- Inline template with sidebar items markup and ng-directives-->
- 
 
-<script type="text/ng-template" id="sidebar-renderer.html">
-   <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
-<a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
+<div class="aside-inner" >
+   <nav sidebar="" class="sidebar">
+     
+      
+      <ul class="nav"  style="padding-top: 5px;" >
+         <!-- Iterates over all sidebar items-->
+         <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"   ng-click="toggleCollapse(pIndex, true)">
+   				 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
+			<a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
 
-<div style=" "><img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"></img>
+<div style=" ">
+
+<img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"  ></img>
+
+
+
  <div  style=" padding-bottom:8px ;padding-top: 9px; margin: -5px;  font-family: Roboto;light;	font-size:12px;"> {{item.text}}
  </div>
+ 
 </div>
 
 </a>
 <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
 <li class="sidebar-subnav-header"  style="font-family: Roboto;light;	font-size:18px;" >{{(item.translate | translate) || item.text}}</li>
-<li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer2.html'"  style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
+<li ng-repeat="item in item.submenu"   style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
 ng-click="toggleCollapse(pIndex)">
 		
-		
-
-</li>
-</ul>
-
-</script>
-
-<script type="text/ng-template" id="sidebar-renderer2.html">
-  <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
+	 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
 <a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
 <div style=" "><img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"></img>
  <div ng-if="item.text !='Submit'" style=" padding-bottom:8px ;font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;"> {{item.text}}
@@ -36,18 +38,9 @@ ng-click="toggleCollapse(pIndex)">
 </a>
 <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
 
-<li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer3.html'"  ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
+<li ng-repeat="item in item.submenu"   ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
 ng-click="toggleCollapse(pIndex)">
-		
-		
-
-</li>
-</ul>
-
-</script>
-
-<script type="text/ng-template" id="sidebar-renderer3.html" >
-  <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
+		 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
 <a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
 
  <div style="font:12px Roboto Light;"> 
@@ -94,47 +87,24 @@ ng-click="toggleCollapse(pIndex)">
 				</select>
                
 
-				<div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'"    ">
+				<div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'" >
           			 <input class="option-text-style" type="date"  name="bday"> 
          			</div>
 
 
-		<div class="input-group col-lg-1" ng-if="item.text=='to_date'"  ">
+		<div class="input-group col-lg-1" ng-if="item.text=='to_date'"  >
             <input class="option-text-style" type="date"  name="bday"> 
          </div>
  </div>
 
 </a>
-
-</script>
-<!--<script>
-	function selectMake(){
-
-		alert("Clicked");
-		}
-</script>
---><!-- START Sidebar (left)-->
-<div class="aside-inner" >
-   <nav sidebar="" class="sidebar">
-      <!-- START sidebar nav-->
-      
-      
-             
 		
-      
-      
-      <ul class="nav"  style="padding-top: 5px;" >
-         <!-- Iterates over all sidebar items-->
-         <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"  ng-include="'sidebar-renderer.html'" ng-click="toggleCollapse(pIndex, true)">
-   					<div style="position:absolute; width:100%; height:100% ;font-size: 11px;" ng-click="$state.go(item.sref)"> 
-	   					<img   	 ng-src="{{item.img}}" style="margin-left: 0px;"   />
-	   					 <br>
-	   					 <div style="padding-top: 9px; margin: -5px;"> {{item.text}} </div>
-	   			 </div>   
-	   			 
-	   			 <label>Make </label><input type"text"/>
-      			<hr style="margin-top: 112%; margin-left: -20%; border-top: 1px solid #4E4E4E ">
-      			
+
+</li>
+</ul>	
+
+</li>
+</ul>	
       			
       	</li>
       	

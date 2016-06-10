@@ -134,11 +134,35 @@ var usageExists_old = function(payload, usages, usage_to_find, group_level) {
       //if(payload.region.states > 0) { all_match = (usages[usage].state == usage_to_find.state); }
       //if(payload.region.cities > 0) { all_match = all_match && (usages[usage].city == usage_to_find.city); }
       //if(payload.region.zip_codes > 0) { all_match = all_match && (usages[usage].zip_code == usage_to_find.zip_cde); }
-      if(payload.timescale.years.length > 0) { 
-        
-        all_match = (usages[usage].sold.year == usage_to_find.sold.year);
+      if(payload.region.states.length > 0) {         
+        all_match = (usages[usage].state == usage_to_find.state);
+        if(!all_match) return;
       }
       
+      if(payload.region.cities.length > 0) {         
+        all_match = (usages[usage].city == usage_to_find.city);
+        if(!all_match) return;
+      }
+      
+      if(payload.region.zip_codes.length > 0) {         
+        all_match = (usages[usage].city == usage_to_find.city);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.years.length > 0) {         
+        all_match = (usages[usage].sold.year == usage_to_find.sold.year);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.quarters.length > 0) {         
+        all_match = (usages[usage].sold.quarter == usage_to_find.sold.quarter);
+        if(!all_match) return;
+      }
+      
+      if(payload.timescale.quarters.months > 0) {         
+        all_match = (usages[usage].sold.month == usage_to_find.sold.month);
+        if(!all_match) return;
+      }
       console.log("Matched : " + all_match);       
       return all_match;          
     }

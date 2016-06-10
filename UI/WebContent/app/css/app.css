@@ -12143,6 +12143,10 @@ display : block;
             background-color:"#0A437D";
 }
 
+#first-chart-select {
+       font-weight: bold !important;
+}
+
 
 /* 
 .table-striped > tbody > tr:nth-of-type(odd) {
