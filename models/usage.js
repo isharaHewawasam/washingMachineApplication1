@@ -286,6 +286,17 @@ var getData = function(payload, callback) {
 };  
 
 var doesRecordFallsInFilter = function(payload, keys) {
+  return isItemPresent(payload.productAttrs.makes, keys[0]) && 
+           isItemPresent(payload.productAttrs.models, keys[1]) && 
+           isItemPresent(payload.region.states, keys[2]) && 
+           isItemPresent(payload.region.cities, keys[3]) &&  
+           isItemPresent(payload.region.zip_codes, keys[4]) &&
+           isItemPresent(payload.timescale.years, keys[5]) &&
+           isItemPresent(payload.timescale.quarters, keys[6]) &&
+           isItemPresent(payload.timescale.months, keys[7]);  
+}
+
+var doesRecordFallsInFilter_old = function(payload, keys) {
   if(getGroupLevel(payload) == 3) {   
     return isItemPresent(payload.region.states, keys[2]);       
   }
