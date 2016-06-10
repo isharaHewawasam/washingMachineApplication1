@@ -64,8 +64,7 @@ var fillFavourites = function(payload, usage, callback) {
 };
 
 exports.getAllUsage = function(payload, callback) {  
-	  getData(null, function(err, result) {
-      console.log("got data " + result.rows.length); 
+	  getData(null, function(err, result) {       
 	    if(err) {
 	    	callback(err, null);
 	    } else {  		  	  	
