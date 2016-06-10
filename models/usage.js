@@ -302,11 +302,12 @@ var doesRecordFallsInFilter = function(payload, keys) {
   }  
   
   if(getGroupLevel(payload) == 6) {   
-    return isItemPresent(payload.region.states, keys[2]) && 
+    return isItemPresent(payload.productAttrs.makes, keys[0]) && 
+           isItemPresent(payload.productAttrs.models, keys[1]) &&
+           isItemPresent(payload.region.states, keys[2]) && 
            isItemPresent(payload.region.cities, keys[3]) &&  
            isItemPresent(payload.region.zip_codes, keys[4]) &&
-           isItemPresent(payload.timescale.years, keys[5]); 
-             
+           isItemPresent(payload.timescale.years, keys[5]);              
   }  
   
   if(getGroupLevel(payload) == 7) {   
@@ -319,7 +320,9 @@ var doesRecordFallsInFilter = function(payload, keys) {
   }  
   
   if(getGroupLevel(payload) == 8) {   
-    return isItemPresent(payload.region.states, keys[2]) && 
+    return isItemPresent(payload.productAttrs.makes, keys[0]) && 
+           isItemPresent(payload.productAttrs.models, keys[1]) && 
+           isItemPresent(payload.region.states, keys[2]) && 
            isItemPresent(payload.region.cities, keys[3]) &&  
            isItemPresent(payload.region.zip_codes, keys[4]) &&
            isItemPresent(payload.timescale.years, keys[5]) &&
