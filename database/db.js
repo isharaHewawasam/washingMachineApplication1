@@ -20,10 +20,22 @@ exports.open = function(conn_info, callback) {
   Cloudant(conn_info, function(err, cloudant) {    	  
     if (err)  return callback('Failed to initialize Cloudant: ' + err.message);
     
-    state.db = cloudant.db.use(conn_info.dbName);   
-    callback();
+    cloudant.db.list(function(err, allDbs) {
+      for(var each_db in allDbs) {
+        if(allDbs[each_db] === conn_info.dbName) {            
+           state.db = cloudant.db.use(conn_info.dbName); 
+           callback();
+           return;           
+        }          
+      }
+      
+      if(err)
+        callback(err);
+      
+      //we reached here means database does not exists    
+      callback(conn_info.dbName + " not found on " + JSON.stringify(conn_info));      
+    });    
   });
-
 };
   
 exports.search = function(index, query, options, callback) {

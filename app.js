@@ -64,7 +64,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	    console.log("Sales Database connection failed");
 	    console.log(err);
 	  } else {
-      WashDailyAggregateDb.open(config.WashDailyAggregateDatabase, function(err) {
+      WashDailyAggregateDb.open(config.WashDailyAggregateDatabase, function(err) {        
         if(err) {
           console.log("Wash daily aggregate Database connection failed");
 	        console.log(err);
