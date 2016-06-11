@@ -264,7 +264,7 @@ App.controller('AppController',
 
     $rootScope.currTitle = $state.current.title;
     $rootScope.pageTitle = function() {
-      var title = 'IoT for Electronics - Usage Dashboard';
+      var title = 'IoT for Electronic';
       document.title = title;
       return title; 
     };
@@ -421,20 +421,19 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scop
 	    }]);
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
-	
-	
-	
-	
-	
-	
+	$scope.searchButtonText = "Apply Filter";
+  $scope.test = false;
+	$scope.isDisabled = false;
 	$scope.region=[];
 	$scope.timescale=[];
 	
 	
 	
 	$scope.tryit = function() {
-		
-	/*
+		$scope.test = true;
+		$scope.searchButtonText = "Filtering...";    
+	  $scope.isDisabled = true;
+	
 		if($scope.region.states==undefined)
 			{
 			
@@ -455,14 +454,14 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 			console.log("zip_codes undefined");
 			$scope.usagedata.region.zip_codes=[];
 		}
-		*/
-		/*
+		
+		
 		console.log("region form data  : "+$scope.region);	
 		console.log("states form data  : "+$scope.region.states);	
 		console.log("cities form data  : "+$scope.region.cities);	
-		console.log("codes form data  : "+$scope.region.zip_codes);	*/
+		console.log("codes form data  : "+$scope.region.zip_codes);	
 
-		/*$scope.usagedata={
+		$scope.usagedata={
   				  "productAttrs": {
   	    		    "makes": [  ],
   	    		    "models": [],
@@ -494,8 +493,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		  "region": {
   	    		    "states": [
   	    		      {
-  	    		        
-  	    		    	  "value": $scope.region.states
+  	    		        "value": $scope.region.states
   	    		      }
   	    		    ],
   	    		    "cities": [
@@ -512,98 +510,12 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		                  ]
   	    		  }
   	    		};
-		*/
-		
-		$scope.usagedata={
-				  "productAttrs": {
-	    		    "makes": [  ],
-	    		    "models": [],
-	    		    "skus": [],
-	    		    "mfg_date": {
-	    		      "start_date": "01/01/2015",
-	    		      "end_date": "01/01/2016"
-	    		    }
-	    		  },
-	    		"timescale": {
-	      		    "years": [{
-	    		        "value": parseInt($scope.timescale.years)
-	    		      } ],
-	      		    "quarters": [ {
-	    		        "value": parseInt($scope.timescale.quarters)
-	    		      }],
-	      		    "months": [{
-	    		        "value": parseInt($scope.timescale.months)
-	    		      } ],
-	    		    "date": {
-	    		      "start_date": "01/01/2015",
-	    		      "end_date": "01/01/2016"
-	    		    },
-	    		    "relative": {
-	    		      "unit": "2",
-	    		      "value": 0
-	    		    }
-	    		  },
-	    		  "region": {
-	    		    "states": [
-	    		      {
-	    		        
-	    		    	  "value": $scope.region.states
-	    		      }
-	    		    ],
-	    		    "cities": [
-	    		               {
-	    		            	   "value": $scope.region.cities
-	 	   
-	    		               }
-	    		               ],
-	    		    "zip_codes": [
-						{
-							   "value": $scope.region.zip_codes
-						
-						}
-	    		                  ]
-	    		  }
-	    		};
-		
-		//////////start gopal
-		if($scope.region.states==undefined || $scope.region.states=="")
-		{
-		
-		console.log("states undefined");
-		$scope.usagedata.region.states=[];
-		}
-		console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
-		if($scope.region.cities==undefined || $scope.region.cities=="")
-		{
-			
-			console.log("cities undefined");
-			$scope.usagedata.region.cities=[];
-		}
-		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
-		{
-
-			console.log("zip_codes undefined");
-			$scope.usagedata.region.zip_codes=[];
-		}
-		if($scope.timescale.years==undefined)
-		{
-			$scope.usagedata.timescale.years=[];
-		}	
-		if($scope.timescale.quarters==undefined)
-		{
-			$scope.usagedata.timescale.quarters=[];
-		}
-		
-		if($scope.timescale.months==undefined)
-		{
-			$scope.usagedata.timescale.months=[];
-		}
-		/*if($scope.region.cities==undefined)
+		if($scope.region.cities==undefined)
 				$scope.usagedata.region.cities=[];
 		if($scope.region.states==undefined)
 			$scope.usagedata.region.states=[];
 		if($scope.region.zip_codes==undefined)
-			$scope.usagedata.region.zip_codes=[];*/
+			$scope.usagedata.region.zip_codes=[];
 		
 		
 
@@ -634,11 +546,15 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
-	       	  			//alert(data);
+	       	  		$scope.test = false;
+                $scope.searchButtonText = "Apply filter";
+	       	  		$scope.isDisabled = false;
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
-	                
-	        	 alert("No data found");
+	                $scope.searchButtonText = "Apply filter";    
+               $scope.test = false;
+               $scope.isDisabled = false;
+	        	// alert("error");
 	        	 console.log("error:"+status);
 	        	 
 	         });
@@ -842,7 +758,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       else
         return $state.is(item.sref) || $state.includes(item.sref);
     };
-
+    $rootScope.myfun= function() {
+    	alert("myfun called");
+    	console.log("myfun called");
+    }
     // Load menu from json file
     // ----------------------------------- 
     
