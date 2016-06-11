@@ -1,0 +1,119 @@
+[
+  
+  {
+    "text": "Dashboard",
+    "sref": "app.singleview",
+    "img": "app/img/Dashboardassets/dashboard.png",
+    "translate": "sidebar.nav.SINGLEVIEW"
+  },
+   {
+    "text": "Filter",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/filter.png",
+    "submenu": [
+      { "text": "Search by Product", 
+      	          
+		        "submenu": [
+		      { "text": "Make"
+		     	
+		      },
+		      { "text": "Type"
+		     
+		      },
+		      { "text": "MFG Date"
+		     
+		      },
+		      { "text": "SKU"
+		     
+		      }             
+		      ] 
+      },
+      { 
+      	"text": "Demographics",           
+		        "submenu": [
+		      { "text": "Income Range"
+		     
+		      } ,
+		      { "text": "Occupation"
+		     
+		      } ,
+		      { "text": "Age Group"
+		     
+		      } ,
+		      { "text": "Product Name"
+		     
+		      }    
+		      ] 
+      }        
+    ],
+    "translate": "Products"
+  },
+ 
+  {
+    "text": "Machine",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/machine.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+  {
+    "text": "Reports",
+    "sref": "#",
+    "img": "app/img/Dashboardassets/reports.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  },
+   {
+    "text": "Calendar",
+    "sref": "app.myownview",
+    "img": "app/img/Dashboardassets/calendar.png",
+    "imghover": "calendar_hover.png",
+    "submenu": [
+      { "text": "Search by from date", 
+      	          
+		        "submenu": [
+		      { "text": "from_date"
+		     	
+		      }           
+		      ] 
+      },
+      { 
+      	"text": "Search by to date",           
+		        "submenu": [
+		      { "text": "to_date"
+		     
+		      }  
+		      ] 
+      },
+      { 
+      	"text": "Submit"           
+		     
+      }     
+          
+    ],
+    "translate": "Filter by Dates"
+  },
+  {
+    "text": "Setting",
+    "sref": "singleview",
+    "img": "app/img/Dashboardassets/settings.png",
+    "submenu": [
+      { "text": "Sub Menu", 
+        "sref": "app.submenu", 
+        "translate": "sidebar.nav.menu.SUBMENU" 
+      }    
+    ],
+    "translate": "sidebar.nav.menu.MENU"
+  }
+  
+]

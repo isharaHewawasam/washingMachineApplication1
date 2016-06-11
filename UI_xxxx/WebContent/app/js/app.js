@@ -421,17 +421,105 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scop
 	    }]);
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
-	$scope.searchButtonText = "Apply Filter";
+	 $scope.searchButtonText = "Apply Filter";
   $scope.test = false;
 	$scope.isDisabled = false;
+	
+	
+	
+	
+	
 	$scope.region=[];
 	$scope.timescale=[];
 	
 	
+	
 	$scope.tryit = function() {
+   
+  
+  $scope.test = true;
 		$scope.searchButtonText = "Filtering...";    
 	  $scope.isDisabled = true;
-	  $scope.test = true;
+		
+	/*
+		if($scope.region.states==undefined)
+			{
+			
+			console.log("states undefined");
+			$scope.usagedata.region.states=[];
+			}
+		
+		if($scope.region.cities==undefined)
+		{
+
+			console.log("cities undefined");
+			$scope.usagedata.region.cities=[];
+		}
+		
+		if($scope.region.zip_codes==undefined)
+		{
+
+			console.log("zip_codes undefined");
+			$scope.usagedata.region.zip_codes=[];
+		}
+		*/
+		/*
+		console.log("region form data  : "+$scope.region);	
+		console.log("states form data  : "+$scope.region.states);	
+		console.log("cities form data  : "+$scope.region.cities);	
+		console.log("codes form data  : "+$scope.region.zip_codes);	*/
+
+		/*$scope.usagedata={
+  				  "productAttrs": {
+  	    		    "makes": [  ],
+  	    		    "models": [],
+  	    		    "skus": [],
+  	    		    "mfg_date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    }
+  	    		  },
+  	    		"timescale": {
+  	      		    "years": [{
+  	    		        "value": parseInt($scope.timescale.years)
+  	    		      } ],
+  	      		    "quarters": [ {
+  	    		        "value": parseInt($scope.timescale.quarters)
+  	    		      }],
+  	      		    "months": [{
+  	    		        "value": parseInt($scope.timescale.months)
+  	    		      } ],
+  	    		    "date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    },
+  	    		    "relative": {
+  	    		      "unit": "2",
+  	    		      "value": 0
+  	    		    }
+  	    		  },
+  	    		  "region": {
+  	    		    "states": [
+  	    		      {
+  	    		        
+  	    		    	  "value": $scope.region.states
+  	    		      }
+  	    		    ],
+  	    		    "cities": [
+  	    		               {
+  	    		            	   "value": $scope.region.cities
+  	 	   
+  	    		               }
+  	    		               ],
+  	    		    "zip_codes": [
+  						{
+  							   "value": $scope.region.zip_codes
+  						
+  						}
+  	    		                  ]
+  	    		  }
+  	    		};
+		*/
 		
 		$scope.usagedata={
 				  "productAttrs": {
@@ -545,7 +633,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	           data: $scope.usagedata
 	          
 	         }).success(function(data, status) {
-	           $scope.test = false;
+	           $scope.griddata=data.data; 
+	       	  		$scope.test = false;
                 $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false;
 	        	 if(!data || data.data.length === 0){
@@ -558,7 +647,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	       	  			//alert(data);
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
-	                $scope.test = false;
+	                $scope.griddata=data.data; 
+	       	  		$scope.test = false;
                 $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false;
 	        	 alert("No data found");
