@@ -21,7 +21,7 @@ var getData = function(payload, callback) {
   var params;
   
   view_name = "WashDayByMakeAndModelNew";   
-  var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
+  var params = { reduce: true, group: true, group_level: filter.filterType() + 1 };
     
   db.view('favouriteWashDay', view_name, params, function(err, result) {
     //console.log(params);
@@ -44,12 +44,6 @@ var week_days = function(){
   return week_days;
 };
 
-var usage_keys_in_csv = function(usage){
-  var usage_keys = usage.make + "," + usage.model;  
-  
-  if(usage.state) usage_keys = usage_keys + "," + usage.state;
-  return usage_keys;
-};
 
 exports.search = function(usage, callback) {  
   var days = week_days();           
@@ -79,7 +73,7 @@ var doesUsageFallsInResponse = function(usage, keys) {
   var response_keys = keys.slice(1, keys.length);
   var idx = 0;
    
-  while(idx < filter.groupLevel()) {    
+  while(idx < filter.filterType()) {    
     if(!match(usage_values[idx], response_keys[idx])) return false;
     idx++;
   }
@@ -87,79 +81,7 @@ var doesUsageFallsInResponse = function(usage, keys) {
   return true;
 };
 
-var doesUsageFallsInResponse_old = function(usage, keys) { 
-  
-  if(filter.groupLevel() == 1) {   
-    return isItemPresent(usage.make, keys[0]);       
-  }
-  
-  if(filter.groupLevel() == 2) {
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]);
-  }
-  
-  if(filter.groupLevel() == 3) {   
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&  
-           match(usage.state, keys[2]);           
-  }
-  
-  if(filter.groupLevel() == 4) {   
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&
-           match(usage.state, keys[2]) && 
-           match(usage.city, keys[3]);       
-  }
-  
-  if(filter.groupLevel() == 5) {   
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&
-           match(usage.state, keys[2]) && 
-           match(usage.city, keys[3]) &&  
-           match(usage.zip_code, keys[4]);            
-  }  
-  
-  if(filter.groupLevel() == 6) {
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&
-           match(usage.state, keys[2]) && 
-           match(usage.city, keys[3]) &&  
-           match(usage.zip_code, keys[4]) &&
-           match(usage.sold.year, keys[5]);              
-  }  
-  
-  if(filter.groupLevel() == 7) {     
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&
-           match(usage.state, keys[2]) && 
-           match(usage.city, keys[3]) &&  
-           match(usage.zip_code, keys[4]) &&
-           match(usage.sold.year, keys[5]) &&
-           match(usage.sold.quarter, keys[6]);             
-  }  
-  
-  if(filter.groupLevel() == 8) {   
-    return match(usage.make, keys[0]) &&
-           match(usage.model, keys[1]) &&
-           match(usage.state, keys[2]) && 
-           match(usage.city, keys[3]) &&  
-           match(usage.zip_code, keys[4]) &&
-           match(usage.sold.year, keys[5]) &&
-           match(usage.sold.quarter, keys[6]) &&
-           match(usage.sold.month, keys[7]);             
-  }  
-  
-  return false;
-};
-
 var match = function(item1, item2) { 
   return item1.toString().toUpperCase() === item2.toString().toUpperCase();
 }
 
-var isItemPresent = function(item, array){  
-  for(var array_item in array) {         
-    if(array[array_item].value.toString().toUpperCase() === item.toUpperCase()) return true
-  }
-  
-  return false;
-};
