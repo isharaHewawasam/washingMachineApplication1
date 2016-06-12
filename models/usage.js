@@ -150,17 +150,24 @@ var fillRecord = function(result) {
   var record = { "sold": {"year": 0, "quarter": 0, "month": 0} };
     
   record.make = result.key[0];
-  record.model = result.key[1];  
-  record.state = result.key[2];
-  record.city = result.key[3];
-  record.zip_code = result.key[4];  
-  record.sold.year = result.key[5]; 
-  record.sold.quarter = result.key[6];
-  record.sold.month = result.key[7];
+  record.model = result.key[1]; 
+
+  if( (filter.isFilterCategoryByRegion()) || (filter.isFilterCategoryNone()) ) { 
+    record.state = result.key[2];
+    record.city = result.key[3];
+    record.zip_code = result.key[4]; 
+  } 
+  
+  if(filter.isFilterCategoryByYear()) {
+    record.sold.year = result.key[2]; 
+    record.sold.quarter = result.key[3];
+    record.sold.month = result.key[4];
+  }
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
-     
+  
+  //console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
