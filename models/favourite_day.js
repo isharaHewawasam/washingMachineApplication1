@@ -19,8 +19,15 @@ var getData = function(payload, callback) {
     
   var view_name;
   var params;
+     
+  if( (filter.isFilterCategoryByRegion()) || 
+      (filter.isFilterCategoryNone()) 
+    )
+       view_name = "WashDayByMakeAndModel";
   
-  view_name = "WashDayByMakeAndModelNew";   
+  if(filter.isFilterCategoryByYear()) 
+    view_name = "WashDayByYear";
+  
   var params = { reduce: true, group: true, group_level: filter.filterType() + 1 };
     
   db.view('favouriteWashDay', view_name, params, function(err, result) {
@@ -66,6 +73,29 @@ exports.search = function(usage, callback) {
 };
 
 var doesUsageFallsInResponse = function(usage, keys) { 
+  var usage_values;
+
+  if( (filter.isFilterCategoryByRegion()) || 
+      (filter.isFilterCategoryNone()) 
+    )
+    usage_values = [usage.make, usage.model, usage.state, usage.city, usage.zip_code];
+  
+  if(filter.isFilterCategoryByYear()) 
+    usage_values = [usage.make, usage.model, usage.year, usage.quarter, usage.month];
+  
+  
+  var response_keys = keys.slice(1, keys.length);
+  var idx = 0;
+   
+  while(idx < filter.filterType()) {    
+    if(!match(usage_values[idx], response_keys[idx])) return false;
+    idx++;
+  }
+  
+  return true;
+};
+
+var doesUsageFallsInResponse_old = function(usage, keys) { 
   var usage_values = [usage.make, usage.model, usage.state,
                       usage.city, usage.zip_code, usage.year,
                       usage.quarter, usage.month 
