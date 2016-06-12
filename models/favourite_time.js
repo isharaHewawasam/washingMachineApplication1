@@ -34,10 +34,10 @@ exports.search = function(usage, callback) {
   
   for(var row in response.rows) { 
     if(usage_keys.toUpperCase() === response.rows[row].key[0].join().toUpperCase().substring(0, usage_keys.length)) {      
-      if(days.hasOwnProperty(response.rows[row].key[1])) {
-        days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count; 
+      if(days.hasOwnProperty(response.rows[row].key[2])) {
+        days[response.rows[row].key[2]] = days[response.rows[row].key[2]] + response.rows[row].value.count; 
       } else {  
-        days[response.rows[row].key[1]] = response.rows[row].value.count; 
+        days[response.rows[row].key[2]] = response.rows[row].value.count; 
       }
     }        
   }

@@ -1,5 +1,6 @@
 <div class="somediv hidden" id="hiddenDiv"></div>
 <div class="chart-somediv hidden" id="hiddenDiv" ></div>
+<div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
    <!-- START Language list-->
    
@@ -31,7 +32,7 @@
                <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
                   <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
                   <option class="option-text-style" value="" disabled selected>States
-                    <option class="option-text-style" value="" >All States
+                    <option class="option-text-style" value="" >All
                      <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
                   </select>
                     <!--  <option class="option-text-style" value="" disabled selected>States
@@ -51,7 +52,7 @@
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle"  ng-model="region.cities" ng-change="selectZip()"  >
                     <option class="option-text-style" value="" disabled selected>Cities
-                    <option class="option-text-style" value="" >All Cities
+                    <option class="option-text-style" value="" >All
 					 <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
 					<!--<option class="option-text-style" value="" >San Diego
 					<option class="option-text-style" value="" >San Jose -->
@@ -63,7 +64,7 @@
                <div class="col-lg-2"  style="max-width: 150px;margin-left:22px !important ;padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle" ng-model="region.zip_codes" >
                  <option class="option-text-style" value="" disabled selected >Zip Code
-                 <option class="option-text-style" value="" >All Zipcode
+                 <option class="option-text-style" value="" >All
                      <option class="option-text-style" ng-repeat="zip in zips" value={{zip.zip_code}} >{{zip.zip_code}}
                      <!-- <option class="option-text-style" value="" disabled selected>Zip Code
 					<option class="option-text-style" value="" >1001
@@ -77,6 +78,7 @@
                 <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle" ng-model="timescale.years" >
                     <option class="option-text-style" value=""  disabled selected >Year
+                      <option class="option-text-style" value="" >All
 					<option class="option-text-style" ng-repeat="sales_year in sales_years" value={{sales_year.year}} >{{sales_year.year}}
                   </select>
                                    
@@ -86,6 +88,7 @@
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle" ng-model="timescale.quarters" ng-change="quarterMonths()">
                     <option class="option-text-style" value="" selected disabled>Quarter
+                      <option class="option-text-style" value="" >All
                     <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter.id}} >{{quarter.value}}
 					
                   </select>
@@ -96,6 +99,7 @@
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
                   <select name="" class="form-control filter-selectStyle" ng-model="timescale.months">
                    <option class="option-text-style" value="" selected disabled>Month
+                     <option class="option-text-style" value="" >All
                    <option class="option-text-style" ng-repeat="month in months" value={{month.id}} >{{month.value}}
 					
                   </select>
@@ -428,13 +432,17 @@
    <div class="col-lg-8"   >
       <!-- START panel -->
    
-      <div class="panel panel-default" style="  height: 240px; ">
-         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; ">Washing Machines status    <img class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></img></div>
+      <div class="panel panel-default" style="  height: 240px; " id="gridNormal">
+         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; ">Washing Machines status   
+          <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximizeGrid()"></img>
+         <img id="gridCloseImg" class="pull-right hidden col-md-1 " style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+         
+         </div>
       
        
-         <div class="panel-body">
+         <div class="panel-body" id="gridHideNodata" >
           <!--   START table-responsive -->
-            <div class="table-responsive scrollit">
+            <div id="gridAdjustHeight" class="table-responsive scrollit" >
                <table  class="table table-striped table-bordered table-hover">
                   <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
                     
@@ -454,7 +462,7 @@
                       <tr ng-repeat="itm in griddata"  >
                         <td>{{itm.make}}</td>
                         <td>{{itm.model}}</td>
-                        <td style="text-align:right">{{itm.totalLoad}}</td>
+                        <td>{{itm.totalLoad}}</td>
                         <td>{{itm.popularDay}}</td>
                         <td>{{itm.popularTime}}</td>
                      </tr>
@@ -463,6 +471,7 @@
                </table>
             </div>
        <!--      END table-responsive -->
+         <label  class="pull-right ">{{griddata.length}} records found</label>
          </div>
       </div>
     <!--   END panel -->

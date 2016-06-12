@@ -1,7 +1,7 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
+var filter = require('../models/filters');
 var response;
-var group_level = 0;
 
 exports.getAllDays = function(payload, callback) {
 	  getData(payload, function(err, result) {
@@ -14,6 +14,22 @@ exports.getAllDays = function(payload, callback) {
 	  });
 };
 
+var getData = function(payload, callback) {
+  filter.setPayload(payload);
+    
+  var view_name;
+  var params;
+  
+  view_name = "WashDayByMakeAndModelNew";   
+  var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
+    
+  db.view('favouriteWashDay', view_name, params, function(err, result) {
+    //console.log(params);
+    //console.log("Favourite day records from cloudant : " + result.rows.length);    
+    response = result;    
+    callback(err, result);
+  });
+};  
 var week_days = function(){
   var days = week_days;
  
@@ -38,9 +54,9 @@ var usage_keys_in_csv = function(usage){
 exports.search = function(usage, callback) {  
   var days = week_days();           
     
-  for(var row in response.rows) {      
-    if(doesRecordFallsInFilter(usage, response.rows[row].key[0])) {            
-      days[response.rows[row].key[1]] = days[response.rows[row].key[1]] + response.rows[row].value.count
+  for(var row in response.rows) { 
+    if(doesUsageFallsInResponse(usage, response.rows[row].key)) {       
+      days[response.rows[row].key[0]] = days[response.rows[row].key[0]] + response.rows[row].value.count
     }      
   }
     
@@ -53,80 +69,49 @@ exports.search = function(usage, callback) {
     }      
   }
   return fav_day;
-}
+};
 
-var getData = function(payload, callback) {   
-  var view_name;
-  var params;
+var doesUsageFallsInResponse = function(usage, keys) { 
+  var usage_values = [usage.make, usage.model, usage.state,
+                      usage.city, usage.zip_code, usage.year,
+                      usage.quarter, usage.month 
+                     ];
+  var response_keys = keys.slice(1, keys.length);
+  var idx = 0;
+   
+  while(idx < filter.groupLevel()) {    
+    if(!match(usage_values[idx], response_keys[idx])) return false;
+    idx++;
+  }
   
-  if((payload == null) || (payload == undefined)){       
-    view_name = "WashDayByMakeAndModel";  
-    params = { group: true, reduce: true };  
-    group_level = 2;
-  } else {   
-    view_name = "favouriteWashDay";
-    params = { reduce: true, group: true, group_level: getGroupLevel(payload) };
-  }    
-  
-  db.view('favouriteWashDay', view_name, params, function(err, result) {      
-    response = result;    
-    callback(err, result);
-  });
-};  
+  return true;
+};
 
-var getGroupLevel = function(payload) {
-  if((payload == null) || (payload == undefined)){
-    group_level = 2;
-    return group_level;
-  }    
+var doesUsageFallsInResponse_old = function(usage, keys) { 
   
-  if(payload.region.states.length > 0) group_level = 3;  
-  if(payload.region.cities.length > 0) group_level = 4;  
-  if(payload.region.zip_codes.length > 0) group_level = 5;  
-  if(payload.timescale.years.length > 0) group_level = 6;  
-  if(payload.timescale.quarters.length > 0) group_level = 7;  
-  if(payload.timescale.months.length > 0) group_level = 8;  
-  
-  return group_level;
-};  
-
-var getGroupLevelold = function(usage) {  
-  var group_level = 2;   
-           
-  if(usage.state) group_level = 3;  
-  if(usage.city) group_level = 4;  
-  if(usage.zip_code) group_level = 5;  
-  if(usage.sold.year) group_level = 6;  
-  if(usage.sold.quarter) group_level = 7;  
-  if(usage.sold.month) group_level = 8;
-     
-  return group_level;
-};  
-
-var doesRecordFallsInFilter = function(usage, keys) { 
-  if(group_level == 1) {   
+  if(filter.groupLevel() == 1) {   
     return isItemPresent(usage.make, keys[0]);       
   }
   
-  if(group_level == 2) {       
+  if(filter.groupLevel() == 2) {
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]);
   }
   
-  if(group_level == 3) {   
+  if(filter.groupLevel() == 3) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&  
            match(usage.state, keys[2]);           
   }
   
-  if(group_level == 4) {   
+  if(filter.groupLevel() == 4) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
            match(usage.city, keys[3]);       
   }
   
-  if(group_level == 5) {   
+  if(filter.groupLevel() == 5) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -134,7 +119,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.zip_code, keys[4]);            
   }  
   
-  if(group_level == 6) {
+  if(filter.groupLevel() == 6) {
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -143,7 +128,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.sold.year, keys[5]);              
   }  
   
-  if(group_level == 7) {     
+  if(filter.groupLevel() == 7) {     
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 
@@ -153,7 +138,7 @@ var doesRecordFallsInFilter = function(usage, keys) {
            match(usage.sold.quarter, keys[6]);             
   }  
   
-  if(group_level == 8) {   
+  if(filter.groupLevel() == 8) {   
     return match(usage.make, keys[0]) &&
            match(usage.model, keys[1]) &&
            match(usage.state, keys[2]) && 

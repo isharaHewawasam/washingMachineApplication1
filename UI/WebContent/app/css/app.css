@@ -12147,6 +12147,19 @@ display : block;
        font-weight: bold !important;
 }
 
+.gridMaximize{
+	position: absolute;
+	width:80% !important;
+	height:80% !important;
+	top: 10%;
+	left: 10%;
+	background-color: #ffffff;
+	/* border: 1px solid #d4d4d4; */
+	border-left: 1px solid #d4d4d4;
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:99;
+}
+
 .glyphicon.spinning {
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
@@ -12161,7 +12174,6 @@ display : block;
     from { -webkit-transform: rotate(0deg);}
     to { -webkit-transform: rotate(360deg);}
 }
-
 /* 
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #E7EEF6;

@@ -424,14 +424,99 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	$scope.searchButtonText = "Apply Filter";
   $scope.test = false;
 	$scope.isDisabled = false;
+	
+	
+	
+	
+	
 	$scope.region=[];
 	$scope.timescale=[];
+	
 	
 	
 	$scope.tryit = function() {
 		$scope.searchButtonText = "Filtering...";    
 	  $scope.isDisabled = true;
 	  $scope.test = true;
+	/*
+		if($scope.region.states==undefined)
+			{
+			
+			console.log("states undefined");
+			$scope.usagedata.region.states=[];
+			}
+		
+		if($scope.region.cities==undefined)
+		{
+
+			console.log("cities undefined");
+			$scope.usagedata.region.cities=[];
+		}
+		
+		if($scope.region.zip_codes==undefined)
+		{
+
+			console.log("zip_codes undefined");
+			$scope.usagedata.region.zip_codes=[];
+		}
+		*/
+		/*
+		console.log("region form data  : "+$scope.region);	
+		console.log("states form data  : "+$scope.region.states);	
+		console.log("cities form data  : "+$scope.region.cities);	
+		console.log("codes form data  : "+$scope.region.zip_codes);	*/
+
+		/*$scope.usagedata={
+  				  "productAttrs": {
+  	    		    "makes": [  ],
+  	    		    "models": [],
+  	    		    "skus": [],
+  	    		    "mfg_date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    }
+  	    		  },
+  	    		"timescale": {
+  	      		    "years": [{
+  	    		        "value": parseInt($scope.timescale.years)
+  	    		      } ],
+  	      		    "quarters": [ {
+  	    		        "value": parseInt($scope.timescale.quarters)
+  	    		      }],
+  	      		    "months": [{
+  	    		        "value": parseInt($scope.timescale.months)
+  	    		      } ],
+  	    		    "date": {
+  	    		      "start_date": "01/01/2015",
+  	    		      "end_date": "01/01/2016"
+  	    		    },
+  	    		    "relative": {
+  	    		      "unit": "2",
+  	    		      "value": 0
+  	    		    }
+  	    		  },
+  	    		  "region": {
+  	    		    "states": [
+  	    		      {
+  	    		        
+  	    		    	  "value": $scope.region.states
+  	    		      }
+  	    		    ],
+  	    		    "cities": [
+  	    		               {
+  	    		            	   "value": $scope.region.cities
+  	 	   
+  	    		               }
+  	    		               ],
+  	    		    "zip_codes": [
+  						{
+  							   "value": $scope.region.zip_codes
+  						
+  						}
+  	    		                  ]
+  	    		  }
+  	    		};
+		*/
 		
 		$scope.usagedata={
 				  "productAttrs": {
@@ -504,16 +589,16 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 			console.log("zip_codes undefined");
 			$scope.usagedata.region.zip_codes=[];
 		}
-		if($scope.timescale.years==undefined)
+		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
 		{
 			$scope.usagedata.timescale.years=[];
 		}	
-		if($scope.timescale.quarters==undefined)
+		if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
 		{
 			$scope.usagedata.timescale.quarters=[];
 		}
 		
-		if($scope.timescale.months==undefined)
+		if($scope.timescale.months==undefined || $scope.timescale.months=="")
 		{
 			$scope.usagedata.timescale.months=[];
 		}
@@ -551,7 +636,9 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
 	        		 console.log("empty data");
-	        		alert("No data found");
+	        			//$("#gridMax #gridMaxImg").addClass("hidden");
+
+	        		//alert("No data found");
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
@@ -725,9 +812,45 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		    
 		    }
 		
+	$scope.maximizeGrid=function(){
+		var gridNormal = $("#gridNormal").clone();
 		
+		$("#gridMax").empty();
+		$("#gridMax").append(gridNormal);
+		
+		$("#gridMax #gridMaxImg").addClass("hidden");
+		$("#gridMax #gridCloseImg").removeClass("hidden");
+		//$("#gridCloseImg").removeClass("hidden");
+		
+		  $("#gridAdjustHeight").height(560);
+
+	$("#gridMax").removeClass("hidden");
 	
-}]);
+	
+	
+	}
+	
+	$("body").on("click","#gridCloseImg",function(){
+		$("#gridMax").empty();
+		$("#gridMax").addClass("hidden");
+		  $("#gridAdjustHeight").height(160);
+
+		//$scope.plotChartFunction("container");
+    });
+	
+	/*$scope.closeGrid=function(){
+		
+		alert("closeGrid");
+
+		$("#gridMax").empty();
+		
+		
+		$("#gridMax #gridMaxImg").removeClass("hidden");
+		$("#gridMax #gridCloseImg").addClass("hidden");
+		
+		$("#gridMax").addClass("hidden");
+	}
+*/}]);
 
 /**=========================================================
  * Module: sidebar-menu.js

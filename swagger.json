@@ -311,7 +311,7 @@
     "/usage": {
       "post": {
         "x-swagger-router-controller": "usage",
-        "operationId": "getUsageByFilter",
+        "operationId": "getAllUsage",
         "tags": ["Usage"],
         "description": "Returns washing machines usage paramters like water load, detergent, power etc. You can specify State, City, Zip code etc to filter data.",
         "parameters": [
