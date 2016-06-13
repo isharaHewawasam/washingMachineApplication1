@@ -5,7 +5,8 @@ var FILTER_CATEGORY = {
   'NONE': 0,
   'BY_PRODUCT': 1,
   'BY_REGION': 2,
-  'BY_YEAR': 3
+  'BY_YEAR': 3,
+  'MIXED': 4
 };
 
 var FILTER = {
@@ -24,20 +25,31 @@ var FILTER = {
 var filter_category = FILTER_CATEGORY.NONE;
 var filter_type = FILTER.NONE;
 
+var isFilterSelected = function(items){
+  return (items.length > 0)
+}
+
 exports.setPayload = function(payload) { 
   filter_category = FILTER_CATEGORY.NONE;
   filter_type = FILTER.NONE; 
  
   if((payload === null) || (payload === undefined)) return;  
  
+  // Region 
   if(payload.region.states.length > 0) filter_type = FILTER.BY_STATE;  
   if(payload.region.cities.length > 0) filter_type = FILTER.BY_CITY;  
   if(payload.region.zip_codes.length > 0) filter_type = FILTER.BY_ZIP_CODE;  
   
+  //Year
   if(payload.timescale.years.length > 0) filter_type = FILTER.BY_YEAR;
   if(payload.timescale.quarters.length > 0) filter_type = FILTER.BY_QUARTER;  
   if(payload.timescale.months.length > 0) filter_type = FILTER.BY_MONTH; 
 
+  //Mixed
+  filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : filter_type;
+  //If no filter is applied set to by state
+  
+  
   switch(filter_type){
     case FILTER.BY_STATE:
     case FILTER.BY_CITY:
@@ -49,13 +61,42 @@ exports.setPayload = function(payload) {
     case FILTER.BY_MONTH:
       filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
+    case FILTER.MIXED:
+      console.log("mixed");
+      filter_category = FILTER_CATEGORY.MIXED;
+      break;
     default:
       filter_category = FILTER.NONE;
       break;
   }    
 };
+ 
+var isFilterCategoryMixed_ = function(payload) {
+  // Region 
+  var is_filter_by_region = false;
+    
+  if( (payload.region.states.length > 0) ||  
+      (payload.region.cities.length > 0) ||   
+      (payload.region.zip_codes.length > 0) ) {
+      is_filter_by_region = true;
+  }
+  
+  // year
+  var is_filter_by_year = false;
+  
+  if( (payload.timescale.years.length > 0) ||
+      (payload.timescale.quarters.length > 0) ||   
+      (payload.timescale.months.length > 0) ) {
+      is_filter_by_year = true;  
+  }        
+  
+  return (is_filter_by_region && is_filter_by_year);
+};
 
 exports.groupLevel = function(){
+  if(filter_category === FILTER_CATEGORY.MIXED)
+    return 8;
+  
   if(isFilterByNone()) return 2;
   if(isFilterByMake()) return 1; 
   if(isFilterByModel()) return 2;
@@ -94,6 +135,11 @@ exports.isFilterCategoryByRegion = function(){
 exports.isFilterCategoryByYear = function(){
   return filter_category === FILTER_CATEGORY.BY_YEAR;
 };
+
+exports.isFilterCategoryMixed = function(){
+  return filter_category === FILTER_CATEGORY.MIXED;
+};
+
 
 var isFilterByNone = function(){
   return (filter_type === FILTER.NONE);

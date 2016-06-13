@@ -435,7 +435,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	
 	$scope.tryit = function() {
-		$scope.searchButtonText = "Filtering...";    
+			$scope.searchButtonText = "Filtering...";    
 	  $scope.isDisabled = true;
 	  $scope.test = true;
 	/*
@@ -632,7 +632,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	         }).success(function(data, status) {
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false;
+	       	  		$scope.isDisabled = false
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
 	        		 console.log("empty data");
@@ -645,9 +645,9 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	       	  			//alert(data);
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
-	                $scope.test = false;
+	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false;
+	       	  		$scope.isDisabled = false     
 	        	 alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
@@ -749,19 +749,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	
 	 
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
-	    	 $scope.years=data.years;
-	    	 
-				       
-				           
-				           
-	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	       console.log(JSON.stringify(data));
-	    });
-	 
+	
 	 
 	  
 	 
@@ -778,7 +766,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    . error(function(data, status) {
 	       console.log(JSON.stringify(data));
 	    });
-	 
+	 $scope.cities;
 	 $scope.selectCities=function(){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
@@ -788,7 +776,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		    	 $scope.cities=data[$scope.region.states];
-		    //	 console.log(JSON.stringify($scope.cities));
+		    	 console.log("gopalcity:"+JSON.stringify($scope.cities));
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
 		       //console.log(JSON.stringify(data));
@@ -872,7 +860,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     });
     
    
-
+  //  $rootScope.types;
+    $rootScope.test="gopal";
     // Check item and children active state
     var isActive = function(item) {
 
@@ -972,6 +961,23 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	       console.log(JSON.stringify(data));
 	    });
 	 
+    
+    
+    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
+	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+	               
+	    	 $scope.years=data.years;
+	    	 console.log("manufacture year :"+JSON.stringify(data));
+				       
+				           
+				           
+	    }). error(function(data, status) {
+	      // alert("error"  +status);
+	       console.log(JSON.stringify(data));
+	    });
+	 
+    
+    
     $scope.selectMake=function()
     {
     	
@@ -1143,7 +1149,8 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
  =========================================================*/
 
 App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope, $window, Utils) {
-  
+  	console.log("inside sidebar directive");
+
   var $win  = $($window);
   var $body = $('body');
   var $scope;
@@ -1168,12 +1175,12 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
       var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
       var subNav = $();
       $sidebar.on( eventName, '.nav > li', function() {
-
+    	//  
         if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) {
 
-          subNav.trigger('mouseleave');
+        //  subNav.trigger('mouseleave');
           subNav = toggleMenuItem( $(this) );
-          	console.log("inside sidebar directive");
+          	console.log("inside sidebar directive condition");
           // Used to detect click and touch events outside the sidebar          
           sidebarAddBackdrop();
 

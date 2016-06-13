@@ -21,7 +21,8 @@ var getData = function(payload, callback) {
   var params;
      
   if( (filter.isFilterCategoryByRegion()) || 
-      (filter.isFilterCategoryNone()) 
+      (filter.isFilterCategoryNone()) ||
+      (filter.isFilterCategoryMixed())
     )
        view_name = "WashDayByMakeAndModel";
   
@@ -31,13 +32,14 @@ var getData = function(payload, callback) {
   var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
     
   db.view('favouriteWashDay', view_name, params, function(err, result) {
-    console.log("Favourite day view name : " + view_name);
+    /*console.log("Favourite day view name : " + view_name);
     console.log("Favourite day params : " + JSON.stringify(params));    
-    console.log("Favourite day records from cloudant : " + result.rows.length);    
+    console.log("Favourite day records from cloudant : " + result.rows.length);   */ 
     response = result;    
     callback(err, result);
   });
 };  
+
 var week_days = function(){
   var days = week_days;
  
@@ -76,39 +78,21 @@ exports.search = function(usage, callback) {
 var doesUsageFallsInResponse = function(usage, keys) { 
   var usage_values;
 
-  if( (filter.isFilterCategoryByRegion()) || 
-      (filter.isFilterCategoryNone()) 
+  if( (filter.isFilterCategoryNone()) || 
+      (filter.isFilterCategoryByRegion()) ||
+      (filter.isFilterCategoryMixed())
     )
     usage_values = [usage.make, usage.model, usage.state, usage.city, usage.zip_code];
   
   if(filter.isFilterCategoryByYear()) 
     usage_values = [usage.make, usage.model, usage.sold.year, usage.sold.quarter, usage.sold.month];
   
+  if( (filter.isFilterCategoryMixed()) ) 
+    usage_values.push(usage.sold.year, usage.sold.quarter, usage.sold.moth);
   
   var response_keys = keys.slice(1, keys.length);
-  var idx = 0;
-   
-  //console.log("usage " + usage_values); 
-  while(idx < filter.filterType()) {  
-    //console.log("comparing");
-    //console.log("keys " + response_keys);
-    //console.log(usage_values[idx]);
-    //console.log(response_keys[idx]);
-    if(!match(usage_values[idx], response_keys[idx])) return false;
-    idx++;
-  }
+  var idx = 0; 
   
-  return true;
-};
-
-var doesUsageFallsInResponse_old = function(usage, keys) { 
-  var usage_values = [usage.make, usage.model, usage.state,
-                      usage.city, usage.zip_code, usage.year,
-                      usage.quarter, usage.month 
-                     ];
-  var response_keys = keys.slice(1, keys.length);
-  var idx = 0;
-   
   while(idx < filter.filterType()) {    
     if(!match(usage_values[idx], response_keys[idx])) return false;
     idx++;

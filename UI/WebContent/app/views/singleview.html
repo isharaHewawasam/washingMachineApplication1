@@ -106,7 +106,7 @@
                                    
                </div>
                
-             	<div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
+             <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
              		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
                 {{searchButtonText}}</button>         
@@ -169,7 +169,7 @@
 	    <div id="show-transparent" class="map-mapDiv showhim">
 			<div id="googleMap"  class="map-mapDiv"></div>
 			<div class="semi-transparent-div showme" id="trn-div">
-				<img src="../img/Dashboardassets/icon_maximize.png" class="pull-right image-position"  id="maximize">
+				<img src="app/img/Dashboardassets/icon_maximize.png" class="pull-right image-position"  id="maximize">
 			</div>
 			
 			<script type="text/javascript">
@@ -432,7 +432,7 @@
    <div class="col-lg-8"   >
       <!-- START panel -->
    
-      <div class="panel panel-default" style="  height: 240px; " id="gridNormal">
+      <div class="panel panel-default"  id="gridNormal">
          <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; ">Washing Machines status   
           <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximizeGrid()"></img>
          <img id="gridCloseImg" class="pull-right hidden col-md-1 " style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
@@ -462,7 +462,7 @@
                       <tr ng-repeat="itm in griddata"  >
                         <td>{{itm.make}}</td>
                         <td>{{itm.model}}</td>
-                        <td>{{itm.totalLoad}}</td>
+                        <td style="text-align: right">{{itm.totalLoad}}</td>
                         <td>{{itm.popularDay}}</td>
                         <td>{{itm.popularTime}}</td>
                      </tr>

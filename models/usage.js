@@ -1,10 +1,8 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
-var fav_days = require('../models/favourite_day');
-var fav_times = require('../models/favourite_time');
-var filter = require('../models/filters');
-
-var COLLECTION_NAME = 'stores';
+var fav_days = require('./favourite_day');
+var fav_times = require('./favourite_time');
+var filter = require('./filters');
 
 exports.getAllUsage = function(payload, callback) {  
 	  getData(payload, function(err, result) { 
@@ -26,8 +24,9 @@ exports.getAllUsage = function(payload, callback) {
           }   
         }      
         
-        fillFavourites(payload, usage, function(err, result_) {                
-	        callback(err, usage);
+        fillFavourites(payload, usage, function(err, result_) {   
+          //console.log("Response : " + JSON.stringify(result_));        
+	        callback(err, result_);
         });  
 	    }
 	  });
@@ -41,18 +40,19 @@ var getData = function(payload, callback) {
   var view_name;  
   
   if( (filter.isFilterCategoryByRegion()) || 
-      (filter.isFilterCategoryNone()) 
+      (filter.isFilterCategoryNone()) ||
+      (filter.isFilterCategoryMixed())      
     )
-       view_name = "averages";
+    view_name = "averages";
   
   if(filter.isFilterCategoryByYear()) 
     view_name = "averagesByYear";
   
   //-----------
   db.view('averages', view_name, params, function(err, result) {
-    console.log("Usage view name " + view_name);    
+    /*console.log("Usage view name " + view_name);    
     console.log("Usage view params " + JSON.stringify(params));
-    console.log("Usage records form cloudant " + result.rows.length); 
+    console.log("Usage records form cloudant " + result.rows.length); */
     callback(err, result);
   });
 };  
@@ -75,30 +75,16 @@ var addOrUpdateUsages = function(payload, usages, new_usage) {
 
 var fillFavourites = function(payload, usage, callback) { 
   fav_days.getAllDays(payload, function(err, result) {   
-    //fav_times.getAllDays(payload, function(err, result) {    
+    fav_times.getAllDays(payload, function(err, result) {    
       for(var item in usage.data) {                
         usage.data[item].popularDay = fav_days.search(usage.data[item]);                
-        //usage.data[item].popularTime = fav_times.search(usage.data[item]);      
+        usage.data[item].popularTime = fav_times.search(usage.data[item]);  
+        //console.log("Usage : " + usage);
       } 
+      //console.log("Usage : " + JSON.stringify(usage.data));
       callback(null, usage);
-    //});     
-  });  
-};
-
-
-
-var usageExists_working = function(payload, usages, usage_to_find, group_level) {  
-  for(var each_usage in usages) {    
-    if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
-    
-    var all_match;
-    
-    if(payload.timescale.years.length) {        
-      all_match = (usages[each_usage].sold.year == usage_to_find.sold.year);
-    }
-    
-    if (all_match) return true;
-  }
+    });     
+  });
 };
 
 var usageExists = function(payload, usages, usage_to_find, group_level) {  
@@ -152,17 +138,27 @@ var fillRecord = function(result) {
   record.make = result.key[0];
   record.model = result.key[1]; 
 
-  if( (filter.isFilterCategoryByRegion()) || (filter.isFilterCategoryNone()) ) { 
-    record.state = result.key[2];
-    record.city = result.key[3];
-    record.zip_code = result.key[4]; 
+  if( (filter.isFilterCategoryNone()) || 
+      (filter.isFilterCategoryByRegion()) ||
+      (filter.isFilterCategoryMixed())
+    ) { 
+      record.state = result.key[2];
+      record.city = result.key[3];
+      record.zip_code = result.key[4]; 
   } 
   
-  if(filter.isFilterCategoryByYear()) {
+  if(filter.isFilterCategoryByYear()) {    
     record.sold.year = result.key[2]; 
     record.sold.quarter = result.key[3];
     record.sold.month = result.key[4];
   }
+  
+  if(filter.isFilterCategoryMixed()) {    
+    record.sold.year = result.key[5]; 
+    record.sold.quarter = result.key[6];
+    record.sold.month = result.key[7];
+  }
+  
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
@@ -172,6 +168,9 @@ var fillRecord = function(result) {
 };
 
 var doesRecordFallsInFilter = function(payload, keys) {
+  if(filter.isFilterCategoryNone())
+    return true;
+
   if(filter.isFilterCategoryByRegion()) {
     return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
             isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
@@ -188,14 +187,16 @@ var doesRecordFallsInFilter = function(payload, keys) {
             isItemPresent(payload.timescale.months, "value", keys[4]);
   }
   
-  /*return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-          isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
-          isItemPresent(payload.region.states, "value", keys[2]) && 
-          isItemPresent(payload.region.cities, "value", keys[3]) &&  
-          isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
-          isItemPresent(payload.timescale.years, "value", keys[5]) &&
-          isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
-          isItemPresent(payload.timescale.months, "value", keys[7]); */ 
+  if(filter.isFilterCategoryMixed()) {
+    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
+            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+            isItemPresent(payload.region.states, "value", keys[2]) && 
+            isItemPresent(payload.region.cities, "value", keys[3]) &&  
+            isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
+            isItemPresent(payload.timescale.years, "value", keys[5]) &&
+            isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
+            isItemPresent(payload.timescale.months, "value", keys[7]);
+  }          
 }
 
 var isItemPresent = function(array, key_name, item){  

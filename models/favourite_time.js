@@ -1,5 +1,6 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
+var filter = require('../models/filters');
 var response;
 
 exports.getAllDays = function(payload, callback) {
@@ -13,31 +14,43 @@ exports.getAllDays = function(payload, callback) {
 	  });
 };
 
-var usage_keys_in_csv = function(usage){
-  var usage_keys = usage.make + "," + usage.model;  
+var getData = function(payload, callback) {
+  filter.setPayload(payload);
+    
+  var view_name;
+  var params;
+     
+  if( (filter.isFilterCategoryByRegion()) || 
+      (filter.isFilterCategoryNone()) ||
+      (filter.isFilterCategoryMixed())
+    )
+       view_name = "WashTimeByMakeAndModel";
   
-  if(usage.state)
-    usage_keys = usage_keys + "," + usage.state;
+  if(filter.isFilterCategoryByYear()) 
+    view_name = "WashTimeByYear";
   
-  if(usage.city)
-    usage_keys = usage_keys + "," + usage.city
-  
-  if(usage.zip_code)
-    usage_keys = usage_keys + "," + usage.zip_code;
-  
-  return usage_keys;
-};
+  var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
+    
+  db.view('favouriteWashDay', view_name, params, function(err, result) {
+    /*console.log("Favourite wash time view name : " + view_name);
+    console.log("Favourite wash time params : " + JSON.stringify(params));    
+    console.log("Favourite wash time records from cloudant : " + result.rows.length);   */ 
+    response = result;    
+    callback(err, result);
+  });
+};  
 
 exports.search = function(usage, callback) {
   var days = {};           
-  var usage_keys = usage_keys_in_csv(usage);
   
-  for(var row in response.rows) { 
-    if(usage_keys.toUpperCase() === response.rows[row].key[0].join().toUpperCase().substring(0, usage_keys.length)) {      
-      if(days.hasOwnProperty(response.rows[row].key[2])) {
-        days[response.rows[row].key[2]] = days[response.rows[row].key[2]] + response.rows[row].value.count; 
+  var response_keys;
+  
+  for(var row in response.rows) {     
+    if(doesUsageFallsInResponse(usage, response.rows[row].key)){      
+      if(days.hasOwnProperty(response.rows[row].key[0])) {        
+        days[response.rows[row].key[0]] = days[response.rows[row].key[0]] + response.rows[row].value.count; 
       } else {  
-        days[response.rows[row].key[2]] = response.rows[row].value.count; 
+        days[response.rows[row].key[0]] = response.rows[row].value.count; 
       }
     }        
   }
@@ -47,38 +60,62 @@ exports.search = function(usage, callback) {
   for(var day in days) {
     if(days[day] > max) {
       max = days[day];
-      fav_day = day;      
+      fav_day = day;            
     }      
   }
+  
+  //console.log("fav day : " + fav_day);
   return fav_day;
 }
 
-var getData = function(payload, callback) {   
-  var view_name;
-  var params;
-  
-  if(payload === null || payload === undefined) {
-    view_name = "WashTimeByMakeAndModel";  
-    params = { group: true, reduce: true };  
-  } else { 
-    view_name = "favouriteWashTime";
-    params = { reduce: true, group: true, group_level: getGroupLevel(payload) }; 
-  }    
-  
-  db.view('favouriteWashDay', view_name, params, function(err, result) {    
-    response = result;    
-    callback(err, result);
-  });
-};  
+var doesUsageFallsInResponse = function(usage, keys) { 
+  var usage_values;
 
-var getGroupLevel = function(payload) {
-  var group_level = 2;  
+  if( (filter.isFilterCategoryNone()) || 
+      (filter.isFilterCategoryByRegion()) ||
+      (filter.isFilterCategoryMixed())
+    )
+    usage_values = [usage.make, usage.model, usage.state, usage.city, usage.zip_code];
   
-  if(payload.region.states.length > 0) group_level = 3;  
-  if(payload.region.cities.length > 0) group_level = 4;  
-  if(payload.region.zip_codes.length > 0) group_level = 5;  
+  if(filter.isFilterCategoryByYear()) 
+    usage_values = [usage.make, usage.model, usage.sold.year, usage.sold.quarter, usage.sold.month];
   
-  return group_level;
-};  
+  if( (filter.isFilterCategoryMixed()) ) 
+    usage_values.push(usage.sold.year, usage.sold.quarter, usage.sold.moth);
+  
+  var response_keys = keys.slice(1, keys.length);
+  var idx = 0;
+ 
+  //console.log("usage " + usage_values); 
+  while(idx < filter.filterType()) {  
+    //console.log("comparing");
+    //console.log("keys " + response_keys);
+    //console.log(usage_values[idx]);
+    //console.log(response_keys[idx]);
+    if(!match(usage_values[idx], response_keys[idx])) return false;
+    idx++;
+  }
+  
+  return true;
+};
 
+var doesUsageFallsInResponse_old = function(usage, keys) { 
+  var usage_values = [usage.make, usage.model, usage.state,
+                      usage.city, usage.zip_code, usage.year,
+                      usage.quarter, usage.month 
+                     ];
+  var response_keys = keys.slice(1, keys.length);
+  var idx = 0;
+   
+  while(idx < filter.filterType()) {    
+    if(!match(usage_values[idx], response_keys[idx])) return false;
+    idx++;
+  }
+  
+  return true;
+};
+
+var match = function(item1, item2) { 
+  return item1.toString().toUpperCase() === item2.toString().toUpperCase();
+}
 
