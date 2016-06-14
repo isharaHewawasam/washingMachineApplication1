@@ -32,40 +32,44 @@ var getData = function(payload, callback) {
   var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
     
   db.view('favouriteWashDay', view_name, params, function(err, result) {
-    /*console.log("Favourite wash time view name : " + view_name);
+    console.log("Time : " + Date());
+    console.log("Favourite wash time view name : " + view_name);
     console.log("Favourite wash time params : " + JSON.stringify(params));    
-    console.log("Favourite wash time records from cloudant : " + result.rows.length);   */ 
+    console.log("Favourite wash time records from cloudant : " + result.rows.length);
+    console.log("========================================");
     response = result;    
     callback(err, result);
   });
 };  
 
 exports.search = function(usage, callback) {
-  var days = {};           
-  
+  var wash_times = {}; 
   var response_keys;
   
   for(var row in response.rows) {     
     if(doesUsageFallsInResponse(usage, response.rows[row].key)){      
-      if(days.hasOwnProperty(response.rows[row].key[0])) {        
-        days[response.rows[row].key[0]] = days[response.rows[row].key[0]] + response.rows[row].value.count; 
+      if(wash_times.hasOwnProperty(response.rows[row].key[0])) {        
+        wash_times[response.rows[row].key[0]] = wash_times[response.rows[row].key[0]] + response.rows[row].value.count; 
       } else {  
-        days[response.rows[row].key[0]] = response.rows[row].value.count; 
+        wash_times[response.rows[row].key[0]] = response.rows[row].value.count; 
       }
     }        
   }
-    
-  var fav_day = "NA";
+   
+  //console.log("Wash time " + JSON.stringify(wash_times));   
+  var fav_wash_time = "NA";
   var max = 0;
-  for(var day in days) {
-    if(days[day] > max) {
-      max = days[day];
-      fav_day = day;            
+  for(var idx in wash_times) {
+    if(wash_times[idx] > max) {
+      //console.log("Idx : " + idx);
+      //console.log("wash time : " + wash_times[idx])
+      max = wash_times[idx];
+      fav_wash_time = idx;               
     }      
   }
   
-  //console.log("fav day : " + fav_day);
-  return fav_day;
+  //console.log("Favourite Wash Time : " + fav_wash_time);
+  return fav_wash_time;
 }
 
 var doesUsageFallsInResponse = function(usage, keys) { 

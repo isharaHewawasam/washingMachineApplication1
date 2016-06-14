@@ -32,9 +32,11 @@ var getData = function(payload, callback) {
   var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
     
   db.view('favouriteWashDay', view_name, params, function(err, result) {
-    /*console.log("Favourite day view name : " + view_name);
+    console.log("Time : " + Date());
+    console.log("Favourite day view name : " + view_name);
     console.log("Favourite day params : " + JSON.stringify(params));    
-    console.log("Favourite day records from cloudant : " + result.rows.length);   */ 
+    console.log("Favourite day records from cloudant : " + result.rows.length); 
+    console.log("=========================================");
     response = result;    
     callback(err, result);
   });

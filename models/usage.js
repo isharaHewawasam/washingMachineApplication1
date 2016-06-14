@@ -25,8 +25,10 @@ exports.getAllUsage = function(payload, callback) {
         }      
         
         fillFavourites(payload, usage, function(err, result_) {   
-          //console.log("Response : " + JSON.stringify(result_));        
-	        callback(err, result_);
+          //console.log("Response : " + JSON.stringify(result_)); 
+          console.log("Sending response");            
+          callback(err, "ddgfdgdfgresult_");          
+	        //callback(err, result_);
         });  
 	    }
 	  });
@@ -50,9 +52,11 @@ var getData = function(payload, callback) {
   
   //-----------
   db.view('averages', view_name, params, function(err, result) {
-    /*console.log("Usage view name " + view_name);    
+    console.log("Time : " + Date());
+    console.log("Usage view name " + view_name);    
     console.log("Usage view params " + JSON.stringify(params));
-    console.log("Usage records form cloudant " + result.rows.length); */
+    console.log("Usage records form cloudant " + result.rows.length);
+    console.log("============================================");
     callback(err, result);
   });
 };  
@@ -79,7 +83,7 @@ var fillFavourites = function(payload, usage, callback) {
       for(var item in usage.data) {                
         usage.data[item].popularDay = fav_days.search(usage.data[item]);                
         usage.data[item].popularTime = fav_times.search(usage.data[item]);  
-        //console.log("Usage : " + usage);
+        //console.log("Usage : " + JSON.stringify(usage));
       } 
       //console.log("Usage : " + JSON.stringify(usage.data));
       callback(null, usage);

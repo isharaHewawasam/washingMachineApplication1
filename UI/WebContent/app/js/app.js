@@ -59,6 +59,9 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 
           }]);
 
+ App.value('http_defaults', {
+    timeout: (10 * 60 * 1000)
+  });
 /**=========================================================
  * Module: config.js
  * App routes and resources configuration
@@ -623,8 +626,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		  
 		
 		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
-		
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+		$http({url:'http://ibm-iot.mybluemix.net/api/v1/usage',        
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -648,7 +650,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false     
-	        	 alert("No data found");
+	        	 alert("timeout No data found");
 	        	 console.log("error:"+status);
 	        	 
 	         });
