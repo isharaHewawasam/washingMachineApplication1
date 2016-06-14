@@ -59,9 +59,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 
           }]);
 
- App.value('http_defaults', {
-    timeout: (10 * 60 * 1000)
-  });
+ 
 /**=========================================================
  * Module: config.js
  * App routes and resources configuration

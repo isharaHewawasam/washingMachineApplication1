@@ -25,10 +25,10 @@ exports.getAllUsage = function(payload, callback) {
         }      
         
         fillFavourites(payload, usage, function(err, result_) {   
-          //console.log("Response : " + JSON.stringify(result_)); 
+          console.log("Response : " + JSON.stringify(result_)); 
           console.log("Sending response");            
-          callback(err, "ddgfdgdfgresult_");          
-	        //callback(err, result_);
+          //callback(err, "ddgfdgdfgresult_");          
+	        callback(err, result_);
         });  
 	    }
 	  });
