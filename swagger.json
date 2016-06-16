@@ -365,8 +365,8 @@
     },
     "/sensors": {
       "post": {
-        "x-swagger-router-controller": "sensor",
-        "operationId": "getUsage",
+        "x-swagger-router-controller": "sensors",
+        "operationId": "getSensorsByFilter",
         "tags": ["Sensors"],
         "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
         "parameters": [
@@ -391,7 +391,7 @@
             "description": "Successful request.",            
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/Usage"
+              "$ref": "#/definitions/SensorsResponse"
             }
           }
         }
@@ -432,7 +432,7 @@
             "description": "Successful request.",            
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/Usage"
+              "$ref": "#/definitions/SensorsResponse"
             }
           }
         }
@@ -718,7 +718,45 @@
            "type": "integer"                    
         }
       }
-    },    
+    },
+    "SensorsResponse": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/SensorResponse" 
+          }          
+        }
+      }
+    },
+    "SensorResponse": {
+      "properties": {
+        "make": {                   
+           "type": "string"                    
+        },
+        "model": {                   
+           "type": "string"                    
+        },
+        "avgWaterUsed": {                   
+           "type": "number"                    
+        },
+        "avgEngergyUsed": {                   
+           "type": "number"                    
+        },
+        "aviongWashCycleDuration": {                   
+           "type": "integer"                    
+        },
+        "avgWashCycles": {                   
+           "type": "integer"                    
+        },
+        "avgTemperature": {                   
+           "type": "number"                    
+        },
+        "avgDetergentUsed": {                   
+           "type": "number"                    
+        }
+      }
+    },
     "SalesByChartResponse": {
       "properties": {
         "xAxisUnit": {                   

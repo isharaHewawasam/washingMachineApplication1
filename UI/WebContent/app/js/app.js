@@ -664,7 +664,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
 
-    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+    		  $http({url:"http://localhost:3000/api/v1/usage", 
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
@@ -736,7 +736,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    } 
 
 	
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/states', 
+	 $http({url:'http://localhost:3000/api/v1/config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
@@ -755,7 +755,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	 
 	 //sanket changes
 	 
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/sales/years', 
+	 $http({url:'http://localhost:3000/api/v1/config/sales/years', 
 	     	method: "get",
 	     	Accept: "text/plain"
 	     	})
@@ -771,7 +771,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
 		 $scope.zips=[];
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.region.states, 
+		 $http({url:"http://localhost:3000/api/v1/config/states/cities?state_names="+$scope.region.states, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -787,7 +787,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		
 		 $scope.region.zip_codes=undefined;
 		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
+		 $http({url:"http://localhost:3000/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -948,7 +948,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes', 
+    $http({url:'http://localhost:3000/api/v1/config/makes', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.makes=data.makes;
@@ -963,7 +963,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	 
     
     
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
+    $http({url:'http://localhost:3000/api/v1/config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
