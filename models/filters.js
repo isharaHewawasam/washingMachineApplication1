@@ -34,7 +34,8 @@ exports.setPayload = function(payload) {
   filter_type = FILTER.NONE; 
  
   if((payload === null) || (payload === undefined)) return;  
- 
+  if((payload.region === undefined) && (payload.timescale === undefined)) return;
+  
   // Region 
   if(payload.region.states.length > 0) filter_type = FILTER.BY_STATE;  
   if(payload.region.cities.length > 0) filter_type = FILTER.BY_CITY;  

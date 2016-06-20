@@ -37,6 +37,7 @@ exports.getAllUsage = function(payload, callback) {
 };
 
 var getData = function(payload, callback) { 
+console.log("payload " + JSON.stringify(payload));
   filter.setPayload(payload);
   //var params = { reduce: true, group: true, group_level: filter.groupLevel() };
   var params = { reduce: true, group_level: filter.groupLevel() };
