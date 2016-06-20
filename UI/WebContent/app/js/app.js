@@ -18,6 +18,7 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 // APP START
 // ----------------------------------- 
 var Role;
+var Name;
 var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
@@ -263,14 +264,16 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	           	  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');
 	           	  
-	           	$rootScope.Role="mkt_manager";
+	           	$rootScope.Role="Mkt Manager";
+	        	$rootScope.Name="John Smith";
 	             };
 	        	
 	        	
 	        }else{
 	      	  $scope.errorMsg = 'success';
 	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="eng_manager";
+	      	$rootScope.Role="Engg Manager";
+	      	$rootScope.Name="Alan Mcdormet";
 	      	  // window.location.href = 'success.html';
 	      	 // $state.go('app.singleview');
 	      	  
@@ -324,9 +327,10 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', function($rootScope,$scope, $http, $state) {
 	//alert("loaded");
-	console.log("rolename from rootscope "+$rootScope.Role);
+	console.log("name from rootscope "+$rootScope.Name);
 	$scope.rolename=$rootScope.Role;
-	console.log("rolename from scope "+$scope.rolename);
+	$scope.names=$rootScope.Name;
+	console.log("names from scope "+$scope.names);
 	
 	}]);
 /**=========================================================
@@ -1170,6 +1174,50 @@ App.controller('myController', function ($scope) {
 		}]
 	});
 	}
+	
+	$scope.plotEngManagerChartFunction = function(divId){
+		$("#"+divId).highcharts( {
+			credits:false,
+			title:false,
+			legend: {enabled:false},
+		    xAxis: {
+		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
+		    },
+		    yAxis: {
+				title:false
+			    },
+			    tooltip: {
+			    	backgroundColor: '#87C1E6',
+			    	shared: true,
+				    style:{
+						color:'#ffffff'
+					}
+		        },
+		        plotOptions: {
+		            series: {
+		            	 color: "#f0f0f0", 
+		                marker: {
+		                	fillColor: '#FFFFFF', 
+		                    lineWidth: 2,
+		                    lineColor: "#6BD500",  // inherit from series 
+		                    radius: 6
+		                }
+		            }
+		        },
+		    series: [{
+			    		name:"WD100CW",
+		        		data: [0, 1000, 1733, 129, 2000, 1322, 1500]
+		    }/*,
+		    {
+	    		name:"WA80E5XEC",
+	    		data: [110, 120, 733, 1029, 20, 122, 150]
+			},
+		    {
+	    		name:"WTW7000DW",
+	    		data: [1110, 1920, 633, 129, 520, 1212, 350]
+			}*/]
+		});
+		}
 	
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
