@@ -2,7 +2,7 @@
 var avg = require('./avg_calculator');
 
 exports.getAverageUsage = function(payload, averagesBuffer, callback) {
-  const SENSOR_NAME = "Power";
+  var SENSOR_NAME = "Power";
     
   var params = { 
                  "description": "Average Water Usage",
