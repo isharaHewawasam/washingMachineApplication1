@@ -366,7 +366,7 @@
     "/sensors": {
       "post": {
         "x-swagger-router-controller": "sensors",
-        "operationId": "getSensorsByFilter",
+        "operationId": "getSensorsDataByFilter",
         "tags": ["Sensors"],
         "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
         "parameters": [
@@ -378,48 +378,14 @@
             "schema": {
               "$ref": "#/definitions/Usage"
             }
-          }
-        ],      
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/SensorsResponse"
-            }
-          }
-        }
-      }
-    },
-    "/sensors/{sensor}": {
-      "post": {
-        "x-swagger-router-controller": "sensor",
-        "operationId": "getUsage",
-        "tags": ["Sensors"],
-        "description": "Returns washing machines usage for a single attribute like temperature, power usage etc",
-        "parameters": [
           {
-            "name": "sensor",
-            "in": "path",
-            "description": "Sensor name (temperature, water, power sensor etc).",
-            "required": true,
-            "type": "string"
-          }, 
-          {
-            "name": "Payload",
-            "in": "body",
+            "name": "sensor_name",
+            "in": "query",
             "description": "Washing Machine, Date and Region information",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Usage"
-            }
-          }
+            "required": false,
+            "type": "string"
+          }              
         ],      
         "responses": {
           "default": {

@@ -5,12 +5,19 @@ var http = require('http');
 var swaggerTools = require('swagger-tools');
 var config = require('./config/config');
 var db = require('./database/db')
+var Database = require('./database/db_')
 var WashDailyAggregateDb = require('./database/dbWashDailyAggregate')
 var serverPort = process.env.PORT || 3000;
 var serveStatic = require('serve-static');
 var cors = require('cors');
+var bodyParser = require('body-parser');
+
+
 
 app.use(serveStatic("./UI/WebContent"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // swaggerRouter configuration
 var options = {
   controllers: './controllers',
@@ -36,6 +43,7 @@ process.on('SIGINT', exitHandler);
 process.on('exit', exitHandler);
 process.on('uncaughtException', exitHandler);
 
+var salesDb = new Database();
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   
@@ -57,7 +65,29 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
-
+   
+  /*salesDb.open(config.WashDailyAggregateDatabase, function(err){
+    if(err) {
+      console.log("Error in database connection : " + err);
+      return;
+    }
+    
+    console.log("Connection successfull");
+    salesDb.use(config.SalesDatabase.dbName, function(err){      
+      if(err) {
+        return;
+      }
+    
+      var params = { reduce: true, group_level: 2 };
+    
+      salesDb.view('averages', "averages", params, function(err, result) {
+        //console.log(err);
+        console.log(JSON.stringify(result));
+      });
+    
+    });
+  });*/
+  
   //connect to database
   db.open(config.SalesDatabase, function(err) {
 	  if(err) {	  	
@@ -69,7 +99,8 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
           console.log("Wash daily aggregate Database connection failed");
 	        console.log(err);
         } else {
-          http.createServer(app).listen(serverPort, '0.0.0.0', function() {   			
+          http.createServer(app).listen(serverPort, '0.0.0.0', function() {   
+            //getAllAverages();          
 	          console.log('Express server listening on port ' + serverPort);
           });
         }  
@@ -82,3 +113,18 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
   });*/
 });
+
+var getAllAverages = function(payload){
+  var sensors = require("./models/sensors/sensors");
+  var payload = require('./payloads/states').payload;
+  var avgWaterUsage = 0;
+  
+  sensors.getAverageUsageForAll(payload, function(err, result) {
+    if(result) {
+      console.log(result);
+    } else {
+      console.log("Error in getting water average " + err);
+    }
+  });
+  
+};

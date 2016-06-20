@@ -17,7 +17,7 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 
 // APP START
 // ----------------------------------- 
-
+var Role;
 var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
@@ -59,7 +59,6 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 
           }]);
 
- 
 /**=========================================================
  * Module: config.js
  * App routes and resources configuration
@@ -74,8 +73,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   $locationProvider.html5Mode(false);
 
   // default route
-  $urlRouterProvider.otherwise('/app/singleview');
-
+  //$urlRouterProvider.otherwise('/app/singleview');
+  $urlRouterProvider.otherwise('/page/login');
   // 
   // Application Routes
   // -----------------------------------   
@@ -88,11 +87,41 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('modernizr', 'icons')
     })
      
+    .state('page', {
+        url: '/page',
+        templateUrl: 'app/views/page.html',
+        resolve: helper.resolveFor('modernizr', 'icons'),
+        controller: ["$rootScope", function($rootScope) {
+            $rootScope.app.layout.isBoxed = false;
+        }]
+    })
+    .state('page.login', {
+        url: '/login',
+        title: "Login",
+        controller: 'LoginFormController',
+
+        templateUrl:helper.basepath('Login.html')
+        })
+    
+    /*.state('app.login', {
+        url: '/login',
+        title: "Login",
+        controller: 'LoginFormController',
+        templateUrl:helper.basepath('Login.html')
+        //templateUrl: 'app/pages/login.html'
+    })*/
     .state('app.singleview', {
         url: '/singleview',
         title: 'Single View',
         controller: 'DashboardController',
         templateUrl: helper.basepath('singleview.html')
+    })
+    
+    .state('app.engmanagerview', {
+        url: '/engmanagerview',
+        title: 'engmanagerview',
+        controller: 'DashboardController',
+        templateUrl: helper.basepath('engmanagerview.html')
     })
 	.state('app.myownview', {
         url: '/myownview',
@@ -212,6 +241,94 @@ App
 
   })
 ;
+
+
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state,$rootScope) {
+	//alert("loaded");
+	
+	
+	
+	$scope.postForm = function() {
+
+		
+		//{ success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
+		 var response1 = { success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
+	        if(!response1.success) {
+	      	//  $scope.errorMsg  = 'Not Authorised';
+	        	
+	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
+	             if(!response.success) {
+	           	  $scope.errorMsg  = 'Not Authorised';
+	             }else{
+	           	  $scope.errorMsg = 'success';
+	           	  $state.go('app.singleview');
+	           	  
+	           	$rootScope.Role="mkt_manager";
+	             };
+	        	
+	        	
+	        }else{
+	      	  $scope.errorMsg = 'success';
+	      	$state.go('app.engmanagerview');
+	      	$rootScope.Role="eng_manager";
+	      	  // window.location.href = 'success.html';
+	      	 // $state.go('app.singleview');
+	      	  
+	      //	 $state.go('app.engmanagerview');
+	      	//return
+	        };
+		
+		/*
+		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
+        if(!response.success) {
+      	  $scope.errorMsg  = 'Not Authorised';
+        }else{
+      	  $scope.errorMsg = 'success';
+      	  $state.go('app.singleview');
+      	  
+      	
+        };*/
+//alert("loaded");
+//$state.go('app.login');
+
+/*	  // bind here all data from the form
+ $scope.account = {};
+	  // place the message if something goes wrong
+	  $scope.authMsg = '';
+
+	  $scope.login = function() {
+	    $scope.authMsg = '';
+
+	    $http
+	      .post('api/account/login', {email: $scope.account.email, password: $scope.account.password})
+	      .then(function(response) {
+	        // assumes if ok, response is an object with some data, if not, a string with error
+	        // customize according to your api
+	        if ( !response.account ) {
+	          $scope.authMsg = 'Incorrect credentials.';
+	        }else{
+	          $state.go('app.dashboard');
+	        }
+	      }, function(x) {
+	        $scope.authMsg = 'Server Request Error';
+	      });
+	  };*/
+	//  $state.go('app.singleview');
+
+	 // app.login
+	}
+	}]);
+
+
+
+
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', function($rootScope,$scope, $http, $state) {
+	//alert("loaded");
+	console.log("rolename from rootscope "+$rootScope.Role);
+	$scope.rolename=$rootScope.Role;
+	console.log("rolename from scope "+$scope.rolename);
+	
+	}]);
 /**=========================================================
  * Module: main.js
  * Main Application Controller
@@ -304,7 +421,7 @@ App.controller('AppController',
       // list of available languages
       available: {
         'en':       'English',
-        'es_AR':    'Español'
+        'es_AR':    'EspaÃ±ol'
       },
       // display always the current ui language
       init: function () {
@@ -333,7 +450,7 @@ App.controller('AppController',
     };
 
     
-    $state.go('app.singleview');
+   // $state.go('app.singleview');
     
 }]);
 
@@ -624,7 +741,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		  
 		
 		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
-		$http({url:'http://ibm-iot.mybluemix.net/api/v1/usage',        
+		
+		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -648,7 +766,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false     
-	        	 alert("timeout No data found");
+	        	 alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
 	         });

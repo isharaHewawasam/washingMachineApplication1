@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AngularJS Posting Login Form</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="app/css/Login.css" rel="stylesheet"/>
+	
+  </head>
+
+  <body  ng-controller="LoginFormController">
+ 
+  
+ <div style="background:0A427D !important" class="jumbotron">
+ <img src="app/img/Dashboardassets/logo.png" alt="App Logo" class="img-responsive btnPendingGoals"   />
+<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">IOT for Electronics</strong>
+  
+ 
+</div>
+    <div class="container">
+       <h2><img src="app/img/Dashboardassets/iconlock.png" class="lock"   /></span> Login</h2>
+      <form class="login-form" ng-submit="postForm()">
+       
+         
+        <label >Username</label>
+        
+        <input type="email" id="inputUsername" class="form-control" placeholder="Username" required autofocus ng-model="inputData.username"></br>
+        <label for=>Password</label>
+      
+        <input type="password" id="inputPassword"  class="form-control" placeholder="Password" required ng-model="inputData.password">
+		<br>
+		<div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
+		 <a href="#" class="pull-left forgot-password" ><u>Forgot Password </u></a>
+        <button class="btn" type="submit" >Login</button>
+		
+      </form>
+    </div> 
+	<script>
+	angular.module('postExample', [])
+	.controller('PostController', ['$scope', '$http', function($scope, $http) {
+		
+		this.postForm = function() {
+
+			
+			
+			  var response = { success: this.inputData.username === 'test' && this.inputData.password === 'test' };
+              if(!response.success) {
+            	  $scope.errorMsg  = 'Not Authorised';
+              }else{
+            	  $scope.errorMsg = 'success';
+            	  window.location.href = 'success.html';
+              }
+
+	/*		var encodedString = 'username=' +
+				encodeURIComponent(this.inputData.username) +
+				'&password=' +
+				encodeURIComponent(this.inputData.password);
+				
+			$http({
+				method: 'POST',
+				url: 'check-login.php',
+				data: encodedString,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data, status, headers, config) {
+				console.log(data);
+				if ( data.trim() === 'correct') {
+					window.location.href = 'success.html';
+				} else {
+					$scope.errorMsg = "Login not correct";
+				}
+			})
+			.error(function(data, status, headers, config) {
+				$scope.errorMsg = 'Unable to submit form';
+			})  */
+		}
+		
+	}]);
+	</script>
+  </body>
+</html>

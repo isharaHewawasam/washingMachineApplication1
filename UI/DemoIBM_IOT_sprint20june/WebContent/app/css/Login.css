@@ -1,0 +1,51 @@
+.login-form {
+			max-width: 400px;
+			margin: 0 auto;
+			 padding: 15px 35px 45px;
+			background-color: #fff;
+  			border: 1px solid rgba(0,0,0,0.1);  
+		}
+		#inputUsername {
+		  margin-bottom: -1px;
+		  border-bottom-right-radius: 0;
+		  border-bottom-left-radius: 0;
+		  
+		}
+		#inputPassword {
+			border-top-left-radius: 0;
+  			border-top-right-radius: 0;
+  		
+  			
+		}
+		h2 {
+    text-align: center;
+}
+/** Bootstrap**/
+.jumbotron {
+    padding: 20px 15px;
+    margin-bottom: 30px;
+    color: inherit;
+       display: inline-block;
+    width: 100%;
+    background-color:#0A427D
+}
+.lock{
+	  margin-bottom: 23px;
+	 
+}
+.btn {
+  border-radius:0;
+  background: #0A427D;
+  color: #ffffff;
+	float:right;
+  
+}
+.btn:hover {
+  color: #ffffff;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img
+{
+display: inline;
+}
+	

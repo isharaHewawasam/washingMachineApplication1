@@ -30,9 +30,10 @@ var getData = function(payload, callback) {
     view_name = "WashDayByYear";
   
   var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
-    
+  
+ console.log("Sending favtoure day query request " + Date());  
   db.view('favouriteWashDay', view_name, params, function(err, result) {
-    console.log("Time : " + Date());
+    console.log("Received favoutire day : " + Date());
     console.log("Favourite day view name : " + view_name);
     console.log("Favourite day params : " + JSON.stringify(params));    
     console.log("Favourite day records from cloudant : " + result.rows.length); 

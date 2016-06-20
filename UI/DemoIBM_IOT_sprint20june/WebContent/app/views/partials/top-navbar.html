@@ -1,5 +1,5 @@
 <!-- START Top Navbar-->
-<nav role="navigation" class="navbar topnavbar" style="height: 60px; border:0px; margin:0px; padding:0px; ">
+<nav role="navigation" class="navbar topnavbar" ng-controller="TopnavbarController" style="height: 60px; border:0px; margin:0px; padding:0px; ">
 	<!-- START navbar header-->
 	<div class="navbar-header"></div>
 	<!-- END navbar header-->
@@ -34,6 +34,7 @@
 								<span class="media-heading">
 									<img src="app/img/Dashboardassets/user_pic.png" alt="Image"	class="media-box-object img-circle thumb48" style="display:inline;"/>
 									<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">John Smith</strong>
+								<label >{{rolename}}</label>
 								</span>
 							</span>
 							<img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" style="display:inline;"/>
