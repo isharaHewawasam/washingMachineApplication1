@@ -261,7 +261,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	             if(!response.success) {
 	           	  $scope.errorMsg  = 'Not Authorised';
 	             }else{
-	           	  $scope.errorMsg = 'success';
+	           	//  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');
 	           	  
 	           	$rootScope.Role="Mkt Manager";
@@ -270,7 +270,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        	
 	        	
 	        }else{
-	      	  $scope.errorMsg = 'success';
+	      	 // $scope.errorMsg = 'success';
 	      	$state.go('app.engmanagerview');
 	      	$rootScope.Role="Engg Manager";
 	      	$rootScope.Name="Alan Mcdormet";
@@ -332,6 +332,13 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	$scope.names=$rootScope.Name;
 	console.log("names from scope "+$scope.names);
 	
+	
+	
+	
+	 $scope.logOut=function(){
+		
+		 $state.go('page.login');
+		   }
 	}]);
 /**=========================================================
  * Module: main.js
