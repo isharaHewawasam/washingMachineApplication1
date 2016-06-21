@@ -2,10 +2,10 @@
 var avg = require('./avg_calculator');
 
 exports.getAverageUsage = function(payload, averagesBuffer, callback) {
-  var SENSOR_NAME = "Power";
-  
+  var SENSOR_NAME = "Detergent";
+    
   var params = { 
-                 "description": "Average Water Usage",
+                 "description": "Average Wash Cycles",
                  "payload": payload,
                  "buffer": averagesBuffer,
                  "view": {
@@ -17,7 +17,6 @@ exports.getAverageUsage = function(payload, averagesBuffer, callback) {
                };
   
   avg.getAverageUsage(params, function(err, result) {
-    //console.log("power " + JSON.stringify(result));
     callback(err, result);
   });    
   

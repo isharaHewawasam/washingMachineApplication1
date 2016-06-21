@@ -1,3 +1,4 @@
+'use strict';
 var all_sensors = { "data":[{
         "make": "Whirlpool",
         "model": "WM1001",

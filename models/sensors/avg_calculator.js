@@ -12,15 +12,15 @@ exports.getAverageUsage = function(params, callback) {
         var row;
         
         if((params.payload === null) || (params.payload === undefined)){
-          for(row in result.rows) {          
+          for(row in result.rows) {                    
             params.buffer.push(fillRecord(result.rows[row], params.avgKeyName));
           }
         } else {
           for(var row in result.rows) {
-            //console.log(result.rows[row].key);
             if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) { 
-              //console.log("adding");
-              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params.avgKeyName));
+              //console.log("adding " + params.avgKeyName);
+              //console.log(JSON.stringify(result.rows[row].key));
+              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params.avgKeyName), params.avgKeyName);
             }                    
           }   
         }      
@@ -49,14 +49,22 @@ var getData = function(params, callback) {
   });
 };  
 
-var addOrUpdateUsages = function(payload, usages, new_usage) {
-  if(usageExists(payload, usages, new_usage, filter.filterType())) {    
+var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name) {
+  //console.log("exists " + avg_key_name); 
+  if(usageExists(payload, usages, new_usage, filter.filterType())) {
+    //console.log("exists " + avg_key_name);   
     for(var each_usage in usages) {
-      //console.log("Beforexxx");
-      if( (each_usage.make == new_usage.make) && (each_usage.model == new_usage.model) ) {
+      //console.log(new_usage);
+      if( (usages[each_usage].make == new_usage.make) && (usages[each_usage].model == new_usage.model) ) {
+        
         //console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
-        usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
-        //console.log("After " + JSON.stringify(new_usage));
+        //usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
+        if (usages[each_usage].hasOwnProperty(avg_key_name)) {
+          usages[each_usage][avg_key_name] = (usages[each_usage][avg_key_name] + new_usage[avg_key_name])/2;
+        } else {
+          usages[each_usage][avg_key_name] = new_usage[avg_key_name];
+        }
+        //console.log("after " + JSON.stringify(usages[each_usage]));
         return;
       }
     }
@@ -139,7 +147,7 @@ var fillRecord = function(result, key_name) {
   }
   
   record[key_name] = (result.value[0].sum / result.value[0].count).toFixed(2);
-  
+  record[key_name] = parseFloat(record[key_name]);
   
   //console.log("record : " + JSON.stringify(record));  
   return record;
@@ -183,8 +191,9 @@ var doesRecordFallsInFilter = function(payload, keys) {
 
 var isItemPresent = function(array, key_name, item){ 
   if(array.length == 0) return true;
-  
+
   for(var array_item in array) {    
+    //console.log(array[array_item][key_name].toString().toUpperCase() + "   " + item.toUpperCase());
     if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true    
   }
  

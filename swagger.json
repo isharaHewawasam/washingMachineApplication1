@@ -58,7 +58,7 @@
         }
       }
     },
-    "/sales/{chart_id}": {
+    "/sales": {
       "post": {
         "x-swagger-router-controller": "sales",
         "operationId": "getChartById",
@@ -67,7 +67,7 @@
          "parameters": [
           {
             "name": "chart_id",
-            "in": "path",
+            "in": "query",
             "description": "Char id",
             "required": true,
             "type": "string"
@@ -76,7 +76,7 @@
             "name": "Payload",
             "in": "body",
             "description": "Washing Machine, Date and Region information",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/SalesByChartPayload"
             }
@@ -364,9 +364,32 @@
       }
     },
     "/sensors": {
+      "get": {
+        "x-swagger-router-controller": "sensors",
+        "operationId": "getSensors",
+        "tags": ["Sensors"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/SensorNameResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sensors/data": {
       "post": {
         "x-swagger-router-controller": "sensors",
-        "operationId": "getSensorsDataByFilter",
+        "operationId": "getSensorsAvgUsage",
         "tags": ["Sensors"],
         "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
         "parameters": [
@@ -398,7 +421,7 @@
             "description": "Successful request.",            
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/SensorsResponse"
+              "$ref": "#/definitions/MultipleSensorsDataResponse"
             }
           }
         }
@@ -685,17 +708,17 @@
         }
       }
     },
-    "SensorsResponse": {
+    "MultipleSensorsDataResponse": {
       "properties": {        
         "data": {
           "type": "array",
           "items": {            
-            "$ref": "#/definitions/SensorResponse" 
+            "$ref": "#/definitions/SensorDataResponse" 
           }          
         }
       }
     },
-    "SensorResponse": {
+    "SensorDataResponse": {
       "properties": {
         "make": {                   
            "type": "string"                    
@@ -720,6 +743,25 @@
         },
         "avgDetergentUsed": {                   
            "type": "number"                    
+        }
+      }
+    },
+    "SensorNameResponse": {
+      "properties": {
+        "displayName": {                   
+           "type": "string"                    
+        },
+        "key": {                   
+           "type": "string"                    
+        },
+        "api": {                   
+           "type": "string"                    
+        },
+        "defaults": {                   
+           "type": "string"                    
+        },
+        "aviongWashCycleDuration": {                   
+           "type": "integer"                    
         }
       }
     },
@@ -755,8 +797,7 @@
         }
       }
     },
-    "Charts": {
-             
+    "Charts": {             
     },    
     "Error": {
       "properties": {
