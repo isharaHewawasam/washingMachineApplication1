@@ -259,7 +259,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        	
 	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
 	             if(!response.success) {
-	           	  $scope.errorMsg  = 'Not Authorised';
+	           	  $scope.errorMsg  = 'Incorrect username or password entered. Please try again';
 	             }else{
 	           	//  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');

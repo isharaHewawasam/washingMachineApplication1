@@ -7,14 +7,11 @@
 		}
 		#inputUsername {
 		  margin-bottom: -1px;
-		  border-bottom-right-radius: 0;
-		  border-bottom-left-radius: 0;
+		  border-radius: 0;
 		  
 		}
 		#inputPassword {
-			border-top-left-radius: 0;
-  			border-top-right-radius: 0;
-  		
+			border-radius: 0;
   			
 		}
 		h2 {
@@ -28,6 +25,12 @@
        display: inline-block;
     width: 100%;
     background-color:#0A427D
+}
+
+
+
+.help-block{
+	color: #a94442;
 }
 .lock{
 	  margin-bottom: 23px;
