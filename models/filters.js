@@ -22,11 +22,38 @@ var FILTER = {
   'MIXED': 9
 };
 
+var REPORT_TYPE = {
+  "NONE": 0,
+  "SENSOR": 1,
+  "TOP_3_SELLING_MODELS": 2,
+  "SOLD_VS_CONNECTED": 3
+};
+
 var filter_category = FILTER_CATEGORY.NONE;
 var filter_type = FILTER.NONE;
+var report_type = REPORT_TYPE.NONE;
 
 var isFilterSelected = function(items){
   return (items.length > 0)
+}
+
+exports.setReportType2Sensor = function() {
+  report_type =  REPORT_TYPE.SENSOR;
+};
+
+exports.setReportType2Sales = function() {
+  report_type =  REPORT_TYPE.TOP_3_SELLING_MODELS;
+}
+
+exports.setReportType2SoldVsConnected = function() {
+  report_type =  REPORT_TYPE.SOLD_VS_CONNECTED;
+}
+function isDataTypeSensor() {
+  return report_type ===  REPORT_TYPE.SENSOR;
+}
+
+function isDataTypeSales() {
+  return report_type ===  REPORT_TYPE.TOP_3_SELLING_MODELS;
 }
 
 exports.setPayload = function(payload) { 
@@ -98,7 +125,20 @@ exports.groupLevel = function(){
   if(filter_category === FILTER_CATEGORY.MIXED)
     return 8;
   
-  if(isFilterByNone()) return 2;
+  if (isFilterByNone()) {
+    switch(report_type) {
+      case REPORT_TYPE.NONE:
+      case REPORT_TYPE.SENSOR:
+        return 2;
+      case REPORT_TYPE.TOP_3_SELLING_MODELS:
+        return 4;
+      case REPORT_TYPE.SOLD_VS_CONNECTED:
+        return 0;
+      default:
+        return -1;      
+    }    
+  }
+  
   if(isFilterByMake()) return 1; 
   if(isFilterByModel()) return 2;
   

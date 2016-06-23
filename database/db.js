@@ -12,6 +12,14 @@ var state = {
   db: null
 };
 
+exports.view = function(design_doc_name, view_name, params, callback) {
+  if(state.db == undefined) return callabck('Not connected to database connected');  
+  
+  state.db.view(design_doc_name, view_name, params, function(err, result) {
+    if(err) return callback(err, null);
+    if(result) return callback(err, result);    
+  });  
+};
 
 // open database
 exports.open = function(conn_info, callback) {

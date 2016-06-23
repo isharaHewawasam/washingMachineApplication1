@@ -1,7 +1,7 @@
 "use strict"
 
 var express = require('express');
-var sales = require('../models/sales.js');
+var sales = require('../models/sales/sales.js');
 var helper = require('./helpers/utility.js');
 
 module.exports.getCharts = function(req, res, next) {
@@ -10,11 +10,10 @@ module.exports.getCharts = function(req, res, next) {
 	});
 };
 
-module.exports.getChartById = function(req, res, next) {
-  var chart_id = req.swagger.params.chart_id === undefined ? null : req.swagger.params.chart_id.value;  
-	console.log("Chart Id " + chart_id);
+module.exports.getReportData = function(req, res, next) {
+  var report_name = req.swagger.params.report_name === undefined ? null : req.swagger.params.report_name.value;  
   
-	sales.getChartDataById(chart_id, function(err, result){  	  
+	sales.getReportData(report_name, req.body, function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	});
 };

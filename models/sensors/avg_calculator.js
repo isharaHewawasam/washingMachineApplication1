@@ -1,26 +1,56 @@
 'use strict';
-var db = require('../../database/dbWashDailyAggregate');
+var salesDb = require('../../database/db');
+var sensorsDataDb = require('../../database/dbWashDailyAggregate');
+var keys_map = require("./view_keys_mapping");
 var filter = require('../filters');
 var dummy_data = require('../../database/dummy_data/sensors');
 
-//exports.getAverageUsage = function(sensor_name, payload, usage_records, callback) {
-exports.getAverageUsage = function(params, callback) {     
-	  getData(params, function(err, result) { 
+exports.getSumPie = function(params, callback) {  
+  params.stats = "sum_pie";
+  filter.setReportType2SoldVsConnected();
+  keys_map.setReportType2TopModels();
+  
+  getStats(params, callback);
+};
+
+exports.getSum = function(params, callback) {  
+  params.stats = "sum";
+  filter.setReportType2Sales();
+  keys_map.setReportType2TopModels();
+  
+  if (params.top !== undefined) {
+    params.sort = { "value": true, "order": "desc" }
+  }
+  
+  getStats(params, callback);
+};
+
+exports.getAverage = function(params, callback) {  
+  params.stats = "average";
+  getStats(params, callback);
+};
+
+function getStats(params, callback) {
+	  getData(params, function(err, result) {   
 	    if(err) {
 	    	callback(err, null);
 	    } else {  
-        var row;
+        if (filter.groupLevel() == 0) {
+          callback(err, result);
+          return;
+        }
         
         if((params.payload === null) || (params.payload === undefined)){
-          for(row in result.rows) {                    
-            params.buffer.push(fillRecord(result.rows[row], params.avgKeyName));
+          for(var row in result.rows) {
+            params.buffer.push(fillRecord(result.rows[row], params));
           }
         } else {
           for(var row in result.rows) {
-            if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) { 
-              //console.log("adding " + params.avgKeyName);
+            //console.log(result.rows[row].key);
+            if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) {
+              //console.log("adding " + params.statsKeyName);
               //console.log(JSON.stringify(result.rows[row].key));
-              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params.avgKeyName), params.avgKeyName);
+              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params), params.statsKeyName);
             }                    
           }   
         }      
@@ -36,18 +66,58 @@ var getData = function(params, callback) {
   
   var view_params = { reduce: true, group: true, group_level: filter.groupLevel() };  
   var view_name = filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
+  var db = params.stats === "average" ? sensorsDataDb : salesDb;
  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
+    doGetDataLogging(err, result, params, view_params, view_name);    
+    
+    //sort result is sorting if set
+    sortResult(params.sort, result.rows)
+    //get top rows if top is set
+    result.rows = getTop(params.top, result.rows);       
+    
+    callback(err, result);
+  });
+};  
+
+function getTop(top, rows) {
+  if (top !== undefined) {  
+    rows = rows.slice(0, top);
+  }
+  return rows;
+}
+
+function doGetDataLogging(err, result, params, view_params, view_name) {
+  if(err) {
+      console.log("Error in  searching view");
+      console.log(err);
+    }
+    
     console.log("Time : " + Date());
     console.log(params.description);
     console.log("Design Doc name " + params.view.designDocName); 
     console.log("View name " + view_name);    
     console.log("Usage view params " + JSON.stringify(view_params));
     console.log("Usage records form cloudant " + result.rows.length);
+    //console.log("Usage records form cloudant " + JSON.stringify(result.rows));
     console.log("============================================");
-    callback(err, result);
-  });
-};  
+}
+
+function sortResult(sort, data) {
+  if (sort === undefined) return;
+  
+  if (sort.value !== undefined && sort.order === "asc") {
+    data.sort(function(a, b) {
+        return a.value - b.value;
+    });
+  }
+  
+  if(sort.value && sort.order === "desc") {
+    data.sort(function(a, b) {
+        return b.totalSales - a.totalSales;
+    });
+  }
+}
 
 var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name) {
   //console.log("exists " + avg_key_name); 
@@ -119,35 +189,45 @@ var do_make_and_model_match = function(usage1, usage2) {
          (usage1.model == usage2.model);
 };
 
-var fillRecord = function(result, key_name) {
+var fillRecord = function(result, params) {
   var record = { "sold": {"year": 0, "quarter": 0, "month": 0} };
-    
-  record.make = result.key[0];
-  record.model = result.key[1]; 
+  var keys = keys_map.key;
+ 
+  //console.log("keys " + JSON.stringify(keys));
+  record.make = result.key[keys.MAKE];
+  record.model = result.key[keys.MODEL]; 
 
   if( (filter.isFilterCategoryNone()) || 
       (filter.isFilterCategoryByRegion()) ||
       (filter.isFilterCategoryMixed())
     ) { 
-      record.state = result.key[2];
-      record.city = result.key[3];
-      record.zip_code = result.key[4]; 
+      record.state = result.key[keys.STATE];
+      record.city = result.key[keys.CITY];
+      record.zip_code = result.key[keys.ZIP_CODE]; 
   } 
   
   if(filter.isFilterCategoryByYear()) {    
-    record.sold.year = result.key[2]; 
-    record.sold.quarter = result.key[3];
-    record.sold.month = result.key[4];
+    record.sold.year = parseInt(result.key[keys.YEAR_2]); 
+    record.sold.quarter = parseInt(result.key[keys.QUARTER_2]);
+    record.sold.month = parseInt(result.key[keys.MONTH_2]);
   }
   
   if(filter.isFilterCategoryMixed()) {    
-    record.sold.year = result.key[5]; 
-    record.sold.quarter = result.key[6];
-    record.sold.month = result.key[7];
+    record.sold.year = result.key[keys.YEAR]; 
+    record.sold.quarter = result.key[keys.QUARTER];
+    record.sold.month = result.key[keys.MONTH];
   }
   
-  record[key_name] = (result.value[0].sum / result.value[0].count).toFixed(2);
-  record[key_name] = parseFloat(record[key_name]);
+  switch (params.stats) {
+    case "average":
+      record[params.statsKeyName] = (result.value[0].sum / result.value[0].count).toFixed(2);
+      record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);
+      break;
+    case "sum":
+      record[params.statsKeyName] = result.value;
+      break;
+  }
+  
   
   //console.log("record : " + JSON.stringify(record));  
   return record;

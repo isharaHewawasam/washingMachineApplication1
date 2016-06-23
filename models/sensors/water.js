@@ -13,10 +13,10 @@ exports.getAverageUsage = function(payload, averagesBuffer, callback) {
                            "default": "average" + SENSOR_NAME + "Usage",
                            "byYear": "average" + SENSOR_NAME + "UsageByYear"
                          },
-                  "avgKeyName": "avg" + SENSOR_NAME + "Usage"
+                  "statsKeyName": "avg" + SENSOR_NAME + "Usage"
                };
   
-  avg.getAverageUsage(params, function(err, result) {
+  avg.getAverage(params, function(err, result) {
     callback(err, result);
   });    
   

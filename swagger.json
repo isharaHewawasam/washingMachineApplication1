@@ -61,14 +61,14 @@
     "/sales": {
       "post": {
         "x-swagger-router-controller": "sales",
-        "operationId": "getChartById",
+        "operationId": "getReportData",
         "tags": ["Sales"],
         "description": "Returns washing machines charting details.",
          "parameters": [
           {
-            "name": "chart_id",
+            "name": "report_name",
             "in": "query",
-            "description": "Char id",
+            "description": "Report Name",
             "required": true,
             "type": "string"
           },
