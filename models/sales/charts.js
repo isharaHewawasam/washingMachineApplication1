@@ -22,7 +22,7 @@ exports.charts = [
     "chartTypes": ["Bar"]
   },
   {
-    "id": reportNames.soldVsConnected,
+    "id": reportNames.salesVolume,
     "name": "Sales Volumes",
     "description": "Sales Volume",
     "chartTypes": ["Multiline"]
