@@ -264,7 +264,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	           	//  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');
 	           	  
-	           	$rootScope.Role="Mkt Manager";
+	           	$rootScope.Role="Marketing Manager";
 	        	$rootScope.Name="John Smith";
 	             };
 	        	
@@ -818,77 +818,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	};
 	
  
-  //aloka code
-	function renderMap(divId, salesData){
-		
-		/*var salesData = [{"state": "California","latitude": 36.116203,"longitude": -119.681564,"unitsSold": 1000,"unitsConnected": 330},
-		                 {"state": "Los Angeles","latitude": 34.052235,"longitude": -118.243683,"unitsSold": 484,"unitsConnected": 440},
-		                 {"state": "Florida","latitude": 27.766279,"longitude": -81.686783,"unitsSold": 289,"unitsConnected": 200}];*/
-	          	     
-		var salesDataStr = JSON.stringify(salesData);
-		
-		// Modify the json data set according to required highmap data format
-		salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
-		salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
-		salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
-		
-		salesData = JSON.parse(salesDataStr);
-		
-		// Initiate the map
-		var chart = Highcharts.Map({
-	        chart: {
-	            renderTo: divId
-	        },
-	        
-		    title: {
-		        text: 'Sales Volume Distribution'
-		    },
-		
-		    mapNavigation: {
-		        enabled: true
-		    },
-		
-		    tooltip: {
-		        headerFormat: '',
-		        pointFormat: '<b>Sales vs Connected</b><br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
-		    },
-		    
-		    plotOptions: {
-		        mapbubble:{
-		            minSize:20,
-		            maxSize:'12%'
-		        }
-		    },
-		    
-		    series: [{
-		        mapData: Highcharts.maps['custom/world'],
-		        name: 'Basemap',
-		        borderColor: '#A0A0A0',
-		        nullColor: 'rgba(200, 200, 200, 0.3)',
-		        showInLegend: false
-		    }, {
-		        name: 'Separators',
-		        type: 'mapline',
-		        data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
-		        color: '#E0E0E0',
-		        showInLegend: false,
-		        enableMouseTracking: false
-		    }, {
-		        type: 'mapbubble',
-		        name: 'Sales Volume',
-		        color: '#4682B4',
-		        data: salesData,
-		        dataLabels: {
-		            enabled: true,
-		            format: '{point.z}',
-		            color:'#000000'
-		        }
-		    }]
-		});
-		
-		//console.log('Rendered the app successfully');
-		
-	}
+  
     		
     // load all usage data on dashboard		
     		$scope.griddata=[];
@@ -1247,7 +1177,90 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	
 }]);
 
-
+App.controller('mapController',function($scope,$http){
+	$scope.plotMapFunction = function(divId){
+			$http.post('http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
+			    	console.log("Sales Volume List : "+JSON.stringify(data));			    	
+			    	renderMap(divId, data);
+			    	
+			    }). error(function(data, status) {
+			      // alert("error"  +status);
+			       console.log('Error : ' + status);
+			       renderMap(divId, data);
+			    });
+	
+	}
+});
+function renderMap(divId, salesData){
+	
+	/*var salesData = [{"state": "California","latitude": 36.116203,"longitude": -119.681564,"unitsSold": 1000,"unitsConnected": 330},
+	                 {"state": "Los Angeles","latitude": 34.052235,"longitude": -118.243683,"unitsSold": 484,"unitsConnected": 440},
+	                 {"state": "Florida","latitude": 27.766279,"longitude": -81.686783,"unitsSold": 289,"unitsConnected": 200}];*/
+          	     
+	var salesDataStr = JSON.stringify(salesData);
+	
+	// Modify the json data set according to required highmap data format
+	salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
+	salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
+	salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
+	
+	salesData = JSON.parse(salesDataStr);
+	
+	// Initiate the map
+	var chart = Highcharts.Map({
+        chart: {
+            renderTo: divId
+        },
+        
+	    title: {
+	        text: 'Sales Volume Distribution'
+	    },
+	
+	    mapNavigation: {
+	        enabled: true
+	    },
+	
+	    tooltip: {
+	        headerFormat: '',
+	        pointFormat: '<b>Sales vs Connected</b><br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+	    },
+	    
+	    plotOptions: {
+	        mapbubble:{
+	            minSize:20,
+	            maxSize:'12%'
+	        }
+	    },
+	    
+	    series: [{
+	        mapData: Highcharts.maps['custom/world'],
+	        name: 'Basemap',
+	        borderColor: '#A0A0A0',
+	        nullColor: 'rgba(200, 200, 200, 0.3)',
+	        showInLegend: false
+	    }, {
+	        name: 'Separators',
+	        type: 'mapline',
+	        data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        color: '#E0E0E0',
+	        showInLegend: false,
+	        enableMouseTracking: false
+	    }, {
+	        type: 'mapbubble',
+	        name: 'Sales Volume',
+	        color: '#4682B4',
+	        data: salesData,
+	        dataLabels: {
+	            enabled: true,
+	            format: '{point.z}',
+	            color:'#000000'
+	        }
+	    }]
+	});
+	
+	//console.log('Rendered the app successfully');
+	
+}
 App.controller('myController', function ($scope,$http) {
 	
 	$scope.selectedSales="";

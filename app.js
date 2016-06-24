@@ -16,7 +16,12 @@ var utility = require("./middle_ware/utility");
 app.use(serveStatic("./UI/WebContent"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(logErrors);
 
+/*function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+}*/
 // swaggerRouter configuration
 var options = {
   controllers: './controllers',
