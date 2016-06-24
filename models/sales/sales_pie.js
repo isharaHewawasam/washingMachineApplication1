@@ -1,10 +1,14 @@
 'use strict';
-var avg = require('../sensors/avg_calculator');
 
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
+  var filter = require("../filters");
+  var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
+  
+  filter.setReportType2SoldVsConnected();
+  key_map.setReportType2TopModels();
   
   var params = { 
                  "description": "Top Selling Models",
@@ -15,10 +19,13 @@ exports.getData = function(payload, callback) {
                            "default": VIEW_NAME,
                            "byYear": VIEW_NAME
                          },
-                  "statsKeyName": "totalSales"
+                  "statsKeyName": "totalSales",
+                  "databaseType": "sales",
+                  "filter": filter,
+                  "key_maps": key_map
                };
   
-  avg.getSumPie(params, function(err, result) {
+  require('../sensors/avg_calculator').getSum(params, function(err, result) {
     callback(err, result);    
   });      
 };

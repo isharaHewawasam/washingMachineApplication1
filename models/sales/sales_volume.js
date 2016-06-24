@@ -5,9 +5,14 @@ exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
   var payload = require("../../payloads/top_3_models").payload;  
+  var filter = require("../filters");
+  var key_map = require("../view_keys_mapping");
+  
+  filter.setReportType2Sales();
+  key_map.setReportType2TopModels();
   
   var params = { 
-                 "description": "Top Selling Models",
+                 "description": "Sell Volume",
                  "payload": payload,
                  "buffer": topModelsBuffer,
                  "view": {
@@ -15,29 +20,14 @@ exports.getData = function(payload, callback) {
                            "default": VIEW_NAME,
                            "byYear": VIEW_NAME
                          },
-                  "statsKeyName": "totalSales"
+                  "statsKeyName": "totalSales",
+                  "databaseType": "sales",
+                  "filter": filter,
+                  "key_maps": key_map
                };
   
   avg.getSum(params, function(err, result) {
-    var q1 = [];
-    var q2 = [];
-    var q3 = [];
-    var q4 = [];
-    
-    splitInQuarters(result, q1, q2, q3, q4);
-    
-    var final_result = q1.slice(0, 3);
-    final_result = final_result.concat(q2.slice(0, 3), q3.slice(0, 3), q4.slice(0, 3));
-    
-    var response = {};
-    
-    response.description = "Top 3 selling models";
-    response.data = final_result;
-    response.xAxisUnit = getxAxisByQuarters(final_result);
-    response.yAxisUnit = "Hello";
-    
-    callback(err, response);
-    
+    callback(err, result);
   });      
 };
 

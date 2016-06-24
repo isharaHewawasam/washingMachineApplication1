@@ -1,145 +1,103 @@
 <div class="aside-inner" >
-   <nav sidebar="" class="sidebar">
-     
-      
-      <ul class="nav"  style="padding-top: 5px;" >
-         <!-- Iterates over all sidebar items-->
-         <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"   ng-click="toggleCollapse(pIndex, true)">
-   				 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
-			<a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
-
-<div style=" ">
-
-<img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"  ></img>
-
-
-
- <div  style=" padding-bottom:8px ;padding-top: 9px; margin: -5px;  font-family: Roboto;light;	font-size:12px;"> {{item.text}}
- </div>
- 
+    <nav sidebar="" class="sidebar">
+        <ul class="nav"  style="padding-top: 5px;" >
+            <!-- Iterates over all sidebar items-->
+            <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"   ng-click="toggleCollapse(pIndex, true)">
+                <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
+                <a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
+                    <div style=" ">
+                        <img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"  ></img>
+                        <div  style=" padding-bottom:8px ;padding-top: 9px; margin: -5px;  font-family: Roboto;light;	font-size:12px;"> {{item.text}}
+                        </div>
+                    </div>
+                </a>
+                <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
+                    <li class="sidebar-subnav-header"  style="font-family: Roboto;light;	font-size:18px;" >{{(item.translate | translate) || item.text}}</li>
+                    <li ng-repeat="subitem in item.submenu"   style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
+                        ng-click="toggleCollapse(pIndex)">
+                        <span ng-if="subitem.heading">{{(item.translate | translate) || item.text}}</span>
+                        <a ng-if="!subitem.heading" ng-href="{{$state.href(subitem.sref, subitem.params)}}" title="{{subitem.text}}">
+                            <div style=" ">
+                                <img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{subitem.img}}"></img>
+                                <div ng-if="subitem.text !='Submit'" style=" padding-bottom:8px ;font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;"> {{subitem.text}}
+                                </div>
+                                <button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:210px;   	font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;">{{subitem.text}} 
+                                </button>
+                            </div>
+                        </a>
+                        <ul ng-if="subitem.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
+                            <li ng-repeat="subsubitem in subitem.submenu"   ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
+                                ng-click="toggleCollapse(pIndex)">
+                                <!-- <span ng-if="subsubitem.heading">{{(subsubitem.translate | translate) || subsubitem.text}}</span> -->
+                                <a ng-if="!subsubitem.heading" ng-href="{{$state.href(subsubitem.sref, subsubitem.params)}}" title="{{subsubitem.text}}">
+                                    <div style="font:12px Roboto Light;" >
+                                        <select  ng-init="makeData=1" ng-model="makeData" class="option-text-style" ng-if="subsubitem.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important" >
+                                            <option class="option-text-style" value=""   disabled selected>{{subsubitem.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}sachin</option>
+                                        </select>
+                                        <select  id="typeDropDown" class="option-text-style" name="account1" class='chosen-select' ng-if="subsubitem.text=='Type'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;" >
+                                            <option  class="option-text-style" value="" disabled selected>{{subsubitem.text}}</option>
+                                            <option class="option-text-style" value="WD100CW" >WD100CW</option>
+                                            <option class="option-text-style" value="WT901CF" >WT901CF</option>
+                                            <option class="option-text-style" value="WT901CW" >WT901CW</option>
+                                            <!-- <option  class="option-text-style" ng-repeat="itm in models"   value={{itm.model}}>{{itm.model}}</option>
+                                                <option class="option-text-style" ng-repeat="model in types" value="{{model.model}}" >{{model.model}}</option> -->
+                                        </select>
+                                        <select class="option-text-style"    name="account2" ng-if="subsubitem.text=='MFG Date'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;" >
+                                            <option class="option-text-style" value="" disabled selected>{{subsubitem.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="itm in years"   value="itm.year">{{subsubitem.year}}</option>
+                                        </select>
+                                        <select class="option-text-style" name="account3" ng-if="subsubitem.text=='SKU'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
+                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
+                                            <option class="option-text-style" value="00043D-FBC8" >00043D-FBC8</option>
+                                            <option class="option-text-style" value="000524-F923" >000524-F923</option>
+                                            <option class="option-text-style" value="000CB0-3B70" >000CB0-3B70</option>
+                                            <option class="option-text-style" value="0011C7-08C3" >0011C7-08C3</option>
+                                            <option class="option-text-style" value="0012E0-53F7" >0012E0-53F7</option>
+                                            <option class="option-text-style" value="00154C-6E62" >00154C-6E62</option>
+                                            <option class="option-text-style" value="00166F-2335" >00166F-2335</option>
+                                            <option class="option-text-style" value="0025AF-8649" >0025AF-8649</option>
+                                            <option class="option-text-style" value="002921-63A3" >002921-63A3</option>
+                                            <option class="option-text-style" value="002C56-17A5" >002C56-17A5</option>
+                                            <option class="option-text-style" value="003254-3655" >003254-3655</option>
+                                            <option class="option-text-style" value="004D93-124C" >004D93-124C</option>
+                                            <option class="option-text-style" value="004EF2-F74E" >004EF2-F74E</option>
+                                            <option class="option-text-style" value="00566D-EFB7" >00566D-EFB7</option>
+                                            <option class="option-text-style" value="00642E-DCD9" >00642E-DCD9</option>
+                                            <!-- 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
+                                                -->				
+                                        </select>
+                                        <select class="option-text-style" name="account" ng-if="item.text=='Income Range'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_model" onchange="selectCities()" >
+                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
+                                        </select>
+                                        <select class="option-text-style" name="account" ng-if="item.text=='Occupation'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_mfg" onchange="selectCities()" >
+                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
+                                        </select>
+                                        <select class="option-text-style" name="account" ng-if="item.text=='Age Group'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
+                                            <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
+                                        </select>
+                                        <select class="option-text-style"  name="account" ng-if="item.text=='Product Name'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_product" onchange="selectCities()" >
+                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
+                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
+                                        </select>
+                                        <div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'" >
+                                            <input class="option-text-style" type="date"  name="bday"> 
+                                        </div>
+                                        <div class="input-group col-lg-1" ng-if="item.text=='to_date'"  >
+                                            <input class="option-text-style" type="date"  name="bday"> 
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- END sidebar nav-->
+    </nav>
 </div>
-
-</a>
-<ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-<li class="sidebar-subnav-header"  style="font-family: Roboto;light;	font-size:18px;" >{{(item.translate | translate) || item.text}}</li>
-<li ng-repeat="item in item.submenu"   style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
-ng-click="toggleCollapse(pIndex)">
-		
-	 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
-<a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
-<div style=" "><img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"></img>
- <div ng-if="item.text !='Submit'" style=" padding-bottom:8px ;font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;"> {{item.text}}
- </div>
-<button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:210px;   	font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;">{{item.text}} 
- </button>
-</div>
-
-</a>
-<ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-
-<li ng-repeat="item in item.submenu"   ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
-ng-click="toggleCollapse(pIndex)">
-		 <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
-<a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
-
- <div style="font:12px Roboto Light;"> 
-	 
-			
-                <select  id="makeDropdownid" class="option-text-style" name="account" ng-if="item.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_make" ng-change="selectMake()" >
-                    <option class="option-text-style" value=""   disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
-				</select>
-
-				<select  id="typeDropDown" class="option-text-style" name="account1" class='chosen-select' ng-if="item.text=='Type'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;" >
-                   <option  class="option-text-style" value="" disabled selected>{{item.text}}</option> 
-			
-						<option class="option-text-style" value="WD100CW" >WD100CW</option>
-						<option class="option-text-style" value="WT901CF" >WT901CF</option>
-						<option class="option-text-style" value="WT901CW" >WT901CW</option>
-						
-			
-				 <!-- <option  class="option-text-style" ng-repeat="itm in models"   value={{itm.model}}>{{itm.model}}</option>
-			
-				  		 <option class="option-text-style" ng-repeat="model in types" value="{{model.model}}" >{{model.model}}</option> -->
-			
-				
-				</select>
-
-				<select class="option-text-style"    name="account2" ng-if="item.text=='MFG Date'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_mfg" ng-change="selectCities()" >
-                    <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="itm in years"   value="itm.year">{{itm.year}}</option>
-				</select>
-
-				<select class="option-text-style" name="account3" ng-if="item.text=='SKU'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
-                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-						<option class="option-text-style" value="00043D-FBC8" >00043D-FBC8</option>
-						<option class="option-text-style" value="000524-F923" >000524-F923</option>
-						<option class="option-text-style" value="000CB0-3B70" >000CB0-3B70</option>
-						<option class="option-text-style" value="0011C7-08C3" >0011C7-08C3</option>
-						<option class="option-text-style" value="0012E0-53F7" >0012E0-53F7</option>
-						<option class="option-text-style" value="00154C-6E62" >00154C-6E62</option>
-						<option class="option-text-style" value="00166F-2335" >00166F-2335</option>
-						<option class="option-text-style" value="0025AF-8649" >0025AF-8649</option>
-						<option class="option-text-style" value="002921-63A3" >002921-63A3</option>
-						<option class="option-text-style" value="002C56-17A5" >002C56-17A5</option>
-						<option class="option-text-style" value="003254-3655" >003254-3655</option>
-						<option class="option-text-style" value="004D93-124C" >004D93-124C</option>
-						<option class="option-text-style" value="004EF2-F74E" >004EF2-F74E</option>
-						<option class="option-text-style" value="00566D-EFB7" >00566D-EFB7</option>
-						<option class="option-text-style" value="00642E-DCD9" >00642E-DCD9</option>
-						
-
-<!-- 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
- -->				</select>
-
-				<select class="option-text-style" name="account" ng-if="item.text=='Income Range'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_model" onchange="selectCities()" >
-                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-				</select>
-
-				<select class="option-text-style" name="account" ng-if="item.text=='Occupation'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_mfg" onchange="selectCities()" >
-                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-				</select>
-
-				<select class="option-text-style" name="account" ng-if="item.text=='Age Group'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
-                    <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-				</select>
-
-				<select class="option-text-style"  name="account" ng-if="item.text=='Product Name'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_product" onchange="selectCities()" >
-                    <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-				</select>
-               
-
-				<div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'" >
-          			 <input class="option-text-style" type="date"  name="bday"> 
-         			</div>
-
-
-		<div class="input-group col-lg-1" ng-if="item.text=='to_date'"  >
-            <input class="option-text-style" type="date"  name="bday"> 
-         </div>
- </div>
-
-</a>
-		
-
-</li>
-</ul>	
-
-</li>
-</ul>	
-      			
-      	</li>
-      	
-      </ul>
-      <!-- END sidebar nav-->
-   </nav>
-</div>
-
-
-
-
 <!-- END Sidebar (left)-->

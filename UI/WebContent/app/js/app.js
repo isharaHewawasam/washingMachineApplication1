@@ -19,7 +19,7 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 // ----------------------------------- 
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils'])
+var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'chart.js'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -259,7 +259,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        	
 	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
 	             if(!response.success) {
-	           	  $scope.errorMsg  = 'Incorrect username or password entered. Please try again';
+	           	  $scope.errorMsg  = 'Not Authorised';
 	             }else{
 	           	//  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');
@@ -272,7 +272,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        }else{
 	      	 // $scope.errorMsg = 'success';
 	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Eng Manager";
+	      	$rootScope.Role="Engg Manager";
 	      	$rootScope.Name="Alan Mcdormet";
 	      	  // window.location.href = 'success.html';
 	      	 // $state.go('app.singleview');
@@ -558,6 +558,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 	
 	
+	
 	$scope.region=[];
 	$scope.timescale=[];
 	
@@ -647,56 +648,65 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   	    		};
 		*/
 		
-		$scope.usagedata={
-				  "productAttrs": {
-	    		    "makes": [  ],
-	    		    "models": [],
-	    		    "skus": [],
-	    		    "mfg_date": {
-	    		      "start_date": "01/01/2015",
-	    		      "end_date": "01/01/2016"
-	    		    }
-	    		  },
-	    		"timescale": {
-	      		    "years": [{
-	    		        "value": parseInt($scope.timescale.years)
-	    		      } ],
-	      		    "quarters": [ {
-	    		        "value": parseInt($scope.timescale.quarters)
-	    		      }],
-	      		    "months": [{
-	    		        "value": parseInt($scope.timescale.months)
-	    		      } ],
-	    		    "date": {
-	    		      "start_date": "01/01/2015",
-	    		      "end_date": "01/01/2016"
-	    		    },
-	    		    "relative": {
-	    		      "unit": "2",
-	    		      "value": 0
-	    		    }
-	    		  },
-	    		  "region": {
-	    		    "states": [
-	    		      {
-	    		        
-	    		    	  "value": $scope.region.states
-	    		      }
-	    		    ],
-	    		    "cities": [
-	    		               {
-	    		            	   "value": $scope.region.cities
-	 	   
-	    		               }
-	    		               ],
-	    		    "zip_codes": [
-						{
-							   "value": $scope.region.zip_codes
-						
-						}
-	    		                  ]
-	    		  }
-	    		};
+		$scope.usagedata={  
+						   "productAttrs":{  
+							      "makes":[  
+		
+							      ],
+							      "models":[  
+		
+							      ],
+							      "skus":[  
+		
+							      ],
+							      "mfg_date":{  
+							         "start_date":"01/01/2015",
+							         "end_date":"01/01/2016"
+							      }
+							   },
+							   "timescale":{  
+							      "years":[  
+							         {  
+							            "value":parseInt($scope.timescale.years)
+							         }
+							      ],
+							      "quarters":[  
+							         {  
+							            "value":parseInt($scope.timescale.quarters)
+							         }
+							      ],
+							      "months":[  
+							         {  
+							            "value":parseInt($scope.timescale.months)
+							         }
+							      ],
+							      "date":{  
+							         "start_date":"01/01/2015",
+							         "end_date":"01/01/2016"
+							      },
+							      "relative":{  
+							         "unit":"2",
+							         "value":0
+							      }
+							   },
+							   "region":{  
+							      "states":[  
+							         {  
+							            "value":$scope.region.states
+							         }
+							      ],
+							      "cities":[  
+							         {  
+							            "value":$scope.region.cities
+							         }
+							      ],
+							      "zip_codes":[  
+							         {  
+							            "value":$scope.region.zip_codes
+							         }
+							      ]
+							   }
+							};
 		
 		//////////start gopal
 		if($scope.region.states==undefined || $scope.region.states=="")
@@ -744,14 +754,37 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		console.log("years form data  : "+$scope.timescale.years);	
 		console.log("quaters form data  : "+$scope.timescale.quarters);	
 		console.log("month form data  : "+$scope.timescale.months);	
-
 		
+		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
+		
+		//code added by sanket
+		$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
+                  method: "POST",
+                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+                  data: $scope.usagedata
+                  
+         }).success(function(data, status) {
+        	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
+                  if(!data || data.length === 0){
+                       console.log("empty data");
+            
+                  }  else{
+                      console.log("Got data for map..." );
+                      renderMap("map-container", data);
+                  }
+                  console.log("data from server  :"+JSON.stringify(data));
+                 }). error(function(data, status) {
+                   
+                        alert("No data found");
+                        console.log("error:"+status);
+                         
+          });
 		
 	
 		$scope.griddata=[];
 		  
 		
-		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
+		
 		
 		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
 	          method: "POST",
@@ -785,7 +818,77 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	};
 	
  
-  
+  //aloka code
+	function renderMap(divId, salesData){
+		
+		/*var salesData = [{"state": "California","latitude": 36.116203,"longitude": -119.681564,"unitsSold": 1000,"unitsConnected": 330},
+		                 {"state": "Los Angeles","latitude": 34.052235,"longitude": -118.243683,"unitsSold": 484,"unitsConnected": 440},
+		                 {"state": "Florida","latitude": 27.766279,"longitude": -81.686783,"unitsSold": 289,"unitsConnected": 200}];*/
+	          	     
+		var salesDataStr = JSON.stringify(salesData);
+		
+		// Modify the json data set according to required highmap data format
+		salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
+		salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
+		salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
+		
+		salesData = JSON.parse(salesDataStr);
+		
+		// Initiate the map
+		var chart = Highcharts.Map({
+	        chart: {
+	            renderTo: divId
+	        },
+	        
+		    title: {
+		        text: 'Sales Volume Distribution'
+		    },
+		
+		    mapNavigation: {
+		        enabled: true
+		    },
+		
+		    tooltip: {
+		        headerFormat: '',
+		        pointFormat: '<b>Sales vs Connected</b><br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+		    },
+		    
+		    plotOptions: {
+		        mapbubble:{
+		            minSize:20,
+		            maxSize:'12%'
+		        }
+		    },
+		    
+		    series: [{
+		        mapData: Highcharts.maps['custom/world'],
+		        name: 'Basemap',
+		        borderColor: '#A0A0A0',
+		        nullColor: 'rgba(200, 200, 200, 0.3)',
+		        showInLegend: false
+		    }, {
+		        name: 'Separators',
+		        type: 'mapline',
+		        data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+		        color: '#E0E0E0',
+		        showInLegend: false,
+		        enableMouseTracking: false
+		    }, {
+		        type: 'mapbubble',
+		        name: 'Sales Volume',
+		        color: '#4682B4',
+		        data: salesData,
+		        dataLabels: {
+		            enabled: true,
+		            format: '{point.z}',
+		            color:'#000000'
+		        }
+		    }]
+		});
+		
+		//console.log('Rendered the app successfully');
+		
+	}
     		
     // load all usage data on dashboard		
     		$scope.griddata=[];
@@ -978,15 +1081,22 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils',
   function($rootScope, $scope, $state, $http, $timeout, Utils){
 	
+	$rootScope.intete=1;
+	$scope.maake;
+	$scope.makeData;
+	$scope.getCall=function(p){
+		console.log("calling"+p);
+	}
+	
     var collapseList = [];
     
     $rootScope.name="";
     // demo: when switch from collapse to hover, close all items
-    $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
-      if ( newVal === false && oldVal === true) {
-        closeAllBut(-1);
-      }
-    });
+//    $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
+//      if ( newVal === false && oldVal === true) {
+//        closeAllBut(-1);
+//      }
+//    });
     
    
   //  $rootScope.types;
@@ -1042,8 +1152,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (collapseList[$index]);
     };
 
-    $scope.toggleCollapse = function($index, isParentItem) {
-
+    $scope.toggleCollapse = function($index, isParentItem,subitem) {
+    	$rootScope.intete+=1;
+    	console.log("Toggle collapse"+$rootScope.intete+""+$scope.makeData+""+subitem);
+    	
 
       // collapsed sidebar doesn't toggle drodopwn
       if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
@@ -1096,7 +1208,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
-	    	 console.log("manufacture year :"+JSON.stringify(data));
+	    	 console.log("manufacture year :"+data);
 				       
 				           
 				           
@@ -1136,15 +1248,99 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 }]);
 
 
-App.controller('myController', function ($scope) {
+App.controller('myController', function ($scope,$http) {
+	
+	$scope.selectedSales="";
+	$scope.selectedChart="";
+	
+	$scope.labels = ["Sold", "Connected"];
+	  $scope.data = [];
+	  
+	  $scope.barLabels = ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016'];
+	  $scope.barSeries = ['Sold', 'Connected'];
 
+	  $scope.barData = [[65, 59, 80, 81],
+	                    [28, 48, 40, 19]];
+	 
+	  
+	  $http({
+			  url:'http://ibm-iot.mybluemix.net/api/v1/sales/charts', 
+			  method: 'GET',
+			}).success(function(data, status) {
+				$scope.salesList=data;
+//				$scope.chartTypes=data[parseInt($scope.selectedSales)].chartTypes;
+		    	console.log("Sales Volume List: :"+JSON.stringify(data));					           
+		    }). error(function(data, status) {
+		      // alert("error"  +status);
+		       console.log(JSON.stringify(data));
+		    });
+	  
+	  
+	  
+	$scope.disp=function(){
+		if($scope.selectedSales!='' && $scope.selectedSales!=null && $scope.selectedSales!=undefined)			  
+			  $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
+		else
+			$scope.chartTypes="";
+		
+		console.log("Chart types:"+$scope.chartTypes);
+		console.log("selectedSales:"+$scope.selectedSales);
+	}
+	
+	$scope.dispChart=function(selectedChart){
+		console.log("in disp chart");
+		if($scope.selectedChart=='Pie'){			
+			console.log("In disp Chart");
+			 $http({
+				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=false', 
+				  method: 'POST'
+					 
+				}).success(function(data, status) {
+			    	console.log("Pie Chart response :"+JSON.stringify(data));	
+			    	$scope.data[0]=data.soldCount;
+			    	$scope.data[1]=data.connectedCount;
+			    	
+			    }). error(function(data, status) {
+			       console.log(JSON.stringify(data));
+			    });
+			
+		}
+		else if($scope.selectedChart=='Bar'){
+			 $http({
+				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=false', 
+				  method: 'POST'
+				 
+				}).success(function(data, status) {
+			    	console.log("Bar Chart response :"+JSON.stringify(data));
+			    	//$scope.barData=data;
+			    	
+			    	
+			    }). error(function(data, status) {
+			       console.log(JSON.stringify(data));
+			    });
+		}
+		else if($scope.selectedChart=='Multiline'){
+			 $http({
+				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
+				  method: 'POST'
+				 
+				}).success(function(data, status) {
+			    	console.log("Multiline Chart response :"+JSON.stringify(data));	
+			    	$scope.linechartData=data;
+			    }). error(function(data, status) {
+			       console.log(JSON.stringify(data));
+			    });
+		}
+	}
+	
+	
 	$scope.plotChartFunction = function(divId){
 	$("#"+divId).highcharts( {
 		credits:false,
 		title:false,
 		legend: {enabled:false},
 	    xAxis: {
-	        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
+	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 	    },
 	    yAxis: {
 			title:false
@@ -1168,16 +1364,12 @@ App.controller('myController', function ($scope) {
 	            }
 	        },
 	    series: [{
-		    		name:"WD100CW",
-	        		data: [0, 1000, 1733, 129, 2000, 1322, 1500]
+		    		name:"Sold",
+	        		data: [0, 1000, 1733, 129]
 	    },
 	    {
-    		name:"WA80E5XEC",
-    		data: [110, 120, 733, 1029, 20, 122, 150]
-		},
-	    {
-    		name:"WTW7000DW",
-    		data: [1110, 1920, 633, 129, 520, 1212, 350]
+    		name:"Connected",
+    		data: [110, 120, 733, 1029]
 		}]
 	});
 	}

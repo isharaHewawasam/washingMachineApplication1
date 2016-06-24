@@ -11,8 +11,7 @@ var serverPort = process.env.PORT || 3000;
 var serveStatic = require('serve-static');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-
-
+var utility = require("./middle_ware/utility");
 
 app.use(serveStatic("./UI/WebContent"));
 app.use(bodyParser.json());
@@ -29,7 +28,7 @@ var swaggerDoc = require('./swagger.json');
 
 function exitHandler(reason) {	
   if(reason)
-	console.log(reason);
+	console.log("Caught unhandled exception : " + reason);
   process.exit(0);
   
   if(db !== undefined) {
@@ -87,6 +86,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     
     });
   });*/
+  
   
   //connect to database
   db.open(config.SalesDatabase, function(err) {

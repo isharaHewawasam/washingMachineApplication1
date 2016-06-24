@@ -1,18 +1,34 @@
 'use strict';
 var salesDb = require('../../database/db');
 var sensorsDataDb = require('../../database/dbWashDailyAggregate');
-var keys_map = require("./view_keys_mapping");
-var filter = require('../filters');
+//var keys_map = require("./view_keys_mapping");
+//var filter = require('../filters');
 var dummy_data = require('../../database/dummy_data/sensors');
+var utility = require("../../middle_ware/utility");
 
-exports.getSumPie = function(params, callback) {  
-  params.stats = "sum_pie";
+var filter = null;
+var keys_map = null;
+
+/*exports.getSumPie = function(params, callback) {  
   filter.setReportType2SoldVsConnected();
   keys_map.setReportType2TopModels();
   
   getStats(params, callback);
+};*/
+
+exports.getSum = function(params, callback) {  
+  params.stats = "sum";
+  //filter.setReportType2Sales();
+  //keys_map.setReportType2TopModels();
+  
+  if (params.top !== undefined) {
+    params.sort = { "value": true, "order": "desc" }
+  }
+  
+  getStats(params, callback);
 };
 
+/*
 exports.getSum = function(params, callback) {  
   params.stats = "sum";
   filter.setReportType2Sales();
@@ -24,6 +40,7 @@ exports.getSum = function(params, callback) {
   
   getStats(params, callback);
 };
+*/
 
 exports.getAverage = function(params, callback) {  
   params.stats = "average";
@@ -31,6 +48,9 @@ exports.getAverage = function(params, callback) {
 };
 
 function getStats(params, callback) {
+  filter = params.filter;
+  keys_map = params.key_maps;
+  
 	  getData(params, function(err, result) {   
 	    if(err) {
 	    	callback(err, null);
@@ -60,13 +80,31 @@ function getStats(params, callback) {
 	  });
 };
 
+function getDb(dbRef) {
+  switch (dbRef) {
+    case "sales":
+      return salesDb;
+    case "sensorDailyAggregate":
+      return sensorsDataDb;
+    default:
+      console.log("avg_calculator::getDb(): Invalid db referance");
+      return null;
+  }
+}
+
 //var getData = function(design_doc_name, view_name, group_level, payload, callback) { 
-var getData = function(params, callback) {  
+var getData = function(params, callback) {
+  if (utility.isParamInvalid (params.databaseType, 
+                              "Database not set. avg_calculator::getData")) {
+     callback("Database ref not set", null);
+     return;
+   }
+ 
   filter.setPayload(params.payload);  
   
   var view_params = { reduce: true, group: true, group_level: filter.groupLevel() };  
   var view_name = filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
-  var db = params.stats === "average" ? sensorsDataDb : salesDb;
+  var db = getDb(params.databaseType);
  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
     doGetDataLogging(err, result, params, view_params, view_name);    

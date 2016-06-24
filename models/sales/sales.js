@@ -8,15 +8,17 @@ exports.getReportData = function(report_name, group, payload, callback) {
   
   switch(report_name) {
     case reportName.soldVsConnected:
+      //to be shown on map
       if (group) {
-        console.log("Grouped = true");
         require("./sold_vs_connected").getGroupedData(payload, callback); return;
+      //to be shown as pie chart  
       } else {
-        console.log("Grouped = false");
         require("./sold_vs_connected").getUngroupedData(payload, callback); return;
       }
     case reportName.top3SellingModels:
-      require("./top_selling_models").getData(payload, callback); return;  
+      require("./top_selling_models").getData(payload, callback); return;
+    case reportName.salesVolume:
+      require("./sales_volume").getData(payload, callback); return;    
     default:
       callback("Invaoid chart id", null); return;
   }  

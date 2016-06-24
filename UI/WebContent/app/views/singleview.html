@@ -134,221 +134,48 @@
    <!-- START dashboard main content-->
    
   
-   <div class="col-lg-4 " ng-controller="myController" ng-init="plotChartFunction('container')">
+   <div class="col-lg-4 " ng-controller="myController">
      <div class="chart-chartDiv" id="chartParent">
 		<div class="chart-filterDiv " id="chartFilterDivId">
-                                    <select id="first-chart-select" class="chart-selectStyle col-md-4 " style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
-                                                <option class="chart-option-text-style" value="">Top 3 models
-                                                <option class="chart-option-text-style" value="">Sold vs Connected
-                                    </select> <select class="chart-selectStyle col-md-3 chart-border "
+                                    <select id="first-chart-select" class="chart-selectStyle col-md-4 " ng-change="disp()" ng-model="selectedSales" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                                
+                                                <option class="chart-option-text-style" disabled selected value="">Please select</option>
+                                                <option class="chart-option-text-style"  ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
+                                               
+                                    </select>
+                                     <select class="chart-selectStyle col-md-3 chart-border "
                                                 style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
-                                                <option class="chart-option-text-style" value="">Last 1 day
-                                                <option class="chart-option-text-style" value="" selected>Last 7 days
+                                                <option class="chart-option-text-style" selected value="">Last 1 day
+                                                <option class="chart-option-text-style" value="" >Last 7 days
                                                 <option class="chart-option-text-style" value="">Last 30 days
                                                 <option class="chart-option-text-style" value="">Last 3 months
                                                 <option class="chart-option-text-style" value="">Last 6 months
                                                 <option class="chart-option-text-style" value="">Last 1 year
                                                 <option class="chart-option-text-style" value="">Last 3 years
-                                    </select> <select class="chart-selectStyle col-md-4 "
-                                                style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
-                                                <option class="chart-option-text-style" value="">Line Chart
-                                                <option class="chart-option-text-style" value="">Bar Chart
-                                                <option class="chart-option-text-style" value="">Pie Chart
                                     </select> 
-                                    <img id="maximize" class=" col-md-1 image-margin image-size pull-right" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
+                                    <select class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)"  ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                             <option class="chart-option-text-style"  ng-repeat="chart in chartTypes" value="{{chart}}">{{chart}}</option>
+                                    </select> 
+                                    <img id="maximize" class="pull-right col-md-1" style="padding:0px;   margin-top:10px;      margin-right: 9px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()"></img>
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-		<div id="container" class="graphDiv"></div>
-	</div>
-	
-	</div>
-	
-	<div class="col-lg-4 map-mapDiv">
-     <!-- START widget-->
-	    <div id="show-transparent" class="map-mapDiv showhim">
-			<div id="googleMap"  class="map-mapDiv"></div>
-			<div class="semi-transparent-div showme" id="trn-div">
-				<img src="app/img/Dashboardassets/icon_maximize.png" class="pull-right image-position"  id="maximize">
-			</div>
-			
-			<script type="text/javascript">
-
- 	$(function(){var map;
-    function initialize(mapstate,divId) {
-        if(divId=="" || typeof(divId)=="undefined"){
-            divId="googleMap";
-        }
-        var myOptions = {
-        		center:new google.maps.LatLng(42.6526, -73.7562),
-        	    zoom:5,
-        	    mapTypeId:google.maps.MapTypeId.ROADMAP,
-        };
-        map = new window.google.maps.Map(document.getElementById(divId), myOptions);
-
-        /* var locations = [
-                         ['<b>Store Locator</b></br>'+ 
-                    		'<b>Capital: </b> Sacramento </br>'+
-                    		'<b>Dialing: </b> code +1 </br>'+
-                    		'<b>ISO Code: </b> USA </br>'+
-                    		'<b>States: </b>California <img src="app/img/Dashboardassets/map_direction.png" > </br>', 38.5816, -121.4944, 4],
-                         ['<b>Store Locator</b></br>'+ 
-                    		'<b>Capital: </b> Honolulu </br>'+
-                    		'<b>Dialing: </b> code +1 </br>'+
-                    		'<b>ISO Code: </b> USA </br>'+
-                    		'<b>States: </b>Hawaii <img src="app/img/Dashboardassets/map_direction.png" > </br>', 21.3069, -157.8583, 5],
-                         ['<b>Store Locator</b></br>'+ 
-                    		'<b>Capital: </b> Boston </br>'+
-                    		'<b>Dialing: </b> code +1 </br>'+
-                    		'<b>ISO Code: </b> USA </br>'+
-                    		'<b>States: </b>Massachusetts <img src="app/img/Dashboardassets/map_direction.png" > </br>', 42.3601, -71.0589, 3],
-                         ['<b>Store Locator</b></br>'+ 
-                    		'<b>Capital: </b> Jackson  </br>'+
-                    		'<b>Dialing: </b> code +1 </br>'+
-                    		'<b>ISO Code: </b> USA </br>'+
-                    		'<b>States: </b>Mississippi <img src="app/img/Dashboardassets/map_direction.png" > </br>', 32.2988, -90.1848, 2],
-                         ['<b>Store Locator</b></br>'+ 
-                    		'<b>Capital: </b>  	Albany  </br>'+
-                    		'<b>Dialing: </b> code +1 </br>'+
-                    		'<b>ISO Code: </b> USA </br>'+
-                    		'<b>States: </b>New York <img src="app/img/Dashboardassets/map_direction.png" > </br>', 42.6526, -73.7562, 1]
-                       ]; */
-                       
-                       
-                       var locations = [
-                                        ['<div style="width:200px !important;"><b>Store Address</b></br>'+ 
-                                   		'<b>Capital: </b> Sacramento </br>'+
-                                   		'<b>Dialing: </b> code +1 </br>'+
-                                   		'<b>ISO Code: </b> USA </br>'+
-                                   		'<b>States: </b>California <img style="float:right" src="app/img/Dashboardassets/map_direction.png" > </br></div>', 38.5816, -121.4944, 4],
-                                        ['<div style="width:200px !important;"><b>Store Address</b></br>'+
-                                   		'<b>Capital: </b> Honolulu </br>'+
-                                   		'<b>Dialing: </b> code +1 </br>'+
-                                   		'<b>ISO Code: </b> USA </br>'+
-                                   		'<b>States: </b>Hawaii <img style="float:right" src="app/img/Dashboardassets/map_direction.png" > </br></div>', 21.3069, -157.8583, 5],
-                                        ['<div style="width:200px !important;"><b>Store Address</b></br>'+ 
-                                   		'<b>Capital: </b> Boston </br>'+
-                                   		'<b>Dialing: </b> code +1 </br>'+
-                                   		'<b>ISO Code: </b> USA </br>'+
-                                   		'<b>States: </b>Massachusetts <img style="float:right" src="app/img/Dashboardassets/map_direction.png" > </br>', 42.3601, -71.0589, 3],
-                                        ['<div style="width:200px !important;"><b>Store Address</b></br>'+ 
-                                   		'<b>Capital: </b> Jackson  </br>'+
-                                   		'<b>Dialing: </b> code +1 </br>'+
-                                   		'<b>ISO Code: </b> USA </br>'+
-                                   		'<b>States: </b>Mississippi <img style="float:right" src="app/img/Dashboardassets/map_direction.png" > </br></div>', 32.2988, -90.1848, 2],
-                                        ['<div style="width:200px !important;"><b>Store Address</b></br>'+ 
-                                   		'<b>Capital: </b>  	Albany  </br>'+
-                                   		'<b>Dialing: </b> code +1 </br>'+
-                                   		'<b>ISO Code: </b> USA </br>'+
-                                   		'<b>States: </b>New York <img style="float:right" src="app/img/Dashboardassets/map_direction.png" > </br></div>', 42.6526, -73.7562, 1]
-                                      ];              
-                       
-
-        var infowindow = new google.maps.InfoWindow();
-        var marker, i;
-
-        for (i = 0; i < locations.length; i++) { 
-          marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-            icon: 'app/img/Dashboardassets/circle_0'+(i+1)+'.png',
-            map: map
-          });
-
-          google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function() {
-                infowindow.setContent(locations[i][0]);
-                infowindow.open(map, marker);
-              }
-            })(marker, i));
-        }
-        var homeControlDiv = document.createElement("div");
-        var homeControl = new RenderButton (homeControlDiv, map,mapstate);
-        homeControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
-    }
-
-//Following code is used to set the map maximize and minimize button
-    function RenderButton(controlDiv, map,mapstate) {
-        // Set CSS styles for the DIV containing the control
-        // Setting padding to 5 px will offset the control
-        // from the edge of the map
-        controlDiv.style.padding = "5px";
-        // Set CSS for the control border
-		var controlUI = document.createElement("div");
-		var image = document.createElement("img");
-		/* if(mapstate=="Maximize")
-			image.src='images/icon_maximize.png';
-		else */ if(mapstate=="Minimize")
-					image.src='app/img/Dashboardassets/close.png';
-        /* controlUI.style.backgroundColor = "white";
-        controlUI.style.borderStyle = "solid";
-        controlUI.style.borderWidth = "2px";
-        controlUI.style.cursor = "pointer";
-        controlUI.style.textAlign = "center";
-        controlUI.title = "Click to set the map to Home"; */
-        image.title = "Click to set the map to Home";
-        
-         controlDiv.appendChild(controlUI); 
-        controlDiv.appendChild(image);
-        
-        // Set CSS for the control interior
-        var controlText = document.createElement("div");
-        controlText.style.fontFamily = "Arial,sans-serif";
-        controlText.style.fontSize = "12px";
-        controlText.style.paddingLeft = "4px";
-        controlText.style.paddingRight = "4px";
-        controlText.style.display='none';
-        //if(no==0)
-        controlText.innerHTML = mapstate;
-        controlUI.appendChild(controlText);
-
-        $("body").on("click",".semi-transparent-div #maximize", function(){
-            
-        	fullscreen("hiddenDiv");
-            controlText.innerHTML = "Minimize";
-            google.maps.event.addDomListener(window, "load", initialize("Minimize","hiddenDiv"));
-        });
-        
-        google.maps.event.addDomListener(image, "click", function() {
-                if (controlText.innerHTML == "Maximize") {
-                    
-                    fullscreen("hiddenDiv");
-                    controlText.innerHTML = "Minimize";
-                    google.maps.event.addDomListener(window, "load", initialize("Minimize","hiddenDiv"));
-                } else {
-                    minscreen("googleMap");
-                    controlText.innerHTML = "Maximize";
-                    google.maps.event.addDomListener(window, "load", initialize("Maximize","googleMap"));
-                }
-        });
-    }
-    google.maps.event.addDomListener(window, "load", initialize("Maximize","googleMap"));
-//You can configure full screen and min screen implementation in some function like this,
-	function fullscreen(divId) {
-		var elem = $("#"+divId);
-	        elem.addClass("somediv");
-	        elem.removeClass("hidden");
-	    }
-	    function minscreen(divId) {
-	        var elem = $("#"+divId);
-	        $("#hiddenDiv").empty();
-	        $("#hiddenDiv").addClass("hidden");
-	        elem.addClass("map-mapDiv");
-	     
-	    }
-	    
-});
-
- 	function tp(){
-		alert("tp");
- 	 	}
-
- 	</script>
+		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"></div>
+		<div ng-if="selectedChart=='Pie'" class="container-canvas">
+			<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels">	</canvas>
 		</div>
-		
-		      <!-- END widget-->
- 	
-   </div>
+		<div ng-if="selectedChart=='Bar'" class="container-canvas">
+			<canvas id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div class="col-lg-4" ng-controller="mapController" ng-init="plotMapFunction('map-container')">
+	
+			<div id="map-container" class="map-mapDiv"></div>			
+	
+	</div>
    
  <div class="col-lg-4" style=" width: 374px; height:373px " >
       <div class="panel panel-default" style=" width: 374px; height:373px " >
@@ -443,7 +270,8 @@
          <div class="panel-body" id="gridHideNodata" >
           <!--   START table-responsive -->
             <div id="gridAdjustHeight" class="table-responsive scrollit" >
-               <table  class="table table-striped table-bordered table-hover">
+               <table  class="table table-striped table-bordered table-hover" ng-if="griddata.length > 0">
+               	<div ng-show="!griddata.length" class="text-center col-md-4 col-md-offset-4">No Records to display</div>
                   <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
                     
                  
@@ -471,7 +299,7 @@
                </table>
             </div>
        <!--      END table-responsive -->
-         <label  class="pull-right ">{{griddata.length}} records found</label>
+         <label  class="pull-right " ng-if="griddata.length > 0">{{griddata.length}} records found</label>
          </div>
       </div>
     <!--   END panel -->

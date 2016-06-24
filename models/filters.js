@@ -25,8 +25,9 @@ var FILTER = {
 var REPORT_TYPE = {
   "NONE": 0,
   "SENSOR": 1,
-  "TOP_3_SELLING_MODELS": 2,
-  "SOLD_VS_CONNECTED": 3
+  "SOLD_VS_CONNECTED": 2,
+  "SALES": 3,
+  "CONNECTED": 4
 };
 
 var filter_category = FILTER_CATEGORY.NONE;
@@ -41,19 +42,27 @@ exports.setReportType2Sensor = function() {
   report_type =  REPORT_TYPE.SENSOR;
 };
 
-exports.setReportType2Sales = function() {
-  report_type =  REPORT_TYPE.TOP_3_SELLING_MODELS;
-}
-
+//sales vs connected report
 exports.setReportType2SoldVsConnected = function() {
   report_type =  REPORT_TYPE.SOLD_VS_CONNECTED;
 }
+
+//Sales report
+exports.setReportType2Sales = function() {
+  report_type =  REPORT_TYPE.SALES;
+}
+
+//Connected report
+exports.setReportType2Connected = function() {
+  report_type =  REPORT_TYPE.CONNECTED;
+}
+
 function isDataTypeSensor() {
   return report_type ===  REPORT_TYPE.SENSOR;
 }
 
 function isDataTypeSales() {
-  return report_type ===  REPORT_TYPE.TOP_3_SELLING_MODELS;
+  return report_type ===  REPORT_TYPE.SALES;
 }
 
 exports.setPayload = function(payload) { 
