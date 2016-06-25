@@ -35,20 +35,49 @@ exports.getData = function(payload, callback) {
     
     splitInQuarters(result, q1, q2, q3, q4);
     
-    var final_result = q1.slice(0, 3);
-    final_result = final_result.concat(q2.slice(0, 3), q3.slice(0, 3), q4.slice(0, 3));
+    q1 = groupByFilter(q1.slice(0, 3));
+    q2 = groupByFilter(q2.slice(0, 3));
+    q3 = groupByFilter(q3.slice(0, 3));
+    q4 = groupByFilter(q4.slice(0, 3));
+    
+    var final_result = [];
+    final_result[0] = q1
+    final_result[1] = q2
+    final_result[2] = q3
+    final_result[3] = q4
     
     var response = {};
     
     response.description = "Top 3 selling models";
     response.data = final_result;
-    response.xAxisUnit = getxAxisByQuarters(final_result);
-    response.yAxisUnit = "Hello";
+    //response.xAxisUnit = getxAxisByQuarters(final_result);
+    
     
     callback(err, response);
     
   });      
 };
+
+function groupByFilter(quarters) {
+  var group = {};
+  var filter = "";
+  var model;
+    
+  group.filter = quarters[0].sold.year + " - " + "Q" + quarters[0].sold.quarter
+  
+  for (var each_quarter in quarters) {
+    model = quarters[each_quarter].make + " " + quarters[each_quarter].model;
+    group[model] = quarters[each_quarter].totalSales;
+  }
+  return group;
+  //console.log(group);
+  
+  
+}
+
+function formatResponseSchema(response) {
+  //for(var each_item in response.
+}
 
 function getxAxisByQuarters(data) {
   var xAxis = [];
@@ -79,4 +108,6 @@ function splitInQuarter(data, quarterBuffer, quarter_no) {
   quarterBuffer.sort(function(a, b) {
     return b.totalSales - a.totalSales;
   });
+  
+  //console.log(quarterBuffer);
 }

@@ -27,8 +27,10 @@ var REPORT_TYPE = {
   "SENSOR": 1,
   "SOLD_VS_CONNECTED": 2,
   "SALES": 3,
-  "CONNECTED": 4
+  "CONNECTED": 4,
+  "FAVOURITE": 5
 };
+
 
 var filter_category = FILTER_CATEGORY.NONE;
 var filter_type = FILTER.NONE;
@@ -37,6 +39,10 @@ var report_type = REPORT_TYPE.NONE;
 var isFilterSelected = function(items){
   return (items.length > 0)
 }
+
+exports.setReportType2Favourite = function() {
+  report_type =  REPORT_TYPE.FAVOURITE;
+};
 
 exports.setReportType2Sensor = function() {
   report_type =  REPORT_TYPE.SENSOR;
@@ -139,6 +145,8 @@ exports.groupLevel = function(){
       case REPORT_TYPE.NONE:
       case REPORT_TYPE.SENSOR:
         return 2;
+      case REPORT_TYPE.FAVOURITE:
+        return 3;      
       case REPORT_TYPE.TOP_3_SELLING_MODELS:
         return 4;
       case REPORT_TYPE.SOLD_VS_CONNECTED:

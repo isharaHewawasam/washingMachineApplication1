@@ -107,12 +107,13 @@ var getData = function(params, callback) {
   var db = getDb(params.databaseType);
  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
-    doGetDataLogging(err, result, params, view_params, view_name);    
+    
+    //doGetDataLogging(err, result, params, view_params, view_name);    
     
     //sort result is sorting if set
-    sortResult(params.sort, result.rows)
+    //sortResult(params.sort, result.rows)
     //get top rows if top is set
-    result.rows = getTop(params.top, result.rows);       
+    //result.rows = getTop(params.top, result.rows);       
     
     callback(err, result);
   });

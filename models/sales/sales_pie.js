@@ -11,7 +11,7 @@ exports.getData = function(payload, callback) {
   key_map.setReportType2TopModels();
   
   var params = { 
-                 "description": "Top Selling Models",
+                 "description": "Sold - Pie",
                  "payload": null,
                  "buffer": topModelsBuffer,
                  "view": {

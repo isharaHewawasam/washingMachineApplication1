@@ -5,7 +5,7 @@ var fav_times = require('./favourite_time');
 var filter = require('./filters');
 
 exports.getAllUsage = function(payload, callback) {  
-    console.log("Request received : " + Date());
+
 	  getData(payload, function(err, result) { 
 	    if(err) {
 	    	callback(err, null);
@@ -37,8 +37,11 @@ exports.getAllUsage = function(payload, callback) {
 };
 
 var getData = function(payload, callback) { 
-console.log("payload " + JSON.stringify(payload));
+console.log("payload sfsf " + JSON.stringify(payload));
+
   filter.setPayload(payload);
+  filter.setReportType2Sensor();
+  console.log("grop level : " + filter.groupLevel());
   //var params = { reduce: true, group: true, group_level: filter.groupLevel() };
   var params = { reduce: true, group_level: filter.groupLevel() };
   //-------------

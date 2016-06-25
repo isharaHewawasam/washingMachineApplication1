@@ -14,8 +14,9 @@ exports.getAllDays = function(payload, callback) {
 	  });
 };
 
-var getData = function(payload, callback) {
+var getData = function(payload, callback) {  
   filter.setPayload(payload);
+  filter.setReportType2Favourite();
     
   var view_name;
   var params;
@@ -79,6 +80,8 @@ exports.search = function(usage, callback) {
 };
 
 var doesUsageFallsInResponse = function(usage, keys) { 
+  //console.log("usage : " + JSON.stringify(usage));
+  //console.log("keys : " + keys);
   var usage_values;
 
   if( (filter.isFilterCategoryNone()) || 

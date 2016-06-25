@@ -16,6 +16,7 @@ exports.getAllDays = function(payload, callback) {
 
 var getData = function(payload, callback) {
   filter.setPayload(payload);
+  filter.setReportType2Favourite();
     
   var view_name;
   var params;
