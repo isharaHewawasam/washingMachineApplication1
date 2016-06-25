@@ -105,7 +105,6 @@ exports.setPayload = function(payload) {
       filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
     case FILTER.MIXED:
-      console.log("mixed");
       filter_category = FILTER_CATEGORY.MIXED;
       break;
     default:
@@ -146,7 +145,9 @@ exports.groupLevel = function(){
       case REPORT_TYPE.SENSOR:
         return 2;
       case REPORT_TYPE.FAVOURITE:
-        return 3;      
+        return 3;  
+      case REPORT_TYPE.SALES:
+        return 2;        
       case REPORT_TYPE.TOP_3_SELLING_MODELS:
         return 4;
       case REPORT_TYPE.SOLD_VS_CONNECTED:

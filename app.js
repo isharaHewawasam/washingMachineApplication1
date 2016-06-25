@@ -32,8 +32,14 @@ var options = {
 var swaggerDoc = require('./swagger.json');
 
 function exitHandler(reason) {	
-  if(reason)
-	console.log("Caught unhandled exception : " + reason);
+  if(reason) {
+    console.log("*********APP CRASHED****************************************");
+	  console.trace(reason.stack);
+    console.log("------------------------------------------------------------");
+    console.log("Reason : " + reason);
+    console.log("************************************************************");
+  }
+  
   process.exit(0);
   
   if(db !== undefined) {

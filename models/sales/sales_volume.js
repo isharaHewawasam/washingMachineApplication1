@@ -7,13 +7,14 @@ exports.getData = function(payload, callback) {
   var payload = require("../../payloads/top_3_models").payload;  
   var filter = require("../filters");
   var key_map = require("../view_keys_mapping");
-  
+  //var payload = require("../../payloads/top_3_models").payload;  
+  //console.log("sales volume");
   filter.setReportType2Sales();
-  key_map.setReportType2TopModels();
+  key_map.setReportType2Sales();
   
   var params = { 
-                 "description": "Sell Volume",
-                 "payload": payload,
+                 "description": "Top Selling Models",
+                 "payload": null,
                  "buffer": topModelsBuffer,
                  "view": {
                            "designDocName": "sales",
@@ -27,9 +28,32 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
+    
     callback(err, result);
+    
   });      
 };
+
+function groupByFilter(quarters) {
+  var group = {};
+  var filter = "";
+  var model;
+    
+  group.filter = quarters[0].sold.year + " - " + "Q" + quarters[0].sold.quarter
+  
+  for (var each_quarter in quarters) {
+    model = quarters[each_quarter].make + " " + quarters[each_quarter].model;
+    group[model] = quarters[each_quarter].totalSales;
+  }
+  return group;
+  //console.log(group);
+  
+  
+}
+
+function formatResponseSchema(response) {
+  //for(var each_item in response.
+}
 
 function getxAxisByQuarters(data) {
   var xAxis = [];
@@ -60,4 +84,6 @@ function splitInQuarter(data, quarterBuffer, quarter_no) {
   quarterBuffer.sort(function(a, b) {
     return b.totalSales - a.totalSales;
   });
+  
+  //console.log(quarterBuffer);
 }

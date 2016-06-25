@@ -3,7 +3,8 @@
 var REPORT_TYPE = {
   "NONE": 0,
   "SENSOR": 1,
-  "TOP_3_SELLING_MODELS": 2
+  "TOP_3_SELLING_MODELS": 2,
+  "SALES": 3
 };
 
 var key = {};
@@ -16,6 +17,10 @@ exports.setReportType2TopModels = function() {
   setKeys(REPORT_TYPE.TOP_3_SELLING_MODELS);
 };
 
+exports.setReportType2Sales = function() {
+  setKeys(REPORT_TYPE.SALES);
+};
+
 function setKeys(report_type) {
   switch (report_type) {
     case REPORT_TYPE.SENSOR:
@@ -25,6 +30,7 @@ function setKeys(report_type) {
       key.YEAR_2 = 2; key.QUARTER_2 = 3; key.MONTH_2 = 4
       break;
     case REPORT_TYPE.TOP_3_SELLING_MODELS:
+    case REPORT_TYPE.SALES:
       key.MAKE = 0; key.MODEL = 1;
       key.YEAR = 2; key.QUARTER = 3; key.MONTH = 4;
       key.YEAR_2 = 2; key.QUARTER_2 = 3; key.MONTH_2 = 4  

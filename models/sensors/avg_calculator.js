@@ -28,19 +28,6 @@ exports.getSum = function(params, callback) {
   getStats(params, callback);
 };
 
-/*
-exports.getSum = function(params, callback) {  
-  params.stats = "sum";
-  filter.setReportType2Sales();
-  keys_map.setReportType2TopModels();
-  
-  if (params.top !== undefined) {
-    params.sort = { "value": true, "order": "desc" }
-  }
-  
-  getStats(params, callback);
-};
-*/
 
 exports.getAverage = function(params, callback) {  
   params.stats = "average";
@@ -108,10 +95,10 @@ var getData = function(params, callback) {
  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
     
-    //doGetDataLogging(err, result, params, view_params, view_name);    
+    doGetDataLogging(err, result, params, view_params, view_name);    
     
     //sort result is sorting if set
-    //sortResult(params.sort, result.rows)
+    sortResult(params.sort, result.rows)
     //get top rows if top is set
     //result.rows = getTop(params.top, result.rows);       
     
@@ -136,9 +123,9 @@ function doGetDataLogging(err, result, params, view_params, view_name) {
     console.log(params.description);
     console.log("Design Doc name " + params.view.designDocName); 
     console.log("View name " + view_name);    
-    console.log("Usage view params " + JSON.stringify(view_params));
-    console.log("Usage records form cloudant " + result.rows.length);
-    //console.log("Usage records form cloudant " + JSON.stringify(result.rows));
+    console.log("view params " + JSON.stringify(view_params));
+    console.log("No records  " + result.rows.length);
+    //console.log("Data " + JSON.stringify(result.rows));
     console.log("============================================");
 }
 
@@ -229,7 +216,7 @@ var do_make_and_model_match = function(usage1, usage2) {
 };
 
 var fillRecord = function(result, params) {
-  var record = { "sold": {"year": 0, "quarter": 0, "month": 0} };
+  var record = {}// "sold": {"year": 0, "quarter": 0, "month": 0} };
   var keys = keys_map.key;
  
   //console.log("keys " + JSON.stringify(keys));
@@ -245,13 +232,15 @@ var fillRecord = function(result, params) {
       record.zip_code = result.key[keys.ZIP_CODE]; 
   } 
   
-  if(filter.isFilterCategoryByYear()) {    
+  if(filter.isFilterCategoryByYear()) {   
+    record.sold = {};  
     record.sold.year = parseInt(result.key[keys.YEAR_2]); 
     record.sold.quarter = parseInt(result.key[keys.QUARTER_2]);
     record.sold.month = parseInt(result.key[keys.MONTH_2]);
   }
   
-  if(filter.isFilterCategoryMixed()) {    
+  if(filter.isFilterCategoryMixed()) {
+    record.sold = {};
     record.sold.year = result.key[keys.YEAR]; 
     record.sold.quarter = result.key[keys.QUARTER];
     record.sold.month = result.key[keys.MONTH];

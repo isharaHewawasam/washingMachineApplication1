@@ -19,20 +19,14 @@ var payload = {
       "end_date": "string"
     },
     "relative": {
-      "unit": "string",
+      "unit": "2",
       "value": 0
     }
   },
   "region": {
-    "states": [
-    {"value": "aRizona"}
-    ],
-    "cities": [
-      
-    ],
-    "zip_codes": [
-      
-    ]
+    "states": [],
+    "cities": [],
+    "zip_codes": []
   }
 };
 
