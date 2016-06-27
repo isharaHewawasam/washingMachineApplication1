@@ -7,11 +7,15 @@ exports.getData = function getUngroupedData(payload, callback) {
   require("./sales_map").getData(payload, function(err, sales_result) {
     //console.log(JSON.stringify(sales_result));
     if (sales_result) {
-      require("./connected_map").getData(payload, sales_result, function(err, connected_buffer) {
+      var temp = [];
+      //require("./connected_map").getData(payload, sales_result, function(err, connected_buffer) {
+      require("./connected_map").getData(payload, temp, function(err, connected_buffer) {  
         var response = {};
         
-        setRegionLocations(connected_buffer, function() {
-          callback(err, connected_buffer);
+        mix_res(sales_result, connected_buffer);
+        
+        setRegionLocations(sales_result, function() {
+          callback(err, sales_result);
         });
       });
     } else {
@@ -21,6 +25,39 @@ exports.getData = function getUngroupedData(payload, callback) {
   
 };
 
+function mix_res(sales_result, connected_buffer) {
+  var found = false;
+  
+  for (var each_sales_item in sales_result) {
+    found = false;
+    for (var each_conn_item in connected_buffer) {
+      if ( are_same(sales_result[each_sales_item], connected_buffer[each_conn_item]) ) {
+        //console.log("same");
+        sales_result[each_sales_item].unitsConnected  = connected_buffer[each_conn_item].unitsConnected;
+      }
+    }
+  }
+}
+
+function are_same(item1, item2) {
+  var state_match = true;
+  var city_match = true;
+  var zip_match = true;
+  
+  if ( (item1.state !== undefined) && (item2.state !== undefined) ) {
+    state_match = (item1.state === item2.state);  
+  }
+  
+  if ( (item1.city !== undefined) && (item2.city !== undefined) ) {
+    city_match = (item1.city === item2.city);  
+  }
+  
+  if ( (item1.state !== undefined) && (item2.state !== undefined) ) {
+    zip_match = (item1.zip_code === item2.zip_code);  
+  }
+  
+  return state_match && city_match && zip_match;
+}
 /*require("./models/region_lat_long").getStateLocation("Washington", function(loc) {
     console.log("Washington " + JSON.stringify(loc));
   });

@@ -149,7 +149,7 @@ function sortResult(sort, data) {
 
 var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name, stats, XXX_007) {
   //console.log("exists " + JSON.stringify(usages)); 
-  if(usageExists(payload, usages, new_usage, filter.filterType(), XXX_007)) {
+  if(usageExists(payload, usages, new_usage, filter.filterType())) {
     //console.log("exists " + avg_key_name);   
     for(var each_usage in usages) {
       if( (usages[each_usage].make == new_usage.make) && (usages[each_usage].model == new_usage.model) ) {
@@ -179,7 +179,7 @@ var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name, stats
 
 
 var usageExists = function(payload, usages, usage_to_find, group_level, XXX_007) { 
-  if (XXX_007 && filter.isFilterCategoryNone()) return true;
+  //if (filter.isFilterCategoryNone()) return true;
   
   for(var each_usage in usages) {    
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 

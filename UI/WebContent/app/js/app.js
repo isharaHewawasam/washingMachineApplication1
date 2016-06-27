@@ -1199,26 +1199,26 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
-	var sum_latitude = 0;
+	/*var sum_latitude = 0;
 	var sum_longitude = 0;
 	
 	$.each(salesData, function () {			
 		sum_latitude+= parseFloat(this.lat);
 		sum_longitude+= parseFloat(this.lon);
-    });
+    });*/
 	
 	// Initiate the map
 	var chart = Highcharts.Map({
         chart: {
-            renderTo: divId,
+            renderTo: divId/*,
             events:{
                 load: function () {  
                 	// Focus the map to a point based on the average latitude and longitude values of the data set
                 	var pos = this.fromLatLonToPoint({ lat: sum_latitude/salesData.length, lon: sum_longitude/salesData.length });
-                    this.mapZoom(0.4, this.xAxis[0].toPixels(pos.x));
+                    this.mapZoom(0.5, this.xAxis[0].toPixels(pos.x));
                 	//this.mapZoom(0.8, this.xAxis[0].toPixels(pos.x));
                 }
-            }
+            }*/
         },
         
 	    title: {
@@ -1242,8 +1242,8 @@ function renderMap(divId, salesData){
 	    },
 	    
 	    series: [{
-	        mapData: Highcharts.maps['custom/world'],
-	        //mapData: Highcharts.maps['custom/north-america'],
+	        //mapData: Highcharts.maps['custom/world'],
+	        mapData: Highcharts.maps['custom/north-america'],
 	        name: 'Basemap',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
@@ -1251,8 +1251,8 @@ function renderMap(divId, salesData){
 	    }, {
 	        name: 'Separators',
 	        type: 'mapline',
-	        data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
-	        //data: Highcharts.geojson(Highcharts.maps['custom/north-america'], 'mapline'),
+	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        data: Highcharts.geojson(Highcharts.maps['custom/north-america'], 'mapline'),
 	        color: '#E0E0E0',
 	        showInLegend: false,
 	        enableMouseTracking: false
@@ -1264,7 +1264,8 @@ function renderMap(divId, salesData){
 	        dataLabels: {
 	            enabled: true,
 	            format: '{point.z}',
-	            color:'#000000'
+	            color:'#000000'/*,
+	            allowOverlap: true*/
 	        }
 	    }]
 	});
@@ -1272,6 +1273,7 @@ function renderMap(divId, salesData){
 	//console.log('Rendered the app successfully');
 	
 }
+
 App.controller('myController', function ($scope,$http,$rootScope) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
@@ -1401,8 +1403,8 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 					 
 				}).success(function(data, status) {
 			    	console.log("Pie Chart response :"+JSON.stringify(data));	
-			    	$scope.data[0]=data.soldCount;
-			    	$scope.data[1]=data.connectedCount;
+			    	$scope.data[0]=data.unitsSold;
+			    	$scope.data[1]=data.unitsConnected;
 			    	
 			    }). error(function(data, status) {
 			       console.log(JSON.stringify(data));
@@ -1440,58 +1442,70 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	}
 	
 	$scope.plotBarChart=function(divId){
-		$(function () {
-		    $('#bar').highcharts({
-		        chart: {
-		            type: 'column'
-		        },
-		        title: {
-		            text: 'Top 3 Selling Models'
-		        },
-		        xAxis: {
-		            categories: [
-		                'Q1 2016',
-		                'Q2 2016',
-		                'Q3 2016',
-		                'Q4 2016'
-		            ],
-		            crosshair: true
-		        },
-		        yAxis: {
-		            min: 0,
-		            title: {
-		                text: 'Sales'
-		            }
-		        },
-		        tooltip: {
-		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-		                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-		            footerFormat: '</table>',
-		            shared: true,
-		            useHTML: true
-		        },
-		        plotOptions: {
-		            column: {
-		                pointPadding: 0.2,
-		                borderWidth: 0
-		            }
-		        },
-		        series: [{
-		            name: 'LG',
-		            data: [149.9, 171.5, 106.4,150]
+		
+		 $http({
+			  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=false', 
+			  method: 'POST'
+			 
+			}).success(function(data, status) {
+		    		
+		    	$scope.barchartData=data;
+		    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
+		    	
+		    	$(function () {
+				    $('#bar').highcharts({
+				        chart: {
+				            type: 'column'
+				        },
+				        title: {
+				            text: 'Top 3 Selling Models'
+				        },
+				        xAxis: {
+				            categories: [
+				                '2016'
+				            ],
+				            crosshair: true
+				        },
+				        yAxis: {
+				            min: 0,
+				            title: {
+				                text: 'Sales'
+				            }
+				        },
+				        tooltip: {
+				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+				            footerFormat: '</table>',
+				            shared: true,
+				            useHTML: true
+				        },
+				        plotOptions: {
+				            column: {
+				                pointPadding: 0.2,
+				                borderWidth: 0
+				            }
+				        },
+				        series: [{
+				            name: $scope.barchartData.sales[0].item,
+				            data: [$scope.barchartData.sales[0].unitsSold]
 
-		        }, {
-		            name: 'Samsung',
-		            data: [183.6, 178.8, 198.5, 193.4]
+				        }, {
+				            name: $scope.barchartData.sales[1].item,
+				            data: [$scope.barchartData.sales[1].unitsSold]
 
-		        }, {
-		            name: 'Whirlpool',
-		            data: [148.9, 138.8, 139.3, 141.4]
+				        }, {
+				            name: $scope.barchartData.sales[2].item,
+				            data: [$scope.barchartData.sales[2].unitsSold]
 
-		        }]
-		    });
-		});
+				        }]
+				    });
+				});
+			}). error(function(data, status) {
+			       console.log(JSON.stringify(data));
+			    });
+		
+		
 	}
 	$scope.plotChartFunction = function(divId){
 		 $http({
