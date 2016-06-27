@@ -25,10 +25,13 @@ var FILTER = {
 var REPORT_TYPE = {
   "NONE": 0,
   "SENSOR": 1,
-  "SOLD_VS_CONNECTED": 2,
-  "SALES": 3,
-  "CONNECTED": 4,
-  "FAVOURITE": 5
+  "SOLD_UNGROUPED": 2,
+  "CONNECTED_UNGROUPED": 3,
+  "SALES": 4,
+  "CONNECTED": 5,
+  "FAVOURITE": 6,
+  "SALES_BY_REGION_AND_PRODUCT": 7,
+  "CONNECTED_BY_REGION_AND_PRODUCT": 8
 };
 
 
@@ -40,6 +43,14 @@ var isFilterSelected = function(items){
   return (items.length > 0)
 }
 
+exports.setReportType2SalesByRegionAndProduct = function() {
+  report_type =  REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT;
+};
+
+exports.setReportType2ConnectedByRegionAndProduct = function() {
+  report_type =  REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT;
+};
+
 exports.setReportType2Favourite = function() {
   report_type =  REPORT_TYPE.FAVOURITE;
 };
@@ -49,8 +60,13 @@ exports.setReportType2Sensor = function() {
 };
 
 //sales vs connected report
-exports.setReportType2SoldVsConnected = function() {
-  report_type =  REPORT_TYPE.SOLD_VS_CONNECTED;
+exports.setReportType2SoldUngrouped = function() {
+  report_type =  REPORT_TYPE.SOLD_UNGROUPED;
+}
+
+//sales vs connected report
+exports.setReportType2ConnectedUngrouped = function() {
+  report_type =  REPORT_TYPE.CONNECTED_UNGROUPED;
 }
 
 //Sales report
@@ -71,23 +87,65 @@ function isDataTypeSales() {
   return report_type ===  REPORT_TYPE.SALES;
 }
 
+function isArrayValid(par_array){
+  return ((par_array !== undefined) && (par_array.length > 0))
+}
+
+function setDefaultFilters(payload) {
+  switch(report_type) {
+    case REPORT_TYPE.SOLD_UNGROUPED:
+       /*payload.timescale.years.push( {"value": (new Date()).getFullYear()});
+       payload.timescale.quarters.push( {"value": 1} );
+       payload.timescale.quarters.push( {"value": 2} );
+       payload.timescale.quarters.push( {"value": 3} );
+       payload.timescale.quarters.push( {"value": 4} );*/
+      break;
+    case REPORT_TYPE.CONNECTED_UNGROUPED:
+      break;
+  }    
+}
+
 exports.setPayload = function(payload) { 
+  require("../middle_ware/adjust_payload").setPayload(payload);
+  //setDefaultFilters(payload);
+  //console.log("Fsfdsfsdfd " + JSON.stringify(payload));
+  
   filter_category = FILTER_CATEGORY.NONE;
   filter_type = FILTER.NONE; 
  
   if((payload === null) || (payload === undefined)) return;  
   if((payload.region === undefined) && (payload.timescale === undefined)) return;
+ 
+   // Region
+  if (payload.region) {
+    if ((payload.region.states) && (payload.region.states.length)) {
+       filter_type = FILTER.BY_STATE;  
+    }
+    
+    if ((payload.region.cities) && (payload.region.cities.length)) {
+       filter_type = FILTER.BY_CITY;  
+    }
+    
+    if ((payload.region.zip_codes) && (payload.region.zip_codes.length)) {
+       filter_type = FILTER.BY_ZIP_CODE;
+    }
+  }
   
-  // Region 
-  if(payload.region.states.length > 0) filter_type = FILTER.BY_STATE;  
-  if(payload.region.cities.length > 0) filter_type = FILTER.BY_CITY;  
-  if(payload.region.zip_codes.length > 0) filter_type = FILTER.BY_ZIP_CODE;  
+  //Timescale
+  if (payload.timescale) {
+    if ((payload.timescale.years) && (payload.timescale.years.length)) {
+       filter_type = FILTER.BY_YEAR;
+    }
+    
+    if ((payload.timescale.quarters) && (payload.timescale.quarters.length)) {
+       filter_type = FILTER.BY_QUARTER;  
+    }
+    
+    if ((payload.timescale.months) && (payload.timescale.months.length)) {
+       filter_type = FILTER.BY_MONTH; 
+    }
+  }
   
-  //Year
-  if(payload.timescale.years.length > 0) filter_type = FILTER.BY_YEAR;
-  if(payload.timescale.quarters.length > 0) filter_type = FILTER.BY_QUARTER;  
-  if(payload.timescale.months.length > 0) filter_type = FILTER.BY_MONTH; 
-
   //Mixed
   filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : filter_type;
   //If no filter is applied set to by state
@@ -117,10 +175,12 @@ var isFilterCategoryMixed_ = function(payload) {
   // Region 
   var is_filter_by_region = false;
     
-  if( (payload.region.states.length > 0) ||  
-      (payload.region.cities.length > 0) ||   
-      (payload.region.zip_codes.length > 0) ) {
-      is_filter_by_region = true;
+  if (payload.region) {  
+    if ( ((payload.region.states) && (payload.region.states.length > 0)) ||  
+       (payload.region.cities.length > 0) ||   
+       (payload.region.zip_codes.length > 0) ) {
+       is_filter_by_region = true;
+    }
   }
   
   // year
@@ -150,21 +210,49 @@ exports.groupLevel = function(){
         return 2;        
       case REPORT_TYPE.TOP_3_SELLING_MODELS:
         return 4;
-      case REPORT_TYPE.SOLD_VS_CONNECTED:
-        return 0;
+      case REPORT_TYPE.SOLD_UNGROUPED:
+        return 7;
+      case REPORT_TYPE.CONNECTED_UNGROUPED:
+        return 4;  
+      case REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
+        return 2;  
+      case REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
+        return 2;          
       default:
         return -1;      
     }    
   }
   
-  if(isFilterByMake()) return 1; 
-  if(isFilterByModel()) return 2;
+  switch (report_type) {
+    case  REPORT_TYPE.SOLD_UNGROUPED:
+      if ( isFilterByState() ) return 6;  
+      if ( isFilterByCity() ) return 7;
+      if ( isFilterByZipCode() ) return 8;
+      break;
+    case  REPORT_TYPE.CONNECTED_UNGROUPED:
+      if ( isFilterByState() ) return 4;  
+      if ( isFilterByCity() ) return 5;
+      if ( isFilterByZipCode() ) return 6;  
+       break;
+    case  REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
+    case  REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
+      if ( isFilterByState() ) return 1;  
+      if ( isFilterByCity() ) return 2;
+      if ( isFilterByZipCode() ) return 3; 
+      
+      if ( isFilterByMake() ) return 4; 
+      if ( isFilterByModel() ) return 5; 
+      break;      
+    default:  
+      if ( isFilterByMake() ) return 1; 
+      if ( isFilterByModel() ) return 2;
   
-  if( (isFilterByState()) || (isFilterByYear()) ) return 3;  
-  if( (isFilterByCity()) || (isFilterByQuarter()) ) return 4;
-  if( (isFilterByZipCode()) || (isFilterByMonth()) ) return 5
-  
-  return 2;
+      if ( (isFilterByState() ) || ( isFilterByYear() ) ) return 3;  
+      if ( (isFilterByCity() ) || ( isFilterByQuarter() ) ) return 4;
+      if ( (isFilterByZipCode() ) || (isFilterByMonth() ) ) return 5;
+      
+      return 2;
+  }
 };
 
 // {"key":["LG","WD100CW","Arizona","Chandler","85225","2015","1","1"]

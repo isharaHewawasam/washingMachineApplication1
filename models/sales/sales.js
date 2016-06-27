@@ -10,7 +10,7 @@ exports.getReportData = function(report_name, group, payload, callback) {
     case reportName.soldVsConnected:
       //to be shown on map
       if (group) {
-        require("./sold_vs_connected").getGroupedData(payload, callback); return;
+        require("./sold_vs_connected").getData(payload, callback); return;
       //to be shown as pie chart  
       } else {
         require("./sold_vs_connected").getUngroupedData(payload, callback); return;

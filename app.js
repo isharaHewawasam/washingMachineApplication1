@@ -31,6 +31,8 @@ var options = {
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
 var swaggerDoc = require('./swagger.json');
 
+//console.log(6755.toUpperCase());
+
 function exitHandler(reason) {	
   if(reason) {
     console.log("*********APP CRASHED****************************************");
@@ -52,6 +54,7 @@ function exitHandler(reason) {
 process.on('SIGINT', exitHandler);
 process.on('exit', exitHandler);
 process.on('uncaughtException', exitHandler);
+
 
 var salesDb = new Database();
 // Initialize the Swagger middleware
@@ -111,7 +114,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	        console.log(err);
         } else {
           http.createServer(app).listen(serverPort, '0.0.0.0', function() {   
-            //getAllAverages();          
+            //getAllLatLong();          
 	          console.log('Express server listening on port ' + serverPort);
           });
         }  
@@ -125,17 +128,14 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   });*/
 });
 
-var getAllAverages = function(payload){
-  var sensors = require("./models/sensors/sensors");
-  var payload = require('./payloads/states').payload;
-  var avgWaterUsage = 0;
-  
-  sensors.getAverageUsageForAll(payload, function(err, result) {
-    if(result) {
-      console.log(result);
-    } else {
-      console.log("Error in getting water average " + err);
-    }
+var getAllLatLong = function(){
+  require("./models/region_lat_long").getStateLocation("Washington", function(loc) {
+    console.log("Washington " + JSON.stringify(loc));
   });
+  
+  require("./models/region_lat_long").getCityLocation("Florida", "Miami", function(loc) {
+    console.log("Miami " + JSON.stringify(loc));
+  });
+  
   
 };

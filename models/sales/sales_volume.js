@@ -14,7 +14,7 @@ exports.getData = function(payload, callback) {
   
   var params = { 
                  "description": "Top Selling Models",
-                 "payload": null,
+                 "payload": payload,
                  "buffer": topModelsBuffer,
                  "view": {
                            "designDocName": "sales",

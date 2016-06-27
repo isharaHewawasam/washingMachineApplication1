@@ -1,32 +1,31 @@
 'use strict';
-var avg = require('../sensors/avg_calculator');
 
 exports.getData = function(payload, callback) {
-  var VIEW_NAME = "sales";
-  var salesBuffer = [];
+  var VIEW_NAME = "salesByRegionAndProduct";
+  var buffer = [];
   var filter = require("../filters");
   var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
-  filter.setReportType2SoldVsConnected();
-  key_map.setReportType2TopModels();
+  filter.setReportType2SalesByRegionAndProduct();
+  key_map.setReportType2SalesByRegionAndProduct();
   
   var params = { 
-                 "description": "Total Units Sold",
+                 "description": "Sold - Pie",
                  "payload": payload,
-                 "buffer": salesBuffer,
+                 "buffer": buffer,
                  "view": {
                            "designDocName": "sales",
                            "default": VIEW_NAME,
-                           "byYear": VIEW_NAME + "ByYear"
+                           "byYear": VIEW_NAME
                          },
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
                   "filter": filter,
                   "key_maps": key_map
                };
- 
-  avg.getSum(params, function(err, result) {
-    callback(err, result);
-  });    
+  
+  require('../sensors/avg_calculator').getSum(params, function(err, result) {
+    callback(err, result);    
+  });      
 };

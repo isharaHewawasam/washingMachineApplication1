@@ -650,15 +650,9 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		
 		$scope.usagedata={  
 						   "productAttrs":{  
-							      "makes":[  
-		
-							      ],
-							      "models":[  
-		
-							      ],
-							      "skus":[  
-		
-							      ],
+							      "makes":[],
+							      "models":[],
+							      "skus":[],
 							      "mfg_date":{  
 							         "start_date":"01/01/2015",
 							         "end_date":"01/01/2016"
@@ -757,6 +751,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		
 		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
 		
+		// to set usage object in anotehr controllr
+		$rootScope.setUsageData($scope.usagedata);
 		//code added by sanket
 		$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
@@ -781,6 +777,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
           });
 		
 	
+		
 		$scope.griddata=[];
 		  
 		
@@ -1192,11 +1189,7 @@ App.controller('mapController',function($scope,$http){
 	}
 });
 function renderMap(divId, salesData){
-	
-	/*var salesData = [{"state": "California","latitude": 36.116203,"longitude": -119.681564,"unitsSold": 1000,"unitsConnected": 330},
-	                 {"state": "Los Angeles","latitude": 34.052235,"longitude": -118.243683,"unitsSold": 484,"unitsConnected": 440},
-	                 {"state": "Florida","latitude": 27.766279,"longitude": -81.686783,"unitsSold": 289,"unitsConnected": 200}];*/
-          	     
+	     
 	var salesDataStr = JSON.stringify(salesData);
 	
 	// Modify the json data set according to required highmap data format
@@ -1206,10 +1199,26 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
+	var sum_latitude = 0;
+	var sum_longitude = 0;
+	
+	$.each(salesData, function () {			
+		sum_latitude+= parseFloat(this.lat);
+		sum_longitude+= parseFloat(this.lon);
+    });
+	
 	// Initiate the map
 	var chart = Highcharts.Map({
         chart: {
-            renderTo: divId
+            renderTo: divId,
+            events:{
+                load: function () {  
+                	// Focus the map to a point based on the average latitude and longitude values of the data set
+                	var pos = this.fromLatLonToPoint({ lat: sum_latitude/salesData.length, lon: sum_longitude/salesData.length });
+                    this.mapZoom(0.4, this.xAxis[0].toPixels(pos.x));
+                	//this.mapZoom(0.8, this.xAxis[0].toPixels(pos.x));
+                }
+            }
         },
         
 	    title: {
@@ -1234,6 +1243,7 @@ function renderMap(divId, salesData){
 	    
 	    series: [{
 	        mapData: Highcharts.maps['custom/world'],
+	        //mapData: Highcharts.maps['custom/north-america'],
 	        name: 'Basemap',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
@@ -1242,6 +1252,7 @@ function renderMap(divId, salesData){
 	        name: 'Separators',
 	        type: 'mapline',
 	        data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        //data: Highcharts.geojson(Highcharts.maps['custom/north-america'], 'mapline'),
 	        color: '#E0E0E0',
 	        showInLegend: false,
 	        enableMouseTracking: false
@@ -1261,13 +1272,14 @@ function renderMap(divId, salesData){
 	//console.log('Rendered the app successfully');
 	
 }
-App.controller('myController', function ($scope,$http) {
-	
+App.controller('myController', function ($scope,$http,$rootScope) {
+	$scope.usagedata=null;
+	$rootScope.selectedSales="";
 	$scope.selectedSales="";
 	$scope.selectedChart="";
-	
+	$scope.linechartData=[];
 	$scope.labels = ["Sold", "Connected"];
-	  $scope.data = [];
+	  $scope.data = [100002,87600];
 	  
 	  $scope.barLabels = ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016'];
 	  $scope.barSeries = ['Sold', 'Connected'];
@@ -1276,6 +1288,82 @@ App.controller('myController', function ($scope,$http) {
 	                    [28, 48, 40, 19]];
 	 
 	  
+	  $rootScope.setUsageData=function(usagedata){
+		  $scope.usagedata=usagedata;
+		  console.log("In rootScope Usage data:: "+JSON.stringify($scope.usagedata)+":: "+$scope.selectedSales);
+		  if($scope.selectedSales==0){
+				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
+	                method: "POST",
+	                headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	                data: $scope.usagedata
+	                
+				       }).success(function(data, status) {
+				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
+				                if(!data || data.length === 0){
+				                     console.log("empty data for soldVsConnected");
+				          
+				                }  else{
+				                    console.log("Got data for soldVsConnected..." );
+				                }
+				                console.log("data from server  :"+JSON.stringify(data));
+				               }). error(function(data, status) {
+				                 
+				                      alert("No data found");
+				                      console.log("error:"+status);
+				                       
+				        });
+			}
+			else if($scope.selectedSales== 1){
+				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=true', 
+	                method: "POST",
+	                headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	                data: $scope.usagedata
+	                
+				       }).success(function(data, status) {
+				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
+				                if(!data || data.length === 0){
+				                     console.log("empty data for top3SellingModels");
+				          
+				                }  else{
+				                    console.log("Got data for top3SellingModels..." );
+				                }
+				                console.log("data from server  :"+JSON.stringify(data));
+				               }). error(function(data, status) {
+				                 
+				                      alert("No data found");
+				                      console.log("error:"+status);
+				                       
+				        });
+				
+			} else if($scope.selectedSales==2){
+				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=true', 
+	                method: "POST",
+	                headers: { 
+			                	'Content-Type': 'application/json',
+			                	'Accept':'text/plain' ,
+			                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+			                	'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  
+	                		 },
+	                data: $scope.usagedata
+	                
+				       }).success(function(data, status) {
+				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
+				                if(!data || data.length === 0){
+				                     console.log("empty data for salesVolume");
+				          
+				                }  else{
+				                    console.log("Got data for salesVolume..." );
+				                }
+				                console.log("data from server  :"+JSON.stringify(data));
+				               }). error(function(data, status) {
+				                 
+				                      alert("No data found");
+				                      console.log("error:"+status);
+				                       
+				        });
+				
+			}
+	  }
 	  $http({
 			  url:'http://ibm-iot.mybluemix.net/api/v1/sales/charts', 
 			  method: 'GET',
@@ -1291,19 +1379,22 @@ App.controller('myController', function ($scope,$http) {
 	  
 	  
 	$scope.disp=function(){
-		if($scope.selectedSales!='' && $scope.selectedSales!=null && $scope.selectedSales!=undefined)			  
-			  $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
+		if($scope.selectedSales!='' && $scope.selectedSales!=null && $scope.selectedSales!=undefined){
+			$rootScope.selectedSales=$scope.selectedSales;
+			 $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
+			 $scope.selectedChart=$scope.chartTypes[0];
+		}
 		else
 			$scope.chartTypes="";
 		
 		console.log("Chart types:"+$scope.chartTypes);
-		console.log("selectedSales:"+$scope.selectedSales);
+		console.log("selectedSales:"+$scope.selectedSales+":Chart :"+$scope.selectedChart);
 	}
 	
 	$scope.dispChart=function(selectedChart){
-		console.log("in disp chart");
-		if($scope.selectedChart=='Pie'){			
-			console.log("In disp Chart");
+		console.log("in disp chart"+selectedChart);
+		if($scope.selectedChart=='Pie'){	
+//			$scope.selectedChart='Pie';
 			 $http({
 				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=false', 
 				  method: 'POST'
@@ -1319,6 +1410,7 @@ App.controller('myController', function ($scope,$http) {
 			
 		}
 		else if($scope.selectedChart=='Bar'){
+//			$scope.selectedChart='Bar';
 			 $http({
 				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=false', 
 				  method: 'POST'
@@ -1333,58 +1425,130 @@ App.controller('myController', function ($scope,$http) {
 			    });
 		}
 		else if($scope.selectedChart=='Multiline'){
-			 $http({
-				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
-				  method: 'POST'
-				 
-				}).success(function(data, status) {
-			    	console.log("Multiline Chart response :"+JSON.stringify(data));	
-			    	$scope.linechartData=data;
-			    }). error(function(data, status) {
-			       console.log(JSON.stringify(data));
-			    });
+//			$scope.selectedChart='Multiline';
+//			 $http({
+//				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
+//				  method: 'POST'
+//				 
+//				}).success(function(data, status) {
+//			    	console.log("Multiline Chart response :"+JSON.stringify(data));	
+//			    	$scope.linechartData=data;
+//			    }). error(function(data, status) {
+//			       console.log(JSON.stringify(data));
+//			    });
 		}
 	}
 	
-	
+	$scope.plotBarChart=function(divId){
+		$(function () {
+		    $('#bar').highcharts({
+		        chart: {
+		            type: 'column'
+		        },
+		        title: {
+		            text: 'Top 3 Selling Models'
+		        },
+		        xAxis: {
+		            categories: [
+		                'Q1 2016',
+		                'Q2 2016',
+		                'Q3 2016',
+		                'Q4 2016'
+		            ],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Sales'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: [{
+		            name: 'LG',
+		            data: [149.9, 171.5, 106.4,150]
+
+		        }, {
+		            name: 'Samsung',
+		            data: [183.6, 178.8, 198.5, 193.4]
+
+		        }, {
+		            name: 'Whirlpool',
+		            data: [148.9, 138.8, 139.3, 141.4]
+
+		        }]
+		    });
+		});
+	}
 	$scope.plotChartFunction = function(divId){
-	$("#"+divId).highcharts( {
-		credits:false,
-		title:false,
-		legend: {enabled:false},
-	    xAxis: {
-	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
-	    },
-	    yAxis: {
-			title:false
-		    },
-		    tooltip: {
-		    	backgroundColor: '#87C1E6',
-		    	shared: true,
-			    style:{
-					color:'#ffffff'
-				}
-	        },
-	        plotOptions: {
-	            series: {
-	            	 color: "#f0f0f0", 
-	                marker: {
-	                	fillColor: '#FFFFFF', 
-	                    lineWidth: 2,
-	                    lineColor: "#6BD500",  // inherit from series 
-	                    radius: 6
-	                }
-	            }
-	        },
-	    series: [{
-		    		name:"Sold",
-	        		data: [0, 1000, 1733, 129]
-	    },
-	    {
-    		name:"Connected",
-    		data: [110, 120, 733, 1029]
-		}]
-	});
+		 $http({
+			  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
+			  method: 'POST'
+			 
+			}).success(function(data, status) {
+		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
+		    	$scope.linechartData=data;
+		    	
+		    	//linechart data
+		    	$("#"+divId).highcharts( {
+		    		credits:false,
+		    		title:false,
+		    		legend: {enabled:false},
+		    	    xAxis: {
+		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
+		    	    },
+		    	    yAxis: {
+		    			title:false
+		    		    },
+		    		    tooltip: {
+		    		    	backgroundColor: '#87C1E6',
+		    		    	shared: true,
+		    			    style:{
+		    					color:'#ffffff'
+		    				}
+		    	        },
+		    	        plotOptions: {
+		    	            series: {
+		    	            	 color: "#f0f0f0", 
+		    	                marker: {
+		    	                	fillColor: '#FFFFFF', 
+		    	                    lineWidth: 2,
+		    	                    lineColor: "#6BD500",  // inherit from series 
+		    	                    radius: 6
+		    	                }
+		    	            }
+		    	        },
+		    	    series: [{
+		    		    		name:$scope.linechartData[0].make,
+		    	        		data: [$scope.linechartData[0].totalSales,$scope.linechartData[1].totalSales,$scope.linechartData[2].totalSales,$scope.linechartData[2].totalSales]
+		    	    },
+		    	    {
+		        		name:""+$scope.linechartData[3].make,
+		        		data: [$scope.linechartData[3].totalSales,$scope.linechartData[4].totalSales,$scope.linechartData[5].totalSales,$scope.linechartData[5].totalSales]
+		    		},
+		    		{
+		    			name:""+$scope.linechartData[6].make,
+		        		data: [$scope.linechartData[6].totalSales,$scope.linechartData[7].totalSales,$scope.linechartData[8].totalSales,$scope.linechartData[8].totalSales]
+		    		}]
+		    	});
+		    }). error(function(data, status) {
+		       console.log(JSON.stringify(data));
+		    });
+		
+	
 	}
 	
 	$scope.plotEngManagerChartFunction = function(divId){
@@ -1438,22 +1602,59 @@ App.controller('myController', function ($scope,$http) {
      	$("#hiddenDiv").append(chartParent);
      	$("#hiddenDiv").removeClass("hidden");
      	$("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
-     	$("#hiddenDiv #container").removeClass("graphDiv");
-     	$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+     	if($scope.selectedChart=='Multiline'){
+     		$("#hiddenDiv #container").removeClass("graphDiv");
+     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+         	
+         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+         	
+         	$("#hiddenDiv #container").addClass("graphDiv-maximize");
+         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+         	
+         	$("#hiddenDiv #maximize").addClass("hidden");
+         	$("#hiddenDiv #close").removeClass("hidden");
+         	
+         	$scope.plotChartFunction("hiddenDiv #container");
      	
-     	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
-     	$("#hiddenDiv #container").addClass("graphDiv-maximize");
-     	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
      	
-     	$("#hiddenDiv #maximize").addClass("hidden");
-     	$("#hiddenDiv #close").removeClass("hidden");
+     	}
      	
-     	$scope.plotChartFunction("hiddenDiv #container");
+     	if($scope.selectedChart=='Pie'){
+//     		$("#hiddenDiv #container").removeClass("graphDiv");
+     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+         	
+         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+         	
+         	$("#hiddenDiv #pie").addClass("graphDiv-maximize");
+         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+         	
+         	$("#hiddenDiv #maximize").addClass("hidden");
+         	$("#hiddenDiv #close").removeClass("hidden");
+         	
+         }
+     	
+     	if($scope.selectedChart=='Bar'){
+     		$("#hiddenDiv #bar").removeClass("graphDiv");
+     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+         	
+         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+         	
+         	$("#hiddenDiv #bar").addClass("graphDiv-maximize");
+         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+         	
+         	$("#hiddenDiv #maximize").addClass("hidden");
+         	$("#hiddenDiv #close").removeClass("hidden");
+         	$scope.plotBarChart("hiddenDiv #bar");
+         }
+     	
 	};
 	$("body").on("click","#hiddenDiv #close",function(){
 		$("#hiddenDiv").empty();
 		$("#hiddenDiv").addClass("hidden");
-		$scope.plotChartFunction("container");
+		if($scope.selectedChart=='Multiline')
+			$scope.plotChartFunction("container");
+		else
+			$scope.plotBarChart("bar");
     });
 	/* $scope.closing = function(){
 		console.log("ha ha ha");

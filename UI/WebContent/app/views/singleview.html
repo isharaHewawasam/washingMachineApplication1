@@ -153,20 +153,29 @@
                                                 <option class="chart-option-text-style" value="">Last 1 year
                                                 <option class="chart-option-text-style" value="">Last 3 years
                                     </select> 
-                                    <select class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)"  ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
-                                             <option class="chart-option-text-style"  ng-repeat="chart in chartTypes" value="{{chart}}">{{chart}}</option>
+                                    <select class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)" ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                             <option class="chart-option-text-style"  selected ng-init="dispChart(selectedChart)" ng-repeat="chart in chartTypes" value="{{chart}}">{{chart}}</option>
                                     </select> 
                                     <img id="maximize" class="pull-right col-md-1" style="padding:0px;   margin-top:10px;      margin-right: 9px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()"></img>
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"></div>
-		<div ng-if="selectedChart=='Pie'" class="container-canvas">
+		
+		<div ng-if="selectedChart=='Pie'" id="pie" class="container-canvas">
+			<div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
+				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
+			</div>
 			<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels">	</canvas>
 		</div>
-		<div ng-if="selectedChart=='Bar'" class="container-canvas">
-			<canvas id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>
+		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
+		
+			<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
+				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
+			</div>
+			
+			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>  -->
 		</div>
+		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"></div>
 	</div>
 	
 	</div>

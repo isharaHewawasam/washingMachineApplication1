@@ -4,4 +4,28 @@
         margin-left: auto;
     margin-top: 18%;
     
-    }
+}
+.circle {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 5px;
+}
+.circle-color-sold{
+	background: #97bbcd;	
+}
+.circle-color-connected{
+	background: #dcdcdc;	
+}
+.padding-zero{
+	
+}
+.chart-label{
+	font-family: Roboto;light;
+	font-size:13px;
+	color:#222222;	
+	height: 32px;
+	text-align: center;
+	margin: 0px auto;
+}

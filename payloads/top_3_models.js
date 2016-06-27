@@ -9,15 +9,8 @@ var payload = {
     }
   },
   "timescale": {
-  "years": [
-  {"value": 2016}
-    ],
-    "quarters": [
-    {"value": 1},
-    {"value": 2},
-    {"value": 3},
-    {"value": 4}
-    ],
+  "years": [],
+    "quarters": [],
     "months": [],
     "date": {
       "start_date": "string",
@@ -29,10 +22,8 @@ var payload = {
     }
   },
   "region": {
-    "states": [
-    ],
-    "cities": [
-      
+    "states": [{"value": "arizona"}],
+    "cities": [      
     ],
     "zip_codes": [
       

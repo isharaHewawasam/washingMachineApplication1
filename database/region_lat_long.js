@@ -12,12 +12,15 @@ var state = {
   db: null
 };
 
-
-
+exports.read_all = function(callback) {
+  state.db.get("_all_docs",{ "include_docs": true}, function(err, result) {
+    callback(err, result);
+  });
+};
 
 // open database
 exports.open = function(conn_info, callback) {
-  if (state.db) return callbak(null);
+  if (state.db) return callback(null);
   
   Cloudant(conn_info, function(err, cloudant) {    	  
     if (err)  return callback('Failed to initialize Cloudant: ' + err.message);

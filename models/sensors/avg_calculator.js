@@ -6,6 +6,7 @@ var sensorsDataDb = require('../../database/dbWashDailyAggregate');
 var dummy_data = require('../../database/dummy_data/sensors');
 var utility = require("../../middle_ware/utility");
 
+
 var filter = null;
 var keys_map = null;
 
@@ -37,7 +38,7 @@ exports.getAverage = function(params, callback) {
 function getStats(params, callback) {
   filter = params.filter;
   keys_map = params.key_maps;
-  
+  var XXX_007 = params.buffer.length;
 	  getData(params, function(err, result) {   
 	    if(err) {
 	    	callback(err, null);
@@ -49,15 +50,16 @@ function getStats(params, callback) {
         
         if((params.payload === null) || (params.payload === undefined)){
           for(var row in result.rows) {
+            //console.log(result.rows[row]);
             params.buffer.push(fillRecord(result.rows[row], params));
           }
         } else {
           for(var row in result.rows) {
-            //console.log(result.rows[row].key);
+            //console.log(params.statsKeyName);
             if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) {
               //console.log("adding " + params.statsKeyName);
               //console.log(JSON.stringify(result.rows[row].key));
-              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params), params.statsKeyName);
+              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params), params.statsKeyName, params.stats, XXX_007);
             }                    
           }   
         }      
@@ -145,18 +147,24 @@ function sortResult(sort, data) {
   }
 }
 
-var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name) {
-  //console.log("exists " + avg_key_name); 
-  if(usageExists(payload, usages, new_usage, filter.filterType())) {
+var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name, stats, XXX_007) {
+  //console.log("exists " + JSON.stringify(usages)); 
+  if(usageExists(payload, usages, new_usage, filter.filterType(), XXX_007)) {
     //console.log("exists " + avg_key_name);   
     for(var each_usage in usages) {
-      //console.log(new_usage);
       if( (usages[each_usage].make == new_usage.make) && (usages[each_usage].model == new_usage.model) ) {
-        
+        //console.log("exists " + avg_key_name);
         //console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
         //usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
         if (usages[each_usage].hasOwnProperty(avg_key_name)) {
-          usages[each_usage][avg_key_name] = (usages[each_usage][avg_key_name] + new_usage[avg_key_name])/2;
+          switch(stats) {
+            case "sum":
+              usages[each_usage][avg_key_name] = (usages[each_usage][avg_key_name] + new_usage[avg_key_name]);
+              break;
+            case "average":
+              usages[each_usage][avg_key_name] = (usages[each_usage][avg_key_name] + new_usage[avg_key_name])/2;
+              break;
+          }
         } else {
           usages[each_usage][avg_key_name] = new_usage[avg_key_name];
         }
@@ -170,7 +178,9 @@ var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name) {
 };
 
 
-var usageExists = function(payload, usages, usage_to_find, group_level) {  
+var usageExists = function(payload, usages, usage_to_find, group_level, XXX_007) { 
+  if (XXX_007 && filter.isFilterCategoryNone()) return true;
+  
   for(var each_usage in usages) {    
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
@@ -226,7 +236,7 @@ var fillRecord = function(result, params) {
   if( (filter.isFilterCategoryNone()) || 
       (filter.isFilterCategoryByRegion()) ||
       (filter.isFilterCategoryMixed())
-    ) { 
+    ) {
       record.state = result.key[keys.STATE];
       record.city = result.key[keys.CITY];
       record.zip_code = result.key[keys.ZIP_CODE]; 
@@ -267,18 +277,20 @@ var doesRecordFallsInFilter = function(payload, keys) {
   if(filter.isFilterCategoryNone()) {
     return true;
   }
-
   
-  if(filter.isFilterCategoryByRegion()) {   
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
-            isItemPresent(payload.region.states, "value", keys[2]) && 
-            isItemPresent(payload.region.cities, "value", keys[3]) &&  
-            isItemPresent(payload.region.zip_codes, "value", keys[4])
+  var KEYS = keys_map.key;
+  
+  if ( filter.isFilterCategoryByRegion() ) {
+       return isItemPresent(payload.productAttrs.makes, "make_name", keys[KEYS.MAKE]) && 
+              isItemPresent(payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
+              isItemPresent(payload.region.states, "value", keys[KEYS.STATE]) && 
+              isItemPresent(payload.region.cities, "value", keys[KEYS.CITY]) &&  
+              isItemPresent(payload.region.zip_codes, "value", keys[KEYS.ZIP_CODE])
+    
   }
   
-  if(filter.isFilterCategoryByYear()) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
+  if ( filter.isFilterCategoryByYear() ) {
+    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0])  && 
             isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
             isItemPresent(payload.timescale.years, "value", keys[2]) &&
             isItemPresent(payload.timescale.quarters, "value", keys[3]) &&
@@ -286,7 +298,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
   }
   
   if(filter.isFilterCategoryMixed()) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
+    return  ( payload.productAttrs.makes && isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) ) && 
             isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
             isItemPresent(payload.region.states, "value", keys[2]) && 
             isItemPresent(payload.region.cities, "value", keys[3]) &&  
@@ -296,13 +308,49 @@ var doesRecordFallsInFilter = function(payload, keys) {
             isItemPresent(payload.timescale.months, "value", keys[7]);
   }          
 }
-
+/* working old
+var doesRecordFallsInFilter = function(payload, keys) {
+  //filter.setPayload(payload);
+  
+  if(filter.isFilterCategoryNone()) {
+    return true;
+  }
+  
+  if ( filter.isFilterCategoryByRegion() ) {
+       return isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
+              isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+              isItemPresent(payload.region.states, "value", keys[2]) && 
+              isItemPresent(payload.region.cities, "value", keys[3]) &&  
+              isItemPresent(payload.region.zip_codes, "value", keys[4])
+    
+  }
+  
+  if ( filter.isFilterCategoryByYear() ) {
+    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0])  && 
+            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+            isItemPresent(payload.timescale.years, "value", keys[2]) &&
+            isItemPresent(payload.timescale.quarters, "value", keys[3]) &&
+            isItemPresent(payload.timescale.months, "value", keys[4]);
+  }
+  
+  if(filter.isFilterCategoryMixed()) {
+    return  ( payload.productAttrs.makes && isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) ) && 
+            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+            isItemPresent(payload.region.states, "value", keys[2]) && 
+            isItemPresent(payload.region.cities, "value", keys[3]) &&  
+            isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
+            isItemPresent(payload.timescale.years, "value", keys[5]) &&
+            isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
+            isItemPresent(payload.timescale.months, "value", keys[7]);
+  }          
+}*/
 var isItemPresent = function(array, key_name, item){ 
   if(array.length == 0) return true;
 
   for(var array_item in array) {    
     //console.log(array[array_item][key_name].toString().toUpperCase() + "   " + item.toUpperCase());
-    if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true    
+    //console.log(array[array_item][key_name].toString().toUpperCase());
+    if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true    
   }
  
   return false;
