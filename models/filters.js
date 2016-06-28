@@ -91,25 +91,9 @@ function isArrayValid(par_array){
   return ((par_array !== undefined) && (par_array.length > 0))
 }
 
-function setDefaultFilters(payload) {
-  switch(report_type) {
-    case REPORT_TYPE.SOLD_UNGROUPED:
-       /*payload.timescale.years.push( {"value": (new Date()).getFullYear()});
-       payload.timescale.quarters.push( {"value": 1} );
-       payload.timescale.quarters.push( {"value": 2} );
-       payload.timescale.quarters.push( {"value": 3} );
-       payload.timescale.quarters.push( {"value": 4} );*/
-      break;
-    case REPORT_TYPE.CONNECTED_UNGROUPED:
-      break;
-  }    
-}
-
 exports.setPayload = function(payload) { 
   require("../middle_ware/adjust_payload").setPayload(payload);
-  //setDefaultFilters(payload);
-  //console.log("Fsfdsfsdfd " + JSON.stringify(payload));
-  
+    
   filter_category = FILTER_CATEGORY.NONE;
   filter_type = FILTER.NONE; 
  

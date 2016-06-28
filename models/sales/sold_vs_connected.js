@@ -14,7 +14,9 @@ exports.getData = function getUngroupedData(payload, callback) {
         
         mix_res(sales_result, connected_buffer);
         
+        console.log("Started getting locations : sales connected");
         setRegionLocations(sales_result, function() {
+          console.log("completed getting locations : sales connected");
           callback(err, sales_result);
         });
       });

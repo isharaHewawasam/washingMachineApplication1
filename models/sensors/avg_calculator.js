@@ -56,11 +56,19 @@ function getStats(params, callback) {
         } else {
           for(var row in result.rows) {
             //console.log(params.statsKeyName);
-            if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) {
-              //console.log("adding " + params.statsKeyName);
-              //console.log(JSON.stringify(result.rows[row].key));
-              addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params), params.statsKeyName, params.stats, XXX_007);
-            }                    
+            //xxxx 007
+            try{
+              if(doesRecordFallsInFilter(params.payload, result.rows[row].key)) {
+                //console.log("adding " + params.statsKeyName);
+                //console.log(JSON.stringify(result.rows[row].key));
+                addOrUpdateUsages(params.payload, params.buffer, fillRecord(result.rows[row], params), params.statsKeyName, params.stats, XXX_007);
+              } 
+            }   
+            catch(ex) {
+              console.log("Exception occured");
+              console.log(ex);
+              continue;
+            }              
           }   
         }      
         
@@ -180,7 +188,7 @@ var addOrUpdateUsages = function(payload, usages, new_usage, avg_key_name, stats
 
 var usageExists = function(payload, usages, usage_to_find, group_level, XXX_007) { 
   //if (filter.isFilterCategoryNone()) return true;
-  
+  console.log("avg_calc.usageExists : " + JSON.stringify(payload));
   for(var each_usage in usages) {    
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
@@ -298,6 +306,9 @@ var doesRecordFallsInFilter = function(payload, keys) {
   }
   
   if(filter.isFilterCategoryMixed()) {
+    console.log("avg_calculator::isFilterCatgegoryMixed");
+    console.log("payload.timescale.years " + JSON.stringify(payload));
+    console.log("keys " + keys);
     return  ( payload.productAttrs.makes && isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) ) && 
             isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
             isItemPresent(payload.region.states, "value", keys[2]) && 
