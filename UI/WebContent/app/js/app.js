@@ -19,7 +19,7 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 // ----------------------------------- 
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'chart.js'])
+var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'chart.js','ngMaterial','ngMessages'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -1015,6 +1015,45 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		console.log("calling"+p);
 	}
 	
+    
+    
+    $scope.myDate = new Date();
+
+    $scope.search={};
+      $scope.selectedMake=function(){
+          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$scope.search.selectedMake, 
+	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+	               
+	    	 $scope.models=data[$scope.search.selectedMake];
+	    	 //console.log("manufacture year :"+JSON.stringify(data));
+				       
+				           
+				           
+	    }). error(function(data, status) {
+	      // alert("error"  +status);
+	      // console.log(JSON.stringify(data));
+	    });
+      }
+      
+      $scope.selectedModel=function(){
+          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$scope.search.selectedModel, 
+	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+	               
+	    	 $scope.SKUs=data[$scope.search.selectedModel];
+              console.log($scope.SKUs);
+	    	 //console.log("manufacture year :"+JSON.stringify(data));
+				       
+				           
+				           
+	    }). error(function(data, status) {
+	      // alert("error"  +status);
+	      // console.log(JSON.stringify(data));
+	    });
+      }
+    
+
+    
+    
     var collapseList = [];
     
     $rootScope.name="";

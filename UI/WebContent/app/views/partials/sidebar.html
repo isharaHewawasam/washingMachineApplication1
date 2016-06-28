@@ -1,103 +1,248 @@
-<div class="aside-inner" >
-    <nav sidebar="" class="sidebar">
-        <ul class="nav"  style="padding-top: 5px;" >
-            <!-- Iterates over all sidebar items-->
-            <li ng-class="getMenuItemPropClasses(item)"    ng-repeat="item in menuItems" ng-init="pIndex = $index"   ng-click="toggleCollapse(pIndex, true)">
-                <span ng-if="item.heading">{{(item.translate | translate) || item.text}}</span>
-                <a ng-if="!item.heading" ng-href="{{$state.href(item.sref, item.params)}}" title="{{item.text}}">
-                    <div style=" ">
-                        <img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{item.img}}"  ></img>
-                        <div  style=" padding-bottom:8px ;padding-top: 9px; margin: -5px;  font-family: Roboto;light;	font-size:12px;"> {{item.text}}
-                        </div>
+<style>
+    .leftbar-icon{
+        
+        z-index: 899988;
+        /*width:80px;*/ 
+        height:80px; 
+        border-bottom:1px solid #4E4E4E;
+        margin-top: 0px;
+        color: #979797;
+        /*
+       
+        color: #F0F0F0;
+        font-size: 12px;
+        text-align: center;
+        padding: 15px   */
+     }
+    
+    .sidebarItemActive {
+         background-color: #4A88C9;
+        color: #fff;
+    }
+    
+    .element-margin{
+        margin-bottom: 0px;
+        padding: 10px;
+        
+    }
+    
+    .menu-text{
+        font-family: Roboto;light;
+        font-size:11px;
+        color: inherit;
+        text-align: center
+        
+    }
+    
+    .sidebarIconContainer {
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .iconpos{
+        width: 32px;
+        height: 32px;
+    }
+    
+       #filterPanel,#calenderPanel{
+        
+        background: #000;
+        width: 200px;
+        height: auto;
+        
+        position: relative;
+        z-index: 888;
+        -moz-box-shadow: 10px 10px 5px #888;
+        -webkit-box-shadow: 10px 10px 5px #888;
+        box-shadow: 10px 10px 5px #888;
+    }
+    .divSpacePad{
+        /*padding-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;*/
+        padding: 10px;
+    }
+     .datepickerdemo md-content {
+            padding-bottom: 200px; 
+         }
+        .datepickerdemo .validation-messages {
+            font-size: 11px;
+            color: darkred;
+            margin: 10px 0 0 25px; 
+         }
+    
+    .searchbtn{
+     padding-bottom:8px ; 
+        width:180px;   
+        font-family: Roboto;light;
+        font-size:14px;
+        padding-top: 9px;
+       margin-left: 12px;
+    }
+</style>
+    
+    <div class="aside-inner" >
+        <nav class="sidebar">
+            <div class="nav">
+                <div id="dashboardNav" class="leftbar-icon sidebarItemActive">
+                    <div class="sidebarIconContainer">
+                        <img class="iconpos" src="app/img/Dashboardassets/dashboard.png">
                     </div>
-                </a>
-                <ul ng-if="item.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-                    <li class="sidebar-subnav-header"  style="font-family: Roboto;light;	font-size:18px;" >{{(item.translate | translate) || item.text}}</li>
-                    <li ng-repeat="subitem in item.submenu"   style="  background-color:#E7EEF6" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
-                        ng-click="toggleCollapse(pIndex)">
-                        <span ng-if="subitem.heading">{{(item.translate | translate) || item.text}}</span>
-                        <a ng-if="!subitem.heading" ng-href="{{$state.href(subitem.sref, subitem.params)}}" title="{{subitem.text}}">
-                            <div style=" ">
-                                <img style="height:37px; width:37px;" ng-hide="inSubmenu" ng-src="{{subitem.img}}"></img>
-                                <div ng-if="subitem.text !='Submit'" style=" padding-bottom:8px ;font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;"> {{subitem.text}}
-                                </div>
-                                <button type="button"  class="mb-sm btn btn-primary" ng-if="item.text =='Submit'" style=" padding-bottom:8px ; width:210px;   	font-family: Roboto;light;	font-size:14px; padding-top: 9px; margin: -5px;">{{subitem.text}} 
-                                </button>
-                            </div>
-                        </a>
-                        <ul ng-if="subitem.submenu" collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav">
-                            <li ng-repeat="subsubitem in subitem.submenu"   ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" 
-                                ng-click="toggleCollapse(pIndex)">
-                                <!-- <span ng-if="subsubitem.heading">{{(subsubitem.translate | translate) || subsubitem.text}}</span> -->
-                                <a ng-if="!subsubitem.heading" ng-href="{{$state.href(subsubitem.sref, subsubitem.params)}}" title="{{subsubitem.text}}">
-                                    <div style="font:12px Roboto Light;" >
-                                        <select  ng-init="makeData=1" ng-model="makeData" class="option-text-style" ng-if="subsubitem.text=='Make'" class="form-control"  style=" min-width: 136px; padding:10px;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important" >
-                                            <option class="option-text-style" value=""   disabled selected>{{subsubitem.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}sachin</option>
-                                        </select>
-                                        <select  id="typeDropDown" class="option-text-style" name="account1" class='chosen-select' ng-if="subsubitem.text=='Type'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;" >
-                                            <option  class="option-text-style" value="" disabled selected>{{subsubitem.text}}</option>
-                                            <option class="option-text-style" value="WD100CW" >WD100CW</option>
-                                            <option class="option-text-style" value="WT901CF" >WT901CF</option>
-                                            <option class="option-text-style" value="WT901CW" >WT901CW</option>
-                                            <!-- <option  class="option-text-style" ng-repeat="itm in models"   value={{itm.model}}>{{itm.model}}</option>
-                                                <option class="option-text-style" ng-repeat="model in types" value="{{model.model}}" >{{model.model}}</option> -->
-                                        </select>
-                                        <select class="option-text-style"    name="account2" ng-if="subsubitem.text=='MFG Date'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;" >
-                                            <option class="option-text-style" value="" disabled selected>{{subsubitem.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="itm in years"   value="itm.year">{{subsubitem.year}}</option>
-                                        </select>
-                                        <select class="option-text-style" name="account3" ng-if="subsubitem.text=='SKU'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
-                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-                                            <option class="option-text-style" value="00043D-FBC8" >00043D-FBC8</option>
-                                            <option class="option-text-style" value="000524-F923" >000524-F923</option>
-                                            <option class="option-text-style" value="000CB0-3B70" >000CB0-3B70</option>
-                                            <option class="option-text-style" value="0011C7-08C3" >0011C7-08C3</option>
-                                            <option class="option-text-style" value="0012E0-53F7" >0012E0-53F7</option>
-                                            <option class="option-text-style" value="00154C-6E62" >00154C-6E62</option>
-                                            <option class="option-text-style" value="00166F-2335" >00166F-2335</option>
-                                            <option class="option-text-style" value="0025AF-8649" >0025AF-8649</option>
-                                            <option class="option-text-style" value="002921-63A3" >002921-63A3</option>
-                                            <option class="option-text-style" value="002C56-17A5" >002C56-17A5</option>
-                                            <option class="option-text-style" value="003254-3655" >003254-3655</option>
-                                            <option class="option-text-style" value="004D93-124C" >004D93-124C</option>
-                                            <option class="option-text-style" value="004EF2-F74E" >004EF2-F74E</option>
-                                            <option class="option-text-style" value="00566D-EFB7" >00566D-EFB7</option>
-                                            <option class="option-text-style" value="00642E-DCD9" >00642E-DCD9</option>
-                                            <!-- 					 <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-                                                -->				
-                                        </select>
-                                        <select class="option-text-style" name="account" ng-if="item.text=='Income Range'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_model" onchange="selectCities()" >
-                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-                                        </select>
-                                        <select class="option-text-style" name="account" ng-if="item.text=='Occupation'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_mfg" onchange="selectCities()" >
-                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-                                        </select>
-                                        <select class="option-text-style" name="account" ng-if="item.text=='Age Group'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_sku" onchange="selectCities()" >
-                                            <option class="option-text-style" value="" disabled selected>{{item.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-                                        </select>
-                                        <select class="option-text-style"  name="account" ng-if="item.text=='Product Name'" class="form-control"  style=" min-width: 136px;  padding:10px;  font-size:12px;font:Roboto Regular;  background-repeat: no-repeat;-webkit-appearance: none; background-position: right 5px center;    background-position-x: 95%;    background-position-y: 50%;   background-image: url('app/img/Dashboardassets/dropdown_arrow.png') !important;"  ng-model="selected_product" onchange="selectCities()" >
-                                            <option class="option-text-style" value=""  disabled selected>{{item.text}}</option>
-                                            <option  class="option-text-style" ng-repeat="itm in models"   value="itm.model">{{itm.model}}</option>
-                                        </select>
-                                        <div class="option-text-style"class="input-group col-lg-1" ng-if="item.text=='from_date'" >
-                                            <input class="option-text-style" type="date"  name="bday"> 
-                                        </div>
-                                        <div class="input-group col-lg-1" ng-if="item.text=='to_date'"  >
-                                            <input class="option-text-style" type="date"  name="bday"> 
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <!-- END sidebar nav-->
-    </nav>
-</div>
-<!-- END Sidebar (left)-->
+                    <div class="menu-text">Dashboard</div>
+                </div>
+                <div  id="filterNav" class="leftbar-icon">
+                    <div class="sidebarIconContainer">
+                        <img class="iconpos" src="app/img/Dashboardassets/filter.png">
+                    </div>
+                    <div class="menu-text">Filter</div>
+                </div>
+                <div  id="calenderNav" class="leftbar-icon">
+                    <div class="sidebarIconContainer">
+                        <img class="iconpos" src="app/img/Dashboardassets/calendar.png">
+                    </div>
+                    <div class="menu-text">Calender</div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="filterPanel" style="margin-left:69px; top: 135px; background:#fff; display:none">
+        <div class="divSpacePad">
+            <label>Products</label>
+        </div>
+        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+            <span>Search by Product</span>
+        </div>
+       
+        
+        <div class="form-group element-margin">
+            <select class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
+                <option class="option-text-style" value="" disabled selected>Make</option>
+                <option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
+            </select>
+        </div>
+        
+        <div class="form-group element-margin">
+           <select  class="form-control" ng-model="search.selectedModel" ng-change="selectedModel()">
+                <option class="option-text-style" value="" disabled selected>Type</option>
+                <option class="option-text-style" ng-repeat="model in models"   value={{model.model}}>{{model.model}}</option>
+            </select>
+        </div>
+        
+        <div class="form-group element-margin">
+            <select  class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
+                <option class="option-text-style" value="" disabled selected>SKU</option>
+                <option class="option-text-style" ng-repeat="SKU in SKUs"   value={{SKU.sku}}>{{SKU.sku}}</option>
+            </select>
+        </div>
+            
+        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+            <span>Demographics</span>
+        </div>
+        
+        
+        <div class="form-group element-margin">
+           <select class="form-control">
+                <option class="option-text-style" value="" disabled selected>Income Range
+                <option class="option-text-style" value="" >All
+            </select>
+        </div>
+        
+        <div class="form-group element-margin">
+            <select  class="form-control">
+                <option class="option-text-style" value="" disabled selected>Occupation
+                <option class="option-text-style" value="" >All
+            </select>
+        </div>
+        
+        <div class="form-group element-margin">
+             <select  class="form-control">
+                <option class="option-text-style" value="" disabled selected>Age Group
+                <option class="option-text-style" value="" >All
+            </select>
+        </div>
+        
+        <div class="form-group element-margin">
+             <select  class="form-control">
+                <option class="option-text-style" value="" disabled selected>Product name
+                <option class="option-text-style" value="" >All
+            </select>
+        </div>
+        
+    </div>
+
+    <div id="calenderPanel" style="margin-left:69px; top: 215px; background:#fff; display:none">
+        <div class="divSpacePad">
+            <label>Filter By Dates</label>
+        </div>
+        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+            <span>search by From Date</span>
+        </div>
+        
+         <div class="form-group element-margin">
+            <select class="form-control" <!--ng-model="search.selectedMake" ng-change="selectedMake()"-->>
+                <option class="option-text-style" value="" disabled selected>00/00/0000</option>
+                <!--<option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>-->
+            </select>
+        </div>
+        
+        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+            <span>Search By To Date</span>
+        </div>
+        <div class="form-group element-margin">
+            <select class="form-control"<!-- ng-model="search.selectedMake" ng-change="selectedMake()"-->>
+                <option class="option-text-style" value="" disabled selected>00/00/0000</option>
+                <!--<option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>-->
+            </select>
+        </div>
+        <!--<div class="form-group element-margin">
+            <button class="btn btn-default">Search</button>    
+        </div>-->
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" style="">Submit 
+        </button>
+        
+    </div>
+
+<script>
+        
+            
+        $("#filterNav, #filterPanel").mouseover(function(){
+            $('#filterPanel').show();
+            $('#filterNav').addClass('sidebarItemActive');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/filter_hover.png');
+            $('#dashboardNav').removeClass('sidebarItemActive');
+            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+            $('#calenderNav').removeClass('sidebarItemActive');
+            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+        });
+        $("#filterNav, #filterPanel ").mouseout(function(){
+            $('#filterPanel').hide();
+            $('#filterNav').removeClass('sidebarItemActive');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#dashboardNav').addClass('sidebarItemActive');
+            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+            $('#calenderNav').removeClass('sidebarItemActive');
+            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+        });
+        
+    
+        $("#calenderNav, #calenderPanel").mouseover(function(){
+            $('#calenderPanel').show();
+            $('#filterNav').removeClass('sidebarItemActive');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#dashboardNav').removeClass('sidebarItemActive');
+            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+            $('#calenderNav').addClass('sidebarItemActive');
+            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar_hover.png');
+        });
+        $("#calenderNav, #calenderPanel ").mouseout(function(){
+            $('#calenderPanel').hide();
+            $('#filterNav').removeClass('sidebarItemActive');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#dashboardNav').addClass('sidebarItemActive');
+            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+            $('#calenderNav').removeClass('sidebarItemActive');
+            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+        });
+    
+       
+</script>
