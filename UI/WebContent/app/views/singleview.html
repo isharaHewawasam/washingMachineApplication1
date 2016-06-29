@@ -2,6 +2,7 @@
 <div class="chart-somediv hidden" id="hiddenDiv" ></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
+   <link href="app/css/charts.css" rel="stylesheet"/>
    <!-- START Language list-->
    
    <!-- END Language list    -->
@@ -160,7 +161,7 @@
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-		
+		<span ng-show="progress" class="progress"><i class="glyphicon glyphicon-refresh spinning"> </i> {{loadingText}}</span>
 		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"></div>
 		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
 		
