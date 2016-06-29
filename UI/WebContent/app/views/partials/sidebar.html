@@ -14,10 +14,14 @@
         text-align: center;
         padding: 15px   */
      }
-    
+
     .sidebarItemActive {
          background-color: #4A88C9;
         color: #fff;
+    }
+
+    .md-datepicker-calendar-pane {
+        z-index: 1151;
     }
     
     .element-margin{
@@ -127,7 +131,13 @@
                 <option class="option-text-style" ng-repeat="model in models"   value={{model.model}}>{{model.model}}</option>
             </select>
         </div>
-        
+
+        <md-datepicker
+                ng-model="search.mfgDate"
+                md-placeholder="Enter date">
+        </md-datepicker>
+
+
         <div class="form-group element-margin">
             <select  class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
                 <option class="option-text-style" value="" disabled selected>SKU</option>
@@ -179,20 +189,20 @@
         </div>
         
          <div class="form-group element-margin">
-            <select class="form-control" <!--ng-model="search.selectedMake" ng-change="selectedMake()"-->>
-                <option class="option-text-style" value="" disabled selected>00/00/0000</option>
-                <!--<option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>-->
-            </select>
+             <md-datepicker
+                     ng-model="calendar.fromDate"
+                     md-placeholder="Enter date">
+             </md-datepicker>
         </div>
-        
+
         <div style="width:100%; background:#e7eef6" class="divSpacePad">
             <span>Search By To Date</span>
         </div>
         <div class="form-group element-margin">
-            <select class="form-control"<!-- ng-model="search.selectedMake" ng-change="selectedMake()"-->>
-                <option class="option-text-style" value="" disabled selected>00/00/0000</option>
-                <!--<option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>-->
-            </select>
+            <md-datepicker
+                    ng-model="calendar.toDate"
+                    md-placeholder="Enter date">
+            </md-datepicker>
         </div>
         <!--<div class="form-group element-margin">
             <button class="btn btn-default">Search</button>    
@@ -203,9 +213,8 @@
     </div>
 
 <script>
-        
-            
-        $("#filterNav, #filterPanel").mouseover(function(){
+
+        $(document).on("mouseover", "#filterNav, #filterPanel", function() {
             $('#filterPanel').show();
             $('#filterNav').addClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter_hover.png');
@@ -214,7 +223,10 @@
             $('#calenderNav').removeClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
         });
-        $("#filterNav, #filterPanel ").mouseout(function(){
+        $(document).on("mouseleave", "#filterNav, #filterPanel", function() {
+            if($('.md-pane-open').is(":visible")){
+                return;
+            }
             $('#filterPanel').hide();
             $('#filterNav').removeClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
@@ -222,10 +234,11 @@
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
             $('#calenderNav').removeClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+            event.stopPropagation();
         });
-        
-    
-        $("#calenderNav, #calenderPanel").mouseover(function(){
+
+
+        $(document).on("mouseover", "#calenderNav, #calenderPanel", function() {
             $('#calenderPanel').show();
             $('#filterNav').removeClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
@@ -234,7 +247,11 @@
             $('#calenderNav').addClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar_hover.png');
         });
-        $("#calenderNav, #calenderPanel ").mouseout(function(){
+
+        $(document).on("mouseleave", "#calenderNav, #calenderPanel", function() {
+            if($('.md-pane-open').is(":visible")){
+                return;
+            }
             $('#calenderPanel').hide();
             $('#filterNav').removeClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
@@ -242,7 +259,7 @@
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
             $('#calenderNav').removeClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+            event.stopPropagation();
         });
-    
-       
+
 </script>
