@@ -83,6 +83,8 @@
         padding-top: 9px;
        margin-left: 12px;
     }
+    
+    
 </style>
     
     <div class="aside-inner" >
@@ -144,6 +146,9 @@
                 <option class="option-text-style" ng-repeat="SKU in SKUs"   value={{SKU.sku}}>{{SKU.sku}}</option>
             </select>
         </div>
+        
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()">Apply Filter 
+        </button>
             
         <div style="width:100%; background:#e7eef6" class="divSpacePad">
             <span>Demographics</span>
@@ -177,6 +182,10 @@
                 <option class="option-text-style" value="" >All
             </select>
         </div>
+        
+        
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()">Apply Filter 
+        </button>
         
     </div>
 

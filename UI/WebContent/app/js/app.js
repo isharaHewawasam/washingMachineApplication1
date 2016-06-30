@@ -1051,6 +1051,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	    });
       }
     
+         $scope.applyProductFilter=function(){
+
+                  console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
+
+                }
 
     
     
