@@ -8,6 +8,14 @@
    <!-- END Language list    -->
   
   <div class="pull-right" >
+    <style>
+		tr:nth-child(even) {background: #E7EEF6}
+ 		#dropdown{
+         	color: blue;
+         	border:0;
+         	  } 
+		
+   </style>
       
       Application Dashboard Last Updated May 10, 2016, 3:26:26 PM
    </div>
@@ -108,7 +116,7 @@
                </div>
                
              <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
-             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
+             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
                 {{searchButtonText}}</button>         
             		
@@ -265,7 +273,7 @@
       <!-- START panel -->
    
       <div class="panel panel-default"  id="gridNormal">
-         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; ">Washing Machines status   
+         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; "><b>Washing Machines status </b>  
           <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximizeGrid()"></img>
          <img id="gridCloseImg" class="pull-right hidden col-md-1 " style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
          
@@ -281,11 +289,12 @@
                     
                  
                   	<tr>
-                        <th>Make</th>
-                        <th>Model</th>
-                        <th>Total Load</th>
-                        <th>Popular Day</th>
-                        <th>Popular Time</th>
+                       <th style="text-align: center"> Make  <select id="dropdown"></select></th> 
+                        <th style="text-align: center">Model <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Total Loads <select id="dropdown"></select> </th>
+                        <th style="text-align:center">Most Popular Wash Day <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Most Popular Time of Day <select id="dropdown"></select> </th>
+
                      </tr>
                   
                   
@@ -293,11 +302,12 @@
                   
                   <tbody>
                       <tr ng-repeat="itm in griddata"  >
-                        <td>{{itm.make}}</td>
-                        <td>{{itm.model}}</td>
-                        <td style="text-align: right">{{itm.totalLoad}}</td>
-                        <td>{{itm.popularDay}}</td>
-                        <td>{{itm.popularTime}}</td>
+                        <td style="text-align:center">{{itm.make}}</td>
+                        <td style="text-align:center">{{itm.model}}</td>
+                        <td style="text-align:center">{{itm.totalLoad}}</td>
+                        <td style="text-align:center">{{itm.popularDay}}</td>
+                        <td style="text-align:center">{{itm.popularTime}}</td>
+
                      </tr>
                     
                  </tbody>
