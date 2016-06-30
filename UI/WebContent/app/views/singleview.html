@@ -116,7 +116,7 @@
                </div>
                
              <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
-             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
+             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
                 {{searchButtonText}}</button>         
             		
@@ -169,7 +169,7 @@
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-		<span ng-show="progress" class="progress"><i class="glyphicon glyphicon-refresh spinning"> </i> {{loadingText}}</span>
+	 <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
 		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"></div>
 		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
 		

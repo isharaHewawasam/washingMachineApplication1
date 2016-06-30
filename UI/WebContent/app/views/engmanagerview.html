@@ -2,6 +2,7 @@
 <div class="chart-somediv hidden" id="hiddenDiv" ></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
+<link href="app/css/charts.css" rel="stylesheet"/>
    <!-- START Language list-->
    
    <!-- END Language list    -->
@@ -134,7 +135,7 @@
    <!-- START dashboard main content-->
    
   
-   <div class="col-lg-4 " ng-controller="myController" ng-init="plotEngManagerChartFunction('container')">
+   <div class="col-lg-4 " ng-controller="myController" >
      <div class="chart-chartDiv" id="chartParent">
 		<div class="chart-filterDiv " id="chartFilterDivId">
                                     <select id="first-chart-select" class="chart-selectStyle col-md-4 " style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
@@ -156,17 +157,27 @@
                                                 <option class="chart-option-text-style" value="">Last 6 months
                                                 <option class="chart-option-text-style" value="">Last 1 year
                                                 <option class="chart-option-text-style" value="">Last 3 years
-                                    </select> <select class="chart-selectStyle col-md-4 "
-                                                style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
-                                                <option class="chart-option-text-style" value="">Line Chart
-                                                <option class="chart-option-text-style" value="">Bar Chart
-                                                <option class="chart-option-text-style" value="">Pie Chart
-                                    </select> 
+                                                </select>
+                                                
+                                  <select class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)" ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                             <option class="chart-option-text-style"  ng-init="dispChart(selectedChart)" ng-repeat="chart in EngchartTypes" value="{{chart}}">{{chart}}</option>
+                                    </select>
                                     <img id="maximize" class=" col-md-1 image-margin image-size pull-right" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
-
-		<div id="container" class="graphDiv"></div>
+              <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
+			<div  ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotEngManagerChartFunction('container')"></div>
+		
+		<div   ng-if="selectedChart=='Pie'"  id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"></div>
+		<div  ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
+		
+			<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
+				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
+			</div>
+			
+			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>  -->
+		</div>
+		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"></div>
 	</div>
 	
 	</div>

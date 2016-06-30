@@ -1323,6 +1323,10 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
 	$scope.selectedChart="";
+	
+	  $scope.EngchartTypes=['Pie','Bar','Multiline'];
+	  $scope.selectedChart=$scope.EngchartTypes[0];
+	
 	$scope.linechartData=null;
 	  $scope.data = null;
 	  $scope.barchartData=null;
@@ -1425,7 +1429,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	$scope.disp=function(index){
 		if(index==0)
-			$scope.selectedSales=""+index;
+			$scope.selectedSales="";
 
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
 //			$rootScope.selectedSales=$scope.selectedSales;
