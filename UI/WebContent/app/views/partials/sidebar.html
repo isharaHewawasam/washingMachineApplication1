@@ -48,18 +48,34 @@
         height: 32px;
     }
     
-       #filterPanel,#calenderPanel{
-        
-        background: #000;
-        width: 200px;
-        height: auto;
-        
-        position: relative;
-        z-index: 888;
-        -moz-box-shadow: 10px 10px 5px #888;
-        -webkit-box-shadow: 10px 10px 5px #888;
-        box-shadow: 10px 10px 5px #888;
-    }
+       
+#filterPanel {
+    background: #000;
+    width: 231px;
+    height: auto;
+    position: relative;
+    z-index: 888;
+    overflow-x: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+    height: 499px;
+    overflow-y: scroll;
+}
+    
+    #calenderPanel {
+    background: #000;
+    width: 231px;
+    height: auto;
+    position: relative;
+    z-index: 888;
+    overflow-x: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+  
+}
+
     .divSpacePad{
         /*padding-left: 10px;
         padding-top: 10px;
@@ -84,6 +100,14 @@
        margin-left: 12px;
     }
     
+    
+    .clearfltrbtn{
+        
+        width:auto;   
+        font-family: Roboto;light;
+        font-size:12px;
+        
+    }
     
 </style>
     
@@ -114,6 +138,8 @@
     <div id="filterPanel" style="margin-left:69px; top: 135px; background:#fff; display:none">
         <div class="divSpacePad">
             <label>Products</label>
+            
+            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter()">  clear filter</button>
         </div>
         <div style="width:100%; background:#e7eef6" class="divSpacePad">
             <span>Search by Product</span>
@@ -147,9 +173,7 @@
             </select>
         </div>
         
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()">Apply Filter 
-        </button>
-            
+                
         <div style="width:100%; background:#e7eef6" class="divSpacePad">
             <span>Demographics</span>
         </div>
@@ -176,13 +200,7 @@
             </select>
         </div>
         
-        <div class="form-group element-margin">
-             <select  class="form-control">
-                <option class="option-text-style" value="" disabled selected>Product name
-                <option class="option-text-style" value="" >All
-            </select>
-        </div>
-        
+            
         
         <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()">Apply Filter 
         </button>

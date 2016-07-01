@@ -1009,12 +1009,19 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
   function($rootScope, $scope, $state, $http, $timeout, Utils){
 	
 	$rootScope.intete=1;
-	$scope.maake;
+	$scope.make;
 	$scope.makeData;
 	$scope.getCall=function(p){
 		console.log("calling"+p);
 	}
 	
+    
+    $scope.clearfilter=function(){
+          
+         $scope.search={};
+        
+      }
+    
     
     
     $scope.myDate = new Date();
@@ -1055,6 +1062,16 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
                   console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
 
+             
+           var date = new Date();
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+          // console.log(day, monthNames[monthIndex], year);
+            console.log("date  :"+day + ' ' +monthIndex + ' ' + year);  
+
+             
                 }
 
     
