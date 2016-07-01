@@ -1,819 +1,873 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Washing Machines API's",
-    "description": "APIs for getting washing machines sales and usage information.",
-    "version": "1.0"
-  },
-  "produces": ["application/json"],  
-  "host": "localhost:3000",
-  "basePath": "/api/v1",
-  "paths": {
-    "/config/states": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllStates",
-        "tags": ["States"],
-        "description": "Returns all states where washing machines are available for sale",        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/State"
-            }
-          }
-        }
-      }
-    },
-    "/sales/charts": {
-      "get": {
-        "x-swagger-router-controller": "sales",
-        "operationId": "getCharts",
-        "tags": ["Sales"],
-        "description": "Returns washing machines charting details.",        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "items": {
-                      "$ref": "#/definitions/Chart"                      
-                    }
-              
-            }
-          }
-        }
-      }
-    },
-    "/sales": {
-      "post": {
-        "x-swagger-router-controller": "sales",
-        "operationId": "getReportData",
-        "tags": ["Sales"],
-        "description": "Returns washing machines charting details.",
-         "parameters": [
-          {
-            "name": "report_name",
-            "in": "query",
-            "description": "Report Name",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "group",
-            "in": "query",
-            "description": "Whether data will be groped by States, Cities etc or not",
-            "required": true,
-            "type": "boolean",
-            "default": true
-          },
-          {
-            "name": "Payload",
-            "in": "body",
-            "description": "Washing Machine, Date and Region information",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/SalesByChartPayload"
-            }
-          }
-        ],         
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/SalesByChartResponse"
-            }
-          }
-        }
-      }
-    },
-    "/config/sales/years": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllSalesYears",
-        "tags": ["Sales"],
-        "description": "Returns all sales years",        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Years"
-            }
-          }
-        }
-      }
-    },
-    "/config/manufacture/years": {
-      "get": {
-        "x-swagger-router-controller": "manufacture",
-        "operationId": "getAllMfgYears",
-        "tags": ["Manufacture"],
-        "description": "Returns all manufacture years",        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Years"
-            }
-          }
-        }
-      }
-    },
-    "/config/states/cities": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllCitiesByStates",
-        "tags": ["Cities"],
-        "description": "Returns all cities in a state where washing machine is sold", 
-        "parameters": [
-          {
-            "name": "state_names",
-            "in": "query",
-            "description": "State names",
-            "required": true,
-            "type": "array",
-            "items": {
-                      "type": "string"                      
-                    }
-          }          
-        ],        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Cities"
-            }
-          }
-        }
-      }
-    },
-    "/config/cities/zipcodes": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllZipCodesByCities",
-        "tags": ["Zip Codes"],
-        "description": "Returns all zip codes where washing machines are available for sell", 
-        "parameters": [
-          {
-            "name": "cities_names",
-            "in": "query",
-            "description": "Cities names",
-            "required": true,
-            "type": "array",
-            "items": {
-                      "type": "string"                      
-                    }
-          }          
-        ],          
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/ZipCodes"
-            }
-          }
-        }
-      }
-    },
-    "/config/makes": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllMakes",
-        "tags": ["Makes"],
-        "description": "Returns all makes/brand names.",        
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Makes"
-            }
-          }
-        }
-      }
-    },
-    "/config/makes/models": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllModelsByMakes",
-        "tags": ["Models"],
-        "description": "Returns all modles by make/brand name",
-        "parameters": [
-          {
-            "name": "make_names",
-            "in": "query",
-            "description": "Makes/Brand Names",
-            "required": true,
-            "type": "array",
-            "items": {
-                      "type": "string"                      
-                    }
-          }          
-        ],                 
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Models"
-            }
-          }
-        }
-      }
-    },
-    "/config/models/skus": {
-      "get": {
-        "x-swagger-router-controller": "config",
-        "operationId": "getAllSKUsByModels",
-        "tags": ["SKUs"],
-        "description": "Returns all SKU's for given model(s)",
-        "parameters": [
-          {
-            "name": "model_names",
-            "in": "query",
-            "description": "Model(s) names",
-            "required": true,
-            "type": "array",
-            "items": {
-                      "type": "string"                      
-                    }
-          }          
-        ],               
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Models"
-            }
-          }
-        }
-      }
-    },
-    "/usage": {
-      "post": {
-        "x-swagger-router-controller": "usage",
-        "operationId": "getAllUsage",
-        "tags": ["Usage"],
-        "description": "Returns washing machines usage paramters like water load, detergent, power etc. You can specify State, City, Zip code etc to filter data.",
-        "parameters": [
-          {
-            "name": "Payload",
-            "in": "body",
-            "description": "Washing Machine, Date and Region information",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Usage"
-            }
-          }
-        ],      
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Usage"
-            }
-          }
-        }
-      },
-      "get": {
-        "x-swagger-router-controller": "usage",
-        "operationId": "getAllUsage",
-        "tags": ["Usage"],
-        "description": "Returns washing machines usage paramters like water load, detergent, power etc",          
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/Usage"
-            }
-          }
-        }
-      }
-    },
-    "/sensors": {
-      "get": {
-        "x-swagger-router-controller": "sensors",
-        "operationId": "getSensors",
-        "tags": ["Sensors"],
-        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/SensorNameResponse"
-            }
-          }
-        }
-      }
-    },
-    "/sensors/data": {
-      "post": {
-        "x-swagger-router-controller": "sensors",
-        "operationId": "getSensorsAvgUsage",
-        "tags": ["Sensors"],
-        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
-        "parameters": [
-          {
-            "name": "Payload",
-            "in": "body",
-            "description": "Washing Machine, Date and Region information",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Usage"
-            }
-          },
-          {
-            "name": "sensor_name",
-            "in": "query",
-            "description": "Washing Machine, Date and Region information",
-            "required": false,
-            "type": "string"
-          }              
-        ],      
-        "responses": {
-          "default": {
-            "description": "Invalid request.",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "200": {
-            "description": "Successful request.",            
-            "schema": {
-              "type": "array",
-              "$ref": "#/definitions/MultipleSensorsDataResponse"
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "State": {
-      "properties": {
-        "state_name": {
-          "type": "string"
-        }
-      }
-    },
-    "Years": {
-      "properties": {
-        "year": {
-          "type": "string"
-        }
-      }
-    },
-    "City": {
-      "properties": {
-        "city_name": {
-          "type": "string"
-        }
-      }
-    },  
-    "Cities": {
-      "properties": {
-        "state_name": {
-          "type": "array",
-          "items": {            
-            "type": "string"
-          }          
-        }
-      }
-    },
-    "ZipCodes": {
-      "properties": {
-        "state_name": {
-          "type": "array",
-          "items": {            
-            "type": "string"
-          }          
-        }
-      }
-    },
-    "Make": {
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      }
-    },
-    "DateRange": {
-      "properties": {
-        "start_date": {
-          "type": "string"
-        },
-        "end_date": {
-          "type": "string"
-        }
-      }
-    },
-    "Model": {
-      "properties": {
-        "model_name": {
-          "type": "string"
-        }
-      }
-    },      
-    "Makes": {
-      "properties": {
-        "makes": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/Make"
-          }          
-        }
-      }
-    },
-    "Models": {
-      "properties": {
-        "make_name": {
-          "type": "array",
-          "items": {            
-            "type": "string"
-          }          
-        }
-      }
-    },
-    "SKU": {
-      "properties": {
-        "sku_name": {
-          "type": "string"
-        }
-      }
-    },   
-    "SKUs": {
-      "properties": {
-        "sku_name": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/SKU"
-          }          
-        }
-      }
-    },
-    "ProductAttr": {
-      "properties": {
-        "makes": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/Make" 
-          }          
-        },
-        "models": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/Model" 
-          }          
-        },
-        "skus": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/SKU" 
-          }          
-        },
-        "mfg_date": {                    
-          "$ref": "#/definitions/DateRange"                  
-        }
-      }
-    },
-    "TemplateString": {
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      }
-    }, 
-    "TemplateNumber": {
-      "properties": {
-        "value": {
-          "type": "integer"
-        }
-      }
-    }, 
-    "relative": {
-      "properties": {
-        "unit": {
-          "type": "string"
-        },
-        "value": {
-          "type": "integer"
-        }
-      }
-    }, 
-    "timescale": {
-      "properties": {
-        "years": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateNumber" 
-          }          
-        },
-        "quarters": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateNumber" 
-          }          
-        },
-        "months": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateNumber" 
-          }          
-        },
-        "date": {                    
-          "$ref": "#/definitions/DateRange"                  
-        },
-        "relative": {                    
-          "$ref": "#/definitions/relative"                  
-        }
-      }  
-    },
-    "region": {
-      "properties": {
-        "states": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateString" 
-          }          
-        },
-        "cities": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateString" 
-          }          
-        },
-        "zip_codes": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/TemplateString" 
-          }          
-        }
-      }  
-    },    
-    "Usage": {
-      "properties": {
-        "productAttrs": {                   
-           "$ref": "#/definitions/ProductAttr"                    
-         },
-         "timescale": {                   
-           "$ref": "#/definitions/timescale"                    
-         },
-         "region": {                   
-           "$ref": "#/definitions/region"                    
-         }
-      }
-    },
-    "SalesByChartPayload": {
-      "properties": {
-        "xaxis": {                   
-           "type": "string"                    
-        }, 
-        "yaxis": {                   
-           "type": "string"                    
-        }, 
-        "productAttrs": {                   
-           "$ref": "#/definitions/ProductAttr"                    
-        },
-         "timescale": {                   
-           "$ref": "#/definitions/timescale"                    
-         },
-         "region": {                   
-           "$ref": "#/definitions/region"                    
-         },
-         "sortOrder": {                   
-           "type": "string"                    
-        }, 
-        "limit": {                   
-           "type": "integer"                    
-        }
-      }
-    },
-    "Sale": {
-      "properties": {
-        "sold": {                   
-           "type": "integer"                    
-        },
-        "state": {                   
-           "type": "string"                    
-        },
-        "city": {                   
-           "type": "string"                    
-        },
-        "zipcode": {                   
-           "type": "string"                    
-        },
-        "make": {                   
-           "type": "string"                    
-        },
-        "model": {                   
-           "type": "string"                    
-        },
-        "sku": {                   
-           "type": "string"                    
-        },
-        "day": {                   
-           "type": "integer"                    
-        },
-        "month": {                   
-           "type": "string"                    
-        },
-        "quarter": {                   
-           "type": "string"                    
-        },
-        "year": {                   
-           "type": "integer"                    
-        },
-        "connected": {                   
-           "type": "integer"                    
-        }
-      }
-    },
-    "MultipleSensorsDataResponse": {
-      "properties": {        
-        "data": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/SensorDataResponse" 
-          }          
-        }
-      }
-    },
-    "SensorDataResponse": {
-      "properties": {
-        "make": {                   
-           "type": "string"                    
-        },
-        "model": {                   
-           "type": "string"                    
-        },
-        "avgWaterUsed": {                   
-           "type": "number"                    
-        },
-        "avgEngergyUsed": {                   
-           "type": "number"                    
-        },
-        "aviongWashCycleDuration": {                   
-           "type": "integer"                    
-        },
-        "avgWashCycles": {                   
-           "type": "integer"                    
-        },
-        "avgTemperature": {                   
-           "type": "number"                    
-        },
-        "avgDetergentUsed": {                   
-           "type": "number"                    
-        }
-      }
-    },
-    "SensorNameResponse": {
-      "properties": {
-        "displayName": {                   
-           "type": "string"                    
-        },
-        "key": {                   
-           "type": "string"                    
-        },
-        "api": {                   
-           "type": "string"                    
-        },
-        "defaults": {                   
-           "type": "string"                    
-        },
-        "aviongWashCycleDuration": {                   
-           "type": "integer"                    
-        }
-      }
-    },
-    "SalesByChartResponse": {
-      "properties": {
-        "xAxisUnit": {                   
-           "type": "string"                    
-        },
-        "yAxixUnit": {                   
-           "type": "string"                    
-        },
-        "data": {
-          "type": "array",
-          "items": {            
-            "$ref": "#/definitions/Sale" 
-          }          
-        }
-      }
-    },
-    "Chart": {
-      "properties": {
-        "id": {                   
-           "type": "string"                    
-        },
-        "name": {                   
-           "type": "string"                    
-        },
-         "description": {                   
-           "type": "string"                    
-        },
-         "chartType": {                   
-           "type": "string"                    
-        }
-      }
-    },
-    "Charts": {             
-    },    
-    "Error": {
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      },
-      "required": ["message"]
-    }
-  }
+	"swagger": "2.0",
+	"info": {
+		"title": "Washing Machines API's",
+		"description": "APIs for getting washing machines sales and usage information.",
+		"version": "1.0"
+	},
+	"produces": ["application/json"],
+	"host": "localhost:3000",
+	"basePath": "/api/v1",
+	"paths": {
+		"/mostFaultModels": {
+			"get": {
+				"x-swagger-router-controller": "insights",
+				"operationId": "getMostFaultModels",
+				"tags": ["Insights"],
+				"description": "Return the most fault models",
+				"responses": {
+					"default": {
+						"description": "Most Fault Models",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Most_Fault_Models"
+						}
+					}
+				}
+			}
+		},
+		"/leastFaultModels": {
+			"get": {
+				"x-swagger-router-controller": "insights",
+				"operationId": "getLeastFaultModels",
+				"tags": ["Insights"],
+				"description": "Return the most least models",
+				"responses": {
+					"default": {
+						"description": "least Fault Models",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Least_Fault_Models"
+						}
+					}
+				}
+			}
+		},
+		"/config/states": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllStates",
+				"tags": ["States"],
+				"description": "Returns all states where washing machines are available for sale",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/State"
+						}
+					}
+				}
+			}
+		},
+		"/sales/charts": {
+			"get": {
+				"x-swagger-router-controller": "sales",
+				"operationId": "getCharts",
+				"tags": ["Sales"],
+				"description": "Returns washing machines charting details.",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Chart"
+							}
+
+						}
+					}
+				}
+			}
+		},
+		"/sales": {
+			"post": {
+				"x-swagger-router-controller": "sales",
+				"operationId": "getReportData",
+				"tags": ["Sales"],
+				"description": "Returns washing machines charting details.",
+				"parameters": [{
+					"name": "report_name",
+					"in": "query",
+					"description": "Report Name",
+					"required": true,
+					"type": "string"
+				}, {
+					"name": "group",
+					"in": "query",
+					"description": "Whether data will be groped by States, Cities etc or not",
+					"required": true,
+					"type": "boolean",
+					"default": true
+				}, {
+					"name": "Payload",
+					"in": "body",
+					"description": "Washing Machine, Date and Region information",
+					"required": false,
+					"schema": {
+						"$ref": "#/definitions/SalesByChartPayload"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/SalesByChartResponse"
+						}
+					}
+				}
+			}
+		},
+		"/config/sales/years": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllSalesYears",
+				"tags": ["Sales"],
+				"description": "Returns all sales years",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Years"
+						}
+					}
+				}
+			}
+		},
+		"/config/manufacture/years": {
+			"get": {
+				"x-swagger-router-controller": "manufacture",
+				"operationId": "getAllMfgYears",
+				"tags": ["Manufacture"],
+				"description": "Returns all manufacture years",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Years"
+						}
+					}
+				}
+			}
+		},
+		"/config/states/cities": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllCitiesByStates",
+				"tags": ["Cities"],
+				"description": "Returns all cities in a state where washing machine is sold",
+				"parameters": [{
+					"name": "state_names",
+					"in": "query",
+					"description": "State names",
+					"required": true,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Cities"
+						}
+					}
+				}
+			}
+		},
+		"/config/cities/zipcodes": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllZipCodesByCities",
+				"tags": ["Zip Codes"],
+				"description": "Returns all zip codes where washing machines are available for sell",
+				"parameters": [{
+					"name": "cities_names",
+					"in": "query",
+					"description": "Cities names",
+					"required": true,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/ZipCodes"
+						}
+					}
+				}
+			}
+		},
+		"/config/makes": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllMakes",
+				"tags": ["Makes"],
+				"description": "Returns all makes/brand names.",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Makes"
+						}
+					}
+				}
+			}
+		},
+		"/config/makes/models": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllModelsByMakes",
+				"tags": ["Models"],
+				"description": "Returns all modles by make/brand name",
+				"parameters": [{
+					"name": "make_names",
+					"in": "query",
+					"description": "Makes/Brand Names",
+					"required": true,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Models"
+						}
+					}
+				}
+			}
+		},
+		"/config/models/skus": {
+			"get": {
+				"x-swagger-router-controller": "config",
+				"operationId": "getAllSKUsByModels",
+				"tags": ["SKUs"],
+				"description": "Returns all SKU's for given model(s)",
+				"parameters": [{
+					"name": "model_names",
+					"in": "query",
+					"description": "Model(s) names",
+					"required": true,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Models"
+						}
+					}
+				}
+			}
+		},
+		"/usage": {
+			"post": {
+				"x-swagger-router-controller": "usage",
+				"operationId": "getAllUsage",
+				"tags": ["Usage"],
+				"description": "Returns washing machines usage paramters like water load, detergent, power etc. You can specify State, City, Zip code etc to filter data.",
+				"parameters": [{
+					"name": "Payload",
+					"in": "body",
+					"description": "Washing Machine, Date and Region information",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/Usage"
+					}
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Usage"
+						}
+					}
+				}
+			},
+			"get": {
+				"x-swagger-router-controller": "usage",
+				"operationId": "getAllUsage",
+				"tags": ["Usage"],
+				"description": "Returns washing machines usage paramters like water load, detergent, power etc",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Usage"
+						}
+					}
+				}
+			}
+		},
+		"/sensors": {
+			"get": {
+				"x-swagger-router-controller": "sensors",
+				"operationId": "getSensors",
+				"tags": ["Sensors"],
+				"description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/SensorNameResponse"
+						}
+					}
+				}
+			}
+		},
+		"/sensors/data": {
+			"post": {
+				"x-swagger-router-controller": "sensors",
+				"operationId": "getSensorsAvgUsage",
+				"tags": ["Sensors"],
+				"description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+				"parameters": [{
+					"name": "Payload",
+					"in": "body",
+					"description": "Washing Machine, Date and Region information",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/Usage"
+					}
+				}, {
+					"name": "sensor_name",
+					"in": "query",
+					"description": "Washing Machine, Date and Region information",
+					"required": false,
+					"type": "string"
+				}],
+				"responses": {
+					"default": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/MultipleSensorsDataResponse"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Most_Fault_Models": {
+			"properties": {
+				"Model": {
+					"type": "string"
+				},
+				"Make": {
+					"type": "string"
+				},
+				"no_of_faults": {
+					"type": "integer"
+				}
+			}
+		},
+		"Least_Fault_Models": {
+			"properties": {
+				"Model": {
+					"type": "string"
+				},
+				"Make": {
+					"type": "string"
+				},
+				"no_of_faults": {
+					"type": "integer"
+				}
+			}
+		},
+		"State": {
+			"properties": {
+				"state_name": {
+					"type": "string"
+				}
+			}
+		},
+		"Years": {
+			"properties": {
+				"year": {
+					"type": "string"
+				}
+			}
+		},
+		"City": {
+			"properties": {
+				"city_name": {
+					"type": "string"
+				}
+			}
+		},
+		"Cities": {
+			"properties": {
+				"state_name": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"ZipCodes": {
+			"properties": {
+				"state_name": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"Make": {
+			"properties": {
+				"value": {
+					"type": "string"
+				}
+			}
+		},
+		"DateRange": {
+			"properties": {
+				"start_date": {
+					"type": "string"
+				},
+				"end_date": {
+					"type": "string"
+				}
+			}
+		},
+		"Model": {
+			"properties": {
+				"model_name": {
+					"type": "string"
+				}
+			}
+		},
+		"Makes": {
+			"properties": {
+				"makes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Make"
+					}
+				}
+			}
+		},
+		"Models": {
+			"properties": {
+				"make_name": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"SKU": {
+			"properties": {
+				"sku_name": {
+					"type": "string"
+				}
+			}
+		},
+		"SKUs": {
+			"properties": {
+				"sku_name": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SKU"
+					}
+				}
+			}
+		},
+		"ProductAttr": {
+			"properties": {
+				"makes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Make"
+					}
+				},
+				"models": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Model"
+					}
+				},
+				"skus": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SKU"
+					}
+				},
+				"mfg_date": {
+					"$ref": "#/definitions/DateRange"
+				}
+			}
+		},
+		"TemplateString": {
+			"properties": {
+				"value": {
+					"type": "string"
+				}
+			}
+		},
+		"TemplateNumber": {
+			"properties": {
+				"value": {
+					"type": "integer"
+				}
+			}
+		},
+		"relative": {
+			"properties": {
+				"unit": {
+					"type": "string"
+				},
+				"value": {
+					"type": "integer"
+				}
+			}
+		},
+		"timescale": {
+			"properties": {
+				"years": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateNumber"
+					}
+				},
+				"quarters": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateNumber"
+					}
+				},
+				"months": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateNumber"
+					}
+				},
+				"date": {
+					"$ref": "#/definitions/DateRange"
+				},
+				"relative": {
+					"$ref": "#/definitions/relative"
+				}
+			}
+		},
+		"region": {
+			"properties": {
+				"states": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateString"
+					}
+				},
+				"cities": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateString"
+					}
+				},
+				"zip_codes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TemplateString"
+					}
+				}
+			}
+		},
+		"Usage": {
+			"properties": {
+				"productAttrs": {
+					"$ref": "#/definitions/ProductAttr"
+				},
+				"timescale": {
+					"$ref": "#/definitions/timescale"
+				},
+				"region": {
+					"$ref": "#/definitions/region"
+				}
+			}
+		},
+		"SalesByChartPayload": {
+			"properties": {
+				"xaxis": {
+					"type": "string"
+				},
+				"yaxis": {
+					"type": "string"
+				},
+				"productAttrs": {
+					"$ref": "#/definitions/ProductAttr"
+				},
+				"timescale": {
+					"$ref": "#/definitions/timescale"
+				},
+				"region": {
+					"$ref": "#/definitions/region"
+				},
+				"sortOrder": {
+					"type": "string"
+				},
+				"limit": {
+					"type": "integer"
+				}
+			}
+		},
+		"Sale": {
+			"properties": {
+				"sold": {
+					"type": "integer"
+				},
+				"state": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"zipcode": {
+					"type": "string"
+				},
+				"make": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"sku": {
+					"type": "string"
+				},
+				"day": {
+					"type": "integer"
+				},
+				"month": {
+					"type": "string"
+				},
+				"quarter": {
+					"type": "string"
+				},
+				"year": {
+					"type": "integer"
+				},
+				"connected": {
+					"type": "integer"
+				}
+			}
+		},
+		"MultipleSensorsDataResponse": {
+			"properties": {
+				"data": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SensorDataResponse"
+					}
+				}
+			}
+		},
+		"SensorDataResponse": {
+			"properties": {
+				"make": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"avgWaterUsed": {
+					"type": "number"
+				},
+				"avgEngergyUsed": {
+					"type": "number"
+				},
+				"aviongWashCycleDuration": {
+					"type": "integer"
+				},
+				"avgWashCycles": {
+					"type": "integer"
+				},
+				"avgTemperature": {
+					"type": "number"
+				},
+				"avgDetergentUsed": {
+					"type": "number"
+				}
+			}
+		},
+		"SensorNameResponse": {
+			"properties": {
+				"displayName": {
+					"type": "string"
+				},
+				"key": {
+					"type": "string"
+				},
+				"api": {
+					"type": "string"
+				},
+				"defaults": {
+					"type": "string"
+				},
+				"aviongWashCycleDuration": {
+					"type": "integer"
+				}
+			}
+		},
+		"SalesByChartResponse": {
+			"properties": {
+				"xAxisUnit": {
+					"type": "string"
+				},
+				"yAxixUnit": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Sale"
+					}
+				}
+			}
+		},
+		"Chart": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"chartType": {
+					"type": "string"
+				}
+			}
+		},
+		"Charts": {},
+		"Error": {
+			"properties": {
+				"message": {
+					"type": "string"
+				}
+			},
+			"required": ["message"]
+		}
+	}
 }
