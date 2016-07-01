@@ -2,21 +2,23 @@
  var geo_location = require("../../models/region_lat_long");
 
  //for map
-exports.getData = function getUngroupedData(payload, callback) {
-  
+exports.getData = function(payload, callback) {
+  //console.log("12321");
   require("./sales_map").getData(payload, function(err, sales_result) {
     //console.log(JSON.stringify(sales_result));
     if (sales_result) {
       var temp = [];
+      //console.log("12321");
       //require("./connected_map").getData(payload, sales_result, function(err, connected_buffer) {
       require("./connected_map").getData(payload, temp, function(err, connected_buffer) {  
+        //console.log("12321");
         var response = {};
         
         mix_res(sales_result, connected_buffer);
         
-        console.log("Started getting locations : sales connected");
+        //console.log("Started getting locations : sales connected");
         setRegionLocations(sales_result, function() {
-          console.log("completed getting locations : sales connected");
+          //console.log("completed getting locations : sales connected");
           callback(err, sales_result);
         });
       });
@@ -132,10 +134,14 @@ function filterType(response) {
 }
 
 //for pie chart
-exports.getUngroupedData = function getUngroupedData(payload, callback) {
+
+exports.getUngroupedData = function(payload, callback) {
+  
   require("./sales_pie").getData(payload, function(err, sales_result) {
+    //console.log("sales pie...");
     if (sales_result) {
       require("./connected_pie").getData(payload, function(err, connected_result) {
+        //console.log("connected pie...");
         var response = {};
         
         response.description = "Sold vs Connected";
@@ -152,11 +158,12 @@ exports.getUngroupedData = function getUngroupedData(payload, callback) {
 
 
 
+
 function getSum(result, key) {
   var sum = 0;
   
   for (var each_row in result) {
-    console.log(result[each_row][key]);
+    //console.log(result[each_row][key]);
     sum = sum + result[each_row][key];
   }
   //console.log("sum = " + sum);

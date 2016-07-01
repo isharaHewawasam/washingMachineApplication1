@@ -3,11 +3,11 @@
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "salesByRegionAndProduct";
   var buffer = [];
-  var filter = require("../filters");
+  var Filter = require("../filters");
   var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
-  filter.setReportType2SalesByRegionAndProduct();
+  //filter.setReportType2SalesByRegionAndProduct();
   key_map.setReportType2SalesByRegionAndProduct();
   
   var params = { 
@@ -21,10 +21,10 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
-                  "filter": filter,
+                  "filter": new Filter(payload, 7),
                   "key_maps": key_map
                };
-  
+  // SALES_BY_REGION_AND_PRODUCT = 7
   require('../sensors/avg_calculator').getSum(params, function(err, result) {
     callback(err, result);    
   });      

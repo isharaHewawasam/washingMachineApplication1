@@ -4,12 +4,12 @@ var avg = require('../sensors/avg_calculator');
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
-  var payload = require("../../payloads/top_3_models").payload;  
-  var filter = require("../filters");
+  //var payload = require("../../payloads/top_3_models").payload;  
+  var Filter = require("../filters");
   var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   //console.log("sales volume");
-  filter.setReportType2Sales();
+  //filter.setReportType2Sales();
   key_map.setReportType2Sales();
   
   var params = { 
@@ -23,7 +23,7 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",
-                  "filter": filter,
+                  "filter": new Filter(payload, 4),
                   "key_maps": key_map
                };
   

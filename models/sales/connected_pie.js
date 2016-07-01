@@ -3,12 +3,16 @@
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "connected";
   var buffer = [];
-  var filter = require("../filters");
+  var Filter = require("../filters");
   var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
-  filter.setReportType2ConnectedUngrouped();
+  //filter.setReportType2ConnectedUngrouped();
   key_map.setReportType2Connected();
+  //console.log("Before : " + JSON.stringify(payload));
+  //var updated_payload  = resetUnwantedFilters(payload);
+  //console.log("after : " + JSON.stringify(payload));
+  
   var params = { 
                  "description": "Connected Washing Machines",
                  "payload": payload,
@@ -20,11 +24,20 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "unitsConnected",
                   "databaseType": "sales",
-                  "filter": filter,
+                  "filter": new Filter(payload, 3),
                   "key_maps": key_map
                };
+  //CONNECTED_UNGROUPED = 3
   
   require('../sensors/avg_calculator').getSum(params, function(err, result) {
     callback(err, result);    
   });      
 };
+
+function resetUnwantedFilters(payload) {
+  var updated_payload = payload;
+  
+  updated_payload.timescale.years = [];
+  
+  return updated_payload;
+}

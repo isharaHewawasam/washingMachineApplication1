@@ -3,11 +3,11 @@
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var buffer = [];
-  var filter = require("../filters");
+  var Filter = require("../filters");
   var key_map = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
-  filter.setReportType2SoldUngrouped();
+  //filter.setReportType2SoldUngrouped();
   key_map.setReportType2TopModels();
   
   var params = { 
@@ -21,12 +21,13 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
-                  "filter": filter,
+                  "filter": new Filter(payload, 2),
                   "key_maps": key_map
                };
-  
+  //CONNECTED_UNGROUPED = 2
   require('../sensors/avg_calculator').getSum(params, function(err, result) {
-    console.log(JSON.stringify(result));
-    callback(err, result);    
+    //console.log("fsfsxxxxx"); 
+    callback(err, result); 
+   
   });      
 };

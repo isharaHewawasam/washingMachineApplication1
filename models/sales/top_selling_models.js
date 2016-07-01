@@ -6,14 +6,14 @@ exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
   //var payload = require("../../payloads/top_3_models").payload;  
-  var filter = require("../filters");
+  var Filter = require("../filters");
   var key_map = require("../view_keys_mapping"); 
    
   validatePayload(payload); 
   //console.log("pyfds " + JSON.stringify(payload));
   //filter.setReportType2SoldVsConnected();
   
-  filter.setReportType2Sales();
+  //filter.setReportType2Sales();
   key_map.setReportType2TopModels();
   
   var params = { 
@@ -27,9 +27,10 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",
-                  "filter": filter,
+                  "filter": new Filter(payload, 4),
                   "key_maps": key_map
                };
+  // SALES = 4             
   avg.getSum(params, function(err, result) { 
     result.sort(function(a, b) {
       return b.totalSales - a.totalSales;

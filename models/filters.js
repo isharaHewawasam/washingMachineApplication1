@@ -1,6 +1,5 @@
 'use strict';
 
-
 var FILTER_CATEGORY = {
   'NONE': 0,
   'BY_PRODUCT': 1,
@@ -34,127 +33,75 @@ var REPORT_TYPE = {
   "CONNECTED_BY_REGION_AND_PRODUCT": 8
 };
 
+module.exports.REPORT_TYPE = REPORT_TYPE;
 
-var filter_category = FILTER_CATEGORY.NONE;
-var filter_type = FILTER.NONE;
-var report_type = REPORT_TYPE.NONE;
-
-var isFilterSelected = function(items){
-  return (items.length > 0)
-}
-
-exports.setReportType2SalesByRegionAndProduct = function() {
-  report_type =  REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT;
-};
-
-exports.setReportType2ConnectedByRegionAndProduct = function() {
-  report_type =  REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT;
-};
-
-exports.setReportType2Favourite = function() {
-  report_type =  REPORT_TYPE.FAVOURITE;
-};
-
-exports.setReportType2Sensor = function() {
-  report_type =  REPORT_TYPE.SENSOR;
-};
-
-//sales vs connected report
-exports.setReportType2SoldUngrouped = function() {
-  report_type =  REPORT_TYPE.SOLD_UNGROUPED;
-}
-
-//sales vs connected report
-exports.setReportType2ConnectedUngrouped = function() {
-  report_type =  REPORT_TYPE.CONNECTED_UNGROUPED;
-}
-
-//Sales report
-exports.setReportType2Sales = function() {
-  report_type =  REPORT_TYPE.SALES;
-}
-
-//Connected report
-exports.setReportType2Connected = function() {
-  report_type =  REPORT_TYPE.CONNECTED;
-}
-
-function isDataTypeSensor() {
-  return report_type ===  REPORT_TYPE.SENSOR;
-}
-
-function isDataTypeSales() {
-  return report_type ===  REPORT_TYPE.SALES;
-}
-
-function isArrayValid(par_array){
-  return ((par_array !== undefined) && (par_array.length > 0))
-}
-
-exports.setPayload = function(payload) { 
+var Filter = function Filter(payload, view_name){
   require("../middle_ware/adjust_payload").setPayload(payload);
-    
-  filter_category = FILTER_CATEGORY.NONE;
-  filter_type = FILTER.NONE; 
- 
+  
+  this.filter_category = FILTER_CATEGORY.NONE;
+  this.filter_type = FILTER.NONE;
+  this.report_type = view_name;    
+
   if((payload === null) || (payload === undefined)) return;  
   if((payload.region === undefined) && (payload.timescale === undefined)) return;
  
    // Region
   if (payload.region) {
     if ((payload.region.states) && (payload.region.states.length)) {
-       filter_type = FILTER.BY_STATE;  
+       this.filter_type = FILTER.BY_STATE;  
     }
     
     if ((payload.region.cities) && (payload.region.cities.length)) {
-       filter_type = FILTER.BY_CITY;  
+       this.filter_type = FILTER.BY_CITY;  
     }
     
     if ((payload.region.zip_codes) && (payload.region.zip_codes.length)) {
-       filter_type = FILTER.BY_ZIP_CODE;
+       this.filter_type = FILTER.BY_ZIP_CODE;
     }
   }
   
   //Timescale
   if (payload.timescale) {
     if ((payload.timescale.years) && (payload.timescale.years.length)) {
-       filter_type = FILTER.BY_YEAR;
+       this.filter_type = FILTER.BY_YEAR;
     }
     
     if ((payload.timescale.quarters) && (payload.timescale.quarters.length)) {
-       filter_type = FILTER.BY_QUARTER;  
+       this.filter_type = FILTER.BY_QUARTER;  
     }
     
     if ((payload.timescale.months) && (payload.timescale.months.length)) {
-       filter_type = FILTER.BY_MONTH; 
+       this.filter_type = FILTER.BY_MONTH; 
     }
   }
   
   //Mixed
-  filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : filter_type;
+  this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
   //If no filter is applied set to by state
   
   
-  switch(filter_type){
+  switch(this.filter_type){
     case FILTER.BY_STATE:
     case FILTER.BY_CITY:
     case FILTER.BY_ZIP_CODE:
-      filter_category = FILTER_CATEGORY.BY_REGION;
+      this.filter_category = FILTER_CATEGORY.BY_REGION;
       break;
     case FILTER.BY_YEAR:
     case FILTER.BY_QUARTER:
     case FILTER.BY_MONTH:
-      filter_category = FILTER_CATEGORY.BY_YEAR;
+      this.filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
     case FILTER.MIXED:
-      filter_category = FILTER_CATEGORY.MIXED;
+      this.filter_category = FILTER_CATEGORY.MIXED;
       break;
     default:
-      filter_category = FILTER.NONE;
+      this.filter_category = FILTER.NONE;
       break;
   }    
 };
- 
+
+module.exports = Filter;
+
 var isFilterCategoryMixed_ = function(payload) {
   // Region 
   var is_filter_by_region = false;
@@ -179,12 +126,13 @@ var isFilterCategoryMixed_ = function(payload) {
   return (is_filter_by_region && is_filter_by_year);
 };
 
-exports.groupLevel = function(){
-  if(filter_category === FILTER_CATEGORY.MIXED)
-    return 8;
+Filter.prototype.isFilterCategoryMixed_ = isFilterCategoryMixed_;
+
+Filter.prototype.groupLevel = function(){
+  if(this.filter_category === FILTER_CATEGORY.MIXED) return 8;
   
-  if (isFilterByNone()) {
-    switch(report_type) {
+  if (this.isFilterByNone()) {
+    switch(this.report_type) {
       case REPORT_TYPE.NONE:
       case REPORT_TYPE.SENSOR:
         return 2;
@@ -207,103 +155,132 @@ exports.groupLevel = function(){
     }    
   }
   
-  switch (report_type) {
+  switch (this.report_type) {
     case  REPORT_TYPE.SOLD_UNGROUPED:
-      if ( isFilterByState() ) return 6;  
-      if ( isFilterByCity() ) return 7;
-      if ( isFilterByZipCode() ) return 8;
+      if ( this.isFilterByYear() ) return 3;  
+      if ( this.isFilterByQuarter() ) return 4;
+      if ( this.isFilterByMonth() ) return 5;
+      
+      if ( this.isFilterByState() ) return 6;  
+      if ( this.isFilterByCity() ) return 7;
+      if ( this.isFilterByZipCode() ) return 8;
       break;
     case  REPORT_TYPE.CONNECTED_UNGROUPED:
-      if ( isFilterByState() ) return 4;  
-      if ( isFilterByCity() ) return 5;
-      if ( isFilterByZipCode() ) return 6;  
+      if ( this.isFilterByYear() ) return 3;  
+      if ( this.isFilterByQuarter() ) return 4;
+      if ( this.isFilterByMonth() ) return 5;
+      
+      if ( this.isFilterByState() ) return 6;  
+      if ( this.isFilterByCity() ) return 7;
+      if ( this.isFilterByZipCode() ) return 8;  
        break;
     case  REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
     case  REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
-      if ( isFilterByState() ) return 1;  
-      if ( isFilterByCity() ) return 2;
-      if ( isFilterByZipCode() ) return 3; 
+      if ( this.isFilterByState() ) return 1;  
+      if ( this.isFilterByCity() ) return 2;
+      if ( this.isFilterByZipCode() ) return 3; 
       
-      if ( isFilterByMake() ) return 4; 
-      if ( isFilterByModel() ) return 5; 
+      if ( this.isFilterByMake() ) return 4; 
+      if ( this.isFilterByModel() ) return 5;
+
+      if ( this.isFilterByYear() ) return 6;  
+      if ( this.isFilterByQuarter() ) return 7;
+      if ( this.isFilterByMonth() ) return 8;       
       break;      
     default:  
-      if ( isFilterByMake() ) return 1; 
-      if ( isFilterByModel() ) return 2;
+      if ( this.isFilterByMake() ) return 1; 
+      if ( this.isFilterByModel() ) return 2;
   
-      if ( (isFilterByState() ) || ( isFilterByYear() ) ) return 3;  
-      if ( (isFilterByCity() ) || ( isFilterByQuarter() ) ) return 4;
-      if ( (isFilterByZipCode() ) || (isFilterByMonth() ) ) return 5;
+      if ( (this.isFilterByState() ) || ( this.isFilterByYear() ) ) return 3;  
+      if ( (this.isFilterByCity() ) || ( this.isFilterByQuarter() ) ) return 4;
+      if ( (this.isFilterByZipCode() ) || (this.isFilterByMonth() ) ) return 5;
       
       return 2;
   }
 };
 
 // {"key":["LG","WD100CW","Arizona","Chandler","85225","2015","1","1"]
-exports.filterType = function() {  
-  if(isFilterByNone()) return 2;
+var filterType  = function() {  
+  if(this.isFilterByNone()) return 2;
    
-  if(isFilterByMake()) return 1; 
-  if(isFilterByModel()) return 2;
+  if(this.isFilterByMake()) return 1; 
+  if(this.isFilterByModel()) return 2;
   
-  if(isFilterByState()) return 3;
-  if(isFilterByCity()) return 4;
-  if(isFilterByZipCode()) return 4;
+  if(this.isFilterByState()) return 3;
+  if(this.isFilterByCity()) return 4;
+  if(this.isFilterByZipCode()) return 4;
   
-  if(isFilterByYear()) return 2;
-  if(isFilterByQuarter()) return 3;
-  if(isFilterByMonth()) return 4;
+  if(this.isFilterByYear()) return 2;
+  if(this.isFilterByQuarter()) return 3;
+  if(this.isFilterByMonth()) return 4;
 };
 
-exports.isFilterCategoryNone = function(){
-  return filter_category === FILTER_CATEGORY.NONE;
+Filter.prototype.filterType = filterType;
+
+Filter.prototype.isFilterCategoryNone = function(){
+  return this.filter_category === FILTER_CATEGORY.NONE;
 };
 
-exports.isFilterCategoryByRegion = function(){
-  return filter_category === FILTER_CATEGORY.BY_REGION;
+Filter.prototype.isFilterCategoryByRegion = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_REGION;
 };
 
-exports.isFilterCategoryByYear = function(){
-  return filter_category === FILTER_CATEGORY.BY_YEAR;
+Filter.prototype.isFilterCategoryByYear = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_YEAR;
 };
 
-exports.isFilterCategoryMixed = function(){
-  return filter_category === FILTER_CATEGORY.MIXED;
+Filter.prototype.isFilterCategoryMixed = function(){
+  return this.filter_category === FILTER_CATEGORY.MIXED;
 };
 
-
-var isFilterByNone = function(){
-  return (filter_type === FILTER.NONE);
+Filter.prototype.isFilterByNone = function(){
+  return this.filter_type === FILTER.NONE;
 };
 
 var isFilterByMake = function(){
-  return filter_type === FILTER.BY_MAKE;
+  return this.filter_type === FILTER.BY_MAKE;
 };
+
+Filter.prototype.isFilterByMake = isFilterByMake;
 
 var isFilterByModel = function(){
-  return filter_type === FILTER.BY_MODEL;
+  return this.filter_type === FILTER.BY_MODEL;
 };
+
+Filter.prototype.isFilterByModel = isFilterByModel;
 
 var isFilterByState = function(){  
-  return filter_type === FILTER.BY_STATE;
+  return this.filter_type === FILTER.BY_STATE;
 };
+
+Filter.prototype.isFilterByState = isFilterByState;
 
 var isFilterByCity = function(){
-  return filter_type === FILTER.BY_CITY;
+  return this.filter_type === FILTER.BY_CITY;
 };
+
+Filter.prototype.isFilterByCity = isFilterByCity;
 
 var isFilterByZipCode = function(){
-  return filter_type === FILTER.BY_ZIP_CODE;
+  return this.filter_type === FILTER.BY_ZIP_CODE;
 };
+
+Filter.prototype.isFilterByZipCode = isFilterByZipCode
 
 var isFilterByYear = function(){
-  return filter_type === FILTER.BY_YEAR;
+  return this.filter_type === FILTER.BY_YEAR;;
 };
+
+Filter.prototype.isFilterByYear = isFilterByYear;
 
 var isFilterByQuarter = function(){
-  return filter_type === FILTER.BY_QUARTER;
+  return this.filter_type === FILTER.BY_QUARTER;
 };
 
+Filter.prototype.isFilterByQuarter = isFilterByQuarter;
+
 var isFilterByMonth = function(){
-  return filter_type === FILTER.BY_MONTH;
+  return this.filter_type === FILTER.BY_MONTH;
 };
+
+Filter.prototype.isFilterByMonth = isFilterByMonth;

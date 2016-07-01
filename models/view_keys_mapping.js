@@ -53,12 +53,14 @@ function setKeys(report_type) {
       break;
     case REPORT_TYPE.CONNECTED:
       key.MAKE = 0; key.MODEL = 1;
-      key.STATE = 2; key.CITY = 3; key.ZIP_CODE = 4;
+      key.YEAR = 2; key.QUARTER = 3; key.MONTH = 4;
+      key.STATE = 5; key.CITY = 6; key.ZIP_CODE = 7;
       break;  
     case REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
     case REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
       key.STATE = 0; key.CITY = 1; key.ZIP_CODE = 2;
       key.MAKE = 3; key.MODEL = 4;
+      key.YEAR = 5; key.QUARTER = 6; key.MONTH = 7;
       break
     default:
       console.log("Invalid report key");
