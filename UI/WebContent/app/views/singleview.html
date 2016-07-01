@@ -2,11 +2,20 @@
 <div class="chart-somediv hidden" id="hiddenDiv" ></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
+   <link href="app/css/charts.css" rel="stylesheet"/>
    <!-- START Language list-->
    
    <!-- END Language list    -->
   
   <div class="pull-right" >
+    <style>
+		tr:nth-child(even) {background: #E7EEF6}
+ 		#dropdown{
+         	color: blue;
+         	border:0;
+         	  } 
+		
+   </style>
       
       Application Dashboard Last Updated May 10, 2016, 3:26:26 PM
    </div>
@@ -27,7 +36,7 @@
             
             
             
-            <div class="form-group filter-filterDiv col-lg-12" style=" width: 100% auto; "" id="filterDivId" >
+            <div class="form-group filter-filterDiv col-lg-12" style=" width: 100% auto; " id="filterDivId" >
               
                <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
                   <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
@@ -129,7 +138,6 @@
 
 
 
-
 <div class="row"  >
    <!-- START dashboard main content-->
    
@@ -139,9 +147,9 @@
 		<div class="chart-filterDiv " id="chartFilterDivId">
                                     <select id="first-chart-select" class="chart-selectStyle col-md-4 " ng-change="disp()" ng-model="selectedSales" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
                                                 
-                                                <option class="chart-option-text-style" disabled selected value="">Please select</option>
-                                                <option class="chart-option-text-style"  ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
-                                               
+                                                <option class="chart-option-text-style" disabled value="">Please select</option>
+                                                <option class="chart-option-text-style"  ng-if="$index==0" ng-init="disp($index)"selected ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
+                                               	<option class="chart-option-text-style"  ng-if="$index!=0" ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
                                     </select>
                                      <select class="chart-selectStyle col-md-3 chart-border "
                                                 style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
@@ -160,13 +168,8 @@
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-		
-		<div ng-if="selectedChart=='Pie'" id="pie" class="container-canvas">
-			<div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
-				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
-			</div>
-			<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels">	</canvas>
-		</div>
+	 <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
+		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"></div>
 		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
 		
 			<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
@@ -269,7 +272,7 @@
       <!-- START panel -->
    
       <div class="panel panel-default"  id="gridNormal">
-         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; ">Washing Machines status   
+         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; "><b>Washing Machines status </b>  
           <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximizeGrid()"></img>
          <img id="gridCloseImg" class="pull-right hidden col-md-1 " style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
          
@@ -285,11 +288,12 @@
                     
                  
                   	<tr>
-                        <th>Make</th>
-                        <th>Model</th>
-                        <th>Total Load</th>
-                        <th>Popular Day</th>
-                        <th>Popular Time</th>
+                       <th style="text-align: center"> Make  <select id="dropdown"></select></th> 
+                        <th style="text-align: center">Model <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Total Loads <select id="dropdown"></select> </th>
+                        <th style="text-align:center">Most Popular Wash Day <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Most Popular Time of Day <select id="dropdown"></select> </th>
+
                      </tr>
                   
                   
@@ -297,11 +301,12 @@
                   
                   <tbody>
                       <tr ng-repeat="itm in griddata"  >
-                        <td>{{itm.make}}</td>
-                        <td>{{itm.model}}</td>
-                        <td style="text-align: right">{{itm.totalLoad}}</td>
-                        <td>{{itm.popularDay}}</td>
-                        <td>{{itm.popularTime}}</td>
+                        <td style="text-align:center">{{itm.make}}</td>
+                        <td style="text-align:center">{{itm.model}}</td>
+                        <td style="text-align:center">{{itm.totalLoad}}</td>
+                        <td style="text-align:center">{{itm.popularDay}}</td>
+                        <td style="text-align:center">{{itm.popularTime}}</td>
+
                      </tr>
                     
                  </tbody>
