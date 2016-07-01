@@ -13,7 +13,7 @@ exports.getData = function(payload, callback) {
   key_map.setReportType2Sales();
   
   var params = { 
-                 "description": "Top Selling Models",
+                 "description": "Sales Volume",
                  "payload": payload,
                  "buffer": topModelsBuffer,
                  "view": {
@@ -23,7 +23,7 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",
-                  "filter": new Filter(payload, 4),
+                  "filter": new Filter(payload, 9),
                   "key_maps": key_map
                };
   

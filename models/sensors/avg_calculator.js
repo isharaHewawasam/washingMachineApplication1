@@ -273,7 +273,6 @@ var doesRecordFallsInFilter = function(params, keys) {
   var KEYS = keys_map.key;
   
   if ( params.filter.isFilterCategoryByRegion() ) {
-    console.log("keys : " + keys);
        return isItemPresent(params.payload.productAttrs.makes, "make_name", keys[KEYS.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
               isItemPresent(params.payload.region.states, "value", keys[KEYS.STATE]) && 
@@ -291,7 +290,6 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if(params.filter.isFilterCategoryMixed()) {
-    console.log("keys " + keys);
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "make_name", keys[KEYS.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
             isItemPresent(params.payload.region.states, "value", keys[KEYS.STATE]) && 

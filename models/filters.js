@@ -30,7 +30,8 @@ var REPORT_TYPE = {
   "CONNECTED": 5,
   "FAVOURITE": 6,
   "SALES_BY_REGION_AND_PRODUCT": 7,
-  "CONNECTED_BY_REGION_AND_PRODUCT": 8
+  "CONNECTED_BY_REGION_AND_PRODUCT": 8,
+  "SALES_VOLUME": 9
 };
 
 module.exports.REPORT_TYPE = REPORT_TYPE;
@@ -138,6 +139,8 @@ Filter.prototype.groupLevel = function(){
         return 2;
       case REPORT_TYPE.FAVOURITE:
         return 3;  
+      case REPORT_TYPE.SALES_VOLUME:
+        return 2;  
       case REPORT_TYPE.SALES:
         return 2;        
       case REPORT_TYPE.TOP_3_SELLING_MODELS:
@@ -186,7 +189,19 @@ Filter.prototype.groupLevel = function(){
       if ( this.isFilterByYear() ) return 6;  
       if ( this.isFilterByQuarter() ) return 7;
       if ( this.isFilterByMonth() ) return 8;       
-      break;      
+      break;     
+   case  REPORT_TYPE.SALES_VOLUME:
+      if ( this.isFilterByMake() ) return 1; 
+      if ( this.isFilterByModel() ) return 2;   
+      
+      if ( this.isFilterByYear() ) return 3;  
+      if ( this.isFilterByQuarter() ) return 4;
+      if ( this.isFilterByMonth() ) return 5;   
+      
+      if ( this.isFilterByState() ) return 6;  
+      if ( this.isFilterByCity() ) return 7;
+      if ( this.isFilterByZipCode() ) return 8; 
+      break;         
     default:  
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;

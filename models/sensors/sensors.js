@@ -1,5 +1,7 @@
 'use strict';
 
+var use_default_key;;
+
 exports.getSensors = function(callback) {
   callback(null, require("./sensor_names").sensors);  
 };
@@ -13,6 +15,8 @@ exports.getSensorsAvgUsage = function(sensor_name, payload, callback) {
 };
 
 function getAvgUsageBySensor(sensor_name, payload, callback) {
+  use_default_key = false;
+  
   if(sensor_name) {
     var averages = [];    
     var avg_keys = require("./sensor_names").avgKeys;
@@ -38,6 +42,7 @@ function getAvgUsageBySensor(sensor_name, payload, callback) {
 }
 
 function getAvgUsage(payload, callback) {  
+  use_default_key = true;
   var averages = [];
   
   getAvgWaterUsage(payload, averages, callback, true);

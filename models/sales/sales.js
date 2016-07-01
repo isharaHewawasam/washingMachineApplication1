@@ -23,3 +23,6 @@ exports.getReportData = function(report_name, group, payload, callback) {
       callback("Invaoid chart id", null); return;
   }  
 };
+
+function sanitizePayload(payload) {
+}
