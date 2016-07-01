@@ -12,7 +12,7 @@ exports.getData = function(payload, buffer, callback) {
   
   //console.log("Report : " + Filter.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT);
   var params = { 
-                 "description": "Connected Washing Machines",
+                 "description": "Connected Washing Machines by Region",
                  "payload": payload,
                  "buffer": buffer,
                  "view": {

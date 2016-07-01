@@ -2,32 +2,43 @@
  var geo_location = require("../../models/region_lat_long");
 
  //for map
+ 
 exports.getData = function(payload, callback) {
-  //console.log("12321");
-  require("./sales_map").getData(payload, function(err, sales_result) {
-    //console.log(JSON.stringify(sales_result));
+   var updated_payload = removeUnwantedKeys(payload);
+   var temp = [];
+   var response = {};
+   
+  require("./sales_map").getData(updated_payload, function(err, sales_result) {
     if (sales_result) {
-      var temp = [];
-      //console.log("12321");
-      //require("./connected_map").getData(payload, sales_result, function(err, connected_buffer) {
-      require("./connected_map").getData(payload, temp, function(err, connected_buffer) {  
-        //console.log("12321");
-        var response = {};
-        
+      require("./connected_map").getData(updated_payload, temp, function(err, connected_buffer) { 
         mix_res(sales_result, connected_buffer);
-        
-        //console.log("Started getting locations : sales connected");
         setRegionLocations(sales_result, function() {
-          //console.log("completed getting locations : sales connected");
           callback(err, sales_result);
         });
       });
     } else {
       callback(err, sales_result);
     }    
-  });
+});
   
+  
+function removeUnwantedKeys(payload) {
+  var result = payload;
+  
+  try {
+    result.timescale.years = [];
+    result.timescale.quarters = [];
+    result.timescale.months = [];
+  }
+  catch(ex) {
+    console.log("Exception in sales_map::removeUnwantedKeys");
+    console.log(ex);
+  }    
+    
+  return result;
+}  
 };
+
 
 function mix_res(sales_result, connected_buffer) {
   var found = false;

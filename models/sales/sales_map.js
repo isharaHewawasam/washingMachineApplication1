@@ -9,9 +9,10 @@ exports.getData = function(payload, callback) {
   
   //filter.setReportType2SalesByRegionAndProduct();
   key_map.setReportType2SalesByRegionAndProduct();
+ 
   
   var params = { 
-                 "description": "Sold - Pie",
+                 "description": "Sold Washing Machines by Region",
                  "payload": payload,
                  "buffer": buffer,
                  "view": {
@@ -29,3 +30,4 @@ exports.getData = function(payload, callback) {
     callback(err, result);    
   });      
 };
+
