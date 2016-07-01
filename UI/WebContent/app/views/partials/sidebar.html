@@ -167,9 +167,14 @@
 
 
         <div class="form-group element-margin">
+            <input type="text" ng-model="skuFilter" class="form-control" placeholder="SKU Search..." style="height:32px">
+        </div>
+        
+        <div class="form-group element-margin">
+            
             <select  class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
                 <option class="option-text-style" value="" disabled selected>SKU</option>
-                <option class="option-text-style" ng-repeat="SKU in SKUs"   value={{SKU.sku}}>{{SKU.sku}}</option>
+                <option class="option-text-style" ng-repeat="SKU in SKUs | filter : skuFilter"   value={{SKU.sku}}>{{SKU.sku}}</option>
             </select>
         </div>
         
@@ -241,7 +246,7 @@
 
 <script>
 
-        $(document).on("mouseover", "#filterNav, #filterPanel", function() {
+        $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
             $('#filterPanel').show();
             $('#filterNav').addClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter_hover.png');
@@ -250,7 +255,7 @@
             $('#calenderNav').removeClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
         });
-        $(document).on("mouseleave", "#filterNav, #filterPanel", function() {
+        $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
             if($('.md-pane-open').is(":visible")){
                 return;
             }
@@ -265,7 +270,7 @@
         });
 
 
-        $(document).on("mouseover", "#calenderNav, #calenderPanel", function() {
+        $(document).on("mouseover", "#calenderNav, #calenderPanel", function(event) {
             $('#calenderPanel').show();
             $('#filterNav').removeClass('sidebarItemActive');
             $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
@@ -275,7 +280,7 @@
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar_hover.png');
         });
 
-        $(document).on("mouseleave", "#calenderNav, #calenderPanel", function() {
+        $(document).on("mouseleave", "#calenderNav, #calenderPanel", function(event) {
             if($('.md-pane-open').is(":visible")){
                 return;
             }

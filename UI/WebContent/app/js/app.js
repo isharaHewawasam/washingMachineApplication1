@@ -1011,6 +1011,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	$rootScope.intete=1;
 	$scope.make;
 	$scope.makeData;
+    /*$scope.valArr=[];*/
+      
+    
+      
 	$scope.getCall=function(p){
 		console.log("calling"+p);
 	}
@@ -1025,6 +1029,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     
     
     $scope.myDate = new Date();
+      
+     /* $scope.selectedSKU=function(){
+          $scope.valArr.push($scope.search.selectedSKU);
+          alert($scope.valArr);
+      }*/
 
     $scope.search={};
       $scope.selectedMake=function(){
@@ -1033,7 +1042,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	               
 	    	 $scope.models=data[$scope.search.selectedMake];
 	    	 //console.log("manufacture year :"+JSON.stringify(data));
-				       
+              
+                /*$scope.valArr.push($scope.search.selectedMake);
+              alert($scope.valArr);*/
+                
 				           
 				           
 	    }). error(function(data, status) {
@@ -1049,7 +1061,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	    	 $scope.SKUs=data[$scope.search.selectedModel];
               console.log($scope.SKUs);
 	    	 //console.log("manufacture year :"+JSON.stringify(data));
-				       
+             /* $scope.valArr.push($scope.search.selectedModel);
+              alert($scope.valArr);*/
 				           
 				           
 	    }). error(function(data, status) {
