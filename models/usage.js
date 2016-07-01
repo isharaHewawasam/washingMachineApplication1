@@ -2,7 +2,8 @@
 var db = require('../database/dbWashDailyAggregate');
 var fav_days = require('./favourite_day');
 var fav_times = require('./favourite_time');
-var filter = require('./filters');
+var Filter = require("./filters");
+var filter;
 
 exports.getAllUsage = function(payload, callback) {  
 
@@ -39,8 +40,9 @@ exports.getAllUsage = function(payload, callback) {
 var getData = function(payload, callback) { 
 console.log("payload sfsf " + JSON.stringify(payload));
 
-  filter.setPayload(payload);
-  filter.setReportType2Sensor();
+  filter  = new Filter(payload, 6);
+  //filter.setPayload(payload);
+  //filter.setReportType2Sensor();
   console.log("grop level : " + filter.groupLevel());
   //var params = { reduce: true, group: true, group_level: filter.groupLevel() };
   var params = { reduce: true, group_level: filter.groupLevel() };

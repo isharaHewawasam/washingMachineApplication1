@@ -1,6 +1,7 @@
 'use strict';
 var db = require('../database/dbWashDailyAggregate');
-var filter = require('../models/filters');
+var Filter = require("./filters");
+var filter;
 var response;
 
 exports.getAllDays = function(payload, callback) {
@@ -15,9 +16,10 @@ exports.getAllDays = function(payload, callback) {
 };
 
 var getData = function(payload, callback) {  
-  filter.setPayload(payload);
-  filter.setReportType2Favourite();
-    
+  //filter.setPayload(payload);
+  //filter.setReportType2Favourite();
+  filter  = new Filter(payload, 1);
+  
   var view_name;
   var params;
      
