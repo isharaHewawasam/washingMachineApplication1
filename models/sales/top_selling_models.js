@@ -7,13 +7,14 @@ exports.getData = function(payload, callback) {
   var topModelsBuffer = [];
   //var payload = require("../../payloads/top_3_models").payload;  
   var Filter = require("../filters");
-  var key_map = require("../view_keys_mapping"); 
+  var KeyMap = require("../view_keys_mapping"); 
    
   validatePayload(payload); 
   //console.log("pyfds " + JSON.stringify(payload));
   //filter.setReportType2SoldVsConnected();
   
   //filter.setReportType2Sales();
+  var key_map = new KeyMap();
   key_map.setReportType2TopModels();
   
   var params = { 

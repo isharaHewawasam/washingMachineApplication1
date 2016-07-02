@@ -92,7 +92,9 @@ var getData = function(params, callback) {
   var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
   var db = getDb(params.databaseType);
  
-
+  //console.log("In Group level");
+  //params.keys_map.dumpReportType();
+  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
     
     doGetDataLogging(err, result, params, view_params, view_name);    

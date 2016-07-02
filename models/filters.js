@@ -191,6 +191,7 @@ Filter.prototype.groupLevel = function(){
       if ( this.isFilterByMonth() ) return 8;       
       break;     
    case  REPORT_TYPE.SALES_VOLUME:
+   case  REPORT_TYPE.SALES:
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;   
       

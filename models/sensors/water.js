@@ -4,8 +4,9 @@ var avg = require('./avg_calculator');
 exports.getAverageUsage = function(payload, averagesBuffer, callback) {
   var SENSOR_NAME = "Water";
   var Filter = require("../filters");
-  var key_map = require("../view_keys_mapping");
+  var KeyMap = require("../view_keys_mapping");
   
+  var key_map = new KeyMap();
   key_map.setReportType2Sensor();
   
   var params = { 

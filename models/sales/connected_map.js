@@ -4,10 +4,11 @@ exports.getData = function(payload, buffer, callback) {
   var VIEW_NAME = "connectedByRegionAndProduct";
   //var buffer = [];
   var Filter = require("../filters");
-  var key_map = require("../view_keys_mapping");
+  var KeyMap = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
   //filter.setReportType2ConnectedByRegionAndProduct();
+  var key_map = new KeyMap();
   key_map.setReportType2ConnectionByRegionAndProduct();
   
   //console.log("Report : " + Filter.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT);

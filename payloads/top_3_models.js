@@ -22,7 +22,7 @@ var payload = {
     }
   },
   "region": {
-    "states": [{"value": "california"}],
+    "states": [],
     "cities": [      
     ],
     "zip_codes": [

@@ -1,71 +1,83 @@
 'use strict';
 
-var REPORT_TYPE = {
-  "NONE": 0,
-  "SENSOR": 1,
-  "TOP_3_SELLING_MODELS": 2,
-  "SALES": 3,
-  "CONNECTED": 4,
-  "SALES_BY_REGION_AND_PRODUCT": 5,
-  "CONNECTED_BY_REGION_AND_PRODUCT": 6
+var ViewKeysMappings = function() {
+  this.REPORT_TYPE = {};
+  this.REPORT_TYPE.NONE = 0;
+  this.REPORT_TYPE.SENSOR = 1;
+  this.REPORT_TYPE.TOP_3_SELLING_MODELS = 2;
+  this.REPORT_TYPE.SALES = 3;
+  this.REPORT_TYPE.CONNECTED = 4;
+  this.REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT = 5;
+  this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT = 6;
+  
+  this.key = {};
 };
 
-var key = {};
+module.exports = ViewKeysMappings;
 
-exports.setReportType2SalesByRegionAndProduct = function() {
-  setKeys(REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT);
-};
-
-exports.setReportType2ConnectionByRegionAndProduct = function() {
-  setKeys(REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT);
-};
-
-exports.setReportType2Sensor = function() {
-  setKeys(REPORT_TYPE.SENSOR);
-};
-
-exports.setReportType2TopModels = function() {
-  setKeys(REPORT_TYPE.TOP_3_SELLING_MODELS);
-};
-
-exports.setReportType2Sales = function() {
-  setKeys(REPORT_TYPE.SALES);
-};
-
-exports.setReportType2Connected = function() {
-  setKeys(REPORT_TYPE.CONNECTED);
-};
-
-function setKeys(report_type) {
+ViewKeysMappings.prototype.setKeys = function(report_type) {
   switch (report_type) {
-    case REPORT_TYPE.SENSOR:
-      key.MAKE = 0; key.MODEL = 1; 
-      key.STATE = 2; key.CITY = 3; key.ZIP_CODE = 4;
-      key.YEAR = 5; key.QUARTER = 6; key.MONTH = 7;
-      key.YEAR_2 = 2; key.QUARTER_2 = 3; key.MONTH_2 = 4;
+    case this.REPORT_TYPE.SENSOR:
+      this.key.MAKE = 0; this.key.MODEL = 1; 
+      this.key.STATE = 2; this.key.CITY = 3; this.key.ZIP_CODE = 4;
+      this.key.YEAR = 5; this.key.QUARTER = 6; this.key.MONTH = 7;
+      this.key.YEAR_2 = 2; this.key.QUARTER_2 = 3; this.key.MONTH_2 = 4;
       break;
-    case REPORT_TYPE.TOP_3_SELLING_MODELS:
-    case REPORT_TYPE.SALES:
-      key.MAKE = 0; key.MODEL = 1;
-      key.YEAR = 2; key.QUARTER = 3; key.MONTH = 4;
-      key.YEAR_2 = 2; key.QUARTER_2 = 3; key.MONTH_2 = 4;  
-      key.STATE = 5; key.CITY = 6; key.ZIP_CODE = 7;
+    case this.REPORT_TYPE.TOP_3_SELLING_MODELS:
+    case this.REPORT_TYPE.SALES:
+      this.key.MAKE = 0; this.key.MODEL = 1;
+      this.key.YEAR = 2; this.key.QUARTER = 3; this.key.MONTH = 4;
+      this.key.YEAR_2 = 2; this.key.QUARTER_2 = 3; this.key.MONTH_2 = 4;  
+      this.key.STATE = 5; this.key.CITY = 6; this.key.ZIP_CODE = 7;
       break;
-    case REPORT_TYPE.CONNECTED:
-      key.MAKE = 0; key.MODEL = 1;
-      key.YEAR = 2; key.QUARTER = 3; key.MONTH = 4;
-      key.STATE = 5; key.CITY = 6; key.ZIP_CODE = 7;
+    case this.REPORT_TYPE.CONNECTED:
+      this.key.MAKE = 0; this.key.MODEL = 1;
+      this.key.YEAR = 2; this.key.QUARTER = 3; this.key.MONTH = 4;
+      this.key.STATE = 5; this.key.CITY = 6; this.key.ZIP_CODE = 7;
       break;  
-    case REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
-    case REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
-      key.STATE = 0; key.CITY = 1; key.ZIP_CODE = 2;
-      key.MAKE = 3; key.MODEL = 4;
-      key.YEAR = 5; key.QUARTER = 6; key.MONTH = 7;
+    case this.REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
+    case this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
+      this.key.STATE = 0; this.key.CITY = 1; this.key.ZIP_CODE = 2;
+      this.key.MAKE = 3; this.key.MODEL = 4;
+      this.key.YEAR = 5; this.key.QUARTER = 6; this.key.MONTH = 7;
       break
     default:
       console.log("Invalid report key");
       break;
   }
-}
+};
 
-exports.key = key;
+ViewKeysMappings.prototype.setReportType2SalesByRegionAndProduct = function() {
+  this.setKeys(this.REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT);
+};
+
+ViewKeysMappings.prototype.setReportType2ConnectionByRegionAndProduct = function() {
+  this.setKeys(this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT);
+};
+
+ViewKeysMappings.prototype.setReportType2Sensor = function() {
+  this.setKeys(this.REPORT_TYPE.SENSOR);
+};
+
+var setReportType2TopModels = function() {
+  this.setKeys(this.REPORT_TYPE.TOP_3_SELLING_MODELS);
+};
+
+ViewKeysMappings.prototype.setReportType2TopModels = setReportType2TopModels;
+
+var setReportType2Sales = function() {
+  this.setKeys(this.REPORT_TYPE.SALES);
+};
+
+ViewKeysMappings.prototype.setReportType2Sales = setReportType2Sales;
+
+ViewKeysMappings.prototype.setReportType2Connected = function() {
+  this.setKeys(this.REPORT_TYPE.CONNECTED);
+};
+
+var dumpReportType = function() {
+  console.log("Report Type of key maps : " + report_type2);
+};
+
+ViewKeysMappings.prototype.dumpReportType = dumpReportType;
+//ViewKeysMappings.prototype.setKeys = setKeys;

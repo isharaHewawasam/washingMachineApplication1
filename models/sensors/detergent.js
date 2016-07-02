@@ -4,9 +4,11 @@ var avg = require('./avg_calculator');
 exports.getAverageUsage = function(payload, averagesBuffer, callback) {
   var SENSOR_NAME = "Detergent";
   var Filter = require("../filters");
-  var key_map = require("../view_keys_mapping");
+  var KeyMap = require("../view_keys_mapping");
   
-  key_map.setReportType2Sensor();  
+  var key_map = new KeyMap();  
+  key_map.setReportType2Sensor();
+  
   var params = { 
                  "description": "Average Wash Cycles",
                  "payload": payload,

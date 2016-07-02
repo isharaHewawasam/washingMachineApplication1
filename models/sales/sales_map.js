@@ -4,10 +4,11 @@ exports.getData = function(payload, callback) {
   var VIEW_NAME = "salesByRegionAndProduct";
   var buffer = [];
   var Filter = require("../filters");
-  var key_map = require("../view_keys_mapping");
+  var KeyMap = require("../view_keys_mapping");
   //var payload = require("../../payloads/top_3_models").payload;  
   
   //filter.setReportType2SalesByRegionAndProduct();
+  var key_map = new KeyMap();
   key_map.setReportType2SalesByRegionAndProduct();
  
   
