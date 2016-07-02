@@ -5,7 +5,7 @@ exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, call
   var SENSOR_NAME = "Detergent";
   var Filter = require("../filters");
   var KeyMap = require("../view_keys_mapping");
-  
+  var temp = null;
   var key_map = new KeyMap();  
   key_map.setReportType2Sensor();
   
