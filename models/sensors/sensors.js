@@ -48,8 +48,12 @@ function getAvgUsage(payload, callback) {
   getAvgWaterUsage(payload, averages, callback, true);
 }
 
+function getStatsKeyName() {
+  return use_default_key ? null : "avgUsage";
+}
+
 function getAvgWaterUsage(payload, averages, callback, call_next_function) {
-  require("./water").getAverageUsage(payload, averages, function(err, result) {
+  require("./water").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
@@ -59,7 +63,7 @@ function getAvgWaterUsage(payload, averages, callback, call_next_function) {
 }
 
 function getAvgPowerUsage(payload, averages, callback, call_next_function) {
-  require("./power").getAverageUsage(payload, averages, function(err, result) {
+  require("./power").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
@@ -69,7 +73,7 @@ function getAvgPowerUsage(payload, averages, callback, call_next_function) {
 }
 
 function getAvgTemperatureUsage(payload, averages, callback, call_next_function) {
-  require("./temperature").getAverageUsage(payload, averages, function(err, result) {
+  require("./temperature").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
@@ -79,7 +83,7 @@ function getAvgTemperatureUsage(payload, averages, callback, call_next_function)
 }
 
 function getAvgWashCycleDuration(payload, averages, callback, call_next_function) {
-  require("./wash_cycle_duration").getAverageUsage(payload, averages, function(err, result) {
+  require("./wash_cycle_duration").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
@@ -89,7 +93,7 @@ function getAvgWashCycleDuration(payload, averages, callback, call_next_function
 }
 
 function getAvgWashCycles(payload, averages, callback, call_next_function) {
-  require("./wash_cycles").getAverageUsage(payload, averages, function(err, result) {
+  require("./wash_cycles").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
@@ -99,7 +103,7 @@ function getAvgWashCycles(payload, averages, callback, call_next_function) {
 }
 
 function getAvgDetergentUsage(payload, averages, callback) {
-  require("./detergent").getAverageUsage(payload, averages, function(err, result) {    
+  require("./detergent").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {    
     callback(err, result);    
   });
 }
