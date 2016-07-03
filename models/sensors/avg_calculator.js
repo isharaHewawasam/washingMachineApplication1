@@ -4,7 +4,7 @@ var sensorsDataDb = require('../../database/dbWashDailyAggregate');
 var utility = require("../../middle_ware/utility");
 
 //var filter = null;
-var keys_map = null;
+//var keys_map = null;
 
 exports.getSum = function(params, callback) {  
   params.stats = "sum";
@@ -24,7 +24,7 @@ exports.getAverage = function(params, callback) {
 
 function getStats(params, callback) {
   //filter = params.filter;
-  keys_map = params.key_maps;
+  //keys_map = params.key_maps;
   
   //if (params.filter === undefined) console.log("filter not defined");
 	  getData(params, function(err, result) {   
@@ -227,33 +227,33 @@ var do_make_and_model_match = function(usage1, usage2) {
 
 var fillRecord = function(result, params) {
   var record = {}// "sold": {"year": 0, "quarter": 0, "month": 0} };
-  var keys = keys_map.key;
+  //var keys = params.keys_map.key;
  
   //console.log("keys " + JSON.stringify(keys));
-  record.make = result.key[keys.MAKE];
-  record.model = result.key[keys.MODEL]; 
+  record.make = result.key[params.key_maps.key.MAKE];
+  record.model = result.key[params.key_maps.key.MODEL]; 
 
   if( (params.filter.isFilterCategoryNone()) || 
       (params.filter.isFilterCategoryByRegion()) ||
       (params.filter.isFilterCategoryMixed())
     ) {
-      record.state = result.key[keys.STATE];
-      record.city = result.key[keys.CITY];
-      record.zip_code = result.key[keys.ZIP_CODE]; 
+      record.state = result.key[params.key_maps.key.STATE];
+      record.city = result.key[params.key_maps.key.CITY];
+      record.zip_code = result.key[params.key_maps.key.ZIP_CODE]; 
   } 
   
   if(params.filter.isFilterCategoryByYear()) {   
     record.sold = {};  
-    record.sold.year = parseInt(result.key[keys.YEAR_2]); 
-    record.sold.quarter = parseInt(result.key[keys.QUARTER_2]);
-    record.sold.month = parseInt(result.key[keys.MONTH_2]);
+    record.sold.year = parseInt(result.key[params.key_maps.key.YEAR_2]); 
+    record.sold.quarter = parseInt(result.key[params.key_maps.key.QUARTER_2]);
+    record.sold.month = parseInt(result.key[params.key_maps.key.MONTH_2]);
   }
   
   if(params.filter.isFilterCategoryMixed()) {
     record.sold = {};
-    record.sold.year = result.key[keys.YEAR]; 
-    record.sold.quarter = result.key[keys.QUARTER];
-    record.sold.month = result.key[keys.MONTH];
+    record.sold.year = result.key[params.key_maps.key.YEAR]; 
+    record.sold.quarter = result.key[params.key_maps.key.QUARTER];
+    record.sold.month = result.key[params.key_maps.key.MONTH];
   }
   
   switch (params.stats) {
@@ -278,34 +278,33 @@ var doesRecordFallsInFilter = function(params, keys) {
     return true;
   }
   
-  var KEYS = keys_map.key;
-  
+    
   if ( params.filter.isFilterCategoryByRegion() ) {
-       return isItemPresent(params.payload.productAttrs.makes, "make_name", keys[KEYS.MAKE]) && 
-              isItemPresent(params.payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
-              isItemPresent(params.payload.region.states, "value", keys[KEYS.STATE]) && 
-              isItemPresent(params.payload.region.cities, "value", keys[KEYS.CITY]) &&  
-              isItemPresent(params.payload.region.zip_codes, "value", keys[KEYS.ZIP_CODE])
+       return isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE]) && 
+              isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+              isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
+              isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
+              isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE])
     
   }
   
   if ( params.filter.isFilterCategoryByYear() ) {
-    return  isItemPresent(params.payload.productAttrs.makes, "make_name", keys[KEYS.MAKE])  && 
-            isItemPresent(params.payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
-            isItemPresent(params.payload.timescale.years, "value", keys[KEYS.YEAR]) &&
-            isItemPresent(params.payload.timescale.quarters, "value", keys[KEYS.QUARTER]) &&
-            isItemPresent(params.payload.timescale.months, "value", keys[KEYS.MONTH]);
+    return  isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE])  && 
+            isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
   }
   
   if(params.filter.isFilterCategoryMixed()) {
-    return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "make_name", keys[KEYS.MAKE]) ) && 
-            isItemPresent(params.payload.productAttrs.models, "model_name", keys[KEYS.MODEL]) && 
-            isItemPresent(params.payload.region.states, "value", keys[KEYS.STATE]) && 
-            isItemPresent(params.payload.region.cities, "value", keys[KEYS.CITY]) &&  
-            isItemPresent(params.payload.region.zip_codes, "value", keys[KEYS.ZIP_CODE]) &&
-            isItemPresent(params.payload.timescale.years, "value", keys[KEYS.YEAR]) &&
-            isItemPresent(params.payload.timescale.quarters, "value", keys[KEYS.QUARTER]) &&
-            isItemPresent(params.payload.timescale.months, "value", keys[KEYS.MONTH])
+    return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE]) ) && 
+            isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
+            isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
+            isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH])
   }          
 }
 
