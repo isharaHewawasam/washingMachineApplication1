@@ -149,6 +149,7 @@ function sortResult(sort, data) {
 
 var addOrUpdateUsages = function(params, new_usage) {
   if(usageExists(params.payload, params.buffer, new_usage, params.filter.filterType())) {
+    //console.log("Exists : " + JSON.stringify(new_usage));
     for(var each_usage in params.buffer) {
       if( (params.buffer[each_usage].make == new_usage.make) && (params.buffer[each_usage].model == new_usage.model) ) {
         if (params.buffer[each_usage].hasOwnProperty(params.statsKeyName)) {
@@ -176,8 +177,11 @@ var usageExists = function(payload, usages, usage_to_find, group_level) {
   //if (filter.isFilterCategoryNone()) return true;
   //console.log("avg_calc.usageExists : " + JSON.stringify(payload));
   for(var each_usage in usages) {    
-    if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
+    //console.log("1:" + JSON.stringify(usages[each_usage]));
+    //console.log("2:" + JSON.stringify(usage_to_find));
     
+    if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
+     
     var all_match;
     
     if(payload.region.states.length > 0) {         
@@ -185,13 +189,15 @@ var usageExists = function(payload, usages, usage_to_find, group_level) {
         if(!all_match) return;
       }
       
+      //console.log("1");
       if(payload.region.cities.length > 0) {         
         all_match = (usages[each_usage].city == usage_to_find.city);
         if(!all_match) return;
       }
+      //console.log("2");
       
       if(payload.region.zip_codes.length > 0) {         
-        all_match = (usages[each_usage].city == usage_to_find.city);
+        all_match = (usages[each_usage].zip_code == usage_to_find.city);
         if(!all_match) return;
       }
       
@@ -302,42 +308,7 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.timescale.months, "value", keys[KEYS.MONTH])
   }          
 }
-/* working old
-var doesRecordFallsInFilter = function(payload, keys) {
-  //filter.setPayload(payload);
-  
-  if(filter.isFilterCategoryNone()) {
-    return true;
-  }
-  
-  if ( filter.isFilterCategoryByRegion() ) {
-       return isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-              isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
-              isItemPresent(payload.region.states, "value", keys[2]) && 
-              isItemPresent(payload.region.cities, "value", keys[3]) &&  
-              isItemPresent(payload.region.zip_codes, "value", keys[4])
-    
-  }
-  
-  if ( filter.isFilterCategoryByYear() ) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0])  && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
-            isItemPresent(payload.timescale.years, "value", keys[2]) &&
-            isItemPresent(payload.timescale.quarters, "value", keys[3]) &&
-            isItemPresent(payload.timescale.months, "value", keys[4]);
-  }
-  
-  if(filter.isFilterCategoryMixed()) {
-    return  ( payload.productAttrs.makes && isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) ) && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
-            isItemPresent(payload.region.states, "value", keys[2]) && 
-            isItemPresent(payload.region.cities, "value", keys[3]) &&  
-            isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
-            isItemPresent(payload.timescale.years, "value", keys[5]) &&
-            isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
-            isItemPresent(payload.timescale.months, "value", keys[7]);
-  }          
-}*/
+
 var isItemPresent = function(array, key_name, item){ 
   if(array.length == 0) return true;
 

@@ -2,15 +2,15 @@
  var geo_location = require("../../models/region_lat_long");
 
  //for map
- 
 exports.getData = function(payload, callback) {
-   var updated_payload = removeUnwantedKeys(payload);
+   removeUnwantedKeys(payload);
+   
    var temp = [];
    var response = {};
    
-  require("./sales_map").getData(updated_payload, function(err, sales_result) {
+  require("./sales_map").getData(payload, function(err, sales_result) {
     if (sales_result) {
-      require("./connected_map").getData(updated_payload, temp, function(err, connected_buffer) { 
+      require("./connected_map").getData(payload, temp, function(err, connected_buffer) { 
         mix_res(sales_result, connected_buffer);
         setRegionLocations(sales_result, function() {
           callback(err, sales_result);
@@ -20,7 +20,7 @@ exports.getData = function(payload, callback) {
       callback(err, sales_result);
     }    
 });
-  
+
   
 function removeUnwantedKeys(payload) {
   var result = payload;

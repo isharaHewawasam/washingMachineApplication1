@@ -49,7 +49,7 @@ var Filter = function Filter(payload, view_name){
    // Region
   if (payload.region) {
     if ((payload.region.states) && (payload.region.states.length)) {
-       this.filter_type = FILTER.BY_STATE;  
+       this.filter_type = FILTER.BY_STATE;
     }
     
     if ((payload.region.cities) && (payload.region.cities.length)) {
