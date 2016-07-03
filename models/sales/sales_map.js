@@ -38,7 +38,7 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 7)
    
-  if ( filter.isFilterByNone() )  callback(null, payload);
+  if ( filter.isFilterByNone() ||  filter.isFilterByZipCode())  callback(null, payload);
   
   if (filter.isFilterByState()) {
     var Config = require("../config");

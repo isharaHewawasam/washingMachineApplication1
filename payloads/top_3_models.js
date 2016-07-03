@@ -22,12 +22,9 @@ var payload = {
     }
   },
   "region": {
-    "states": [],
-    "cities": [      
-    ],
-    "zip_codes": [
-      
-    ]
+    "states": [{"value": "arizona"}],
+  "cities": [{"value": "chandler"}],
+    "zip_codes": [{"value": 85226}]
   }
 };
 
