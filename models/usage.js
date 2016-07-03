@@ -40,7 +40,7 @@ exports.getAllUsage = function(payload, callback) {
 var getData = function(payload, callback) { 
 console.log("payload sfsf " + JSON.stringify(payload));
 
-  filter  = new Filter(payload, 6);
+  filter  = new Filter(payload, 1);
   //filter.setPayload(payload);
   //filter.setReportType2Sensor();
   console.log("grop level : " + filter.groupLevel());
