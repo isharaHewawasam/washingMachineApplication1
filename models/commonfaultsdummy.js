@@ -1,4 +1,5 @@
 'use strict';
+var API_URL = "/api/v1/faults/commonFaultModels";
 
 module.exports.commonFaults = [
                          {                       	
