@@ -10,7 +10,7 @@ module.exports.getAllUsage = function(req, res, next) {
 	});
 };
 //get most used models  details
-module.exports.getCommonFaults = function(req, res, next) { 
+module.exports.getmostUsedModels = function(req, res, next) { 
 	usage.getmostUsedModels(function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	});

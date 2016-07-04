@@ -25,6 +25,15 @@ module.exports = {
      "dbName_1lac": "washdatadailyaggregation2",
      "dbName_1k": "washdatadailyaggregation2"
    },
+   "WashDataFailedWashesTest": {
+	     "provider": "Cloudant",
+		   "host": "9aba8573-52a8-43f0-9b18-cab8a0b35343-bluemix.cloudant.com",
+		   "port": 443,
+		   "user": "9aba8573-52a8-43f0-9b18-cab8a0b35343-bluemix",
+		   "Password": "829646b74b4d31bb4719ff5de13cfd765db6750a567d526282a5a30263c57cd8",
+		   "url": "https://9aba8573-52a8-43f0-9b18-cab8a0b35343-bluemix:829646b74b4d31bb4719ff5de13cfd765db6750a567d526282a5a30263c57cd8@9aba8573-52a8-43f0-9b18-cab8a0b35343-bluemix.cloudant.com",
+		   "dbName": "washdatafailedwashestest_dilendra",
+	   },
    "RegionLatituesLongitudes": {
      "provider": "Cloudant",
 	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
