@@ -9,7 +9,7 @@ var ViewKeysMappings = function() {
   this.REPORT_TYPE.CONNECTED = 4;
   this.REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT = 5;
   this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT = 6;
-  
+  this.REPORT_TYPE.SENSOR_BY_YEAR = 7;
   this.key = {};
 };
 
@@ -21,8 +21,11 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       this.key.MAKE = 0; this.key.MODEL = 1; 
       this.key.STATE = 2; this.key.CITY = 3; this.key.ZIP_CODE = 4;
       this.key.YEAR = 5; this.key.QUARTER = 6; this.key.MONTH = 7;
-      this.key.YEAR_2 = 2; this.key.QUARTER_2 = 3; this.key.MONTH_2 = 4;
       break;
+    case this.REPORT_TYPE.SENSOR_BY_YEAR:
+      this.key.MAKE = 0; this.key.MODEL = 1; 
+      this.key.YEAR = 2; this.key.QUARTER = 3; this.key.MONTH = 4;
+      break;  
     case this.REPORT_TYPE.TOP_3_SELLING_MODELS:
     case this.REPORT_TYPE.SALES:
       this.key.MAKE = 0; this.key.MODEL = 1;
@@ -57,6 +60,10 @@ ViewKeysMappings.prototype.setReportType2ConnectionByRegionAndProduct = function
 
 ViewKeysMappings.prototype.setReportType2Sensor = function() {
   this.setKeys(this.REPORT_TYPE.SENSOR);
+};
+
+ViewKeysMappings.prototype.setReportType2SensorByYear = function() {
+  this.setKeys(this.REPORT_TYPE.SENSOR_BY_YEAR);
 };
 
 var setReportType2TopModels = function() {

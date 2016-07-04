@@ -65,14 +65,20 @@ var Filter = function Filter(payload, view_name){
   if (payload.timescale) {
     if ((payload.timescale.years) && (payload.timescale.years.length)) {
        this.filter_type = FILTER.BY_YEAR;
+       this.years = payload.timescale.years;
     }
     
     if ((payload.timescale.quarters) && (payload.timescale.quarters.length)) {
        this.filter_type = FILTER.BY_QUARTER;  
+       this.years = payload.timescale.years;
+       this.quarters = payload.timescale.quarters
     }
     
     if ((payload.timescale.months) && (payload.timescale.months.length)) {
        this.filter_type = FILTER.BY_MONTH; 
+       this.years = payload.timescale.years;
+       this.quarters = payload.timescale.quarters
+       this.months = payload.timescale.months;
     }
   }
   
@@ -128,6 +134,35 @@ var isFilterCategoryMixed_ = function(payload) {
 };
 
 Filter.prototype.isFilterCategoryMixed_ = isFilterCategoryMixed_;
+
+Filter.prototype.filterDescription = function() {
+  if (this.isFilterByYear()) {
+    return JSON.stringify(this.years[0].value);
+  }
+  
+  if (this.isFilterByQuarter()) {
+    if (this.quarters[0].length == 1) {
+      return this.years[0].value + " - Q" + this.quarters[0].value;
+    } else {
+      return this.years[0].value;
+    }
+  }
+  
+  if (this.isFilterByMonth()) {
+    return this.years[0].value + " - " + this.months[0].value;
+  }
+  
+  if (this.isFilterCategoryMixed()) {
+    var desc = this.years[0].value; 
+    
+    if ( (this.quarters !== undefined) && (this.quarters.length == 1)) {
+      desc = desc + " Q" + this.quarters[0].value;
+    }
+    return desc;
+  }
+};
+
+
 
 Filter.prototype.groupLevel = function(){
   if(this.filter_category === FILTER_CATEGORY.MIXED) return 8;
@@ -281,7 +316,7 @@ var isFilterByZipCode = function(){
   return this.filter_type === FILTER.BY_ZIP_CODE;
 };
 
-Filter.prototype.isFilterByZipCode = isFilterByZipCode
+Filter.prototype.isFilterByZipCode = isFilterByZipCode;
 
 var isFilterByYear = function(){
   return this.filter_type === FILTER.BY_YEAR;;

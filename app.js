@@ -55,7 +55,6 @@ process.on('SIGINT', exitHandler);
 process.on('exit', exitHandler);
 process.on('uncaughtException', exitHandler);
 
-
 var salesDb = new Database();
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {

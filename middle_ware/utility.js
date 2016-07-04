@@ -16,3 +16,4 @@ exports.isParamValid = isParamValid;
 exports.isParamInvalid = function(param, msg) {
   return !(isParamValid(param, msg));  
 };
+

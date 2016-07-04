@@ -6,10 +6,11 @@ exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
   //var payload = require("../../payloads/top_3_models").payload;  
-  var Filter = require("../filters");
+  var FilterModule = require("../filters");
   var KeyMap = require("../view_keys_mapping"); 
+  validatePayload(payload);
+  var Filter = new FilterModule(payload, 4)  ;
    
-  validatePayload(payload); 
   //console.log("pyfds " + JSON.stringify(payload));
   //filter.setReportType2SoldVsConnected();
   
@@ -18,7 +19,7 @@ exports.getData = function(payload, callback) {
   key_map.setReportType2TopModels();
   
   var params = { 
-                 "description": "Top Selling Models for " + payload.timescale.years[0].value,
+                 "description": "Top Selling Models for " + Filter.filterDescription(),
                  "payload": payload,
                  "buffer": topModelsBuffer,
                  "view": {
@@ -28,7 +29,7 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",
-                  "filter": new Filter(payload, 4),
+                  "filter": Filter,
                   "key_maps": key_map
                };
   // SALES = 4             
@@ -40,7 +41,7 @@ exports.getData = function(payload, callback) {
     var response = {};
     var result2 = result.slice(0,3);
     
-    response.description = "Top 3 Selling Models";
+    response.description = params.description;
     response.sales = [];
     
     for (var each_item in result2) {

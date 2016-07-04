@@ -148,8 +148,9 @@ function sortResult(sort, data) {
 }
 
 var addOrUpdateUsages = function(params, new_usage) {
+  //console.log("Add usage " + JSON.stringify(params.buffer));
   if(usageExists(params.payload, params.buffer, new_usage, params.filter.filterType())) {
-    //console.log("Exists : " + JSON.stringify(new_usage));
+    //console.log("Existing : " + JSON.stringify(new_usage));
     for(var each_usage in params.buffer) {
       if( (params.buffer[each_usage].make == new_usage.make) && (params.buffer[each_usage].model == new_usage.model) ) {
         if (params.buffer[each_usage].hasOwnProperty(params.statsKeyName)) {
@@ -168,6 +169,7 @@ var addOrUpdateUsages = function(params, new_usage) {
       }
     }
   } else { 
+    //console.log("Not existing : " + JSON.stringify(new_usage));
     params.buffer.push(new_usage);
   }
 };
@@ -182,40 +184,48 @@ var usageExists = function(payload, usages, usage_to_find, group_level) {
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
      
-    var all_match;
+    var all_match = true;
     
     if(payload.region.states.length > 0) {         
         all_match = (usages[each_usage].state == usage_to_find.state);
+        //console.log("state " + all_match);
         if(!all_match) return;
       }
       
       //console.log("1");
       if(payload.region.cities.length > 0) {         
         all_match = (usages[each_usage].city == usage_to_find.city);
+        //console.log("city " + all_match);
         if(!all_match) return;
       }
       //console.log("2");
       
       if(payload.region.zip_codes.length > 0) {         
         all_match = (usages[each_usage].zip_code == usage_to_find.city);
+        //console.log("zip " + all_match);
         if(!all_match) return;
       }
       
       if(payload.timescale.years.length > 0) {         
         all_match = (usages[each_usage].sold.year == usage_to_find.sold.year);
+        //console.log("year " + all_match);
         if(!all_match) return;
       }
       
       if(payload.timescale.quarters.length > 0) {         
         all_match = (usages[each_usage].sold.quarter == usage_to_find.sold.quarter);
+        //console.log("quarter " + all_match);
         if(!all_match) return;
       }
       
       if(payload.timescale.months.length > 0) {         
         all_match = (usages[each_usage].sold.month == usage_to_find.sold.month);
+        //console.log("months " + all_match);
         if(!all_match) return;
       }
     
+    //console.log("Usage " + JSON.stringify(usages[each_usage]));
+    //console.log("All match " + all_match);
     if (all_match) return true;
   }
 };
@@ -244,16 +254,32 @@ var fillRecord = function(result, params) {
   
   if(params.filter.isFilterCategoryByYear()) {   
     record.sold = {};  
-    record.sold.year = parseInt(result.key[params.key_maps.key.YEAR_2]); 
-    record.sold.quarter = parseInt(result.key[params.key_maps.key.QUARTER_2]);
-    record.sold.month = parseInt(result.key[params.key_maps.key.MONTH_2]);
+    record.sold.year = parseInt(result.key[params.key_maps.key.YEAR]); 
+    record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]);
+    
+    if (params.filter.isFilterByQuarter()) {
+      record.sold.quarter = parseInt(result.key[params.key_maps.key.QUARTER]);
+      record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]) + " Q" + 
+                          parseInt(result.key[params.key_maps.key.QUARTER]); 
+    }
+    
+    if (params.filter.isFilterByMonth()) {
+      record.sold.month = parseInt(result.key[params.key_maps.key.MONTH]);
+      record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]) + " " + 
+                          parseInt(result.key[params.key_maps.key.Month]); 
+    }
+    
+    
   }
-  
+ 
   if(params.filter.isFilterCategoryMixed()) {
     record.sold = {};
     record.sold.year = result.key[params.key_maps.key.YEAR]; 
     record.sold.quarter = result.key[params.key_maps.key.QUARTER];
     record.sold.month = result.key[params.key_maps.key.MONTH];
+    
+    record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]) + " Q" + 
+                          parseInt(result.key[params.key_maps.key.QUARTER]); 
   }
   
   switch (params.stats) {

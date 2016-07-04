@@ -4,18 +4,17 @@ var avg = require('../sensors/avg_calculator');
 exports.getData = function(payload, callback) {
   var VIEW_NAME = "sales";
   var topModelsBuffer = [];
-  //var payload = require("../../payloads/top_3_models").payload;  
-  var Filter = require("../filters");
+  var FilterModule = require("../filters");
   var KeyMap = require("../view_keys_mapping"); 
    
-  //var payload = require("../../payloads/top_3_models").payload;  
-  //console.log("sales volume");
-  //filter.setReportType2Sales();
   var key_map = new KeyMap();
   key_map.setReportType2Sales();
   
+  validatePayload(payload);
+  var Filter = new FilterModule(payload, 9)  ;
+  //console.log("payload " + JSON.stringify(payload));
   var params = { 
-                 "description": "Sales Volume",
+                 "description": "Sales Volume for " + Filter.filterDescription(),
                  "payload": payload,
                  "buffer": topModelsBuffer,
                  "view": {
@@ -25,16 +24,135 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",
-                  "filter": new Filter(payload, 9),
+                  "filter": Filter,
                   "key_maps": key_map
                };
   
   avg.getSum(params, function(err, result) {
-    
-    callback(err, result);
-    
+    var response = {};
+     response.description = "Sales Volume for " + Filter.filterDescription();
+    response.data = processResult(result);
+    callback(err, response);
   });      
 };
+
+/*
+[
+	[{
+		"timescale": "2016 Q1",
+		"sales": [{
+			"item": "make",
+			"unitsSold": 4514
+		}]
+	}],
+	[{
+		"timescale": "2016 Q2"
+	}],
+	[{
+		"timescale": "2016 Q3"
+	}]
+]
+*/
+function processResult(result) {
+  for (var each_item in result) {
+    delete result[each_item].sold;
+  }
+  
+  var final_response = [];
+  var time_scales = [];
+  
+  //add timscales
+  for (var each_item in result) {
+    if (TimeScaleExists(time_scales, result[each_item].time_scale)) continue
+    time_scales.push({"time_scale": result[each_item].time_scale});
+  }
+  
+  //add sales for each time scale
+  for (var each_time_scale in time_scales){
+    //console.log("1 " + JSON.stringify(time_scales[each_time_scale]));
+    time_scales[each_time_scale].sales = [];
+    for (var each_item in result) {
+      
+      if (time_scales[each_time_scale].time_scale !== result[each_item].time_scale) continue
+      
+       var sales = {};
+       
+       sales.item = result[each_item].make + " - " + result[each_item].model;
+       sales.unitsSold = result[each_item].totalSales;
+       
+       if (!doesMakeAndModelExists(time_scales[each_time_scale].sales, sales)) {
+         time_scales[each_time_scale].sales.push(sales);
+      }
+    }
+  }
+  
+  final_response.push(time_scales);
+  return time_scales;
+}
+
+function doesMakeAndModelExists(sales_array, sales_item) {
+  for (var each_item in sales_array) {
+    if (sales_array[each_item].item === sales_item.item) {
+      //console.log("exists");
+      sales_array[each_item].unitsSold = sales_array[each_item].unitsSold + sales_item.unitsSold;
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+function TimeScaleExists(time_scales, time_scale) {
+  var exists = false;
+  
+  for (var each_item in time_scales) {
+    if (time_scales[each_item].time_scale === time_scale) {
+      return true;
+    }
+  }
+  return exists;
+}
+
+function timescale_desc(timescale) {
+  var result = timescale.sold.year;
+  //console.log(" e" + JSON.stringify(timescale));
+  if (timescale.sold.quarter !== undefined) {
+    result = result + " Q" + timescale.sold.quarter;
+  }
+  
+  return result;
+}
+
+function validatePayload(payload){
+  addYear(payload);
+}
+
+function addYear(payload) {
+  if (payload.timescale === undefined || payload.timescale === null) {
+    payload.timescale = {};
+  }
+  
+  if (payload.timescale.years === undefined || payload.timescale.years === null) {
+    payload.timescale.years = [];  
+  }
+  
+  if (payload.timescale.years.length == 0 ) {
+    //add year
+    payload.timescale.years.push({"value": (new Date).getFullYear()});
+  }
+  
+  if (payload.timescale.quarters === undefined || payload.timescale.quarters === null) {
+    payload.timescale.quarters = [];  
+  }
+  
+  if (payload.timescale.quarters.length == 0 ) {
+   //add quarters
+    payload.timescale.quarters.push({"value": 1});
+    payload.timescale.quarters.push({"value": 2});
+    payload.timescale.quarters.push({"value": 3});
+    payload.timescale.quarters.push({"value": 4});
+  }
+}
 
 function groupByFilter(quarters) {
   var group = {};

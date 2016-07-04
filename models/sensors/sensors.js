@@ -103,7 +103,7 @@ function getAvgWashCycles(payload, averages, callback, call_next_function) {
 }
 
 function getAvgDetergentUsage(payload, averages, callback) {
-  require("./detergent").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {    
+  require("./detergent").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {      
     callback(err, result);    
   });
 }
