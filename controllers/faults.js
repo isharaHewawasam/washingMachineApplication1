@@ -1,7 +1,7 @@
 "use strict"
 
 var express = require('express');
-var insights = require('../models/faults');
+var faults = require('../models/faults');
 var helper = require('./helpers/utility.js');
 
 
