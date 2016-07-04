@@ -136,7 +136,9 @@
 
 
 
-
+<div ng-controller="filterIconController" class="row form-group filter-filterDiv col-lg-12" style="width: 100% auto;height:62px;">
+    <div ng-repeat="va in someArray" style="height:32px;background:#91aed3;padding: 6px;margin:10px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va}} </div>
+</div>
 
 <div class="row"  >
    <!-- START dashboard main content-->
@@ -185,7 +187,9 @@
 	
 	<div class="col-lg-4" ng-controller="mapController" ng-init="plotMapFunction('map-container')">
 	
-			<div id="map-container" class="map-mapDiv"></div>			
+		<div class="panel panel-default" style="width: 578px; height: 373px">
+			<div id="map-container" class="map-mapDiv" style="width: 100%; height: 368.5px"></div>
+		</div>			
 	
 	</div>
    

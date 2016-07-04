@@ -149,7 +149,7 @@ function sortResult(sort, data) {
 
 var addOrUpdateUsages = function(params, new_usage) {
   //console.log("Add usage " + JSON.stringify(params.buffer));
-  if(usageExists(params.payload, params.buffer, new_usage, params.filter.filterType())) {
+  if(usageExists(params.payload, params.buffer, new_usage)) {
     //console.log("Existing : " + JSON.stringify(new_usage));
     for(var each_usage in params.buffer) {
       if( (params.buffer[each_usage].make == new_usage.make) && (params.buffer[each_usage].model == new_usage.model) ) {
@@ -175,7 +175,7 @@ var addOrUpdateUsages = function(params, new_usage) {
 };
 
 
-var usageExists = function(payload, usages, usage_to_find, group_level) { 
+var usageExists = function(payload, usages, usage_to_find) { 
   //if (filter.isFilterCategoryNone()) return true;
   //console.log("avg_calc.usageExists : " + JSON.stringify(payload));
   for(var each_usage in usages) {    
@@ -184,7 +184,7 @@ var usageExists = function(payload, usages, usage_to_find, group_level) {
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
      
-    var all_match = true;
+    var all_match = false;
     
     if(payload.region.states.length > 0) {         
         all_match = (usages[each_usage].state == usage_to_find.state);
