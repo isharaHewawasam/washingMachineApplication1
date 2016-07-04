@@ -222,5 +222,7 @@ var isItemPresent = function(array, key_name, item){
   
   return false;
 };
-
+exports.getmostUsedModels = function(callback) {
+	  callback(null, require("./mostusedmodelsdummy").mostUsedModels);  
+};
 
