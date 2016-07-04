@@ -51,9 +51,19 @@ function exitHandler(reason) {
   }
 }
 
+function LogExcpetion(reason) {	
+  if(reason) {
+    console.log("*********APP CRASHED****************************************");
+	  console.trace(reason.stack);
+    console.log("------------------------------------------------------------");
+    console.log("Reason : " + reason);
+    console.log("************************************************************");
+  }
+}
+
 process.on('SIGINT', exitHandler);
 process.on('exit', exitHandler);
-process.on('uncaughtException', exitHandler);
+process.on('uncaughtException', LogExcpetion);
 
 
 var salesDb = new Database();
