@@ -3,7 +3,7 @@ var db = require('../database/dbWashDataFailedWashes');
 var COLLECTION_NAME = 'stores';
 
 exports.getCommonFaults = function(callback) {
-  var opts = { q: '*:*', limit:1 };  
+  var opts = { q: '*:*', limit:3 };  
   
   db.view('Faults', 'MostCommonFaults', opts, function(err, result) {
     if(err) {

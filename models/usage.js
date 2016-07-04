@@ -223,15 +223,6 @@ var isItemPresent = function(array, key_name, item){
   return false;
 };
 exports.getmostUsedModels = function(callback) {
-	  //callback(null, require("./mostusedmodelsdummy").mostUsedModels);
-	var opts = { q: '*:*', limit:1 };  
-	  
-	  db.view('Faults', 'MostCommonFaults', opts, function(err, result) {
-	    if(err) {
-	    	callback(err, null)
-	    } else {  
-	      callback(err, result);
-	    }
-	  });
+	  callback(null, require("./mostusedmodelsdummy").mostUsedModels);
 };
 
