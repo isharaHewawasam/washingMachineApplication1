@@ -61,6 +61,11 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
           }]);
 
 /**=========================================================
+*
+*
+===========================================================*/
+//App.value('filterIcons', { value: []} );
+/**=========================================================
  * Module: config.js
  * App routes and resources configuration
  =========================================================*/
@@ -1011,7 +1016,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	$rootScope.intete=1;
 	$scope.make;
 	$scope.makeData;
-    /*$scope.valArr=[];*/
+    $scope.valArr=[2,3,4,56,7567,2345];
+      $rootScope.filterIcons=[];
       
     
       
@@ -1023,20 +1029,41 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     $scope.clearfilter=function(){
           
          $scope.search={};
-        
+         $rootScope.filterIcons=[];
       }
     
+    $scope.createIconArray=function(){
+        $scope.someArr=[];
+        
+        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
+            $scope.someArr.push($scope.search.selectedSKU);
+        
+        if($scope.search.selectedMake && $scope.search.selectedMake.length != 0)
+            $scope.someArr.push($scope.search.selectedMake);
+        
+        if($scope.search.selectedModel && $scope.search.selectedModel.length != 0)
+            $scope.someArr.push($scope.search.selectedModel);
+        $scope.valArr=$scope.someArr;
+        
+        $rootScope.filterIcons=$scope.someArr;
+        console.log($rootScope.filterIcons);
+        
+    };
     
     
     $scope.myDate = new Date();
       
-     /* $scope.selectedSKU=function(){
-          $scope.valArr.push($scope.search.selectedSKU);
-          alert($scope.valArr);
-      }*/
+      $scope.selectedSKU=function(){
+          $scope.createIconArray();
+          
+      }
 
     $scope.search={};
       $scope.selectedMake=function(){
+          
+          $scope.search.selectedModel="";
+          $scope.search.selectedSKU="";
+          $scope.createIconArray();
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$scope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
@@ -1055,14 +1082,17 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       }
       
       $scope.selectedModel=function(){
+          $scope.search.selectedSKU="";
+          $scope.createIconArray();
+          
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$scope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.SKUs=data[$scope.search.selectedModel];
               console.log($scope.SKUs);
 	    	 //console.log("manufacture year :"+JSON.stringify(data));
-             /* $scope.valArr.push($scope.search.selectedModel);
-              alert($scope.valArr);*/
+              
+              
 				           
 				           
 	    }). error(function(data, status) {
@@ -1246,6 +1276,15 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		    }*/
 	 
 	
+}]);
+
+App.controller('filterIconController',['$rootScope','$scope','$interval',function($rootScope,$scope,$interval){
+    
+   function callMe(){
+       $scope.someArray=$rootScope.filterIcons;
+   }
+   
+   $interval(callMe,1000);
 }]);
 
 App.controller('mapController',function($scope,$http){
