@@ -82,7 +82,7 @@
 			"get": {
 				"x-swagger-router-controller": "usage",
 				"operationId": "getmostUsedModels",
-				"tags": ["Faults"],
+				"tags": ["Usage"],
 				"description": "Return the most least models",
 				"responses": {
 					"default": {
