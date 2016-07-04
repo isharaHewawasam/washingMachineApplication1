@@ -519,7 +519,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scope, $timeout) {
+App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.ApiClient", function($scope, $timeout, configApiClient) {
 
 	  $scope.images = [1, 2, 3];
 
@@ -528,6 +528,17 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scop
 	    for(var i = 1; i <= 10; i++) {
 	      $scope.images.push(last + i);
 	    }
+	  };
+	  
+	  $scope.getInsightsForEngManagerView = function(divId) {
+			 //alert('in avg wash ' + configApiClient.baseUrl); 
+			 
+			 var leastFaultDataSet = [{Model:"Model 3",Make:"2232423",no_of_faults:123},
+			                          {Model:"Model 4",Make:"2232423",no_of_faults:123},
+			                          {Model:"Model 8",Make:"2232423",no_of_faults:12}];
+			 
+			 console.log('Insights data set : '+JSON.stringify(leastFaultDataSet));
+			 
 	  };
 
 	}]).factory('datasource', [
@@ -1273,26 +1284,10 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
-	/*var sum_latitude = 0;
-	var sum_longitude = 0;
-	
-	$.each(salesData, function () {			
-		sum_latitude+= parseFloat(this.lat);
-		sum_longitude+= parseFloat(this.lon);
-    });*/
-	
 	// Initiate the map
 	var chart = Highcharts.Map({
         chart: {
-            renderTo: divId/*,
-            events:{
-                load: function () {  
-                	// Focus the map to a point based on the average latitude and longitude values of the data set
-                	var pos = this.fromLatLonToPoint({ lat: sum_latitude/salesData.length, lon: sum_longitude/salesData.length });
-                    this.mapZoom(0.5, this.xAxis[0].toPixels(pos.x));
-                	//this.mapZoom(0.8, this.xAxis[0].toPixels(pos.x));
-                }
-            }*/
+            renderTo: divId
         },
         
 	    title: {
@@ -1305,7 +1300,7 @@ function renderMap(divId, salesData){
 	
 	    tooltip: {
 	        headerFormat: '',
-	        pointFormat: '<b>Sales vs Connected</b><br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+	        pointFormat: '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
 	    },
 	    
 	    plotOptions: {
@@ -1317,7 +1312,7 @@ function renderMap(divId, salesData){
 	    
 	    series: [{
 	        //mapData: Highcharts.maps['custom/world'],
-	        mapData: Highcharts.maps['custom/north-america'],
+	        mapData: Highcharts.maps['countries/us/us-all'],
 	        name: 'Basemap',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
@@ -1326,7 +1321,7 @@ function renderMap(divId, salesData){
 	        name: 'Separators',
 	        type: 'mapline',
 	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
-	        data: Highcharts.geojson(Highcharts.maps['custom/north-america'], 'mapline'),
+	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
 	        color: '#E0E0E0',
 	        showInLegend: false,
 	        enableMouseTracking: false
@@ -1338,8 +1333,7 @@ function renderMap(divId, salesData){
 	        dataLabels: {
 	            enabled: true,
 	            format: '{point.z}',
-	            color:'#000000'/*,
-	            allowOverlap: true*/
+	            color:'#000000'
 	        }
 	    }]
 	});
