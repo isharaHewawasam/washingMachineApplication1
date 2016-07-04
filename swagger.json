@@ -55,6 +55,30 @@
 				}
 			}
 		},
+		"/commonFaultModels": {
+			"get": {
+				"x-swagger-router-controller": "faults",
+				"operationId": "getCommonFaults",
+				"tags": ["Faults"],
+				"description": "Return the most least models",
+				"responses": {
+					"default": {
+						"description": "least Fault Models",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"type": "array",
+							"$ref": "#/definitions/Common_Faults"
+						}
+					}
+				}
+			}
+		},
+		
 		"/config/states": {
 			"get": {
 				"x-swagger-router-controller": "config",
@@ -489,6 +513,22 @@
 				},
 				"no_of_faults": {
 					"type": "integer"
+				}
+			}
+		},
+		"Common_Faults": {
+			"properties": {
+				"noofFailures": {
+					"type": "integer"
+				},
+				"failureType": {
+					"type": "string"
+				},
+				"Make": {
+					"type": "string"
+				},
+				"Model": {
+					"type": "string"
 				}
 			}
 		},

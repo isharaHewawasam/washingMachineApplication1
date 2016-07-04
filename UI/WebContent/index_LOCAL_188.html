@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="angle">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <meta name="description" content="{{app.description}}">
+   <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
+   <title data-ng-bind="pageTitle()">IoT for Electronics - Usage Dashboard Node-Red</title>
+   
+   <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+   <link rel="stylesheet" href="app/css/charts.css">
+   <link rel="stylesheet" href="app/js/bootstrap/css/bootstrap.css">
+   <link href="app/js/bootstrap/css/bootstrap-multiselect.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.css">
+</head>
+
+<body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat}">
+   <div data-ui-view="" data-autoscroll="false" class="wrapper"></div>
+   <script src="app/js/base.js"></script>
+   <script src="app/js/app.js"></script>
+   <script src="http://maps.googleapis.com/maps/api/js"></script>
+   <script type="text/javascript" src="app/js/jquery/jquery-2.2.3.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script type="text/javascript" src="app/js/highcharts/highcharts.src.js"></script>
+	<script src="http://code.highcharts.com/highcharts-more.js"></script>
+	<script src="http://code.highcharts.com/maps/modules/map.js"></script>
+	<script type="text/javascript" src="app/js/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="app/js/bootstrap/js/bootstrap-multiselect.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.js"></script>
+	
+	<script type="text/javascript" src="app/js/Chart.min.js"></script>
+	<script type="text/javascript" src="app/js/angular-chart.min.js"></script>
+	
+	 <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.2/proj4.js"></script>
+    
+    <script src="https://code.highcharts.com/mapdata/custom/north-america.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js"></script>  
+	
+	
+	
+</body>
+
+</html>
