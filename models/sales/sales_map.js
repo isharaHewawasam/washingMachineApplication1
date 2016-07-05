@@ -1,6 +1,6 @@
 'use strict';
 
-exports.getData = function(payload, callback) {
+exports.getData = function(payload, drilldown, callback) {
   var VIEW_NAME = "salesByRegionAndProduct";
   var buffer = [];
   var Filter = require("../filters");
@@ -23,7 +23,7 @@ exports.getData = function(payload, callback) {
                          },
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
-                  "filter": new Filter(payload, 7),
+                  "filter": drilldown ? new Filter(payload, 7) : new Filter(payload, 10),
                   "key_maps": key_map
                };
   // SALES_BY_REGION_AND_PRODUCT = 7
@@ -39,6 +39,8 @@ function addMissingData(payload, callback) {
   var filter = new FilterClass(payload, 7)
    
   if ( filter.isFilterByNone() ||  filter.isFilterByZipCode())  callback(null, payload);
+  
+  //callback(null, payload)
   
   if (filter.isFilterByState()) {
     var Config = require("../config");

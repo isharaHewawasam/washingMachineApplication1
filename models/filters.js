@@ -31,7 +31,9 @@ var REPORT_TYPE = {
   "FAVOURITE": 6,
   "SALES_BY_REGION_AND_PRODUCT": 7,
   "CONNECTED_BY_REGION_AND_PRODUCT": 8,
-  "SALES_VOLUME": 9
+  "SALES_VOLUME": 9,
+  "SALES_BY_STATE": 10,
+  "CONNECTED_BY_STATE": 11
 };
 
 module.exports.REPORT_TYPE = REPORT_TYPE;
@@ -187,7 +189,10 @@ Filter.prototype.groupLevel = function(){
       case REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
         return 2;  
       case REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
-        return 2;          
+        return 2;    
+      case REPORT_TYPE.SALES_BY_STATE:
+      case REPORT_TYPE.CONNECTED_BY_STATE:
+        return 1;        
       default:
         return -1;      
     }    

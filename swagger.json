@@ -108,22 +108,34 @@
       }
     },
     "/insights/most-used": {
-      "post": {
+      "get": {
         "x-swagger-router-controller": "most_used",
         "operationId": "getData",
         "tags": ["Insights"],
-        "description": "Returns washing machines charting details.",
-         "parameters": [
-          {
-            "name": "Payload",
-            "in": "body",
-            "description": "Washing Machine, Date and Region information",
-            "required": false,
+        "description": "Returns most used washing machines",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
             "schema": {
-              "$ref": "#/definitions/SalesByChartPayload"
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/SalesByChartResponse"
             }
           }
-        ],         
+        }
+      }
+    },
+    "/insights/disconnected": {
+      "get": {
+        "x-swagger-router-controller": "disconnected",
+        "operationId": "getData",
+        "tags": ["Insights"],
+        "description": "Returns washing machines which are not connected.",
         "responses": {
           "default": {
             "description": "Invalid request.",
