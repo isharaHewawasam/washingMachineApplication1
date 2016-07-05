@@ -2,15 +2,16 @@
  var geo_location = require("../../models/region_lat_long");
 
  //for map
-exports.getData = function(payload, callback) {
+exports.getData = function(payload, drill_down, callback) {
    removeUnwantedKeys(payload);
    
    var temp = [];
    var response = {};
    
-  require("./sales_map").getData(payload, function(err, sales_result) {
+   
+  require("./sales_map").getData(payload, drill_down, function(err, sales_result) {
     if (sales_result) {
-      require("./connected_map").getData(payload, temp, function(err, connected_buffer) { 
+      require("./connected_map").getData(payload, drill_down, temp, function(err, connected_buffer) { 
         mix_res(sales_result, connected_buffer);
         setRegionLocations(sales_result, function() {
           callback(err, sales_result);
