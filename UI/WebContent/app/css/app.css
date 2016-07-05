@@ -1559,6 +1559,10 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+#most-fault-container, #least-fault-container, #common-fault-container{
+	height:200px;
+	/* overflow-y: scroll;  */
+}
 .container {
    height: 334px; 
     min-width: 310px; 
