@@ -139,7 +139,7 @@
 		<div class="col-lg-1 "
 			style="max-width: 114px; margin-left: 22px !important padding-left:0px;">
 			<button ng-disabled="isDisabled" class="btn btn-default"
-				style="min-width: 114px;; background-color: #91AED3; height: 34px; font-family: Roboto; font-size: 15px; color: #FFFFFF;"
+				style="min-width: 114px;; background-color: #4C74E2; height: 34px; font-family: Roboto; font-size: 15px; color: #FFFFFF;"
 				id="applyFilter" ng-click="tryit()">
 				<span ng-show="test"><i
 					class="glyphicon glyphicon-refresh spinning"></i></span>
@@ -177,7 +177,7 @@
                                                 <option class="chart-option-text-style"  ng-if="$index==0" ng-init="Engdisp($index)" selected ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                               	<option class="chart-option-text-style"  ng-if="$index!=0" ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                     </select>
-                                     <select class="chart-selectStyle col-md-3 chart-border "
+                                     <select id="second-chart-select"  class="chart-selectStyle col-md-3 chart-border "
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style" value="">Last 1
 						day
@@ -193,13 +193,13 @@
 						year
 					<option class="chart-option-text-style" value="">Last 3
 						years
-				</select> <select class="chart-selectStyle col-md-4 "
+				</select> <select id="third-chart-select" class="chart-selectStyle col-md-4 "
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style"
 						ng-init="dispChart(selectedChart)"
 						ng-repeat="chart in EngchartTypes" value="{{chart}}">{{chart}}</option>
-				</select> <img id="maximize"	class=" col-md-1 image-margin image-size pull-right"src="app/img/Dashboardassets/icon_maximize.png"ng-click="maximize()"> 
+				</select> <img id="maximize" class="pull-right col-md-1" style="padding:0px;   margin-top:10px; margin-right: 9px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()"></img>
 				<img id="close"
 class=" col-md-1 image-margin close-image-size hidden pull-right"src="app/img/Dashboardassets/close.png" ng-click="closing()">
 			</div>
