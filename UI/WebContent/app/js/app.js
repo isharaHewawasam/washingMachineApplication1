@@ -275,7 +275,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        }else{
 	      	 // $scope.errorMsg = 'success';
 	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Engg Manager";
+	      	$rootScope.Role="Engineering Manager";
 	      	$rootScope.Name="Alan Mcdormet";
 	      	  // window.location.href = 'success.html';
 	      	 // $state.go('app.singleview');
@@ -522,7 +522,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.ApiClient", function($scope, $timeout, configApiClient) {
+App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.config.ApiClient", function($scope, $timeout, $http, configApiClient) {
 
 	  $scope.images = [1, 2, 3];
 
@@ -533,7 +533,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 	    }
 	  };
 	  
-	  $scope.getMostFaults = function(divId, data) {
+	  $scope.getMostFaults = function(divId) {
 			 //alert('in avg wash ' + configApiClient.baseUrl); 
 			 
 			 var mostFaultDataSet = [{Model:"Model 3",Make:"2232423",no_of_faults:123},
@@ -551,7 +551,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 			 
 	  };
 	  
-	  $scope.getLeastFaults = function(divId, data) {
+	  $scope.getLeastFaults = function(divId) {
 		  var leastFaultDataSet = [{Model:"Model 1",Make:"Make 1",no_of_faults:0},
 		                           {Model:"Model 3",Make:"Make 2",no_of_faults:1},
 		                           {Model:"Model 7",Make:"Make 3",no_of_faults:2}];
@@ -567,9 +567,9 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 		  
 	  };
 	  
-	  $scope.getCommonFaults = function(divId, data) {
-		  var commonFaultDataSet = [{"Model": "Model 3","Make": "Make 1","no_of_faults": 163,"failureType":"Water leak"},
-		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 153,"failureType":"Software Failure"},
+	  $scope.getCommonFaults = function(divId) {
+		  var commonFaultDataSet = [{"Model": "Model 3","Make": "Make 1","no_of_faults": 163,"failureType":"Sensor"},
+		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 153,"failureType":"Software"},
 		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 130,"failureType":"Error"}];
 		  
 		  var commonFaultDataStr = JSON.stringify(commonFaultDataSet);
@@ -581,6 +581,46 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 			 
 		  renderPieChart(divId, commonFaultDataSet, 'Common Fault');
 
+	  };
+	   
+	  $scope.getMostUsedModel = function(divId) {
+		  $http({url:configApiClient.baseUrl + 'insights/most-used', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var mostUsedDataStr = JSON.stringify(data);
+					  
+			    	 mostUsedDataStr = mostUsedDataStr.replace(/"totalLoadWeight":/g, '"y":');
+			    	 mostUsedDataStr = mostUsedDataStr.replace(/"model":/g, '"name":');
+							
+					 data = JSON.parse(mostUsedDataStr);
+						 
+					 renderPieChart(divId, data, 'Most Used Models');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most used models, status: " + status);
+			});		  		  
+	  };
+	  
+	  $scope.getMostUsedCycles = function(divId) {
+		  
+	  };
+	  
+	  $scope.getNotConnectedMachines = function(divId) {
+		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var notConnectedDataStr = JSON.stringify(data);
+					  
+			    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
+			    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
+							
+					 data = JSON.parse(notConnectedDataStr);
+						 
+					 renderPieChart(divId, data, 'Not Connected Machines');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most used models, status: " + status);
+			});	
 	  };
 
 	}]).factory('datasource', [
@@ -1128,17 +1168,34 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
          $rootScope.filterIcons=[];
       }
     
-    $scope.createIconArray=function(){
+   $scope.createIconArray=function(){
         $scope.someArr=[];
         
-        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
-            $scope.someArr.push($scope.search.selectedSKU);
+        
         
         if($scope.search.selectedMake && $scope.search.selectedMake.length != 0)
-            $scope.someArr.push($scope.search.selectedMake);
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedMake,
+                    key:"make"
+                }
+            );
         
         if($scope.search.selectedModel && $scope.search.selectedModel.length != 0)
-            $scope.someArr.push($scope.search.selectedModel);
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedModel,
+                    key:"model"
+                }
+            );
+        
+        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedSKU,
+                    key:"sku"    
+                });
+        
         $scope.valArr=$scope.someArr;
         
         $rootScope.filterIcons=$scope.someArr;
@@ -1150,7 +1207,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     $scope.myDate = new Date();
       
       $scope.selectedSKU=function(){
-          $scope.createIconArray();
+        //  $scope.createIconArray();
           
       }
 
@@ -1159,7 +1216,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           
           $scope.search.selectedModel="";
           $scope.search.selectedSKU="";
-          $scope.createIconArray();
+        //  $scope.createIconArray();
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$scope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
@@ -1179,7 +1236,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       
       $scope.selectedModel=function(){
           $scope.search.selectedSKU="";
-          $scope.createIconArray();
+       //   $scope.createIconArray();
           
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$scope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
@@ -1201,16 +1258,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
                   console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
 
-             
-           var date = new Date();
-            var day = date.getDate();
-            var monthIndex = date.getMonth();
-            var year = date.getFullYear();
-
-          // console.log(day, monthNames[monthIndex], year);
-            console.log("date  :"+day + ' ' +monthIndex + ' ' + year);  
-
-             
+                    $scope.createIconArray();
+                   
                 }
 
     
@@ -1381,8 +1430,28 @@ App.controller('filterIconController',['$rootScope','$scope','$interval',functio
    }
    
    $interval(callMe,1000);
+    
+    $scope.removeFilter=function(filter){
+        var indexofvar= $rootScope.filterIcons.indexOf(filter);
+        
+        if(filter.key=="make"){
+            $rootScope.filterIcons=[];
+        } else if(filter.key=="sku"){
+            
+            $rootScope.filterIcons.splice(indexofvar,1);
+        }else if(filter.key=="model"){
+            
+            $rootScope.filterIcons.splice(indexofvar,1);
+            angular.forEach($rootScope.filterIcons,function(value,key){
+                if(value.key=="sku"){
+                    /*var indexofvar= $rootScope.filterIcons.indexOf(value);*/
+                    $rootScope.filterIcons.splice(key,1);
+                }
+            });
+        }
+       
+    }
 }]);
-
 App.controller('mapController',function($scope,$http){
 	$scope.plotMapFunction = function(divId){
 			$http.post('http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
@@ -1475,7 +1544,8 @@ function renderPieChart(divId, insightsData, chartTitle){
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            type: 'pie'
+            type: 'pie',
+            marginRight:140
         },
         title: {
             text: chartTitle,
@@ -1499,7 +1569,8 @@ function renderPieChart(divId, insightsData, chartTitle){
             itemMarginBottom: 20,
             labelFormatter: function () {
                 return this.name + ' - ' + this.percentage.toFixed(2) + '%';
-            }
+            },
+            marginLeft:0
         },
         plotOptions: {
             pie: {
@@ -1509,7 +1580,9 @@ function renderPieChart(divId, insightsData, chartTitle){
                     enabled: false
                 },
                 showInLegend: true,
-                colors: ['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+                colors: ['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+                size: 10,
+                center: ['50%', '50%']
             }
         },
         series: [{
@@ -1650,8 +1723,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	  $scope.Engdisp=function(index){
 			if(index==0)
-				$scope.selectedSensors="";
-		
+				$scope.selectedSensors=""+0;
 
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
 //				$rootScope.selectedSales=$scope.selectedSales;
@@ -1663,8 +1735,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 			}
 			else
 					$scope.sensortype="";
-			
-			
+	
 			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
 					
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
@@ -1674,7 +1745,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	$scope.disp=function(index){
 		if(index==0)
-			$scope.selectedSales="";
+			$scope.selectedSales=""+0;
 
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
 //			$rootScope.selectedSales=$scope.selectedSales;
@@ -1690,7 +1761,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	
 	$scope.dispChart=function(selectedChart){
 		console.log("in disp chart"+selectedChart);
-		console.log("in disp sensors"+selectedSensors);
+		//console.log("in disp sensors"+selectedSensors);
 //		if($scope.selectedChart=='Pie'){	
 ////			$scope.selectedChart='Pie';
 //			 $http({
@@ -2069,7 +2140,9 @@ $scope.plotPieChart=function(divID){
 	
 	$scope.plotEngManagerChartFunction = function(divId,key){
 		
-		
+		  $scope.loadingText = "Loading data...";    
+		  $scope.isDisabled = true;
+		  $scope.progress = true;
 		var url="http://ibm-iot.mybluemix.net/api/v1/sensors/data?sensor_name="+key;
 		
 			
@@ -2082,6 +2155,7 @@ $scope.plotPieChart=function(divID){
 				$scope.progress = false;
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
 		    	$scope.linechartData=data;
+		    	 $scope.progress = false;
 		
 		
 		$("#"+divId).highcharts( {
@@ -2177,7 +2251,7 @@ $scope.plotPieChart=function(divID){
          	
          	
          	
-       //  	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
      	
      	
      	}
@@ -2223,7 +2297,7 @@ $scope.plotPieChart=function(divID){
 			$scope.plotPieChart("piecontainer");
 		}else if($scope.selectedChart=='LineChart'){
 			
-         	//$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
 	/* $scope.closing = function(){

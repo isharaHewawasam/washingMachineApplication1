@@ -10,6 +10,7 @@ var ViewKeysMappings = function() {
   this.REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT = 5;
   this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT = 6;
   this.REPORT_TYPE.SENSOR_BY_YEAR = 7;
+  this.REPORT_TYPE.MOST_USED_WM = 8;
   this.key = {};
 };
 
@@ -43,11 +44,20 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       this.key.STATE = 0; this.key.CITY = 1; this.key.ZIP_CODE = 2;
       this.key.MAKE = 3; this.key.MODEL = 4;
       this.key.YEAR = 5; this.key.QUARTER = 6; this.key.MONTH = 7;
-      break
+      break;
+    // consider this.key.QUARTER  as DAY for this view
+    case this.REPORT_TYPE.MOST_USED_WM:
+      this.key.YEAR = 0; this.key.MONTH = 1; this.key.QUARTER = 2; 
+      this.key.MAKE = 3; this.key.MODEL = 4;
+      break;   
     default:
       console.log("Invalid report key");
       break;
   }
+};
+
+ViewKeysMappings.prototype.setReportType2MostUsedWM = function() {
+  this.setKeys(this.REPORT_TYPE.MOST_USED_WM);
 };
 
 ViewKeysMappings.prototype.setReportType2SalesByRegionAndProduct = function() {

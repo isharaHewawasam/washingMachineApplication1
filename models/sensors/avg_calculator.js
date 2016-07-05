@@ -87,8 +87,9 @@ var getData = function(params, callback) {
    }
  
   //filter.setPayload(params.payload);  
+  var group_level = (params.group_level === undefined) ? params.filter.groupLevel() : params.group_level;
   
-  var view_params = { reduce: true, group: true, group_level: params.filter.groupLevel() };  
+  var view_params = { reduce: true, group: true, group_level: group_level, "startkey": params.start_key, "endkey": params.end_key };  
   var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
   var db = getDb(params.databaseType);
  
@@ -100,11 +101,11 @@ var getData = function(params, callback) {
     doGetDataLogging(err, result, params, view_params, view_name);    
     
     //sort result is sorting if set
-    sortResult(params.sort, result.rows)
+    //sortResult(params.sort, result.rows)
     //get top rows if top is set
-    if (params.top !== undefined) {
-      result.rows = getTop(params.top, result.rows);       
-    }
+    //if (params.top !== undefined) {
+      //result.rows = getTop(params.top, result.rows);       
+    //}
     
     callback(err, result);
   });
@@ -129,7 +130,7 @@ function doGetDataLogging(err, result, params, view_params, view_name) {
     console.log("View name " + view_name);    
     console.log("view params " + JSON.stringify(view_params));
     console.log("No records  " + result.rows.length);
-    //console.log("Data " + JSON.stringify(result.rows));
+    console.log("Data " + JSON.stringify(result.rows));
     console.log("============================================");
 }
 
@@ -187,13 +188,14 @@ var addOrUpdateUsages = function(params, new_usage) {
 
 var usageExists = function(payload, usages, usage_to_find) { 
   //if (filter.isFilterCategoryNone()) return true;
-  //console.log("avg_calc.usageExists : " + JSON.stringify(payload));
+  //console.log("avg_calc.usageExists : " + JSON.stringify(usage_to_find));
   for(var each_usage in usages) {    
     //console.log("1:" + JSON.stringify(usages[each_usage]));
     //console.log("2:" + JSON.stringify(usage_to_find));
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
      
+    
     var all_match = false;
     
     if(payload.region.states.length > 0) {         
@@ -296,10 +298,11 @@ var fillRecord = function(result, params) {
     case "average":
       record[params.statsKeyName] = (result.value[0].sum / result.value[0].count).toFixed(2);
       record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);
+      console.log("avg");
       break;
     case "sum":
       if (result.value instanceof Array) {
-        record[params.statsKeyName] = result.value[0].sum;
+        record[params.statsKeyName] = result.value[0];
       } else {
         record[params.statsKeyName] = result.value;
       }

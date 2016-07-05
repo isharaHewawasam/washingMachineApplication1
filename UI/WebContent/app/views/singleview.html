@@ -9,7 +9,6 @@
   
   <div class="pull-right" >
     <style>
-		tr:nth-child(even) {background: #E7EEF6}
  		#dropdown{
          	color: blue;
          	border:0;
@@ -116,7 +115,7 @@
                </div>
                
              <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
-             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #91AED3;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
+             		<button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
                 {{searchButtonText}}</button>         
             		
@@ -137,7 +136,8 @@
 
 
 <div ng-controller="filterIconController" class="row form-group filter-filterDiv col-lg-12" style="width: 100% auto;height:62px;">
-    <div ng-repeat="va in someArray" style="height:32px;background:#91aed3;padding: 6px;margin:10px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va}} </div>
+    <div ng-repeat="va in someArray" 
+         style="height:26px;background:#91aed3;padding: 4px;margin:10px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va.value}} <span style="color:#fff;font-size:11pt;" ng-click='removeFilter(va)'>X</span></div>
 </div>
 
 <div class="row"  >
@@ -170,9 +170,10 @@
                                     <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right" src="app/img/Dashboardassets/close.png" ng-click="closing()">
                         </div>
 
-	 <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
-		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"></div>
+	
+		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"> <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
 		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
+		 <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
 		
 			<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
 				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
@@ -180,7 +181,7 @@
 			
 			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>  -->
 		</div>
-		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"></div>
+		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"> <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
 	</div>
 	
 	</div>
@@ -193,10 +194,15 @@
 	
 	</div>
    
- <div class="col-lg-4" style=" width: 374px; height:373px " >
-      <div class="panel panel-default" style=" width: 374px; height:373px " >
-         <div class="panel-heading" style="background-color: #ffffff;">
-            <div class="pull-right "><img class="col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></img></div>
+ 
+ 		<div class="col-lg-4" style="width: 374px; height: 373px">
+		<div class="panel panel-default" style="width: 374px; height: 373px">
+			<div class="panel-heading" style="background-color: #ffffff;">
+				<div class="pull-right ">
+					<img class="col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;"
+						src="app/img/Dashboardassets/help.png"></img>
+				</div>
            <!--  <div class="pull-right " style="padding-right: 10px; padding-top:-5px; padding-left: 3px; padding-bottom:10px ">
             
             <select  name="Days"
@@ -212,18 +218,26 @@
 			</select>
             
             </div> -->
-            <div class="panel-title md-body-2" style="font-family: Roboto; font-size: 15px;">Insights</div>
-         </div>
+            <div class="panel-title md-body-2"
+					style="font-family: Roboto; font-size: 15px;">Insights</div>
+			</div>
          <!-- START list group-->
-         <scrollable height="230"  class="list-group"   ng-controller="InfiniteScrollController">
+         <scrollable height="230"  class="list-group" ng-controller="InfiniteScrollController">
             <!-- START list group item-->
             
             <div infinite-scroll="loadMore()" infinite-scroll-distance="1" >
-            <div ng-repeat="image in images" >
+            
+            <div style="width: 374px; height: 315px; overflow-y: scroll">
+				<div id="most-used-model-container" ng-init="getMostUsedModel('most-used-model-container')"></div>
+				<div id="most-used-wash-cycle-container" ng-init="getNotConnectedMachines('most-used-wash-cycle-container')"></div>
+				<div id="not-connected-machines-container" ng-init="getCommonFaults('not-connected-machines-container')"></div> 
+			</div>
+			
+            <!-- <div ng-repeat="image in images" >
             <a href="#" class="list-group-item">
                <div class="media-box" style="height: 90px" >
                   <div class="pull-left " >
-                    <!--  <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" /> -->
+                     <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" />
                   		
       
 				         <div class=" alert-warning media-box-object img-circle thumb32 text-center">
@@ -246,10 +260,10 @@
 					</div>
                </div>
             </a>
-            <!-- END list group item-->
-            <!-- START list group item-->
+            END list group item
+            START list group item
           
-            </div>
+            </div> -->
             </div>
          </scrollable>
          <!-- END list group-->

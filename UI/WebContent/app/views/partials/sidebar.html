@@ -160,12 +160,6 @@
             </select>
         </div>
 
-        <md-datepicker
-                ng-model="search.mfgDate"
-                md-placeholder="Enter date">
-        </md-datepicker>
-
-
         <div class="form-group element-margin">
             <input type="text" ng-model="skuFilter" class="form-control" placeholder="SKU Search..." style="height:32px">
         </div>
@@ -178,6 +172,13 @@
             </select>
         </div>
         
+        <div class="form-group element-margin">
+        <md-datepicker
+                ng-model="search.mfgDate"
+                md-placeholder="MFG Date">
+        </md-datepicker>
+        
+        </div>
                 
         <div style="width:100%; background:#e7eef6" class="divSpacePad">
             <span>Demographics</span>
