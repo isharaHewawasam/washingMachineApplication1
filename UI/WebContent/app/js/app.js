@@ -277,7 +277,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        }else{
 	      	 // $scope.errorMsg = 'success';
 	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Engg Manager";
+	      	$rootScope.Role="Engineering Manager";
 	      	$rootScope.Name="Alan Mcdormet";
 	      	  // window.location.href = 'success.html';
 	      	 // $state.go('app.singleview');
