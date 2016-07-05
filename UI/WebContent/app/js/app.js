@@ -1130,17 +1130,34 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
          $rootScope.filterIcons=[];
       }
     
-    $scope.createIconArray=function(){
+   $scope.createIconArray=function(){
         $scope.someArr=[];
         
-        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
-            $scope.someArr.push($scope.search.selectedSKU);
+        
         
         if($scope.search.selectedMake && $scope.search.selectedMake.length != 0)
-            $scope.someArr.push($scope.search.selectedMake);
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedMake,
+                    key:"make"
+                }
+            );
         
         if($scope.search.selectedModel && $scope.search.selectedModel.length != 0)
-            $scope.someArr.push($scope.search.selectedModel);
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedModel,
+                    key:"model"
+                }
+            );
+        
+        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
+            $scope.someArr.push(
+                {
+                    value:$scope.search.selectedSKU,
+                    key:"sku"    
+                });
+        
         $scope.valArr=$scope.someArr;
         
         $rootScope.filterIcons=$scope.someArr;
@@ -1152,7 +1169,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     $scope.myDate = new Date();
       
       $scope.selectedSKU=function(){
-          $scope.createIconArray();
+        //  $scope.createIconArray();
           
       }
 
@@ -1161,7 +1178,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           
           $scope.search.selectedModel="";
           $scope.search.selectedSKU="";
-          $scope.createIconArray();
+        //  $scope.createIconArray();
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$scope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
@@ -1181,7 +1198,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       
       $scope.selectedModel=function(){
           $scope.search.selectedSKU="";
-          $scope.createIconArray();
+       //   $scope.createIconArray();
           
           $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$scope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
@@ -1203,16 +1220,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
                   console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
 
-             
-           var date = new Date();
-            var day = date.getDate();
-            var monthIndex = date.getMonth();
-            var year = date.getFullYear();
-
-          // console.log(day, monthNames[monthIndex], year);
-            console.log("date  :"+day + ' ' +monthIndex + ' ' + year);  
-
-             
+                    $scope.createIconArray();
+                   
                 }
 
     
@@ -1383,8 +1392,28 @@ App.controller('filterIconController',['$rootScope','$scope','$interval',functio
    }
    
    $interval(callMe,1000);
+    
+    $scope.removeFilter=function(filter){
+        var indexofvar= $rootScope.filterIcons.indexOf(filter);
+        
+        if(filter.key=="make"){
+            $rootScope.filterIcons=[];
+        } else if(filter.key=="sku"){
+            
+            $rootScope.filterIcons.splice(indexofvar,1);
+        }else if(filter.key=="model"){
+            
+            $rootScope.filterIcons.splice(indexofvar,1);
+            angular.forEach($rootScope.filterIcons,function(value,key){
+                if(value.key=="sku"){
+                    /*var indexofvar= $rootScope.filterIcons.indexOf(value);*/
+                    $rootScope.filterIcons.splice(key,1);
+                }
+            });
+        }
+       
+    }
 }]);
-
 App.controller('mapController',function($scope,$http){
 	$scope.plotMapFunction = function(divId){
 			$http.post('http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
