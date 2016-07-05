@@ -194,10 +194,15 @@
 	
 	</div>
    
- <div class="col-lg-4" style=" width: 374px; height:373px " >
-      <div class="panel panel-default" style=" width: 374px; height:373px " >
-         <div class="panel-heading" style="background-color: #ffffff;">
-            <div class="pull-right "><img class="col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></img></div>
+ 
+ 		<div class="col-lg-4" style="width: 374px; height: 373px">
+		<div class="panel panel-default" style="width: 374px; height: 373px">
+			<div class="panel-heading" style="background-color: #ffffff;">
+				<div class="pull-right ">
+					<img class="col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;"
+						src="app/img/Dashboardassets/help.png"></img>
+				</div>
            <!--  <div class="pull-right " style="padding-right: 10px; padding-top:-5px; padding-left: 3px; padding-bottom:10px ">
             
             <select  name="Days"
@@ -213,18 +218,26 @@
 			</select>
             
             </div> -->
-            <div class="panel-title md-body-2" style="font-family: Roboto; font-size: 15px;">Insights</div>
-         </div>
+            <div class="panel-title md-body-2"
+					style="font-family: Roboto; font-size: 15px;">Insights</div>
+			</div>
          <!-- START list group-->
-         <scrollable height="230"  class="list-group"   ng-controller="InfiniteScrollController">
+         <scrollable height="230"  class="list-group" ng-controller="InfiniteScrollController">
             <!-- START list group item-->
             
             <div infinite-scroll="loadMore()" infinite-scroll-distance="1" >
-            <div ng-repeat="image in images" >
+            
+            <div style="width: 374px; height: 315px; overflow-y: scroll">
+				<div id="most-used-model-container" ng-init="getMostUsedModel('most-used-model-container')"></div>
+				<div id="most-used-wash-cycle-container" ng-init="getNotConnectedMachines('most-used-wash-cycle-container')"></div>
+				<div id="not-connected-machines-container" ng-init="getCommonFaults('not-connected-machines-container')"></div> 
+			</div>
+			
+            <!-- <div ng-repeat="image in images" >
             <a href="#" class="list-group-item">
                <div class="media-box" style="height: 90px" >
                   <div class="pull-left " >
-                    <!--  <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" /> -->
+                     <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" />
                   		
       
 				         <div class=" alert-warning media-box-object img-circle thumb32 text-center">
@@ -247,10 +260,10 @@
 					</div>
                </div>
             </a>
-            <!-- END list group item-->
-            <!-- START list group item-->
+            END list group item
+            START list group item
           
-            </div>
+            </div> -->
             </div>
          </scrollable>
          <!-- END list group-->

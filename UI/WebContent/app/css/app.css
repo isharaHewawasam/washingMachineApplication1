@@ -1560,7 +1560,8 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
-#most-fault-container, #least-fault-container, #common-fault-container{
+#most-fault-container, #least-fault-container, #common-fault-container, #most-used-model-container,
+#most-used-wash-cycle-container, #not-connected-machines-container{
 	height:200px;
 	/* overflow-y: scroll;  */
 }

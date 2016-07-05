@@ -261,9 +261,9 @@
 			<scrollable height="230" class="list-group list-scroll"
 				ng-controller="InfiniteScrollController"> <!-- START list group item-->
 
-			<div infinite-scroll="loadMore()" infinite-scroll-distance="1" style="overflow-y: scroll">
+			<div infinite-scroll="loadMore()" infinite-scroll-distance="1">
 			
-			<div style="width: 374px; height: 315px">
+			<div style="width: 374px; height: 315px; overflow-y: scroll">
 				<div id="most-fault-container" ng-init="getMostFaults('most-fault-container')"></div>
 				<div id="least-fault-container" ng-init="getLeastFaults('least-fault-container')"></div>
 				<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')"></div> 
