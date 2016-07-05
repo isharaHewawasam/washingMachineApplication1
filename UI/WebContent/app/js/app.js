@@ -535,15 +535,54 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 	    }
 	  };
 	  
-	  $scope.getInsightsForEngManagerView = function(divId) {
+	  $scope.getMostFaults = function(divId, data) {
 			 //alert('in avg wash ' + configApiClient.baseUrl); 
 			 
-			 var leastFaultDataSet = [{Model:"Model 3",Make:"2232423",no_of_faults:123},
+			 var mostFaultDataSet = [{Model:"Model 3",Make:"2232423",no_of_faults:123},
 			                          {Model:"Model 4",Make:"2232423",no_of_faults:123},
 			                          {Model:"Model 8",Make:"2232423",no_of_faults:12}];
 			 
-			 console.log('Insights data set : '+JSON.stringify(leastFaultDataSet));
+			 var mostFaultDataStr = JSON.stringify(mostFaultDataSet);
+				
+			 // Modify the json data set according to required highchart data format
+			 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+			 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
+			 mostFaultDataSet = JSON.parse(mostFaultDataStr);
 			 
+			 renderPieChart(divId, mostFaultDataSet, 'Most Fault');
+			 
+	  };
+	  
+	  $scope.getLeastFaults = function(divId, data) {
+		  var leastFaultDataSet = [{Model:"Model 1",Make:"Make 1",no_of_faults:0},
+		                           {Model:"Model 3",Make:"Make 2",no_of_faults:1},
+		                           {Model:"Model 7",Make:"Make 3",no_of_faults:2}];
+		  
+		  var leastFaultDataStr = JSON.stringify(leastFaultDataSet);
+		  
+		  leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+		  leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
+				
+		  leastFaultDataSet = JSON.parse(leastFaultDataStr);
+			 
+		  renderPieChart(divId, leastFaultDataSet, 'Least Fault');
+		  
+	  };
+	  
+	  $scope.getCommonFaults = function(divId, data) {
+		  var commonFaultDataSet = [{"Model": "Model 3","Make": "Make 1","no_of_faults": 163,"failureType":"Water leak"},
+		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 153,"failureType":"Software Failure"},
+		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 130,"failureType":"Error"}];
+		  
+		  var commonFaultDataStr = JSON.stringify(commonFaultDataSet);
+		  
+		  commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+		  commonFaultDataStr = commonFaultDataStr.replace(/"failureType":/g, '"name":');
+				
+		  commonFaultDataSet = JSON.parse(commonFaultDataStr);
+			 
+		  renderPieChart(divId, commonFaultDataSet, 'Common Fault');
+
 	  };
 
 	}]).factory('datasource', [
@@ -564,6 +603,8 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout","iot.config.Api
 	            get: get
 	        };
 	    }]);
+
+
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
 	$scope.searchButtonText = "Apply Filter";
@@ -795,8 +836,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	
 		
 		$scope.griddata=[];
-		  
-		
+		$scope.eng_griddata=[];	  		
 		
 		
 		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
@@ -827,14 +867,47 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	        	 console.log("error:"+status);
 	        	 
 	         });
+		  
+		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/sensors/data', 
+	            method: "POST",
+	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	             data: $scope.usagedata
+	            
+	           }).success(function(data, status) {
+	            console.log("*****************Eng manager_Filter****************");
+	             $scope.test = false;
+	                $scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false
+	             if(!data || data.data.length === 0){
+	                   //$('<p>no updates found</p>').appendTo('#rr');
+	               console.log("empty data");
+	                //$("#gridMax #gridMaxImg").addClass("hidden");
+
+	              //alert("No data found");
+	                }
+	             else            
+	                $scope.eng_griddata=data; 
+	                  //alert(data);
+	                console.log("data from server  :"+JSON.stringify(data));
+
+	           }). error(function(data, status) {
+	            console.log("*****************Eng manager Error_Filter****************");
+	             $scope.test = false;
+	                $scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false     
+	             alert("No data found");
+	             console.log("error:"+status);
+	             
+	           });
 		
 	};
 	
  
   
     		
-    // load all usage data on dashboard		
+    		// load all usage data on dashboard		
     		$scope.griddata=[];
+    		$scope.eng_griddata=[];
     		
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
@@ -851,6 +924,20 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
     	              	 console.log("usageerror:"+status);
     	        	 
     	         });
+    		  
+    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/sensors/data", //api url
+                  method: "POST",
+                  Accept: "text/plain"}).success(function(data, status) {
+                     console.log("*****************Eng manager_onLoad****************");
+                            $scope.eng_griddata=data; //.states: array name--check in browser
+                    
+                        console.log("Griddata"+JSON.stringify(data));
+                          
+                     }). error(function(data, status) {
+                      console.log("*****************Eng manager error_onLoad****************");
+                             console.log("usageerror:"+status);
+                       
+                     });
     						
   	    
 		var quarterMonthMapping = JSON.parse('{'
@@ -1312,6 +1399,7 @@ App.controller('mapController',function($scope,$http){
 	
 	}
 });
+
 function renderMap(divId, salesData){
 	     
 	var salesDataStr = JSON.stringify(salesData);
@@ -1378,6 +1466,64 @@ function renderMap(divId, salesData){
 	});
 	
 	//console.log('Rendered the app successfully');
+	
+}
+
+function renderPieChart(divId, insightsData, chartTitle){
+	
+	var pieChart = new Highcharts.Chart({
+        chart: {
+        	renderTo:divId,
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: chartTitle,
+            align: 'left',
+            style: {
+                color: '#0099cc'
+            },
+            //floating: true,
+            y: 20,
+            x: 45
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        legend: {
+            align: 'right',
+            layout: 'vertical',
+            verticalAlign: 'middle',
+            x: -10,
+            y: 30,
+            itemMarginBottom: 20,
+            labelFormatter: function () {
+                return this.name + ' - ' + this.percentage.toFixed(2) + '%';
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+                colors: ['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            size: '80%',
+            innerSize: '80%',
+            showInLegend:true,
+            data: insightsData
+        }]
+    });
+
 	
 }
 
