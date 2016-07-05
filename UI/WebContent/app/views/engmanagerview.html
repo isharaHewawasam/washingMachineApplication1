@@ -256,15 +256,21 @@ class=" col-md-1 image-margin close-image-size hidden pull-right"src="app/img/Da
 					style="font-family: Roboto; font-size: 15px;">Insights</div>
 			</div>
 			<!-- START list group-->
-			<scrollable height="230" class="list-group"
-				ng-controller="InfiniteScrollController" ng-init="getInsightsForEngManagerView()"> <!-- START list group item-->
+			<scrollable height="230" class="list-group list-scroll"
+				ng-controller="InfiniteScrollController"> <!-- START list group item-->
 
-			<div infinite-scroll="loadMore()" infinite-scroll-distance="1">
-				<div ng-repeat="image in images">
+			<div infinite-scroll="loadMore()" infinite-scroll-distance="1" style="overflow-y: scroll">
+			
+			<div style="width: 374px; height: 315px">
+				<div id="most-fault-container" ng-init="getMostFaults('most-fault-container')"></div>
+				<div id="least-fault-container" ng-init="getLeastFaults('least-fault-container')"></div>
+				<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')"></div> 
+			</div>
+				<!-- <div ng-repeat="image in images">
 					<a href="#" class="list-group-item">
 						<div class="media-box" style="height: 90px">
 							<div class="pull-left ">
-								<!--  <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" /> -->
+								 <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" />
 
 
 								<div
@@ -293,10 +299,10 @@ class=" col-md-1 image-margin close-image-size hidden pull-right"src="app/img/Da
 							</div> 
 						</div>
 					</a>
-					<!-- END list group item-->
-					<!-- START list group item-->
+					END list group item
+					START list group item
 
-				</div>
+				</div> -->
 			</div>
 			</scrollable>
 			<!-- END list group-->
@@ -358,41 +364,21 @@ class=" col-md-1 image-margin close-image-size hidden pull-right"src="app/img/Da
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>2</td>
-								<td>#1201</td>
-								<td>20</td>
-								<td>40</td>
-								<td>30</td>
-								<td>02</td>
-								<td>100</td>
-								<td>90</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>#1205</td>
-								<td>30</td>
-								<td>55</td>
-								<td>35</td>
-								<td>03</td>
-								<td>100</td>
-								<td>80</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>#1205</td>
-								<td>40</td>
-								<td>50</td>
-								<td>40</td>
-								<td>04</td>
-								<td>100</td>
-								<td>70</td>
-							</tr>
+							<tr ng-repeat="itm in eng_griddata">
+		                        <td>{{itm.make}}</td>
+		                        <td>{{itm.model}}</td>
+		                        <td>{{itm.avgWaterUsage}}</td>
+		                        <td>{{itm.avgPowerUsage}}</td>
+		                        <td>{{itm.avgWashCycleDurationUsage}}</td>
+		                        <td>{{itm.avgWashCyclesUsage}}</td>
+		                        <td>{{itm.avgTemperatureUsage}}</td>
+		                        <td>{{itm.avgDetergentUsage}}</td>
+                     		</tr>							
 						</tbody>
 					</table>
 				</div>
 				<!--      END table-responsive -->
-				<label class="pull-right ">3 records found</label>
+				<label  class="pull-right " ng-if="eng_griddata.length > 0">{{eng_griddata.length}} records found</label>
 			</div>
 		</div>
 		<!--   END panel -->
