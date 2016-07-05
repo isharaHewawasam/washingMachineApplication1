@@ -1987,8 +1987,19 @@ $scope.plotPieChart=function(divID){
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
 		
+		//give new IDs for identification
+		chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+		chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+		chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
+		
      	$("#hiddenDiv").empty();
      	$("#hiddenDiv").append(chartParent);
+     	
+     	//remove the elements with new ID
+		 $("#filter1").remove();
+		 $("#filter2").remove();
+		 $("#filter3").remove();
+		 
      	$("#hiddenDiv").removeClass("hidden");
      	$("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
      	if($scope.selectedChart=='Multiline'){
