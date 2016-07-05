@@ -171,9 +171,9 @@
                         </div>
 
 	
-		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"> <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
+		<div   ng-if="selectedChart=='Pie'" id="piecontainer"  class="graphDiv" ng-init="plotPieChart('piecontainer')"> <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
 		<div ng-if="selectedChart=='Bar'"  class="graphDiv" id="bar" ng-init="plotBarChart('bar')">
-		 <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
+		 <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span>
 		
 			<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
 				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
@@ -181,7 +181,7 @@
 			
 			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>  -->
 		</div>
-		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"> <span ng-show="progress" class="progress"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
+		<div ng-if="selectedChart=='Multiline'" id="container" class="graphDiv" ng-init="plotChartFunction('container')"> <span ng-show="progress" class="progress-chart"><img alt="" src="app/img/icon-load.gif" width="25%";height="25%"> </span></div>
 	</div>
 	
 	</div>
