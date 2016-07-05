@@ -1,0 +1,149 @@
+Sales Database
+==================================================
+1] Design Doc Name: averages
+*******************************
+a) view : averageDetergentUsage
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totaldetergent]);
+}
+reduce : stats
+
+b) view : averageDetergentUsageByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalpowerusage]);
+}
+reduce : stats
+
+c) view : averagePowerUsage
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalpowerusage]);
+}
+reduce : stats
+
+d) view : averagePowerUsageByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalpowerusage]);
+}
+reduce : stats
+
+e) view : averageTemperatureUsage
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalTemperature]);
+}
+reduce : stats
+
+f) view : averageTemperatureUsageByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalTemperature]);
+}
+reduce : stats
+
+g) view : averageWashCycleDuration
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalDuration]);
+}
+reduce : stats
+
+h) view : averageWashCycleDurationByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalDuration]);
+}
+reduce : stats
+
+i) view : averageWashCycles
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Cycles]);
+}
+reduce : stats
+
+j) view : averageWashCyclesByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Cycles]);
+}
+reduce : stats
+
+k) view : averageWaterUsage
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalwaterusage]);
+}
+reduce : stats
+
+l) view : averageWaterUsageByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalwaterusage]);
+}
+reduce : stats
+
+m) view : averages
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalLoadWeight]);
+}
+reduce : stats
+
+n) view : averagesByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalLoadWeight]);
+}
+reduce : stats
+
+2] Design Doc Name: favouriteWashDay
+*******************************
+a) view : WashDayByMakeAndModel
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([ doc.Dayofweek, doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString() ], 1);
+}
+reduce : stats
+
+b) view : WashDayByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([ doc.Dayofweek, doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString() ], 1);
+}
+reduce : stats
+
+c) view : WashTimeByMakeAndModel
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([ doc.timeOfWash, doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString() ], 1);
+}
+reduce : stats
+
+d) view : WashTimeByYear
+function (doc) {
+  var sold_date = new Date(doc.WashDate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([ doc.timeOfWash, doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString() ], 1);
+}
+reduce : stats

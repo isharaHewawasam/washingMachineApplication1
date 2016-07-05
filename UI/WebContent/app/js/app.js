@@ -11,8 +11,6 @@
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
-
-
 //  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
 
 // APP START

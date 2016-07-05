@@ -1,0 +1,107 @@
+Sales Database
+==================================================
+1] Design Doc Name: CitiesByStates
+Search Index Name : CitiesByStates
+
+function (doc) {
+  index("State", doc.Store.State);
+  index("CityState", doc.Store.City + "," + doc.Store.State, {facet: true});
+  index("CityZip", doc.Store.Zipcode + "," + doc.Store.City, {facet: true});
+}
+----------------------------------------------------------------
+2] Design Doc Name: Makes
+Search Index Name : allMakes
+
+function (doc) {
+  index("Makes", doc.DeviceType.Make, {"store": true, "facet": true});
+  index("SKUs", doc.SKU, {"store": true, "facet": true});
+  index("Models", doc.DeviceType.Model, {"store": true, "facet": true});
+}
+
+----------------------------------------------------------------
+3] Design Doc Name: ModelsByMakes
+Search Index Name : ModelsByMakes
+
+function (doc) {
+  index("Makes", doc.DeviceType.Make, {"store": true, "facet": true});
+  index("ModelMake", doc.DeviceType.Model + "," + doc.DeviceType.Make, {"store": true, "facet": true});
+  index("Modelsku",  doc.SKU + "," + doc.DeviceType.Model, {"store": true, "facet": true});
+}
+----------------------------------------------------------------
+4] Design Doc Name: all-states
+index : allStates 
+
+function (doc) {
+  index("State", doc.Store.State, {"store": true, "facet": true});
+  index("City", doc.Store.City, {"store": true, "facet": true});
+  if(doc.Zipcode) {
+    index("Zipcode", parseInt(doc.Store.Zipcode,10), {"store": true, "facet": true});
+  }
+  index("CityState", doc.Store.City + "," + doc.Store.State, {facet: true});
+}
+
+----------------------------------------------------------------
+5] Design Doc Name: sales
+view : connected 
+function (doc) {
+  if (doc.Connected === "true") {
+    var sold_date = new Date(doc.Solddate);
+    var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+    emit([doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode], 1);
+ }
+}
+stats - count
+*********************
+view : connectedByRegionAndProduct
+function (doc) {
+  if (doc.Connected === "true") {
+    var sold_date = new Date(doc.Solddate);
+    var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+    emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode, doc.DeviceType.Make, doc.DeviceType.Model,sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], 1);
+ }
+}
+stats - count
+*****************
+view : sales
+function (doc) {
+  var sold_date = new Date(doc.Solddate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode], 1);
+}
+stats - count
+******************** 
+view : salesByRegionAndProduct
+function (doc) {
+  var sold_date = new Date(doc.Solddate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode, doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], 1);
+} 
+stats - count
+***************
+view : salesByYear
+function (doc) {
+  var sold_date = new Date(doc.Solddate);
+  var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
+  emit([sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.DeviceType.Make, doc.DeviceType.Model], 1);
+}  
+stats - count
+
+----------------------------------------------------------------
+6] Design Doc Name: yearsByMfgDate
+index : yearsByMfgDate 
+function (doc) {
+  if(doc.MFDate) {
+    index("MfgYear", doc.MFDate, {"store": true, "facet": true});
+  }
+}
+----------------------------------------------------------------
+7] Design Doc Name: yearsBySoldDate
+index : yearsBySoldDate 
+function (doc) {
+  if(doc.Solddate) {
+    index("SoldYear", doc.Solddate.slice(-4), {"store": true, "facet": true});
+  }
+}
+
+Daily Wash Database
+==================================================
