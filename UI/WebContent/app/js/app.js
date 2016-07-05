@@ -264,7 +264,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	        	
 	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
 	             if(!response.success) {
-	           	  $scope.errorMsg  = 'Not Authorised';
+	           	  $scope.errorMsg  = 'We weren\'t able to find the email address and password combination you entered';
 	             }else{
 	           	//  $scope.errorMsg = 'success';
 	           	  $state.go('app.singleview');
