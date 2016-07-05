@@ -106,21 +106,6 @@ var doesUsageFallsInResponse = function(usage, keys) {
   return true;
 };
 
-var doesUsageFallsInResponse_old = function(usage, keys) { 
-  var usage_values = [usage.make, usage.model, usage.state,
-                      usage.city, usage.zip_code, usage.year,
-                      usage.quarter, usage.month 
-                     ];
-  var response_keys = keys.slice(1, keys.length);
-  var idx = 0;
-   
-  while(idx < filter.filterType()) {    
-    if(!match(usage_values[idx], response_keys[idx])) return false;
-    idx++;
-  }
-  
-  return true;
-};
 
 var match = function(item1, item2) { 
   return item1.toString().toUpperCase() === item2.toString().toUpperCase();

@@ -107,6 +107,40 @@
         }
       }
     },
+    "/insights/most-used": {
+      "post": {
+        "x-swagger-router-controller": "most_used",
+        "operationId": "getData",
+        "tags": ["Insights"],
+        "description": "Returns washing machines charting details.",
+         "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SalesByChartPayload"
+            }
+          }
+        ],         
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/SalesByChartResponse"
+            }
+          }
+        }
+      }
+    },
     "/config/sales/years": {
       "get": {
         "x-swagger-router-controller": "config",

@@ -102,7 +102,9 @@ var getData = function(params, callback) {
     //sort result is sorting if set
     sortResult(params.sort, result.rows)
     //get top rows if top is set
-    //result.rows = getTop(params.top, result.rows);       
+    if (params.top !== undefined) {
+      result.rows = getTop(params.top, result.rows);       
+    }
     
     callback(err, result);
   });
@@ -136,13 +138,21 @@ function sortResult(sort, data) {
   
   if (sort.value !== undefined && sort.order === "asc") {
     data.sort(function(a, b) {
-        return a.value - b.value;
+        if (a.value instanceof Array) {
+          return a.value[0].sum - b.value[0].sum;
+        } else {
+          return a.value - b.value;
+        }
     });
   }
   
   if(sort.value && sort.order === "desc") {
     data.sort(function(a, b) {
-        return b.totalSales - a.totalSales;
+      if (a.value instanceof Array) {
+        return b.value[0].sum - a.value[0].sum;
+      } else {
+        return b.value - a.value;
+      }
     });
   }
 }
@@ -288,7 +298,11 @@ var fillRecord = function(result, params) {
       record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);
       break;
     case "sum":
-      record[params.statsKeyName] = result.value;
+      if (result.value instanceof Array) {
+        record[params.statsKeyName] = result.value[0].sum;
+      } else {
+        record[params.statsKeyName] = result.value;
+      }
       break;
   }
   
