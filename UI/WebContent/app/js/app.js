@@ -649,7 +649,11 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
   $scope.test = false;
 	$scope.isDisabled = false;
 	
-	
+	$scope.sidebarObj={};
+	$scope.sidebarObj.selectedMake="";
+	$scope.sidebarObj.selectedModel="";
+	$scope.sidebarObj.selectedSku="";
+	$scope.sidebarObj.mfgDate="";
 	
 	
 	
@@ -657,12 +661,70 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	$scope.region=[];
 	$scope.timescale=[];
 	
+$rootScope.setUsageObjectFromSidebar=function(obj){
+		$scope.sidebarObj=obj;
+		$scope.usagedata={  
+				   "productAttrs":{  
+					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
+					      "models":[{"value":$scope.sidebarObj.selectedModel}],
+					      "skus":[{"value":$scope.sidebarObj.selectedSku}],
+					      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
+					   },
+					   "timescale":{  
+					      "years":[  
+					         {  
+					            "value":parseInt($scope.timescale.years)
+					         }
+					      ],
+					      "quarters":[  
+					         {  
+					            "value":parseInt($scope.timescale.quarters)
+					         }
+					      ],
+					      "months":[  
+					         {  
+					            "value":parseInt($scope.timescale.months)
+					         }
+					      ],
+					      "date":{  
+					         "start_date":"01/01/2015",
+					         "end_date":"01/01/2016"
+					      },
+					      "relative":{  
+					         "unit":"2",
+					         "value":0
+					      }
+					   },
+					   "region":{  
+					      "states":[  
+					         {  
+					            "value":$scope.region.states
+					         }
+					      ],
+					      "cities":[  
+					         {  
+					            "value":$scope.region.cities
+					         }
+					      ],
+					      "zip_codes":[  
+					         {  
+					            "value":$scope.region.zip_codes
+					         }
+					      ]
+					   }
+					};
+		
+		$rootScope.applyFilterBoolean=true;
+		$rootScope.setUsageData($scope.usagedata);
+		
+	}
 	
 	
 	$scope.tryit = function() {
 			$scope.searchButtonText = "Filtering...";    
 	  $scope.isDisabled = true;
 	  $scope.test = true;
+		$rootScope.applyFilterBoolean=true;
 	/*
 		if($scope.region.states==undefined)
 			{
@@ -745,13 +807,10 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		
 		$scope.usagedata={  
 						   "productAttrs":{  
-							      "makes":[],
-							      "models":[],
-							      "skus":[],
-							      "mfg_date":{  
-							         "start_date":"01/01/2015",
-							         "end_date":"01/01/2016"
-							      }
+							   "makes":[{"value":$scope.sidebarObj.selectedMake}],
+							      "models":[{"value":$scope.sidebarObj.selectedModel}],
+							      "skus":[{"value":$scope.sidebarObj.selectedSku}],
+							      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
 							   },
 							   "timescale":{  
 							      "years":[  
@@ -829,6 +888,22 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		if($scope.timescale.months==undefined || $scope.timescale.months=="")
 		{
 			$scope.usagedata.timescale.months=[];
+		}
+		if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
+		{
+			$scope.usagedata.productAttrs.makes=[];
+		}
+		if($scope.sidebarObj.selectedModels==undefined || $scope.sidebarObj.selectedModels=="")
+		{
+			$scope.usagedata.productAttrs.models=[];
+		}
+		if($scope.sidebarObj.selectedSku==undefined || $scope.sidebarObj.selectedSku=="")
+		{
+			$scope.usagedata.productAttrs.skus=[];
+		}
+		if($scope.sidebarObj.mfgDate==undefined || $scope.sidebarObj.mfgDate=="")
+		{
+			$scope.usagedata.productAttrs.mfg_date=[];
 		}
 		/*if($scope.region.cities==undefined)
 				$scope.usagedata.region.cities=[];
@@ -1255,6 +1330,13 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       }
     
          $scope.applyProductFilter=function(){
+				var obj={};
+          	 	obj.selectedMake=$scope.search.selectedMake;
+          	 	obj.selectedModel=$scope.search.selectedModel;
+          	 	obj.selectedSKU=$scope.search.selectedSKU;
+          	 	obj.mfgDate=$scope.search.mfgDate;
+          	 	
+                 $rootScope.setUsageObjectFromSidebar(obj);
 
                   console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
 
@@ -1604,13 +1686,14 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	$scope.selectedSales;
 	$scope.selectedChart="";
 	$scope.seneorkey="";
-	
+	$rootScope.baseUrl='http://ibm-iot.mybluemix.net/api/v1/';
 	  $scope.EngchartTypes=['LineChart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
 	$scope.linechartData=null;
 	  $scope.data = null;
 	  $scope.barchartData=null;
+	  $scope.lineChartSeriesData=[];
 	  $scope.barLabels = ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016'];
 	  $scope.barSeries = ['Sold', 'Connected'];
 
@@ -1622,75 +1705,14 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 		  $scope.usagedata=usagedata;
 		  console.log("In rootScope Usage data:: "+JSON.stringify($scope.usagedata)+":: "+$scope.selectedSales);
 		  if($scope.selectedSales==0){
-				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
-	                method: "POST",
-	                headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-	                data: $scope.usagedata
-	                
-				       }).success(function(data, status) {
-				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
-				                if(!data || data.length === 0){
-				                     console.log("empty data for soldVsConnected");
-				          
-				                }  else{
-				                    console.log("Got data for soldVsConnected..." );
-				                }
-				                console.log("data from server  :"+JSON.stringify(data));
-				               }). error(function(data, status) {
-				                 
-				                      alert("No data found");
-				                      console.log("error:"+status);
-				                       
-				        });
+			  $scope.plotPieChart("piecontainer");	
+				
 			}
 			else if($scope.selectedSales== 1){
-				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=true', 
-	                method: "POST",
-	                headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-	                data: $scope.usagedata
-	                
-				       }).success(function(data, status) {
-				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
-				                if(!data || data.length === 0){
-				                     console.log("empty data for top3SellingModels");
-				          
-				                }  else{
-				                    console.log("Got data for top3SellingModels..." );
-				                }
-				                console.log("data from server  :"+JSON.stringify(data));
-				               }). error(function(data, status) {
-				                 
-				                      alert("No data found");
-				                      console.log("error:"+status);
-				                       
-				        });
+				$scope.plotBarChart("bar");
 				
 			} else if($scope.selectedSales==2){
-				$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=true', 
-	                method: "POST",
-	                headers: { 
-			                	'Content-Type': 'application/json',
-			                	'Accept':'text/plain' ,
-			                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
-			                	'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  
-	                		 },
-	                data: $scope.usagedata
-	                
-				       }).success(function(data, status) {
-				      	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
-				                if(!data || data.length === 0){
-				                     console.log("empty data for salesVolume");
-				          
-				                }  else{
-				                    console.log("Got data for salesVolume..." );
-				                }
-				                console.log("data from server  :"+JSON.stringify(data));
-				               }). error(function(data, status) {
-				                 
-				                      alert("No data found");
-				                      console.log("error:"+status);
-				                       
-				        });
+				$scope.plotChartFunction('container');
 				
 			}
 	  }
@@ -1724,6 +1746,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  $scope.Engdisp=function(index){
 			if(index==0)
 				$scope.selectedSensors=""+0;
+		
 
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
 //				$rootScope.selectedSales=$scope.selectedSales;
@@ -1761,51 +1784,8 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	
 	$scope.dispChart=function(selectedChart){
 		console.log("in disp chart"+selectedChart);
-		//console.log("in disp sensors"+selectedSensors);
-//		if($scope.selectedChart=='Pie'){	
-////			$scope.selectedChart='Pie';
-//			 $http({
-//				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=false', 
-//				  method: 'POST'
-//					 
-//				}).success(function(data, status) {
-//			    	console.log("Pie Chart response :"+JSON.stringify(data));	
-//			    	$scope.data[0]=data.unitsSold;
-//			    	$scope.data[1]=data.unitsConnected;
-//			    	
-//			    }). error(function(data, status) {
-//			       console.log(JSON.stringify(data));
-//			    });
-//			
-//		}
-//		else if($scope.selectedChart=='Bar'){
-////			$scope.selectedChart='Bar';
-//			 $http({
-//				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=false', 
-//				  method: 'POST'
-//				 
-//				}).success(function(data, status) {
-//			    	console.log("Bar Chart response :"+JSON.stringify(data));
-//			    	//$scope.barData=data;
-//			    	
-//			    	
-//			    }). error(function(data, status) {
-//			       console.log(JSON.stringify(data));
-//			    });
-//		}
-//		else if($scope.selectedChart=='Multiline'){
-////			$scope.selectedChart='Multiline';
-////			 $http({
-////				  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
-////				  method: 'POST'
-////				 
-////				}).success(function(data, status) {
-////			    	console.log("Multiline Chart response :"+JSON.stringify(data));	
-////			    	$scope.linechartData=data;
-////			    }). error(function(data, status) {
-////			       console.log(JSON.stringify(data));
-////			    });
-//		}
+		console.log("in disp sensors"+selectedSensors);
+
 	}
 	
 	//code by Babagouda
@@ -1814,10 +1794,10 @@ $scope.plotPieChart=function(divID){
 	$scope.loadingText = "Loading data...";    
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
-	  
+	  console.log("in plot pie chart");
 	if($scope.data==null){
 	 $http({
-		  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=false', 
+		  url:$rootScope.baseUrl+'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
@@ -1868,10 +1848,74 @@ $scope.plotPieChart=function(divID){
 	    })
 	   
 	}else{
-		$scope.progress = false;
-		$(function() {
-            // Create the chart
-            chart = new Highcharts.Chart({
+		
+		if($rootScope.applyFilterBoolean){
+			$http({
+				  url:$rootScope.baseUrl+'sales?report_name=soldVsConnected&group=true', 
+				  method: 'POST',
+				  headers: { 
+	                	'Content-Type': 'application/json',
+	                	'Accept':'text/plain' ,
+	                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+	                	'Access-Control-Allow-Methods':'POST',
+	                	'Access-Control-Allow-Credentials':true  
+          		 },
+				  data:$scope.usagedata
+					 
+				}).success(function(data, status) {
+					$scope.progress = false;
+			    	console.log("Pie Chart response With Filter:"+JSON.stringify(data));
+			    	$scope.data[0]=data[0].unitsSold;
+			    	$scope.data[1]=data[0].unitsConnected;
+			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
+			    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+			    	$(function() {
+			            // Create the chart
+			            chart = new Highcharts.Chart({
+			                chart: {
+			                    renderTo: ''+divID,
+			                    type: 'pie'
+			                },
+			                title: {
+			                    text: 'Sold Vs Connected'
+			                },
+			               
+			                plotOptions: {
+			                    pie: {
+			                        shadow: false
+			                    }
+			                },
+			                tooltip: {
+			                    formatter: function() {
+			                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+			                    }
+			                },
+			                series: [{
+			                    name: 'Browsers',
+			                    data: [["Connected",parseFloat($scope.connPercentage)],["Unconnected",parseFloat($scope.unconnPercentage)]],
+			                    size: '80%',
+			                    innerSize: '80%',
+			                    showInLegend:true,
+			                    dataLabels: {
+			                        enabled: false
+			                    }
+			                }]
+			            });
+			        });
+			    	})
+			    .error(function(data,status){
+			    	$scope.progress = false;
+			    	console.log("Error:"+JSON.stringify(data));
+			    });
+				
+			$rootScope.applyFilterBoolean=false;
+		}
+		else{
+			$scope.progress = false;
+		
+			$(function() {
+	            // Create the chart
+	            chart = new Highcharts.Chart({
                 chart: {
                     renderTo: ''+divID,
                     type: 'pie'
@@ -1902,7 +1946,8 @@ $scope.plotPieChart=function(divID){
                 }]
             });
         });
-	}
+	  }
+	 }
 	
 	}
 
@@ -1913,7 +1958,7 @@ $scope.plotPieChart=function(divID){
 		  
 		if($scope.barchartData==null){
 		 $http({
-			  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=top3SellingModels&group=false', 
+			  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=false', 
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
@@ -1976,6 +2021,80 @@ $scope.plotPieChart=function(divID){
 			       console.log(JSON.stringify(data));
 			    });
 		}else{
+			if($rootScope.applyFilterBoolean){
+				$http({
+					  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=true', 
+					  method: 'POST',
+					  headers: { 
+		                	'Content-Type': 'application/json',
+		                	'Accept':'text/plain' ,
+		                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Methods':'POST',
+		                	'Access-Control-Allow-Credentials':true  
+	          		 },
+					  data:$scope.usagedata
+						 
+					}).success(function(data, status) {
+						$scope.progress = false;
+						
+				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
+				    	$scope.barchartData=data;
+				    	$(function () {
+						    $('#bar').highcharts({
+						        chart: {
+						            type: 'column'
+						        },
+						        title: {
+						            text: 'Top 3 Selling Models'
+						        },
+						        xAxis: {
+						            categories: [
+						                '2016'
+						            ],
+						            crosshair: true
+						        },
+						        yAxis: {
+						            min: 0,
+						            title: {
+						                text: 'Sales'
+						            }
+						        },
+						        tooltip: {
+						            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+						                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+						            footerFormat: '</table>',
+						            shared: true,
+						            useHTML: true
+						        },
+						        plotOptions: {
+						            column: {
+						                pointPadding: 0.2,
+						                borderWidth: 0
+						            }
+						        },
+						        series: [{
+						            name: $scope.barchartData.sales[0].item,
+						            data: [$scope.barchartData.sales[0].unitsSold]
+
+						        }, {
+						            name: $scope.barchartData.sales[1].item,
+						            data: [$scope.barchartData.sales[1].unitsSold]
+
+						        }, {
+						            name: $scope.barchartData.sales[2].item,
+						            data: [$scope.barchartData.sales[2].unitsSold]
+
+						        }]
+						    });
+						});
+					}).error(function(data,status){
+						$scope.progress = false;
+						console.log("Error:"+JSON.stringify(data));
+					});
+				$rootScope.applyFilterBoolean=false;
+			}	
+			else{
 			$scope.progress = false;
 			$(function () {
 			    $('#bar').highcharts({
@@ -2027,26 +2146,135 @@ $scope.plotPieChart=function(divID){
 			    });
 			});
 		}
-		
+	   
+		}
 		
 	}
 	$scope.plotChartFunction = function(divId){
+		console.log("In line chart function");
 		$scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
-		  
+		  var obj={};
 		if($scope.linechartData==null){
+			console.log("In line chart function in if");
 		 $http({
-			  url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=salesVolume&group=false', 
+			  url:$rootScope.baseUrl+'sales?report_name=salesVolume&group=false', 
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
 				$scope.progress = false;
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
-		    	$scope.linechartData=data;
+		    	$scope.linechartData=data.data;
+		    	console.log("Multiline Chart response Line Chart Data sachin:"+JSON.stringify($scope.linechartData[0].sales.length.length));	
 		    	
+		    		for(var j=0;j<$scope.linechartData[0].sales.length;j++){
+			    			console.log("in for loop");
+				    		obj={
+					    			name:$scope.linechartData[0].sales[j].item,
+					    			data:[$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold]
+					    	}
+				    		$scope.lineChartSeriesData.push(obj);
+				    		obj={};
+			    		}
+			    		console.log("Series Data:: "+JSON.stringify($scope.lineChartSeriesData));
+			    	
 		    	//linechart data
 		    	$("#"+divId).highcharts( {
+		    		credits:false,
+		    		title:false,
+		    		legend: {enabled:false},
+		    	    xAxis: {
+		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
+		    	    },
+		    	    yAxis: {
+		    			title:false
+		    		    },
+		    		    tooltip: {
+		    		    	backgroundColor: '#87C1E6',
+		    		    	shared: true,
+		    			    style:{
+		    					color:'#ffffff'
+		    				}
+		    	        },
+		    	        plotOptions: {
+		    	            series: {
+		    	            	 color: "#f0f0f0", 
+		    	                marker: {
+		    	                	fillColor: '#FFFFFF', 
+		    	                    lineWidth: 2,
+		    	                    lineColor: "#6BD500",  // inherit from series 
+		    	                    radius: 6
+		    	                }
+		    	            }
+		    	        },
+		    	    series:$scope.lineChartSeriesData
+		    	});
+		    }). error(function(data, status) {
+		    	$scope.progress = false;
+		       console.log(JSON.stringify(data));
+		    });
+		}else{
+			console.log("In line chart function in else");
+			if($rootScope.applyFilterBoolean){
+				console.log("In line chart function in else if");
+				$http({
+					  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=true', 
+					  method: 'POST',
+					  headers: { 
+		                	'Content-Type': 'application/json',
+		                	'Accept':'text/plain' ,
+		                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Methods':'POST',
+		                	'Access-Control-Allow-Credentials':true  
+	          		 },
+					  data:$scope.usagedata
+						 
+					}).success(function(data, status) {
+						$scope.progress = false;						
+				    	console.log("Line Chart response With Filter:"+JSON.stringify(data));
+				    	$("#"+divId).highcharts( {
+				    		credits:false,
+				    		title:false,
+				    		legend: {enabled:false},
+				    	    xAxis: {
+				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
+				    	    },
+				    	    yAxis: {
+				    			title:false
+				    		    },
+				    		    tooltip: {
+				    		    	backgroundColor: '#87C1E6',
+				    		    	shared: true,
+				    			    style:{
+				    					color:'#ffffff'
+				    				}
+				    	        },
+				    	        plotOptions: {
+				    	            series: {
+				    	            	 color: "#f0f0f0", 
+				    	                marker: {
+				    	                	fillColor: '#FFFFFF', 
+				    	                    lineWidth: 2,
+				    	                    lineColor: "#6BD500",  // inherit from series 
+				    	                    radius: 6
+				    	                }
+				    	            }
+				    	        },
+				    	    series: $scope.lineChartSeriesData
+				    	});
+				    	
+				   }).error(function(data,status){
+					   $scope.progress = false;	
+					   console.log("Error:"+JSON.stringify(data));
+				   });
+				$rootScope.applyFilterBoolean=false;
+			}
+			else{
+				console.log("In line chart function in else else");
+				console.log("Series Data:: "+JSON.stringify($scope.lineChartSeriesData));
+				$scope.progress = false;
+				$("#"+divId).highcharts( {
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
@@ -2074,69 +2302,13 @@ $scope.plotPieChart=function(divID){
 		    	                }
 		    	            }
 		    	        },
-		    	    series: [{
-		    		    		name:$scope.linechartData[0].make,
-		    	        		data: [$scope.linechartData[0].totalSales,$scope.linechartData[1].totalSales,$scope.linechartData[2].totalSales,$scope.linechartData[2].totalSales]
-		    	    },
-		    	    {
-		        		name:""+$scope.linechartData[3].make,
-		        		data: [$scope.linechartData[3].totalSales,$scope.linechartData[4].totalSales,$scope.linechartData[5].totalSales,$scope.linechartData[5].totalSales]
-		    		},
-		    		{
-		    			name:""+$scope.linechartData[6].make,
-		        		data: [$scope.linechartData[6].totalSales,$scope.linechartData[7].totalSales,$scope.linechartData[8].totalSales,$scope.linechartData[8].totalSales]
-		    		}]
+		    	    series: $scope.lineChartSeriesData
 		    	});
-		    }). error(function(data, status) {
-		    	$scope.progress = false;
-		       console.log(JSON.stringify(data));
-		    });
-		}else{
-			$scope.progress = false;
-			$("#"+divId).highcharts( {
-	    		credits:false,
-	    		title:false,
-	    		legend: {enabled:false},
-	    	    xAxis: {
-	    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
-	    	    },
-	    	    yAxis: {
-	    			title:false
-	    		    },
-	    		    tooltip: {
-	    		    	backgroundColor: '#87C1E6',
-	    		    	shared: true,
-	    			    style:{
-	    					color:'#ffffff'
-	    				}
-	    	        },
-	    	        plotOptions: {
-	    	            series: {
-	    	            	 color: "#f0f0f0", 
-	    	                marker: {
-	    	                	fillColor: '#FFFFFF', 
-	    	                    lineWidth: 2,
-	    	                    lineColor: "#6BD500",  // inherit from series 
-	    	                    radius: 6
-	    	                }
-	    	            }
-	    	        },
-	    	    series: [{
-	    		    		name:$scope.linechartData[0].make,
-	    	        		data: [$scope.linechartData[0].totalSales,$scope.linechartData[1].totalSales,$scope.linechartData[2].totalSales,$scope.linechartData[2].totalSales]
-	    	    },
-	    	    {
-	        		name:""+$scope.linechartData[3].make,
-	        		data: [$scope.linechartData[3].totalSales,$scope.linechartData[4].totalSales,$scope.linechartData[5].totalSales,$scope.linechartData[5].totalSales]
-	    		},
-	    		{
-	    			name:""+$scope.linechartData[6].make,
-	        		data: [$scope.linechartData[6].totalSales,$scope.linechartData[7].totalSales,$scope.linechartData[8].totalSales,$scope.linechartData[8].totalSales]
-	    		}]
-	    	});
+			}
 		}
 	
-	}
+	}	
+	
 	
 	$scope.plotEngManagerChartFunction = function(divId,key){
 		
