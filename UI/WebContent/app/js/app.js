@@ -1386,8 +1386,9 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
 	$scope.selectedChart="";
+	$scope.seneorkey="";
 	
-	  $scope.EngchartTypes=['Pie','Bar','Multiline'];
+	  $scope.EngchartTypes=['LineChart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
 	$scope.linechartData=null;
@@ -1476,6 +1477,20 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 				
 			}
 	  }
+	  
+	  
+	  // display sensors Name for Engg Manager
+	  $http({
+		  url:'http://ibm-iot.mybluemix.net/api/v1/sensors', 
+		  method: 'GET',
+		}).success(function(data, status) {
+			$scope.sensorsList=data;
+	    	console.log("Sensors Name List: :"+JSON.stringify(data));					           
+	    }). error(function(data, status) {
+	      // alert("error"  +status);
+	       console.log(JSON.stringify(data));
+	    });
+	  
 	  $http({
 			  url:'http://ibm-iot.mybluemix.net/api/v1/sales/charts', 
 			  method: 'GET',
@@ -1487,6 +1502,29 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 		      // alert("error"  +status);
 		       console.log(JSON.stringify(data));
 		    });
+	  
+	  
+	  $scope.Engdisp=function(index){
+			if(index==0)
+				$scope.selectedSensors="";
+		
+
+			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
+//				$rootScope.selectedSales=$scope.selectedSales;
+				 $scope.sensortype=$scope.sensorsList[$scope.selectedSensors].displayName;
+				 $scope.seneorkey=$scope.sensorsList[$scope.selectedSensors].key;
+				 
+			
+				
+			}
+			else
+					$scope.sensortype="";
+			
+			
+			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
+					
+			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+		}
 	  
 	  
 	  
@@ -1508,6 +1546,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	
 	$scope.dispChart=function(selectedChart){
 		console.log("in disp chart"+selectedChart);
+		console.log("in disp sensors"+selectedSensors);
 //		if($scope.selectedChart=='Pie'){	
 ////			$scope.selectedChart='Pie';
 //			 $http({
@@ -1884,7 +1923,23 @@ $scope.plotPieChart=function(divID){
 	
 	}
 	
-	$scope.plotEngManagerChartFunction = function(divId){
+	$scope.plotEngManagerChartFunction = function(divId,key){
+		
+		
+		var url="http://ibm-iot.mybluemix.net/api/v1/sensors/data?sensor_name="+key;
+		
+			
+		
+		 $http({
+			  url:url, 
+			  method: 'POST'
+			 
+			}).success(function(data, status) {
+				$scope.progress = false;
+		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
+		    	$scope.linechartData=data;
+		
+		
 		$("#"+divId).highcharts( {
 			credits:false,
 			title:false,
@@ -1913,20 +1968,21 @@ $scope.plotPieChart=function(divID){
 		                }
 		            }
 		        },
-		    series: [{
-			    		name:"WD100CW",
-		        		data: [0, 1000, 1733, 129, 2000, 1322, 1500]
-		    }/*,
-		    {
-	    		name:"WA80E5XEC",
-	    		data: [110, 120, 733, 1029, 20, 122, 150]
-			},
-		    {
-	    		name:"WTW7000DW",
-	    		data: [1110, 1920, 633, 129, 520, 1212, 350]
-			}*/]
+		        series: [{
+		    		name:$scope.linechartData[0].make,
+	        		data: [$scope.linechartData[0].avgUsage,$scope.linechartData[1].avgUsage,$scope.linechartData[2].avgUsage,$scope.linechartData[2].avgUsage]
+	    },
+	    {
+    		name:""+$scope.linechartData[3].make,
+    		data: [$scope.linechartData[3].avgUsage,$scope.linechartData[4].avgUsage,$scope.linechartData[5].avgUsage,$scope.linechartData[5].avgUsage]
+		},
+		{
+			name:""+$scope.linechartData[6].make,
+    		data: [$scope.linechartData[6].avgUsage,$scope.linechartData[7].avgUsage,$scope.linechartData[8].avgUsage,$scope.linechartData[8].avgUsage]
+		}]
 		});
-		}
+		})
+	}
 	
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
@@ -1948,6 +2004,25 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #close").removeClass("hidden");
          	
          	$scope.plotChartFunction("hiddenDiv #container");
+     	
+     	
+     	}if($scope.selectedChart=='LineChart'){
+     		
+     	
+     		$("#hiddenDiv #container").removeClass("graphDiv");
+     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+         	
+         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+         	
+         	$("#hiddenDiv #container").addClass("graphDiv-maximize");
+         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+         	
+         	$("#hiddenDiv #maximize").addClass("hidden");
+         	$("#hiddenDiv #close").removeClass("hidden");
+         	
+         	
+         	
+       //  	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
      	
      	
      	}
@@ -1991,6 +2066,9 @@ $scope.plotPieChart=function(divID){
 			$scope.plotBarChart("bar");
 		}else if($scope.selectedChart=='Pie'){
 			$scope.plotPieChart("piecontainer");
+		}else if($scope.selectedChart=='LineChart'){
+			
+         	//$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
 	/* $scope.closing = function(){
