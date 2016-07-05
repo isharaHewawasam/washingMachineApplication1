@@ -1652,8 +1652,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	  $scope.Engdisp=function(index){
 			if(index==0)
-				$scope.selectedSensors="";
-		
+				$scope.selectedSensors=""+0;
 
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
 //				$rootScope.selectedSales=$scope.selectedSales;
@@ -1665,8 +1664,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 			}
 			else
 					$scope.sensortype="";
-			
-			
+	
 			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
 					
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
@@ -1676,7 +1674,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	$scope.disp=function(index){
 		if(index==0)
-			$scope.selectedSales="";
+			$scope.selectedSales=""+0;
 
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
 //			$rootScope.selectedSales=$scope.selectedSales;
@@ -1692,7 +1690,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	
 	$scope.dispChart=function(selectedChart){
 		console.log("in disp chart"+selectedChart);
-		console.log("in disp sensors"+selectedSensors);
+		//console.log("in disp sensors"+selectedSensors);
 //		if($scope.selectedChart=='Pie'){	
 ////			$scope.selectedChart='Pie';
 //			 $http({
@@ -2071,7 +2069,9 @@ $scope.plotPieChart=function(divID){
 	
 	$scope.plotEngManagerChartFunction = function(divId,key){
 		
-		
+		  $scope.loadingText = "Loading data...";    
+		  $scope.isDisabled = true;
+		  $scope.progress = true;
 		var url="http://ibm-iot.mybluemix.net/api/v1/sensors/data?sensor_name="+key;
 		
 			
@@ -2084,6 +2084,7 @@ $scope.plotPieChart=function(divID){
 				$scope.progress = false;
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
 		    	$scope.linechartData=data;
+		    	 $scope.progress = false;
 		
 		
 		$("#"+divId).highcharts( {
@@ -2179,7 +2180,7 @@ $scope.plotPieChart=function(divID){
          	
          	
          	
-       //  	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
      	
      	
      	}
@@ -2225,7 +2226,7 @@ $scope.plotPieChart=function(divID){
 			$scope.plotPieChart("piecontainer");
 		}else if($scope.selectedChart=='LineChart'){
 			
-         	//$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
 	/* $scope.closing = function(){
