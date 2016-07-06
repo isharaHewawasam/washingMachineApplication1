@@ -38,7 +38,7 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
-    callback(err, result);
+    callback(err, result.slice(0, 3));
   });    
 };
 
