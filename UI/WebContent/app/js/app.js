@@ -1239,7 +1239,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     
     $scope.clearfilter=function(){
           
-         $scope.search={};
+         $rootScope.search={};
          $rootScope.filterIcons=[];
       }
     
@@ -1248,26 +1248,26 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         
         
         
-        if($scope.search.selectedMake && $scope.search.selectedMake.length != 0)
+        if($rootScope.search.selectedMake && $rootScope.search.selectedMake.length != 0)
             $scope.someArr.push(
                 {
-                    value:$scope.search.selectedMake,
+                    value:$rootScope.search.selectedMake,
                     key:"make"
                 }
             );
         
-        if($scope.search.selectedModel && $scope.search.selectedModel.length != 0)
+        if($rootScope.search.selectedModel && $rootScope.search.selectedModel.length != 0)
             $scope.someArr.push(
                 {
-                    value:$scope.search.selectedModel,
+                    value:$rootScope.search.selectedModel,
                     key:"model"
                 }
             );
         
-        if($scope.search.selectedSKU && $scope.search.selectedSKU.length != 0)
+        if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0)
             $scope.someArr.push(
                 {
-                    value:$scope.search.selectedSKU,
+                    value:$rootScope.search.selectedSKU,
                     key:"sku"    
                 });
         
@@ -1286,19 +1286,19 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           
       }
 
-    $scope.search={};
+    $rootScope.search={};
       $scope.selectedMake=function(){
           
-          $scope.search.selectedModel="";
-          $scope.search.selectedSKU="";
+          $rootScope.search.selectedModel="";
+          $rootScope.search.selectedSKU="";
         //  $scope.createIconArray();
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$scope.search.selectedMake, 
+          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$rootScope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
-	    	 $scope.models=data[$scope.search.selectedMake];
+	    	 $scope.models=data[$rootScope.search.selectedMake];
 	    	 //console.log("manufacture year :"+JSON.stringify(data));
               
-                /*$scope.valArr.push($scope.search.selectedMake);
+                /*$scope.valArr.push($rootScope.search.selectedMake);
               alert($scope.valArr);*/
                 
 				           
@@ -1310,13 +1310,13 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       }
       
       $scope.selectedModel=function(){
-          $scope.search.selectedSKU="";
+          $rootScope.search.selectedSKU="";
        //   $scope.createIconArray();
           
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$scope.search.selectedModel, 
+          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$rootScope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
-	    	 $scope.SKUs=data[$scope.search.selectedModel];
+	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
               console.log($scope.SKUs);
 	    	 //console.log("manufacture year :"+JSON.stringify(data));
               
@@ -1331,14 +1331,14 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     
          $scope.applyProductFilter=function(){
 				var obj={};
-          	 	obj.selectedMake=$scope.search.selectedMake;
-          	 	obj.selectedModel=$scope.search.selectedModel;
-          	 	obj.selectedSKU=$scope.search.selectedSKU;
-          	 	obj.mfgDate=$scope.search.mfgDate;
+          	 	obj.selectedMake=$rootScope.search.selectedMake;
+          	 	obj.selectedModel=$rootScope.search.selectedModel;
+          	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+          	 	obj.mfgDate=$rootScope.search.mfgDate;
           	 	
                  $rootScope.setUsageObjectFromSidebar(obj);
 
-                  console.log("applied product filter  make :"+$scope.search.selectedMake+", model :"+$scope.search.selectedModel+", sku :"+$scope.search.selectedSKU+", MFG Date :"+$scope.search.mfgDate);
+                  console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
 
                     $scope.createIconArray();
                    
@@ -1516,13 +1516,20 @@ App.controller('filterIconController',['$rootScope','$scope','$interval',functio
     $scope.removeFilter=function(filter){
         var indexofvar= $rootScope.filterIcons.indexOf(filter);
         
+         console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+
+        
+        
         if(filter.key=="make"){
             $rootScope.filterIcons=[];
+            $rootScope.search={};
         } else if(filter.key=="sku"){
-            
+          
+            $rootScope.search.selectedSKU=undefined;
             $rootScope.filterIcons.splice(indexofvar,1);
         }else if(filter.key=="model"){
-            
+             $rootScope.search.selectedModel=undefined;
+            $rootScope.search.selectedSKU=undefined;
             $rootScope.filterIcons.splice(indexofvar,1);
             angular.forEach($rootScope.filterIcons,function(value,key){
                 if(value.key=="sku"){
