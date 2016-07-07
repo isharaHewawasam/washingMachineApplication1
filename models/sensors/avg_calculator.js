@@ -195,7 +195,6 @@ var usageExists = function(payload, usages, usage_to_find) {
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
      
-    
     var all_match = false;
     
     if(payload.region.states.length > 0) {         

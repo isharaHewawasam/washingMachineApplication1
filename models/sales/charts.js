@@ -26,5 +26,5 @@ exports.charts = [
     "name": "Sales Volumes",
     "description": "Sales Volume",
     "chartTypes": ["Multiline"]
-  },
+  }
 ];

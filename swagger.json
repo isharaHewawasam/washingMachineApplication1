@@ -153,6 +153,75 @@
         }
       }
     },
+    "/demographics/family/age-ranges": {
+      "get": {
+        "x-swagger-router-controller": "age-ranges",
+        "operationId": "getData",
+        "tags": ["Demographics"],
+        "description": "Returns age ranges for users of washing machines",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/RangeResponse"
+            }
+          }
+        }
+      }
+    },
+    "/demographics/family/income-ranges": {
+      "get": {
+        "x-swagger-router-controller": "income-ranges",
+        "operationId": "getData",
+        "tags": ["Demographics"],
+        "description": "Returns income ranges for users of washing machines",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/RangeResponse"
+            }
+          }
+        }
+      }
+    },
+    "/demographics/family/members-count": {
+      "get": {
+        "x-swagger-router-controller": "members-count",
+        "operationId": "getData",
+        "tags": ["Demographics"],
+        "description": "Returns number of family members to select from",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/RangeResponse"
+            }
+          }
+        }
+      }
+    },
     "/config/sales/years": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -832,6 +901,26 @@
           "items": {            
             "$ref": "#/definitions/Sale" 
           }          
+        }
+      }
+    },
+    "MultipleRangesResponse": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/RangeResponse" 
+          }          
+        }
+      }
+    },
+    "RangeResponse": {
+      "properties": {
+        "id": {                   
+           "type": "number"                    
+        },
+        "range": {                   
+           "type": "string"                    
         }
       }
     },
