@@ -580,7 +580,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 	  };
 	   
 	  $scope.getMostUsedModel = function(divId) {
-		  $http({url:configApiClient.baseUrl + 'insights/most-used', 
+		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			               
 			    	 var mostUsedDataStr = JSON.stringify(data);
@@ -615,7 +615,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 					 renderPieChart(divId, data, 'Not Connected Machines');		               
 						           
 			}). error(function(data, status) {
-			       console.log("Error getting data for most used models, status: " + status);
+			       console.log("Error getting data for disconnected machines, status: " + status);
 			});	
 	  };
 
