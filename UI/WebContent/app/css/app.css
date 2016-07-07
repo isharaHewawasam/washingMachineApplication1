@@ -1560,11 +1560,6 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
-#most-fault-container, #least-fault-container, #common-fault-container, #most-used-model-container,
-#most-used-wash-cycle-container, #not-connected-machines-container{
-	height:200px;
-	/* overflow-y: scroll;  */
-}
 .container {
    height: 334px; 
     min-width: 310px; 
@@ -12185,3 +12180,21 @@ display : block;
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #E7EEF6;
 } */
+
+/* for insight divs*/
+#nav1 {
+    
+    background-color:white;
+    height:325px;
+    width:25px;
+    float:left;
+    padding:5px;
+}
+#nav2 {
+    float:left;
+    width:300px;
+}
+.insights-insightsDiv{
+	height:200px;
+	/* overflow-y: scroll;  */
+}
