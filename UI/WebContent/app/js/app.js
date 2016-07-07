@@ -1632,17 +1632,21 @@ function renderPieChart(divId, insightsData, chartTitle){
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            marginRight:140
+            marginRight:140,
+            margin: [50, 110, 0, 0]
         },
+        credits: {
+	    	enabled: false
+	    },
         title: {
             text: chartTitle,
             align: 'left',
             style: {
                 color: '#0099cc'
             },
-            //floating: true,
-            y: 20,
-            x: 45
+            floating: true,
+            y: 24,
+            x: 15
         },
         credits:{
         	enabled: false
@@ -1654,13 +1658,13 @@ function renderPieChart(divId, insightsData, chartTitle){
             align: 'right',
             layout: 'vertical',
             verticalAlign: 'middle',
-            x: -10,
+            x: 20,
             y: 30,
-            itemMarginBottom: 20,
+            itemMarginBottom: 8,
             labelFormatter: function () {
                 return this.name + ' - ' + this.percentage.toFixed(2) + '%';
             },
-            marginLeft:0
+            marginLeft:30
         },
         plotOptions: {
             pie: {
@@ -1683,9 +1687,7 @@ function renderPieChart(divId, insightsData, chartTitle){
             showInLegend:true,
             data: insightsData
         }]
-    });
-
-	
+    });	
 }
 
 App.controller('myController', function ($scope,$http,$rootScope) {
@@ -1694,6 +1696,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	$scope.selectedSales;
 	$scope.selectedChart="";
 	$scope.seneorkey="";
+	$scope.Unit="";
 	$rootScope.baseUrl='http://ibm-iot.mybluemix.net/api/v1/';
 	  $scope.EngchartTypes=['LineChart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
@@ -1766,6 +1769,25 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 			}
 			else
 					$scope.sensortype="";
+			if( $scope.sensortype=="Average Water Usage"){
+				
+				$scope.Unit="Water usage in Gallons";
+			}else if( $scope.sensortype=="Average Power"){
+				
+				$scope.Unit="power in kWh";
+			}else if( $scope.sensortype=="Average Wash Cycle Duration"){
+				
+				$scope.Unit="wash cycle duration in mins";
+			}else if( $scope.sensortype=="Average Wash Cycles"){
+				
+				$scope.Unit="cycle wah in RPM";
+			}else if( $scope.sensortype=="Average Temperature"){
+				
+				$scope.Unit=", temperature in  F";
+			}else if( $scope.sensortype=="Average Detergent Used"){
+				
+				$scope.Unit="detergent in gms";
+			}
 	
 			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
 					
@@ -2352,7 +2374,9 @@ $scope.plotPieChart=function(divID){
 		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
 		    },
 		    yAxis: {
-				title:false
+		    	 title: {
+		                text: ""+$scope.Unit
+		            },
 			    },
 			    tooltip: {
 			    	backgroundColor: '#87C1E6',

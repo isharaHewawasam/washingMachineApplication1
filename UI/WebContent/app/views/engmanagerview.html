@@ -180,7 +180,7 @@
                                                 <option class="chart-option-text-style"  ng-if="$index==0" ng-init="Engdisp($index)" selected ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                               	<option class="chart-option-text-style"  ng-if="$index!=0" ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                     </select>
-                                     <select class="chart-selectStyle col-md-3 chart-border "
+                                    <select id="second-chart-select" class="chart-selectStyle col-md-3 chart-border "
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style" value="">Last 1
 						day
@@ -196,7 +196,7 @@
 						year
 					<option class="chart-option-text-style" value="">Last 3
 						years
-				</select> <select class="chart-selectStyle col-md-3"
+				</select> <select id="third-chart-select"class="chart-selectStyle col-md-3"
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style"
@@ -234,79 +234,49 @@
 		<div class="panel panel-default" style="width: 374px; height: 373px">
 			<div class="panel-heading" style="background-color: #ffffff;">
 				<div class="pull-right ">
-					<img class="col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;"
+					<img class="col-md-1" style="padding: 0px; height: 15px; width: 15px;"
 						src="app/img/Dashboardassets/help.png"></img>
 				</div>
-				<!--  <div class="pull-right " style="padding-right: 10px; padding-top:-5px; padding-left: 3px; padding-bottom:10px ">
-            
-            <select  name="Days"
-				style=" width: 70px; background-color: transparent;   border: none">
-				<option class="chart-option-text-style" value="" selected="selected">Today
-				<option class="chart-option-text-style" value="">Last 1 day
-				<option class="chart-option-text-style" value="">Last 7 days
-				<option class="chart-option-text-style" value="">Last 30 days
-				<option class="chart-option-text-style" value="">Last 3 months
-				<option class="chart-option-text-style" value="">Last 6 months
-				<option class="chart-option-text-style" value="">Last 1 year
-				<option class="chart-option-text-style" value="">Last 3 years
-			</select>
-            
-            </div> -->
-				<div class="panel-title md-body-2"
-					style="font-family: Roboto; font-size: 15px;">Insights</div>
+
+				<div class="panel-title md-body-2" style="font-family: Roboto; font-size: 15px;">Insights</div>
 			</div>
-			<!-- START list group-->
-			<scrollable height="230" class="list-group list-scroll"
-				ng-controller="InfiniteScrollController"> <!-- START list group item-->
 
-			<div infinite-scroll="loadMore()" infinite-scroll-distance="1">
-			
-			<div style="width: 374px; height: 315px; overflow-y: scroll">
-				<div id="most-fault-container" ng-init="getMostFaults('most-fault-container')"></div>
-				<div id="least-fault-container" ng-init="getLeastFaults('least-fault-container')"></div>
-				<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')"></div> 
-			</div>
-				<!-- <div ng-repeat="image in images">
-					<a href="#" class="list-group-item">
-						<div class="media-box" style="height: 90px">
-							<div class="pull-left ">
-								 <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" />
+			<scrollable height="230" class="list-group list-scroll"	ng-controller="InfiniteScrollController">
 
 
-								<div
-									class=" alert-warning media-box-object img-circle thumb32 text-center">
-									<h2 class="mv-lg">{{image}}</h2>
-
-								</div>
+			<div infinite-scroll="loadMore()" infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
 
 
+				<div class="col-lg-6" style="width: 374px; height: 310px">
+
+					<div class="col-lg-6" id="nav1">
+						<div style="width: 25px; height: 175px">
+							<div class="alert-warning media-box-object img-circle thumb32 text-center">
+								<h2 class="mv-lg">1</h2>
 							</div>
-							<div class="media-box-body clearfix">
-								<small class="pull-right">4m ago</small> <strong
-									class="media-box-heading text-primary"> <span
-									class="circle circle-success circle-lg text-left"></span>The
-									AVG wash
-								</strong>
-								<p class="mb-sm">
-									<small>The avg wash cycle run time for selected
-										make/type in more by 20% in selected geographic. </small> <img
-										class="pull-right col-md-1"
-										style="padding-top: 10px; width: auto; height: auto;"
-										src="app/img/Dashboardassets/more.png">
-
-
-								</p>
-							</div> 
 						</div>
-					</a>
-					END list group item
-					START list group item
+						<div style="width: 25px; height: 175px; padding-top:5px">
+							<div class="alert-warning media-box-object img-circle thumb32 text-center"	style="width: 25px; height: 175px">
+								<h2 class="mv-lg">2</h2>
+							</div>
+						</div>
+						<div style="width: 25px; height: 175px; padding-top:30px">
+							<div class="alert-warning media-box-object img-circle thumb32 text-center" style="width: 25px; height: 175px">
+								<h2 class="mv-lg">3</h2>
+							</div>
+						</div>
+					</div>
 
-				</div> -->
-			</div>
+					<div class="col-lg-6" id="nav2" style="height: 100%">
+
+						<div id="most-fault-container"	ng-init="getMostFaults('most-fault-container')"	class="insights-insightsDiv"></div>
+						<div id="least-fault-container"	ng-init="getLeastFaults('least-fault-container')" class="insights-insightsDiv"></div>
+						<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')" class="insights-insightsDiv"></div>
+					</div>
+
+
+				</div>
 			</scrollable>
-			<!-- END list group-->
 
 		</div>
 	</div>
@@ -354,14 +324,14 @@
 
 
 							<tr>
-								<th>Make</th>
-								<th>Model</th>
-								<th>Water used(G)</th>
-								<th>Energy used(kw)</th>
-								<th>Wash cycle..(min)</th>
-								<th>Wash cycles..</th>
-								<th>Temperature(f)</th>
-								<th>Detergent used(gms)</th>
+								<th align="centre">Make</th>
+								<th align="centre">Model</th>
+								<th align="centre">Water used<span class='notbold'>(G)</span></th>
+								<th align="centre">Energy used<span class='notbold'>(kw)</span></th>
+								<th align="centre">Wash cycle<span class='notbold'>(min)</span></th>
+								<th align="centre">Wash cycles</th>
+								<th  align="centre">Temperature<span class='notbold'>(f)</span></th>
+								<th  align="centre">Detergent used<span class='notbold'>(gms)</span></th>
 							</tr>
 						</thead>
 						<tbody>
