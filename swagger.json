@@ -107,9 +107,9 @@
         }
       }
     },
-    "/insights/most-used": {
+    "/insights/most-used-products": {
       "get": {
-        "x-swagger-router-controller": "most_used",
+        "x-swagger-router-controller": "most_used_products",
         "operationId": "getData",
         "tags": ["Insights"],
         "description": "Returns most used washing machines",
@@ -125,6 +125,31 @@
             "schema": {
               "type": "array",
               "$ref": "#/definitions/SalesByChartResponse"
+            }
+          }
+        }
+      }
+    },
+    "/insights/most-used-wash-cycles": {
+      "get": {
+        "x-swagger-router-controller": "most_used_wash_cycles",
+        "operationId": "getData",
+        "tags": ["Insights"],
+        "description": "Returns most used wash cycles",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "items": {
+                  "type": "number"
+               }
             }
           }
         }
