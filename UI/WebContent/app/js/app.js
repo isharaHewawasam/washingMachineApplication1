@@ -104,7 +104,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: "Login",
         controller: 'LoginFormController',
 
-        templateUrl:helper.basepath('Login.html')
+        templateUrl:helper.basepath('Login.html'),
+        data:{title: 'IoT for Electronics - Login'}
         })
     
     /*.state('app.login', {
@@ -118,14 +119,16 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/singleview',
         title: 'Single View',
         controller: 'DashboardController',
-        templateUrl: helper.basepath('singleview.html')
+        templateUrl: helper.basepath('singleview.html'),
+        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
     })
     
     .state('app.engmanagerview', {
         url: '/engmanagerview',
         title: 'engmanagerview',
         controller: 'DashboardController',
-        templateUrl: helper.basepath('engmanagerview.html')
+        templateUrl: helper.basepath('engmanagerview.html'),
+        data:{title: 'IoT for Electronics - Engineering Manager Dashboard'}
     })
 	.state('app.myownview', {
         url: '/myownview',
@@ -393,13 +396,6 @@ App.controller('AppController',
         // Save the route title
         $rootScope.currTitle = $state.current.title;
       });
-
-    $rootScope.currTitle = $state.current.title;
-    $rootScope.pageTitle = function() {
-      var title = 'IoT for Electronics - Usage Dashboard';
-      document.title = title;
-      return title; 
-    };
 
     // iPad may presents ghost click issues
     // if( ! browser.ipad )
@@ -1572,7 +1568,9 @@ function renderMap(divId, salesData){
         chart: {
             renderTo: divId
         },
-        
+        credits:{
+        	enabled:false
+        },
 	    title: {
 	        text: 'Sales Volume Distribution'
 	    },
@@ -1645,6 +1643,9 @@ function renderPieChart(divId, insightsData, chartTitle){
             //floating: true,
             y: 20,
             x: 45
+        },
+        credits:{
+        	enabled: false
         },
         tooltip: {
             pointFormat: '<b>{point.percentage:.1f}%</b>'
@@ -1825,7 +1826,9 @@ $scope.plotPieChart=function(divID){
 	                title: {
 	                    text: 'Sold Vs Connected'
 	                },
-	               
+	                credits:{
+	                	enabled: false
+	                },	               
 	                plotOptions: {
 	                    pie: {
 	                        shadow: false
@@ -1886,7 +1889,9 @@ $scope.plotPieChart=function(divID){
 			                title: {
 			                    text: 'Sold Vs Connected'
 			                },
-			               
+			                credits:{
+			                	enabled: false
+			                },			               
 			                plotOptions: {
 			                    pie: {
 			                        shadow: false
@@ -1930,7 +1935,9 @@ $scope.plotPieChart=function(divID){
                 title: {
                     text: 'Sold Vs Connected'
                 },
-               
+                credits:{
+                	enabled: false
+                },
                 plotOptions: {
                     pie: {
                         shadow: false
