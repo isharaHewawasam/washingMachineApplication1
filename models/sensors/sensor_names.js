@@ -7,7 +7,10 @@ var avgKeys = {
     "washCyclesDuration": "avg-wash-cycle-duration",
     "washCycles": "avg-wash-cycles",
     "temperature": "avg-temperature",
-    "detergent": "avg-detergent-usage"
+    "detergent": "avg-detergent-usage",
+    "humidity": "avg-humidity",
+    "weight": "avg-weight",
+    "load": "avg-load"
 };
 
 module.exports.avgKeys = avgKeys;
@@ -57,6 +60,18 @@ module.exports.sensors = [
     "displayName": "Average Detergent Used",
     "key": avgKeys.detergent,
     "api": API_URL + avgKeys.detergent,
+    "defaults": defaults
+  },
+  {
+    "displayName": "Average Humidity",
+    "key": avgKeys.humidity,
+    "api": API_URL + avgKeys.humidity,
+    "defaults": defaults
+  },
+  {
+    "displayName": "Average Load",
+    "key": avgKeys.load,
+    "api": API_URL + avgKeys.load,
     "defaults": defaults
   }
 ];

@@ -297,7 +297,6 @@ var fillRecord = function(result, params) {
     case "average":
       record[params.statsKeyName] = (result.value[0].sum / result.value[0].count).toFixed(2);
       record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);
-      console.log("avg");
       break;
     case "sum":
       if (result.value instanceof Array) {

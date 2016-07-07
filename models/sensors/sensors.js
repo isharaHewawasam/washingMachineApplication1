@@ -22,22 +22,25 @@ function getAvgUsageBySensor(sensor_name, payload, callback) {
     var avg_keys = require("./sensor_names").avgKeys;
     
     switch(sensor_name) {
-      case avg_keys.water:
+      case avg_keys.water: //Water
         getAvgWaterUsage(payload, averages, callback, false); return;
-      case avg_keys.power:
+      case avg_keys.power: //Power
         getAvgPowerUsage(payload, averages, callback, false); return;
-      case avg_keys.washCyclesDuration:
+      case avg_keys.washCyclesDuration: //Wash Cycles Duration
         getAvgWashCycleDuration(payload, averages, callback, false); return;
-      case avg_keys.washCycles:
+      case avg_keys.washCycles: //Wash Cycles
         getAvgWashCycles(payload, averages, callback, false); return; 
-      case avg_keys.temperature:
+      case avg_keys.temperature: //Temperature
         getAvgTemperatureUsage(payload, averages, callback, false); return;
-      case avg_keys.detergent:
+      case avg_keys.detergent: //Detergent
         getAvgDetergentUsage(payload, averages, callback, false); return;   
+      case avg_keys.humidity: //Humidity
+        getAvgHumidityUsage(payload, averages, callback, false); return; 
+      case avg_keys.load: //Load
+        getAvgLoadUsage(payload, averages, callback, false); return;        
       default:
         callback("Invalid sensor attribute", null); return;
     }
-    
   }    
 }
 
@@ -102,8 +105,28 @@ function getAvgWashCycles(payload, averages, callback, call_next_function) {
   });
 }
 
-function getAvgDetergentUsage(payload, averages, callback) {
-  require("./detergent").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {      
-    callback(err, result);    
+function getAvgDetergentUsage(payload, averages, callback, call_next_function) {
+  require("./detergent").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {
+    if(err || !call_next_function) {
+      callback(err, result);
+    } else {    
+      getAvgHumidityUsage(payload, averages, callback, call_next_function);   
+    }
+  });
+}
+
+function getAvgHumidityUsage(payload, averages, callback, call_next_function) {
+  require("./humidity").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {      
+    if(err || !call_next_function) {
+      callback(err, result);
+    } else {    
+     getAvgLoadUsage(payload, averages, callback, call_next_function);  
+    }  
+  });
+}
+
+function getAvgLoadUsage(payload, averages, callback, call_next_function) {
+  require("./load").getAverageUsage(payload, averages, getStatsKeyName(), function(err, result) {      
+    callback(err, result);  
   });
 }
