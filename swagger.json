@@ -9,6 +9,76 @@
   "host": "localhost:3000",
   "basePath": "/api/v1",
   "paths": {
+    "/mostFaultModels": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getMostFaultModels",
+        "tags": ["Insights"],
+        "description": "Return the most fault models",
+        "responses": {
+          "default": {
+            "description": "Most Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Most_Fault_Models"
+            }
+          }
+        }
+      }
+    },
+    "/leastFaultModels": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getLeastFaultModels",
+        "tags": ["Insights"],
+        "description": "Return the most least models",
+        "responses": {
+          "default": {
+            "description": "least Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Least_Fault_Models"
+            }
+          }
+        }
+      }
+    },
+    "/mostCommonfault": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getmostFault",
+        "tags": ["Insights"],
+        "description": "Return the most least models",
+        "responses": {
+          "default": {
+            "description": "least Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+
     "/config/states": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -125,6 +195,40 @@
             "schema": {
               "type": "array",
               "$ref": "#/definitions/SalesByChartResponse"
+            }
+          }
+        }
+      }
+    },
+    "/insights/product-score": {
+      "get": {
+        "x-swagger-router-controller": "product_score",
+        "operationId": "getData",
+        "tags": ["Insights"],
+        "description": "Returns products sentiments on social media",
+        "parameters": [
+          {
+            "name": "media_name",
+            "in": "query",
+            "description": "Social Media name. example = facebook or twitter",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "items": {
+                  "$ref": "#/definitions/SocialMediaScoreResponse"
+               }
             }
           }
         }
@@ -577,6 +681,45 @@
     }
   },
   "definitions": {
+    "Most_Fault_Models": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
+    "Least_Fault_Models": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
+    "most_common_fault": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
     "State": {
       "properties": {
         "state_name": {
@@ -967,6 +1110,22 @@
     },
     "Charts": {             
     },    
+    "SocialMediaScoreResponse": {
+      "properties": {
+        "product": {
+          "type": "integer"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "dislikes": {
+          "type": "integer"
+        },
+        "totalComments": {
+          "type": "integer"
+        }
+      }
+    }, 
     "Error": {
       "properties": {
         "message": {

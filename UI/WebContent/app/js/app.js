@@ -920,7 +920,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		// to set usage object in anotehr controllr
 		$rootScope.setUsageData($scope.usagedata);
 		//code added by sanket
-		$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
+		$http({url:'http://localhost:3000/api/v1/sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
                   data: $scope.usagedata
@@ -948,7 +948,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$scope.eng_griddata=[];	  		
 		
 		
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+		  $http({url:'http://localhost:3000/api/v1/usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -977,7 +977,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        	 
 	         });
 		  
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/sensors/data', 
+		  $http({url:'http://localhost:3000/api/v1/sensors/data', 
 	            method: "POST",
 	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
@@ -1021,7 +1021,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
 
-    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+    		  $http({url:"http://localhost:3000/api/v1/usage", 
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
@@ -1034,7 +1034,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     	        	 
     	         });
     		  
-    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/sensors/data", //api url
+    		  $http({url:"http://localhost:3000/api/v1/sensors/data", //api url
                   method: "POST",
                   Accept: "text/plain"}).success(function(data, status) {
                      console.log("*****************Eng manager_onLoad****************");
@@ -1107,7 +1107,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    } 
 
 	
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/states', 
+	 $http({url:'http://localhost:3000/api/v1/config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
@@ -1126,7 +1126,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	 
 	 //sanket changes
 	 
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/sales/years', 
+	 $http({url:'http://localhost:3000/api/v1/config/sales/years', 
 	     	method: "get",
 	     	Accept: "text/plain"
 	     	})
@@ -1142,7 +1142,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
 		 $scope.zips=[];
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.region.states, 
+		 $http({url:"http://localhost:3000/api/v1/config/states/cities?state_names="+$scope.region.states, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -1158,7 +1158,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		
 		 $scope.region.zip_codes=undefined;
 		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
+		 $http({url:"http://localhost:3000/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -1288,7 +1288,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           $rootScope.search.selectedModel="";
           $rootScope.search.selectedSKU="";
         //  $scope.createIconArray();
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$rootScope.search.selectedMake, 
+          $http({url:'http://localhost:3000/api/v1/config/makes/models?make_names='+$rootScope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.models=data[$rootScope.search.selectedMake];
@@ -1309,7 +1309,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           $rootScope.search.selectedSKU="";
        //   $scope.createIconArray();
           
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$rootScope.search.selectedModel, 
+          $http({url:'http://localhost:3000/api/v1/config/models/skus?model_names='+$rootScope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
@@ -1445,7 +1445,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes', 
+    $http({url:'http://localhost:3000/api/v1/config/makes', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.makes=data.makes;
@@ -1460,7 +1460,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	 
     
     
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
+    $http({url:'http://localhost:3000/api/v1/config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
@@ -1541,7 +1541,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval',functio
 }]);
 App.controller('mapController',function($scope,$http){
 	$scope.plotMapFunction = function(divId){
-			$http.post('http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
+			$http.post('http://localhost:3000/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
 			    	console.log("Sales Volume List : "+JSON.stringify(data));			    	
 			    	renderMap(divId, data);
 			    	
@@ -1699,7 +1699,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	$scope.selectedChart="";
 	$scope.seneorkey="";
 	$scope.Unit="";
-	$rootScope.baseUrl='http://ibm-iot.mybluemix.net/api/v1/';
+	$rootScope.baseUrl='http://localhost:3000/api/v1/';
 	  $scope.EngchartTypes=['LineChart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
@@ -1733,7 +1733,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	  // display sensors Name for Engg Manager
 	  $http({
-		  url:'http://ibm-iot.mybluemix.net/api/v1/sensors', 
+		  url:'http://localhost:3000/api/v1/sensors', 
 		  method: 'GET',
 		}).success(function(data, status) {
 			$scope.sensorsList=data;
@@ -1744,7 +1744,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	    });
 	  
 	  $http({
-			  url:'http://ibm-iot.mybluemix.net/api/v1/sales/charts', 
+			  url:'http://localhost:3000/api/v1/sales/charts', 
 			  method: 'GET',
 			}).success(function(data, status) {
 				$scope.salesList=data;
@@ -2353,7 +2353,7 @@ $scope.plotPieChart=function(divID){
 		  $scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
-		var url="http://ibm-iot.mybluemix.net/api/v1/sensors/data?sensor_name="+key;
+		var url="http://localhost:3000/api/v1/sensors/data?sensor_name="+key;
 		
 			
 		

@@ -7,6 +7,7 @@ var config = require('./config/config');
 var db = require('./database/db')
 var Database = require('./database/db_')
 var WashDailyAggregateDb = require('./database/dbWashDailyAggregate')
+var faultWashesDb=require('./database/faultWashes_db');
 var serverPort = process.env.PORT || 3000;
 var serveStatic = require('serve-static');
 var cors = require('cors');
@@ -123,10 +124,17 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
           console.log("Wash daily aggregate Database connection failed");
 	        console.log(err);
         } else {
-          http.createServer(app).listen(serverPort, '0.0.0.0', function() {   
-            //getAllLatLong();          
-	          console.log('Express server listening on port ' + serverPort);
-          });
+          faultWashesDb.open(config.DeviceData1000, function(err) {        
+            if(err) {
+              console.log("Wash daily aggregate Database connection failed");
+              console.log(err);
+            } else {
+                http.createServer(app).listen(serverPort, '0.0.0.0', function() {   
+                //getAllLatLong();          
+              console.log('Express server listening on port ' + serverPort);
+            });
+          }  
+        });
         }  
       });
 	  }
