@@ -11855,7 +11855,7 @@ body {
 	border-bottom: 1px solid #d4d4d4;
 }
 .chart-selectStyle{
-	
+	font-size: 13px;
 	height: 32px;
 	border-color: #D4D4D4;
 	background-color:#FFFFFF;
@@ -11895,9 +11895,9 @@ body {
 	font-family: Roboto;light;
 	font-size:13px !important;
 	color:#222222;
-	border-bottom: 1px solid black;
-	height: 32px;
-	text-align: center;
+	/*border-bottom: 1px solid black;
+	height: 32px;*/
+	text-align: left;
 	margin: 0px auto;
 }
 .img-float-right{
