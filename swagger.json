@@ -9,6 +9,76 @@
   "host": "localhost:3000",
   "basePath": "/api/v1",
   "paths": {
+    "/mostFaultModels": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getMostFaultModels",
+        "tags": ["Insights"],
+        "description": "Return the most fault models",
+        "responses": {
+          "default": {
+            "description": "Most Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Most_Fault_Models"
+            }
+          }
+        }
+      }
+    },
+    "/leastFaultModels": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getLeastFaultModels",
+        "tags": ["Insights"],
+        "description": "Return the most least models",
+        "responses": {
+          "default": {
+            "description": "least Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Least_Fault_Models"
+            }
+          }
+        }
+      }
+    },
+    "/mostCommonfault": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getmostFault",
+        "tags": ["Insights"],
+        "description": "Return the most least models",
+        "responses": {
+          "default": {
+            "description": "least Fault Models",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+
     "/config/states": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -577,6 +647,45 @@
     }
   },
   "definitions": {
+    "Most_Fault_Models": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
+    "Least_Fault_Models": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
+    "most_common_fault": {
+      "properties": {
+        "Model": {
+          "type": "string"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
     "State": {
       "properties": {
         "state_name": {
