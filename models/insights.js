@@ -7,6 +7,17 @@ exports.getMostFaultModels = function(callback) {
   var opts = { q: '*:*', counts: ['Model'], limit:0 };  
   
   db.search('insights', 'mostFaultModels', opts, function(err, result) {
+    function predicatBy(prop){
+   			return function(a,b){
+      			if( a[prop] > b[prop]){
+          			return 1;
+      			}else if( a[prop] < b[prop] ){
+          			return -1;
+      			}
+      			return 0;
+   				}
+			}
+      
     if(err) {
     	console.log(err);
     	callback(err, null)
@@ -17,16 +28,7 @@ exports.getMostFaultModels = function(callback) {
 	  			 result.counts.Model.Model4, result.counts.Model.Model5,result.counts.Model.Model6,
 	  			result.counts.Model.Model7,result.counts.Model.Model8,result.counts.Model.Model9];
 
-	  	function predicatBy(prop){
-   			return function(a,b){
-      			if( a[prop] > b[prop]){
-          			return 1;
-      			}else if( a[prop] < b[prop] ){
-          			return -1;
-      			}
-      			return 0;
-   				}
-			}
+	  	
 
 	  var count=0;
 
