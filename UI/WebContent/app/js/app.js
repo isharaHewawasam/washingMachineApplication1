@@ -987,7 +987,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
 	                $scope.isDisabled = false
-	             if(!data || data.data.length === 0){
+	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
 	               console.log("empty data");
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
@@ -1332,11 +1332,13 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           	 	obj.selectedSKU=$rootScope.search.selectedSKU;
           	 	obj.mfgDate=$rootScope.search.mfgDate;
           	 	
-                 $rootScope.setUsageObjectFromSidebar(obj);
+                $rootScope.setUsageObjectFromSidebar(obj);
 
-                  console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+                console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
 
-                    $scope.createIconArray();
+                $scope.createIconArray();
+                
+                document.getElementById('filterPanel').style.display = 'none';
                    
                 }
 
