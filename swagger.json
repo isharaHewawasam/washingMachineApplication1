@@ -130,6 +130,40 @@
         }
       }
     },
+    "/insights/product-score": {
+      "get": {
+        "x-swagger-router-controller": "product_score",
+        "operationId": "getData",
+        "tags": ["Insights"],
+        "description": "Returns products sentiments on social media",
+        "parameters": [
+          {
+            "name": "media_name",
+            "in": "query",
+            "description": "Social Media name. example = facebook or twitter",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "items": {
+                  "$ref": "#/definitions/SocialMediaScoreResponse"
+               }
+            }
+          }
+        }
+      }
+    },
     "/insights/most-used-wash-cycles": {
       "get": {
         "x-swagger-router-controller": "most_used_wash_cycles",
@@ -967,6 +1001,22 @@
     },
     "Charts": {             
     },    
+    "SocialMediaScoreResponse": {
+      "properties": {
+        "product": {
+          "type": "integer"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "dislikes": {
+          "type": "integer"
+        },
+        "totalComments": {
+          "type": "integer"
+        }
+      }
+    }, 
     "Error": {
       "properties": {
         "message": {
