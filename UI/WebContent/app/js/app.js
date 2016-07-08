@@ -1342,7 +1342,20 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                    
                 }
 
-    
+         $scope.applyDemographicsFilter=function(){
+				var obj={};
+       	 	obj.selectedMake=$rootScope.search.selectedMake;
+       	 	obj.selectedModel=$rootScope.search.selectedModel;
+       	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+       	 	obj.mfgDate=$rootScope.search.mfgDate;
+       	 	
+             $rootScope.setUsageObjectFromSidebar(obj);
+
+             $scope.createIconArray();
+             
+             document.getElementById('demographicsFilterPanel').style.display = 'none';
+                
+             };
     
     var collapseList = [];
     
