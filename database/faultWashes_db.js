@@ -1,6 +1,6 @@
 /*
  * Author : Yasitha Dehigama
- * Time Stamp : 07/08/2016 11:20
+ * Time Stamp : 07/08/2016
  * Purpose : Contains database connection and query code
  * Project : iot Dashboard for Washing Machines
  */
