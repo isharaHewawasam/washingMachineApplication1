@@ -1,7 +1,7 @@
 "use strict"
 
 var express = require('express');
-var most_used = require('../models/insights/most_used_products.js');
+var most_used = require('../models/insights/most_used_wash_cycles.js');
 var helper = require('./helpers/utility.js');
 
 module.exports.getData = function(req, res, next) {
