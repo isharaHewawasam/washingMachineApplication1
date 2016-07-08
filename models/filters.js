@@ -33,7 +33,8 @@ var REPORT_TYPE = {
   "CONNECTED_BY_REGION_AND_PRODUCT": 8,
   "SALES_VOLUME": 9,
   "SALES_BY_STATE": 10,
-  "CONNECTED_BY_STATE": 11
+  "CONNECTED_BY_STATE": 11,
+  "INSIGHTS": 12,
 };
 
 module.exports.REPORT_TYPE = REPORT_TYPE;
@@ -192,8 +193,10 @@ Filter.prototype.groupLevel = function(){
         return 2;    
       case REPORT_TYPE.SALES_BY_STATE:
       case REPORT_TYPE.CONNECTED_BY_STATE:
+      case REPORT_TYPE.INSIGHTS:
         return 1;        
       default:
+        console.log("filters::groupLevel() : Invalid Report or View Name");
         return -1;      
     }    
   }

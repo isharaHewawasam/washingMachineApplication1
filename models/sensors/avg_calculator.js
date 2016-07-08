@@ -16,6 +16,10 @@ exports.getSum = function(params, callback) {
   getStats(params, callback);
 };
 
+exports.getCount = function(params, callback) {  
+  params.stats = "count";
+  getStats(params, callback);
+};
 
 exports.getAverage = function(params, callback) {  
   params.stats = "average";
@@ -251,6 +255,12 @@ var fillRecord = function(result, params) {
   //var keys = params.keys_map.key;
  
   //console.log("keys " + JSON.stringify(keys));
+  
+  if (params.statsKeyNameX !== undefined) {
+    console.log("223423432 " + params.key_maps.key.STATS_KEY_X);
+    record[params.statsKeyNameX] = result.key[params.key_maps.key.STATS_KEY_X];
+  }
+  
   record.make = result.key[params.key_maps.key.MAKE];
   record.model = result.key[params.key_maps.key.MODEL]; 
 
@@ -294,6 +304,9 @@ var fillRecord = function(result, params) {
   }
   
   switch (params.stats) {
+    case "count":
+      record[params.statsKeyName] = result.value.count;
+      break;
     case "average":
       record[params.statsKeyName] = (result.value[0].sum / result.value[0].count).toFixed(2);
       record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);

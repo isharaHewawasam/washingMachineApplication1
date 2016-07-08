@@ -11,6 +11,7 @@ var ViewKeysMappings = function() {
   this.REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT = 6;
   this.REPORT_TYPE.SENSOR_BY_YEAR = 7;
   this.REPORT_TYPE.MOST_USED_WM = 8;
+  this.REPORT_TYPE.INSIGHTS = 9;
   this.key = {};
 };
 
@@ -50,6 +51,13 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       this.key.YEAR = 0; this.key.MONTH = 1; this.key.QUARTER = 2; 
       this.key.MAKE = 3; this.key.MODEL = 4;
       break;   
+    case this.REPORT_TYPE.INSIGHTS:
+      this.key.STATS_KEY_X = 0;
+      this.key.MAKE = 1; this.key.MODEL = 2;
+      this.key.STATE = 3; this.key.CITY = 4; this.key.ZIP_CODE = 5;
+      this.key.YEAR = 6; this.key.MONTH = 7; this.key.QUARTER = 8; 
+      
+      break;   
     default:
       console.log("Invalid report key");
       break;
@@ -81,6 +89,12 @@ var setReportType2TopModels = function() {
 };
 
 ViewKeysMappings.prototype.setReportType2TopModels = setReportType2TopModels;
+
+var setReportType2Insights = function() {
+  this.setKeys(this.REPORT_TYPE.INSIGHTS);
+};
+
+ViewKeysMappings.prototype.setReportType2Insights = setReportType2Insights;
 
 var setReportType2Sales = function() {
   this.setKeys(this.REPORT_TYPE.SALES);
