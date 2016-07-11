@@ -133,8 +133,6 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
                 //getAllLatLong();          
 				console.log('Express server listening on port ' + serverPort);
 				
-				var myEnv = process.env.app_route;
-				console.log("============================My user defined====== " + myEnv);
             });
           }  
         });
