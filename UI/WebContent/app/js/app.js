@@ -581,7 +581,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			               
-			    	 var mostUsedProductDataStr = JSON.stringify(data);
+			    	 var mostUsedProductDataStr = JSON.stringify(data.data);
 					  
 			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
 			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
