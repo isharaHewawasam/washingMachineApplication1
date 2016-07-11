@@ -519,76 +519,74 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
 
 App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.config.ApiClient", function($scope, $timeout, $http, configApiClient) {
-
-	  $scope.images = [1, 2, 3];
-
-	  $scope.loadMore = function() {
-	    var last = $scope.images[$scope.images.length - 1];
-	    for(var i = 1; i <= 10; i++) {
-	      $scope.images.push(last + i);
-	    }
-	  };
 	  
 	  $scope.getMostFaults = function(divId) {
-			 //alert('in avg wash ' + configApiClient.baseUrl); 
-			 
-			 var mostFaultDataSet = [{Model:"Model 3",Make:"2232423",no_of_faults:123},
-			                          {Model:"Model 4",Make:"2232423",no_of_faults:123},
-			                          {Model:"Model 8",Make:"2232423",no_of_faults:12}];
-			 
-			 var mostFaultDataStr = JSON.stringify(mostFaultDataSet);
-				
-			 // Modify the json data set according to required highchart data format
-			 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
-			 mostFaultDataSet = JSON.parse(mostFaultDataStr);
-			 
-			 renderPieChart(divId, mostFaultDataSet, 'Most Fault');
-			 
+		  
+		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var mostFaultDataStr = JSON.stringify(data);
+					  
+			    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+			    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
+							
+					 data = JSON.parse(mostFaultDataStr);
+						 
+					 renderPieChart(divId, data, 'Most Fault');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most fault models, status: " + status);
+			});			 
 	  };
 	  
 	  $scope.getLeastFaults = function(divId) {
-		  var leastFaultDataSet = [{Model:"Model 1",Make:"Make 1",no_of_faults:0},
-		                           {Model:"Model 3",Make:"Make 2",no_of_faults:1},
-		                           {Model:"Model 7",Make:"Make 3",no_of_faults:2}];
 		  
-		  var leastFaultDataStr = JSON.stringify(leastFaultDataSet);
-		  
-		  leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-		  leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
-				
-		  leastFaultDataSet = JSON.parse(leastFaultDataStr);
-			 
-		  renderPieChart(divId, leastFaultDataSet, 'Least Fault');
-		  
+		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var leastFaultDataStr = JSON.stringify(data);
+					  
+			    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+			    	 leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
+							
+					 data = JSON.parse(leastFaultDataStr);
+						 
+					 renderPieChart(divId, data, 'Least Fault');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for least fault models, status: " + status);
+			});			  
 	  };
 	  
 	  $scope.getCommonFaults = function(divId) {
-		  var commonFaultDataSet = [{"Model": "Model 3","Make": "Make 1","no_of_faults": 163,"failureType":"Sensor"},
-		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 153,"failureType":"Software"},
-		                            {"Model": "Model 3","Make": "Make 1","no_of_faults": 130,"failureType":"Error"}];
 		  
-		  var commonFaultDataStr = JSON.stringify(commonFaultDataSet);
-		  
-		  commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-		  commonFaultDataStr = commonFaultDataStr.replace(/"failureType":/g, '"name":');
-				
-		  commonFaultDataSet = JSON.parse(commonFaultDataStr);
-			 
-		  renderPieChart(divId, commonFaultDataSet, 'Common Fault');
-
+		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 		               
+			    	 var commonFaultDataStr = JSON.stringify(data);
+					  
+			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
+							
+					 data = JSON.parse(commonFaultDataStr);
+						 
+					 renderPieChart(divId, data, 'Common Fault');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most common faults, status: " + status);
+			});	
 	  };
 	   
 	  $scope.getMostUsedModel = function(divId) {
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			               
-			    	 var mostUsedDataStr = JSON.stringify(data);
+			    	 var mostUsedProductDataStr = JSON.stringify(data);
 					  
-			    	 mostUsedDataStr = mostUsedDataStr.replace(/"totalLoadWeight":/g, '"y":');
-			    	 mostUsedDataStr = mostUsedDataStr.replace(/"model":/g, '"name":');
+			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
+			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
 							
-					 data = JSON.parse(mostUsedDataStr);
+					 data = JSON.parse(mostUsedProductDataStr);
 						 
 					 renderPieChart(divId, data, 'Most Used Models');		               
 						           
@@ -598,7 +596,21 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 	  };
 	  
 	  $scope.getMostUsedCycles = function(divId) {
-		  
+		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var mostUsedCyclesDataStr = JSON.stringify(data);
+					  
+			    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"cyclesAndCount":/g, '"y":');
+			    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"washCycles":/g, '"name":');
+							
+					 data = JSON.parse(mostUsedCyclesDataStr);
+						 
+					 renderPieChart(divId, data, 'Most Used Wash Cycles');		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most used wash cycles, status: " + status);
+			});
 	  };
 	  
 	  $scope.getNotConnectedMachines = function(divId) {
@@ -617,6 +629,41 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 			}). error(function(data, status) {
 			       console.log("Error getting data for disconnected machines, status: " + status);
 			});	
+	  };
+	  
+	  $scope.getTwitterHandles = function(divId){
+		  
+		  var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
+		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
+		  
+		  var twitterDataStr = JSON.stringify(twitterData);
+		  
+		  twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
+		  twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
+					
+		  twitterData = JSON.parse(twitterDataStr);
+		  
+		  var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 65px;margin-bottom: 20px'/>";
+		  
+		  renderPieChart(divId, twitterData, twitterTitle);
+		  
+		  /*$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			               
+			    	 var mostFaultDataStr = JSON.stringify(data);
+					  
+			    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+			    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
+							
+					 data = JSON.parse(mostFaultDataStr);
+					 
+					 var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 65px;margin-bottom: 20px'/>";
+						 
+					 renderPieChart(divId, data, twitterTitle);		               
+						           
+			}). error(function(data, status) {
+			       console.log("Error getting data for most fault models, status: " + status);
+			});*/	
 	  };
 
 	}]).factory('datasource', [
@@ -1573,6 +1620,9 @@ function renderMap(divId, salesData){
         credits:{
         	enabled:false
         },
+	    exporting: { 
+	    	enabled: false 
+	    },
 	    title: {
 	        text: 'Sales Volume Distribution'
 	    },
@@ -1635,13 +1685,24 @@ function renderPieChart(divId, insightsData, chartTitle){
             plotShadow: false,
             type: 'pie',
             marginRight:140,
-            margin: [50, 110, 0, 0]
+            margin: [50, 110, 0, 0],
+            events: {
+            	load: function(event) {
+            		if (divId == 'twitter-handle-container'){
+            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +this.series[0].data[0].totalComments + '</b></div>');
+            		}
+            	}
+            }
         },
         credits: {
 	    	enabled: false
 	    },
+	    exporting: { 
+	    	enabled: false 
+	    },
         title: {
             text: chartTitle,
+            useHTML: true,
             align: 'left',
             style: {
                 color: '#0099cc'
@@ -1650,9 +1711,6 @@ function renderPieChart(divId, insightsData, chartTitle){
             y: 24,
             x: 15
         },
-        credits:{
-        	enabled: false
-        },
         tooltip: {
             pointFormat: '<b>{point.percentage:.1f}%</b>'
         },
@@ -1660,13 +1718,17 @@ function renderPieChart(divId, insightsData, chartTitle){
             align: 'right',
             layout: 'vertical',
             verticalAlign: 'middle',
-            x: 20,
+            x: 10,
             y: 30,
+            useHTML: true,
             itemMarginBottom: 8,
             labelFormatter: function () {
-                return this.name + ' - ' + this.percentage.toFixed(2) + '%';
+            	if (divId != 'twitter-handle-container')
+            		return this.name + ' - ' + this.percentage.toFixed(2) + '%';
+            	else 
+            		return this.name + '-' + this.y;
             },
-            marginLeft:30
+            margin:30
         },
         plotOptions: {
             pie: {
@@ -1676,7 +1738,7 @@ function renderPieChart(divId, insightsData, chartTitle){
                     enabled: false
                 },
                 showInLegend: true,
-                colors: ['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+                colors: divId != 'twitter-handle-container'?['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
                 size: 10,
                 center: ['50%', '50%']
             }

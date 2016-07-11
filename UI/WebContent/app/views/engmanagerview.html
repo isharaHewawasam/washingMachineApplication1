@@ -246,7 +246,7 @@
 			<scrollable height="230" class="list-group list-scroll"	ng-controller="InfiniteScrollController">
 
 
-			<div infinite-scroll="loadMore()" infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
+			<div infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
 
 
 				<div class="col-lg-6" style="width: 374px; height: 310px">
@@ -266,12 +266,15 @@
 						</div>	
 					</div>
 
-					<div class="col-lg-6" id="nav2" style="height: 100%">
-
+					<div class="col-lg-6" id="nav2" style="height: 100%">						
+						<div id="twitter-handle-container"	ng-init="getTwitterHandles('twitter-handle-container')"	class="insights-insightsDiv"></div>				
 						<div id="most-fault-container"	ng-init="getMostFaults('most-fault-container')"	class="insights-insightsDiv"></div>
 						<div id="least-fault-container"	ng-init="getLeastFaults('least-fault-container')" class="insights-insightsDiv"></div>
 						<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')" class="insights-insightsDiv"></div>
 					</div>
+					
+					<!-- <div id="twitter-img" class="col-lg-4"><img style="padding: 0px; height: 30px; width: 30px;"
+						src="app/img/Dashboardassets/twitter.png"></div>  -->
 
 
 				</div>

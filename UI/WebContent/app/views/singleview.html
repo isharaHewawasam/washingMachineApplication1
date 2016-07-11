@@ -207,7 +207,7 @@
 
 			<scrollable height="230" class="list-group"	ng-controller="InfiniteScrollController">
 
-			<div infinite-scroll="loadMore()" infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
+			<div infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
 
 				<div class="col-lg-6" style="width: 374px; height: 310px">
 
@@ -228,8 +228,8 @@
 
 					<div class="col-lg-6" id="nav2" style="height: 100%">
 						<div id="most-used-model-container"	ng-init="getMostUsedModel('most-used-model-container')" class="insights-insightsDiv"></div>
-						<div id="most-used-wash-cycle-container" ng-init="getNotConnectedMachines('most-used-wash-cycle-container')" class="insights-insightsDiv"></div>
-						<div id="not-connected-machines-container"	ng-init="getCommonFaults('not-connected-machines-container')" class="insights-insightsDiv"></div>
+						<div id="most-used-wash-cycle-container" ng-init="getMostUsedCycles('most-used-wash-cycle-container')" class="insights-insightsDiv"></div>
+						<div id="not-connected-machines-container"	ng-init="getNotConnectedMachines('not-connected-machines-container')" class="insights-insightsDiv"></div>
 					</div>
 
 
