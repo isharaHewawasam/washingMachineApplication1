@@ -1941,7 +1941,7 @@ $scope.plotPieChart=function(divID){
 	                    type: 'pie'
 	                },
 	                title: {
-	                    text: 'Sold Vs Connected'
+	                    text: 'Connected Vs Disconnected'
 	                },
 	                credits:{
 	                	enabled: false
@@ -1958,7 +1958,7 @@ $scope.plotPieChart=function(divID){
 	                },
 	                series: [{
 	                    name: 'Browsers',
-	                    data: [["Connected",parseFloat($scope.connPercentage)],["Unconnected",parseFloat($scope.unconnPercentage)]],
+	                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
 	                    size: '80%',
 	                    innerSize: '80%',
 	                    showInLegend:true,
@@ -2004,7 +2004,7 @@ $scope.plotPieChart=function(divID){
 			                    type: 'pie'
 			                },
 			                title: {
-			                    text: 'Sold Vs Connected'
+			                    text: 'Connected Vs Disconnected'
 			                },
 			                credits:{
 			                	enabled: false
@@ -2021,7 +2021,7 @@ $scope.plotPieChart=function(divID){
 			                },
 			                series: [{
 			                    name: 'Browsers',
-			                    data: [["Connected",parseFloat($scope.connPercentage)],["Unconnected",parseFloat($scope.unconnPercentage)]],
+			                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
 			                    size: '80%',
 			                    innerSize: '80%',
 			                    showInLegend:true,
@@ -2050,7 +2050,7 @@ $scope.plotPieChart=function(divID){
                     type: 'pie'
                 },
                 title: {
-                    text: 'Sold Vs Connected'
+                    text: 'Connected Vs Disconnected'
                 },
                 credits:{
                 	enabled: false
@@ -2067,7 +2067,7 @@ $scope.plotPieChart=function(divID){
                 },
                 series: [{
                     name: 'Browsers',
-                    data: [["Connected",parseFloat($scope.connPercentage)],["Unconnected",parseFloat($scope.unconnPercentage)]],
+                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
                     size: '80%',
                     innerSize: '80%',
                     showInLegend:true,
