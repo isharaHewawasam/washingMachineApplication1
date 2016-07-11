@@ -687,7 +687,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 
 
 
-App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
+App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
 	$scope.searchButtonText = "Apply Filter";
   $scope.test = false;
 	$scope.isDisabled = false;
@@ -967,7 +967,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		// to set usage object in anotehr controllr
 		$rootScope.setUsageData($scope.usagedata);
 		//code added by sanket
-		$http({url:'http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true', 
+		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
                   data: $scope.usagedata
@@ -995,7 +995,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$scope.eng_griddata=[];	  		
 		
 		
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/usage', 
+		  $http({url:configApiClient.baseUrl +  'usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
@@ -1024,7 +1024,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        	 
 	         });
 		  
-		  $http({url:'http://ibm-iot.mybluemix.net/api/v1/sensors/data', 
+		  $http({url:configApiClient.baseUrl + 'sensors/data', 
 	            method: "POST",
 	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
@@ -1068,7 +1068,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
 
-    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+    		  $http({url:configApiClient.baseUrl +  "usage", 
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
@@ -1081,7 +1081,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     	        	 
     	         });
     		  
-    		  $http({url:"http://ibm-iot.mybluemix.net/api/v1/sensors/data", //api url
+    		  $http({url:configApiClient.baseUrl + "sensors/data", //api url
                   method: "POST",
                   Accept: "text/plain"}).success(function(data, status) {
                      console.log("*****************Eng manager_onLoad****************");
@@ -1154,7 +1154,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    } 
 
 	
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/states', 
+	 $http({url:configApiClient.baseUrl + 'config/states', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
@@ -1173,7 +1173,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	 
 	 //sanket changes
 	 
-	 $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/sales/years', 
+	 $http({url:configApiClient.baseUrl + 'config/sales/years', 
 	     	method: "get",
 	     	Accept: "text/plain"
 	     	})
@@ -1189,7 +1189,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
 		 $scope.zips=[];
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/states/cities?state_names="+$scope.region.states, 
+		 $http({url:configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -1205,7 +1205,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		
 		 $scope.region.zip_codes=undefined;
 		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/cities/zipcodes?cities_names="+$scope.region.cities,
+		 $http({url:configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -1264,8 +1264,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
  =========================================================*/
 
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils',
-  function($rootScope, $scope, $state, $http, $timeout, Utils){
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils', "iot.config.ApiClient",
+  function($rootScope, $scope, $state, $http, $timeout, Utils, configApiClient){
 	
 	$rootScope.intete=1;
 	$scope.make;
@@ -1335,7 +1335,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           $rootScope.search.selectedModel="";
           $rootScope.search.selectedSKU="";
         //  $scope.createIconArray();
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names='+$rootScope.search.selectedMake, 
+          $http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.models=data[$rootScope.search.selectedMake];
@@ -1356,7 +1356,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           $rootScope.search.selectedSKU="";
        //   $scope.createIconArray();
           
-          $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/models/skus?model_names='+$rootScope.search.selectedModel, 
+          $http({url:configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel, 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
@@ -1492,7 +1492,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/makes', 
+    $http({url:configApiClient.baseUrl + 'config/makes', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.makes=data.makes;
@@ -1507,7 +1507,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	 
     
     
-    $http({url:'http://ibm-iot.mybluemix.net/api/v1/config/manufacture/years', 
+    $http({url:configApiClient.baseUrl + 'config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
@@ -1550,7 +1550,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	
 }]);
 
-App.controller('filterIconController',['$rootScope','$scope','$interval',function($rootScope,$scope,$interval){
+App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.config.ApiClient',function($rootScope,$scope,$interval, configApiClient){
     
    function callMe(){
        $scope.someArray=$rootScope.filterIcons;
@@ -1586,10 +1586,11 @@ App.controller('filterIconController',['$rootScope','$scope','$interval',functio
        
     }
 }]);
-App.controller('mapController',function($scope,$http){
+App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
 	$scope.plotMapFunction = function(divId){
-			$http.post('http://ibm-iot.mybluemix.net/api/v1/sales?report_name=soldVsConnected&group=true').success(function(data, status) {
-			    	console.log("Sales Volume List : "+JSON.stringify(data));			    	
+			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
+			    	console.log("Sales Volume List : "+JSON.stringify(data));
+			    	
 			    	renderMap(divId, data);
 			    	
 			    }). error(function(data, status) {
@@ -1599,7 +1600,7 @@ App.controller('mapController',function($scope,$http){
 			    });
 	
 	}
-});
+}]);
 
 function renderMap(divId, salesData){
 	     
@@ -1754,14 +1755,14 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
-App.controller('myController', function ($scope,$http,$rootScope) {
+App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.ApiClient', function ($scope, $http, $rootScope, configApiClient) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
 	$scope.selectedChart="";
 	$scope.seneorkey="";
 	$scope.Unit="";
-	$rootScope.baseUrl='http://ibm-iot.mybluemix.net/api/v1/';
+	$rootScope.baseUrl=configApiClient.baseUrl;
 	  $scope.EngchartTypes=['LineChart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
@@ -1795,7 +1796,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	  
 	  // display sensors Name for Engg Manager
 	  $http({
-		  url:'http://ibm-iot.mybluemix.net/api/v1/sensors', 
+		  url:configApiClient.baseUrl + 'sensors', 
 		  method: 'GET',
 		}).success(function(data, status) {
 			$scope.sensorsList=data;
@@ -1806,7 +1807,7 @@ App.controller('myController', function ($scope,$http,$rootScope) {
 	    });
 	  
 	  $http({
-			  url:'http://ibm-iot.mybluemix.net/api/v1/sales/charts', 
+			  url:configApiClient.baseUrl + 'sales/charts', 
 			  method: 'GET',
 			}).success(function(data, status) {
 				$scope.salesList=data;
@@ -1891,7 +1892,7 @@ $scope.plotPieChart=function(divID){
 	  console.log("in plot pie chart");
 	if($scope.data==null){
 	 $http({
-		  url:$rootScope.baseUrl+'sales?report_name=soldVsConnected&group=false', 
+		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
@@ -1947,7 +1948,7 @@ $scope.plotPieChart=function(divID){
 		
 		if($rootScope.applyFilterBoolean){
 			$http({
-				  url:$rootScope.baseUrl+'sales?report_name=soldVsConnected&group=true', 
+				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
 				  headers: { 
 	                	'Content-Type': 'application/json',
@@ -2058,7 +2059,7 @@ $scope.plotPieChart=function(divID){
 		  
 		if($scope.barchartData==null){
 		 $http({
-			  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=false', 
+			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
@@ -2123,7 +2124,7 @@ $scope.plotPieChart=function(divID){
 		}else{
 			if($rootScope.applyFilterBoolean){
 				$http({
-					  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=true', 
+					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
 					  method: 'POST',
 					  headers: { 
 		                	'Content-Type': 'application/json',
@@ -2259,7 +2260,7 @@ $scope.plotPieChart=function(divID){
 		if($scope.linechartData==null){
 			console.log("In line chart function in if");
 		 $http({
-			  url:$rootScope.baseUrl+'sales?report_name=salesVolume&group=false', 
+			  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
@@ -2319,7 +2320,7 @@ $scope.plotPieChart=function(divID){
 			if($rootScope.applyFilterBoolean){
 				console.log("In line chart function in else if");
 				$http({
-					  url:$rootScope.baseUrl+'sales?report_name=top3SellingModels&group=true', 
+					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
 					  method: 'POST',
 					  headers: { 
 		                	'Content-Type': 'application/json',
@@ -2415,7 +2416,7 @@ $scope.plotPieChart=function(divID){
 		  $scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
-		var url="http://ibm-iot.mybluemix.net/api/v1/sensors/data?sensor_name="+key;
+		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;
 		
 			
 		
@@ -2578,7 +2579,7 @@ $scope.plotPieChart=function(divID){
 		console.log("ha ha ha");
 	}; */
 			
-});
+}]);
 
 /*App.controller('filterController', function ($scope,$http) {
 	
