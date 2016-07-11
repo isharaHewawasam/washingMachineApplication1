@@ -984,7 +984,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                   console.log("data from server  :"+JSON.stringify(data));
                  }). error(function(data, status) {
                    
-                        alert("No data found");
+                        //alert("No data found");
                         console.log("error:"+status);
                          
           });
@@ -992,7 +992,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	
 		
 		$scope.griddata=[];
-		$scope.eng_griddata=[];	  		
+		$scope.eng_griddata=[];
+		$scope.isNoDataFound = null;
 		
 		
 		  $http({url:configApiClient.baseUrl +  'usage', 
@@ -1010,6 +1011,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
 	        		//alert("No data found");
+	                $scope.isNoDataFound = true; //make it true if no data found instead of alert
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
@@ -1019,7 +1021,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false     
-	        	 alert("No data found");
+	        	 //alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
 	         });
@@ -1051,7 +1053,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
 	                $scope.isDisabled = false     
-	             alert("No data found");
+	             //alert("No data found");
 	             console.log("error:"+status);
 	             
 	           });
@@ -1314,6 +1316,13 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                     key:"sku"    
                 });
         
+        if($rootScope.search.mfgDate && $rootScope.search.mfgDate.length != 0)
+        	$scope.someArr.push(
+        			{
+        				value:$rootScope.search.mfgDate.toLocaleDateString(),
+        				key:"mfg-date"
+        			});
+        
         $scope.valArr=$scope.someArr;
         
         $rootScope.filterIcons=$scope.someArr;
@@ -1568,8 +1577,10 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
         if(filter.key=="make"){
             $rootScope.filterIcons=[];
             $rootScope.search={};
-        } else if(filter.key=="sku"){
-          
+        }else if(filter.key=="mfg-date"){
+        	$rootScope.search.mfgDate=undefined;
+            $rootScope.filterIcons.splice(indexofvar,1);        	
+        }else if(filter.key=="sku"){         
             $rootScope.search.selectedSKU=undefined;
             $rootScope.filterIcons.splice(indexofvar,1);
         }else if(filter.key=="model"){

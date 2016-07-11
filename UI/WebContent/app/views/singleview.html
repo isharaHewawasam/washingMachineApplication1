@@ -268,7 +268,8 @@
           <!--   START table-responsive -->
             <div id="gridAdjustHeight" class="table-responsive scrollit" >
                <table  class="table table-striped table-bordered table-hover" ng-if="griddata.length > 0">
-               	<div ng-show="!griddata.length" class="text-center col-md-4 col-md-offset-4">No Records to display</div>
+                <div ng-show="isDisabled" class="text-center col-md-4 col-md-offset-4"> Applying Filters... Please wait</div>
+               	<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4">No Records to display</div>
                   <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
                     
                  
