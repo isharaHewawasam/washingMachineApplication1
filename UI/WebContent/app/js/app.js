@@ -1513,8 +1513,27 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	      // alert("error"  +status);
 	       console.log(JSON.stringify(data));
 	    });
-	 
     
+    $http({url: configApiClient.baseUrl + 'demographics/family/age-ranges', 
+       method: "GET", Accept: "text/plain"}).success(function(data, status) {
+      	 $scope.demoAgeRange=data;
+      }). error(function(data, status) {
+         console.log(data);
+      });
+
+      $http({url: configApiClient.baseUrl + 'demographics/family/income-ranges', 
+       method: "GET", Accept: "text/plain"}).success(function(data, status) {
+      	 $scope.demoIncomeRange=data;
+      }). error(function(data, status) {
+         console.log(data);
+      });
+
+      $http({url: configApiClient.baseUrl + 'demographics/family/members-count', 
+       method: "GET", Accept: "text/plain"}).success(function(data, status) {
+      	 $scope.demoMembersCount=data;
+      }). error(function(data, status) {
+         console.log(data);
+      });
     
     $http({url:configApiClient.baseUrl + 'config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
