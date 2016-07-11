@@ -642,8 +642,8 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 	  
 	  $scope.getTwitterHandles = function(divId){
 		  
-		  var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
-		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
+		  var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Tweets","count": 47,"totalComments": 66},
+		                     {"product": "Make 1 - Model C","preferenceName": "Re-Tweets","count": 10,"totalComments": 66}];
 		  
 		  var twitterDataStr = JSON.stringify(twitterData);
 		  
