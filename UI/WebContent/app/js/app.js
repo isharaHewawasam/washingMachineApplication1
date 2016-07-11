@@ -1543,6 +1543,27 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         				key:"mfg-date"
         			});
         
+        if ($rootScope.search.incomeRange) {
+        	$scope.someArr.push({
+				value:$rootScope.search.incomeRange,
+				key:"incomeRange"
+			});
+        }
+        
+        if ($rootScope.search.occupation) {
+        	$scope.someArr.push({
+				value:$rootScope.search.occupation,
+				key:"occupation"
+			});
+        }
+        
+        if ($rootScope.search.ageGroup) {
+        	$scope.someArr.push({
+				value:$rootScope.search.ageGroup,
+				key:"ageGroup"
+			});
+        }
+        
         $scope.valArr=$scope.someArr;
         
         $rootScope.filterIcons=$scope.someArr;
@@ -1617,6 +1638,17 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                 document.getElementById('filterPanel').style.display = 'none';
                    
                 }
+         
+         $scope.applyDemographicsFilter=function(){
+    		 var obj={};
+       	 	 obj.incomeRange=$rootScope.search.incomeRange;
+       	 	 obj.occupation=$rootScope.search.occupation;
+       	 	 obj.ageGroup=$rootScope.search.ageGroup;
+             //$rootScope.setUsageObjectFromSidebar(obj);
+             console.log("applied demographic filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+             $scope.createIconArray();
+             document.getElementById('filterPanel').style.display = 'none';
+         };
 
     
     
@@ -1806,35 +1838,48 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
    
    $interval(callMe,1000);
     
-    $scope.removeFilter=function(filter){
-        var indexofvar= $rootScope.filterIcons.indexOf(filter);
-        
-         console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
-
-        
-        
-        if(filter.key=="make"){
-            $rootScope.filterIcons=[];
-            $rootScope.search={};
-        }else if(filter.key=="mfg-date"){
-        	$rootScope.search.mfgDate=undefined;
-            $rootScope.filterIcons.splice(indexofvar,1);        	
-        }else if(filter.key=="sku"){         
-            $rootScope.search.selectedSKU=undefined;
-            $rootScope.filterIcons.splice(indexofvar,1);
-        }else if(filter.key=="model"){
-             $rootScope.search.selectedModel=undefined;
-            $rootScope.search.selectedSKU=undefined;
-            $rootScope.filterIcons.splice(indexofvar,1);
-            angular.forEach($rootScope.filterIcons,function(value,key){
-                if(value.key=="sku"){
-                    /*var indexofvar= $rootScope.filterIcons.indexOf(value);*/
-                    $rootScope.filterIcons.splice(key,1);
-                }
-            });
-        }
-       
-    }
+   $scope.removeFilter=function(filter){
+       var indexofvar= $rootScope.filterIcons.indexOf(filter);
+       console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+       if(filter.key=="make"){
+           $rootScope.search.make=undefined;
+           $rootScope.search.selectedModel=undefined;
+           $rootScope.search.selectedSKU=undefined;
+           $rootScope.search.mfgDate=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+           angular.forEach($rootScope.filterIcons,function(obj ,key){
+               if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-date"){
+                   $rootScope.filterIcons.splice(key,1);
+               }
+           });
+       }else if(filter.key=="mfg-date"){
+       	$rootScope.search.mfgDate=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);        	
+       }else if(filter.key=="sku"){         
+           $rootScope.search.selectedSKU=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+       }else if(filter.key=="model"){
+            $rootScope.search.selectedModel=undefined;
+           $rootScope.search.selectedSKU=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+           angular.forEach($rootScope.filterIcons,function(value,key){
+               if(value.key=="sku"){
+                   /*var indexofvar= $rootScope.filterIcons.indexOf(value);*/
+                   $rootScope.filterIcons.splice(key,1);
+               }
+           });
+       } else if (filter.key=="incomeRange") {
+       	$rootScope.search.incomeRange=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+       } else if (filter.key=="occupation") {
+       	$rootScope.search.occupation=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+       } else if (filter.key=="ageGroup") {
+       	$rootScope.search.ageGroup=undefined;
+           $rootScope.filterIcons.splice(indexofvar,1);
+       }
+      
+   }  
 }]);
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
 	$scope.plotMapFunction = function(divId){

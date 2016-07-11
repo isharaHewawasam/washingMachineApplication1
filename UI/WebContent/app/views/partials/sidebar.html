@@ -211,7 +211,7 @@
         
         
         <div class="form-group element-margin">
-           <select class="form-control">
+           <select class="form-control" ng-model="search.incomeRange">
                 <option class="option-text-style" value="" disabled selected>Income Range</option>
                 <!-- <option class="option-text-style" value="" >All -->
                 <option class="option-text-style" ng-repeat="income in demoIncomeRange" value={{income.range}}>{{income.range}}</option>
@@ -219,14 +219,14 @@
         </div>
         
         <div class="form-group element-margin">
-            <select  class="form-control">
+            <select  class="form-control" ng-model="search.occupation">
                 <option class="option-text-style" value="" disabled selected>Occupation</option>
                 <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count.count}}>{{count.count}}</option>
             </select>
         </div>
         
         <div class="form-group element-margin">
-             <select  class="form-control">
+             <select  class="form-control" ng-model="search.ageGroup">
                 <option class="option-text-style" value="" disabled selected>Age Group</option>
                 <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age.range}}>{{age.range}}</option>
             </select>
