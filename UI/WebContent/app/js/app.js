@@ -142,6 +142,15 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
        
         templateUrl: helper.basepath('submenu.html')
     })
+    
+    .state('app.twitterinsights', {
+        url: '/twitterinsights',
+        title: 'Twitter Insights View',
+        controller: 'TwitterInsightsController',
+        templateUrl: helper.basepath('twitterinsights.html'),
+        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+    })
+    
     // 
     // CUSTOM RESOLVES
     //   Add your own resolves properties
@@ -518,7 +527,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.config.ApiClient", function($scope, $timeout, $http, configApiClient) {
+App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
 	  
 	  $scope.getMostFaults = function(divId) {
 		  
@@ -665,7 +674,12 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "iot.
 			       console.log("Error getting data for most fault models, status: " + status);
 			});*/	
 	  };
-
+	  
+	  $scope.loadTwitterinsights = function() {
+		  console.log("----------Load Twitter Insights Page --------------- ;")
+		  $state.go('app.twitterinsights');
+	  };
+	  
 	}]).factory('datasource', [
 	    '$log', '$timeout', function(console, $timeout) {
 	        'use strict';
@@ -1259,6 +1273,212 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax").addClass("hidden");
 	}
 */}]);
+
+
+App.controller('TwitterInsightsController', 
+		['$rootScope', '$scope', '$state', '$http', '$timeout', "iot.config.ApiClient",
+                 function($rootScope, $scope, $state, $http, $timeout, configApiClient){
+	
+	$scope.twitter_insights_griddata = [];
+	
+	// dummey data
+	var obj 		= {};
+	obj.make 		= 1;
+	obj.model 		= '#1201';
+	obj.tweets 		= 100;
+	obj.likes 		= 120;
+	obj.dislikes 	= 45;
+	obj.followers 	= 260;
+	obj.comments 	= 521;
+	$scope.twitter_insights_griddata.push(obj);
+	
+	var obj 		= {};
+	obj.make 		= 2;
+	obj.model 		= '#1202';
+	obj.tweets 		= 90;
+	obj.likes 		= 170;
+	obj.dislikes 	= 15;
+	obj.followers 	= 560;
+	obj.comments 	= 121;
+	$scope.twitter_insights_griddata.push(obj);
+	
+	
+	$("#gridAdjustHeight").height(400);
+	
+	/*$http({url:configApiClient.baseUrl + "twitterinsights/data", //api url
+        method: "POST",
+        Accept: "text/plain"}).success(function(data, status) {
+        		console.log("*****************twitterinsights success ****************");
+        		$scope.twitter_insights_griddata = data; 
+          
+        		//console.log("TwitterInsightsGriddata"+JSON.stringify(data));
+                
+           }). error(function(data, status) {
+        	   console.log("*****************twitterinsights error ****************");
+               console.log("usageerror:"+status);
+             
+    });*/
+	
+	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
+	
+	$scope.loadDashboard = function() {
+		$state.go('app.engmanagerview');
+	};
+	
+	
+	$scope.maximizeGrid=function(){
+		var gridNormal = $("#gridNormal").clone();
+		
+		$("#gridMax").empty();
+		$("#gridMax").append(gridNormal);
+		
+		$("#gridMax #gridMaxImg").addClass("hidden");
+		$("#gridMax #gridCloseImg").removeClass("hidden");
+		//$("#gridCloseImg").removeClass("hidden");
+		
+		$("#gridAdjustHeight").height(560);
+
+	$("#gridMax").removeClass("hidden");
+	
+	};
+	
+	$("body").on("click","#gridCloseImg",function(){
+		$("#gridMax").empty();
+		$("#gridMax").addClass("hidden");
+		  $("#gridAdjustHeight").height(400);
+    });
+	
+	$scope.getTwitterSentiments = function(divId){
+		  
+			var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
+		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
+		  
+		
+		  var twitterData = 
+			  [{"product": "Make 1 - Model C", "name": "positive", "y": 59, "totalComments": 66},
+			   {"product": "Make 1 - Model C", "name": "othres", "y": 41, "totalComments": 66}];
+		  
+		  //var twitterDataStr = JSON.stringify(twitterData);
+		  
+		  //twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
+		  //twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
+					
+		  //twitterData = JSON.parse(twitterDataStr);
+		  
+		  var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
+			 
+			  
+		  renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle);
+		  
+		  var twitterData = 
+			  [{"product": "Make 1 - Model C", "name": "Neutral", "y": 27, "totalComments": 66},
+			   {"product": "Make 1 - Model C", "name": "othres", "y": 73, "totalComments": 66}];
+		  
+		  
+		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle);
+		  
+		  var twitterData = 
+			  [{"product": "Make 1 - Model C", "name": "Negative", "y": 14, "totalComments": 66},
+			   {"product": "Make 1 - Model C", "name": "othres", "y": 86, "totalComments": 66}];
+		  
+		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle);
+		  
+	
+	  };
+	
+}]);
+
+
+function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle){
+	
+	var pieChart = new Highcharts.Chart({
+        chart: {
+        	renderTo:divId,
+        	width: 120,
+        	height: 120,
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            /*marginRight:140,*/
+            margin: [0, 0, 0, 0],
+            events: {
+            	load: function(event) {
+            		/*if (divId == 'twitter-handle-container'){
+            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +this.series[0].data[0].totalComments + '</b></div>');
+            		}*/
+            	}
+            }
+        },
+        credits: {
+	    	enabled: false
+	    },
+	    exporting: { 
+	    	enabled: false 
+	    },
+        title: {
+            text: '',
+            useHTML: true,
+            align: 'left',
+            style: {
+                color: '#0099cc'
+            },
+            floating: true,
+            y: 24,
+            x: 15
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+                colors: divId != 'twitter-handle-container'?['#339933', '#808080', '#ffcc00', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
+                size: 10,
+                center: ['50%', '50%']
+            }
+        },
+        
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            size: '80%',
+            innerSize: '80%',
+            showInLegend:false,
+            data: insightsData
+        }]
+    },
+    function(chart) { // on complete
+        var textX = chart.plotLeft + (chart.plotWidth  * 0.5);
+        var textY = chart.plotTop  + (chart.plotHeight * 0.5);
+        
+        /*var span = '<span id="pieChartInfoText" style="position:absolute; width:100px; text-align:center">';
+        span += '<span style="font-size: 25px; font-weight: bold; text-align:center;">'+chart.series[1].data[1].y+'%</span><br>';
+        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">Targets recovered</span><br>';
+        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">before breach</span>';
+        span += '</span>';*/
+        	        
+        span = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
+        
+        //if(data.showCenterText){
+	        //$('#'+divId+'_text').remove();
+        console.log('-----------id ','#'+divId+'_text');
+        	//$('#'+divId+'_text').remove();
+	        $('#'+divId+'_text').append(span);
+	        	span = $('#'+divId+'_text');
+	        	span.css('left', textX + (span.width() * -0.5)+30);
+	        	span.css('top', textY + (span.height() * -0.5)+2);
+        //}
+    }
+	
+    );	
+};
 
 /**=========================================================
  * Module: sidebar-menu.js
