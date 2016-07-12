@@ -12201,5 +12201,6 @@ display : block;
 
 .insights-insightsDiv{
 	height:200px;
+	width:370px;
 	/* overflow-y: scroll;  */
 }

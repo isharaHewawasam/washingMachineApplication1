@@ -225,15 +225,21 @@
 
 	</div>
 
-	<div class="col-lg-4" ng-controller="mapController"  ng-init="plotMapFunction('map-container')">
-	    <div class="panel panel-default" style="width: 100%; height: 373px">
-	      <div id="map-container" class="map-mapDiv"  style="width: 100%; height: 368.5px"></div>
-	    
-	  </div> 
+	<div class="col-lg-4" ng-controller="mapController"	ng-init="plotMapFunction('map-container')">
+		<div class="panel panel-default" style="width: 100%; height: 373px"	id="mapNormal">
+
+			<div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
+				<b>Sales Volume Distribution </b> 
+				<img id="mapMaxImg" class="pull-right col-md-1" style="padding: 0px; height: 15px; width: 15px;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximizeMap()"></img> 
+				<img id="mapMinImg"	class="pull-right hidden col-md-1 "	style="padding: 0px; height: 15px; width: 15px;" src="app/img/Dashboardassets/close.png"></img>
+			</div>
+			<div id="map-container" class="map-mapDiv"	style="width: 99%; height: 325px"></div>
+		</div>
 	</div>
 
+
 	<div class="col-lg-4" style="width: 374px; height: 373px">
-		<div class="panel panel-default" style="width: 374px; height: 373px">
+		<div class="panel panel-default" style="width: 450px; height: 373px">
 			<div class="panel-heading" style="background-color: #ffffff;">
 				<div class="pull-right ">
 					<img class="col-md-1" style="padding: 0px; height: 15px; width: 15px;"
@@ -281,7 +287,7 @@
 						</div>
 					</div>
 
-					<div class="col-lg-6" id="nav2" style="height: 100%">						
+					<div class="col-lg-6" id="nav2" style="height: 100%; width:310px">						
 						<div id="twitter-handle-container" ng-click="loadTwitterinsights()"	ng-init="getTwitterHandles('twitter-handle-container')"	class="insights-insightsDiv"></div>				
 						<div id="most-fault-container"	ng-init="getMostFaults('most-fault-container')"	class="insights-insightsDiv"></div>
 						<div id="least-fault-container"	ng-init="getLeastFaults('least-fault-container')" class="insights-insightsDiv"></div>
@@ -349,8 +355,8 @@
 								<th align="centre">Wash cycles</th>
 								<th  align="centre">Temperature<span class='notbold'>(f)</span></th>
 								<th  align="centre">Detergent used<span class='notbold'>(gms)</span></th>
-								<th>Average Humidity</th>
-                				<th>Average Load</th>
+								<th align="centre">Humidity<span class='notbold'>(%)</span></th>
+                				<th align="centre">Load<span class='notbold'>(kgs)</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -383,7 +389,7 @@
 	<aside class="col-lg-4" style="">
 
 		<!-- START messages and activity-->
-		<div class="panel panel-default" style="width: 374px; height: 240px;">
+		<div class="panel panel-default" style="width: 450px; height: 259px;">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
 					style="font-family: Roboto; font-size: 15px;">

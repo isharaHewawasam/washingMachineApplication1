@@ -196,7 +196,7 @@
    
  
  	<div class="col-lg-4" style="width: 374px; height: 373px">
-		<div class="panel panel-default" style="width: 374px; height: 373px">
+		<div class="panel panel-default" style="width: 450px; height: 373px">
 			<div class="panel-heading" style="background-color: #ffffff;">
 				<div class="pull-right ">
 					<img class="col-md-1" style="padding: 0px; height: 15px; width: 15px;"	src="app/img/Dashboardassets/help.png"></img>
@@ -223,10 +223,17 @@
 						 </div>
 						<div style="width: 25px; height: 175px; padding-top:25px;">
 						   <div  class="alert-warning media-box-object img-circle thumb32 text-center" style="width: 25px; height: 175px"><h2 class="mv-lg">3</h2></div>
+						<img src="app/img/Dashboardassets/lines.jpg" class="thumb33" alt="Image" style="background-repeat: repeat-y;" />
 						</div>	
+						<div style="width: 25px; height: 175px; padding-top: 50px;">
+							<div class="alert-warning media-box-object img-circle thumb32 text-center"	style="width: 25px; height: 175px">
+								<h2 class="mv-lg">4</h2>
+							</div>
+						</div>
 					</div>
 
-					<div class="col-lg-6" id="nav2" style="height: 100%">
+					<div class="col-lg-6" id="nav2" style="height: 100%; width:310px">
+						<div id="twitter-handle-container"	ng-init="getTwitterHandles('twitter-handle-container')"	class="insights-insightsDiv"></div>
 						<div id="most-used-model-container"	ng-init="getMostUsedModel('most-used-model-container')" class="insights-insightsDiv"></div>
 						<div id="most-used-wash-cycle-container" ng-init="getMostUsedCycles('most-used-wash-cycle-container')" class="insights-insightsDiv"></div>
 						<div id="not-connected-machines-container"	ng-init="getNotConnectedMachines('not-connected-machines-container')" class="insights-insightsDiv"></div>
@@ -312,7 +319,7 @@
    <aside class="col-lg-4" style="">
      
       <!-- START messages and activity-->
-      <div class="panel panel-default" style="width: 374px; height: 240px; ">
+      <div class="panel panel-default" style="width: 450px; height: 259px; ">
          <div class="panel-heading">
             <div class="panel-title md-body-2" style="font-family: Roboto; font-size: 15px;">Notification<img class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></div>
             
@@ -339,6 +346,7 @@
                   </div>
                </div>
             </div>
+            
             <!-- END list group item-->
              <!-- START list group item-->
             <div class="list-group-item">

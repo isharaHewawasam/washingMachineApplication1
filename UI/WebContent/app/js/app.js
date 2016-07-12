@@ -528,7 +528,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
 
 App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
-	  
+	
 	  $scope.getMostFaults = function(divId) {
 		  
 		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
@@ -652,7 +652,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					
 		  twitterData = JSON.parse(twitterDataStr);
 		  
-		  var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 65px;margin-bottom: 20px'/>";
+		  var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 160px;margin-bottom: 20px'/>";
 		  
 		  renderPieChart(divId, twitterData, twitterTitle);
 		  
@@ -1881,6 +1881,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
       
    }  
 }]);
+
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
 	$scope.plotMapFunction = function(divId){
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
@@ -1892,9 +1893,31 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 			      // alert("error"  +status);
 			       console.log('Error : ' + status);
 			       renderMap(divId, data);
-			    });
-	
+			    });	
 	}
+	
+	$scope.maximizeMap=function(){        
+	        
+		var mapNormal = $("#mapNormal").clone();        
+	        
+	    $("#hiddenDiv").empty();
+	    $("#hiddenDiv").append(mapNormal);	        
+	    $("#hiddenDiv").removeClass("hidden");    	        
+	    $("#mapMaxImg").addClass("hidden");       
+	    $("#map-container").height(660); 	        
+	    $("#mapMinImg").removeClass("hidden");    
+	     
+	    $scope.plotMapFunction("map-container");        
+	 }
+	 
+	$("body").on("click"," #mapMinImg",function(){
+	    var elem = $("#map-container");
+	    $("#hiddenDiv").empty();
+	    $("#hiddenDiv").addClass("hidden");       
+	    elem.addClass("map-mapDiv");  
+	    $scope.plotMapFunction("map-container");
+	});
+
 }]);
 
 function renderMap(divId, salesData){
@@ -1971,6 +1994,10 @@ function renderMap(divId, salesData){
 	
 }
 
+function displayDetailedTwitterView(){
+	alert('In details twitter view');
+}
+
 function renderPieChart(divId, insightsData, chartTitle){
 	
 	var pieChart = new Highcharts.Chart({
@@ -1985,7 +2012,8 @@ function renderPieChart(divId, insightsData, chartTitle){
             events: {
             	load: function(event) {
             		if (divId == 'twitter-handle-container'){
-            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +this.series[0].data[0].totalComments + '</b></div>');
+            			$('.highcharts-legend-item').last().append('<img src="app/img/Dashboardassets/icon_arrow.png" style="margin-left: 112px" onclick="displayDetailedTwitterView()"/><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
+            					this.series[0].data[0].totalComments + '</b></div>');
             		}
             	}
             }
@@ -2014,7 +2042,7 @@ function renderPieChart(divId, insightsData, chartTitle){
             align: 'right',
             layout: 'vertical',
             verticalAlign: 'middle',
-            x: 10,
+            x: -30,
             y: 30,
             useHTML: true,
             itemMarginBottom: 8,
@@ -2050,6 +2078,79 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
+App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', function ($scope, $http, configApiClient) {
+	$scope.getTwitterSentimates = function(divId){
+		var data = [{name: 'tweets',data: [40]}, 
+		            {name: 're-tweets',data: [60]}];
+		renderHorizontalBarChart(divId, data);
+	}
+}]);
+
+function renderHorizontalBarChart(divId, notificationData){
+	$('#' + divId).highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Twitter Sentimate'
+        },
+        xAxis: {
+            lineWidth: 0, 
+            tickWidth: 0,
+            labels: {
+                enabled: false,
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                return '<b>' + this.y + '</b>'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total fruit consumption'
+            },
+            gridLineWidth: 0,
+            lineWidth: 0,
+            labels: {
+                enabled: false,
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        
+
+    	colors:['#5DADE2', '#339933'],
+        
+        plotOptions: {
+            series: {
+                stacking: 'normal',
+                pointWidth: 15/*,
+                colors:['#5DADE2', '#D6EAF8']*/
+            },
+            bar: {
+            	colorByPoint: true
+                /*dataLabels: {
+                    enabled: true,
+                    distance : -50,
+                    formatter: function() {
+                        var dlabel = this.series.name + '<br/>';
+                        dlabel += Math.round(this.percentage*100)/100 + ' %';
+                            return dlabel
+                     },
+                    style: {
+                        color: 'white',
+                    },
+                },*/
+                
+            },
+        },
+        series: notificationData
+    });
+}
+
 App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.ApiClient', function ($scope, $http, $rootScope, configApiClient) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
@@ -2058,7 +2159,7 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 	$scope.seneorkey="";
 	$scope.Unit="";
 	$rootScope.baseUrl=configApiClient.baseUrl;
-	  $scope.EngchartTypes=['LineChart'];
+	$scope.EngchartTypes=['Line Chart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
 	$scope.linechartData=null;
@@ -2134,19 +2235,25 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 				$scope.Unit="Water usage in Gallons";
 			}else if( $scope.sensortype=="Average Power"){
 				
-				$scope.Unit="power in kWh";
+				$scope.Unit="Power in kWh";
 			}else if( $scope.sensortype=="Average Wash Cycle Duration"){
 				
 				$scope.Unit="wash cycle duration in mins";
 			}else if( $scope.sensortype=="Average Wash Cycles"){
 				
-				$scope.Unit="cycle wah in RPM";
+				$scope.Unit="Cycle wash in RPM";
 			}else if( $scope.sensortype=="Average Temperature"){
 				
-				$scope.Unit=", temperature in  F";
+				$scope.Unit="Temperature in  F";
 			}else if( $scope.sensortype=="Average Detergent Used"){
 				
-				$scope.Unit="detergent in gms";
+				$scope.Unit="Detergent in gms";
+			}else if( $scope.sensortype=="Average Humidity"){
+				
+				$scope.Unit="Humidity in %";
+			}else if( $scope.sensortype=="Average Load"){
+				
+				$scope.Unit="Load in KGS ";
 			}
 	
 			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
@@ -2805,7 +2912,7 @@ $scope.plotPieChart=function(divID){
          	$scope.plotChartFunction("hiddenDiv #container");
      	
      	
-     	}if($scope.selectedChart=='LineChart'){
+     	}if($scope.selectedChart=='Line Chart'){
      		
      	
      		$("#hiddenDiv #container").removeClass("graphDiv");
@@ -2865,7 +2972,7 @@ $scope.plotPieChart=function(divID){
 			$scope.plotBarChart("bar");
 		}else if($scope.selectedChart=='Pie'){
 			$scope.plotPieChart("piecontainer");
-		}else if($scope.selectedChart=='LineChart'){
+		}else if($scope.selectedChart=='Line Chart'){
 			
          	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
