@@ -573,7 +573,6 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 		               
 			    	 var commonFaultDataStr = JSON.stringify(data.faults);
-					  
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
 							
