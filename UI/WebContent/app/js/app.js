@@ -652,7 +652,7 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					
 		  twitterData = JSON.parse(twitterDataStr);
 		  
-		  var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 160px;margin-bottom: 20px'/>";
+		  var twitterTitle = "Twitter Handles";
 		  
 		  renderPieChart(divId, twitterData, twitterTitle);
 		  
@@ -2003,6 +2003,7 @@ function renderPieChart(divId, insightsData, chartTitle){
 	var pieChart = new Highcharts.Chart({
         chart: {
         	renderTo:divId,
+        	width:350,
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
@@ -2012,7 +2013,9 @@ function renderPieChart(divId, insightsData, chartTitle){
             events: {
             	load: function(event) {
             		if (divId == 'twitter-handle-container'){
-            			$('.highcharts-legend-item').last().append('<img src="app/img/Dashboardassets/icon_arrow.png" style="margin-left: 112px" onclick="displayDetailedTwitterView()"/><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
+            			/*$('.highcharts-legend-item').last().append('<img src="app/img/Dashboardassets/icon_arrow.png" style="margin-left: 112px" onclick="displayDetailedTwitterView()"/><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
+            					this.series[0].data[0].totalComments + '</b></div>');*/
+            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
             					this.series[0].data[0].totalComments + '</b></div>');
             		}
             	}
