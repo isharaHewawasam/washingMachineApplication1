@@ -6,7 +6,7 @@ var Filter = require("./filters");
 var filter;
 
 exports.getAllUsage = function(payload, callback) {  
-
+  addMissingData(payload, function(err, result) {
 	  getData(payload, function(err, result) { 
 	    if(err) {
 	    	callback(err, null);
@@ -27,6 +27,7 @@ exports.getAllUsage = function(payload, callback) {
         }      
         
         console.log("Completed processing total water load records " + Date()); 
+        //console.log(JSON.stringify(usage));
         fillFavourites(payload, usage, function(err, result_) {   
           //console.log("Response : " + JSON.stringify(result_)); 
           console.log("Sending response");            
@@ -35,6 +36,7 @@ exports.getAllUsage = function(payload, callback) {
         });  
 	    }
 	  });
+  });
 };
 
 var getData = function(payload, callback) { 
@@ -49,7 +51,10 @@ console.log("payload sfsf " + JSON.stringify(payload));
   //-------------
   var view_name;  
   
+  //if (filter.isFilterCategoryByProduct()) console.log("isFilterCategoryByProduct()");
+  
   if( (filter.isFilterCategoryByRegion()) || 
+      (filter.isFilterCategoryByProduct()) ||
       (filter.isFilterCategoryNone()) ||
       (filter.isFilterCategoryMixed())      
     )
@@ -186,26 +191,32 @@ var fillRecord = function(result) {
 var doesRecordFallsInFilter = function(payload, keys) {
   if(filter.isFilterCategoryNone())
     return true;
-
+  
+  if ( filter.isFilterCategoryByProduct() ) {
+    //console.log(JSON.stringify(keys));
+       return isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
+              isItemPresent(payload.productAttrs.models, "value", keys[1])
+  }
+  
   if(filter.isFilterCategoryByRegion()) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+    return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
+            isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
             isItemPresent(payload.region.states, "value", keys[2]) && 
             isItemPresent(payload.region.cities, "value", keys[3]) &&  
             isItemPresent(payload.region.zip_codes, "value", keys[4])
   }
   
   if(filter.isFilterCategoryByYear()) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+    return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
+            isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
             isItemPresent(payload.timescale.years, "value", keys[2]) &&
             isItemPresent(payload.timescale.quarters, "value", keys[3]) &&
             isItemPresent(payload.timescale.months, "value", keys[4]);
   }
   
   if(filter.isFilterCategoryMixed()) {
-    return  isItemPresent(payload.productAttrs.makes, "make_name", keys[0]) && 
-            isItemPresent(payload.productAttrs.models, "model_name", keys[1]) && 
+    return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
+            isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
             isItemPresent(payload.region.states, "value", keys[2]) && 
             isItemPresent(payload.region.cities, "value", keys[3]) &&  
             isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
@@ -225,4 +236,56 @@ var isItemPresent = function(array, key_name, item){
   return false;
 };
 
+function addMissingData(payload, callback) {
+  var FilterClass = require("./filters"); 
+  var filter = new FilterClass(payload, 1)
+   
+  if ( filter.isFilterByNone() ||  filter.isFilterByModel())  callback(null, payload);
+  
+  //callback(null, payload)
+  
+  if (filter.isFilterByMake()) {
+    var Config = require("./config");
+    var makes = [];
+    
+    makes.push(payload.productAttrs.makes[0].value);
+    Config.getAllModelsByMakes(makes, function(err, result) {
+      //console.log("Result : " + JSON.stringify(result));
+      if (result) {
+        //console.log(JSON.stringify(result));
+        for (var each_make in result) {
+          //console.log("Make : " + JSON.stringify(result[each_make]));
+          for (var each_model in result[each_make]) {
+            var model = {"value": result[each_make][each_model]["model"]};
+            //console.log(JSON.stringify(city));
+            payload.productAttrs.models.push( model );
+          }
+        }
+        callback(err, result);
+      }
+    });
+  }
+  
+  /*if (filter.isFilterByCity()) {
+    var Config = require("../config");
+    var states_names = [];
+    
+    states_names.push(payload.region.cities[0].value);
+    Config.getAllZipCodesByCities(states_names, function(err, result) {
+      //console.log("Result : " + JSON.stringify(result));
+      if (result) {
+        //console.log(JSON.stringify(result));
+        for (var each_city in result) {
+          //console.log("State : " + JSON.stringify(result[each_state]));
+          for (var each_zip in result[each_city]) {
+            var zip = {"value": result[each_city][each_zip]["zip_code"]};
+            //console.log(JSON.stringify(city));
+            payload.region.zip_codes.push( zip );
+          }
+        }
+        callback(err, result);
+      }
+    });
+  }*/
+}
 

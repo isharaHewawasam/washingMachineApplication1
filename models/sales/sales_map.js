@@ -28,7 +28,10 @@ exports.getData = function(payload, drilldown, callback) {
                   "xxx_007": true
                };
   // SALES_BY_REGION_AND_PRODUCT = 7
- 
+    //if (drilldown) {
+     // params.xxx_007 = true;
+    //}
+    
     require('../sensors/avg_calculator').getSum(params, function(err, result) {
       callback(err, result);    
     });      

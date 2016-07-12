@@ -12,13 +12,14 @@ var FILTER = {
   'NONE': 0,
   'BY_MAKE': 1,
   'BY_MODEL': 2,
-  'BY_STATE': 3,
-  'BY_CITY': 4,
-  'BY_ZIP_CODE': 5,
-  'BY_YEAR': 6,
-  'BY_QUARTER': 7,
-  'BY_MONTH': 8,
-  'MIXED': 9
+  'BY_SKU': 3,
+  'BY_STATE': 4,
+  'BY_CITY': 5,
+  'BY_ZIP_CODE': 6,
+  'BY_YEAR': 7,
+  'BY_QUARTER': 8,
+  'BY_MONTH': 9,
+  'MIXED': 10
 };
 
 var REPORT_TYPE = {
@@ -49,6 +50,21 @@ var Filter = function Filter(payload, view_name){
   if((payload === null) || (payload === undefined)) return;  
   if((payload.region === undefined) && (payload.timescale === undefined)) return;
  
+  // Product
+  if (payload.productAttrs) {
+    if ((payload.productAttrs.makes) && (payload.productAttrs.makes.length)) {
+       this.filter_type = FILTER.BY_MAKE;
+    }
+    
+    if ((payload.productAttrs.models) && (payload.productAttrs.models.length)) {
+       this.filter_type = FILTER.BY_MODEL;  
+    }
+    
+    if ((payload.productAttrs.skus) && (payload.productAttrs.skus.length)) {
+       this.filter_type = FILTER.BY_SKU;
+    }
+  }
+  
    // Region
   if (payload.region) {
     if ((payload.region.states) && (payload.region.states.length)) {
@@ -91,6 +107,11 @@ var Filter = function Filter(payload, view_name){
   
   
   switch(this.filter_type){
+    case FILTER.BY_MAKE:
+    case FILTER.BY_MODEL:
+    case FILTER.BY_SKU:
+      this.filter_category = FILTER_CATEGORY.BY_PRODUCT;
+      break;
     case FILTER.BY_STATE:
     case FILTER.BY_CITY:
     case FILTER.BY_ZIP_CODE:
@@ -113,6 +134,17 @@ var Filter = function Filter(payload, view_name){
 module.exports = Filter;
 
 var isFilterCategoryMixed_ = function(payload) {
+  // Product 
+  var is_filter_by_product = false;
+    
+  if (payload.productAttrs) {  
+    if ( ((payload.productAttrs.makes) && (payload.productAttrs.makes.length > 0)) ||  
+       ((payload.productAttrs.models) && (payload.productAttrs.models.length > 0)) ||   
+       ((payload.productAttrs.skus) && (payload.productAttrs.makes.skus > 0)) ) {
+       is_filter_by_product = true;
+    }
+  }
+  
   // Region 
   var is_filter_by_region = false;
     
@@ -127,13 +159,17 @@ var isFilterCategoryMixed_ = function(payload) {
   // year
   var is_filter_by_year = false;
   
-  if( (payload.timescale.years.length > 0) ||
-      (payload.timescale.quarters.length > 0) ||   
-      (payload.timescale.months.length > 0) ) {
-      is_filter_by_year = true;  
-  }        
+  if (payload.timescale) {
+    if( (payload.timescale.years.length > 0) ||
+        (payload.timescale.quarters.length > 0) ||   
+        (payload.timescale.months.length > 0) ) {
+        is_filter_by_year = true;  
+    }        
+  }
   
-  return (is_filter_by_region && is_filter_by_year);
+  return (is_filter_by_product && 
+          is_filter_by_region && 
+          is_filter_by_year);
 };
 
 Filter.prototype.isFilterCategoryMixed_ = isFilterCategoryMixed_;
@@ -280,6 +316,10 @@ Filter.prototype.isFilterCategoryNone = function(){
   return this.filter_category === FILTER_CATEGORY.NONE;
 };
 
+Filter.prototype.isFilterCategoryByProduct = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_PRODUCT;
+};
+
 Filter.prototype.isFilterCategoryByRegion = function(){
   return this.filter_category === FILTER_CATEGORY.BY_REGION;
 };
@@ -307,6 +347,12 @@ var isFilterByModel = function(){
 };
 
 Filter.prototype.isFilterByModel = isFilterByModel;
+
+var isFilterBySKU = function(){
+  return this.filter_type === FILTER.BY_SKU;
+};
+
+Filter.prototype.isFilterBySKU = isFilterBySKU;
 
 var isFilterByState = function(){  
   return this.filter_type === FILTER.BY_STATE;

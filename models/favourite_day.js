@@ -24,6 +24,7 @@ var getData = function(payload, callback) {
   var params;
      
   if( (filter.isFilterCategoryByRegion()) || 
+      (filter.isFilterCategoryByProduct()) ||
       (filter.isFilterCategoryNone()) ||
       (filter.isFilterCategoryMixed())
     )
@@ -88,6 +89,7 @@ var doesUsageFallsInResponse = function(usage, keys) {
 
   if( (filter.isFilterCategoryNone()) || 
       (filter.isFilterCategoryByRegion()) ||
+      (filter.isFilterCategoryByProduct()) ||
       (filter.isFilterCategoryMixed())
     )
     usage_values = [usage.make, usage.model, usage.state, usage.city, usage.zip_code];

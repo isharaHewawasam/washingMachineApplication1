@@ -24,7 +24,8 @@ exports.getData = function(payload, drill_down, buffer, callback) {
                   "statsKeyName": "unitsConnected",
                   "databaseType": "sales",
                   "filter": drill_down ? new Filter(payload, 8) : new Filter(payload, 11),
-                  "key_maps": key_map
+                  "key_maps": key_map,
+                  "xxx_007": true
                };
   // 8 = Filter.CONNECTED_BY_REGION_AND_PRODUCT
   require('../sensors/avg_calculator').getSum(params, function(err, result) {

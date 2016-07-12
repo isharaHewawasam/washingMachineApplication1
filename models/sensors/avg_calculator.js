@@ -33,6 +33,7 @@ function getStats(params, callback) {
   //if (params.filter === undefined) console.log("filter not defined");
 	  getData(params, function(err, result) {   
 	    if(err) {
+        
 	    	callback(err, null);
 	    } else {  
         if (params.filter.groupLevel() == 0) {
@@ -43,10 +44,10 @@ function getStats(params, callback) {
         if((params.payload === null) || (params.payload === undefined)){
           
           for(var row in result.rows) {
-            //console.log(result.rows[row]);
             params.buffer.push(fillRecord(result.rows[row], params));
           }
         } else {
+         
           for(var row in result.rows) {
             //try{
               if(doesRecordFallsInFilter(params, result.rows[row].key)) {
@@ -165,6 +166,7 @@ function sortResult(sort, data) {
 var addOrUpdateUsages = function(params, new_usage) {
   //console.log("Add usage " + JSON.stringify(params.buffer));
   var xxx_007 = params.xxx_007 !== undefined ? true : false;
+  
   if(usageExists(params.payload, params.buffer, new_usage, xxx_007)) {
     //console.log("Existing : " + JSON.stringify(new_usage));
     for(var each_usage in params.buffer) {
@@ -199,8 +201,11 @@ var usageExists = function(payload, usages, usage_to_find, xxx_007) {
     //console.log("2:" + JSON.stringify(usage_to_find));
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
-     
+    
+    //for insights - disconnected chart
+    //for sold and connected - group
     //var all_match = false;
+    //------------
     //var all_match = true;
     var all_match = xxx_007 ? false : true;
     
@@ -260,7 +265,6 @@ var fillRecord = function(result, params) {
   //console.log("keys " + JSON.stringify(keys));
   
   if (params.statsKeyNameX !== undefined) {
-    console.log("223423432 " + params.key_maps.key.STATS_KEY_X);
     record[params.statsKeyNameX] = result.key[params.key_maps.key.STATS_KEY_X];
   }
   
@@ -335,10 +339,15 @@ var doesRecordFallsInFilter = function(params, keys) {
     return true;
   }
   
-    
+  if ( params.filter.isFilterCategoryByProduct() ) {
+    console.log(JSON.stringify(keys));
+       return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
+              isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL])
+  }
+  
   if ( params.filter.isFilterCategoryByRegion() ) {
-       return isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE]) && 
-              isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+       return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
+              isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
               isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
               isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
               isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE])
@@ -346,16 +355,16 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if ( params.filter.isFilterCategoryByYear() ) {
-    return  isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE])  && 
-            isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+    return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
             isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
             isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
   }
   
   if(params.filter.isFilterCategoryMixed()) {
-    return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "make_name", keys[params.key_maps.key.MAKE]) ) && 
-            isItemPresent(params.payload.productAttrs.models, "model_name", keys[params.key_maps.key.MODEL]) && 
+    return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
             isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
             isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
