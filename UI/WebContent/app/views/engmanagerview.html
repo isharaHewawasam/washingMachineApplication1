@@ -10,7 +10,7 @@
 	<div class="pull-right">Application Dashboard Last Updated May
 		10, 2016, 3:26:26 PM</div>
 
-	<a href="#"
+	<a href="#/app/engmanagerview"
 		style="font-size: 14px; font: Roboto Light; color: #0F64BC;">Washing
 		Machine Monitor System </a> <span
 		style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
@@ -255,9 +255,9 @@
 			<div infinite-scroll-distance="1"	style="overflow-y: scroll; overflow-x: hidden;">
 
 
-				<div class="col-lg-6" style="width: 374px; height: 310px">
+				<div class="col-lg-6" style="width: 420px; height: 310px;">
 
-					<div class="col-lg-6" id="nav1">
+					<div class="col-lg-6" id="nav1" style=";">
 						<div
 							style="width: 25px; height: 175px; background-repeat: repeat-y;">
 							<div
@@ -278,26 +278,14 @@
 							<div class="alert-warning media-box-object img-circle thumb32 text-center"	style="width: 25px; height: 175px">
 								<h2 class="mv-lg">3</h2>
 							</div>
-							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33" alt="Image" style="background-repeat: repeat-y;" />
-						</div>
-						<div style="width: 25px; height: 175px; padding-top: 50px;">
-							<div class="alert-warning media-box-object img-circle thumb32 text-center"	style="width: 25px; height: 175px">
-								<h2 class="mv-lg">4</h2>
-							</div>
 						</div>
 					</div>
 
-					<div class="col-lg-6" id="nav2" style="height: 100%; width:310px">						
-						<div id="twitter-handle-container" ng-click="loadTwitterinsights()"	ng-init="getTwitterHandles('twitter-handle-container')"	class="insights-insightsDiv"></div>				
+					<div class="col-lg-6" id="nav2" style="height: 100%;">										
 						<div id="most-fault-container"	ng-init="getMostFaults('most-fault-container')"	class="insights-insightsDiv"></div>
 						<div id="least-fault-container"	ng-init="getLeastFaults('least-fault-container')" class="insights-insightsDiv"></div>
 						<div id="common-fault-container" ng-init="getCommonFaults('common-fault-container')" class="insights-insightsDiv"></div>
 					</div>
-					
-					<!-- <div id="twitter-img" class="col-lg-4"><img style="padding: 0px; height: 30px; width: 30px;"
-						src="app/img/Dashboardassets/twitter.png"></div>  -->
-
-
 				</div>
 			</scrollable>
 
@@ -347,30 +335,30 @@
 
 
 							<tr>
-								<th align="centre">Make</th>
-								<th align="centre">Model</th>
-								<th align="centre">Water used<span class='notbold'>(G)</span></th>
-								<th align="centre">Energy used<span class='notbold'>(kw)</span></th>
-								<th align="centre">Wash cycle<span class='notbold'>(min)</span></th>
-								<th align="centre">Wash cycles</th>
-								<th  align="centre">Temperature<span class='notbold'>(f)</span></th>
-								<th  align="centre">Detergent used<span class='notbold'>(gms)</span></th>
-								<th align="centre">Humidity<span class='notbold'>(%)</span></th>
-                				<th align="centre">Load<span class='notbold'>(kgs)</span></th>
+								<th astyle="text-align:center">Make</th>
+								<th style="text-align:center">Model</th>
+								<th style="text-align:center">Water used<span class='notbold'>(G)</span></th>
+								<th style="text-align:center">Energy used<span class='notbold'>(kw)</span></th>
+								<th style="text-align:center">Wash cycle<span class='notbold'>(min)</span></th>
+								<th style="text-align:center">Wash cycles</th>
+								<th style="text-align:center">Temperature<span class='notbold'>(f)</span></th>
+								<th style="text-align:center">Detergent used<span class='notbold'>(gms)</span></th>
+								<th style="text-align:center">Humidity<span class='notbold'>(%)</span></th>
+                				<th style="text-align:center">Load<span class='notbold'>(kgs)</span></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="itm in eng_griddata">
-		                        <td>{{itm.make}}</td>
-		                        <td>{{itm.model}}</td>
-		                        <td>{{itm.avgWaterUsage}}</td>
-		                        <td>{{itm.avgPowerUsage}}</td>
-		                        <td>{{itm.avgWashCycleDurationUsage}}</td>
-		                        <td>{{itm.avgWashCyclesUsage}}</td>
-		                        <td>{{itm.avgTemperatureUsage}}</td>
-		                        <td>{{itm.avgDetergentUsage}}</td>
-		                        <td>{{itm.avgHumidityUsage}}</td>
-                            	<td>{{itm.avgLoadUsage}}</td>
+		                        <td style="text-align:center">{{itm.make}}</td>
+		                        <td style="text-align:center">{{itm.model}}</td>
+		                        <td style="text-align:center">{{itm.avgWaterUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgPowerUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgWashCycleDurationUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgWashCyclesUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgTemperatureUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgDetergentUsage}}</td>
+		                        <td style="text-align:center">{{itm.avgHumidityUsage}}</td>
+                            	<td style="text-align:center">{{itm.avgLoadUsage}}</td>
                      		</tr>							
 						</tbody>
 					</table>
