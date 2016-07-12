@@ -29,8 +29,15 @@ module.exports.getmostFault = function(req, res, next) {
 
 //twitter notifications
 
-module.exports.getTwitternotificationsentimate = function(req, res, next) { 
-	insights.getTwitternotificationsentimate(function(err, result){  	  
+module.exports.getTwitternotificationsentiments = function(req, res, next) { 
+	insights.getTwitternotificationsentiments(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
+
+module.exports.getTwitternotificationspike = function(req, res, next) { 
+	insights.getTwitternotificationspike(function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	});
 };
