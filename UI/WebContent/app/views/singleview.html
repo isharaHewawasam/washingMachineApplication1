@@ -327,54 +327,54 @@
          
          <!-- START list group-->
          <div class="list-group">
-      <!-- START list group item-->
             <div class="list-group-item">
-               <div class="media-box">
-<!--                   <div class="pull-left"> -->
-<!--                      <span class="fa-stack"> -->
-<!--                         <em class="fa fa-circle fa-stack-2x text-warning"></em> -->
-<!--                         <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em> -->
-<!--                      </span> -->
-<!--                   </div> -->
-                  <div class="media-box-body clearfix">
-                     <small class="text-greens pull-right ml">40%</small>
-                     <div class="media-box-heading"><a href="#" class="text-warning m0">Water used over a period of time</a>
+               <div class="media-box" ng-controller="notificationController" ng-init="getTwitterSentimates()">
+
+                  <div class="media-box-body clearfix" ng-repeat="itm in data">
+                     <small class="text-pink pull-right ml">{{itm.twitter_count/itm.full_count*100}}%</small>
+                     <div class="media-box-heading"><a href="#" class="text-warning m0">Twitter Sentiments for {{itm.name}}</a>
                      </div>
-<!--                      <progressbar value="22" type="warning" class="progress-xs m0"></progressbar> -->
-                     <progressbar  value="40" type="greens" class="progress-xs m0" style=" height: 10px;"></progressbar>
+                     <progressbar  value="itm.twitter_count/itm.full_count*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> Count: {{itm.twitter_count}}" data-trigger="hover"></progressbar>
 
                   </div>
                </div>
             </div>
             
+            <br>
             <!-- END list group item-->
              <!-- START list group item-->
-            <div class="list-group-item">
+            <div class="list-group-item" ng-controller="notificationController" ng-init="getSpikesInMachines()">
                <div class="media-box">
-<!--                   <div class="pull-left"> -->
-<!--                      <span class="fa-stack"> -->
-<!--                         <em class="fa fa-circle fa-stack-2x text-warning"></em> -->
-<!--                         <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em> -->
-<!--                      </span> -->
-<!--                   </div> -->
-                  <div class="media-box-body clearfix">
-                     <small class="text-pinks pull-right ml" >-80%</small>
-                     <div class="media-box-heading"><a href="#" class="text-warning m0">Detergent used over a period of time</a>
+                  <div class="media-box-body clearfix" ng-repeat="itm in data">
+                     <small class="text-pink pull-right ml" >{{itm.count/itm.total*100}}%</small>
+                     <div class="media-box-heading"><a href="#" class="text-warning m0">Spike in connected washing machines</a>
                      </div>
-                     <progressbar value="80" type="pink" class="progress-xs m0" style=" height: 10px;"></progressbar>
+                     <progressbar value="itm.count/itm.total*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Make: {{itm.make}} <br> Model: {{itm.model}} <br> Reason: {{itm.reason}}" data-trigger="hover"></progressbar>
                   </div>
                </div>
             </div>
+ 
+ 
+ 			
+
+ 
+            <!-- <div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+  aria-valuemin="0" aria-valuemax="100" style="width:40%">
+    40% Complete (success)
+  </div>
+</div> -->
+
             <!-- END list group item-->
             <!-- START list group item-->
-            <div class="list-group-item">
+            <!-- <div class="list-group-item">
                <div class="media-box">
-<!--                   <div class="pull-left"> -->
-<!--                      <span class="fa-stack"> -->
-<!--                         <em class="fa fa-circle fa-stack-2x text-warning"></em> -->
-<!--                         <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em> -->
-<!--                      </span> -->
-<!--                   </div> -->
+                  <div class="pull-left">
+                     <span class="fa-stack">
+                        <em class="fa fa-circle fa-stack-2x text-warning"></em>
+                        <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em>
+                     </span>
+                  </div>
                   <div class="media-box-body clearfix">
                      <small class="text-yellows pull-right ml">65%</small>
                      <div class="media-box-heading"><a href="#" class="text-warning m0">Structure warranty programs</a>
@@ -383,7 +383,7 @@
                      <progressbar value="65" type="yellow" class="progress-xs m0" style=" height: 10px;"></progressbar>
                   </div>
                </div>
-            </div>
+            </div> -->
             <!-- END list group item-->
          </div>
          <!-- END list group-->
