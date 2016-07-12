@@ -573,7 +573,6 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 		               
 			    	 var commonFaultDataStr = JSON.stringify(data.faults);
-					  
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
 							
@@ -709,7 +708,7 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	$scope.sidebarObj={};
 	$scope.sidebarObj.selectedMake="";
 	$scope.sidebarObj.selectedModel="";
-	$scope.sidebarObj.selectedSku="";
+	$scope.sidebarObj.selectedSKU="";
 	$scope.sidebarObj.mfgDate="";
 	
 	
@@ -724,7 +723,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 				   "productAttrs":{  
 					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
 					      "models":[{"value":$scope.sidebarObj.selectedModel}],
-					      "skus":[{"value":$scope.sidebarObj.selectedSku}],
+					      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
 					      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
 					   },
 					   "timescale":{  
@@ -777,7 +776,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	}
 	
 	
-	$scope.tryit = function() {
+	$rootScope.tryit = function() {
 			$scope.searchButtonText = "Filtering...";    
 	  $scope.isDisabled = true;
 	  $scope.test = true;
@@ -866,7 +865,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 						   "productAttrs":{  
 							   "makes":[{"value":$scope.sidebarObj.selectedMake}],
 							      "models":[{"value":$scope.sidebarObj.selectedModel}],
-							      "skus":[{"value":$scope.sidebarObj.selectedSku}],
+							      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
 							      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
 							   },
 							   "timescale":{  
@@ -950,11 +949,11 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		{
 			$scope.usagedata.productAttrs.makes=[];
 		}
-		if($scope.sidebarObj.selectedModels==undefined || $scope.sidebarObj.selectedModels=="")
+		if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
 		{
 			$scope.usagedata.productAttrs.models=[];
 		}
-		if($scope.sidebarObj.selectedSku==undefined || $scope.sidebarObj.selectedSku=="")
+		if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
 		{
 			$scope.usagedata.productAttrs.skus=[];
 		}
@@ -981,6 +980,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		// to set usage object in anotehr controllr
 		$rootScope.setUsageData($scope.usagedata);
 		//code added by sanket
+		//For map
 		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
@@ -1009,7 +1009,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$scope.eng_griddata=[];
 		$scope.isNoDataFound = null;
 		
-		
+		//for grid mkt_mgr
 		  $http({url:configApiClient.baseUrl +  'usage', 
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
@@ -1040,6 +1040,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        	 
 	         });
 		  
+		//For grid from eng manager
 		  $http({url:configApiClient.baseUrl + 'sensors/data', 
 	            method: "POST",
 	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
@@ -1319,12 +1320,37 @@ App.controller('TwitterInsightsController',
              
     });*/
 	
+	$scope.tweetsData = {};
+	$scope.tweetsData.tweets_color = 'red';
+	$scope.tweetsData.tweets_count = 7;
+	$scope.tweetsData.tweets_percentage = 69.3;
+	
+	$scope.tweetsData.tweetsimpress_color = 'red';
+	$scope.tweetsData.tweetsimpress_count = 3564;
+	$scope.tweetsData.tweetsimpress_percentage = 81.8;
+	
+	$scope.tweetsData.profilevisits_color = 'green';
+	$scope.tweetsData.profilevisits_count = 997;
+	$scope.tweetsData.profilevisits_percentage = 28.6;
+	
+	$scope.tweetsData.mentions_color = 'red';
+	$scope.tweetsData.mentions_count =10;
+	$scope.tweetsData.mentions_percentage = 23.1;
+	
+	$scope.tweetsData.twitter_color = 'red';
+	$scope.tweetsData.twitter_count = 248;
+	$scope.tweetsData.twitter_percentage = 30;
+	
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 	
 	$scope.loadDashboard = function() {
 		$state.go('app.singleview');
 	};
 	
+	$scope.getTextColor = function(color){
+		console.log("------------Text Color -------------",color);
+		return (color=='red'? 'twitter_arrow_red' : 'twitter_arrow_green');
+	}
 	
 	$scope.maximizeGrid=function(){
 		var gridNormal = $("#gridNormal").clone();
@@ -1381,15 +1407,115 @@ App.controller('TwitterInsightsController',
 			  [{"name": "Negative", "y": 14, "totalComments": 66},
 			   {"name": "othres", "y": 86, "totalComments": 66}];
 		
-		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Neutral<div>"; //data.centerText;
+		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
 		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);
 		  
 	
 	  };
-	
+	  
+	  $scope.getTwitterData = function(divId) {
+		  
+		  var data = [
+		  			[1247529600000,20.32],
+		  			[1247616000000,20.98],
+		  			[1247702400000,-21.07],
+		  			[1247788800000,25.68],
+		  			[1248048000000,-21.84],
+		  			[1248134400000,21.64],
+		  			[1248220800000,-22.39],
+		  			[1248307200000,22.55],
+		  			[1248393600000,-22.86],
+		  			[1248652800000,22.87],
+		  			[1248739200000,-22.86],
+		  			[1248825600000,22.86],
+		  			[1248912000000,-23.26],
+		  			[1248998400000,23.34]
+		  			];
+		  if(divId == 'mentions_div') {
+			  var data = [
+			  			[1247529600000,-20.32],
+			  			[1247616000000,20.98],
+			  			[1247702400000,21.07],
+			  			[1247788800000,-25.68],
+			  			[1248048000000,-21.84],
+			  			[1248134400000,-21.64],
+			  			[1248220800000,22.39],
+			  			[1248307200000,-22.55],
+			  			[1248393600000,22.86],
+			  			[1248652800000,22.87],
+			  			[1248739200000,22.86],
+			  			[1248825600000,-22.86],
+			  			[1248912000000,-23.26],
+			  			[1248998400000,23.34]
+			  			];
+		  }else if(divId == 'impressions_div'){
+			  var data = [
+			  			[1247529600000,20.32],
+			  			[1247616000000,-20.98],
+			  			[1247702400000,-21.07],
+			  			[1247788800000,25.68],
+			  			[1248048000000,-21.84],
+			  			[1248134400000,-21.64],
+			  			[1248220800000,22.39],
+			  			[1248307200000,22.55],
+			  			[1248393600000,-22.86],
+			  			[1248652800000,-22.87],
+			  			[1248739200000,-22.86],
+			  			[1248825600000,22.86],
+			  			[1248912000000,-23.26],
+			  			[1248998400000,23.34]
+			  			];
+		  }
+		  renderTwitterSentimentsLineChart(divId, data);
+    	
+	  }
 }]);
 
-
+function renderTwitterSentimentsLineChart(divId, insightsData) {
+	  var pieChart = new Highcharts.Chart({
+	      chart: {
+	        	renderTo: divId,
+	        	width: 140,
+	        	height:70,
+//	        	margin: [0, 10, 10, 10]
+	        	spacingLeft: 0,
+	        	spacingTop: 0
+	      },
+	      credits: {
+	          enabled: false
+	      },
+          rangeSelector: {
+              selected: 1
+          },
+          exporting: { enabled: false },
+          title: {
+              text: ''
+          },
+          tooltip: false,
+          xAxis: {
+                categories: [''],
+                title: {
+                    text: null
+                },
+                labels: {enabled:false,y : 20, rotation: -45, align: 'right' }
+            },
+          yAxis: {
+              title: {
+                  text: ''
+              },
+              visible: false
+          },
+          series: [{
+              name: '',
+              showInLegend: false,
+              data: insightsData,
+              type: 'spline',
+              tooltip: {
+                  valueDecimals: 2
+              }
+          }]
+	  });
+}
 function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerText){
 	
 	var colorCode = ['#339933', '#808080']; // For Positive
@@ -1636,21 +1762,21 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       }
     
          $scope.applyProductFilter=function(){
-				var obj={};
-          	 	obj.selectedMake=$rootScope.search.selectedMake;
-          	 	obj.selectedModel=$rootScope.search.selectedModel;
-          	 	obj.selectedSKU=$rootScope.search.selectedSKU;
-          	 	obj.mfgDate=$rootScope.search.mfgDate;
-          	 	
-                $rootScope.setUsageObjectFromSidebar(obj);
+			var obj={};
+      	 	obj.selectedMake=$rootScope.search.selectedMake;
+      	 	obj.selectedModel=$rootScope.search.selectedModel;
+      	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+      	 	obj.mfgDate=$rootScope.search.mfgDate;
+      	 	
+            $rootScope.setUsageObjectFromSidebar(obj);
 
-                console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+            console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
 
-                $scope.createIconArray();
-                
-                document.getElementById('filterPanel').style.display = 'none';
-                   
-                }
+            $scope.createIconArray();
+            
+            document.getElementById('filterPanel').style.display = 'none';
+            $rootScope.tryit(); 
+        }
          
          $scope.applyDemographicsFilter=function(){
     		 var obj={};

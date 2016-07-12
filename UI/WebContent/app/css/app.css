@@ -12214,3 +12214,37 @@ display : block;
 	width:370px;
 	/* overflow-y: scroll;  */
 }
+
+.twitter_label {
+	margin-top: 20px;
+	color: gray;
+	font-weight: bold; 
+}
+
+.twitter_label .twitter_count {
+	font-size: 20px;
+	float: left;
+	padding-right: 5px;
+}
+
+.twitter_label .twitter_percentage {
+	font-size: 18px;
+	color: black;
+	float: left;
+	color: red;
+	padding-top: 4px;
+}
+
+.col-lg-2 {
+    width: 30%;
+    float: left;
+}
+
+.twitter_arrow_red {
+	color: red;
+}
+
+.twitter_arrow_green {
+	color: green;
+}
+

@@ -70,8 +70,46 @@
 	<!-- START Twitter Insights Chart -->
 
 		<div class="row">
-			<div class="col-lg-8">
 			
+			<div class="col-lg-8 nopadding" style="border-right: slid; border-right-color: gray">
+				<div class="col-lg-12">
+					<table  style="width:100%; margin-top: 20px;">
+						<tr class="twitter_label">
+							<td width="20%">
+								<div>Tweets</div>
+								<div class="twitter_count"><label ng-bind="tweetsData.tweets_count"></label></div>
+								<div class="twitter_percentage" ng-class="getTextColor(tweetsData.tweets_color)" ><label ng-bind="tweetsData.tweets_percentage"></label>%</div>	
+							</td>
+							<td width="20%">
+								<div>Tweets impressions</div>
+								<div class="twitter_count"><label ng-bind="tweetsData.tweetsimpress_count"></label></div>
+								<div class="twitter_percentage" ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><label ng-bind="tweetsData.tweetsimpress_percentage"></label>%</div>
+							</td>
+							<td width="20%">
+								<div>Profile visits</div>
+								<div class="twitter_count"><label ng-bind="tweetsData.profilevisits_count"></label></div>
+								<div class="twitter_percentage" ng-class="getTextColor(tweetsData.profilevisits_color)" ><label ng-bind="tweetsData.profilevisits_percentage"></label>%</div>	
+							</td>
+							<td width="20%">
+								<div>Mentions</div>
+								<div class="twitter_count"><label ng-bind="tweetsData.mentions_count"></label></div>
+								<div class="twitter_percentage" ng-class="getTextColor(tweetsData.mentions_color)" ><label ng-bind="tweetsData.mentions_percentage"></label>%</div>
+							</td>
+							<td width="20%">
+								<div>Twitter</div>
+								<div class="twitter_count"><label ng-bind="tweetsData.twitter_count"></label></div>
+								<div class="twitter_percentage" ng-class="getTextColor(tweetsData.twitter_color)" ><label ng-bind="tweetsData.twitter_percentage"></label></div>
+							</td>
+						</tr>	
+						<tr style="background-color: white">
+							<td><div id='tweets_div' ng-init="getTwitterData('tweets_div')"></div></td>
+							<td><div id='impressions_div' ng-init="getTwitterData('impressions_div')"></div></td>
+							<td><div id='profile_div' ng-init="getTwitterData('profile_div')"></div></td>
+							<td><div id='mentions_div' ng-init="getTwitterData('mentions_div')"></div></td>
+							<td><div id='twitter_div' ng-init="getTwitterData('twitter_div')"></div></td>
+						</tr>	
+					</table>
+				</div>
 			</div>
 			<div class="col-lg-4">
 				</br>
