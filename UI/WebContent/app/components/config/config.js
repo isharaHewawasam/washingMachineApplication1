@@ -11,7 +11,7 @@
 */
 var host= 'http://ibm-iot.mybluemix.net';
 //var applicatio_route = process.env.app_route;
-console.log("============================My user defined====== " + applicatio_route);
+//console.log("============================My user defined====== " + applicatio_route);
 App.constant('iot.config.buildVersion','0.1') // updated by Grunt
 
 	.constant('iot.config.ApiClient', {
