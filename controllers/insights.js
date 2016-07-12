@@ -25,3 +25,12 @@ module.exports.getmostFault = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	  });
 };
+
+
+//twitter notifications
+
+module.exports.getTwitternotificationsentimate = function(req, res, next) { 
+	insights.getTwitternotificationsentimate(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};

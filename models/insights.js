@@ -112,3 +112,8 @@ exports.getmostFault = function(callback) {
   });
 };
 
+//twitter notification
+
+exports.getTwitternotificationsentimate = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotifications);  
+};
