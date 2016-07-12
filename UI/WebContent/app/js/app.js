@@ -1406,7 +1406,7 @@ App.controller('TwitterInsightsController',
 			  [{"name": "Negative", "y": 14, "totalComments": 66},
 			   {"name": "othres", "y": 86, "totalComments": 66}];
 		
-		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Neutral<div>"; //data.centerText;
+		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
 		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);
 		  
 	
@@ -1479,7 +1479,10 @@ function renderTwitterSentimentsLineChart(divId, insightsData) {
 //	        	margin: [0, 10, 10, 10]
 	        	spacingLeft: 0,
 	        	spacingTop: 0
-	      },	
+	      },
+	      credits: {
+	          enabled: false
+	      },
           rangeSelector: {
               selected: 1
           },
