@@ -1355,8 +1355,8 @@ App.controller('TwitterInsightsController',
 		  
 		
 		  var twitterData = 
-			  [{"product": "Make 1 - Model C", "name": "positive", "y": 59, "totalComments": 66},
-			   {"product": "Make 1 - Model C", "name": "othres", "y": 41, "totalComments": 66}];
+			  [{"name": "positive", "y": 59, "totalComments": 66},
+			   {"name": "othres", "y": 41, "totalComments": 66}];
 		  
 		  //var twitterDataStr = JSON.stringify(twitterData);
 		  
@@ -1365,23 +1365,24 @@ App.controller('TwitterInsightsController',
 					
 		  //twitterData = JSON.parse(twitterDataStr);
 		  
-		  var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
+		 var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
 			 
-			  
-		  renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle);
+		 var innerText = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
+		 renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle, innerText); 
 		  
 		  var twitterData = 
-			  [{"product": "Make 1 - Model C", "name": "Neutral", "y": 27, "totalComments": 66},
-			   {"product": "Make 1 - Model C", "name": "othres", "y": 73, "totalComments": 66}];
+			  [{"name": "Neutral", "y": 27, "totalComments": 66},
+			   {"name": "othres", "y": 73, "totalComments": 66}];
 		  
-		  
-		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle);
+		  var innerText = "<div width='100%' style='text-align:center'>27%</div><div>Neutral<div>"; //data.centerText;
+		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle, innerText);
 		  
 		  var twitterData = 
-			  [{"product": "Make 1 - Model C", "name": "Negative", "y": 14, "totalComments": 66},
-			   {"product": "Make 1 - Model C", "name": "othres", "y": 86, "totalComments": 66}];
-		  
-		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle);
+			  [{"name": "Negative", "y": 14, "totalComments": 66},
+			   {"name": "othres", "y": 86, "totalComments": 66}];
+		
+		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Neutral<div>"; //data.centerText;
+		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);
 		  
 	
 	  };
@@ -1389,7 +1390,14 @@ App.controller('TwitterInsightsController',
 }]);
 
 
-function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle){
+function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerText){
+	
+	var colorCode = ['#339933', '#808080']; // For Positive
+	if(divId == 'twitter_sentiments_neg'){
+		colorCode = ['#FF0000', '#808080']; // For Negative
+	}else if(divId == 'twitter_sentiments_neu'){
+		colorCode = ['#5DADE2', '#808080']; // For Neutral
+	}
 	
 	var pieChart = new Highcharts.Chart({
         chart: {
@@ -1427,9 +1435,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle){
             y: 24,
             x: 15
         },
-        tooltip: {
-            pointFormat: '<b>{point.percentage:.1f}%</b>'
-        },
+        tooltip: false,
         
         plotOptions: {
             pie: {
@@ -1439,7 +1445,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle){
                     enabled: false
                 },
                 showInLegend: true,
-                colors: divId != 'twitter-handle-container'?['#339933', '#808080', '#ffcc00', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
+                colors: colorCode, //divId != 'twitter-handle-container'?['#339933', '#808080', '#ffcc00', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
                 size: 10,
                 center: ['50%', '50%']
             }
@@ -1457,21 +1463,28 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle){
     function(chart) { // on complete
         var textX = chart.plotLeft + (chart.plotWidth  * 0.5);
         var textY = chart.plotTop  + (chart.plotHeight * 0.5);
-        
+        console.log(" textX ",textX);
+        console.log(" textY ",textY);
         /*var span = '<span id="pieChartInfoText" style="position:absolute; width:100px; text-align:center">';
         span += '<span style="font-size: 25px; font-weight: bold; text-align:center;">'+chart.series[1].data[1].y+'%</span><br>';
         span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">Targets recovered</span><br>';
         span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">before breach</span>';
         span += '</span>';*/
         	        
-        span = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
+        span = innerText;
         
         //if(data.showCenterText){
 	        //$('#'+divId+'_text').remove();
         console.log('-----------id ','#'+divId+'_text');
+        
         	//$('#'+divId+'_text').remove();
 	        $('#'+divId+'_text').append(span);
 	        	span = $('#'+divId+'_text');
+	        	console.log("span id "+span.id);
+	        	
+	        	console.log("X = "+(textX + (span.width() * -0.5)+30));
+	            console.log("Y = "+(textY + (span.height() * -0.5)+2));
+	            
 	        	span.css('left', textX + (span.width() * -0.5)+30);
 	        	span.css('top', textY + (span.height() * -0.5)+2);
         //}
