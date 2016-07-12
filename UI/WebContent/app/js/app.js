@@ -2104,14 +2104,24 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 					           
 		}). error(function(data, status) {
 				$scope.data = [{name:'#1234', Model: 'Model3', Make:'Make1', twitter_count:60, full_count: 100}];
-		       console.log("Error getting data for most fault models, status: " + status);
+				console.log("Error getting data for twitter notification sentiments, status: " + status);
 		});	
 		
 		/*$scope.data = [{name:'#1234', count:60, total: 100}];*/
 	};
 	
 	$scope.getSpikesInMachines = function() {
-		$scope.data = [{make:'LG', model: 'SKU 6', reason: 'Not happy with the programs', count:30, total: 100}];
+		/*$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+		    	 
+		    	 $scope.data = data;
+					           
+		}). error(function(data, status) {
+				$scope.data = [{make:'LG', model: 'SKU 6', reason: 'Not happy with the programs', count:30, total: 100}];
+				console.log("Error getting data for twitter notification sentiments, status: " + status);
+		});*/
+		
+		$scope.data = [{make:'Make12', model: 'Model6', reason: 'Not happy with the programs', count:30, total: 100}];
 	};
 	
 	$scope.getSpikesOfSpecificErrors = function() {
@@ -2119,8 +2129,8 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 	};
 	
 	$scope.getSpikesByMakeModel = function() {
-		$scope.data = 
-		$scope.spikeCount = 10;
+		$scope.data = [{make:'make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25}];
+		//$scope.spikeCount = 10;
 	};
 	
 	

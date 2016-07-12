@@ -398,57 +398,28 @@
 							<div class="media-box-heading">
 								<a href="#" class="text-warning m0">Spike in number of specific errors</a>
 							</div>
-							<progressbar value="(itm.errorsNew-itm.errorsOld)/itm.errorsOld*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Errors till today: {{itm.errorsNew}} <br> Errors till last 4 weeks: {{itm.errorsOld}}" data-trigger="hover"></progressbar>
+							<progressbar value="(itm.errorsNew-itm.errorsOld)/itm.errorsOld*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Spike: 15% greater than tolerance" data-trigger="hover"></progressbar>
 
 						</div>
 					</div>
 				</div>
 				<br>
-				<!-- END list group item-->
-				<!-- START list group item-->
+				
 				<div class="list-group-item">
 					<div class="media-box" ng-controller="notificationController" ng-init="getSpikesByMakeModel()">
-						<div class="media-box-body clearfix">
-							<small class="text-pink pull-right ml">{{spikeCount}}%</small>
+						<div class="media-box-body clearfix" ng-repeat="itm in data">
+							<small class="text-pink pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100}}%</small>
 							<div class="media-box-heading">
 								<a href="#" class="text-warning m0">Spike in number of specific errors by make, model</a>
 							</div>
-							<progressbar value="spikeCount" type="pink" class="progress-xs m0"	style=" height: 10px;"></progressbar>
+							<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="pink" class="progress-xs m0"	style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.make}} <br>
+							Model: {{itm.model}} <br> Spike: 5% greater than tolerance" data-trigger="hover"></progressbar>
 						</div>
 					</div>
 				</div>
-				<!-- END list group item-->
-				<!-- START list group item-->
-				<!-- <div class="list-group-item">
-					<div class="media-box">
-						                  <div class="pull-left">
-						                     <span class="fa-stack">
-						                        <em class="fa fa-circle fa-stack-2x text-warning"></em>
-						                        <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em>
-						                     </span>
-						                  </div>
-						<div class="media-box-body clearfix">
-							<small class="text-yellows pull-right ml">65%</small>
-							<div class="media-box-heading">
-								<a href="#" class="text-warning m0">Structure warranty
-									programs</a>
-							</div>
-
-							<progressbar value="65" type="yellow" class="progress-xs m0"
-								style=" height: 10px;"></progressbar>
-						</div>
-					</div>
-				</div> -->
-				<!-- END list group item-->
+				
 			</div>
-			<!-- END list group-->
-			<!-- START panel footer-->
-			<!--          <div class="panel-footer clearfix"> -->
-			<!--             <a href="#" class="pull-left"> -->
-			<!--                <small>Load more</small> -->
-			<!--             </a> -->
-			<!--          </div> -->
-			<!-- END panel-footer-->
+			
 		</div>
 		<!-- END messages and activity-->
 	</aside>
