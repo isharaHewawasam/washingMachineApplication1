@@ -12241,10 +12241,14 @@ display : block;
 }
 
 .twitter_arrow_red {
-	color: red;
+	color: red !important;
 }
 
 .twitter_arrow_green {
-	color: green;
+	color: green !important;
+}
+
+.arrow-container{
+	float: left;
 }
 

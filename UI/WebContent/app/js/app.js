@@ -1303,6 +1303,38 @@ App.controller('TwitterInsightsController',
 	obj.comments 	= 121;
 	$scope.twitter_insights_griddata.push(obj);
 	
+	var obj 		= {};
+	obj.make 		= 3;
+	obj.model 		= '#1203';
+	obj.tweets 		= 100;
+	obj.likes 		= 10;
+	obj.dislikes 	= 150;
+	obj.followers 	= 56;
+	obj.comments 	= 11;
+	$scope.twitter_insights_griddata.push(obj);
+	
+	
+	var obj 		= {};
+	obj.make 		= 4;
+	obj.model 		= '#1204';
+	obj.tweets 		= 60;
+	obj.likes 		= 10;
+	obj.dislikes 	= 150;
+	obj.followers 	= 56;
+	obj.comments 	= 12;
+	$scope.twitter_insights_griddata.push(obj);
+	
+	
+	var obj 		= {};
+	obj.make 		= 5;
+	obj.model 		= '#1205';
+	obj.tweets 		= 50;
+	obj.likes 		= 190;
+	obj.dislikes 	= 18;
+	obj.followers 	= 560;
+	obj.comments 	= 123;
+	$scope.twitter_insights_griddata.push(obj);
+	
 	
 	$("#gridAdjustHeight").height(400);
 	
