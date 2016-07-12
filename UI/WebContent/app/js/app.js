@@ -859,8 +859,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
   	    		                  ]
   	    		  }
   	    		};
-		*/
 		
+		*/
+		console.log('$scope.sidebarObj.selectedMake : ', $scope.sidebarObj.selectedMake);
+		console.log('$scope.sidebarObj.selectedModel : ', $scope.sidebarObj.selectedModel);
 		$scope.usagedata={  
 						   "productAttrs":{  
 							   "makes":[{"value":$scope.sidebarObj.selectedMake}],
@@ -1688,6 +1690,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           
          $rootScope.search={};
          $rootScope.filterIcons=[];
+         $rootScope.setUsageObjectFromSidebar($rootScope.search);
+         $rootScope.tryit();
       }
     
    $scope.createIconArray=function(){
@@ -2024,7 +2028,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
        console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
        if(filter.key=="make"){
-           $rootScope.search.make=undefined;
+           $rootScope.search.selectedMake=undefined;
            $rootScope.search.selectedModel=undefined;
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgDate=undefined;
@@ -2060,8 +2064,10 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        	$rootScope.search.ageGroup=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }
-      
-   }  
+       console.log('$rootScope.search in removefilter : ', $rootScope.search);
+       $rootScope.setUsageObjectFromSidebar($rootScope.search);
+      $rootScope.tryit();
+   };  
 }]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
@@ -2524,13 +2530,15 @@ $scope.plotPieChart=function(divID){
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
+	  console.log('$scope.data : ', $scope.data);
 	if($scope.data==null){
+		console.log('in if piechart');
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
-	    	console.log("Pie Chart response :"+JSON.stringify(data));
+	    	console.log("Pie Chart sucess :", data);
 	    	$scope.progress = false;
 	    	$scope.data=[];
 	    	$scope.data[0]=data.unitsSold;
@@ -2574,13 +2582,14 @@ $scope.plotPieChart=function(divID){
 	        });
 	    }). error(function(data, status) {
 	    	$scope.progress = false;
-	       console.log(JSON.stringify(data));
+	       console.log('in piechart error : ',data);
 	       $scope.progress = false;
 	    })
 	   
 	}else{
-		
+		console.log('in else piechart');
 		if($rootScope.applyFilterBoolean){
+			console.log('in applyFilterBoolean if');
 			$http({
 				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
@@ -2595,7 +2604,7 @@ $scope.plotPieChart=function(divID){
 					 
 				}).success(function(data, status) {
 					$scope.progress = false;
-			    	console.log("Pie Chart response With Filter:"+JSON.stringify(data));
+			    	console.log("Pie Chart response With Filter success : ", data);
 			    	$scope.data[0]=data[0].unitsSold;
 			    	$scope.data[1]=data[0].unitsConnected;
 			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
@@ -2638,12 +2647,13 @@ $scope.plotPieChart=function(divID){
 			    	})
 			    .error(function(data,status){
 			    	$scope.progress = false;
-			    	console.log("Error:"+JSON.stringify(data));
+			    	console.log("Pie Chart response With Filter error : ", data);
 			    });
 				
 			$rootScope.applyFilterBoolean=false;
 		}
 		else{
+			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
 		
 			$(function() {
