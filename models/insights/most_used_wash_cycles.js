@@ -26,7 +26,8 @@ exports.getData = function(payload, callback) {
                   "statsKeyNameX": "washCycles",
                   "databaseType": "sensorDailyAggregate",
                   "filter": Filter,
-                  "key_maps": key_map
+                  "key_maps": key_map,
+                  "xxx_007": true
                };
   // SALES = 4             
   avg.getCount(params, function(err, result) { 
