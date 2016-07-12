@@ -283,6 +283,52 @@
         }
       }
     },
+    "/insights/twitter-notifications-sentiments": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationsentiments",
+        "tags": ["Insights"],
+        "description": "twitter notifications-sentimate",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-sentimate",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+    "/insights/twitter-notifications-spike": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationspike",
+        "tags": ["Insights"],
+        "description": "Return twitter notification spike",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
     "/demographics/family/age-ranges": {
       "get": {
         "x-swagger-router-controller": "age-ranges",

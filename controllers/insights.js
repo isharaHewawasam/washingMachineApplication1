@@ -25,3 +25,19 @@ module.exports.getmostFault = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	  });
 };
+
+
+//twitter notifications
+
+module.exports.getTwitternotificationsentiments = function(req, res, next) { 
+	insights.getTwitternotificationsentiments(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
+
+module.exports.getTwitternotificationspike = function(req, res, next) { 
+	insights.getTwitternotificationspike(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};

@@ -24,7 +24,8 @@ exports.getData = function(payload, drilldown, callback) {
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
                   "filter": drilldown ? new Filter(payload, 7) : new Filter(payload, 10),
-                  "key_maps": key_map
+                  "key_maps": key_map,
+                  "xxx_007": true
                };
   // SALES_BY_REGION_AND_PRODUCT = 7
  

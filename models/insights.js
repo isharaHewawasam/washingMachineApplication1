@@ -16,7 +16,7 @@ exports.getMostFaultModels = function(callback) {
 	  var modelCount_array = [result.counts.Model.Model1, result.counts.Model.Model2, result.counts.Model.Model3,
 	  			 result.counts.Model.Model4, result.counts.Model.Model5,result.counts.Model.Model6,
 	  			result.counts.Model.Model7,result.counts.Model.Model8,result.counts.Model.Model9];
-
+    console.log(result);
 	  	function predicatBy(prop){
    			return function(a,b){
       			if( a[prop] > b[prop]){
@@ -62,7 +62,7 @@ exports.getLeastFaultModels = function(callback) {
 	  			 result.counts.Model.Model4, result.counts.Model.Model5,result.counts.Model.Model6,
 	  			result.counts.Model.Model7,result.counts.Model.Model8,result.counts.Model.Model9];
 	  
-
+    console.log(result);
 	  function predicatBy(prop){
    			return function(a,b){
       			if( a[prop] > b[prop]){
@@ -99,7 +99,7 @@ exports.getmostFault = function(callback) {
     } else {  
 	  var all_fault = {'faults': []};
 	  
-	  var faultArray=[result.counts.Fault.Detergentleak,result.counts.Fault.PowerDisconnect,result.counts.Fault.WaterLeak];
+	  var faultArray=[result.counts.Fault.Sensor,result.counts.Fault.Software,result.counts.Fault.Water];
 	  
 	  var count=0;
 	  for(var model in result.counts.Fault) {	  	
@@ -112,3 +112,12 @@ exports.getmostFault = function(callback) {
   });
 };
 
+//twitter notification
+
+exports.getTwitternotificationsentiments = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotifications);  
+};
+
+exports.getTwitternotificationspike = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspike);  
+};
