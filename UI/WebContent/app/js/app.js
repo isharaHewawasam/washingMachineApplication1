@@ -2217,12 +2217,49 @@ function renderPieChart(divId, insightsData, chartTitle){
 }
 
 App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', function ($scope, $http, configApiClient) {
-	$scope.getTwitterSentimates = function(divId){
-		var data = [{name: 'tweets',data: [40]}, 
-		            {name: 're-tweets',data: [60]}];
-		renderHorizontalBarChart(divId, data);
-	}
-}]);
+	$scope.getTwitterSentimates = function(){
+		
+		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-sentiments', 
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+		    	 
+		    	 $scope.data = data;
+					           
+		}). error(function(data, status) {
+				$scope.data = [{name:'#1234', Model: 'Model3', Make:'Make1', twitter_count:60, full_count: 100}];
+		       console.log("Error getting data for most fault models, status: " + status);
+		});	
+		
+		/*$scope.data = [{name:'#1234', count:60, total: 100}];*/
+	};
+	
+	$scope.getSpikesInMachines = function() {
+		$scope.data = [{make:'LG', model: 'SKU 6', reason: 'Not happy with the programs', count:30, total: 100}];
+	};
+	
+	$scope.getSpikesOfSpecificErrors = function() {
+		$scope.data = [{name:'#1234', errorsNew:45, errorsOld: 30}];
+	};
+	
+	$scope.getSpikesByMakeModel = function() {
+		$scope.data = 
+		$scope.spikeCount = 10;
+	};
+	
+	
+}])
+.directive('toggle', function(){
+	  return {
+	    restrict: 'A',
+	    link: function(scope, element, attrs){
+	      if (attrs.toggle=="tooltip"){
+	        $(element).tooltip();
+	      }
+	      if (attrs.toggle=="popover"){
+	        $(element).popover();
+	      }
+	    }
+	  }
+});
 
 function renderHorizontalBarChart(divId, notificationData){
 	$('#' + divId).highcharts({
