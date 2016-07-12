@@ -1322,7 +1322,7 @@ App.controller('TwitterInsightsController',
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 	
 	$scope.loadDashboard = function() {
-		$state.go('app.engmanagerview');
+		$state.go('app.singleview');
 	};
 	
 	
@@ -2021,13 +2021,13 @@ function renderPieChart(divId, insightsData, chartTitle){
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            marginRight:140,
+            marginRight:200,
             margin: [50, 110, 0, 0],
             events: {
             	load: function(event) {
             		if (divId == 'twitter-handle-container'){
             			/*$('.highcharts-legend-item').last().append('<img src="app/img/Dashboardassets/icon_arrow.png" style="margin-left: 112px" onclick="displayDetailedTwitterView()"/><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
-            					this.series[0].data[0].totalComments + '</b></div>');*/
+            			 		this.series[0].data[0].totalComments + '</b></div>');*/
             			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
             					this.series[0].data[0].totalComments + '</b></div>');
             		}
@@ -2055,13 +2055,13 @@ function renderPieChart(divId, insightsData, chartTitle){
             pointFormat: '<b>{point.percentage:.1f}%</b>'
         },
         legend: {
-            align: 'right',
+            align: 'left',
             layout: 'vertical',
             verticalAlign: 'middle',
-            x: -30,
+            x: 155,
             y: 30,
             useHTML: true,
-            itemMarginBottom: 8,
+            itemMarginBottom: -3,
             labelFormatter: function () {
             	if (divId != 'twitter-handle-container')
             		return this.name + ' - ' + this.percentage.toFixed(2) + '%';

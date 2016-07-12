@@ -134,15 +134,15 @@
                 </div>
                 <div  id="filterNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="app/img/Dashboardassets/filter.png">
+                        <img class="iconpos" src="app/img/Dashboardassets/machine.png">
                     </div>
                     <div class="menu-text">Filter</div>
                 </div>
-                <div  id="calenderNav" class="leftbar-icon">
+                <div id="demographicsNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="app/img/Dashboardassets/calendar.png">
+                        <img class="iconpos" src="app/img/Dashboardassets/demographics.png">
                     </div>
-                    <div class="menu-text">Filter</div>
+                    <div class="menu-text">Demographics</div>
                 </div>
             </div>
         </nav>
@@ -241,11 +241,14 @@
         $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
             $('#filterPanel').show();
             $('#filterNav').addClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/filter_hover.png');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
             $('#dashboardNav').removeClass('sidebarItemActive');
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
             $('#calenderNav').removeClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+            /* $('#demographicsNav').removeClass('sidebarItemActive');
+            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png'); */
+            
         });
         $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
             if($('.md-pane-open').is(":visible")){
@@ -253,36 +256,38 @@
             }
             $('#filterPanel').hide();
             $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
             $('#dashboardNav').addClass('sidebarItemActive');
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
-            $('#calenderNav').removeClass('sidebarItemActive');
+            $('#calenderNav').addClass('sidebarItemActive');
             $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+            /* $('#demographicsNav').addClass('sidebarItemActive');
+            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png'); */
             event.stopPropagation();
         });
 
 
-        $(document).on("mouseover", "#calenderNav, #demographicsFilterPanel", function(event) {
+        $(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", function(event) {
             $('#demographicsFilterPanel').show();
             $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
             $('#dashboardNav').removeClass('sidebarItemActive');
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
-            $('#calenderNav').addClass('sidebarItemActive');
-            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar_hover.png');
+            $('#demographicsNav').addClass('sidebarItemActive');
+            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png');
         });
 
-        $(document).on("mouseleave", "#calenderNav, #demographicsFilterPanel", function(event) {
+        $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
             if($('.md-pane-open').is(":visible")){
                 return;
             }
             $('#demographicsFilterPanel').hide();
             $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/filter.png');
+            $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
             $('#dashboardNav').addClass('sidebarItemActive');
             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
-            $('#calenderNav').removeClass('sidebarItemActive');
-            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+            $('#demographicsNav').removeClass('sidebarItemActive');
+            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
             event.stopPropagation();
         });
 
