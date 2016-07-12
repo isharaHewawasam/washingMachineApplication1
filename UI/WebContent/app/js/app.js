@@ -1347,8 +1347,7 @@ App.controller('TwitterInsightsController',
 	};
 	
 	$scope.getTextColor = function(color){
-		console.log("------------Text Color -------------",color);
-		return (color=='red'? 'twitter_arrow_red' : 'twitter_arrow_green');
+		return (color=='red'? 'twitter_percentage twitter_arrow_red' : 'twitter_percentage twitter_arrow_green');
 	}
 	
 	$scope.maximizeGrid=function(){
@@ -1524,7 +1523,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerT
 		colorCode = ['#5DADE2', '#808080']; // For Neutral
 	}
 	
-	var pieChart = new Highcharts.Chart({
+	var chart = new Highcharts.Chart({
         chart: {
         	renderTo:divId,
         	width: 120,
@@ -1586,7 +1585,19 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerT
         }]
     },
     function(chart) { // on complete
-        var textX = chart.plotLeft + (chart.plotWidth  * 0.5);
+    	
+    	var div = '#'+divId;
+    	
+    	/*console.log("------div ",div);
+    	var offsets = $(div).offset();
+    	var top = offsets.top;
+    	var left = offsets.left;
+    	console.log("------- top left ",left);*/
+    	
+    	var position = $(div).position();
+    	console.log('X: ' + position.left + ", Y: " + position.top );
+    	  
+        var textX = position.left + 45; // chart.plotLeft + (chart.plotWidth  * 0.5);
         var textY = chart.plotTop  + (chart.plotHeight * 0.5);
         console.log(" textX ",textX);
         console.log(" textY ",textY);
@@ -1600,7 +1611,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerT
         
         //if(data.showCenterText){
 	        //$('#'+divId+'_text').remove();
-        console.log('-----------id ','#'+divId+'_text');
+        	console.log('-----------id ','#'+divId+'_text');
         
         	//$('#'+divId+'_text').remove();
 	        $('#'+divId+'_text').append(span);
