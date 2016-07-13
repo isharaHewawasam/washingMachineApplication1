@@ -13,7 +13,8 @@ module.exports.twitternotifications = [
                                "City":"New York",
                                "Zipcode":10001,
                         	 "Reason": "Not Happy with the programs",
-                               "date":"06/07/2016"
+                               "date":"06/07/2016",
+                               "twitter_response_time":"Negative"
                          }
                        ];
 
