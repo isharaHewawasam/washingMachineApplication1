@@ -2269,43 +2269,80 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
-App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', function ($scope, $http, configApiClient) {
+App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', 'iot.config.Notification', function ($scope, $http, configApiClient, configNotification) {
 	$scope.getTwitterSentimates = function(){
+		
+		$scope.showTwitterContentFlag = false;
 		
 		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-sentiments', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 
-		    	 $scope.data = data;
+		    	 if (data || data.length != 0) {
+		    	 	$scope.data = data;
+		    	 	$scope.showTwitterContentFlag = true;
+		    	 	$scope.negativeTwitterSentimentThreshold = configNotification.negativeTwitterSentimentThreshold + configNotification.negativeTwitterSentimentTolerance;
+		    	 	$scope.positiveTwitterSentimentThreshold = configNotification.positiveTwitterSentimentThreshold + configNotification.positiveTwitterSentimentTolerance;
+		    	 }
 					           
 		}). error(function(data, status) {
-				$scope.data = [{name:'#1234', Model: 'Model3', Make:'Make1', twitter_count:60, full_count: 100}];
+				//$scope.data = [{name:'#1234', Model: 'Model3', Make:'Make1', twitter_count:60, full_count: 100}];
 				console.log("Error getting data for twitter notification sentiments, status: " + status);
 		});	
-		
-		/*$scope.data = [{name:'#1234', count:60, total: 100}];*/
 	};
 	
 	$scope.getSpikesInMachines = function() {
-		/*$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
+		
+		$scope.showSpikeContentFlag = false;
+		
+		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 
-		    	 $scope.data = data;
+		    	 if (data || data.length != 0) {
+		    		 $scope.data = data;
+		    		 $scope.showSpikeContentFlag = true;
+		    		 $scope.spikeByConnectedMachinesTolerance = configNotification.spikeByConnectedMachinesTolerance;
+		    	 }
 					           
 		}). error(function(data, status) {
-				$scope.data = [{make:'LG', model: 'SKU 6', reason: 'Not happy with the programs', count:30, total: 100}];
-				console.log("Error getting data for twitter notification sentiments, status: " + status);
-		});*/
+				//$scope.data = [{make:'Make1', model: 'Model6', reason: 'Not happy with the programs', count:30, total: 100}];
+				console.log("Error getting data for spikes in machines, status: " + status);
+		});
 		
-		$scope.data = [{make:'Make12', model: 'Model6', reason: 'Not happy with the programs', count:30, total: 100}];
+		//$scope.data = [{make:'Make12', model: 'Model6', reason: 'Not happy with the programs', count:30, total: 100}];
 	};
 	
 	$scope.getSpikesOfSpecificErrors = function() {
-		$scope.data = [{name:'#1234', errorsNew:45, errorsOld: 30}];
+		
+		$scope.showSpikeContentFlag = false;
+		
+		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike-errors', 
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+		    	 if (data || data.length != 0) {
+		    		 $scope.data = data;
+		    		 $scope.showSpikeContentFlag = true;
+		    		 $scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
+		    	 }
+					           
+		}). error(function(data, status) {
+				//$scope.data = [{make:'Make3', model: 'Model4', reason: 'Not happy with the programs', count:30, total: 100}];
+				console.log("Error getting data for spikes of specific errors, status: " + status);
+		});
+		
+		//$scope.data = [{name:'#1234', errorsNew:45, errorsOld: 30}];
 	};
 	
 	$scope.getSpikesByMakeModel = function() {
-		$scope.data = [{make:'make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25}];
-		//$scope.spikeCount = 10;
+		
+		$scope.showSpikeContentFlag = false;
+		
+		/*$scope.data = [{make:'Make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25}];*/
+		$scope.data = [{make:'Make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25},
+		               {make:'Make2', model: 'Model3', reason: 'Errors', current_error_count:70, previous_error_count: 55}];
+		
+		if ($scope.data || $scope.data.length != 0) {
+   		 	$scope.showSpikeContentFlag = true;
+   	 	}
+		
+		$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
+	
 	};
 	
 	
