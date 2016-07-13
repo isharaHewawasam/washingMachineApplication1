@@ -359,8 +359,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', function($rootScope,$scope, $http, $state) {
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', function($rootScope,$scope, $http, $state, $window) {
 	//alert("loaded");
 	console.log("name from rootscope "+$rootScope.Name);
 	$scope.rolename=$rootScope.Role;
