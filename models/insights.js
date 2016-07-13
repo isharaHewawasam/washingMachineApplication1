@@ -161,10 +161,10 @@ exports.getMentions = function(callback) {
 
 //Twitter graph api
 exports.getTwitter = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitter);  
 };
 
-//Twitter Sentiments positive grpah api
+//Twitter Sentiments grpah api
 exports.getTwittersentiments = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
+  callback(null, require("./twiiternotification_dummy").twitterinnerpagesentimates);  
 };
