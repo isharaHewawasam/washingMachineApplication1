@@ -3,98 +3,41 @@ App.controller('TwitterInsightsController',
 		['$rootScope', '$scope', '$state', '$http', '$timeout', "iot.config.ApiClient",
                  function($rootScope, $scope, $state, $http, $timeout, configApiClient){
 	
+	$scope.showPerSign = false;
+	
 	$scope.twitter_insights_griddata = [];
-	
-	// dummey data
-	var obj 		= {};
-	obj.make 		= 1;
-	obj.model 		= '#1201';
-	obj.tweets 		= 100;
-	obj.likes 		= 120;
-	obj.dislikes 	= 45;
-	obj.followers 	= 260;
-	obj.comments 	= 521;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 2;
-	obj.model 		= '#1202';
-	obj.tweets 		= 90;
-	obj.likes 		= 170;
-	obj.dislikes 	= 15;
-	obj.followers 	= 560;
-	obj.comments 	= 121;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 3;
-	obj.model 		= '#1203';
-	obj.tweets 		= 100;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 11;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 4;
-	obj.model 		= '#1204';
-	obj.tweets 		= 60;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 12;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 5;
-	obj.model 		= '#1205';
-	obj.tweets 		= 50;
-	obj.likes 		= 190;
-	obj.dislikes 	= 18;
-	obj.followers 	= 560;
-	obj.comments 	= 123;
-	$scope.twitter_insights_griddata.push(obj);
-	
 	
 	$("#gridAdjustHeight").height(400);
 	
-	/*$http({url:configApiClient.baseUrl + "twitterinsights/data", //api url
-        method: "POST",
+	$http({url:configApiClient.baseUrl + "twitter/innerpage/twitter-insights", //api url
+        method: "GET",
         Accept: "text/plain"}).success(function(data, status) {
-        		console.log("*****************twitterinsights success ****************");
-        		$scope.twitter_insights_griddata = data; 
+        		$scope.twitter_insights_griddata = data.data; 
           
-        		//console.log("TwitterInsightsGriddata"+JSON.stringify(data));
-                
            }). error(function(data, status) {
         	   console.log("*****************twitterinsights error ****************");
                console.log("usageerror:"+status);
              
-    });*/
+    });
+	
 	
 	$scope.tweetsData = {};
-	$scope.tweetsData.tweets_color = 'red';
-	$scope.tweetsData.tweets_count = 7;
-	$scope.tweetsData.tweets_percentage = 69.3;
 	
-	$scope.tweetsData.tweetsimpress_color = 'red';
-	$scope.tweetsData.tweetsimpress_count = 3564;
-	$scope.tweetsData.tweetsimpress_percentage = 81.8;
-	
-	$scope.tweetsData.profilevisits_color = 'green';
-	$scope.tweetsData.profilevisits_count = 997;
-	$scope.tweetsData.profilevisits_percentage = 28.6;
-	
-	$scope.tweetsData.mentions_color = 'red';
-	$scope.tweetsData.mentions_count =10;
-	$scope.tweetsData.mentions_percentage = 23.1;
-	
-	$scope.tweetsData.twitter_color = 'red';
-	$scope.tweetsData.twitter_count = 248;
-	$scope.tweetsData.twitter_percentage = 30;
+	$http({url:configApiClient.baseUrl + "twitter/innerpage/twittersentiments ", //api url
+        method: "GET",
+        Accept: "text/plain"}).success(function(data, status) {
+        		
+        		$scope.tweetsData = data.data[0];
+        		if($scope.tweetsData){
+        			getTwitterSentiments('twitter_sentiments', $scope.tweetsData);
+        			$scope.showPerSign = true;
+        		}
+	        	
+           }). error(function(data, status) {
+        	   console.log("*****************twitterinsights error ****************");
+               console.log("usageerror:"+status);
+             
+    });
 	
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 	
@@ -128,81 +71,9 @@ App.controller('TwitterInsightsController',
 		  $("#gridAdjustHeight").height(400);
     });
 	
-	$scope.getTwitterSentiments = function(divId){
-		  
-			var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
-		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
-		  
-		
-		  var twitterData1 = 
-			  [{"name": "positive", "y": 59, "totalComments": 66},
-			   {"name": "othres", "y": 41, "totalComments": 66}];
-		  
-		  //var twitterDataStr = JSON.stringify(twitterData);
-		  
-		  //twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
-		  //twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-					
-		  //twitterData = JSON.parse(twitterDataStr);
-		  
-		 var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
-			 
-		 var innerText = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
-		 renderTwitterSentimentsPieChart(divId+'_pos', twitterData1, twitterTitle, innerText); 
-		  
-		  var twitterData2 = 
-			  [{"name": "Neutral", "y": 27, "totalComments": 66},
-			   {"name": "othres", "y": 73, "totalComments": 66}];
-		  
-		  var innerText = "<div width='100%' style='text-align:center'>27%</div><div>Neutral<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData2, twitterTitle, innerText);
-		  
-		  var twitterData3 = 
-			  [{"name": "Negative", "y": 14, "totalComments": 66},
-			   {"name": "othres", "y": 86, "totalComments": 66}];
-		
-		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData3, twitterTitle, innerText);
-		  
-		  
-		  $(window).resize(function() {
-			    if(this.resizeTO) clearTimeout(this.resizeTO);
-			    this.resizeTO = setTimeout(function() {
-			    	var objArr = [];
-			    	
-			        $(this).trigger('resizeEnd', objArr);
-			    }, 500);
-		  });
-		  
-		  $(window).bind('resizeEnd', function(event, param1) {
-			 
-			  var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
-			
-			  var twitterData = 
-				  [{"name": "positive", "y": 59, "totalComments": 66},
-				   {"name": "othres", "y": 41, "totalComments": 66}];
-			  
-			  var innerText = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
-			  renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle, innerText); 
-			  
-			  var twitterData = 
-				  [{"name": "Neutral", "y": 27, "totalComments": 66},
-				   {"name": "othres", "y": 73, "totalComments": 66}];
-			  
-			  var innerText = "<div width='100%' style='text-align:center'>27%</div><div>Neutral<div>"; //data.centerText;
-			  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle, innerText);
-			  
-			  var twitterData = 
-				  [{"name": "Negative", "y": 14, "totalComments": 66},
-				   {"name": "othres", "y": 86, "totalComments": 66}];
-			
-			  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
-			  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);  
-			  
-		  });
-	  };
+	
 	  
-	  $scope.getTwitterData = function(divId) {
+	$scope.getTwitterData = function(divId) {
 		  
 		  var data = [
 		  			[1247529600000,20.32],
@@ -260,6 +131,58 @@ App.controller('TwitterInsightsController',
 	  }
 }]);
 
+function getTwitterSentiments (divId, twitter_sentiments) {
+	  
+	 var positive 	= twitter_sentiments.sentimate_positive;
+	 var pos_other	= (100-positive);
+	 var negative 	= twitter_sentiments.sentimate_neutral;
+	 var neg_other	= (100-negative);
+	 var neutral 	= twitter_sentiments.sentimate_negative;
+	 var neu_other	= (100-neutral);
+	 
+	 sentimentsData(divId+'_pos', 'Positive', positive, pos_other);
+	 
+	 sentimentsData(divId+'_neu', 'Neutral', neutral, neu_other);
+	 
+	 sentimentsData(divId+'_neg', 'Negative', negative, neg_other);
+	 
+	 // when browser resize need to redraw the chart to display the inner text at proper location
+	 $(window).resize(function() {
+		    if(this.resizeTO) clearTimeout(this.resizeTO);
+		    this.resizeTO = setTimeout(function() {
+		    	var objArr = [];
+		    	$(this).trigger('resizeEnd', objArr);
+		    }, 500);
+	  });
+	  
+	  $(window).bind('resizeEnd', function(event, param1) {
+		 
+		  sentimentsData(divId+'_pos', 'Positive', positive, pos_other);
+			 
+		  sentimentsData(divId+'_neu', 'Neutral', neutral, neu_other);
+			 
+		  sentimentsData(divId+'_neg', 'Negative', negative, neg_other);
+		  
+	  });
+ };
+ 
+function sentimentsData (divId, name, yValue, oValue) {
+	
+	 var twitterData	= [];
+	 var obj 			= {};
+	 obj.name 			= name;
+	 obj.y				= yValue
+	 twitterData.push(obj);
+	 var obj 			= {};
+	 obj.name 			= "Others";
+	 obj.y				= oValue
+	 twitterData.push(obj);
+	 
+	 var innerText = "<div width='100%' style='text-align:center'>"+yValue+"%</div><div>Positive<div>"; //data.centerText;
+	 renderTwitterSentimentsPieChart(divId, twitterData, innerText); 
+	 
+}
+
 function renderTwitterSentimentsLineChart(divId, insightsData) {
 	  var pieChart = new Highcharts.Chart({
 	      chart: {
@@ -305,7 +228,7 @@ function renderTwitterSentimentsLineChart(divId, insightsData) {
           }]
 	  });
 }
-function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerText, innerTextDiv){
+function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 	
 	var colorCode = ['#339933', '#808080']; // For Positive
 	if(divId == 'twitter_sentiments_neg'){

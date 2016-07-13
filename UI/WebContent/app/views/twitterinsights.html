@@ -78,22 +78,22 @@
 							<td width="20%">
 								<div>Tweets</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweets_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.tweets_color)" ><label ng-bind="tweetsData.tweets_percentage"></label>%</div>	
+								<div ng-class="getTextColor(tweetsData.tweets_color)" ><label ng-bind="tweetsData.tweets_percentage"></label><label ng-show="showPerSign">%</label></div>	
 							</td>
 							<td width="20%">
 								<div>Tweets impressions</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweetsimpress_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><label ng-bind="tweetsData.tweetsimpress_percentage"></label>%</div>
+								<div ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><label ng-bind="tweetsData.tweetsimpress_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
 								<div>Profile visits</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.profilevisits_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.profilevisits_color)" ><label ng-bind="tweetsData.profilevisits_percentage"></label>%</div>	
+								<div ng-class="getTextColor(tweetsData.profilevisits_color)" ><label ng-bind="tweetsData.profilevisits_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>	
 							</td>
 							<td width="20%">
 								<div>Mentions</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.mentions_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.mentions_color)" ><label ng-bind="tweetsData.mentions_percentage"></label>%</div>
+								<div ng-class="getTextColor(tweetsData.mentions_color)" ><label ng-bind="tweetsData.mentions_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
 								<div>Twitter</div>
@@ -116,19 +116,20 @@
 				<div class="col-lg-12">
 					<img height="30px" width="30px" src='app/img/Dashboardassets/twitter.png' alt='' style="margin-left: 20px"/><label style='margin-top: 5px'>Twitter Sentiments</label>
 				</div>
-				<div class="col-lg-12" ng-init="getTwitterSentiments('twitter_sentiments')">
-				
-					<div class="col-lg-4" id="twitter_sentiments_pos"></div>
+				<div class="col-sm-11 col-md-11 col-lg-11" style="width:400px"> <!-- ng-init="getTwitterSentiments('twitter_sentiments')"> -->
+
+					<div class="col-sm-4 col-md-4 col-lg-4" id="twitter_sentiments_pos"></div>
 					<div id="twitter_sentiments_pos_text" style="position:absolute; left:0px; top:0px;"></div>
 					
-					<div class="col-lg-4" id="twitter_sentiments_neu"></div>
+					<div class="col-sm-4 col-md-4 col-lg-4" id="twitter_sentiments_neu"></div>
 					<div id="twitter_sentiments_neu_text" style="position:absolute; left:0px; top:0px;"></div>
 					
-					<div class="col-lg-4" id="twitter_sentiments_neg"></div>
+					<div class="col-sm-4 col-md-4 col-lg-4" id="twitter_sentiments_neg"></div>
 					<div id="twitter_sentiments_neg_text" style="position:absolute; left:0px; top:0px;"></div>
 					
 					
 				</div>	
+				<div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
 			</div>
 		</div>
 	
