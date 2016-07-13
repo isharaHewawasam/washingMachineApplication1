@@ -35,4 +35,23 @@ module.exports.twitternotificationsspike = [
                                "Reason": "Not Happy with the programs",
                                "date":"06/07/2016"
                          }
-                       ];                      
+                       ];  
+
+module.exports.twitternotificationsspikeerror = [
+                         {      
+                               "name":"Model3",
+                               "current_error_count":80,
+                               "previous_error_count":50,               
+                               "Model": "Model3",
+                               "Make": "Make1",
+                               "Description":"Washing machine connectivity status",
+                               "Value":10,
+                               "Cutoff":"02/06/2016-10/07/2016",
+                               "Tolerance":7,
+                               "State":"New York",
+                               "City":"New York",
+                               "Zipcode":10001,
+                               "Reason": "Not Happy with the programs",
+                               "date":"06/07/2016"
+                         }
+                       ];                     

@@ -27,6 +27,7 @@ module.exports.getmostFault = function(req, res, next) {
 };
 
 
+//Under that comment app apis are dummy apis
 //twitter notifications
 
 module.exports.getTwitternotificationsentiments = function(req, res, next) { 
@@ -35,9 +36,16 @@ module.exports.getTwitternotificationsentiments = function(req, res, next) {
 	});
 };
 
-
+//twitter notifications spike
 module.exports.getTwitternotificationspike = function(req, res, next) { 
 	insights.getTwitternotificationspike(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
+//spike in number of specific error
+module.exports.getTwitternotificationspikeerrors = function(req, res, next) { 
+	insights.getTwitternotificationspikeerrors(function(err, result){  	  
 	    helper.sendResponse(res, err, result); 
 	});
 };

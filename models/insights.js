@@ -121,3 +121,7 @@ exports.getTwitternotificationsentiments = function(callback) {
 exports.getTwitternotificationspike = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotificationsspike);  
 };
+//spike in number of specific error
+exports.getTwitternotificationspikeerrors = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerror);  
+};
