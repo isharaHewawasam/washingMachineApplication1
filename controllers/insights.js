@@ -5,6 +5,25 @@ var insights = require('../models/insights');
 var helper = require('./helpers/utility.js');
 var config = require('../models/insights.js');
 
+//Login Authentication
+module.exports.getAuthentication = function(req, res, next) { 
+	insights.getAuthentication(function(err, result){  
+		var username=req.body.username;
+		var password=req.body.password;
+		var role=req.body.role;
+
+		if(username=="mkt_manager@bluemix.com"||username=="eng_manager@bluemix.com"){
+			if(password=="test123"){
+				helper.sendResponse(res, err, "Success");
+			}
+			else{
+				helper.sendResponse(res, err, "Unsuccess");
+			}
+		}
+	     
+	});
+};
+
 //get most fault models  
 module.exports.getMostFaultModels = function(req, res, next) { 
 	config.getMostFaultModels(function(err, result){  	  
@@ -95,6 +114,14 @@ module.exports.getMentions = function(req, res, next) {
 //Twitter graph api
 module.exports.getTwitter = function(req, res, next) { 
 	insights.getTwitter(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Twitter Sentiments api positive graph
+module.exports.getTwittersentiments = function(req, res, next) { 
+	insights.getTwittersentiments(function(err, result){  
 		var dataArray={'data':result};
 	    helper.sendResponse(res, err, dataArray); 
 	});

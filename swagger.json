@@ -490,6 +490,29 @@
         }
       }
     },
+    "/twitter/innerpage/twittersentiments": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwittersentiments",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter sentiments graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter sentiments graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
     "/demographics/family/age-ranges": {
       "get": {
         "x-swagger-router-controller": "age-ranges",
@@ -886,6 +909,40 @@
           }
         }
       }
+    },
+    "/login/authentication": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getAuthentication",
+        "tags": ["Login"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginAuthentication"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/MultipleSensorsDataResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1178,6 +1235,20 @@
          "region": {                   
            "$ref": "#/definitions/region"                    
          }
+      }
+    },
+    "LoginAuthentication": {
+      "properties": {
+        "username": {                   
+           "type": "string"                    
+         },
+         "password": {                   
+           "type":"string"                    
+         },
+         "role":{
+            "type":"string"
+         }
+         
       }
     },
     "SalesByChartPayload": {

@@ -112,8 +112,14 @@ exports.getmostFault = function(callback) {
   });
 };
 
-//twitter notification
 
+//Login Authentication
+exports.getAuthentication = function(callback) {
+  
+  callback(null, "Success");  
+};
+
+//twitter notification
 exports.getTwitternotificationsentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotifications);  
 };
@@ -155,5 +161,10 @@ exports.getMentions = function(callback) {
 
 //Twitter graph api
 exports.getTwitter = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
+};
+
+//Twitter Sentiments positive grpah api
+exports.getTwittersentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
 };
