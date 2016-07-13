@@ -13,11 +13,20 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 
 //  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
 
+var login = angular.module('myLoginCheck',[]).
+factory('$logincheck', function(){
+  return function(isLogin){
+	  console.log('isLogin : ', isLogin);
+	  if(isLogin) return true;
+	  return false;  
+  };
+});
+
 // APP START
 // ----------------------------------- 
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages'])
+var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -170,7 +179,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     ;
 
 
-}]).config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
+}]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
+	  if(!$logincheck($window.sessionStorage.isLoggedIn)) {
+		  $location.path('/login');
+	  }
+}]);
+App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
 
     // Lazy Load modules configuration
@@ -259,7 +273,7 @@ App
 ;
 
 
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state,$rootScope) {
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', function($scope, $http, $state,$rootScope,$window) {
 	//alert("loaded");
 	
 	
@@ -295,7 +309,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	      //	 $state.go('app.engmanagerview');
 	      	//return
 	        };
-		
+	        $window.sessionStorage.isLoggedIn = true;
 		/*
 		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
         if(!response.success) {
@@ -350,11 +364,10 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	
 	
 	
-	 $scope.logOut=function(){
-		
-		 $state.go('page.login');
-		   }
-	}]);
+	$scope.logOut=function(){
+		delete $window.sessionStorage.isLoggedIn;
+		$state.go('page.login');
+ 	}
 /**=========================================================
  * Module: main.js
  * Main Application Controller
