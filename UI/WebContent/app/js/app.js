@@ -374,6 +374,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 		delete $window.sessionStorage.isLoggedIn;
 		$state.go('page.login');
  	}
+}]);
 /**=========================================================
  * Module: main.js
  * Main Application Controller
