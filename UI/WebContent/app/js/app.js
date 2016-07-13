@@ -1247,7 +1247,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax #gridCloseImg").removeClass("hidden");
 		//$("#gridCloseImg").removeClass("hidden");
 		
-		  $("#gridAdjustHeight").height(560);
+		 $(".tbody").height(600);
 
 	$("#gridMax").removeClass("hidden");
 	
@@ -1258,8 +1258,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$("body").on("click","#gridCloseImg",function(){
 		$("#gridMax").empty();
 		$("#gridMax").addClass("hidden");
-		  $("#gridAdjustHeight").height(160);
-
+		//  $("#gridAdjustHeight").height(160);
+		  $(".tbody").height(200);
 		//$scope.plotChartFunction("container");
     });
 	

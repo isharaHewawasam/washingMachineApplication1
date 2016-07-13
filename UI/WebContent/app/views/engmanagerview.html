@@ -3,6 +3,8 @@
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
 	<link href="app/css/charts.css" rel="stylesheet" />
+	<link href="app/css/table.css" rel="stylesheet" />
+	
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
@@ -327,41 +329,41 @@
 
 			<div class="panel-body" id="gridHideNodata">
 				<!--   START table-responsive -->
-				<div id="gridAdjustHeight" class="table-responsive scrollit">
-					<table class="table table-striped table-bordered table-hover">
-						<thead class="md-body-2"
-							style="font-family: Roboto; font-size: 15px;">
-
-
-
-							<tr>
-								<th astyle="text-align:center">Make</th>
-								<th style="text-align:center">Model</th>
-								<th style="text-align:center">Water used<span class='notbold'>(G)</span></th>
-								<th style="text-align:center">Energy used<span class='notbold'>(kw)</span></th>
-								<th style="text-align:center">Wash cycle<span class='notbold'>(min)</span></th>
-								<th style="text-align:center">Wash cycles</th>
-								<th style="text-align:center">Temperature<span class='notbold'>(f)</span></th>
-								<th style="text-align:center">Detergent used<span class='notbold'>(gms)</span></th>
-								<th style="text-align:center">Humidity<span class='notbold'>(%)</span></th>
-                				<th style="text-align:center">Load<span class='notbold'>(kgs)</span></th>
-							</tr>
-						</thead>
-						<tbody>
+				<div id="gridAdjustHeight"  class="panel panel-default">
+				<div class="tableHeader">
+				<p>Make</p>
+								<p class="text-center">Model</p>
+								<p class="text-center">Water used<span class='notbold'> (G)</span></p>
+								<p class="text-center">Energy used<span class='notbold'> (kw)</span></p>
+								<p class="text-center">Wash cycle<span class='notbold'> (min)</span></p>
+								<p class="text-center">Wash cycles</p>
+								<p class="text-center">Temperature<span class='notbold'> (f)</span></p>
+								<p class="text-center">Detergent used<span class='notbold'> (gms)</span></p>
+								<p class="text-center">Humidity<span class='notbold'> (%)</span></p>
+                				<p class="text-center">Load<span class='notbold'> (kgs)</span></p>
+				</div>
+				<div class="tbody"   >
+					<div class="tableScroll">
+					<table class="table table-condensed">
+						
+						<tbody id="tabody">
 							<tr ng-repeat="itm in eng_griddata">
-		                        <td style="text-align:center">{{itm.make}}</td>
-		                        <td style="text-align:center">{{itm.model}}</td>
-		                        <td style="text-align:center">{{itm.avgWaterUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgPowerUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgWashCycleDurationUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgWashCyclesUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgTemperatureUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgDetergentUsage}}</td>
-		                        <td style="text-align:center">{{itm.avgHumidityUsage}}</td>
-                            	<td style="text-align:center">{{itm.avgLoadUsage}}</td>
+		                         <td >{{itm.make}}</td>
+		                        <td >{{itm.model}}</td>
+		                        <td >{{itm.avgWaterUsage}}</td>
+		                        <td  >{{itm.avgPowerUsage}}</td>
+		                        <td >{{itm.avgWashCycleDurationUsage}}</td>
+		                        <td >{{itm.avgWashCyclesUsage}}</td>
+		                        <td>{{itm.avgTemperatureUsage}}</td>
+		                        <td >{{itm.avgDetergentUsage}}</td>
+		                        <td >{{itm.avgHumidityUsage}}</td>
+                            	<td >{{itm.avgLoadUsage}}</td>
                      		</tr>							
 						</tbody>
 					</table>
+		
+		</div>
+		</div>
 				</div>
 				<!--      END table-responsive -->
 				<label  class="pull-right " ng-if="eng_griddata.length > 0">{{eng_griddata.length}} records found</label>
