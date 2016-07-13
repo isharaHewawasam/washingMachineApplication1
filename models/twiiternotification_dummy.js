@@ -14,7 +14,7 @@ module.exports.twitternotifications = [
                                "Zipcode":10001,
                         	 "Reason": "Not Happy with the programs",
                                "date":"06/07/2016",
-                               "twitter_response_time":"Negative"
+                               "twitter_response_type":"Negative"
                          }
                        ];
 
@@ -55,7 +55,34 @@ module.exports.twitternotificationsspikeerror = [
                                "Reason": "Not Happy with the programs",
                                "date":"06/07/2016"
                          }
-                       ];  
+                       ];
+
+module.exports.twitternotificationsspikeerrorbymake = [
+                         {      
+                               "make":"Make1",
+                               "model":"Model2",
+                               "reason":"Not happy with the programs",
+                               "current_error_count":30,
+                               "previous_error_count":25,
+                               "error_type":"Sensor"
+                         },
+                         {      
+                               "make":"Make2",
+                               "model":"Model5",
+                               "reason":"Errors",
+                               "current_error_count":70,
+                               "previous_error_count":55,
+                               "error_type":"Software"
+                         },{      
+                               "make":"Make3",
+                               "model":"Model8",
+                               "reason":"Errors",
+                               "current_error_count":60,
+                               "previous_error_count":45,
+                               "error_type":"Water"
+                         }
+
+                       ];   
 
 
 //twitter inner page apis dummy data

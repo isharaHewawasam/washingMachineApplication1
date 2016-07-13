@@ -352,6 +352,29 @@
         }
       }
     },
+    "/insights/twitter-notifications-spike-errors-bymake": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationspikeerrorsbymake",
+        "tags": ["Insights"],
+        "description": "Return twitter notification spike with error by make",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error by make",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
     "/twitter/innerpage/twitter-insights": {
       "get": {
         "x-swagger-router-controller": "insights",
@@ -938,7 +961,7 @@
             "description": "Successful request.",            
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/MultipleSensorsDataResponse"
+              "$ref": "#/definitions/loginAutentications"
             }
           }
         }
@@ -982,6 +1005,28 @@
         },
         "no_of_faults": {
           "type": "integer"
+        }
+      }
+    },
+    "most_common_fault": {
+      "properties": {
+        "Make": {
+          "type": "string"
+        },
+        "Model": {
+          "type": "string"
+        },
+        "Reason": {
+          "type": "string"
+        },
+        "Current_error_count":{
+          "type":"integer"
+        },
+        "Previous_error_count":{
+          "type":"integer"
+        },
+        "Error_Type":{
+          "type":"integer"
         }
       }
     },
@@ -1353,6 +1398,25 @@
         },
         "connected": {                   
            "type": "integer"                    
+        }
+      }
+    },
+    "loginAutentications": {
+      "properties": {        
+        "name": {
+          "type": "string"         
+        },
+        "username": {
+          "type": "string"         
+        },
+        "role": {
+          "type": "string"         
+        },
+        "rolename": {
+          "type": "string"         
+        },
+        "response": {
+          "type": "string"         
         }
       }
     },

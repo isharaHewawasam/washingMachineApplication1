@@ -131,6 +131,10 @@ exports.getTwitternotificationspike = function(callback) {
 exports.getTwitternotificationspikeerrors = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerror);  
 };
+//spike in number of specific error by make
+exports.getTwitternotificationspikeerrorsbymake = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerrorbymake);  
+};
 
 //Twitter inner page apis
 

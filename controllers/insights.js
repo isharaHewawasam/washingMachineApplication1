@@ -77,6 +77,13 @@ module.exports.getTwitternotificationspikeerrors = function(req, res, next) {
 	});
 };
 
+//spike in number of specific error by make
+module.exports.getTwitternotificationspikeerrorsbymake = function(req, res, next) { 
+	insights.getTwitternotificationspikeerrorsbymake(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
 //Twitter Inner page apis 
 
 //Twitter insights table api
