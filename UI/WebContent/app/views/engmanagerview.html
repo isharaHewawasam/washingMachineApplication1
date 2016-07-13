@@ -331,7 +331,7 @@
 				<!--   START table-responsive -->
 				<div id="gridAdjustHeight"  class="panel panel-default">
 				<div class="tableHeader">
-				<p>Make</p>
+				<p class="text-center">Make</p>
 								<p class="text-center">Model</p>
 								<p class="text-center">Water used<span class='notbold'> (G)</span></p>
 								<p class="text-center">Energy used<span class='notbold'> (kw)</span></p>
@@ -348,16 +348,16 @@
 						
 						<tbody id="tabody">
 							<tr ng-repeat="itm in eng_griddata">
-		                         <td >{{itm.make}}</td>
-		                        <td >{{itm.model}}</td>
-		                        <td >{{itm.avgWaterUsage}}</td>
-		                        <td  >{{itm.avgPowerUsage}}</td>
-		                        <td >{{itm.avgWashCycleDurationUsage}}</td>
-		                        <td >{{itm.avgWashCyclesUsage}}</td>
-		                        <td>{{itm.avgTemperatureUsage}}</td>
-		                        <td >{{itm.avgDetergentUsage}}</td>
-		                        <td >{{itm.avgHumidityUsage}}</td>
-                            	<td >{{itm.avgLoadUsage}}</td>
+		                        <td class="text-center">{{itm.make}}</td>
+		                        <td class="text-center">{{itm.model}}</td>
+		                        <td class="text-center">{{itm.avgWaterUsage}}</td>
+		                        <td class="text-center">{{itm.avgPowerUsage}}</td>
+		                        <td class="text-center">{{itm.avgWashCycleDurationUsage}}</td>
+		                        <td class="text-center">{{itm.avgWashCyclesUsage}}</td>
+		                        <td class="text-center">{{itm.avgTemperatureUsage}}</td>
+		                        <td class="text-center">{{itm.avgDetergentUsage}}</td>
+		                        <td class="text-center">{{itm.avgHumidityUsage}}</td>
+                            	<td class="text-center">{{itm.avgLoadUsage}}</td>
                      		</tr>							
 						</tbody>
 					</table>
