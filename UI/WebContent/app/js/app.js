@@ -278,54 +278,41 @@ App
   })
 ;
 
-
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', function($scope, $http, $state,$rootScope,$window) {
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
 	//alert("loaded");
 	
 	
 	
 	$scope.postForm = function() {
-
+		var loginCredentials = {
+			username: $scope.inputData.username,
+			password: $scope.inputData.password
+		};
+		$http({url:configApiClient.baseUrl + 'login/authentication',
+              method: "POST",
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              data: loginCredentials
+         }).success(function(data, status) {
+     			if (data.response == 'Success') {
+     				$rootScope.Name = data.name;
+     				$rootScope.email = data.username;
+     				$rootScope.roleKey = data.role;
+     				$rootScope.Role = data.rolename;
+     				if (data.role == 'mkt_manager') {
+     					$state.go('app.singleview');
+     				} else if(data.role == 'eng_manager') {
+     					$state.go('app.engmanagerview');
+     				}
+     			} else {
+     				$scope.errorMsg = 'The user name or password you entered is incorrect.';
+     			}
+         }). error(function(data, status) {
+                console.log("error in login :", data);
+                $scope.errorMsg = 'Network issue, please try after some time.';
+         });
 		
-		//{ success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-		 var response1 = { success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	        if(!response1.success) {
-	      	//  $scope.errorMsg  = 'Not Authorised';
-	        	
-	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	             if(!response.success) {
-	           	  $scope.errorMsg  = 'We weren\'t able to find the email address and password combination you entered';
-	             }else{
-	           	//  $scope.errorMsg = 'success';
-	           	  $state.go('app.singleview');
-	           	  
-	           	$rootScope.Role="Marketing Manager";
-	        	$rootScope.Name="John Smith";
-	             };
-	        	
-	        	
-	        }else{
-	      	 // $scope.errorMsg = 'success';
-	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Engineering Manager";
-	      	$rootScope.Name="Alan Mcdormet";
-	      	  // window.location.href = 'success.html';
-	      	 // $state.go('app.singleview');
-	      	  
-	      //	 $state.go('app.engmanagerview');
-	      	//return
-	        };
+		
 	        $window.sessionStorage.isLoggedIn = true;
-		/*
-		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-        if(!response.success) {
-      	  $scope.errorMsg  = 'Not Authorised';
-        }else{
-      	  $scope.errorMsg = 'success';
-      	  $state.go('app.singleview');
-      	  
-      	
-        };*/
 //alert("loaded");
 //$state.go('app.login');
 
