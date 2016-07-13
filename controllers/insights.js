@@ -10,11 +10,19 @@ module.exports.getAuthentication = function(req, res, next) {
 	insights.getAuthentication(function(err, result){  
 		var username=req.body.username;
 		var password=req.body.password;
-		var role=req.body.role;
+	
 
 		if(username=="mkt_manager@bluemix.com"||username=="eng_manager@bluemix.com"){
 			if(password=="test123"){
-				helper.sendResponse(res, err, "Success");
+				if(username=="mkt_manager@bluemix.com"){
+					var array={"name":"John Smith","username":username,"role":"mkt_manager","rolename":"Marketing Manager","response":"Success"}
+					helper.sendResponse(res, err, array);
+				}
+				else if(username=="eng_manager@bluemix.com"){
+					var array={"name":"John Smith","username":username,"role":"eng_manager","rolename":"Engineer Manager","response":"Success"}
+					helper.sendResponse(res, err, array);
+				}
+				
 			}
 			else{
 				helper.sendResponse(res, err, "Unsuccess");
