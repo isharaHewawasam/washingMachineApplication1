@@ -21,8 +21,8 @@ module.exports.twitternotifications = [
 module.exports.twitternotificationsspike = [
                          {      
                                "name":"Model3",
-                               "connected_machines_today":80,
-                               "connected machines_previous":50,               
+                               "current_connected_machines":80,
+                               "previous_connected_machines":50,               
                                "Model": "Model3",
                                "Make": "Make1",
                                "Description":"Washing machine connectivity status",
