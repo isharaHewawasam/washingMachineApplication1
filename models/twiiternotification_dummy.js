@@ -125,15 +125,27 @@ module.exports.twitterinnerpageTwitterinsights = [
                          }
                        ];   
 
-module.exports.twitterinnerpageTweets = [
+module.exports.twitterinnerpagesentiments = [
                          {      
-                               "tweets_color":"red",
+                           
                                "tweets_count":7,
-                               "tweets_percentage":69.3             
+                               "tweetsimpress_count":2300,
+                               "profilevisits_count":997,
+                               "mentions_count":10,
+                               "twitter_count":248,
+                               "tweets_percentage":69.3,
+                               "tweetsimpress_percentage":81.8,   
+                               "profilevisits_percentage":28.6,     
+                               "mentions_percentage":23.1,  
+                               "twitter_percentage":30,
+                               "sentimate_positive":59,
+                               "sentimate_neutral":27,
+                               "sentimate_negative":16 
+
                          }
                        ];  
 
-module.exports.twitterinnerpageTweetsimpressions = [
+/*module.exports.twitterinnerpageTweetsimpressions = [
                          {      
                                "tweetsimpress_color":"red",
                                "tweetsimpress_count":2300,
@@ -172,7 +184,7 @@ module.exports.twitterinnerpagesentimates = [
                                "neutral":27,
                                "negative":16            
                          }
-                       ];  
+                       ];  */
 
 
                            

@@ -1025,13 +1025,43 @@
     },
     "twitter-innerpage-sentiments": {
       "properties": {
-        "positive": {
+        "tweets": {
           "type": "integer"
         },
-        "neutral": {
+        "tweetsimpress_count": {
           "type": "integer"
         },
-        "negative": {
+        "profilevisits_count": {
+          "type": "integer"
+        },
+        "mentions_count": {
+          "type": "integer"
+        },
+        "twitter_count": {
+          "type": "integer"
+        },
+        "tweets_percentage": {
+          "type": "integer"
+        },
+        "tweetsimpress_percentage": {
+          "type": "integer"
+        },
+        "profilevisits_percentage": {
+          "type": "integer"
+        },
+        "mentions_percentage": {
+          "type": "integer"
+        },
+        "twitter_percentage": {
+          "type": "integer"
+        },
+        "sentimate_positive": {
+          "type": "integer"
+        },
+        "sentimate_neutral": {
+          "type": "integer"
+        },
+        "sentimate_negative": {
           "type": "integer"
         }
       }

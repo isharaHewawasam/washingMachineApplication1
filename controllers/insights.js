@@ -87,6 +87,7 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 	});
 };
 
+/*
 // Tweets graph api
 module.exports.getTweets = function(req, res, next) { 
 	insights.getTweets(function(err, result){  
@@ -126,7 +127,7 @@ module.exports.getTwitter = function(req, res, next) {
 	    helper.sendResponse(res, err, dataArray); 
 	});
 };
-
+*/
 //Twitter Sentiments api positive graph
 module.exports.getTwittersentiments = function(req, res, next) { 
 	insights.getTwittersentiments(function(err, result){  
