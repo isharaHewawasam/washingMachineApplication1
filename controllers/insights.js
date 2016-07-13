@@ -49,3 +49,53 @@ module.exports.getTwitternotificationspikeerrors = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	});
 };
+
+//Twitter Inner page apis 
+
+//Twitter insights table api
+module.exports.getTwitterinsightstable = function(req, res, next) { 
+	insights.getTwitterinsightstable(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+// Tweets graph api
+module.exports.getTweets = function(req, res, next) { 
+	insights.getTweets(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Tweets impressions graph api
+module.exports.getTweetsimpressions = function(req, res, next) { 
+	insights.getTweetsimpressions(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Profile visits graph api
+module.exports.getProfilevisits = function(req, res, next) { 
+	insights.getProfilevisits(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Mentions graph api
+module.exports.getMentions = function(req, res, next) { 
+	insights.getMentions(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Twitter graph api
+module.exports.getTwitter = function(req, res, next) { 
+	insights.getTwitter(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
