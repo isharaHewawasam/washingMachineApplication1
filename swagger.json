@@ -507,7 +507,7 @@
             "description": "Successful request.",
             "schema": {
               "type": "array",
-              "$ref": "#/definitions/twitter-innerpage-tweets"
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
             }
           }
         }
@@ -1019,6 +1019,19 @@
           "type": "integer"
         },
         "Precenatage": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-sentiments": {
+      "properties": {
+        "positive": {
+          "type": "integer"
+        },
+        "neutral": {
+          "type": "integer"
+        },
+        "negative": {
           "type": "integer"
         }
       }

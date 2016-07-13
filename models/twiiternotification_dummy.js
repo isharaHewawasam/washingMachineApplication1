@@ -165,4 +165,14 @@ module.exports.twitterinnerpageTwitter = [
                          }
                        ];  
 
+
+module.exports.twitterinnerpagesentimates = [
+                         {      
+                               "positive":59,
+                               "neutral":27,
+                               "negative":16            
+                         }
+                       ];  
+
+
                            
