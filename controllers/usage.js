@@ -7,5 +7,6 @@ var helper = require('./helpers/utility.js');
 module.exports.getAllUsage = function(req, res, next) {  
   usage.getAllUsage(req.body, function(err, result){  	  
 	  helper.sendResponse(res, err, result); 
+	  console.log(req);
 	});
 };
