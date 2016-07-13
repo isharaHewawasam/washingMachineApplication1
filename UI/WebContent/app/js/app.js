@@ -13,11 +13,20 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 
 //  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
 
+var login = angular.module('myLoginCheck',[]).
+factory('$logincheck', function(){
+  return function(isLogin){
+	  console.log('isLogin : ', isLogin);
+	  if(isLogin) return true;
+	  return false;  
+  };
+});
+
 // APP START
 // ----------------------------------- 
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages'])
+var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -130,6 +139,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('engmanagerview.html'),
         data:{title: 'IoT for Electronics - Engineering Manager Dashboard'}
     })
+    .state('app.reports', {
+        url: '/reports',
+        title: 'Reports View',
+        controller: 'reportController',
+        templateUrl: helper.basepath('reports.html'),
+        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+    })
 	.state('app.myownview', {
         url: '/myownview',
         title: 'My own view',
@@ -141,8 +157,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'Submenu',
        
         templateUrl: helper.basepath('submenu.html')
-    })
-    
+    })   
     .state('app.twitterinsights', {
         url: '/twitterinsights',
         title: 'Twitter Insights View',
@@ -170,7 +185,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     ;
 
 
-}]).config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
+}]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
+	  if(!$logincheck($window.sessionStorage.isLoggedIn)) {
+		  $location.path('/login');
+	  }
+}]);
+App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
 
     // Lazy Load modules configuration
@@ -259,7 +279,7 @@ App
 ;
 
 
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state,$rootScope) {
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', function($scope, $http, $state,$rootScope,$window) {
 	//alert("loaded");
 	
 	
@@ -295,7 +315,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	      //	 $state.go('app.engmanagerview');
 	      	//return
 	        };
-		
+	        $window.sessionStorage.isLoggedIn = true;
 		/*
 		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
         if(!response.success) {
@@ -350,11 +370,11 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	
 	
 	
-	 $scope.logOut=function(){
-		
-		 $state.go('page.login');
-		   }
-	}]);
+	$scope.logOut=function(){
+		delete $window.sessionStorage.isLoggedIn;
+		$state.go('page.login');
+ 	}
+}]);
 /**=========================================================
  * Module: main.js
  * Main Application Controller
@@ -1247,7 +1267,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax #gridCloseImg").removeClass("hidden");
 		//$("#gridCloseImg").removeClass("hidden");
 		
-		  $("#gridAdjustHeight").height(560);
+		 $(".tbody").height(600);
 
 	$("#gridMax").removeClass("hidden");
 	
@@ -1258,8 +1278,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$("body").on("click","#gridCloseImg",function(){
 		$("#gridMax").empty();
 		$("#gridMax").addClass("hidden");
-		  $("#gridAdjustHeight").height(160);
-
+		//  $("#gridAdjustHeight").height(160);
+		  $(".tbody").height(200);
 		//$scope.plotChartFunction("container");
     });
 	
@@ -1276,393 +1296,6 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax").addClass("hidden");
 	}
 */}]);
-
-
-App.controller('TwitterInsightsController', 
-		['$rootScope', '$scope', '$state', '$http', '$timeout', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $timeout, configApiClient){
-	
-	$scope.twitter_insights_griddata = [];
-	
-	// dummey data
-	var obj 		= {};
-	obj.make 		= 1;
-	obj.model 		= '#1201';
-	obj.tweets 		= 100;
-	obj.likes 		= 120;
-	obj.dislikes 	= 45;
-	obj.followers 	= 260;
-	obj.comments 	= 521;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 2;
-	obj.model 		= '#1202';
-	obj.tweets 		= 90;
-	obj.likes 		= 170;
-	obj.dislikes 	= 15;
-	obj.followers 	= 560;
-	obj.comments 	= 121;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 3;
-	obj.model 		= '#1203';
-	obj.tweets 		= 100;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 11;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 4;
-	obj.model 		= '#1204';
-	obj.tweets 		= 60;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 12;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 5;
-	obj.model 		= '#1205';
-	obj.tweets 		= 50;
-	obj.likes 		= 190;
-	obj.dislikes 	= 18;
-	obj.followers 	= 560;
-	obj.comments 	= 123;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	$("#gridAdjustHeight").height(400);
-	
-	/*$http({url:configApiClient.baseUrl + "twitterinsights/data", //api url
-        method: "POST",
-        Accept: "text/plain"}).success(function(data, status) {
-        		console.log("*****************twitterinsights success ****************");
-        		$scope.twitter_insights_griddata = data; 
-          
-        		//console.log("TwitterInsightsGriddata"+JSON.stringify(data));
-                
-           }). error(function(data, status) {
-        	   console.log("*****************twitterinsights error ****************");
-               console.log("usageerror:"+status);
-             
-    });*/
-	
-	$scope.tweetsData = {};
-	$scope.tweetsData.tweets_color = 'red';
-	$scope.tweetsData.tweets_count = 7;
-	$scope.tweetsData.tweets_percentage = 69.3;
-	
-	$scope.tweetsData.tweetsimpress_color = 'red';
-	$scope.tweetsData.tweetsimpress_count = 3564;
-	$scope.tweetsData.tweetsimpress_percentage = 81.8;
-	
-	$scope.tweetsData.profilevisits_color = 'green';
-	$scope.tweetsData.profilevisits_count = 997;
-	$scope.tweetsData.profilevisits_percentage = 28.6;
-	
-	$scope.tweetsData.mentions_color = 'red';
-	$scope.tweetsData.mentions_count =10;
-	$scope.tweetsData.mentions_percentage = 23.1;
-	
-	$scope.tweetsData.twitter_color = 'red';
-	$scope.tweetsData.twitter_count = 248;
-	$scope.tweetsData.twitter_percentage = 30;
-	
-	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
-	
-	$scope.loadDashboard = function() {
-		$state.go('app.singleview');
-	};
-	
-	$scope.getTextColor = function(color){
-		return (color=='red'? 'twitter_percentage twitter_arrow_red' : 'twitter_percentage twitter_arrow_green');
-	}
-	
-	$scope.maximizeGrid=function(){
-		var gridNormal = $("#gridNormal").clone();
-		
-		$("#gridMax").empty();
-		$("#gridMax").append(gridNormal);
-		
-		$("#gridMax #gridMaxImg").addClass("hidden");
-		$("#gridMax #gridCloseImg").removeClass("hidden");
-		//$("#gridCloseImg").removeClass("hidden");
-		
-		$("#gridAdjustHeight").height(560);
-
-	$("#gridMax").removeClass("hidden");
-	
-	};
-	
-	$("body").on("click","#gridCloseImg",function(){
-		$("#gridMax").empty();
-		$("#gridMax").addClass("hidden");
-		  $("#gridAdjustHeight").height(400);
-    });
-	
-	$scope.getTwitterSentiments = function(divId){
-		  
-			var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
-		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
-		  
-		
-		  var twitterData = 
-			  [{"name": "positive", "y": 59, "totalComments": 66},
-			   {"name": "othres", "y": 41, "totalComments": 66}];
-		  
-		  //var twitterDataStr = JSON.stringify(twitterData);
-		  
-		  //twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
-		  //twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-					
-		  //twitterData = JSON.parse(twitterDataStr);
-		  
-		 var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
-			 
-		 var innerText = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
-		 renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle, innerText); 
-		  
-		  var twitterData = 
-			  [{"name": "Neutral", "y": 27, "totalComments": 66},
-			   {"name": "othres", "y": 73, "totalComments": 66}];
-		  
-		  var innerText = "<div width='100%' style='text-align:center'>27%</div><div>Neutral<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle, innerText);
-		  
-		  var twitterData = 
-			  [{"name": "Negative", "y": 14, "totalComments": 66},
-			   {"name": "othres", "y": 86, "totalComments": 66}];
-		
-		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);
-		  
-	
-	  };
-	  
-	  $scope.getTwitterData = function(divId) {
-		  
-		  var data = [
-		  			[1247529600000,20.32],
-		  			[1247616000000,20.98],
-		  			[1247702400000,-21.07],
-		  			[1247788800000,25.68],
-		  			[1248048000000,-21.84],
-		  			[1248134400000,21.64],
-		  			[1248220800000,-22.39],
-		  			[1248307200000,22.55],
-		  			[1248393600000,-22.86],
-		  			[1248652800000,22.87],
-		  			[1248739200000,-22.86],
-		  			[1248825600000,22.86],
-		  			[1248912000000,-23.26],
-		  			[1248998400000,23.34]
-		  			];
-		  if(divId == 'mentions_div') {
-			  var data = [
-			  			[1247529600000,-20.32],
-			  			[1247616000000,20.98],
-			  			[1247702400000,21.07],
-			  			[1247788800000,-25.68],
-			  			[1248048000000,-21.84],
-			  			[1248134400000,-21.64],
-			  			[1248220800000,22.39],
-			  			[1248307200000,-22.55],
-			  			[1248393600000,22.86],
-			  			[1248652800000,22.87],
-			  			[1248739200000,22.86],
-			  			[1248825600000,-22.86],
-			  			[1248912000000,-23.26],
-			  			[1248998400000,23.34]
-			  			];
-		  }else if(divId == 'impressions_div'){
-			  var data = [
-			  			[1247529600000,20.32],
-			  			[1247616000000,-20.98],
-			  			[1247702400000,-21.07],
-			  			[1247788800000,25.68],
-			  			[1248048000000,-21.84],
-			  			[1248134400000,-21.64],
-			  			[1248220800000,22.39],
-			  			[1248307200000,22.55],
-			  			[1248393600000,-22.86],
-			  			[1248652800000,-22.87],
-			  			[1248739200000,-22.86],
-			  			[1248825600000,22.86],
-			  			[1248912000000,-23.26],
-			  			[1248998400000,23.34]
-			  			];
-		  }
-		  renderTwitterSentimentsLineChart(divId, data);
-    	
-	  }
-}]);
-
-function renderTwitterSentimentsLineChart(divId, insightsData) {
-	  var pieChart = new Highcharts.Chart({
-	      chart: {
-	        	renderTo: divId,
-	        	width: 140,
-	        	height:70,
-//	        	margin: [0, 10, 10, 10]
-	        	spacingLeft: 0,
-	        	spacingTop: 0
-	      },
-	      credits: {
-	          enabled: false
-	      },
-          rangeSelector: {
-              selected: 1
-          },
-          exporting: { enabled: false },
-          title: {
-              text: ''
-          },
-          tooltip: false,
-          xAxis: {
-                categories: [''],
-                title: {
-                    text: null
-                },
-                labels: {enabled:false,y : 20, rotation: -45, align: 'right' }
-            },
-          yAxis: {
-              title: {
-                  text: ''
-              },
-              visible: false
-          },
-          series: [{
-              name: '',
-              showInLegend: false,
-              data: insightsData,
-              type: 'spline',
-              tooltip: {
-                  valueDecimals: 2
-              }
-          }]
-	  });
-}
-function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerText){
-	
-	var colorCode = ['#339933', '#808080']; // For Positive
-	if(divId == 'twitter_sentiments_neg'){
-		colorCode = ['#FF0000', '#808080']; // For Negative
-	}else if(divId == 'twitter_sentiments_neu'){
-		colorCode = ['#5DADE2', '#808080']; // For Neutral
-	}
-	
-	var chart = new Highcharts.Chart({
-        chart: {
-        	renderTo:divId,
-        	width: 120,
-        	height: 120,
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie',
-            /*marginRight:140,*/
-            margin: [0, 0, 0, 0],
-            events: {
-            	load: function(event) {
-            		/*if (divId == 'twitter-handle-container'){
-            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +this.series[0].data[0].totalComments + '</b></div>');
-            		}*/
-            	}
-            }
-        },
-        credits: {
-	    	enabled: false
-	    },
-	    exporting: { 
-	    	enabled: false 
-	    },
-        title: {
-            text: '',
-            useHTML: true,
-            align: 'left',
-            style: {
-                color: '#0099cc'
-            },
-            floating: true,
-            y: 24,
-            x: 15
-        },
-        tooltip: false,
-        
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true,
-                colors: colorCode, //divId != 'twitter-handle-container'?['#339933', '#808080', '#ffcc00', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
-                size: 10,
-                center: ['50%', '50%']
-            }
-        },
-        
-        series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            size: '80%',
-            innerSize: '80%',
-            showInLegend:false,
-            data: insightsData
-        }]
-    },
-    function(chart) { // on complete
-    	
-    	var div = '#'+divId;
-    	
-    	/*console.log("------div ",div);
-    	var offsets = $(div).offset();
-    	var top = offsets.top;
-    	var left = offsets.left;
-    	console.log("------- top left ",left);*/
-    	
-    	var position = $(div).position();
-    	console.log('X: ' + position.left + ", Y: " + position.top );
-    	  
-        var textX = position.left + 45; // chart.plotLeft + (chart.plotWidth  * 0.5);
-        var textY = chart.plotTop  + (chart.plotHeight * 0.5);
-        console.log(" textX ",textX);
-        console.log(" textY ",textY);
-        /*var span = '<span id="pieChartInfoText" style="position:absolute; width:100px; text-align:center">';
-        span += '<span style="font-size: 25px; font-weight: bold; text-align:center;">'+chart.series[1].data[1].y+'%</span><br>';
-        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">Targets recovered</span><br>';
-        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">before breach</span>';
-        span += '</span>';*/
-        	        
-        span = innerText;
-        
-        //if(data.showCenterText){
-	        //$('#'+divId+'_text').remove();
-        	console.log('-----------id ','#'+divId+'_text');
-        
-        	//$('#'+divId+'_text').remove();
-	        $('#'+divId+'_text').append(span);
-	        	span = $('#'+divId+'_text');
-	        	console.log("span id "+span.id);
-	        	
-	        	console.log("X = "+(textX + (span.width() * -0.5)+30));
-	            console.log("Y = "+(textY + (span.height() * -0.5)+2));
-	            
-	        	span.css('left', textX + (span.width() * -0.5)+30);
-	        	span.css('top', textY + (span.height() * -0.5)+2);
-        //}
-    }
-	
-    );	
-};
 
 /**=========================================================
  * Module: sidebar-menu.js
@@ -2069,6 +1702,45 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
       $rootScope.tryit();
    };  
 }]);
+
+App.controller('reportController',['$scope','$state','$http','iot.config.ApiClient',function($scope,$state,$http,configApiClient){
+	  $scope.getReports=function(){
+	   // alert('reports');
+	    $state.go('app.reports');
+	    console.log("Reports page loaded")
+	  };
+	  $scope.r_griddata=[];
+
+	 $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+	                  method: "GET",
+	                  Accept: "text/plain"}).success(function(data, status) {
+	                 
+	                                    $scope.r_griddata=data.data; 
+	                  
+	                              console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
+	                              
+	               }). error(function(data, status) {
+	                         console.log("reporterror:"+status);
+	                   
+	               });
+
+	        //download report
+	        $scope.downloadReport=function(){
+	            html2canvas(document.getElementById('export'), {
+	            onrendered: function (canvas) {
+	                var data = canvas.toDataURL();
+	                var docDefinition = {
+	                    content: [{
+	                        image: data,
+	                        width: 500,
+	                    }]
+	                };
+	                pdfMake.createPdf(docDefinition).download("reports.pdf");
+	            }
+	        }); 
+	        }
+
+	}]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
 	$scope.plotMapFunction = function(divId){

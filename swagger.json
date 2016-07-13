@@ -329,6 +329,190 @@
         }
       }
     },
+    "/insights/twitter-notifications-spike-errors": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationspikeerrors",
+        "tags": ["Insights"],
+        "description": "Return twitter notification spike with error",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twitter-insights": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterinsightstable",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter insights table data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter insights table data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-twitterinsights"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/tweets": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTweets",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Tweets graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Tweets graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/tweetsimpressions": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTweetsimpressions",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Tweetsimpressions graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Tweetsimpressions graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/profilevisits": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getProfilevisits",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Profile visits graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Profile visits graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/mentions": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getMentions",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page mentions graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page mentions graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twitter": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitter",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twittersentiments": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwittersentiments",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter sentiments graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter sentiments graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
     "/demographics/family/age-ranges": {
       "get": {
         "x-swagger-router-controller": "age-ranges",
@@ -725,6 +909,40 @@
           }
         }
       }
+    },
+    "/login/authentication": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getAuthentication",
+        "tags": ["Login"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginAuthentication"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/MultipleSensorsDataResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -763,6 +981,57 @@
           "type": "string"
         },
         "no_of_faults": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-twitterinsights": {
+      "properties": {
+        "Make": {
+          "type": "string"
+        },
+        "Model": {
+          "type": "string"
+        },
+        "tweets": {
+          "type": "integer"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "dislikes": {
+          "type": "integer"
+        },
+        "followers": {
+          "type": "integer"
+        },
+        "comments": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-tweets": {
+      "properties": {
+        "Color": {
+          "type": "string"
+        },
+        "Count": {
+          "type": "integer"
+        },
+        "Precenatage": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-sentiments": {
+      "properties": {
+        "positive": {
+          "type": "integer"
+        },
+        "neutral": {
+          "type": "integer"
+        },
+        "negative": {
           "type": "integer"
         }
       }
@@ -979,6 +1248,17 @@
          "region": {                   
            "$ref": "#/definitions/region"                    
          }
+      }
+    },
+    "LoginAuthentication": {
+      "properties": {
+        "username": {                   
+           "type": "string"                    
+         },
+         "password": {                   
+           "type":"string"                    
+         }
+         
       }
     },
     "SalesByChartPayload": {

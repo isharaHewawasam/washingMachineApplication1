@@ -112,12 +112,59 @@ exports.getmostFault = function(callback) {
   });
 };
 
-//twitter notification
 
+//Login Authentication
+exports.getAuthentication = function(callback) {
+  
+  callback(null, "Success");  
+};
+
+//twitter notification
 exports.getTwitternotificationsentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotifications);  
 };
 
 exports.getTwitternotificationspike = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotificationsspike);  
+};
+//spike in number of specific error
+exports.getTwitternotificationspikeerrors = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerror);  
+};
+
+//Twitter inner page apis
+
+//Twitter insights table api
+exports.getTwitterinsightstable = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsights);  
+};
+
+//Tweets graph api 
+exports.getTweets = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTweets);  
+};
+
+//Tweets impressions graph api
+exports.getTweetsimpressions = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTweetsimpressions);  
+};
+
+//Profile visits graph api 
+exports.getProfilevisits = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageProfilevisits);  
+};
+
+//Mentions graph api
+exports.getMentions = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
+};
+
+//Twitter graph api
+exports.getTwitter = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitter);  
+};
+
+//Twitter Sentiments grpah api
+exports.getTwittersentiments = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpagesentimates);  
 };

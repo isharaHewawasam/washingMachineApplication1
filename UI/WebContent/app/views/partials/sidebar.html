@@ -49,7 +49,7 @@
     }
     
        
-#filterPanel {
+#filterPanel,#reportsPanel {
     background: #000;
     width: 231px;
     height: auto;
@@ -144,6 +144,12 @@
                     </div>
                     <div class="menu-text">Demographics</div>
                 </div>
+                <div  id="reportsNav" class="leftbar-icon">
+					<div class="sidebarIconContainer">
+						<img class="iconpos" src="app/img/Dashboardassets/reports.png">
+					</div>
+					<div class="menu-text">Reports</div>
+				</div>        
             </div>
         </nav>
     </div>
@@ -235,6 +241,14 @@
         <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()">Apply Filter 
         </button>
     </div>
+    <!--reports-->
+
+     <div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
+       <div class="divSpacePad">
+            <label><a ng-click="getReports()">Reports</a></label>
+        </div>
+       
+     </div>
 
 <script>
 
@@ -290,5 +304,30 @@
             $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
             event.stopPropagation();
         });
+        
+        //reports
+        $(document).on("mouseover", "#reportsNav, #reportsPanel", function(event) {
+           $('#reportsPanel').show();
+           $('#reportsNav').addClass('sidebarItemActive');
+           $('#reportsNav img').attr('src','app/img/Dashboardassets/reports_hover.png');
+           $('#dashboardNav').removeClass('sidebarItemActive');
+           $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+           $('#calenderNav').removeClass('sidebarItemActive');
+           $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+       });
+       $(document).on("mouseleave", "#reportsNav, #reportsPanel", function(event) {
+           if($('.md-pane-open').is(":visible")){
+               return;
+           }
+           $('#reportsPanel').hide();
+           $('#reportsNav').removeClass('sidebarItemActive');
+           $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+           //$('#dashboardNav').addClass('sidebarItemActive');
+           //$('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+           $('#reportsNav').addClass('sidebarItemActive');
+           $('#calenderNav').removeClass('sidebarItemActive');
+           $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
+           event.stopPropagation();
+       });
 
 </script>
