@@ -1,0 +1,154 @@
+ 
+<div id="export">
+ <div class="pull-right" >
+   
+      
+      Application Dashboard Last Updated May 10, 2016, 3:26:26 PM
+   </div>
+  
+   <a href="#/app/singleview"  style="font-size:14px;font:Roboto Light; color: #0F64BC ; " >Washing Machine Monitor System </a> <span style="font-size:14px;font:Roboto; color: #222222 ; padding-left: 15px; padding-right: 15px;" > ></span>  <a href="#" style="font-size:14px;font:Roboto Light; color: #222222 ">   Reports</a>
+  
+</h3>
+
+   
+
+  
+    <div class="row"  >
+
+<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
+   
+   <!-- <div class="panel-body" style="padding: 0px;"> -->
+     <!--  <form role="form" class="form-inline"> -->
+          <!-- <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px "> --> 
+            
+            
+            
+            <div class="form-group filter-filterDiv col-lg-12" style=" width: 100% auto; " id="filterDivId" ng-controller="reportController">
+              
+               <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
+                  <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
+                  <option class="option-text-style" value="" disabled selected>States
+                    <option class="option-text-style" value="" >All
+                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
+                  </select>
+                    <!--  <option class="option-text-style" value="" disabled selected>States
+                                    <option class="option-text-style" value="Arizona" >Arizona
+                                    <option class="option-text-style" value="California" >California
+                                    <option class="option-text-style" value="Florida" >Florida
+                                    <option class="option-text-style" value="New York" >New York
+                                    <option class="option-text-style" value="Tennessee" >Tennessee
+                                    <option class="option-text-style" value="Texas" >Texas
+                                    <option class="option-text-style" value="Virginia" >Virginia
+                                    <option class="option-text-style" value="Washington" >Washington
+                                    <option class="option-text-style" value="Wisconsin" >Wisconsin -->
+                                   
+               </div>
+               <!-- <div class="col-sm-1" style="padding-left: 3px;">
+               </div> -->
+               <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities" ng-change="selectZip()"  >
+                    <option class="option-text-style" value="" disabled selected>Cities
+                    <option class="option-text-style" value="" >All
+                              <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
+                              <!--<option class="option-text-style" value="" >San Diego
+                              <option class="option-text-style" value="" >San Jose -->
+                  </select>
+                                   
+               </div>
+               <!-- <div class="col-sm-1" style="padding-left: 3px;" >
+               </div> -->
+              
+               <!-- <div class="col-sm-1" style="padding-left: 3px;">
+               </div> -->
+                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
+                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.years" >
+                    <option class="option-text-style" value=""  disabled selected >From
+                      <option class="option-text-style" value="" >All
+                              <option class="option-text-style" ng-repeat="sales_year in sales_years" value={{sales_year.year}} >{{sales_year.year}}
+                  </select>
+                                   
+               </div>
+               <!-- <div class="col-sm-1" style="padding-left: 3px;">
+               </div> -->
+               <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
+                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.quarters" ng-change="quarterMonths()">
+                    <option class="option-text-style" value="" selected disabled>To
+                      <option class="option-text-style" value="" >All
+                    <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter.id}} >{{quarter.value}}
+                              
+                  </select>
+                                   
+               </div>
+               <!-- <div class="col-sm-1" style="padding-left: 3px;">
+               </div> -->
+              
+               
+             <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
+                        <button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
+                <span ng-show="test"></span>
+                Apply Filter</button>         
+                        
+                        </div>
+               
+               
+               
+           
+            </div>
+               
+        <!-- </fieldset> -->
+
+         <div class="col-lg-8">
+      <!-- START panel -->
+   
+      <div class="panel panel-default" style="width: 1700px; height: 550px" id="gridNormal">
+         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; "><b>Washing Machines status Reports</b>  
+          <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png" ng-click="maximizeGrid()"></img>
+        </div>
+      
+       
+         <div class="panel-body" id="gridHideNodata" ng-controller="reportController">
+          <!--   START table-responsive -->
+            <div id="gridAdjustHeight" style="width: 1650px; height: 550px">
+               <table  class="table table-striped table-bordered table-hover">
+                  
+                  <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
+                    
+                 
+                        <tr>
+                       <th style="text-align: center"> Make  <select id="dropdown"></select></th> 
+                        <th style="text-align: center">Model <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Total Loads <select id="dropdown"></select> </th>
+                        <th style="text-align:center">Most Popular Wash Day <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Most Popular Time of Day <select id="dropdown"></select> </th>
+
+                     </tr>
+                  
+                  
+                  </thead>
+                  
+                  <tbody>
+                      <tr ng-repeat="itm in r_griddata">
+                        <td style="text-align:center">{{itm.make}}</td>
+                        <td style="text-align:center">{{itm.model}}</td>
+                        <td style="text-align:center">{{itm.totalLoad}}</td>
+                        <td style="text-align:center">{{itm.popularDay}}</td>
+                        <td style="text-align:center">{{itm.popularTime}}</td>
+
+                     </tr>
+                    
+                 </tbody>
+               </table>
+            </div>
+       <!--      END table-responsive -->
+         <label  class="pull-right " ng-if="griddata.length > 0">{{griddata.length}} records found</label>
+         </div>
+      </div>
+    <!--   END panel -->
+    <button type="button"  class="mb-sm btn btn-primary searchbtn" style="" ng-click="downloadReport()">Download Report 
+        </button>
+   </div> 
+       
+
+     </div> 
+</div>
+

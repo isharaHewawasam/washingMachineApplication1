@@ -139,6 +139,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('engmanagerview.html'),
         data:{title: 'IoT for Electronics - Engineering Manager Dashboard'}
     })
+    .state('app.reports', {
+        url: '/reports',
+        title: 'Reports View',
+        controller: 'reportController',
+        templateUrl: helper.basepath('reports.html'),
+        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+    })
 	.state('app.myownview', {
         url: '/myownview',
         title: 'My own view',
@@ -150,8 +157,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'Submenu',
        
         templateUrl: helper.basepath('submenu.html')
-    })
-    
+    })   
     .state('app.twitterinsights', {
         url: '/twitterinsights',
         title: 'Twitter Insights View',
@@ -1695,6 +1701,45 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
       $rootScope.tryit();
    };  
 }]);
+
+App.controller('reportController',['$scope','$state','$http','iot.config.ApiClient',function($scope,$state,$http,configApiClient){
+	  $scope.getReports=function(){
+	   // alert('reports');
+	    $state.go('app.reports');
+	    console.log("Reports page loaded")
+	  };
+	  $scope.r_griddata=[];
+
+	 $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+	                  method: "GET",
+	                  Accept: "text/plain"}).success(function(data, status) {
+	                 
+	                                    $scope.r_griddata=data.data; 
+	                  
+	                              console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
+	                              
+	               }). error(function(data, status) {
+	                         console.log("reporterror:"+status);
+	                   
+	               });
+
+	        //download report
+	        $scope.downloadReport=function(){
+	            html2canvas(document.getElementById('export'), {
+	            onrendered: function (canvas) {
+	                var data = canvas.toDataURL();
+	                var docDefinition = {
+	                    content: [{
+	                        image: data,
+	                        width: 500,
+	                    }]
+	                };
+	                pdfMake.createPdf(docDefinition).download("reports.pdf");
+	            }
+	        }); 
+	        }
+
+	}]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
 	$scope.plotMapFunction = function(divId){
