@@ -25,7 +25,7 @@ module.exports.getAuthentication = function(req, res, next) {
 				
 			}
 			else{
-				helper.sendResponse(res, err, "Unsuccess");
+				helper.sendResponse(res, err, "The username or password you enteered is incorrect");
 			}
 		}
 	     
@@ -52,6 +52,16 @@ module.exports.getmostFault = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	  });
 };
+
+//spike in number of specific error by make with real db
+module.exports.getspikeerrorBymake = function(req, res, next) {
+	config.getspikeerrorBymake(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	  });
+};
+
+
+
 
 
 //Under that comment app apis are dummy apis
@@ -93,6 +103,7 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 	    helper.sendResponse(res, err, dataArray); 
 	});
 };
+
 
 /*
 // Tweets graph api
@@ -140,5 +151,13 @@ module.exports.getTwittersentiments = function(req, res, next) {
 	insights.getTwittersentiments(function(err, result){  
 		var dataArray={'data':result};
 	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Notification api
+module.exports.getNotificationonload = function(req, res, next) { 
+	insights.getNotificationonload(function(err, result){  
+	
+	    helper.sendResponse(res, err, result); 
 	});
 };

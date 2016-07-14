@@ -375,6 +375,29 @@
         }
       }
     },
+    "/insights/twitter-notifications-spike-errors-bymakereal": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getspikeerrorBymake",
+        "tags": ["Insights"],
+        "description": "Return twitter notification spike with error by make from real db",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error by make from real db",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/spike_specificerror-bymake"
+            }
+          }
+        }
+      }
+    },
     "/twitter/innerpage/twitter-insights": {
       "get": {
         "x-swagger-router-controller": "insights",
@@ -531,6 +554,29 @@
             "schema": {
               "type": "array",
               "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
+   "/notification/onload": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationonload",
+        "tags": ["Notifications"],
+        "description": "Return notification by onload function",
+        "responses": {
+          "default": {
+            "description": "Return notification by onload function",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Notifications"
             }
           }
         }
@@ -1008,7 +1054,7 @@
         }
       }
     },
-    "most_common_fault": {
+    "spike_specificerror-bymake": {
       "properties": {
         "Make": {
           "type": "string"
@@ -1108,6 +1154,13 @@
         },
         "sentimate_negative": {
           "type": "integer"
+        }
+      }
+    },
+    "Notifications":{
+      "properties":{
+        "Notification":{
+          "type":"integer" 
         }
       }
     },

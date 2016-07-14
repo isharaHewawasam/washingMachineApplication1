@@ -2,6 +2,9 @@
 var db = require('../database/faultWashes_db.js');
 var COLLECTION_NAME = 'stores';
 
+var DB_NAME = 'washdatafailedwashes';
+
+
 //most fault recrds models
 exports.getMostFaultModels = function(callback) {
   var opts = { q: '*:*', counts: ['Model'], limit:0 };  
@@ -112,6 +115,49 @@ exports.getmostFault = function(callback) {
   });
 };
 
+//spike in number of specific error by make with real db
+exports.getspikeerrorBymake = function(callback) {
+      var options = { q: '*:*', group_level:4 };
+      
+      db.view('insights', 'specific-error-bymake', options, function(err, result) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  
+                  //get today date
+                  var today = new Date();
+                  var dd = today.getDate();
+                  var mm = today.getMonth()+1; //January is 0!
+                  var yyyy = today.getFullYear();
+
+                  if(dd<10) {
+                    dd='0'+dd
+                  } 
+
+                  if(mm<10) {
+                    mm='0'+mm
+                  } 
+                  today = dd+'-'+mm+'-'+yyyy;
+                  
+                  var myDate = new Date();
+                  var fourWeeksBackDate = new Date(myDate.getTime() - (60*60*24*28*1000));
+
+                  console.log(today);
+                  console.log(fourWeeksBackDate);
+
+                  var buildings = [];
+                  for (var i = 0; i < result.rows.length; i++) {
+                        buildings.push({'make':result.rows[i].key[0],'model':result.rows[i].key[1],'errottype':result.rows[i].key[2],
+                          'date':result.rows[i].key[3],'value':result.rows[i].value});
+                  }
+        
+                  return callback(err, buildings);
+            }
+      });
+}
+
+
 
 //Login Authentication
 exports.getAuthentication = function(callback) {
@@ -172,4 +218,11 @@ exports.getTwitter = function(callback) {
 //Twitter Sentiments grpah api
 exports.getTwittersentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpagesentiments);  
+};
+
+//Notification APi
+exports.getNotificationonload = function(callback) {
+  var randomnumber=Math.floor(Math.random() * 4) + 1 ;
+  var arrayRandom=[{'notification_count':randomnumber}]
+  callback(null, arrayRandom);  
 };
