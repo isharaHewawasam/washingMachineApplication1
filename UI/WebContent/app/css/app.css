@@ -4160,7 +4160,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding: 17px 15px;
   font-size: 18px;
   line-height: 21px;
-  height: 55px;
+  height: 50px;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -6987,9 +6987,10 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+/* removed the right padding 20px and updated 15 px */
 @media only screen and (min-width: 768px) {
   .content-wrapper {
-    padding: 20px;
+    padding: 15px;
   }
   .content-wrapper > h3,
   .content-wrapper > .content-heading {
