@@ -243,12 +243,15 @@
     </div>
     <!--reports-->
 
-     <div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
+    <div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
        <div class="divSpacePad">
-            <label><a ng-click="getReports()">Reports</a></label>
+            <label>Reports</label>
+        </div>
+        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+        <label><a ng-click="getReports()">Washing machine Status Report</a></label>
         </div>
        
-     </div>
+	</div>
 
 <script>
 
@@ -321,7 +324,7 @@
            }
            $('#reportsPanel').hide();
            $('#reportsNav').removeClass('sidebarItemActive');
-           $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+           //$('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
            //$('#dashboardNav').addClass('sidebarItemActive');
            //$('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
            $('#reportsNav').addClass('sidebarItemActive');
