@@ -1,4 +1,4 @@
-.tbody
+#gridNormal .tbody
 {
     overflow-y: auto;
     box-sizing: border-box;
@@ -7,31 +7,31 @@
     position: relative;
 
 }
-.tableScroll
+#gridNormal .tableScroll
 {
     overflow-y: scroll;
     height: 100%;
     width: 100%;
 }
-tr {
+#gridNormal tr {
     width: 100%;
     display: flex;
 	    border-bottom: 1px solid rgba(0, 128, 0, 0.15);
 }
 
-td {
+#gridNormal td {
    width:20%;
    padding: 4px 5px 3px 10px;
       border-right: 1px solid #c1c1c1;
       
 }
-table
+#gridNormal table
 {
 width: 100%;
     height: 100%;
     margin-bottom: 0px !important;
 }
-.tableHeader
+#gridNormal .tableHeader
 {
    width: 100%;
     display: flex;
@@ -41,7 +41,7 @@ width: 100%;
     padding-right: 17px;
 }
 
-.tableFooter
+#gridNormal .tableFooter
 {
 display: flex;
 	background-color: #8DDCB9;
@@ -52,7 +52,7 @@ display: flex;
     width: 100%;
 }
 
-.tableHeader p,.tableFooter p{
+#gridNormal .tableHeader p,#gridNormal .tableFooter p{
 width: 20%;
     margin: 0px;
     padding: 5px 0px 4px 10px;
