@@ -61,21 +61,16 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                 <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.years" >
-                    <option class="option-text-style" value=""  disabled selected >From
-                      <option class="option-text-style" value="" >All
-                              <option class="option-text-style" ng-repeat="sales_year in sales_years" value={{sales_year.year}} >{{sales_year.year}}
+                  <select name="" class="form-control filter-selectStyle">
+                    <option class="option-text-style" value=""  disabled selected >From                              
                   </select>
                                    
                </div>
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle" ng-model="timescale.quarters" ng-change="quarterMonths()">
-                    <option class="option-text-style" value="" selected disabled>To
-                      <option class="option-text-style" value="" >All
-                    <option class="option-text-style" ng-repeat="quarter in quarters" value={{quarter.id}} >{{quarter.value}}
-                              
+                  <select name="" class="form-control filter-selectStyle">
+                    <option class="option-text-style" value="" selected disabled>To                                                 
                   </select>
                                    
                </div>
