@@ -348,7 +348,7 @@
    <aside class="col-lg-4" style="">
      
       <!-- START messages and activity-->
-      <div class="panel panel-default" style="width: 450px; height: 259px; ">
+      <div class="panel panel-default" style="width: 450px; height: 355px; ">
          <div class="panel-heading">
             <div class="panel-title md-body-2" style="font-family: Roboto; font-size: 15px;">Notification<img class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png"></div>
             
@@ -357,22 +357,38 @@
          <!-- START list group-->
          <div class="list-group">
             <div class="list-group-item">
-              <div class="media-box" ng-controller="notificationController" ng-init="getTwitterSentimates()">
-               	<div class="media-box-heading" ng-show="showTwitterContentFlag">
-                     <a href="#" class="text-warning m0">Twitter Sentiments for {{itm.name}}</a>
-               	</div>
-               	<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="showTwitterContentFlag">
-               		<div ng-if="itm.twitter_count/itm.full_count*100 > positiveTwitterSentimentThreshold">
+              <div ng-controller="notificationController" ng-init="getTwitterSentimates()">
+              	<div class="media-box-heading" ng-show="data.length">
+                     	<h4>Twitter Sentiments</h4>
+                 </div>
+               	<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="data.length">
+               		<div ng-if="itm.twitter_response_type=='Positive' && itm.twitter_count/itm.full_count*100 > positiveTwitterSentimentThreshold">
+	                     <p class="text-warning m0">{{itm.twitter_response_type}} Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is above {{positiveTwitterSentimentThreshold}}%</p>
+	                     <small class="text-greens pull-right ml">{{itm.twitter_count/itm.full_count*100 | number:0}}%</small> <br>
+	                     <progressbar  value="itm.twitter_count/itm.full_count*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
+	                     Count: {{itm.twitter_count}}" data-trigger="hover"></progressbar>
+	                     <br>
+	                </div>	
+	                <div ng-if="itm.twitter_response_type=='Positive' && itm.twitter_count/itm.full_count*100 <= positiveTwitterSentimentThreshold">
+	                	<p class="text-warning m0">Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is below {{positiveTwitterSentimentThreshold}}%</p>
+	                	<small class="text-pink pull-right ml">{{itm.twitter_count/itm.full_count*100 | number:0}}%</small> <br>
+	                    <progressbar  value="itm.twitter_count/itm.full_count*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
+	                     Count: {{itm.twitter_count}}" data-trigger="hover"></progressbar>
+	                    <br>
+	                </div>
+	                <div ng-if="itm.twitter_response_type=='Negative' && itm.twitter_count/itm.full_count*100 > negativeTwitterSentimentThreshold">
+	                     <p class="text-warning m0">{{itm.twitter_response_type}} Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is above {{negativeTwitterSentimentThreshold}}%</p>
 	                     <small class="text-pink pull-right ml">{{itm.twitter_count/itm.full_count*100 | number:0}}%</small> <br>
 	                     <progressbar  value="itm.twitter_count/itm.full_count*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
 	                     Count: {{itm.twitter_count}}" data-trigger="hover"></progressbar>
 	                     <br>
 	                </div>	
-	                <div ng-if="itm.twitter_count/itm.full_count*100 <= positiveTwitterSentimentThreshold">
+	                <div ng-if="itm.twitter_response_type=='Negative' && itm.twitter_count/itm.full_count*100 <= negativeTwitterSentimentThreshold">
+	                	<p class="text-warning m0">Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is below {{negativeTwitterSentimentThreshold}}%</p>
 	                	<small class="text-greens pull-right ml">{{itm.twitter_count/itm.full_count*100 | number:0}}%</small> <br>
-	                     <progressbar  value="itm.twitter_count/itm.full_count*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
+	                    <progressbar  value="itm.twitter_count/itm.full_count*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
 	                     Count: {{itm.twitter_count}}" data-trigger="hover"></progressbar>
-	                     <br>
+	                    <br>
 	                </div>
                 </div>
               </div>
@@ -381,11 +397,12 @@
             <br>
             
             <div class="list-group-item" ng-controller="notificationController" ng-init="getSpikesInMachines()">
-            	<div class="media-box-heading" ng-show="showSpikeContentFlag">
-                     	<a href="#" class="text-warning m0">Spike in connected washing machines</a>
-                 </div>
+            	<div class="media-box-heading" ng-show="data.length">
+                     	<h4>Spike in connected washing machines</h4>
+                 </div> 
                	 <div class="media-box">
-                  <div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="showSpikeContentFlag">
+                  <div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="data.length">
+                  	<p class="text-warning m0">The number of connected machines are increased by {{(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 | number:0}}% in last 4 weeks</p>
                      <div ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 > spikeByConnectedMachinesTolerance">
 	                     <small class="text-pink pull-right ml" >{{(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 | number:0}}%</small> <br>
 	                     <progressbar value="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br> 
@@ -394,7 +411,7 @@
                      </div>
                      <div ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 <= spikeByConnectedMachinesTolerance">
                      	<small class="text-greens pull-right ml" >{{(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 | number:0}}%</small> <br>
-	                     <progressbar value="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br> 
+	                    <progressbar value="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br> 
 	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}" data-trigger="hover"></progressbar>
 	                     <br>
                      </div>

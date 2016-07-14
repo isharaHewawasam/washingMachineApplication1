@@ -379,7 +379,7 @@
 	<aside class="col-lg-4" style="">
 
 		<!-- START messages and activity-->
-		<div class="panel panel-default" style="width: 450px; height: 259px;">
+		<div class="panel panel-default" style="width: 450px; height: 355px;">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
 					style="font-family: Roboto; font-size: 15px;">
@@ -395,18 +395,21 @@
 				<!-- START list group item-->
 				<div class="list-group-item">
 					<div class="media-box" ng-controller="notificationController" ng-init="getSpikesOfSpecificErrors()">
-					<div class="media-box-heading" ng-show="showSpikeContentFlag">
-							<a href="#" class="text-warning m0">Spike in number of specific errors</a>
+					<div class="media-box-heading" ng-show="data.length">
+							<h4>Spike in number of specific errors</h4>
 					</div>
-					<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="showSpikeContentFlag">
+					<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="data.length">
+						<p class="text-warning m0">Errors are increased by {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}% in last 4 weeks</p>
 						<div ng-if="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 > spikeBySpecificErrorsTolerance">
 							<small class="text-pink pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}%</small> <br>
-							<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Spike: 15% greater than tolerance" data-trigger="hover"></progressbar>
+							<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="pink" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" 
+							data-content="Spike: {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 - spikeBySpecificErrorsTolerance}}% greater than tolerance" data-trigger="hover"></progressbar>
 							<br>
 						</div>
 						<div ng-if="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 <= spikeBySpecificErrorsTolerance">
 							<small class="text-greens pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}%</small> <br>
-							<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Spike: 15% greater than tolerance" data-trigger="hover"></progressbar>
+							<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="greens" class="progress-xs m0" style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" 
+							data-content="Spike: {{spikeBySpecificErrorsTolerance - (itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100}}% less than tolerance" data-trigger="hover"></progressbar>
 							<br>
 						</div>
 					</div>
@@ -416,20 +419,21 @@
 				
 				<div class="list-group-item">
 					<div class="media-box" ng-controller="notificationController" ng-init="getSpikesByMakeModel()">
-					<div class="media-box-heading" ng-show="showSpikeContentFlag">
-							<a href="#" class="text-warning m0">Spike in number of specific errors by make, model</a>
+					<div class="media-box-heading" ng-show="data.length">
+							<h4>Spike in number of specific errors by make, model</h4>
 					</div>
-					<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="showSpikeContentFlag">
+					<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="data.length">
+							<p class="text-warning m0">Errors are increased by {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
 							<div ng-if="((itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100) > spikeBySpecificErrorByMakeModelTolerance">
 								<small class="text-pink pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}%</small> <br>
 								<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="pink" class="progress-xs m0"	style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.make}} <br>
-								Model: {{itm.model}} <br> Spike: 5% greater than tolerance" data-trigger="hover"></progressbar>
+								Model: {{itm.model}} <br> Spike: {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 - spikeBySpecificErrorByMakeModelTolerance | number:0}}% greater than tolerance" data-trigger="hover"></progressbar>
 								<br>
 							</div>
 							<div ng-if="((itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100) <= spikeBySpecificErrorByMakeModelTolerance">
 								<small class="text-greens pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}%</small> <br>
 								<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="greens" class="progress-xs m0"	style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.make}} <br>
-								Model: {{itm.model}} <br> Spike: 5% greater than tolerance" data-trigger="hover"></progressbar>
+								Model: {{itm.model}} <br> Spike: {{spikeBySpecificErrorByMakeModelTolerance - (itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100}}% less than tolerance" data-trigger="hover"></progressbar>
 								<br>
 							</div> 
 					</div>

@@ -6,17 +6,16 @@
  */
 
 /*
-* A configurable value to be changed according to deployment environment. When calling an api from ui, requests will be sent to 
-* the api in this configured host.
+* A configurable value set to be changed according to threshold and tolerance values required for notifications display.
 */
 App.constant('iot.config.buildVersion','0.1') // updated by Grunt
 
 	.constant('iot.config.Notification', {
-		negativeTwitterSentimentThreshold: 10,
-		negativeTwitterSentimentTolerance: 10,
 		positiveTwitterSentimentThreshold: 10,
 		positiveTwitterSentimentTolerance: 10,
-		spikeByConnectedMachinesTolerance: 10,
-		spikeBySpecificErrorsTolerance: 10,
-		spikeBySpecificErrorByMakeModelTolerance: 10
+		negativeTwitterSentimentThreshold: 10,
+		negativeTwitterSentimentTolerance: 10,
+		spikeByConnectedMachinesTolerance: 80,
+		spikeBySpecificErrorsTolerance: 80,
+		spikeBySpecificErrorByMakeModelTolerance: 25
 	});
