@@ -186,7 +186,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 
 
 }]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
-	  if(!$logincheck($window.sessionStorage.isLoggedIn)) {
+	  if(!$logincheck($window.sessionStorage.loginCredentails)) {
 		  $location.path('/login');
 	  }
 }]);
@@ -282,7 +282,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 	//alert("loaded");
 	
 	
-	
+	$rootScope.credentials = {};
 	$scope.postForm = function() {
 		var loginCredentials = {
 			username: $scope.inputData.username,
@@ -294,15 +294,16 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
               data: loginCredentials
          }).success(function(data, status) {
      			if (data.response == 'Success') {
-     				$rootScope.Name = data.name;
-     				$rootScope.email = data.username;
-     				$rootScope.roleKey = data.role;
-     				$rootScope.Role = data.rolename;
+     				$rootScope.credentials.Name = data.name;
+     				$rootScope.credentials.email = data.username;
+     				$rootScope.credentials.roleKey = data.role;
+     				$rootScope.credentials.Role = data.rolename;
      				if (data.role == 'mkt_manager') {
      					$state.go('app.singleview');
      				} else if(data.role == 'eng_manager') {
      					$state.go('app.engmanagerview');
      				}
+     				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
      			} else {
      				$scope.errorMsg = 'The user name or password you entered is incorrect.';
      			}
@@ -312,7 +313,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
          });
 		
 		
-	        $window.sessionStorage.isLoggedIn = true;
+//	        $window.sessionStorage.isLoggedIn = true;
 //alert("loaded");
 //$state.go('app.login');
 
@@ -348,16 +349,12 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', function($rootScope,$scope, $http, $state, $window) {
 	//alert("loaded");
-	console.log("name from rootscope "+$rootScope.Name);
-	$scope.rolename=$rootScope.Role;
-	$scope.names=$rootScope.Name;
-	console.log("names from scope "+$scope.names);
-	
-	
-	
+	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+	$scope.rolename=loginCredentails.Role;
+	$scope.names=loginCredentails.Name;
 	
 	$scope.logOut=function(){
-		delete $window.sessionStorage.isLoggedIn;
+		delete $window.sessionStorage.loginCredentails;
 		$state.go('page.login');
  	}
 }]);
