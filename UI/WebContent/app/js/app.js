@@ -1383,9 +1383,9 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
        	 	 obj.occupation=$rootScope.search.occupation;
        	 	 obj.ageGroup=$rootScope.search.ageGroup;
              $rootScope.setUsageObjectFromSidebar(obj);
-             console.log("applied demographic filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+             console.log("applied demographic filter  incomeRange :"+$rootScope.search.incomeRange+", occupation :"+$rootScope.search.occupation+",ageGroup :"+$rootScope.search.ageGroup);
              $scope.createIconArray();
-             document.getElementById('filterPanel').style.display = 'none';
+             document.getElementById('demographicsFilterPanel').style.display = 'none';
              $rootScope.tryit();
          };
 
@@ -2403,8 +2403,7 @@ $scope.plotPieChart=function(divID){
 				        },
 				        tooltip: {
 				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-				                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 				            footerFormat: '</table>',
 				            shared: true,
 				            useHTML: true
@@ -2475,8 +2474,7 @@ $scope.plotPieChart=function(divID){
 						        },
 						        tooltip: {
 						            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 						            footerFormat: '</table>',
 						            shared: true,
 						            useHTML: true
@@ -2532,8 +2530,7 @@ $scope.plotPieChart=function(divID){
 			        },
 			        tooltip: {
 			            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-			                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 			            footerFormat: '</table>',
 			            shared: true,
 			            useHTML: true
