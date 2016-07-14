@@ -773,7 +773,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 					            "value":$scope.region.zip_codes
 					         }
 					      ]
-					   }
+					   },
+					   "income":[{"value": $scope.sidebarObj.incomeRange}],
+					   "age": [{"value": $scope.sidebarObj.ageGroup}],
+					   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
 					};
 		
 		$rootScope.applyFilterBoolean=true;
@@ -783,142 +786,63 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	
 	
 	$rootScope.tryit = function() {
-			$scope.searchButtonText = "Filtering...";    
-	  $scope.isDisabled = true;
-	  $scope.test = true;
+		$scope.searchButtonText = "Filtering...";    
+		$scope.isDisabled = true;
+		$scope.test = true;
 		$rootScope.applyFilterBoolean=true;
-	/*
-		if($scope.region.states==undefined)
-			{
-			
-			console.log("states undefined");
-			$scope.usagedata.region.states=[];
-			}
-		
-		if($scope.region.cities==undefined)
-		{
-
-			console.log("cities undefined");
-			$scope.usagedata.region.cities=[];
-		}
-		
-		if($scope.region.zip_codes==undefined)
-		{
-
-			console.log("zip_codes undefined");
-			$scope.usagedata.region.zip_codes=[];
-		}
-		*/
-		/*
-		console.log("region form data  : "+$scope.region);	
-		console.log("states form data  : "+$scope.region.states);	
-		console.log("cities form data  : "+$scope.region.cities);	
-		console.log("codes form data  : "+$scope.region.zip_codes);	*/
-
-		/*$scope.usagedata={
-  				  "productAttrs": {
-  	    		    "makes": [  ],
-  	    		    "models": [],
-  	    		    "skus": [],
-  	    		    "mfg_date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    }
-  	    		  },
-  	    		"timescale": {
-  	      		    "years": [{
-  	    		        "value": parseInt($scope.timescale.years)
-  	    		      } ],
-  	      		    "quarters": [ {
-  	    		        "value": parseInt($scope.timescale.quarters)
-  	    		      }],
-  	      		    "months": [{
-  	    		        "value": parseInt($scope.timescale.months)
-  	    		      } ],
-  	    		    "date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    },
-  	    		    "relative": {
-  	    		      "unit": "2",
-  	    		      "value": 0
-  	    		    }
-  	    		  },
-  	    		  "region": {
-  	    		    "states": [
-  	    		      {
-  	    		        
-  	    		    	  "value": $scope.region.states
-  	    		      }
-  	    		    ],
-  	    		    "cities": [
-  	    		               {
-  	    		            	   "value": $scope.region.cities
-  	 	   
-  	    		               }
-  	    		               ],
-  	    		    "zip_codes": [
-  						{
-  							   "value": $scope.region.zip_codes
-  						
-  						}
-  	    		                  ]
-  	    		  }
-  	    		};
-		
-		*/
-		console.log('$scope.sidebarObj.selectedMake : ', $scope.sidebarObj.selectedMake);
-		console.log('$scope.sidebarObj.selectedModel : ', $scope.sidebarObj.selectedModel);
 		$scope.usagedata={  
-						   "productAttrs":{  
-							   "makes":[{"value":$scope.sidebarObj.selectedMake}],
-							      "models":[{"value":$scope.sidebarObj.selectedModel}],
-							      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-							      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
-							   },
-							   "timescale":{  
-							      "years":[  
-							         {  
-							            "value":parseInt($scope.timescale.years)
-							         }
-							      ],
-							      "quarters":[  
-							         {  
-							            "value":parseInt($scope.timescale.quarters)
-							         }
-							      ],
-							      "months":[  
-							         {  
-							            "value":parseInt($scope.timescale.months)
-							         }
-							      ],
-							      "date":{  
-							         "start_date":"01/01/2015",
-							         "end_date":"01/01/2016"
-							      },
-							      "relative":{  
-							         "unit":"2",
-							         "value":0
-							      }
-							   },
-							   "region":{  
-							      "states":[  
-							         {  
-							            "value":$scope.region.states
-							         }
-							      ],
-							      "cities":[  
-							         {  
-							            "value":$scope.region.cities
-							         }
-							      ],
-							      "zip_codes":[  
-							         {  
-							            "value":$scope.region.zip_codes
-							         }
-							      ]
-							   }
-							};
+		   "productAttrs":{  
+			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
+			      "models":[{"value":$scope.sidebarObj.selectedModel}],
+			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+			      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
+			   },
+			   "timescale":{  
+			      "years":[  
+			         {  
+			            "value":parseInt($scope.timescale.years)
+			         }
+			      ],
+			      "quarters":[  
+			         {  
+			            "value":parseInt($scope.timescale.quarters)
+			         }
+			      ],
+			      "months":[  
+			         {  
+			            "value":parseInt($scope.timescale.months)
+			         }
+			      ],
+			      "date":{  
+			         "start_date":"01/01/2015",
+			         "end_date":"01/01/2016"
+			      },
+			      "relative":{  
+			         "unit":"2",
+			         "value":0
+			      }
+			   },
+			   "region":{  
+			      "states":[  
+			         {  
+			            "value":$scope.region.states
+			         }
+			      ],
+			      "cities":[  
+			         {  
+			            "value":$scope.region.cities
+			         }
+			      ],
+			      "zip_codes":[  
+			         {  
+			            "value":$scope.region.zip_codes
+			         }
+			      ]
+			   },
+			   "income":[{"value": $scope.sidebarObj.incomeRange}],
+			   "age": [{"value": $scope.sidebarObj.ageGroup}],
+			   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+		};
 		
 		//////////start gopal
 		if($scope.region.states==undefined || $scope.region.states=="")
@@ -968,6 +892,18 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		if($scope.sidebarObj.mfgDate==undefined || $scope.sidebarObj.mfgDate=="")
 		{
 			$scope.usagedata.productAttrs.mfg_date=[];
+		}
+		if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+		{
+			$scope.usagedata.income=[];
+		}
+		if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+		{
+			$scope.usagedata.age=[];
+		}
+		if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+		{
+			$scope.usagedata.family_members_count=[];
 		}
 		/*if($scope.region.cities==undefined)
 				$scope.usagedata.region.cities=[];
@@ -1449,10 +1385,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
        	 	 obj.incomeRange=$rootScope.search.incomeRange;
        	 	 obj.occupation=$rootScope.search.occupation;
        	 	 obj.ageGroup=$rootScope.search.ageGroup;
-             //$rootScope.setUsageObjectFromSidebar(obj);
+             $rootScope.setUsageObjectFromSidebar(obj);
              console.log("applied demographic filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
              $scope.createIconArray();
              document.getElementById('filterPanel').style.display = 'none';
+             $rootScope.tryit();
          };
 
     
