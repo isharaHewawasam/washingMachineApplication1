@@ -2215,7 +2215,18 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
 	  
-	  
+	  $scope.isActive1 = false;
+	    $scope.isActive2 = false;
+	    $scope.isActive3 = false;
+	  $scope.activeButton = function(index) {
+	    if(index ==1)
+	      $scope.isActive1 = !$scope.isActive1;
+	    else if(index == 2)
+	      $scope.isActive2 = !$scope.isActive2;
+	    else
+	      $scope.isActive3 = !$scope.isActive3;
+	  }
+
 	  
 	$scope.disp=function(index){
 		if(index==0)
@@ -2652,10 +2663,15 @@ $scope.plotPieChart=function(divID){
 		    			text: 'Sales Volumes'
 		    		},
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
 		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',
@@ -2708,10 +2724,16 @@ $scope.plotPieChart=function(divID){
 				    			text: 'Sales Volumes'
 				    		},
 				    	    xAxis: {
+				                title: {
+		                            text: 'Time Scale' //new lable for X
+		                        },
+
 				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 				    	    },
 				    	    yAxis: {
-				    			title:false
+				    			title: {
+		                            text: 'Units Sold' //new lable for Y
+		                        }
 				    		    },
 				    		    tooltip: {
 				    		    	backgroundColor: '#87C1E6',
@@ -2752,10 +2774,16 @@ $scope.plotPieChart=function(divID){
 		    			text: 'Sales Volumes'
 		    		},
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
+
 		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',

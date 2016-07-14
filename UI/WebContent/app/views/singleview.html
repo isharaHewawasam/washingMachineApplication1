@@ -149,13 +149,13 @@
    <div class="col-lg-4 " ng-controller="myController">
      <div class="chart-chartDiv" id="chartParent">
 		<div class="chart-filterDiv " id="chartFilterDivId">
-                                    <select id="first-chart-select" class="chart-selectStyle col-md-4 " ng-change="disp()" ng-model="selectedSales" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                    <select ng-class="{'chart-selectStyle2': isActive1}" ng-click="activeButton(1)" id="first-chart-select" class="chart-selectStyle col-md-4 " ng-change="disp()" ng-model="selectedSales" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
                                                 
                                                 <option class="chart-option-text-style" disabled value="">Please select</option>
                                                 <option class="chart-option-text-style"  ng-if="$index==0" ng-init="disp($index)"selected ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
                                                	<option class="chart-option-text-style"  ng-if="$index!=0" ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
                                     </select>
-                                     <select id="second-chart-select" class="chart-selectStyle col-md-3 chart-border "
+                                     <select ng-class="{'chart-selectStyle2': isActive2}" ng-click="activeButton(2)" id="second-chart-select" class="chart-selectStyle col-md-3 chart-border "
                                                 style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
                                                 <option class="chart-option-text-style" selected value="">Last 1 day
                                                 <option class="chart-option-text-style" value="" >Last 7 days
@@ -165,7 +165,7 @@
                                                 <option class="chart-option-text-style" value="">Last 1 year
                                                 <option class="chart-option-text-style" value="">Last 3 years
                                     </select> 
-                                    <select id="third-chart-select" class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)" ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+                                    <select ng-class="{'chart-selectStyle2': isActive3}" ng-click="activeButton(3)" id="third-chart-select" class="chart-selectStyle col-md-4 " ng-change="dispChart(selectedChart)" ng-model="selectedChart" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
                                              <option class="chart-option-text-style"  selected ng-init="dispChart(selectedChart)" ng-repeat="chart in chartTypes" value="{{chart}}">{{chart}}</option>
                                     </select> 
                                     <img id="maximize" class="pull-right col-md-1" style="padding:0px;   margin-top:10px;      margin-right: 9px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/icon_maximize.png" ng-click="maximize()"></img>
