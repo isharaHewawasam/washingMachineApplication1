@@ -298,6 +298,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
      				$rootScope.credentials.email = data.username;
      				$rootScope.credentials.roleKey = data.role;
      				$rootScope.credentials.Role = data.rolename;
+     				localStorage.setItem('rolename', data.rolename);
      				if (data.role == 'mkt_manager') {
      					$state.go('app.singleview');
      				} else if(data.role == 'eng_manager') {
@@ -3577,3 +3578,16 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
+App.controller('MyviewController', ['$scope', function($scope) {
+	  /* controller code */
+	  //console.log("my controller running");
+	  $scope.getUrl = function(){
+	    if(localStorage.getItem('rolename') == "Engineer Manager"){
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
+	    }
+	    else{
+	      $('#dashboardNav a').attr('href','#/app/singleview');
+	    }
+	  }
+}]);
+
