@@ -348,11 +348,29 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', function($rootScope,$scope, $http, $state, $window) {
-	//alert("loaded");
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, configApiClient) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
 	$scope.names=loginCredentails.Name;
+	$scope.notificationAlertFlag = false;
+	
+	$scope.getNewNotificationCount = function() {
+		
+		$http({url:configApiClient.baseUrl + 'notification/onload', 
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+		     
+		    $scope.notificationCount = data[0].notification_count;
+		 	$scope.notificationAlertFlag = true;
+					           
+		}). error(function(data, status) {
+		       console.log("Error getting data for most fault models, status: " + status);
+		});	
+	}
+	
+	$scope.clearNotificationCount = function() {
+		$scope.notificationAlertFlag = false;
+	}
+	
 	
 	$scope.logOut=function(){
 		delete $window.sessionStorage.loginCredentails;

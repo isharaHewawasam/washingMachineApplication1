@@ -21,9 +21,9 @@
 		
 		<ul class="nav navbar-nav pull-right" style="">
 			
-			<li style="padding-left: 10px;padding-top: 16px">
+			<li style="padding-left: 10px;padding-top: 16px" ng-init="getNewNotificationCount()" ng-click="clearNotificationCount()">
 				<img alt="" src="app/img/Dashboardassets/alert.png">
-				<span class="badge" style="background-color: #FEBD2D;margin-top: -22px;margin-left: -15px;">4</span>
+				<span class="badge" style="background-color: #FEBD2D;margin-top: -22px;margin-left: -15px;" ng-show="notificationAlertFlag">{{notificationCount}}</span>
 			</li> 
 			<li style="padding-left: 25px;padding-top: 8px">
 				<div dropdown="" class="dropdown dropdown-list " class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
