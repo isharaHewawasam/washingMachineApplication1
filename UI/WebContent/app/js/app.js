@@ -533,10 +533,20 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
 App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
 	
+		$scope.isDisabled = false;
+		$scope.isError = false;
+		//$scope.isNoDataDB = false;
+		$scope.msg1 = "Loading.....Please wait";
+		//$scope.msg2="No data Found";
+		$scope.msg3 = "Service is Unavailable";
+    
 	  $scope.getMostFaults = function(divId) {
+		  	$scope.isDisabled = true;
+	        $scope.msg = $scope.msg1;
 		  
 		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostFaultDataStr = JSON.stringify(data);
 					  
@@ -548,15 +558,21 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Fault');		               
 						           
 			}). error(function(data, status) {
+					$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most fault models, status: " + status);
 			});			 
 	  };
 	  
 	  $scope.getLeastFaults = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			               
+			    	 
+			    	 $scope.isDisabled = false;      
 			    	 var leastFaultDataStr = JSON.stringify(data);
 					  
 			    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
@@ -567,15 +583,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Least Fault');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for least fault models, status: " + status);
 			});			  
 	  };
 	  
 	  $scope.getCommonFaults = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 		               
+			    	 $scope.isDisabled = false;		               
 			    	 var commonFaultDataStr = JSON.stringify(data.faults);
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
@@ -585,13 +606,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Common Fault');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most common faults, status: " + status);
 			});	
 	  };
 	   
 	  $scope.getMostUsedModel = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostUsedProductDataStr = JSON.stringify(data.data);
 					  
@@ -603,13 +631,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Used Models');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most used models, status: " + status);
 			});		  		  
 	  };
 	  
 	  $scope.getMostUsedCycles = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostUsedCyclesDataStr = JSON.stringify(data);
 					  
@@ -621,13 +656,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Used Wash Cycles');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most used wash cycles, status: " + status);
 			});
 	  };
 	  
 	  $scope.getNotConnectedMachines = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var notConnectedDataStr = JSON.stringify(data);
 					  
@@ -639,6 +681,9 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Not Connected Machines');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for disconnected machines, status: " + status);
 			});	
 	  };
@@ -1900,12 +1945,21 @@ function renderPieChart(divId, insightsData, chartTitle){
 }
 
 App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', 'iot.config.Notification', function ($scope, $http, configApiClient, configNotification) {
+	$scope.isDisabled = false;
+    $scope.isError = false;
+    //$scope.isNoDataDB = false;
+    $scope.msg1 = "Loading.....Please wait";
+   // $scope.msg2="No Data Found";
+    $scope.msg3 = "Service is Unavailable";
 	$scope.getTwitterSentimates = function(){
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
 		
 		//$scope.showTwitterContentFlag = false;
 		
 		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-sentiments', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+		    	 $scope.isDisabled = false;
 		    	 if (data || data.length != 0) {
 		    	 	$scope.data = data;
 		    	 	//$scope.showTwitterContentFlag = true;
@@ -1914,6 +1968,9 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		    	 }
 					           
 		}). error(function(data, status) {
+			$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
 				console.log("Error getting data for twitter notification sentiments, status: " + status);
 		});	
 	};
@@ -1921,9 +1978,12 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 	$scope.getSpikesInMachines = function() {
 		
 		//$scope.showSpikeContentFlag = false;
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
 		
 		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+		    	 $scope.isDisabled = false;
 		    	 if (data || data.length != 0) {
 		    		 $scope.data = data;
 		    		 //$scope.showSpikeContentFlag = true;
@@ -1931,6 +1991,9 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		    	 }
 					           
 		}). error(function(data, status) {
+			$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
 				console.log("Error getting data for spikes in machines, status: " + status);
 		});
 	};
