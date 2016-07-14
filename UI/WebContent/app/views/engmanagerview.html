@@ -164,7 +164,7 @@
 
 
 <div class="row">
-	<div ng-controller="filterIconController" class="form-group filter-filterDiv col-lg-12" style="width: 100% auto;">
+	<div ng-controller="filterIconController" class="form-group filter-filterDivChart col-lg-12" style="width: 100% auto;">
 	    <div ng-repeat="va in someArray" 
 	         style="height:26px;background:#91aed3;padding: 4px;margin:10px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va.value}} <span style="color:#fff;font-size:11pt;" ng-click='removeFilter(va)'>X</span></div>
 	</div>
@@ -178,13 +178,13 @@
 	<div class="col-lg-4 " ng-controller="myController">
 		<div class="chart-chartDiv" id="chartParent">
 			<div class="chart-filterDiv " id="chartFilterDivId">
-				   <select id="first-chart-select" class="chart-selectStyle col-md-5 " ng-change="Engdisp($index)" ng-model="selectedSensors" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
+				   <select ng-class="{'chart-selectStyle2': isActive1}" ng-click="activeButton(1)" id="first-chart-select" class="chart-selectStyle col-md-5 " ng-change="Engdisp($index)" ng-model="selectedSensors" style="padding-right: 0px; padding-left: 3px;margin-top: 2px">
                                                 
                                                 <option class="chart-option-text-style" disabled value="">Please select</option>
                                                 <option class="chart-option-text-style"  ng-if="$index==0" ng-init="Engdisp($index)" selected ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                               	<option class="chart-option-text-style"  ng-if="$index!=0" ng-repeat="sensor in sensorsList track by $index" value="{{$index}}">{{sensor.displayName}}</option>
                                     </select>
-                                    <select id="second-chart-select" class="chart-selectStyle col-md-3 chart-border "
+                                    <select ng-class="{'chart-selectStyle2': isActive2}" ng-click="activeButton(2)" id="second-chart-select" class="chart-selectStyle col-md-3 chart-border "
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style" value="">Last 1
 						day
@@ -200,7 +200,7 @@
 						year
 					<option class="chart-option-text-style" value="">Last 3
 						years
-				</select> <select id="third-chart-select"class="chart-selectStyle col-md-3"
+				</select> <select ng-class="{'chart-selectStyle2': isActive3}" ng-click="activeButton(3)" id="third-chart-select"class="chart-selectStyle col-md-3"
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style"

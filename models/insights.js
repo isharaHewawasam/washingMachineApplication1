@@ -131,6 +131,10 @@ exports.getTwitternotificationspike = function(callback) {
 exports.getTwitternotificationspikeerrors = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerror);  
 };
+//spike in number of specific error by make
+exports.getTwitternotificationspikeerrorsbymake = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerrorbymake);  
+};
 
 //Twitter inner page apis
 
@@ -139,6 +143,7 @@ exports.getTwitterinsightstable = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsights);  
 };
 
+/*
 //Tweets graph api 
 exports.getTweets = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageTweets);  
@@ -162,9 +167,9 @@ exports.getMentions = function(callback) {
 //Twitter graph api
 exports.getTwitter = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitter);  
-};
+};*/
 
 //Twitter Sentiments grpah api
 exports.getTwittersentiments = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpagesentimates);  
+  callback(null, require("./twiiternotification_dummy").twitterinnerpagesentiments);  
 };

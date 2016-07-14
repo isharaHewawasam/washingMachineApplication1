@@ -77,6 +77,13 @@ module.exports.getTwitternotificationspikeerrors = function(req, res, next) {
 	});
 };
 
+//spike in number of specific error by make
+module.exports.getTwitternotificationspikeerrorsbymake = function(req, res, next) { 
+	insights.getTwitternotificationspikeerrorsbymake(function(err, result){  	  
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
 //Twitter Inner page apis 
 
 //Twitter insights table api
@@ -87,6 +94,7 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 	});
 };
 
+/*
 // Tweets graph api
 module.exports.getTweets = function(req, res, next) { 
 	insights.getTweets(function(err, result){  
@@ -126,7 +134,7 @@ module.exports.getTwitter = function(req, res, next) {
 	    helper.sendResponse(res, err, dataArray); 
 	});
 };
-
+*/
 //Twitter Sentiments api positive graph
 module.exports.getTwittersentiments = function(req, res, next) { 
 	insights.getTwittersentiments(function(err, result){  

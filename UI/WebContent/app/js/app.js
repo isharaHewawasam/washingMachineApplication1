@@ -278,54 +278,41 @@ App
   })
 ;
 
-
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', function($scope, $http, $state,$rootScope,$window) {
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
 	//alert("loaded");
 	
 	
 	
 	$scope.postForm = function() {
-
+		var loginCredentials = {
+			username: $scope.inputData.username,
+			password: $scope.inputData.password
+		};
+		$http({url:configApiClient.baseUrl + 'login/authentication',
+              method: "POST",
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              data: loginCredentials
+         }).success(function(data, status) {
+     			if (data.response == 'Success') {
+     				$rootScope.Name = data.name;
+     				$rootScope.email = data.username;
+     				$rootScope.roleKey = data.role;
+     				$rootScope.Role = data.rolename;
+     				if (data.role == 'mkt_manager') {
+     					$state.go('app.singleview');
+     				} else if(data.role == 'eng_manager') {
+     					$state.go('app.engmanagerview');
+     				}
+     			} else {
+     				$scope.errorMsg = 'The user name or password you entered is incorrect.';
+     			}
+         }). error(function(data, status) {
+                console.log("error in login :", data);
+                $scope.errorMsg = 'Network issue, please try after some time.';
+         });
 		
-		//{ success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-		 var response1 = { success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	        if(!response1.success) {
-	      	//  $scope.errorMsg  = 'Not Authorised';
-	        	
-	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	             if(!response.success) {
-	           	  $scope.errorMsg  = 'We weren\'t able to find the email address and password combination you entered';
-	             }else{
-	           	//  $scope.errorMsg = 'success';
-	           	  $state.go('app.singleview');
-	           	  
-	           	$rootScope.Role="Marketing Manager";
-	        	$rootScope.Name="John Smith";
-	             };
-	        	
-	        	
-	        }else{
-	      	 // $scope.errorMsg = 'success';
-	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Engineering Manager";
-	      	$rootScope.Name="Alan Mcdormet";
-	      	  // window.location.href = 'success.html';
-	      	 // $state.go('app.singleview');
-	      	  
-	      //	 $state.go('app.engmanagerview');
-	      	//return
-	        };
+		
 	        $window.sessionStorage.isLoggedIn = true;
-		/*
-		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-        if(!response.success) {
-      	  $scope.errorMsg  = 'Not Authorised';
-        }else{
-      	  $scope.errorMsg = 'success';
-      	  $state.go('app.singleview');
-      	  
-      	
-        };*/
 //alert("loaded");
 //$state.go('app.login');
 
@@ -359,8 +346,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', function($rootScope,$scope, $http, $state) {
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', function($rootScope,$scope, $http, $state, $window) {
 	//alert("loaded");
 	console.log("name from rootscope "+$rootScope.Name);
 	$scope.rolename=$rootScope.Role;
@@ -1743,12 +1729,15 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
 	}]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
+    $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
+              $scope.progress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
 			    	console.log("Sales Volume List : "+JSON.stringify(data));
 			    	
 			    	renderMap(divId, data);
-			    	
+                      salesDataSet = data;                      
+                      $scope.progress = false;
 			    }). error(function(data, status) {
 			      // alert("error"  +status);
 			       console.log('Error : ' + status);
@@ -1767,7 +1756,7 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	    $("#map-container").height(660); 	        
 	    $("#mapMinImg").removeClass("hidden");    
 	     
-	    $scope.plotMapFunction("map-container");        
+        renderMap("#map-container",salesDataSet );        
 	 }
 	 
 	$("body").on("click"," #mapMinImg",function(){
@@ -1775,7 +1764,7 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	    $("#hiddenDiv").empty();
 	    $("#hiddenDiv").addClass("hidden");       
 	    elem.addClass("map-mapDiv");  
-	    $scope.plotMapFunction("map-container");
+        renderMap("#map-container",salesDataSet );
 	});
 
 }]);
@@ -1791,28 +1780,46 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
+    
+    
+    
+    var zipcode;
+    if(salesDataStr.includes("zip_code")){
+        zipcode = true;
+    }else{
+       zipcode = false;
+    } 
+    
 	// Initiate the map
-	var chart = Highcharts.Map({
-        chart: {
-            renderTo: divId
-        },
-        credits:{
-        	enabled:false
-        },
+    $(function () {
+          
+    //var chart = Highcharts.Map({
+    $('#map-container').highcharts('Map', {
+      chart: {
+          //renderTo: divId
+          
+      },
+      credits:{
+      	enabled:false
+      },
 	    exporting: { 
 	    	enabled: false 
 	    },
 	    title: {
-	        text: 'Sales Volume Distribution'
+	        text: ''
 	    },
 	
 	    mapNavigation: {
 	        enabled: true
 	    },
 	
+    
 	    tooltip: {
 	        headerFormat: '',
-	        pointFormat: '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+            pointFormat: zipcode == true ? 
+                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                    
 	    },
 	    
 	    plotOptions: {
@@ -1849,7 +1856,7 @@ function renderMap(divId, salesData){
 	        }
 	    }]
 	});
-	
+});
 	//console.log('Rendered the app successfully');
 	
 }
@@ -2213,7 +2220,18 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
 	  
-	  
+	  $scope.isActive1 = false;
+	    $scope.isActive2 = false;
+	    $scope.isActive3 = false;
+	  $scope.activeButton = function(index) {
+	    if(index ==1)
+	      $scope.isActive1 = !$scope.isActive1;
+	    else if(index == 2)
+	      $scope.isActive2 = !$scope.isActive2;
+	    else
+	      $scope.isActive3 = !$scope.isActive3;
+	  }
+
 	  
 	$scope.disp=function(index){
 		if(index==0)
@@ -2434,6 +2452,9 @@ $scope.plotPieChart=function(divID){
 				        title: {
 				            text: 'Top 3 Selling Models'
 				        },
+				        credits:{
+				        	enabled:false
+				        	},
 				        xAxis: {
 				            categories: [
 				                '2016'
@@ -2643,11 +2664,19 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
 		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',
@@ -2696,11 +2725,20 @@ $scope.plotPieChart=function(divID){
 				    		credits:false,
 				    		title:false,
 				    		legend: {enabled:false},
+				    		title: {
+				    			text: 'Sales Volumes'
+				    		},
 				    	    xAxis: {
+				                title: {
+		                            text: 'Time Scale' //new lable for X
+		                        },
+
 				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 				    	    },
 				    	    yAxis: {
-				    			title:false
+				    			title: {
+		                            text: 'Units Sold' //new lable for Y
+		                        }
 				    		    },
 				    		    tooltip: {
 				    		    	backgroundColor: '#87C1E6',
@@ -2737,11 +2775,20 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
+
 		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',
@@ -2793,6 +2840,9 @@ $scope.plotPieChart=function(divID){
 			credits:false,
 			title:false,
 			legend: {enabled:false},
+			title: {
+    			text: ""+$scope.sensortype
+    		},
 		    xAxis: {
 		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
 		    },

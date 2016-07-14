@@ -11971,6 +11971,13 @@ body {
 	overflow: hidden;
 	white-space:nowrap;
 }
+.chart-selectStyle2{
+  background-image:url('../img/Dashboardassets/Arrow-up-navmenu2.png') !important;
+  text-overflow:hidden;
+  overflow: hidden;
+  white-space:nowrap;
+}
+
 
 
 /* map fragment css */
@@ -11996,7 +12003,7 @@ body {
 
 .somediv {
 	position: absolute;
-	height: 80%;
+	/*height: 80%;*/
 	width: 80%;
 	top: 10%;
 	left: 10%;
@@ -12032,6 +12039,15 @@ display : block;
 	display:table-cell;
 	padding-left:0px;
 	padding-top:7px;
+}
+.filter-filterDivSideBar{
+  width:1287px;
+  height: 48px;
+  /*background-color: #E7EEF6;*/
+  vertical-align: middle;
+  display:table-cell;
+  padding-left:0px;
+  padding-top:7px;
 }
 .filter-selectStyle{
 	min-width:156px;

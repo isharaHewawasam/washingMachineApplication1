@@ -13,7 +13,8 @@ module.exports.twitternotifications = [
                                "City":"New York",
                                "Zipcode":10001,
                         	 "Reason": "Not Happy with the programs",
-                               "date":"06/07/2016"
+                               "date":"06/07/2016",
+                               "twitter_response_type":"Negative"
                          }
                        ];
 
@@ -54,7 +55,34 @@ module.exports.twitternotificationsspikeerror = [
                                "Reason": "Not Happy with the programs",
                                "date":"06/07/2016"
                          }
-                       ];  
+                       ];
+
+module.exports.twitternotificationsspikeerrorbymake = [
+                         {      
+                               "make":"Make1",
+                               "model":"Model2",
+                               "reason":"Not happy with the programs",
+                               "current_error_count":30,
+                               "previous_error_count":25,
+                               "error_type":"Sensor"
+                         },
+                         {      
+                               "make":"Make2",
+                               "model":"Model5",
+                               "reason":"Errors",
+                               "current_error_count":70,
+                               "previous_error_count":55,
+                               "error_type":"Software"
+                         },{      
+                               "make":"Make3",
+                               "model":"Model8",
+                               "reason":"Errors",
+                               "current_error_count":60,
+                               "previous_error_count":45,
+                               "error_type":"Water"
+                         }
+
+                       ];   
 
 
 //twitter inner page apis dummy data
@@ -125,15 +153,27 @@ module.exports.twitterinnerpageTwitterinsights = [
                          }
                        ];   
 
-module.exports.twitterinnerpageTweets = [
+module.exports.twitterinnerpagesentiments = [
                          {      
-                               "tweets_color":"red",
+                           
                                "tweets_count":7,
-                               "tweets_percentage":69.3             
+                               "tweetsimpress_count":2300,
+                               "profilevisits_count":997,
+                               "mentions_count":10,
+                               "twitter_count":248,
+                               "tweets_percentage":69.3,
+                               "tweetsimpress_percentage":81.8,   
+                               "profilevisits_percentage":28.6,     
+                               "mentions_percentage":23.1,  
+                               "twitter_percentage":30,
+                               "sentimate_positive":59,
+                               "sentimate_neutral":27,
+                               "sentimate_negative":16 
+
                          }
                        ];  
 
-module.exports.twitterinnerpageTweetsimpressions = [
+/*module.exports.twitterinnerpageTweetsimpressions = [
                          {      
                                "tweetsimpress_color":"red",
                                "tweetsimpress_count":2300,
@@ -172,7 +212,7 @@ module.exports.twitterinnerpagesentimates = [
                                "neutral":27,
                                "negative":16            
                          }
-                       ];  
+                       ];  */
 
 
                            
