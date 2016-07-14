@@ -240,7 +240,7 @@ function addMissingData(payload, callback) {
   var FilterClass = require("./filters"); 
   var filter = new FilterClass(payload, 1)
    
-  if ( filter.isFilterByNone() ||  filter.isFilterByModel())  callback(null, payload);
+  if ( filter.isFilterByNone() || filter.isFilterCategoryByRegion() || filter.isFilterByModel())  callback(null, payload); 
   
   //callback(null, payload)
   
