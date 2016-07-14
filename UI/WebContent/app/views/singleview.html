@@ -363,6 +363,7 @@
          </div>
          
          <!-- START list group-->
+         <div style="width: 450px; height: 310px; overflow-y: scroll" class="panel panel-default">
          <div class="list-group">
             <div class="list-group-item">
               <div ng-controller="notificationController" ng-init="getTwitterSentimates()">
@@ -402,8 +403,6 @@
               </div>
             </div>
             
-            <br>
-            
             <div class="list-group-item" ng-controller="notificationController" ng-init="getSpikesInMachines()">
             	<div class="media-box-heading" ng-show="data.length">
                      	<h4>Spike in connected washing machines</h4>
@@ -428,6 +427,7 @@
             </div>
          </div>
       </div>
+     </div>
       <!-- END messages and activity-->
    </aside>
    <!-- END dashboard sidebar-->

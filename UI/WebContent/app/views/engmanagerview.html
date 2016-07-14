@@ -379,7 +379,7 @@
 	<aside class="col-lg-4" style="">
 
 		<!-- START messages and activity-->
-		<div class="panel panel-default" style="width: 450px; height: 355px;">
+		<div class="panel panel-default" style="width: 450px; height: 355px">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
 					style="font-family: Roboto; font-size: 15px;">
@@ -390,6 +390,7 @@
 
 			</div>
 
+			<div style="width: 450px; height: 325px; overflow-y: scroll " class="panel panel-default">
 			<!-- START list group-->
 			<div class="list-group">
 				<!-- START list group item-->
@@ -415,7 +416,6 @@
 					</div>
 					</div>
 				</div>
-				<br>
 				
 				<div class="list-group-item">
 					<div class="media-box" ng-controller="notificationController" ng-init="getSpikesByMakeModel()">
@@ -423,7 +423,7 @@
 							<h4>Spike in number of specific errors by make, model</h4>
 					</div>
 					<div class="media-box-body clearfix" ng-repeat="itm in data" ng-show="data.length">
-							<p class="text-warning m0">Errors are increased by {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
+							<p class="text-warning m0">{{itm.error_type}} related errors are increased by {{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
 							<div ng-if="((itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100) > spikeBySpecificErrorByMakeModelTolerance">
 								<small class="text-pink pull-right ml">{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100 | number:0}}%</small> <br>
 								<progressbar value="(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100" type="pink" class="progress-xs m0"	style=" height: 10px;" data-toggle="popover" data-placement="top" data-html="true" data-content="Make: {{itm.make}} <br>
@@ -442,6 +442,7 @@
 				
 			</div>
 			
+		</div>
 		</div>
 		<!-- END messages and activity-->
 	</aside>
