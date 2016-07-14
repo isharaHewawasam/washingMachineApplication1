@@ -12033,6 +12033,15 @@ display : block;
 	padding-left:0px;
 	padding-top:7px;
 }
+.filter-filterDivSideBar{
+  width:1287px;
+  height: 48px;
+  /*background-color: #E7EEF6;*/
+  vertical-align: middle;
+  display:table-cell;
+  padding-left:0px;
+  padding-top:7px;
+}
 .filter-selectStyle{
 	min-width:156px;
 	height: 32px;

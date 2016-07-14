@@ -1729,12 +1729,15 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
 	}]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
+    $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
+              $scope.progress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
 			    	console.log("Sales Volume List : "+JSON.stringify(data));
 			    	
 			    	renderMap(divId, data);
-			    	
+                      salesDataSet = data;                      
+                      $scope.progress = false;
 			    }). error(function(data, status) {
 			      // alert("error"  +status);
 			       console.log('Error : ' + status);
@@ -1753,7 +1756,7 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	    $("#map-container").height(660); 	        
 	    $("#mapMinImg").removeClass("hidden");    
 	     
-	    $scope.plotMapFunction("map-container");        
+        renderMap("#map-container",salesDataSet );        
 	 }
 	 
 	$("body").on("click"," #mapMinImg",function(){
@@ -1761,7 +1764,7 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	    $("#hiddenDiv").empty();
 	    $("#hiddenDiv").addClass("hidden");       
 	    elem.addClass("map-mapDiv");  
-	    $scope.plotMapFunction("map-container");
+        renderMap("#map-container",salesDataSet );
 	});
 
 }]);
@@ -1777,28 +1780,46 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
+    
+    
+    
+    var zipcode;
+    if(salesDataStr.includes("zip_code")){
+        zipcode = true;
+    }else{
+       zipcode = false;
+    } 
+    
 	// Initiate the map
-	var chart = Highcharts.Map({
-        chart: {
-            renderTo: divId
-        },
-        credits:{
-        	enabled:false
-        },
+    $(function () {
+          
+    //var chart = Highcharts.Map({
+    $('#map-container').highcharts('Map', {
+      chart: {
+          //renderTo: divId
+          
+      },
+      credits:{
+      	enabled:false
+      },
 	    exporting: { 
 	    	enabled: false 
 	    },
 	    title: {
-	        text: 'Sales Volume Distribution'
+	        text: ''
 	    },
 	
 	    mapNavigation: {
 	        enabled: true
 	    },
 	
+    
 	    tooltip: {
 	        headerFormat: '',
-	        pointFormat: '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+            pointFormat: zipcode == true ? 
+                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                    
 	    },
 	    
 	    plotOptions: {
@@ -1835,7 +1856,7 @@ function renderMap(divId, salesData){
 	        }
 	    }]
 	});
-	
+});
 	//console.log('Rendered the app successfully');
 	
 }
@@ -2415,6 +2436,9 @@ $scope.plotPieChart=function(divID){
 				        title: {
 				            text: 'Top 3 Selling Models'
 				        },
+				        credits:{
+				        	enabled:false
+				        	},
 				        xAxis: {
 				            categories: [
 				                '2016'
@@ -2624,6 +2648,9 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
 		    	    xAxis: {
 		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
 		    	    },
@@ -2677,6 +2704,9 @@ $scope.plotPieChart=function(divID){
 				    		credits:false,
 				    		title:false,
 				    		legend: {enabled:false},
+				    		title: {
+				    			text: 'Sales Volumes'
+				    		},
 				    	    xAxis: {
 				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 				    	    },
@@ -2718,6 +2748,9 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
 		    	    xAxis: {
 		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 		    	    },
@@ -2774,6 +2807,9 @@ $scope.plotPieChart=function(divID){
 			credits:false,
 			title:false,
 			legend: {enabled:false},
+			title: {
+    			text: ""+$scope.sensortype
+    		},
 		    xAxis: {
 		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
 		    },
