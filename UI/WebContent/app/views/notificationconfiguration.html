@@ -1,0 +1,178 @@
+<div class="somediv hidden" id="hiddenDiv"></div>
+<div class="chart-somediv hidden" id="hiddenDiv"></div>
+<div class="hidden gridMaximize" id="gridMax"></div>
+<h3 style="padding-top: 20px; padding-bottom: 10px">
+	<link href="app/css/charts.css" rel="stylesheet" />
+	<!-- START Language list-->
+
+	<!-- END Language list    -->
+
+	<div class="pull-right">Application Dashboard Last Updated May
+		10, 2016, 3:26:26 PM</div>
+
+	<a href="#/app/singleview" ng-click="openMyDashboard()"
+		style="font-size: 14px; font: Roboto Light; color: #0F64BC;">Washing
+		Machine Monitor System </a> <span
+		style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
+		></span> <a href="#"
+		style="font-size: 14px; font: Roboto Light; color: #222222">
+		Notification Configuration</a>
+
+</h3>
+
+
+
+
+<div class="row">
+
+	<div class="form-group filter-filterDiv col-lg-12"
+		style="width: 100% auto;" id="filterDivId">
+
+		<div class="col-lg-2 notificationHeader">
+			Notification Configuration</div>
+		<div class="col-lg-10"></div>
+
+	</div>
+
+	<!-- </fieldset> -->
+
+</div>
+
+<!-- </form>    -->
+<!-- </div> -->
+
+<div class="notificationContainer">
+
+	<div>
+		<!-- START Twitter Insights Chart -->
+		<div class="notificationTitleDiv">
+			Set up notification tolerances
+		</div>
+	
+		<!-- END Twitter Insights Chart -->
+	</div>
+	
+	
+	<div>
+	
+		<!-- START Eng Manager Contents -->
+		<div class="notificationBodyDiv" ng-if="isEngManager">
+			<div class="row" style="padding-left: 10px; padding-top: 20px;">
+				<div class="col-lg-7">
+					Show notification when number of wash errors increase by (x%) in last 4 weeks
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="errorInc.name">
+						<option class="option-text-style" value="" disabled selected>Select Error
+						<option class="option-text-style" ng-repeat="errorInc in washErrorsIncrease"
+							value={{errorInc.name}}>{{errorInc.name}}</option>
+					</select>
+				</div>
+				<div class="col-lg-3">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>
+				<div class="col-lg-7">
+					Show notification when number of wash errors decrease by (x%) in last 4 weeks
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="errorDec.name">
+						<option class="option-text-style" value="" disabled selected>Select Error
+						<option class="option-text-style" ng-repeat="errorDec in washErrorsDecrease"
+							value={{errorDec.name}}>{{errorDec.name}}</option>
+					</select>
+				</div>
+				<div class="col-lg-3">
+				
+				</div>
+			</div>
+		</div>
+	
+		<!-- END Eng Manager Contents -->
+		
+		
+		
+		<!-- START Mar Manager Contents -->
+		<div class="notificationBodyDiv" ng-if="!isEngManager">
+			<div class="row" style="padding-left: 10px; padding-top: 20px;">
+				<div class="col-lg-7">
+					Show notification when Twitter negative sentiment score is more by (x%) for baseline value (y%)
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="tnScore.value">
+						<option class="option-text-style" value="" disabled selected>Score
+						<option class="option-text-style" ng-repeat="tnScore in twitterNegativeScore"
+							value={{tnScore.value}}>{{tnScore.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="tnBaseline.value">
+						<option class="option-text-style" value="" disabled selected>Baseline
+						<option class="option-text-style" ng-repeat="tnBaseline in twitterNegativeBaseline"
+							value={{tnBaseline.value}}>{{tnBaseline.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-1"></div>
+				<div class="col-lg-12">&nbsp;</div>
+				<div class="col-lg-7">
+					Show notification when Twitter positive sentiment score is more by (x%) for baseline value (y%)
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="tpScore.value">
+						<option class="option-text-style" value="" disabled selected>Score
+						<option class="option-text-style" ng-repeat="tpScore in twitterPositiveScore"
+							value={{tpScore.value}}>{{tpScore.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="tpBaseline.value">
+						<option class="option-text-style" value="" disabled selected>Baseline
+						<option class="option-text-style" ng-repeat="tpBaseline in twitterPositiveBaseline"
+							value={{tpBaseline.value}}>{{tpBaseline.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-1"></div>
+				<div class="col-lg-12">&nbsp;</div>
+				<div class="col-lg-7">
+					Show notification when connected washing machines are increased by (x%) in last 4 weeks
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="iTolernce.value">
+						<option class="option-text-style" value="" disabled selected>Tolernce
+						<option class="option-text-style" ng-repeat="iTolernce in increasedTolernce"
+							value={{iTolernce.value}}>{{iTolernce.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-3">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>
+				<div class="col-lg-7">
+					Show notification when connected washing machines are lower by (x%) in last 4 weeks
+				</div>		
+				<div class="col-lg-2">
+					<select name="" class="form-control"
+						ng-model="lTolernce.value">
+						<option class="option-text-style" value="" disabled selected>Tolernce
+						<option class="option-text-style" ng-repeat="lTolernce in lowerTolernce"
+							value={{lTolernce.value}}>{{lTolernce.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-3">
+					
+				</div>
+			</div>
+		</div>
+	
+		<!-- END Mar Manager Contents -->
+		
+	</div>
+
+</div>

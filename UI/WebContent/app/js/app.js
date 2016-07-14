@@ -165,6 +165,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('twitterinsights.html'),
         data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
     })
+    .state('app.notificationconf', {
+        url: '/notificationconf',
+        title: 'Notification Configuration View',
+        controller: 'NotificationConfController',
+        templateUrl: helper.basepath('notificationconfiguration.html'),
+        data:{title: 'Notification Configuration - Marketing Manager Dashboard'}
+    })
     
     // 
     // CUSTOM RESOLVES
@@ -376,6 +383,12 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 		delete $window.sessionStorage.loginCredentails;
 		$state.go('page.login');
  	}
+	
+	$scope.loadNotificationConf = function() {
+		console.log("-------------Notification Conf---------------");
+		$state.go('app.notificationconf');
+	};
+	
 }]);
 /**=========================================================
  * Module: main.js
