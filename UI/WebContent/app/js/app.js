@@ -705,6 +705,22 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
+	
+		var monthNames = [
+		  "January", "February", "March",
+		  "April", "May", "June", "July",
+		  "August", "September", "October",
+		  "November", "December"
+		];
+
+		var date = new Date();
+		var day = date.getDate();
+		var monthIndex = date.getMonth();
+		var year = date.getFullYear();
+
+   
+   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
+	
 	$scope.searchButtonText = "Apply Filter";
   $scope.test = false;
 	$scope.isDisabled = false;
