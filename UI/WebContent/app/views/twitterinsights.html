@@ -171,6 +171,7 @@
 								<th align="centre">Dislikes</th>
 								<th align="centre">Followers</th>
 								<th align="centre">Comments</th>
+								<th align="centre">&nbsp;</th>
 							</tr>
 						</thead>
 	
@@ -183,7 +184,10 @@
 		                        <td>{{itm.dislikes}}</td>
 		                        <td>{{itm.followers}}</td>
 		                        <td>{{itm.comments}}</td>
-		                        
+		                        <td style="width: 65px">
+		                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
+		                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
+		                        </td>
                      		</tr>							
 						</tbody>
 					</table>

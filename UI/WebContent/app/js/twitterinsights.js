@@ -1,7 +1,7 @@
 
 App.controller('TwitterInsightsController', 
-		['$rootScope', '$scope', '$state', '$http', '$timeout', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $timeout, configApiClient){
+		['$rootScope', '$scope', '$state', '$http', '$localStorage', "iot.config.ApiClient",
+                 function($rootScope, $scope, $state, $http, $localStorage, configApiClient){
 	
 	$scope.showPerSign = false;
 	
@@ -20,6 +20,18 @@ App.controller('TwitterInsightsController',
              
     });
 	
+	$scope.editTwitterInsights = function(make, model) {
+		$localStorage.showTwitterInnerLint = true;
+		var twitterinsights = {};
+		twitterinsights.make = make;
+		twitterinsights.model = model;
+		$localStorage.twitterinsights = twitterinsights;
+		$state.go('app.notificationconf');	
+	};
+	
+	$scope.deleteTwitterInsights = function() {
+			
+	};
 	
 	$scope.tweetsData = {};
 	

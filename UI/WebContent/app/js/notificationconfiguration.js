@@ -1,18 +1,55 @@
 App.controller('NotificationConfController', 
-		['$rootScope', '$scope', '$state', '$http', '$window', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $window, configApiClient){
+		['$rootScope', '$scope', '$state', '$http', '$window', '$localStorage', "iot.config.ApiClient",
+                 function($rootScope, $scope, $state, $http, $window, $localStorage, configApiClient){
 
 		console.log(">>>>>>>>>Notification Configuration<<<<<<<<<<<")
 
-		$scope.washErrorsIncrease = [{"name": "Error 1"}, {"name": "Error 2"}];
+		var twitterinsights = $localStorage.twitterinsights;
 		
-		$scope.washErrorsDecrease = [{"name": "Error 1"}, {"name": "Error 2"}];
-	
-		$scope.twitterNegativeScore = [{"value" : 10}, {"value" : 20}];
-		$scope.twitterPositiveScore = [{"value" : 10}, {"value" : 20}];
+		console.log("----->>>>> $localStorage.showTwitterInnerLint ",  $localStorage.showTwitterInnerLint);
 		
-		$scope.twitterNegativeBaseline = [{"value" : 10}, {"value" : 20}];
-		$scope.twitterPositiveBaseline = [{"value" : 10}, {"value" : 20}];
+		$scope.showTwitterInsightsLink = $localStorage.showTwitterInnerLint;
+		
+		//delete $localStorage.twitterinsights;
+		if(twitterinsights) {
+			
+			$scope.selectedMake = twitterinsights.make;
+			$scope.selectedModel = twitterinsights.model;
+			
+			$http({url:configApiClient.baseUrl + 'config/makes', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			         $scope.makes = data.makes;
+			         $scope.selectedMake = twitterinsights.make;
+			         
+		    }). error(function(data, status) {
+		      // alert("error"  +status);
+		      // console.log(JSON.stringify(data));
+		    });
+			
+			
+			$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$scope.selectedMake, 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	$scope.models = data[$scope.selectedMake];
+			    	$scope.selectedModel = twitterinsights.model;	           
+		    }). error(function(data, status) {
+			      // alert("error"  +status);
+			      // console.log(JSON.stringify(data));
+		    });
+		}
+		
+		$scope.getModels = function(make){
+			$scope.selectedMake = make.selectedMake;
+			$scope.selectedModel = '';
+			$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$scope.selectedMake, 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	$scope.models = data[$scope.selectedMake];
+		    }). error(function(data, status) {
+			      // alert("error"  +status);
+			      // console.log(JSON.stringify(data));
+		    });
+	     }
+		
+		
 		
 		$scope.increasedTolernce = [{"value" : 10}, {"value" : 20}];
 		$scope.lowerTolernce = [{"value" : 10}, {"value" : 20}];
@@ -35,4 +72,8 @@ App.controller('NotificationConfController',
 		}
 		
 		
+		
+		$scope.loadTwitterInsights = function() {
+			$state.go('app.twitterinsights');
+		}
 }]);

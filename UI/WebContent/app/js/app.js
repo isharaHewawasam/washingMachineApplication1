@@ -355,11 +355,12 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, configApiClient) {
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', '$localStorage', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, $localStorage, configApiClient) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
 	$scope.names=loginCredentails.Name;
 	$scope.notificationAlertFlag = false;
+	$scope.roleKey=loginCredentails.roleKey;
 	
 	$scope.getNewNotificationCount = function() {
 		
@@ -386,6 +387,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	
 	$scope.loadNotificationConf = function() {
 		console.log("-------------Notification Conf---------------");
+		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
 	
@@ -562,7 +564,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
+App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $rootScope, $timeout, $http, $state, configApiClient) {
 	
 		$scope.isDisabled = false;
 		$scope.isError = false;
@@ -737,7 +739,6 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 	  };
 	  
 	  $scope.loadTwitterinsights = function() {
-		  console.log("----------Load Twitter Insights Page --------------- ;")
 		  $state.go('app.twitterinsights');
 	  };
 	  
