@@ -306,7 +306,7 @@
         }
       }
     },
-    "/twitter/twitter-notifications-sentiments": {
+    "/notifications/twitter-notifications-sentiments": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationsentiments",
@@ -329,7 +329,7 @@
         }
       }
     },
-    "/twitter/twitter-notifications-spike": {
+    "/notifications/spike-in-connected-machines": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspike",
@@ -352,7 +352,7 @@
         }
       }
     },
-    "/twitter/twitter-notifications-spike-errors": {
+    "/notifications/spikes-by-specific-errors": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspikeerrors",
@@ -375,7 +375,7 @@
         }
       }
     },
-    "/twitter/twitter-notifications-spike-errors-bymake": {
+    "/notifications/twitter-notifications-spike-errors-bymake": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspikeerrorsbymake",
@@ -398,7 +398,7 @@
         }
       }
     },
-    "/twitter/twitter-notifications-spike-errors-bymakereal": {
+    "/notifications/spikes-by-specific-errors-by-make-model": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getspikeerrorBymake",
@@ -582,7 +582,7 @@
         }
       }
     },
-   "/notification/notification-alert": {
+   "/notifications/notification-alert": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getNotificationonload",
