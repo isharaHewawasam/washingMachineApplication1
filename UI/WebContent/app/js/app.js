@@ -2706,6 +2706,23 @@ $scope.plotPieChart=function(divID){
 		    		title: {
 		    			text: 'Sales Volumes'
 		    		},
+		    		legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                y: 50,   
+		                padding: 1,
+		                itemMarginTop: 3,
+		                itemMarginBottom: 3,        
+		                itemStyle: {
+		                    lineHeight: '10px',
+		                    fontSize: '8px',
+		                    fontWeight: 'normal',
+		                   // symbolHeight: 12,
+		                    //symbolWidth: 10,
+		                    symbolRadius: 4
+		                }
+		            },
 		    	    xAxis: {
 		                title: {
                             text: 'Time Scale' //new lable for X
@@ -2882,6 +2899,20 @@ $scope.plotPieChart=function(divID){
 			title: {
     			text: ""+$scope.sensortype
     		},
+            legend: {
+                align: 'right',
+                verticalAlign: 'top',
+                y: 50,
+                padding: 1,
+                itemMarginTop: 5,
+                itemMarginBottom: 5,
+                itemStyle: {
+                    lineHeight: '10px',
+                    fontSize: '10px',
+                    fontWeight: 'normal',
+                     itemWidth: 100
+                }
+            },
 		    xAxis: {
 		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
 		    },

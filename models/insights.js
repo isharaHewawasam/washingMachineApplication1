@@ -117,42 +117,34 @@ exports.getmostFault = function(callback) {
 
 //spike in number of specific error by make with real db
 exports.getspikeerrorBymake = function(callback) {
-      var options = { q: '*:*', group_level:4 };
-      
+      var options = { q: '*:*', group_level:3 };
+      var optionsforalldata = { q: '*:*', group_level:3 };
       db.view('insights', 'specific-error-bymake', options, function(err, result) {
             if (err) {
                   console.error(err);
                   return callback(err, null);
             } else {
+                  db.view('insights', 'specific-error-bymakeall', optionsforalldata, function(err, resultall) {
+                    if(err){
+                      console.log(err);
+                      return callback(err, null);
+                    }
+                    else{
+                      var arryforData = [];
+                      var fourweekBackdataarray=result.rows.length;
+                      var allyearData=resultall.rows.length;
+
+                      if(fourweekBackdataarray==allyearData){
+
+                        for (var i = 0; i < resultall.rows.length; i++) {
+                          arryforData.push({'make':resultall.rows[i].key[0],'model':resultall.rows[i].key[1],'error_type':resultall.rows[i].key[2],
+                            'countAlldata':resultall.rows[i].value,'countfourweekBack':result.rows[i].value});
+                        }
+                      }              
+                      return callback(err, arryforData);
+                    }
+                  });
                   
-                  //get today date
-                  var today = new Date();
-                  var dd = today.getDate();
-                  var mm = today.getMonth()+1; //January is 0!
-                  var yyyy = today.getFullYear();
-
-                  if(dd<10) {
-                    dd='0'+dd
-                  } 
-
-                  if(mm<10) {
-                    mm='0'+mm
-                  } 
-                  today = dd+'-'+mm+'-'+yyyy;
-                  
-                  var myDate = new Date();
-                  var fourWeeksBackDate = new Date(myDate.getTime() - (60*60*24*28*1000));
-
-                  console.log(today);
-                  console.log(fourWeeksBackDate);
-
-                  var buildings = [];
-                  for (var i = 0; i < result.rows.length; i++) {
-                        buildings.push({'make':result.rows[i].key[0],'model':result.rows[i].key[1],'errottype':result.rows[i].key[2],
-                          'date':result.rows[i].key[3],'value':result.rows[i].value});
-                  }
-        
-                  return callback(err, buildings);
             }
       });
 }
@@ -226,3 +218,8 @@ exports.getNotificationonload = function(callback) {
   var arrayRandom=[{'notification_count':randomnumber}]
   callback(null, arrayRandom);  
 };
+
+//Twitter Handles graph api in single view
+exports.getTwitterhandle = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterhandle);  
+}; 
