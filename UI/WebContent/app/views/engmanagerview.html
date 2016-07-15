@@ -512,13 +512,13 @@
 					<!-- START list group item-->
 					<div class="list-group-item">
 						<div class="media-box" ng-controller="notificationController"
-							ng-init="getSpikesOfSpecificErrors()">
+							ng-init="getSpikesInSpecificErrors()">
 							<div class="media-box-heading" ng-show="data.length">
 								<h4>Spike in number of specific errors</h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length" ng-if="itm.current_error_count != itm.previous_error_count">
-								<p class="text-warning m0">Errors are increased by
+								ng-show="data.length" ng-if="itm.error_type == spikeErrorType && itm.current_error_count != itm.previous_error_count">
+								<p class="text-warning m0">{{itm.error_type}} related errors are increased by
 									{{(itm.current_error_count-itm.previous_error_count)/itm.previous_error_count*100
 									| number:0}}% in last 4 weeks</p>
 								<div
@@ -546,17 +546,33 @@
 									<br>
 								</div>
 							</div>
+							<!--Notification alerts handled-->
+							<div class="media-box-body"
+								ng-show="isDisabled||isError||isNoDataDB">
+								<span
+									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 18px"
+									ng-show="isDisabled"
+									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="sr-only">Error:</span> {{msg}}
+								</span>
+								<span
+									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #e60000; background-color: transparent; font-size: 18px"
+									ng-show="isError||isNoDataDB"
+									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="sr-only">Error:</span> {{msg}}
+								</span>
+							</div>
 						</div>
 					</div>
 
 					<div class="list-group-item">
 						<div class="media-box" ng-controller="notificationController"
-							ng-init="getSpikesByMakeModel()">
+							ng-init="getSpikesInSpecificErrorsByMakeModel()">
 							<div class="media-box-heading" ng-show="data.length">
 								<h4>Spike in number of specific errors by make, model</h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length" ng-if="itm.countAlldata != itm.countfourweekBack">
+								ng-show="data.length" ng-if="itm.error_type == spikeErrorType && itm.countAlldata != itm.countfourweekBack">
 								<p class="text-warning m0">{{itm.error_type}} related errors
 									are increased by
 									{{(itm.countAlldata-itm.countfourweekBack)/itm.countfourweekBack*100
@@ -587,6 +603,22 @@
 										data-trigger="hover"></progressbar>
 									<br>
 								</div>
+							</div>
+							<!--Notification alerts handled-->
+							<div class="media-box-body"
+								ng-show="isDisabled||isError||isNoDataDB">
+								<span
+									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 18px"
+									ng-show="isDisabled"
+									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="sr-only">Error:</span> {{msg}}
+								</span>
+								<span
+									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #e60000; background-color: transparent; font-size: 18px"
+									ng-show="isError||isNoDataDB"
+									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="sr-only">Error:</span> {{msg}}
+								</span>
 							</div>
 						</div>
 					</div>

@@ -549,7 +549,7 @@
 				<div class="list-group">
 					<div class="list-group-item">
 						<div ng-controller="notificationController"
-							ng-init="getTwitterSentimates()">
+							ng-init="getTwitterSentiments()">
 							<div class="media-box-heading" ng-show="data.length">
 								<h4>Twitter Sentiments</h4>
 							</div>
@@ -637,7 +637,7 @@
 					</div>
 
 					<div class="list-group-item" ng-controller="notificationController"
-						ng-init="getSpikesInMachines()">
+						ng-init="getSpikesInConnectedMachines()">
 						<div class="media-box-heading" ng-show="data.length">
 							<h4>Spike in connected washing machines</h4>
 						</div>
@@ -649,7 +649,7 @@
 									itm.previous_connected_machines)/itm.previous_connected_machines*100
 									| number:0}}% in last 4 weeks</p>
 								<div
-									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 > spikeByConnectedMachinesTolerance">
+									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 > spikeByConnectedMachinesIncreaseTolerance">
 									<small class="text-pink pull-right ml">{{(itm.current_connected_machines
 										-
 										itm.previous_connected_machines)/itm.previous_connected_machines*100
@@ -664,7 +664,7 @@
 									<br>
 								</div>
 								<div
-									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 <= spikeByConnectedMachinesTolerance">
+									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 < spikeByConnectedMachinesDecreaseTolerance">
 									<small class="text-greens pull-right ml">{{(itm.current_connected_machines
 										-
 										itm.previous_connected_machines)/itm.previous_connected_machines*100

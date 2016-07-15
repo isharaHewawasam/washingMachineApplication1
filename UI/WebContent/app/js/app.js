@@ -1979,71 +1979,124 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
     $scope.msg1 = "Loading.....Please wait";
    // $scope.msg2="No Data Found";
     $scope.msg3 = "Service is Unavailable";
-	$scope.getTwitterSentimates = function(){
+	$scope.getTwitterSentiments = function(){
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;
 		
-		//$scope.showTwitterContentFlag = false;
-		
-		$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 $scope.isDisabled = false;
-		    	 if (data || data.length != 0) {
-		    	 	$scope.data = data;
-		    	 	//$scope.showTwitterContentFlag = true;
-		    	 	$scope.negativeTwitterSentimentThreshold = configNotification.negativeTwitterSentimentThreshold + configNotification.negativeTwitterSentimentTolerance;
-		    	 	$scope.positiveTwitterSentimentThreshold = configNotification.positiveTwitterSentimentThreshold + configNotification.positiveTwitterSentimentTolerance;
-		    	 }
-					           
-		}). error(function(data, status) {
-			$scope.isDisabled = false;
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
+            data: {
+            	  "role": "mkt_manager",
+            	  "charttype": "twitter_sentiments"
+            	}
+            
+		}).success(function(data, status) {
+			
+			$scope.positiveTwitterSentimentThreshold = data[0].positive_threshold + data[0].positive_tolerance;
+			$scope.negativeTwitterSentimentThreshold = data[0].negative_threshold + data[0].negative_tolerance;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    	 	$scope.data = data;
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+					console.log("Error getting data for twitter notification sentiments, status: " + status);
+			});
+    	 	
+        }). error(function(data, status) {
+        	$scope.isDisabled = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				console.log("Error getting data for twitter notification sentiments, status: " + status);
-		});	
+				console.log("Error getting configuration data for twitter notification sentiments, status: " + status);
+        });
+		
 	};
 	
-	$scope.getSpikesInMachines = function() {
+	$scope.getSpikesInConnectedMachines = function() {
 		
-		//$scope.showSpikeContentFlag = false;
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;			
+		
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {"role": "mkt_manager",
+            	  "charttype": "spikes_in_connected_machines"
+            	  }            
+		}).success(function(data, status) {
+			$scope.spikeByConnectedMachinesIncreaseTolerance = data[0].increase_tolerance;
+			$scope.spikeByConnectedMachinesDecreaseTolerance = data[0].decrease_tolerance;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+					console.log("Error getting data for spikes in connected machines, status: " + status);
+			});
+  	 	  
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+				console.log("Error getting configuration data for spikes in connected machines, status: " + status);
+        });
+		
+	};
+	
+	$scope.getSpikesInSpecificErrors = function() {
+		
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;
 		
-		$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-		    	 $scope.isDisabled = false;
-		    	 if (data || data.length != 0) {
-		    		 $scope.data = data;
-		    		 //$scope.showSpikeContentFlag = true;
-		    		 $scope.spikeByConnectedMachinesTolerance = configNotification.spikeByConnectedMachinesTolerance;
-		    	 }
-					           
-		}). error(function(data, status) {
-			$scope.isDisabled = false;
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {"role": "eng_manager",
+            	  "charttype": "spikes_in_specific_errors"
+            	  }
+            
+		}).success(function(data, status) {
+			
+			$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
+			$scope.spikeErrorType = data[0].error_type_increase;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;			    		 
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+				console.log("Error getting data for spikes in specific errors, status: " + status);
+			});
+			
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				console.log("Error getting data for spikes in machines, status: " + status);
-		});
+			console.log("Error getting configuration data for spikes in specific errors, status: " + status);
+        });
 	};
 	
-	$scope.getSpikesOfSpecificErrors = function() {
-		
-		//$scope.showSpikeContentFlag = false;
-		
-		$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 if (data || data.length != 0) {
-		    		 $scope.data = data;
-		    		 //$scope.showSpikeContentFlag = true;
-		    		 $scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
-		    	 }
-					           
-		}). error(function(data, status) {
-				console.log("Error getting data for spikes of specific errors, status: " + status);
-		});
-	};
-	
-	$scope.getSpikesByMakeModel = function() {
+	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
 		
 		/*$scope.showSpikeContentFlag = false;
 		
@@ -2056,18 +2109,43 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
    	 	}
 		
 		$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;*/
-	
-		$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 if (data || data.length != 0) {
-		    		 $scope.data = data;
-		    		 $scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
-		    	 }
-					           
-		}). error(function(data, status) {
-				console.log("Error getting data for spikes of specific errors by make model, status: " + status);
-		});
 		
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
+		
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {
+            	  "role": "eng_manager",
+            	  "charttype": "spikes_in_connected_machines_by_make_model"
+            	}
+            
+		}).success(function(data, status) {
+			
+			$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
+			$scope.spikeErrorType = data[0].error_type_descrese;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;			    		 
+			    	 }
+						           
+			}). error(function(data, status) {
+					$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
+					console.log("Error getting data for spikes in specific errors by make model, status: " + status);
+			});
+			
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+			console.log("Error getting configuration data for spikes in specific errors by make model, status: " + status);
+        });	
 		
 	};
 	
