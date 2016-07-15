@@ -421,10 +421,10 @@
         }
       }
     },
-    "/notifications/area/charts": {
+    "/notifications/configurations/settings": {
       "post": {
         "x-swagger-router-controller": "insights",
-        "operationId": "getNotificationareachart",
+        "operationId": "getNotificationconfigsettings",
         "tags": ["Notifications"],
         "description": "Returns notifications area chart configuration data",
         "parameters": [
@@ -1111,6 +1111,32 @@
         }
       }
     },
+    "Notificationsareacharts": {
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "charttype": {
+          "type": "string"
+        }
+      }
+    },
+    "notificationsAreachart": {
+      "properties": {        
+        "positive_threshold": {
+          "type": "integer"         
+        },
+        "positive_tolerance": {
+          "type": "integer"         
+        },
+        "negative_threshold": {
+          "type": "integer"         
+        },
+        "negative_tolerance": {
+          "type": "integer"         
+        }
+      }
+    },   
     "twitter-handel":{
       "properties":{
         "Make":{
@@ -1546,33 +1572,6 @@
         },
         "response": {
           "type": "string"         
-        }
-      }
-    },
-    "Notificationsareacharts": {
-      "properties": {
-        "role": {                   
-           "type": "string"                    
-         },
-         "charttype": {                   
-           "type":"string"                    
-         }
-         
-      }
-    },
-    "notificationsAreachart": {
-      "properties": {        
-        "positive_threshold": {
-          "type": "integer"         
-        },
-        "positive_tolerance": {
-          "type": "integer"         
-        },
-        "negative_threshold": {
-          "type": "integer"         
-        },
-        "negative_tolerance": {
-          "type": "integer"         
         }
       }
     },
