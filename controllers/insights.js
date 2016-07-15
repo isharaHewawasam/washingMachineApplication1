@@ -11,7 +11,6 @@ module.exports.getAuthentication = function(req, res, next) {
 		var username=req.body.username;
 		var password=req.body.password;
 	
-
 		if(username=="mkt_manager@bluemix.com"||username=="eng_manager@bluemix.com"){
 			if(password=="test123"){
 				if(username=="mkt_manager@bluemix.com"){
@@ -128,26 +127,28 @@ module.exports.getTwitterhandle = function(req, res, next) {
 	});
 };
 
-//Notification Area chart configuration send response
-module.exports.getNotificationareachart = function(req, res, next) { 
-	insights.getNotificationareachart(function(err, result){ 
-		var userRole=req.body.userid;
+//Notification configuration settings send response
+module.exports.getNotificationconfigsettings = function(req, res, next) { 
+	insights.getNotificationconfigsettings(function(err, result){ 
+		console.log(req.body);
+		var userRole=req.body.role;
 		var chartType=req.body.charttype;
-		var ar;
+		
 		var responseArray=[];
 		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
-			ar="23232";
 			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
 		}
 		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
 			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
-			responseArray.push({'tolerance':30});
+			responseArray.push({'error_type_increase':"Water"});
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
-			responseArray.push({'tolerance':20});
+			responseArray.push({'error_type_descrese':"Water"});
 		}
 	    helper.sendResponse(res, err, responseArray); 
 	});
 };
+
+
