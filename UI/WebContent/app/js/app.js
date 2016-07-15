@@ -355,11 +355,12 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, configApiClient) {
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', '$localStorage', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, $localStorage, configApiClient) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
 	$scope.names=loginCredentails.Name;
 	$scope.notificationAlertFlag = false;
+	$scope.roleKey=loginCredentails.roleKey;
 	
 	$scope.getNewNotificationCount = function() {
 		
@@ -386,6 +387,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	
 	$scope.loadNotificationConf = function() {
 		console.log("-------------Notification Conf---------------");
+		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
 	
@@ -562,7 +564,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
+App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $rootScope, $timeout, $http, $state, configApiClient) {
 	
 		$scope.isDisabled = false;
 		$scope.isError = false;
@@ -737,7 +739,6 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 	  };
 	  
 	  $scope.loadTwitterinsights = function() {
-		  console.log("----------Load Twitter Insights Page --------------- ;")
 		  $state.go('app.twitterinsights');
 	  };
 	  
@@ -868,6 +869,18 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$scope.myDate.getFullYear(),
 	$scope.myDate.getMonth() + 2,
 	$scope.myDate.getDate());
+	
+	$scope.myDate1 = new Date();
+
+	$scope.minDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() - 2,
+	$scope.myDate1.getDate());
+
+	$scope.maxDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() + 2,
+	$scope.myDate1.getDate());
 	//for reports section -finish
 	
 	
@@ -1711,45 +1724,6 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
       $rootScope.tryit();
    };  
 }]);
-
-App.controller('reportController',['$scope','$state','$http','iot.config.ApiClient',function($scope,$state,$http,configApiClient){
-	  $scope.getReports=function(){
-	   // alert('reports');
-	    $state.go('app.reports');
-	    console.log("Reports page loaded")
-	  };
-	  $scope.r_griddata=[];
-
-	 $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
-	                  method: "GET",
-	                  Accept: "text/plain"}).success(function(data, status) {
-	                 
-	                                    $scope.r_griddata=data.data; 
-	                  
-	                              console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
-	                              
-	               }). error(function(data, status) {
-	                         console.log("reporterror:"+status);
-	                   
-	               });
-
-	        //download report
-	        $scope.downloadReport=function(){
-	            html2canvas(document.getElementById('export'), {
-	            onrendered: function (canvas) {
-	                var data = canvas.toDataURL();
-	                var docDefinition = {
-	                    content: [{
-	                        image: data,
-	                        width: 500,
-	                    }]
-	                };
-	                pdfMake.createPdf(docDefinition).download("reports.pdf");
-	            }
-	        }); 
-	        }
-
-	}]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
     $scope.salesDataSet;
@@ -2862,6 +2836,23 @@ $scope.plotPieChart=function(divID){
 				    		title: {
 				    			text: 'Sales Volumes'
 				    		},
+				    		legend: {
+				                layout: 'vertical',
+				                align: 'right',
+				                verticalAlign: 'top',
+				                y: 50,   
+				                padding: 1,
+				                itemMarginTop: 3,
+				                itemMarginBottom: 3,        
+				                itemStyle: {
+				                    lineHeight: '10px',
+				                    fontSize: '8px',
+				                    fontWeight: 'normal',
+				                   // symbolHeight: 12,
+				                    //symbolWidth: 10,
+				                    symbolRadius: 4
+				                }
+				            },
 				    	    xAxis: {
 				                title: {
 		                            text: 'Time Scale' //new lable for X
@@ -2912,6 +2903,23 @@ $scope.plotPieChart=function(divID){
 		    		title: {
 		    			text: 'Sales Volumes'
 		    		},
+		    		legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                y: 50,   
+		                padding: 1,
+		                itemMarginTop: 3,
+		                itemMarginBottom: 3,        
+		                itemStyle: {
+		                    lineHeight: '10px',
+		                    fontSize: '8px',
+		                    fontWeight: 'normal',
+		                   // symbolHeight: 12,
+		                    //symbolWidth: 10,
+		                    symbolRadius: 4
+		                }
+		            },
 		    	    xAxis: {
 		                title: {
                             text: 'Time Scale' //new lable for X

@@ -11,7 +11,6 @@ module.exports.getAuthentication = function(req, res, next) {
 		var username=req.body.username;
 		var password=req.body.password;
 	
-
 		if(username=="mkt_manager@bluemix.com"||username=="eng_manager@bluemix.com"){
 			if(password=="test123"){
 				if(username=="mkt_manager@bluemix.com"){
@@ -105,47 +104,7 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 };
 
 
-/*
-// Tweets graph api
-module.exports.getTweets = function(req, res, next) { 
-	insights.getTweets(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
 
-//Tweets impressions graph api
-module.exports.getTweetsimpressions = function(req, res, next) { 
-	insights.getTweetsimpressions(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Profile visits graph api
-module.exports.getProfilevisits = function(req, res, next) { 
-	insights.getProfilevisits(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Mentions graph api
-module.exports.getMentions = function(req, res, next) { 
-	insights.getMentions(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Twitter graph api
-module.exports.getTwitter = function(req, res, next) { 
-	insights.getTwitter(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-*/
 //Twitter Sentiments api graph
 module.exports.getTwittersentiments = function(req, res, next) { 
 	insights.getTwittersentiments(function(err, result){  
@@ -167,3 +126,29 @@ module.exports.getTwitterhandle = function(req, res, next) {
 	    helper.sendResponse(res, err, result); 
 	});
 };
+
+//Notification configuration settings send response
+module.exports.getNotificationconfigsettings = function(req, res, next) { 
+	insights.getNotificationconfigsettings(function(err, result){ 
+		console.log(req.body);
+		var userRole=req.body.role;
+		var chartType=req.body.charttype;
+		
+		var responseArray=[];
+		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
+			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
+		}
+		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
+			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
+			responseArray.push({'error_type_increase':"Water"});
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
+			responseArray.push({'error_type_descrese':"Water"});
+		}
+	    helper.sendResponse(res, err, responseArray); 
+	});
+};
+
+

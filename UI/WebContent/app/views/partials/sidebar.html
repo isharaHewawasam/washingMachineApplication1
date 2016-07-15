@@ -93,7 +93,14 @@
         width: 32px;
         height: 32px;
     }
-    
+    .fontSubText{
+         text-align: left;
+        font-family: Roboto;light;
+        font-size:14px;
+           margin-bottom: 0px;
+        padding: 10px;
+
+    }
        
 #filterPanel,#reportsPanel {
     background: #000;
@@ -293,8 +300,9 @@
        <div class="divSpacePad">
             <label>Reports</label>
         </div>
-        <div style="width:100%; background:#e7eef6" class="divSpacePad">
-        <label><a ng-click="getReports()">Washing machine Status Report</a></label>
+		<div style="width:100%; background:#e7eef6" class="fontSubText">
+       		<span><a ng-click="getReports()" style="">Washing machine Status Report</a></span>
+           <!-- <button  class="btn btn-primary clearfltrbtn " ng-click="getReports()">  Washing machine Status Report</button>  -->
         </div>
        
 	</div>

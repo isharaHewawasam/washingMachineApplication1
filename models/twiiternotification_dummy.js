@@ -53,7 +53,8 @@ module.exports.twitternotificationsspikeerror = [
                                "City":"New York",
                                "Zipcode":10001,
                                "Reason": "Not Happy with the programs",
-                               "date":"06/07/2016"
+                               "date":"06/07/2016",
+                               "error_type":"Water"
                          }
                        ];
 
