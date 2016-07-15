@@ -58,28 +58,24 @@
                </div>
                <!-- <div class="col-sm-1" style="padding-left: 3px;" >
                </div> -->
-              
-               <!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
-                <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle">
-                    <option class="option-text-style" value=""  disabled selected >From                              
-                  </select>
-                                   
-               </div>
-               <!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
-               <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important;padding-right: 0px; padding-left:0px;">
-                  <select name="" class="form-control filter-selectStyle">
-                    <option class="option-text-style" value="" selected disabled>To                                                 
-                  </select>
-                                   
-               </div>
-               <!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
-              
-               
-             <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
+
+
+			<div class="col-lg-2 "
+				style="max-width: 200px; margin-left: 22px !important; padding-right: 0px; padding-left: 0px;">
+				<md-datepicker class=" filter-selectStyle" style="padding-top:1px;"
+					ng-model="search.mfgDate" md-placeholder="From"> </md-datepicker>
+			</div>
+
+			<div class="col-lg-2"
+				style="max-width: 250px; margin-left: 22px !important; padding-right: 0px; padding-left: 0px;">
+				<md-datepicker class=" filter-selectStyle" style="padding-top:1px;"
+					ng-model="search.selectedSKU" md-placeholder="To">
+				</md-datepicker>
+			</div>
+
+
+
+			<div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
                         <button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"></span>
                 Apply Filter</button>         

@@ -1097,7 +1097,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: rgba(0,0,0,.75);
   text-decoration: none;
 }
 a:hover,

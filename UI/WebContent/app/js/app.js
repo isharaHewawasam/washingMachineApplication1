@@ -734,24 +734,6 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 		  var twitterTitle = "Twitter Handles";
 		  
 		  renderPieChart(divId, twitterData, twitterTitle);
-		  
-		  /*$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			               
-			    	 var mostFaultDataStr = JSON.stringify(data);
-					  
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
-							
-					 data = JSON.parse(mostFaultDataStr);
-					 
-					 var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 65px;margin-bottom: 20px'/>";
-						 
-					 renderPieChart(divId, data, twitterTitle);		               
-						           
-			}). error(function(data, status) {
-			       console.log("Error getting data for most fault models, status: " + status);
-			});*/	
 	  };
 	  
 	  $scope.loadTwitterinsights = function() {
@@ -873,6 +855,20 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$rootScope.setUsageData($scope.usagedata);
 		
 	}
+
+	//for reports section 
+	$scope.myDate = new Date();
+	
+	$scope.minDate = new Date(
+	$scope.myDate.getFullYear(),
+	$scope.myDate.getMonth() - 2,
+	$scope.myDate.getDate());
+	
+	$scope.maxDate = new Date(
+	$scope.myDate.getFullYear(),
+	$scope.myDate.getMonth() + 2,
+	$scope.myDate.getDate());
+	//for reports section -finish
 	
 	
 	$rootScope.tryit = function() {
