@@ -11,18 +11,25 @@
 
  </style>
 <div id="export">
- <div class="pull-right" >   
-      Application Dashboard Last Updated May 10, 2016, 3:26:26 PM
+<div class="pull-right" >
+    <style>
+ 		#dropdown{
+         	color: blue;
+         	border:0;
+         	  } 
+		
+   </style>
+      
+      Application Dashboard Last Updated {{currentDate}}
    </div>
   
-  <div id="dashboardNav" ng-controller="MyviewController">
+	<div id="dashboardNav" ng-controller="MyviewController">
 		<a ng-click="getUrl()"
 			style="font-size: 14px; font: Roboto Light; color: #0F64BC;">Washing
 			Machine Monitor System </a> <span
 			style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
-			></span> <a href="#"
-			style="font-size: 14px; font: Roboto Light; color: #222222">
-			Dashboard </a>
+			</span>
+			Reports
 	</div>
   
 </h3>

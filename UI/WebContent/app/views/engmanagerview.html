@@ -10,7 +10,17 @@
 
 	<!-- END Language list    -->
 
-	<div class="pull-right">Application Dashboard Last Updated {{currentDate}}</div>
+	<div class="pull-right" >
+    <style>
+ 		#dropdown{
+         	color: blue;
+         	border:0;
+         	  } 
+		
+   </style>
+      
+      Application Dashboard Last Updated {{currentDate}}
+   </div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
 		<a ng-click="getUrl()"
