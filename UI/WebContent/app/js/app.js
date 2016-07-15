@@ -868,6 +868,18 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$scope.myDate.getFullYear(),
 	$scope.myDate.getMonth() + 2,
 	$scope.myDate.getDate());
+	
+	$scope.myDate1 = new Date();
+
+	$scope.minDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() - 2,
+	$scope.myDate1.getDate());
+
+	$scope.maxDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() + 2,
+	$scope.myDate1.getDate());
 	//for reports section -finish
 	
 	
