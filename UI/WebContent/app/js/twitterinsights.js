@@ -178,7 +178,7 @@ function sentimentsData (divId, name, yValue, oValue) {
 	 obj.y				= oValue
 	 twitterData.push(obj);
 	 
-	 var innerText = "<div width='100%' style='text-align:center'>"+yValue+"%</div><div>Positive<div>"; //data.centerText;
+	 var innerText = "<div width='100%' style='text-align:center'>"+yValue+"%</div><div>"+name+"<div>"; //data.centerText;
 	 renderTwitterSentimentsPieChart(divId, twitterData, innerText); 
 	 
 }
