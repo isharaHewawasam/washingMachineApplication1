@@ -1769,14 +1769,15 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	}
 	
 	$scope.maximizeMap=function(){        
-	        
+        
 		var mapNormal = $("#mapNormal").clone();        
 	        
-	    $("#hiddenDiv").empty();
-	    $("#hiddenDiv").append(mapNormal);	        
-	    $("#hiddenDiv").removeClass("hidden");    	        
+	    $("#hiddenDivMap").empty();
+	    $("#hiddenDivMap").append(mapNormal);	        
+	    $("#hiddenDivMap").removeClass("hidden");    	        
 	    $("#mapMaxImg").addClass("hidden");       
-	    $("#map-container").height(660); 	        
+	    $("#map-container").height(660); 
+	    $("#map-container").width(1424); 
 	    $("#mapMinImg").removeClass("hidden");    
 	     
         renderMap("#map-container",salesDataSet );        
@@ -1784,11 +1785,11 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	 
 	$("body").on("click"," #mapMinImg",function(){
 	    var elem = $("#map-container");
-	    $("#hiddenDiv").empty();
-	    $("#hiddenDiv").addClass("hidden");       
+	    $("#hiddenDivMap").empty();
+	    $("#hiddenDivMap").addClass("hidden");       
 	    elem.addClass("map-mapDiv");  
         renderMap("#map-container",salesDataSet );
-	});
+	}); 
 
 }]);
 
@@ -1984,7 +1985,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		
 		//$scope.showTwitterContentFlag = false;
 		
-		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-sentiments', 
+		$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 		    	 $scope.isDisabled = false;
 		    	 if (data || data.length != 0) {
@@ -2008,7 +2009,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;
 		
-		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
+		$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 		    	 $scope.isDisabled = false;
 		    	 if (data || data.length != 0) {
@@ -2029,7 +2030,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		
 		//$scope.showSpikeContentFlag = false;
 		
-		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike-errors', 
+		$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 		    	 if (data || data.length != 0) {
 		    		 $scope.data = data;
@@ -2056,7 +2057,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		
 		$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;*/
 	
-		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike-errors-bymake', 
+		$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 		    	 if (data || data.length != 0) {
 		    		 $scope.data = data;
@@ -2064,7 +2065,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		    	 }
 					           
 		}). error(function(data, status) {
-				console.log("Error getting data for spikes of specific errors, status: " + status);
+				console.log("Error getting data for spikes of specific errors by make model, status: " + status);
 		});
 		
 		

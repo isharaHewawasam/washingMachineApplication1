@@ -1,4 +1,15 @@
- 
+ <style type="text/css">
+ 	.datepickerdemoBasicUsage {
+  /** Demo styles for mdCalendar. */ }
+  .datepickerdemoBasicUsage md-content {
+    padding-bottom: 200px; }
+  .datepickerdemoBasicUsage .validation-messages {
+    font-size: 12px;
+    color: #dd2c00;
+    margin: 10px 0 0 25px; }
+
+
+ </style>
 <div id="export">
  <div class="pull-right" >
    
@@ -6,9 +17,8 @@
       Application Dashboard Last Updated May 10, 2016, 3:26:26 PM
    </div>
   
-     <div id="dashboardNav" ng-controller="MyviewController">
-     <a ng-click="getUrl()" id="link" style="font-size:14px;font:Roboto Light; color: #0F64BC ; " >Washing Machine Monitor System </a> <span style="font-size:14px;font:Roboto; color: #222222 ; padding-left: 15px; padding-right: 15px;" > ></span>  <a href="#" style="font-size:14px;font:Roboto Light; color: #222222 ">   Reports</a>
-	</div>
+   <a href="#"  style="font-size:14px;font:Roboto Light; color: #0F64BC ; " >Washing Machine Monitor System </a> <span style="font-size:14px;font:Roboto; color: #222222 ; padding-left: 15px; padding-right: 15px;" > ></span>  <a href="#" style="font-size:14px;font:Roboto Light; color: #222222 ">   Reports</a>
+  
 </h3>
 
    
@@ -26,59 +36,53 @@
             
             <div class="form-group filter-filterDiv col-lg-12" style=" width: 100% auto; " id="filterDivId" ng-controller="DashboardController">
               
-               <div class="col-lg-2" style="max-width: 150px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
+               <div class="col-lg-2" style="max-width: 200px; margin-left:22px; padding-right: 0px; padding-left:0px;"  >
                   <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
                   <option class="option-text-style" value="" disabled selected>States
                     <option class="option-text-style" value="" >All
                      <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option> 
                   </select>
-                    <!--  <option class="option-text-style" value="" disabled selected>States
-                                    <option class="option-text-style" value="Arizona" >Arizona
-                                    <option class="option-text-style" value="California" >California
-                                    <option class="option-text-style" value="Florida" >Florida
-                                    <option class="option-text-style" value="New York" >New York
-                                    <option class="option-text-style" value="Tennessee" >Tennessee
-                                    <option class="option-text-style" value="Texas" >Texas
-                                    <option class="option-text-style" value="Virginia" >Virginia
-                                    <option class="option-text-style" value="Washington" >Washington
-                                    <option class="option-text-style" value="Wisconsin" >Wisconsin -->
+                   
                                    
                </div>
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-               <div class="col-lg-2" style="max-width: 150px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+               <div class="col-lg-2" style="max-width: 200px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;" >
                   <select name="" class="form-control filter-selectStyle"  ng-model="region.cities" ng-change="selectZip()"  >
                     <option class="option-text-style" value="" disabled selected>Cities
-                    <option class="option-text-style" value="" >All
+                    <option class="option-text-style" value="" >All 
                               <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
                               <!--<option class="option-text-style" value="" >San Diego
                               <option class="option-text-style" value="" >San Jose -->
                   </select>
                                    
                </div>
-               <!-- <div class="col-sm-1" style="padding-left: 3px;" >
+                <div class="col-lg-2 " style="max-width: 25px;  margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+        					From
+       				</div>
+              
+                   <div class="col-lg-2 " style="max-width: 200px;  margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+        					<md-datepicker class=" filter-selectStyle" style="padding-top:1px;" ng-model="myDate" md-placeholder="15/07/2016"> </md-datepicker>
+       				</div>
+           		 <div class="col-lg-2 " style="max-width: 10px;  margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+        					To
+       				</div>
+               
+                <div class="col-lg-2" style="max-width: 250px;margin-left:22px !important ; padding-right: 0px; padding-left:0px;">
+        				<md-datepicker class=" filter-selectStyle" style="padding-top:1px;" ng-model="myDate" md-placeholder="15/07/2016"> </md-datepicker>
+       			 </div>
+       			
+
+               <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-
-
-			<div class="col-lg-2 "
-				style="max-width: 200px; margin-left: 22px !important; padding-right: 0px; padding-left: 0px;">
-				<md-datepicker class=" filter-selectStyle" style="padding-top:1px;"
-					ng-model="search.mfgDate" md-placeholder="From"> </md-datepicker>
-			</div>
-
-			<div class="col-lg-2"
-				style="max-width: 250px; margin-left: 22px !important; padding-right: 0px; padding-left: 0px;">
-				<md-datepicker class=" filter-selectStyle" style="padding-top:1px;"
-					ng-model="search.selectedSKU" md-placeholder="To">
-				</md-datepicker>
-			</div>
-
-
-
-			<div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
+              
+               
+             <div class="col-lg-1 " style="max-width: 114px;margin-left:22px !important padding-left:0px;">
+             <span style="max-width: 200px;margin-left:5px !important;padding-right:0px; padding-left:0px;">
                         <button ng-disabled="isDisabled" class="btn btn-default"  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;    color: #FFFFFF;    " id="applyFilter" ng-click="tryit()">
                 <span ng-show="test"></span>
-                Apply Filter</button>         
+                Apply Filter</button>  
+                </span>       
                         
                         </div>
                
@@ -89,11 +93,11 @@
                
         <!-- </fieldset> -->
 
-         <div class="col-lg-8">
+       <!--   <div class="col-lg-8"> -->
       <!-- START panel -->
    
       <div class="panel panel-default" style="width: 1700px; height: 550px" id="gridNormal">
-         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; "><b>Washing Machines status Reports</b>  
+         <div class="panel-heading md-body-2" style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top:10px; "><b>Washing Machines Status Reports</b>  
           <img id="gridMaxImg" class="pull-right col-md-1" style="padding:0px; height: 15px; width: 15px; ;" src="app/img/Dashboardassets/help.png" ng-click="maximizeGrid()"></img>
         </div>
       
@@ -141,6 +145,6 @@
    </div> 
        
 
-     </div> 
+ <!--     </div>  -->
 </div>
 

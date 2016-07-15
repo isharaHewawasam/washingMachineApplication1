@@ -11908,6 +11908,18 @@ body {
 .img-float-right{
 	float: right;
 }
+.map-somediv {
+	position: absolute;
+	width:78% !important;
+	height:80% !important;
+	top: 10%;
+	left: 10%;
+	background-color: #ffffff;
+	border: 1px solid #d4d4d4;
+	/* border-left: 1px solid #d4d4d4; */
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:99;
+} 
 .chart-somediv {
 	position: absolute;
 	width:80% !important;

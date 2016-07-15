@@ -1,5 +1,6 @@
 <div class="somediv hidden" id="hiddenDiv"></div>
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
+<div class="map-somediv hidden" id="hiddenDivMap"></div> 
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px">
    <link href="app/css/charts.css" rel="stylesheet"/>
@@ -553,7 +554,7 @@
 								<h4>Twitter Sentiments</h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length">
+								ng-show="data.length" ng-if="itm.twitter_count != itm.full_count">
 								<div
 									ng-if="itm.twitter_response_type=='Positive' && itm.twitter_count/itm.full_count*100 > positiveTwitterSentimentThreshold">
 									<p class="text-warning m0">{{itm.twitter_response_type}}
@@ -642,7 +643,7 @@
 						</div>
 						<div class="media-box">
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length">
+								ng-show="data.length" ng-if="itm.current_connected_machines != itm.previous_connected_machines">
 								<p class="text-warning m0">The number of connected machines
 									are increased by {{(itm.current_connected_machines -
 									itm.previous_connected_machines)/itm.previous_connected_machines*100
