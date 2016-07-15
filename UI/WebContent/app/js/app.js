@@ -363,7 +363,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	
 	$scope.getNewNotificationCount = function() {
 		
-		$http({url:configApiClient.baseUrl + 'notification/onload', 
+		$http({url:configApiClient.baseUrl + 'notifications/notification-alert', 
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 		     
 		    $scope.notificationCount = data[0].notification_count;
