@@ -45,7 +45,7 @@
 	<div class="form-group filter-filterDiv col-lg-12"
 		style="width: 100% auto;" id="filterDivId">
 
-		<div class="col-lg-2 notificationHeader">
+		<div class="col-lg-2 notificationHeader" style="width: 400px !important;">
 			Notification Configuration</div>
 		<div class="col-lg-10"></div>
 
@@ -105,6 +105,12 @@
 				
 				</div>
 			</div>
+			
+			<div style="width:95%; position: absolute; bottom: 30px">
+				<button type="button" class="mb-sm btn btn-primary searchbtn">Save</button>
+        		<button type="button" class="mb-sm btn btn-primary searchbtn">Cancel</button>
+        	</div>
+        	
 		</div>
 	
 		<!-- END Eng Manager Contents -->
@@ -114,63 +120,82 @@
 		<!-- START Mar Manager Contents -->
 		<div class="notificationBodyDiv" ng-if="!isEngManager">
 			<div class="row" style="padding-left: 10px; padding-top: 20px;">
-				<div class="col-lg-5">
-					Make
+				<div class="col-lg-6">
+					Show notification when Twitter negative sentiment score is more by (x%) for baseline value (y%)
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedMake"  ng-change="getModels(this)">
-						<option class="option-text-style" value="" disabled selected>Select Make
-						<option class="option-text-style" ng-repeat="make in makes"
-							value={{make.name}}>{{make.name}}</option>
+					<select name="" class="form-control" ng-model="selectedScore">
+						<option class="option-text-style" value="" disabled selected>Score
+						<option class="option-text-style" ng-repeat="score in scores"
+							value={{score.value}}>{{score.value}}</option>
 					</select>
 				</div>
-				<div class="col-lg-5"></div>
+				<div class="col-lg-2">
+					<select name="" class="form-control" ng-model="selectedBaseline">
+						<option class="option-text-style" value="" disabled selected>Baseline
+						<option class="option-text-style" ng-repeat="baseline in baselines"
+							value={{baseline.value}}>{{baseline.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-2"></div>
 				
 				<div class="col-lg-12">&nbsp;</div>
-				<div class="col-lg-5">
-					Model
+				<div class="col-lg-6">
+					Show notification when Twitter positive sentiment score is more by (x%) for baseline value (y%)
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedModel">
-						<option class="option-text-style" value="" disabled selected>Select Model
-						<option class="option-text-style" ng-repeat="model in models" 
-							value={{model.model}}>{{model.model}}</option>
+					<select name="" class="form-control" ng-model="selectedScore">
+						<option class="option-text-style" value="" disabled selected>Score
+						<option class="option-text-style" ng-repeat="score in scores"
+							value={{score.value}}>{{score.value}}</option>
 					</select>
 				</div>
-				<div class="col-lg-5">
+				<div class="col-lg-2">
+					<select name="" class="form-control" ng-model="selectedBaseline">
+						<option class="option-text-style" value="" disabled selected>Baseline
+						<option class="option-text-style" ng-repeat="baseline in baselines"
+							value={{baseline.value}}>{{baseline.value}}</option>
+					</select>
+				</div>
+				<div class="col-lg-2">
 					
 				</div>
 				<div class="col-lg-12">&nbsp;</div>
-				<div class="col-lg-5">
-					Show notification when number of wash errors increase by (x%) in last 4 weeks.
+				<div class="col-lg-6">
+					Show notification when connected washing machines are increased by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
 					<select name="" class="form-control"
-						ng-model="iTolernce.value">
-						<option class="option-text-style" value="" disabled selected>Select Error
-						<option class="option-text-style" ng-repeat="iTolernce in increasedTolernce"
-							value={{iTolernce.value}}>{{iTolernce.value}}</option>
+						ng-model="selectedIncreasedTolernce">
+						<option class="option-text-style" value="" disabled selected>Tolernce
+						<option class="option-text-style" ng-repeat="tolernce in tolernces"
+							value={{tolernce.value}}>{{tolernce.value}}</option>
 					</select>
 				</div>
-				<div class="col-lg-5">
+				<div class="col-lg-4">
 				
 				</div>
 				<div class="col-lg-12">&nbsp;</div>
-				<div class="col-lg-5">
-					Show notification when number of wash errors decrease by (x%) in last 4 weeks.
+				<div class="col-lg-6">
+					Show notification when connected washing machines are lower by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
 					<select name="" class="form-control"
-						ng-model="lTolernce.value">
-						<option class="option-text-style" value="" disabled selected>Select Error
-						<option class="option-text-style" ng-repeat="lTolernce in lowerTolernce"
-							value={{lTolernce.value}}>{{lTolernce.value}}</option>
+						ng-model="selectedLowerTolernce">
+						<option class="option-text-style" value="" disabled selected>Tolernce
+						<option class="option-text-style" ng-repeat="tolernce in tolernces"
+							value={{tolernce.value}}>{{tolernce.value}}</option>
 					</select>
 				</div>
-				<div class="col-lg-5">
+				<div class="col-lg-4">
 					
 				</div>
 			</div>
+			
+			<div style="width:95%; position: absolute; bottom: 30px">
+				<button type="button" class="mb-sm btn btn-primary searchbtn">Save</button>
+        		<button type="button" class="mb-sm btn btn-primary searchbtn">Cancel</button>
+        	</div>
 		</div>
 	
 		<!-- END Mar Manager Contents -->

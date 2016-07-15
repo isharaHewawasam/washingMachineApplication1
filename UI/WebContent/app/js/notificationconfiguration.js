@@ -6,10 +6,10 @@ App.controller('NotificationConfController',
 
 		var twitterinsights = $localStorage.twitterinsights;
 		
-		console.log("----->>>>> $localStorage.showTwitterInnerLint ",  $localStorage.showTwitterInnerLint);
 		
 		$scope.showTwitterInsightsLink = $localStorage.showTwitterInnerLint;
 		
+		/*
 		//delete $localStorage.twitterinsights;
 		if(twitterinsights) {
 			
@@ -49,11 +49,13 @@ App.controller('NotificationConfController',
 		    });
 	     }
 		
+		*/
 		
+		$scope.scores = [{"value" : 10}, {"value" : 20}];
+		$scope.baselines = [{"value" : 30}, {"value" : 40}];
 		
-		$scope.increasedTolernce = [{"value" : 10}, {"value" : 20}];
-		$scope.lowerTolernce = [{"value" : 10}, {"value" : 20}];
-		
+		$scope.tolernces = [{"value" : 10}, {"value" : 20}];
+				
 		var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 		var rolename = loginCredentails.Role;
 		var roleKey 	= loginCredentails.roleKey;
