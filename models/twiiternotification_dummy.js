@@ -173,6 +173,20 @@ module.exports.twitterinnerpagesentiments = [
                          }
                        ];  
 
+module.exports.twitterhandle = [
+                         {      
+                               "preferenceName":"Tweets",
+                               "count":47,
+                               "totalComments":66
+                         },
+                         {      
+                               "preferenceName":"Re-Tweets",
+                               "count":10,
+                               "totalComments":66
+                         }
+
+                       ]; 
+
 
 
 

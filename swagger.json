@@ -283,11 +283,34 @@
         }
       }
     },
-    "/insights/twitter-notifications-sentiments": {
+    "/insights/twitter-handles": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterhandle",
+        "tags": ["Insights"],
+        "description": "Return the data to twitter handle graph",
+        "responses": {
+          "default": {
+            "description": "data to twitter handle graph",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-handel"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/twitter-notifications-sentiments": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationsentiments",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "twitter notifications-sentimate",
         "responses": {
           "default": {
@@ -306,11 +329,11 @@
         }
       }
     },
-    "/insights/twitter-notifications-spike": {
+    "/twitter/twitter-notifications-spike": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspike",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "Return twitter notification spike",
         "responses": {
           "default": {
@@ -329,11 +352,11 @@
         }
       }
     },
-    "/insights/twitter-notifications-spike-errors": {
+    "/twitter/twitter-notifications-spike-errors": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspikeerrors",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "Return twitter notification spike with error",
         "responses": {
           "default": {
@@ -352,11 +375,11 @@
         }
       }
     },
-    "/insights/twitter-notifications-spike-errors-bymake": {
+    "/twitter/twitter-notifications-spike-errors-bymake": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspikeerrorsbymake",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "Return twitter notification spike with error by make",
         "responses": {
           "default": {
@@ -375,11 +398,11 @@
         }
       }
     },
-    "/insights/twitter-notifications-spike-errors-bymakereal": {
+    "/twitter/twitter-notifications-spike-errors-bymakereal": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getspikeerrorBymake",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "Return twitter notification spike with error by make from real db",
         "responses": {
           "default": {
@@ -559,7 +582,7 @@
         }
       }
     },
-   "/notification/onload": {
+   "/notification/notification-alert": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getNotificationonload",
@@ -1051,6 +1074,25 @@
         },
         "no_of_faults": {
           "type": "integer"
+        }
+      }
+    },
+    "twitter-handel":{
+      "properties":{
+        "Make":{
+          "type":"string"
+        },
+        "Model":{
+          "type":"string"
+        },
+        "Error_Type":{
+          "type":"string"
+        },
+        "Allcount":{
+          "type":"integer"
+        },
+        "Countfourweekback":{
+          "type":"integer"
         }
       }
     },

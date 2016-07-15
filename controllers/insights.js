@@ -146,7 +146,7 @@ module.exports.getTwitter = function(req, res, next) {
 	});
 };
 */
-//Twitter Sentiments api positive graph
+//Twitter Sentiments api graph
 module.exports.getTwittersentiments = function(req, res, next) { 
 	insights.getTwittersentiments(function(err, result){  
 		var dataArray={'data':result};
@@ -157,7 +157,13 @@ module.exports.getTwittersentiments = function(req, res, next) {
 //Notification api
 module.exports.getNotificationonload = function(req, res, next) { 
 	insights.getNotificationonload(function(err, result){  
-	
+	    helper.sendResponse(res, err, result); 
+	});
+};
+
+//twitter handles graph api in single view
+module.exports.getTwitterhandle = function(req, res, next) { 
+	insights.getTwitterhandle(function(err, result){  
 	    helper.sendResponse(res, err, result); 
 	});
 };
