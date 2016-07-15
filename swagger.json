@@ -421,6 +421,40 @@
         }
       }
     },
+    "/notifications/area/charts": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationareachart",
+        "tags": ["Notifications"],
+        "description": "Returns notifications area chart configuration data",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "notifications area chart configuration data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Notificationsareacharts"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/notificationsAreachart"
+            }
+          }
+        }
+      }
+    },
     "/twitter/innerpage/twitter-insights": {
       "get": {
         "x-swagger-router-controller": "insights",
@@ -1512,6 +1546,33 @@
         },
         "response": {
           "type": "string"         
+        }
+      }
+    },
+    "Notificationsareacharts": {
+      "properties": {
+        "userid": {                   
+           "type": "string"                    
+         },
+         "charttype": {                   
+           "type":"string"                    
+         }
+         
+      }
+    },
+    "notificationsAreachart": {
+      "properties": {        
+        "positive_threshold": {
+          "type": "integer"         
+        },
+        "positive_tolerance": {
+          "type": "integer"         
+        },
+        "negative_threshold": {
+          "type": "integer"         
+        },
+        "negative_tolerance": {
+          "type": "integer"         
         }
       }
     },

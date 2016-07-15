@@ -105,47 +105,7 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 };
 
 
-/*
-// Tweets graph api
-module.exports.getTweets = function(req, res, next) { 
-	insights.getTweets(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
 
-//Tweets impressions graph api
-module.exports.getTweetsimpressions = function(req, res, next) { 
-	insights.getTweetsimpressions(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Profile visits graph api
-module.exports.getProfilevisits = function(req, res, next) { 
-	insights.getProfilevisits(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Mentions graph api
-module.exports.getMentions = function(req, res, next) { 
-	insights.getMentions(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-
-//Twitter graph api
-module.exports.getTwitter = function(req, res, next) { 
-	insights.getTwitter(function(err, result){  
-		var dataArray={'data':result};
-	    helper.sendResponse(res, err, dataArray); 
-	});
-};
-*/
 //Twitter Sentiments api graph
 module.exports.getTwittersentiments = function(req, res, next) { 
 	insights.getTwittersentiments(function(err, result){  
@@ -165,5 +125,29 @@ module.exports.getNotificationonload = function(req, res, next) {
 module.exports.getTwitterhandle = function(req, res, next) { 
 	insights.getTwitterhandle(function(err, result){  
 	    helper.sendResponse(res, err, result); 
+	});
+};
+
+//Notification Area chart configuration send response
+module.exports.getNotificationareachart = function(req, res, next) { 
+	insights.getNotificationareachart(function(err, result){ 
+		var userId=req.body.userid;
+		var chartType=req.body.charttype;
+		var ar;
+		var responseArray=[];
+		if(userId=="mkt_manager"&&chartType=="twitter_sentiments"){
+			ar="23232";
+			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
+		}
+		else if(userId=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
+			responseArray.push({'tolerance':10});
+		}
+		else if(userId=="eng_manager"&&chartType=="spikes_in_specific_errors"){
+			responseArray.push({'tolerance':30});
+		}
+		else if(userId=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
+			responseArray.push({'tolerance':20});
+		}
+	    helper.sendResponse(res, err, responseArray); 
 	});
 };

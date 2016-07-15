@@ -149,11 +149,8 @@ exports.getspikeerrorBymake = function(callback) {
       });
 }
 
-
-
 //Login Authentication
 exports.getAuthentication = function(callback) {
-  
   callback(null, "Success");  
 };
 
@@ -181,32 +178,6 @@ exports.getTwitterinsightstable = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsights);  
 };
 
-/*
-//Tweets graph api 
-exports.getTweets = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageTweets);  
-};
-
-//Tweets impressions graph api
-exports.getTweetsimpressions = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageTweetsimpressions);  
-};
-
-//Profile visits graph api 
-exports.getProfilevisits = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageProfilevisits);  
-};
-
-//Mentions graph api
-exports.getMentions = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageMentions);  
-};
-
-//Twitter graph api
-exports.getTwitter = function(callback) {
-  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitter);  
-};*/
-
 //Twitter Sentiments grpah api
 exports.getTwittersentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpagesentiments);  
@@ -222,4 +193,9 @@ exports.getNotificationonload = function(callback) {
 //Twitter Handles graph api in single view
 exports.getTwitterhandle = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterhandle);  
+}; 
+
+//Notification area chart response api
+exports.getNotificationareachart = function(callback) {
+  callback(null, "Success");  
 }; 
