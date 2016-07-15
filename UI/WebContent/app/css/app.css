@@ -6941,6 +6941,8 @@ body {
     margin: -20px;
   }
 }
+
+/*remove the unsued bottom  */
 .content-wrapper > h3,
 .content-wrapper > .content-heading {
   font-family: inherit;
@@ -6956,7 +6958,7 @@ body {
   padding: 15px;
   font-weight: normal;
   background-color: #fafbfc;
-  border-bottom: 1px solid #cfdbe2;
+ /*  border-bottom: 1px solid #cfdbe2; */
 }
 .content-wrapper > h3 small,
 .content-wrapper > .content-heading small,
@@ -12045,13 +12047,13 @@ display : block;
 /* filter fragment css */
 
 .filter-filterDiv{
-	width:1287px;
+	width:1920px;
 	height: 48px;
 	background-color: #E7EEF6;
 	vertical-align: middle;
 	display:table-cell;
 	padding-left:0px;
-	padding-top:7px;
+    padding-top:7px; 
 }
 .filter-filterDivSideBar{
   width:1287px;
@@ -12318,4 +12320,10 @@ display : block;
 	/* display:table-cell; */
 	padding-left: 5px;
 	border: 1px solid lightgray; 
+}
+/*this is for filter Items  */
+.filtrItem{
+	
+	max-width: 150px;margin-left:15px !important ; padding-right: 0px; padding-left:0px;
+	
 }
