@@ -142,10 +142,10 @@ module.exports.getNotificationconfigsettings = function(req, res, next) {
 			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
-			responseArray.push({'tolerance':30});
+			responseArray.push({'error_type_increase':"Water"});
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
-			responseArray.push({'tolerance':20});
+			responseArray.push({'error_type_descrese':"Water"});
 		}
 	    helper.sendResponse(res, err, responseArray); 
 	});
