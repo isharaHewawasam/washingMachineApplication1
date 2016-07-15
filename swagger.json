@@ -1551,7 +1551,7 @@
     },
     "Notificationsareacharts": {
       "properties": {
-        "userid": {                   
+        "role": {                   
            "type": "string"                    
          },
          "charttype": {                   
