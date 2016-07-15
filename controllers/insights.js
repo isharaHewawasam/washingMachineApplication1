@@ -131,21 +131,21 @@ module.exports.getTwitterhandle = function(req, res, next) {
 //Notification Area chart configuration send response
 module.exports.getNotificationareachart = function(req, res, next) { 
 	insights.getNotificationareachart(function(err, result){ 
-		var userId=req.body.userid;
+		var userRole=req.body.userid;
 		var chartType=req.body.charttype;
 		var ar;
 		var responseArray=[];
-		if(userId=="mkt_manager"&&chartType=="twitter_sentiments"){
+		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
 			ar="23232";
 			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
 		}
-		else if(userId=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
-			responseArray.push({'tolerance':10});
+		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
+			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
 		}
-		else if(userId=="eng_manager"&&chartType=="spikes_in_specific_errors"){
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
 			responseArray.push({'tolerance':30});
 		}
-		else if(userId=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
 			responseArray.push({'tolerance':20});
 		}
 	    helper.sendResponse(res, err, responseArray); 
