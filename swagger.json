@@ -455,6 +455,40 @@
         }
       }
     },
+    "/notifications/configurations/settings/frompage": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationconfigsettingsfrompage",
+        "tags": ["Notifications"],
+        "description": "update notifications configuration settings in database",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "update notifications configuration settings in database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Notificationsareacharts"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/notificationsAreachart"
+            }
+          }
+        }
+      }
+    },
     "/twitter/innerpage/twitter-insights": {
       "get": {
         "x-swagger-router-controller": "insights",
@@ -608,6 +642,40 @@
           },
           "200": {
             "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twittersentiments/withid": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwittersentimentsforid",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter sentiments graph data for paticular id",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "twitter inner page Twitter sentiments graph data for paticular id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/twitter-innerpage-sentiments-forid"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
             "schema": {
               "type": "array",
               "$ref": "#/definitions/twitter-innerpage-sentiments"
@@ -1136,7 +1204,23 @@
           "type": "integer"         
         }
       }
-    },   
+    },  
+    "Notificationsareachartsfrompage": {
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "charttype": {
+          "type": "string"
+        },
+        "value1": {
+          "type": "integer"
+        },
+        "value2": {
+          "type": "integer"
+        }
+      }
+    }, 
     "twitter-handel":{
       "properties":{
         "Make":{
@@ -1180,6 +1264,9 @@
     },
     "twitter-innerpage-twitterinsights": {
       "properties": {
+        "Id":{
+          "type":"integer"
+        },
         "Make": {
           "type": "string"
         },
@@ -1212,6 +1299,13 @@
           "type": "integer"
         },
         "Precenatage": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-sentiments-forid":{
+      "properties":{
+         "tweetsid": {
           "type": "integer"
         }
       }

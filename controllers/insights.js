@@ -103,6 +103,14 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 	});
 };
 
+//Twitter insights table api for requested id
+
+module.exports.getTwittersentimentsforid = function(req, res, next) { 
+	insights.getTwittersentimentsforid(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
 
 
 //Twitter Sentiments api graph
