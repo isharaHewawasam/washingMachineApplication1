@@ -4,6 +4,9 @@ var express = require('express');
 var insights = require('../models/insights');
 var helper = require('./helpers/utility.js');
 var config = require('../models/insights.js');
+var db = require('../database/notificationConfigDb.js');
+var COLLECTION_NAME = 'stores';
+
 
 //Login Authentication
 module.exports.getAuthentication = function(req, res, next) { 
@@ -138,25 +141,92 @@ module.exports.getTwitterhandle = function(req, res, next) {
 //Notification configuration settings send response
 module.exports.getNotificationconfigsettings = function(req, res, next) { 
 	insights.getNotificationconfigsettings(function(err, result){ 
-		console.log(req.body);
-		var userRole=req.body.role;
-		var chartType=req.body.charttype;
 		
-		var responseArray=[];
-		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
-			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
-		}
-		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
-			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
-		}
-		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
-			responseArray.push({'error_type_increase':"Water"});
-		}
-		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
-			responseArray.push({'error_type_descrese':"Water"});
-		}
-	    helper.sendResponse(res, err, responseArray); 
+	    helper.sendResponse(res, err, result); 
 	});
 };
 
+//Notification Configuration setting request from frontend page
+module.exports.getNotificationconfigsettingsfrompage = function(req, res, next) { 
+	insights.getNotificationconfigsettingsfrompage(function(err, result){
+
+		var Cloudant = require('cloudant');
+		var username = "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix";
+		var password = "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4";
+		var cloudant = Cloudant({account:username, password:password});
+    	var alice = cloudant.db.use('notificationconfigdb')
+
+		var userrole=req.body.Userrole;
+		var charttype= req.body.Charttype;
+
+		for(var i=0;i<result.rows.length;i++){
+
+			var docid=result.rows[i].key[0];
+			var revid=result.rows[i].key[1];
+			var roletype=result.rows[i].key[2];
+			var charttypes=result.rows[i].key[3];
+
+			if(userrole==roletype&&charttype==charttypes){
+				if(userrole=="mkt_manager"&&charttype=="twitter_sentiments"){
+					var doc = {
+  						_id: docid,
+  						_rev: revid,
+  						Userrole:userrole,
+  						Charttype:charttype,
+  						Positivethreshold:req.body.Positivethreshold,
+  						Positivetolerance:req.body.Positivetolerance,
+  						Negativethreshold:req.body.Negativethreshold,
+  						Negativetolerance:req.body.Negativetolerance
+					}
+					alice.insert(doc, function(body, header) { 		
+      					console.log('You updated.');    		
+    				});
+				}
+				else if(userrole=="mkt_manager"&&charttype=="spikes_in_connected_machines"){
+					var doc = {
+  						_id: docid,
+  						_rev: revid,
+  						Userrole:userrole,
+  						Charttype:charttype,
+  						Tolerance:req.body.Tolerance
+					}
+					alice.insert(doc, function(body, header) { 		
+      					console.log('You updated.');    		
+    				});
+				}
+				else if(userrole=="eng_manager"&&charttype=="spikes_in_connected_machines_by_make_model"){
+					var doc = {
+  						_id: docid,
+  						_rev: revid,
+  						Userrole:userrole,
+  						Charttype:charttype,
+  						Errortype:req.body.Errortype
+					}
+					alice.insert(doc, function(body, header) { 		
+      					console.log('You updated.');    		
+    				});
+				}
+				else if(userrole=="eng_manager"&&charttype=="spikes_in_specific_errors"){
+					var doc = {
+  						_id: docid,
+  						_rev: revid,
+  						Userrole:userrole,
+  						Charttype:charttype,
+  						Errortype:req.body.Errortype
+					}
+					alice.insert(doc, function(body, header) { 		
+      					console.log('You updated.');    		
+    				});
+				}
+			}
+			
+		}
+	    helper.sendResponse(res, err, "Document Updated"); 
+
+
+	    
+
+
+	});
+};
 

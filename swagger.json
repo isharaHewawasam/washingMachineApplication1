@@ -468,7 +468,7 @@
             "description": "update notifications configuration settings in database",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Notificationsareacharts"
+              "$ref": "#/definitions/Notificationsareachartsfrompage"
             }
           }             
         ],      

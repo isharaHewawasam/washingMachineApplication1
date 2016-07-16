@@ -1,5 +1,6 @@
 //'use strict';
 var db = require('../database/faultWashes_db.js');
+var dbconfig = require('../database/notificationConfigDb.js');
 var COLLECTION_NAME = 'stores';
 
 var DB_NAME = 'washdatafailedwashes';
@@ -218,4 +219,22 @@ exports.getTwitterhandle = function(callback) {
 //Notification area chart response api
 exports.getNotificationconfigsettings = function(callback) {
   callback(null, "Success");  
+}; 
+
+
+//Notification configuration setting insert to db api
+exports.getNotificationconfigsettingsfrompage = function(callback) {
+      var options = { q: '*:*'};
+      
+      dbconfig.view('notificationconfig', 'notificationconfig', options, function(err, result) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  
+                  return callback(err, result);
+                  
+            }
+      });
+
 }; 
