@@ -20,7 +20,8 @@ exports.getData = function(payload, callback) {
                  "view": {
                            "designDocName": "sales",
                            "default": VIEW_NAME,
-                           "byYear": VIEW_NAME
+                           "byYear": VIEW_NAME,
+                           "byFamily": VIEW_NAME
                          },
                   "statsKeyName": "totalSales",
                   "databaseType": "sales",

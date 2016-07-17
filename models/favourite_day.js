@@ -33,6 +33,9 @@ var getData = function(payload, callback) {
   if(filter.isFilterCategoryByYear()) 
     view_name = "WashDayByYear";
   
+  if(filter.isFilterCategoryByFamily()) 
+    view_name = "WashDayByFamily";
+  
   var params = { reduce: true, group: true, group_level: filter.groupLevel() + 1 };
   
  console.log("Sending favtoure day query request " + Date());  
@@ -92,16 +95,26 @@ var doesUsageFallsInResponse = function(usage, keys) {
       (filter.isFilterCategoryByProduct()) ||
       (filter.isFilterCategoryMixed())
     )
-    usage_values = [usage.make, usage.model, usage.state, usage.city, usage.zip_code];
+    usage_values = [usage.make, usage.model, usage.sku, usage.state, usage.city, usage.zip_code];
   
+  //by timescale
   if(filter.isFilterCategoryByYear()) 
-    usage_values = [usage.make, usage.model, usage.sold.year, usage.sold.quarter, usage.sold.month];
+    usage_values = [usage.make, usage.model, usage.sku, usage.sold.year, usage.sold.quarter, usage.sold.month];
+  
+  //by family
+  if(filter.isFilterCategoryByFamily()) 
+    usage_values = [usage.make, usage.model, usage.sku, usage.age, usage.family_members_count, usage.user_income];
   
   if( (filter.isFilterCategoryMixed()) ) 
-    usage_values.push(usage.sold.year, usage.sold.quarter, usage.sold.moth);
+    usage_values.push(usage.sold.year, usage.sold.quarter, usage.sold.month, usage.age, usage.family_members_count, usage.user_income);
   
   var response_keys = keys.slice(1, keys.length);
   var idx = 0; 
+  
+  //console.log("Filter Type : " + filter.filterType());
+  //console.log("Response keys : " + response_keys);
+  //console.log("Usage : " + JSON.stringify(usage_values));
+  //console.log("-----------------------------------------");
   
   while(idx < filter.filterType()) {    
     if(!match(usage_values[idx], response_keys[idx])) return false;

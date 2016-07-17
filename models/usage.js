@@ -20,7 +20,8 @@ exports.getAllUsage = function(payload, callback) {
           }
         } else {
           for(var row in result.rows) {                    
-            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {            
+            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {   
+              //console.log("adding");             
               addOrUpdateUsages(payload, usage.data, fillRecord(result.rows[row]));
             }                    
           }   
@@ -40,7 +41,6 @@ exports.getAllUsage = function(payload, callback) {
 };
 
 var getData = function(payload, callback) { 
-console.log("payload sfsf " + JSON.stringify(payload));
 
   filter  = new Filter(payload, 1);
   //filter.setPayload(payload);
@@ -55,6 +55,7 @@ console.log("payload sfsf " + JSON.stringify(payload));
   
   if( (filter.isFilterCategoryByRegion()) || 
       (filter.isFilterCategoryByProduct()) ||
+      (filter.isFilterCategoryByFamily()) ||
       (filter.isFilterCategoryNone()) ||
       (filter.isFilterCategoryMixed())      
     )
@@ -63,9 +64,17 @@ console.log("payload sfsf " + JSON.stringify(payload));
   if(filter.isFilterCategoryByYear()) 
     view_name = "averagesByYear";
   
+  if(filter.isFilterCategoryByFamily()) {
+    view_name = "averagesByFamily";
+  }
+  
+   
   //-----------
   console.log("Sending usage query request to Usage " + Date());
   db.view('averages', view_name, params, function(err, result) {
+    if (err) {
+       console.log(JSON.stringify(err));
+    }
     console.log("Received usage query response " + Date());
     console.log("Time : " + Date());
     console.log("Usage view name " + view_name);    
@@ -77,7 +86,7 @@ console.log("payload sfsf " + JSON.stringify(payload));
 };  
 
 var addOrUpdateUsages = function(payload, usages, new_usage) {
-  if(usageExists(payload, usages, new_usage, filter.filterType())) {    
+  if(usageExists(payload, usages, new_usage)) {    
     for(var each_usage in usages) {
       //console.log("Beforexxx");
       if( (each_usage.make == new_usage.make) && (each_usage.model == new_usage.model) ) {
@@ -108,11 +117,16 @@ var fillFavourites = function(payload, usage, callback) {
   });
 };
 
-var usageExists = function(payload, usages, usage_to_find, group_level) {  
+var usageExists = function(payload, usages, usage_to_find) {  
   for(var each_usage in usages) {    
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
-    var all_match;
+    var all_match = true;
+    
+    if ((payload.productAttrs.skus !== undefined) && (payload.productAttrs.skus.length > 0)) {
+      all_match = (usages[each_usage].sku == usage_to_find.sku);
+      if(!all_match) return;
+    }
     
     if(payload.region.states.length > 0) {         
         all_match = (usages[each_usage].state == usage_to_find.state);
@@ -158,32 +172,62 @@ var fillRecord = function(result) {
     
   record.make = result.key[0];
   record.model = result.key[1]; 
+  record.sku = result.key[2];
 
+  //product
   if( (filter.isFilterCategoryNone()) || 
       (filter.isFilterCategoryByRegion()) ||
       (filter.isFilterCategoryMixed())
     ) { 
-      record.state = result.key[2];
-      record.city = result.key[3];
-      record.zip_code = result.key[4]; 
+      record.state = result.key[3];
+      record.city = result.key[4];
+      record.zip_code = result.key[5]; 
   } 
   
-  if(filter.isFilterCategoryByYear()) {    
-    record.sold.year = result.key[2]; 
-    record.sold.quarter = result.key[3];
-    record.sold.month = result.key[4];
+  if(filter.isFilterCategoryByFamily()){
+    //age  
+    //if (filter.isFilterByUserAge()) {
+      record.age = result.key[3];
+    //}
+    
+    //members count  
+    //if (filter.isFilterByUserFamilyMembersCount()) {
+      record.family_members_count = result.key[4];
+    //}
+    
+    //income  
+    //if (filter.isFilterByUserIncome()) {
+      record.user_income = result.key[5];
+    //}
   }
   
+  //mixed
   if(filter.isFilterCategoryMixed()) {    
-    record.sold.year = result.key[5]; 
-    record.sold.quarter = result.key[6];
-    record.sold.month = result.key[7];
+    record.sold.year = result.key[6]; 
+    record.sold.quarter = result.key[7];
+    record.sold.month = result.key[8];
+    
+    //age  
+    //if (filter.isFilterByUserAge()) {
+      record.age = result.key[9];
+    //}
+    
+    //members count  
+    //if (filter.isFilterByUserFamilyMembersCount()) {
+      record.family_members_count = result.key[10];
+    //}
+    
+    //income  
+    //if (filter.isFilterByUserIncome()) {
+      record.user_income = result.key[11];
+    //}
   }
   
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
   
+  //console.log("keys : " + JSON.stringify(result.key));
   //console.log("record : " + JSON.stringify(record));  
   return record;
 };
@@ -193,44 +237,76 @@ var doesRecordFallsInFilter = function(payload, keys) {
     return true;
   
   if ( filter.isFilterCategoryByProduct() ) {
-    //console.log(JSON.stringify(keys));
        return isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
-              isItemPresent(payload.productAttrs.models, "value", keys[1])
+              isItemPresent(payload.productAttrs.models, "value", keys[1]) &&
+              isItemPresent(payload.productAttrs.sku, "value", keys[2])
   }
   
   if(filter.isFilterCategoryByRegion()) {
     return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
             isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
-            isItemPresent(payload.region.states, "value", keys[2]) && 
-            isItemPresent(payload.region.cities, "value", keys[3]) &&  
-            isItemPresent(payload.region.zip_codes, "value", keys[4])
+            isItemPresent(payload.productAttrs.skus, "value", keys[2]) &&
+            isItemPresent(payload.region.states, "value", keys[3]) && 
+            isItemPresent(payload.region.cities, "value", keys[4]) &&  
+            isItemPresent(payload.region.zip_codes, "value", keys[5])
   }
   
   if(filter.isFilterCategoryByYear()) {
     return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
             isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
-            isItemPresent(payload.timescale.years, "value", keys[2]) &&
-            isItemPresent(payload.timescale.quarters, "value", keys[3]) &&
-            isItemPresent(payload.timescale.months, "value", keys[4]);
+            isItemPresent(payload.productAttrs.skus, "value", keys[2]) &&
+            isItemPresent(payload.timescale.years, "value", keys[3]) &&
+            isItemPresent(payload.timescale.quarters, "value", keys[4]) &&
+            isItemPresent(payload.timescale.months, "value", keys[5]);
+  }
+  
+  if(filter.isFilterCategoryByFamily()) {
+    return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
+            isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
+            isItemPresent(payload.productAttrs.skus, "value", keys[2]) && 
+            isItemPresent(payload.age, "value", keys[3], true, require("./demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(payload.family_members_count, "value", keys[4]) &&
+            isItemPresent(payload.income, "value", keys[5], true, require("./demographics/data/income-ranges").incomeRanges)
   }
   
   if(filter.isFilterCategoryMixed()) {
     return  isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
             isItemPresent(payload.productAttrs.models, "value", keys[1]) && 
-            isItemPresent(payload.region.states, "value", keys[2]) && 
-            isItemPresent(payload.region.cities, "value", keys[3]) &&  
-            isItemPresent(payload.region.zip_codes, "value", keys[4]) &&
-            isItemPresent(payload.timescale.years, "value", keys[5]) &&
-            isItemPresent(payload.timescale.quarters, "value", keys[6]) &&
-            isItemPresent(payload.timescale.months, "value", keys[7]);
+            isItemPresent(payload.productAttrs.skus, "value", keys[2]) && 
+            isItemPresent(payload.region.states, "value", keys[3]) && 
+            isItemPresent(payload.region.cities, "value", keys[4]) &&  
+            isItemPresent(payload.region.zip_codes, "value", keys[5]) &&
+            isItemPresent(payload.timescale.years, "value", keys[6]) &&
+            isItemPresent(payload.timescale.quarters, "value", keys[7]) &&
+            isItemPresent(payload.timescale.months, "value", keys[8]) &&
+            isItemPresent(payload.age, "value", keys[9], true, require("./demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(payload.family_members_count, "value", keys[10]) &&
+            isItemPresent(payload.income, "value", keys[11], true, require("./demographics/data/income-ranges").incomeRanges)
   }          
 }
 
-var isItemPresent = function(array, key_name, item){  
-  if(array.length == 0) return true;
+/*
+"age": [{
+		"value": 1
+	}]
+*/  
+var isItemPresent = function(array, key_name, item, isRange, ranges){  
+  if(array == undefined || array.length == 0) return true;
   
-  for(var array_item in array) {    
-    if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true    
+  for (var array_item in array) {    
+    if (isRange) {
+      for (var each_item in ranges) {
+        if (ranges[each_item].id == array[array_item][key_name]) {
+          //console.log("Age range id : " + array[array_item][key_name]);
+          //console.log("Range : " + JSON.stringify(ranges[each_item].range));
+          //console.log("Key : " + item + "/" + "Start : " + ranges[each_item].start + "/" + "End : " + ranges[each_item].end);
+          //console.log("Falling in rage : " + (item >= ranges[each_item].start && item <= ranges[each_item].end));
+          return (item >= ranges[each_item].start && item <= ranges[each_item].end);
+        }
+      }
+    } else {
+      if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true 
+    }      
   }
   
   return false;
@@ -240,8 +316,15 @@ function addMissingData(payload, callback) {
   var FilterClass = require("./filters"); 
   var filter = new FilterClass(payload, 1)
    
-  if ( filter.isFilterByNone() ||  filter.isFilterByModel())  callback(null, payload);
-  
+  /*if ( filter.isFilterByNone() ||  
+       filter.isFilterByModel() ||
+       filter.isFilterByYear() ||
+       filter.isFilterCategoryByFamily() ||
+       filter.isFilterCategoryMixed_(payload)
+     ) {
+       callback(null, payload);
+  }*/
+       
   //callback(null, payload)
   
   if (filter.isFilterByMake()) {
@@ -264,8 +347,10 @@ function addMissingData(payload, callback) {
         callback(err, result);
       }
     });
+    
+    //console.log("end");
   }
-  
+  callback(null, payload);
   /*if (filter.isFilterByCity()) {
     var Config = require("../config");
     var states_names = [];

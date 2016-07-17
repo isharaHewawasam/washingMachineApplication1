@@ -19,7 +19,8 @@ exports.getData = function(payload, drilldown, callback) {
                  "view": {
                            "designDocName": "sales",
                            "default": VIEW_NAME,
-                           "byYear": VIEW_NAME
+                           "byYear": VIEW_NAME,
+                           "byFamily": VIEW_NAME,
                          },
                   "statsKeyName": "unitsSold",
                   "databaseType": "sales",
@@ -42,7 +43,7 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 7)
    
-  if ( filter.isFilterByNone() ||  filter.isFilterByZipCode())  callback(null, payload);
+  if ( filter.isFilterByNone() ||  filter.isFilterByZipCode() ||  filter.isFilterByMFGDate())  callback(null, payload);
   
   //callback(null, payload)
   

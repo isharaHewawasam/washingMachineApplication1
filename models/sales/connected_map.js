@@ -19,7 +19,8 @@ exports.getData = function(payload, drill_down, buffer, callback) {
                  "view": {
                            "designDocName": "sales",
                            "default": VIEW_NAME,
-                           "byYear": VIEW_NAME
+                           "byYear": VIEW_NAME,
+                           "byFamily": VIEW_NAME,
                          },
                   "statsKeyName": "unitsConnected",
                   "databaseType": "sales",

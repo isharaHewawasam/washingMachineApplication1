@@ -5,7 +5,9 @@ var FILTER_CATEGORY = {
   'BY_PRODUCT': 1,
   'BY_REGION': 2,
   'BY_YEAR': 3,
-  'MIXED': 4
+  'BY_FAMILY': 4,
+  'BY_MFG_DATE': 5,
+  'MIXED': 5
 };
 
 var FILTER = {
@@ -19,7 +21,11 @@ var FILTER = {
   'BY_YEAR': 7,
   'BY_QUARTER': 8,
   'BY_MONTH': 9,
-  'MIXED': 10
+  'BY_USER_AGE': 10,
+  'BY_USER_FAMILY_MEMBERS_COUNT': 11,
+  'BY_USER_INCOME': 12,
+  'BY_MFG_DATE': 13,
+  'MIXED': 14
 };
 
 var REPORT_TYPE = {
@@ -36,6 +42,9 @@ var REPORT_TYPE = {
   "SALES_BY_STATE": 10,
   "CONNECTED_BY_STATE": 11,
   "INSIGHTS": 12,
+  "USER_AGE": 13,
+  "USER_FAMILY_MEMBERS_COUNT": 14,
+  "USER_INCOME": 15
 };
 
 module.exports.REPORT_TYPE = REPORT_TYPE;
@@ -101,6 +110,24 @@ var Filter = function Filter(payload, view_name){
     }
   }
   
+  // user age
+  if ((payload.age) && (payload.age.length > 0)) {
+     this.filter_type = FILTER.BY_USER_AGE;
+  }
+  
+  // user family members count
+  if ((payload.family_members_count) && (payload.family_members_count.length > 0)) {
+     this.filter_type = FILTER.BY_USER_FAMILY_MEMBERS_COUNT;
+  }
+  
+  // user income
+  if ((payload.income) && (payload.income.length)) {
+     this.filter_type = FILTER.BY_USER_INCOME;
+  }
+    
+  if (payload.productAttrs.mfg_date !== undefined) {
+    this.filter_type = FILTER.BY_MFG_DATE;
+  }    
   //Mixed
   this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
   //If no filter is applied set to by state
@@ -112,6 +139,9 @@ var Filter = function Filter(payload, view_name){
     case FILTER.BY_SKU:
       this.filter_category = FILTER_CATEGORY.BY_PRODUCT;
       break;
+    case FILTER.BY_MFG_DATE:
+      this.filter_category = FILTER_CATEGORY.BY_MFG_DATE;
+      break;
     case FILTER.BY_STATE:
     case FILTER.BY_CITY:
     case FILTER.BY_ZIP_CODE:
@@ -122,6 +152,11 @@ var Filter = function Filter(payload, view_name){
     case FILTER.BY_MONTH:
       this.filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
+    case FILTER.BY_USER_INCOME:
+    case FILTER.BY_USER_FAMILY_MEMBERS_COUNT:
+    case FILTER.BY_USER_AGE:
+      this.filter_category = FILTER_CATEGORY.BY_FAMILY;
+      break;  
     case FILTER.MIXED:
       this.filter_category = FILTER_CATEGORY.MIXED;
       break;
@@ -133,7 +168,7 @@ var Filter = function Filter(payload, view_name){
 
 module.exports = Filter;
 
-var isFilterCategoryMixed_ = function(payload) {
+/*var isFilterCategoryMixed_ = function(payload) {
   // Product 
   var is_filter_by_product = false;
     
@@ -170,6 +205,48 @@ var isFilterCategoryMixed_ = function(payload) {
   return (is_filter_by_product && 
           is_filter_by_region && 
           is_filter_by_year);
+};*/
+
+var isFilterCategoryMixed_ = function(payload) {
+  var filtersCount = 0;
+  
+  // Product
+  if (payload.productAttrs) {  
+    if ( ((payload.productAttrs.makes) && (payload.productAttrs.makes.length > 0)) ||  
+       ((payload.productAttrs.models) && (payload.productAttrs.models.length > 0)) ||   
+       ((payload.productAttrs.skus) && (payload.productAttrs.makes.skus > 0)) ) {
+       filtersCount++;
+    }
+  }
+  
+  //console.log("1 " + filtersCount);
+  // Region
+  if (payload.region) {  
+    if ( ((payload.region.states) && (payload.region.states.length > 0)) ||  
+       (payload.region.cities.length > 0) ||   
+       (payload.region.zip_codes.length > 0) ) {
+       filtersCount++;
+    }
+  }
+  //console.log("2 " + filtersCount);
+  // year
+  if (payload.timescale) {
+    if( (payload.timescale.years.length > 0) ||
+        (payload.timescale.quarters.length > 0) ||   
+        (payload.timescale.months.length > 0) ) {
+        filtersCount++;  
+    }        
+  }
+  
+  //console.log("3 " + filtersCount);
+  if ( (payload.age && payload.age.length > 0) ||
+       (payload.family_members_count && payload.family_members_count.length > 0) ||
+       (payload.income && payload.income.length > 0) ) {
+         filtersCount++; 
+       }
+       
+    
+  return filtersCount > 1;
 };
 
 Filter.prototype.isFilterCategoryMixed_ = isFilterCategoryMixed_;
@@ -204,7 +281,7 @@ Filter.prototype.filterDescription = function() {
 
 
 Filter.prototype.groupLevel = function(){
-  if(this.filter_category === FILTER_CATEGORY.MIXED) return 8;
+  if(this.filter_category === FILTER_CATEGORY.MIXED) return 13;
   
   if (this.isFilterByNone()) {
     switch(this.report_type) {
@@ -264,31 +341,46 @@ Filter.prototype.groupLevel = function(){
       
       if ( this.isFilterByMake() ) return 4; 
       if ( this.isFilterByModel() ) return 5;
+      if ( this.isFilterBySKU() ) return 6;
 
-      if ( this.isFilterByYear() ) return 6;  
-      if ( this.isFilterByQuarter() ) return 7;
-      if ( this.isFilterByMonth() ) return 8;       
+      if ( this.isFilterByYear() ) return 7;  
+      if ( this.isFilterByQuarter() ) return 8;
+      if ( this.isFilterByMonth() ) return 9;    
+ 
+      if ( this.isFilterByUserAge() ) return 10;  
+      if ( this.isFilterByUserFamilyMembersCount() ) return 11;
+      if ( this.isFilterByUserIncome() ) return 12;  
+      
+      if ( this.isFilterByMfgDate() ) return 13;
       break;     
    case  REPORT_TYPE.SALES_VOLUME:
    case  REPORT_TYPE.SALES:
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;   
+      if ( this.isFilterBySKU() ) return 3;
       
-      if ( this.isFilterByYear() ) return 3;  
-      if ( this.isFilterByQuarter() ) return 4;
-      if ( this.isFilterByMonth() ) return 5;   
+      if ( this.isFilterByYear() ) return 4;  
+      if ( this.isFilterByQuarter() ) return 5;
+      if ( this.isFilterByMonth() ) return 6;   
       
-      if ( this.isFilterByState() ) return 6;  
-      if ( this.isFilterByCity() ) return 7;
-      if ( this.isFilterByZipCode() ) return 8; 
+      if ( this.isFilterByState() ) return 7;  
+      if ( this.isFilterByCity() ) return 8;
+      if ( this.isFilterByZipCode() ) return 9; 
+      
+      if ( this.isFilterByUserAge() ) return 10;  
+      if ( this.isFilterByUserFamilyMembersCount() ) return 11;
+      if ( this.isFilterByUserIncome() ) return 12; 
+      
+      if ( this.isFilterByMfgDate() ) return 13;
       break;         
     default:  
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;
+      if ( this.isFilterBySKU() ) return 3;
   
-      if ( (this.isFilterByState() ) || ( this.isFilterByYear() ) ) return 3;  
-      if ( (this.isFilterByCity() ) || ( this.isFilterByQuarter() ) ) return 4;
-      if ( (this.isFilterByZipCode() ) || (this.isFilterByMonth() ) ) return 5;
+      if ( (this.isFilterByState()) || (this.isFilterByYear()) || (this.isFilterByUserAge()) ) return 4;  
+      if ( (this.isFilterByCity()) || (this.isFilterByQuarter()) || (this.isFilterByUserFamilyMembersCount()) ) return 5;
+      if ( (this.isFilterByZipCode()) || (this.isFilterByMonth()) || (this.isFilterByUserIncome()) ) return 6;
       
       return 2;
   }
@@ -296,18 +388,24 @@ Filter.prototype.groupLevel = function(){
 
 // {"key":["LG","WD100CW","Arizona","Chandler","85225","2015","1","1"]
 var filterType  = function() {  
+  if(this.filter_category === FILTER_CATEGORY.MIXED) return 12;
   if(this.isFilterByNone()) return 2;
    
   if(this.isFilterByMake()) return 1; 
   if(this.isFilterByModel()) return 2;
+  if(this.isFilterBySKU()) return 3;
   
-  if(this.isFilterByState()) return 3;
-  if(this.isFilterByCity()) return 4;
-  if(this.isFilterByZipCode()) return 4;
+  if(this.isFilterByState()) return 4;
+  if(this.isFilterByCity()) return 5;
+  if(this.isFilterByZipCode()) return 6;
   
-  if(this.isFilterByYear()) return 2;
-  if(this.isFilterByQuarter()) return 3;
-  if(this.isFilterByMonth()) return 4;
+  if(this.isFilterByYear()) return 4;
+  if(this.isFilterByQuarter()) return 5;
+  if(this.isFilterByMonth()) return 6;
+  
+  if(this.isFilterByUserAge()) return 4;
+  if(this.isFilterByUserFamilyMembersCount()) return 5;
+  if(this.isFilterByUserIncome()) return 6;
 };
 
 Filter.prototype.filterType = filterType;
@@ -318,6 +416,14 @@ Filter.prototype.isFilterCategoryNone = function(){
 
 Filter.prototype.isFilterCategoryByProduct = function(){
   return this.filter_category === FILTER_CATEGORY.BY_PRODUCT;
+};
+
+Filter.prototype.isFilterCategoryByFamily = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_FAMILY;
+};
+
+Filter.prototype.isFilterCategoryByMfgDate = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_MFG_DATE;
 };
 
 Filter.prototype.isFilterCategoryByRegion = function(){
@@ -354,6 +460,12 @@ var isFilterBySKU = function(){
 
 Filter.prototype.isFilterBySKU = isFilterBySKU;
 
+var isFilterByMFGDate = function(){
+  return this.filter_type === FILTER.BY_MFG_DATE;
+};
+
+Filter.prototype.isFilterByMFGDate = isFilterByMFGDate;
+
 var isFilterByState = function(){  
   return this.filter_type === FILTER.BY_STATE;
 };
@@ -389,3 +501,21 @@ var isFilterByMonth = function(){
 };
 
 Filter.prototype.isFilterByMonth = isFilterByMonth;
+
+var isFilterByUserIncome = function(){
+  return this.filter_type === FILTER.BY_USER_INCOME;
+};
+
+Filter.prototype.isFilterByUserIncome = isFilterByUserIncome;
+
+var isFilterByUserFamilyMembersCount = function(){
+  return this.filter_type === FILTER.BY_USER_FAMILY_MEMBERS_COUNT;
+};
+
+Filter.prototype.isFilterByUserFamilyMembersCount = isFilterByUserFamilyMembersCount
+
+var isFilterByUserAge = function(){
+  return this.filter_type === FILTER.BY_USER_AGE;
+};
+
+Filter.prototype.isFilterByUserAge = isFilterByUserAge;

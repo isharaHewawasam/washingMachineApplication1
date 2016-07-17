@@ -377,7 +377,7 @@
     },
     "/demographics/family/members-count": {
       "get": {
-        "x-swagger-router-controller": "members-count",
+        "x-swagger-router-controller": "members-count-ranges",
         "operationId": "getData",
         "tags": ["Demographics"],
         "description": "Returns number of family members to select from",

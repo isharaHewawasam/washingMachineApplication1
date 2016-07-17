@@ -95,7 +95,17 @@ var getData = function(params, callback) {
   var group_level = (params.group_level === undefined) ? params.filter.groupLevel() : params.group_level;
   
   var view_params = { reduce: true, group: true, group_level: group_level, "startkey": params.start_key, "endkey": params.end_key };  
-  var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
+  //var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
+  
+  var view_name = null;
+  if (params.filter.isFilterCategoryByYear()) {
+    view_name = params.view.byYear;
+  } else if (params.filter.isFilterCategoryByFamily()) {
+    view_name = params.view.byFamily;
+  } else {
+    view_name = params.view.default;
+  }
+  
   var db = getDb(params.databaseType);
  
   //console.log("In Group level");
@@ -209,6 +219,11 @@ var usageExists = function(payload, usages, usage_to_find, xxx_007) {
     //var all_match = true;
     var all_match = xxx_007 ? false : true;
     
+    if ((payload.productAttrs.skus !== undefined) && (payload.productAttrs.skus.length > 0)) {
+      all_match = (usages[each_usage].sku == usage_to_find.sku);
+      if(!all_match) return;
+    }
+    
     if(payload.region.states.length > 0) {         
         all_match = (usages[each_usage].state == usage_to_find.state);
         //console.log("state " + all_match);
@@ -270,6 +285,7 @@ var fillRecord = function(result, params) {
   
   record.make = result.key[params.key_maps.key.MAKE];
   record.model = result.key[params.key_maps.key.MODEL]; 
+  record.sku = result.key[params.key_maps.key.SKU];
 
   if( (params.filter.isFilterCategoryNone()) || 
       (params.filter.isFilterCategoryByRegion()) ||
@@ -300,14 +316,40 @@ var fillRecord = function(result, params) {
     
   }
  
+  if(params.filter.isFilterCategoryByFamily()){
+    //age  
+    //if (params.filter.isFilterByUserAge()) {
+      record.age = result.key[params.key_maps.key.AGE];
+    //}
+    
+    //members count  
+    //if (params.filter.isFilterByUserFamilyMembersCount()) {
+      record.family_members_count = result.key[params.key_maps.key.MEMBERS];
+    //}
+    
+    //income  
+    //if (params.filter.isFilterByUserIncome()) {
+      record.user_income = result.key[params.key_maps.key.INCOME];
+    //}
+  }
+  
+  if(params.filter.isFilterCategoryByMfgDate()){
+    //console.log("fill record : filter.isFilterCategoryByMfgDate()");
+    record.mfg_date = result.key[params.key_maps.key.MFG_DATE];
+  }
+  
   if(params.filter.isFilterCategoryMixed()) {
     record.sold = {};
     record.sold.year = result.key[params.key_maps.key.YEAR]; 
     record.sold.quarter = result.key[params.key_maps.key.QUARTER];
     record.sold.month = result.key[params.key_maps.key.MONTH];
     
-    record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]) + " Q" + 
-                          parseInt(result.key[params.key_maps.key.QUARTER]); 
+    record.time_scale = parseInt(result.key[params.key_maps.key.YEAR]) + 
+                       " Q" + parseInt(result.key[params.key_maps.key.QUARTER]); 
+    
+    record.age = result.key[params.key_maps.key.AGE]; 
+    record.family_members_count = result.key[params.key_maps.key.MEMBERS];
+    record.user_income = result.key[params.key_maps.key.INCOME];
   }
   
   switch (params.stats) {
@@ -315,6 +357,8 @@ var fillRecord = function(result, params) {
       record[params.statsKeyName] = result.value.count;
       break;
     case "average":
+      //console.log("Record :" + JSON.stringify(record));
+      //console.log("Stats : " + JSON.stringify(result.value[0]));
       record[params.statsKeyName] = (result.value[0].sum / result.value[0].count).toFixed(2);
       record[params.statsKeyName] = parseFloat(record[params.statsKeyName]);
       break;
@@ -328,7 +372,7 @@ var fillRecord = function(result, params) {
   }
   
   
-  //console.log("record : " + JSON.stringify(record));  
+  console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
@@ -339,15 +383,38 @@ var doesRecordFallsInFilter = function(params, keys) {
     return true;
   }
   
+  if (params.filter.isFilterCategoryByMfgDate()) {
+    var dates_arr = params.payload.productAttrs.mfg_date.start_date.split("/");
+    var start_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+    
+    dates_arr = params.payload.productAttrs.mfg_date.end_date.split("/");
+    var end_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+    
+    //console.log("xxx : " + keys);
+    //console.log("x2 : " + params.key_maps.key.MFG_DATE);
+    //console.log("---------------------------");
+    dates_arr = keys[params.key_maps.key.MFG_DATE].split("/");
+    var mfg_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+    
+    if (mfg_date <= start_date || mfg_date >= end_date) {
+      //console.log("Start Date : " + params.payload.productAttrs.mfg_date.start_date);
+      //console.log("End Date : " + params.payload.productAttrs.mfg_date.end_date);
+      //console.log("Mfg Date : " + keys[params.key_maps.key.MFG_DATE]);
+      return false;
+    }
+  }
+  
   if ( params.filter.isFilterCategoryByProduct() ) {
     console.log(JSON.stringify(keys));
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
-              isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL])
+              isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) &&
+              isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU])
   }
   
   if ( params.filter.isFilterCategoryByRegion() ) {
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+              isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) && 
               isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
               isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
               isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE])
@@ -357,33 +424,58 @@ var doesRecordFallsInFilter = function(params, keys) {
   if ( params.filter.isFilterCategoryByYear() ) {
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
             isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
             isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
             isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
   }
   
+  if(params.filter.isFilterCategoryByFamily()) {
+    //console.log("Keys : " + JSON.stringify(keys));
+    //console.log("Age key id :" + keys[params.key_maps.key.MEMBERS]);
+    return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
+            isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
+            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
+  }
+  
   if(params.filter.isFilterCategoryMixed()) {
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
             isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
             isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
             isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
             isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
             isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
-            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH])
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]) && 
+            isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
+            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
   }          
 }
 
-var isItemPresent = function(array, key_name, item){ 
-  if(array.length == 0) return true;
-
-  for(var array_item in array) {    
-    //console.log(array[array_item][key_name].toString().toUpperCase() + "   " + item.toUpperCase());
-    //console.log(array[array_item][key_name].toString().toUpperCase());
-    if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true    
+var isItemPresent = function(array, key_name, item, isRange, ranges){  
+  if(array == undefined || array.length == 0) return true;
+  
+  for (var array_item in array) {    
+    if (isRange) {
+      for (var each_item in ranges) {
+        if (ranges[each_item].id == array[array_item][key_name]) {
+          //console.log("Age range id : " + array[array_item][key_name]);
+          //console.log("Range : " + JSON.stringify(ranges[each_item].range));
+          //console.log("Key : " + item + "/" + "Start : " + ranges[each_item].start + "/" + "End : " + ranges[each_item].end);
+          //console.log("Falling in rage : " + (item >= ranges[each_item].start && item <= ranges[each_item].end));
+          return (item >= ranges[each_item].start && item <= ranges[each_item].end);
+        }
+      }
+    } else {
+      if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true 
+    }      
   }
- 
+  
   return false;
 };
-
 

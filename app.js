@@ -31,9 +31,7 @@ var options = {
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
 var swaggerDoc = require('./swagger.json');
-
-//console.log(6755.toUpperCase());
-
+                  
 function exitHandler(reason) {	
   if(reason) {
     console.log("*********APP CRASHED****************************************");

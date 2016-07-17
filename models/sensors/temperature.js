@@ -11,6 +11,8 @@ exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, call
   
   if (Filter.isFilterCategoryByYear()) {
     key_map.setReportType2SensorByYear();
+  } else if (Filter.isFilterCategoryByFamily()) {
+    key_map.setReportType2SensorByFamily();
   } else {
     key_map.setReportType2Sensor();
   }
@@ -22,7 +24,8 @@ exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, call
                  "view": {
                            "designDocName": "averages",
                            "default": "average" + SENSOR_NAME + "Usage",
-                           "byYear": "average" + SENSOR_NAME + "UsageByYear"
+                           "byYear": "average" + SENSOR_NAME + "UsageByYear",
+                           "byFamily": "average" + SENSOR_NAME + "UsageByFamily"
                          },
                   "statsKeyName": stats_key_name == null ? "avg" + SENSOR_NAME + "Usage" : stats_key_name,
                   "databaseType": "sensorDailyAggregate",

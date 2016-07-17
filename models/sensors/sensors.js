@@ -137,9 +137,15 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 1)
    
-  if ( filter.isFilterByNone() ||  filter.isFilterByModel())  callback(null, payload);
   
-  //callback(null, payload)
+  /*if ( filter.isFilterByNone() ||  
+       filter.isFilterByModel() ||
+       filter.isFilterByYear() ||
+       filter.isFilterCategoryByFamily() ||
+       filter.isFilterCategoryMixed_(payload)
+     ) {
+       callback(null, payload);
+  }*/
   
   if (filter.isFilterByMake()) {
     var Config = require("../config");
@@ -162,7 +168,7 @@ function addMissingData(payload, callback) {
       }
     });
   }
-  
+  callback(null, payload);
   /*if (filter.isFilterByCity()) {
     var Config = require("../config");
     var states_names = [];
