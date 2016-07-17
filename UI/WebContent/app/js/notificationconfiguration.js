@@ -8,7 +8,7 @@ App.controller('NotificationConfController',
 		
 		
 		$scope.showTwitterInsightsLink = $localStorage.showTwitterInnerLint;
-		
+		$scope.notificationConfig = {};
 		/*
 		//delete $localStorage.twitterinsights;
 		if(twitterinsights) {
@@ -90,5 +90,52 @@ App.controller('NotificationConfController',
 		
 		$scope.loadTwitterInsights = function() {
 			$state.go('app.twitterinsights');
+		}
+		
+		$scope.saveNotificationConfig = function() {
+			var requestBody;
+			var redirecto;
+			if($scope.isEngManager){
+				requestBody = {
+						"UserName": loginCredentails.username,
+						"IncreaseErrortype1": "Sensor",
+						"DecreaseErrortype1": "Sensor",
+						"IncreaseErrortype2": "Sensor",
+						"DecreaseErrortype2": "Sensor"
+				};
+				
+				redirecto = 'app.engmanagerview';
+			}else{
+				requestBody = {
+						  "UserName": loginCredentails.email,
+						  "Make": twitterinsights.make,
+						  "Model": twitterinsights.model,
+						  "PositiveScore": $scope.notificationConfig.selectedPositiveScore,
+						  "PositiveBaseline": $scope.notificationConfig.selectedPositiveBaseline,
+						  "NegativeScore": $scope.notificationConfig.selectedNegativeScore,
+						  "NegativeBaseline": $scope.notificationConfig.selectedNegativeBaseline,
+						  "PositiveTolerance": $scope.notificationConfig.selectedNegativeScore,
+						  "NegativeTolerance": $scope.notificationConfig.selectedNegativeScore
+				};
+				redirecto = 'app.twitterinsights';
+			}
+			$http({url:configApiClient.baseUrl + 'notifications/configurations/settings/frompage', 
+			     method: "POST", 
+			     headers: { 'Content-Type': 'application/json'},
+			     data: requestBody})
+			     .success(function(data, status) {
+			    	 $state.go(redirecto);
+		    }). error(function(data, status) {
+		    	console.log('in error of notification');
+		    });
+			
+		}
+		
+		$scope.cancelNotificationConfig = function() {
+			if($scope.isEngManager){
+				$state.go('app.engmanagerview');
+			}else{
+				$state.go('app.twitterinsights');
+			}
 		}
 }]);

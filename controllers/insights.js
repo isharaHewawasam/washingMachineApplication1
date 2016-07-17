@@ -141,8 +141,24 @@ module.exports.getTwitterhandle = function(req, res, next) {
 //Notification configuration settings send response
 module.exports.getNotificationconfigsettings = function(req, res, next) { 
 	insights.getNotificationconfigsettings(function(err, result){ 
-		
-	    helper.sendResponse(res, err, result); 
+		console.log(req.body);
+		var userRole=req.body.Userrole;
+		var chartType=req.body.Charttype;
+
+		var responseArray=[];
+		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
+			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
+		}
+		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
+			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
+			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
+			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
+		}
+	    helper.sendResponse(res, err, responseArray); 
 	});
 };
 
@@ -156,63 +172,42 @@ module.exports.getNotificationconfigsettingsfrompage = function(req, res, next) 
 		var cloudant = Cloudant({account:username, password:password});
     	var alice = cloudant.db.use('notificationconfigdb')
 
-		var userrole=req.body.Userrole;
-		var charttype= req.body.Charttype;
+		var userrole=req.body.UserName;
 
 		for(var i=0;i<result.rows.length;i++){
 
 			var docid=result.rows[i].key[0];
 			var revid=result.rows[i].key[1];
 			var roletype=result.rows[i].key[2];
-			var charttypes=result.rows[i].key[3];
 
-			if(userrole==roletype&&charttype==charttypes){
-				if(userrole=="mkt_manager"&&charttype=="twitter_sentiments"){
+			if(userrole==roletype){
+				if(userrole=="mkt_manager@bluemix.com"){
 					var doc = {
   						_id: docid,
   						_rev: revid,
-  						Userrole:userrole,
-  						Charttype:charttype,
-  						Positivethreshold:req.body.Positivethreshold,
-  						Positivetolerance:req.body.Positivetolerance,
-  						Negativethreshold:req.body.Negativethreshold,
-  						Negativetolerance:req.body.Negativetolerance
+  						UserName:userrole,
+  						Make:req.body.Make,
+  						Model:req.body.Model,
+  						PositiveScore:req.body.PositiveScore,
+  						PositiveBaseline:req.body.PositiveBaseline,
+  						NegativeScore:req.body.NegativeScore,
+  						NegativeBaseline:req.body.NegativeBaseline,
+  						PositiveTolerance:req.body.PositiveTolerance,
+  						NegativeTolerance:req.body.NegativeTolerance
 					}
 					alice.insert(doc, function(body, header) { 		
       					console.log('You updated.');    		
     				});
 				}
-				else if(userrole=="mkt_manager"&&charttype=="spikes_in_connected_machines"){
+				else if(userrole=="eng_manager@bluemix.com"){
 					var doc = {
   						_id: docid,
   						_rev: revid,
-  						Userrole:userrole,
-  						Charttype:charttype,
-  						Tolerance:req.body.Tolerance
-					}
-					alice.insert(doc, function(body, header) { 		
-      					console.log('You updated.');    		
-    				});
-				}
-				else if(userrole=="eng_manager"&&charttype=="spikes_in_connected_machines_by_make_model"){
-					var doc = {
-  						_id: docid,
-  						_rev: revid,
-  						Userrole:userrole,
-  						Charttype:charttype,
-  						Errortype:req.body.Errortype
-					}
-					alice.insert(doc, function(body, header) { 		
-      					console.log('You updated.');    		
-    				});
-				}
-				else if(userrole=="eng_manager"&&charttype=="spikes_in_specific_errors"){
-					var doc = {
-  						_id: docid,
-  						_rev: revid,
-  						Userrole:userrole,
-  						Charttype:charttype,
-  						Errortype:req.body.Errortype
+  						UserName:userrole,
+  						IncreaseErrortype1:req.body.IncreaseErrortype1,
+  						DecreaseErrortype1:req.body.DecreaseErrortype1,
+  						IncreaseErrortype2:req.body.IncreaseErrortype2,
+  						DecreaseErrortype2:req.body.DecreaseErrortype2
 					}
 					alice.insert(doc, function(body, header) { 		
       					console.log('You updated.');    		
@@ -221,7 +216,7 @@ module.exports.getNotificationconfigsettingsfrompage = function(req, res, next) 
 			}
 			
 		}
-	    helper.sendResponse(res, err, "Document Updated"); 
+	    helper.sendResponse(res, err, {'message':"Document Updated"}); 
 
 
 	    
