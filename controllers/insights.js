@@ -151,13 +151,12 @@ module.exports.getNotificationconfigsettings = function(req, res, next) {
 		}
 		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
 			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
-			console.log("asasas");
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
-			responseArray.push({'error_type_increase':"Water"});
+			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
 		}
 		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
-			responseArray.push({'error_type_descrese':"Water"});
+			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
 		}
 	    helper.sendResponse(res, err, responseArray); 
 	});
