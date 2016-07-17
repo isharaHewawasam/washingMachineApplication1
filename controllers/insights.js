@@ -217,7 +217,7 @@ module.exports.getNotificationconfigsettingsfrompage = function(req, res, next) 
 			}
 			
 		}
-	    helper.sendResponse(res, err, "Document Updated"); 
+	    helper.sendResponse(res, err, {'message':"Document Updated"}); 
 
 
 	    
