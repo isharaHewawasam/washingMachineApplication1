@@ -2028,8 +2028,8 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
             data: {"Username": userid}  
             
 		}).success(function(data, status) {
-			$scope.spikeByConnectedMachinesIncreaseTolerance = data[0].PositiveTolerance;
-			$scope.spikeByConnectedMachinesDecreaseTolerance = data[0].NegativeTolerance;
+			$scope.spikeByConnectedMachinesIncreaseTolerance = parseInt(data[0].PositiveTolerance);
+			$scope.spikeByConnectedMachinesDecreaseTolerance = parseInt(data[0].NegativeTolerance);
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
