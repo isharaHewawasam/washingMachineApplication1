@@ -1751,7 +1751,7 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	    $("#hiddenDivMap").removeClass("hidden");    	        
 	    $("#mapMaxImg").addClass("hidden");       
 	    $("#map-container").height(660); 
-	    $("#map-container").width(1424); 
+	    //$("#map-container").width(1424); 
 	    $("#mapMinImg").removeClass("hidden");    
 	     
         renderMap("#map-container",salesDataSet );        
