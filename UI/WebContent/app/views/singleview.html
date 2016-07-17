@@ -540,19 +540,19 @@
 					<div class="list-group-item">
 						<div ng-controller="notificationController"
 							ng-init="getTwitterSentiments()">
-							<div class="media-box-heading" ng-show="data.length">
+							<div class="media-box-heading" ng-show="data.length || isError">
 								<h4>Twitter Sentiments</h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length" ng-if="itm.twitter_count != itm.full_count">
+								ng-show="data.length">
 								<div
-									ng-if="itm.twitter_response_type=='Positive' && itm.twitter_count/itm.full_count*100 > positiveTwitterSentimentThreshold">
-									<p class="text-warning m0">{{itm.twitter_response_type}}
-										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+									ng-if="itm.twitter_positives_increase_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}} 
+									Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										above {{positiveTwitterSentimentThreshold}}%</p>
-									<small class="text-greens pull-right ml">{{itm.twitter_count/itm.full_count*100
+									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
 										| number:0}}%</small> <br>
-									<progressbar value="itm.twitter_count/itm.full_count*100"
+									<progressbar value="itm.twitter_positives_increase_spike"
 										type="greens" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
@@ -561,13 +561,13 @@
 									<br>
 								</div>
 								<div
-									ng-if="itm.twitter_response_type=='Positive' && itm.twitter_count/itm.full_count*100 <= positiveTwitterSentimentThreshold">
-									<p class="text-warning m0">Twitter sentiment score for
+									ng-if="itm.twitter_positives_decrease_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}} Twitter sentiment score for
 										{{itm.Make}} - {{itm.Model}} is below
 										{{positiveTwitterSentimentThreshold}}%</p>
-									<small class="text-pink pull-right ml">{{itm.twitter_count/itm.full_count*100
+									<small class="text-pink pull-right ml">{{itm.twitter_positives_decrease_spike
 										| number:0}}%</small> <br>
-									<progressbar value="itm.twitter_count/itm.full_count*100"
+									<progressbar value="itm.twitter_positives_decrease_spike"
 										type="pink" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
@@ -576,13 +576,13 @@
 									<br>
 								</div>
 								<div
-									ng-if="itm.twitter_response_type=='Negative' && itm.twitter_count/itm.full_count*100 > negativeTwitterSentimentThreshold">
+									ng-if="itm.twitter_negatives_increase_spike">
 									<p class="text-warning m0">{{itm.twitter_response_type}}
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										above {{negativeTwitterSentimentThreshold}}%</p>
-									<small class="text-pink pull-right ml">{{itm.twitter_count/itm.full_count*100
+									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
 										| number:0}}%</small> <br>
-									<progressbar value="itm.twitter_count/itm.full_count*100"
+									<progressbar value="itm.twitter_negatives_increase_spike"
 										type="pink" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
@@ -591,13 +591,13 @@
 									<br>
 								</div>
 								<div
-									ng-if="itm.twitter_response_type=='Negative' && itm.twitter_count/itm.full_count*100 <= negativeTwitterSentimentThreshold">
-									<p class="text-warning m0">Twitter sentiment score for
+									ng-if="itm.twitter_negatives_decrease_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}} Twitter sentiment score for
 										{{itm.Make}} - {{itm.Model}} is below
 										{{negativeTwitterSentimentThreshold}}%</p>
-									<small class="text-greens pull-right ml">{{itm.twitter_count/itm.full_count*100
+									<small class="text-greens pull-right ml">{{itm.twitter_negatives_decrease_spike
 										| number:0}}%</small> <br>
-									<progressbar value="itm.twitter_count/itm.full_count*100"
+									<progressbar value="itm.twitter_negatives_decrease_spike"
 										type="greens" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br> 
@@ -628,24 +628,19 @@
 
 					<div class="list-group-item" ng-controller="notificationController"
 						ng-init="getSpikesInConnectedMachines()">
-						<div class="media-box-heading" ng-show="data.length">
+						<div class="media-box-heading" ng-show="data.length || isError">
 							<h4>Spike in connected washing machines</h4>
 						</div>
 						<div class="media-box">
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length" ng-if="itm.current_connected_machines != itm.previous_connected_machines">
-								<p class="text-warning m0">The number of connected machines
-									are increased by {{(itm.current_connected_machines -
-									itm.previous_connected_machines)/itm.previous_connected_machines*100
-									| number:0}}% in last 4 weeks</p>
-								<div
-									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 > spikeByConnectedMachinesIncreaseTolerance">
-									<small class="text-pink pull-right ml">{{(itm.current_connected_machines
-										-
-										itm.previous_connected_machines)/itm.previous_connected_machines*100
+								ng-show="data.length">								
+								<div ng-if="itm.decrease_spike">
+									<p class="text-warning m0">The number of connected machines
+									are increased by {{itm.decrease_spike}}% in last 4 weeks</p>
+									<small class="text-pink pull-right ml">{{itm.decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar
-										value="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100"
+										value="itm.decrease_spike"
 										type="pink" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br> 
@@ -653,14 +648,13 @@
 										data-trigger="hover"></progressbar>
 									<br>
 								</div>
-								<div
-									ng-if="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100 < spikeByConnectedMachinesDecreaseTolerance">
-									<small class="text-greens pull-right ml">{{(itm.current_connected_machines
-										-
-										itm.previous_connected_machines)/itm.previous_connected_machines*100
+								<div ng-if="itm.increase_spike">
+									<p class="text-warning m0">The number of connected machines
+									are increased by {{itm.increase_spike}}% in last 4 weeks</p>
+									<small class="text-greens pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>
 									<progressbar
-										value="(itm.current_connected_machines - itm.previous_connected_machines)/itm.previous_connected_machines*100"
+										value="itm.increase_spike"
 										type="greens" class="progress-xs m0" style=" height: 10px;"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br> 

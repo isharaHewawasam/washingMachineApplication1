@@ -16,6 +16,6 @@ App.constant('iot.config.buildVersion','0.1') // updated by Grunt
 		negativeTwitterSentimentThreshold: 10,
 		negativeTwitterSentimentTolerance: 10,
 		spikeByConnectedMachinesTolerance: 80,
-		spikeBySpecificErrorsTolerance: 80,
+		spikeBySpecificErrorsTolerance: 20,
 		spikeBySpecificErrorByMakeModelTolerance: 25
 	});

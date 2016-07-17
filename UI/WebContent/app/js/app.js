@@ -1951,7 +1951,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
     $scope.isError = false;
     //$scope.isNoDataDB = false;
     $scope.msg1 = "Loading.....Please wait";
-   // $scope.msg2="No Data Found";
+    $scope.msg2="No Data Found";
     $scope.msg3 = "Service is Unavailable";
 	$scope.getTwitterSentiments = function(){
 		$scope.isDisabled = true;
@@ -1961,8 +1961,8 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
-            	  "role": "mkt_manager",
-            	  "charttype": "twitter_sentiments"
+            	  "Userrole": "mkt_manager",
+            	  "Charttype": "twitter_sentiments"
             	}
             
 		}).success(function(data, status) {
@@ -1971,10 +1971,31 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 			$scope.negativeTwitterSentimentThreshold = data[0].negative_threshold + data[0].negative_tolerance;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {				    	 			    	
+			    	 
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
 			    	 	$scope.data = data;
+			    	 	
+			    	 	for (var i=0; i< data.length; i++){
+			    			 
+			    			 var twitterCountDifference = data[i].twitter_count/data[i].full_count*100;
+			    			 
+			    			 if (data[i].twitter_response_type == 'Positive' && twitterCountDifference >= $scope.positiveTwitterSentimentThreshold){
+			    				 data[i].twitter_positives_increase_spike = twitterCountDifference;
+			    			 } else if (data[i].twitter_response_type == 'Positive' && twitterCountDifference < $scope.positiveTwitterSentimentThreshold){
+			    				 data[i].twitter_positives_decrease_spike = twitterCountDifference;			    				 
+			    			 } else if (data[i].twitter_response_type == 'Negative' && twitterCountDifference >= $scope.negativeTwitterSentimentThreshold){
+			    				 data[i].twitter_negatives_increase_spike = twitterCountDifference;
+			    			 } else {
+			    				 data[i].twitter_negatives_decrease_spike = twitterCountDifference;
+			    			 } 
+			    		 }			    	 	
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
 			    	 }
 						           
 			}). error(function(data, status) {
@@ -2001,8 +2022,8 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-            data: {"role": "mkt_manager",
-            	  "charttype": "spikes_in_connected_machines"
+            data: {"Userrole": "mkt_manager",
+            	  "Charttype": "spikes_in_connected_machines"
             	  }            
 		}).success(function(data, status) {
 			$scope.spikeByConnectedMachinesIncreaseTolerance = data[0].increase_tolerance;
@@ -2010,9 +2031,37 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
 			    		 $scope.data = data;
+			    		 
+			    		 // Calculate the difference between connected machines as of today and the connected machines 4 weeks ago.
+			    		 // Remove the data that is not above increase tolerance or below decrease tolerance
+			    		 for (var i=0; i< data.length; i++){
+			    			 
+			    			 var connectdMachineCountDifference = (data[i].current_connected_machines - data[i].previous_connected_machines)/data[i].previous_connected_machines*100;
+			    			 
+			    			 if (connectdMachineCountDifference > $scope.spikeByConnectedMachinesIncreaseTolerance){
+			    				 data[i].increase_spike = connectdMachineCountDifference;
+			    			 } else if (connectdMachineCountDifference < $scope.spikeByConnectedMachinesDecreaseTolerance){
+			    				 data[i].decrease_spike = connectdMachineCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
 			    	 }
 						           
 			}). error(function(data, status) {
@@ -2039,20 +2088,48 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-            data: {"role": "eng_manager",
-            	  "charttype": "spikes_in_specific_errors"
+            data: {"Userrole": "eng_manager",
+            	  "Charttype": "spikes_in_specific_errors"
             	  }
             
 		}).success(function(data, status) {
 			
 			$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
-			$scope.spikeErrorType = data[0].error_type_increase;
+			$scope.spikeErrorTypeIncrease = data[0].error_type_increase;
+			$scope.spikeErrorTypeDecrease = data[0].error_type_decrease;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    		 $scope.data = data;			    		 
+			    		 $scope.data = data;	
+			    		 
+			    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
+			    		 // Remove the data that is not in the specified types and not within the specified ranges
+			    		 for (var i=0; i< data.length; i++){
+			    			 var errorCountDifference = (data[i].current_error_count - data[i].previous_error_count)/data[i].previous_error_count*100;
+			    			 
+			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorsTolerance)){
+			    				 data[i].increase_spike = errorCountDifference;
+			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorsTolerance)){
+			    				 data[i].decrease_spike = errorCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }			    		 			    		 
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
 			    	 }
 						           
 			}). error(function(data, status) {
@@ -2072,18 +2149,6 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 	
 	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
 		
-		/*$scope.showSpikeContentFlag = false;
-		
-		$scope.data = [{make:'Make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25}];
-		$scope.data = [{make:'Make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25},
-		               {make:'Make2', model: 'Model3', reason: 'Errors', current_error_count:70, previous_error_count: 55}];
-		
-		if ($scope.data || $scope.data.length != 0) {
-   		 	$scope.showSpikeContentFlag = true;
-   	 	}
-		
-		$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;*/
-		
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;
 		
@@ -2091,20 +2156,46 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
-            	  "role": "eng_manager",
-            	  "charttype": "spikes_in_connected_machines_by_make_model"
+            	  "Userrole": "eng_manager",
+            	  "Charttype": "spikes_in_connected_machines_by_make_model"
             	}
             
 		}).success(function(data, status) {
 			
 			$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
-			$scope.spikeErrorType = data[0].error_type_descrese;
+			$scope.spikeErrorTypeIncrease = data[0].error_type_increase;
+			$scope.spikeErrorTypeDecrease = data[0].error_type_decrease;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    		 $scope.data = data;			    		 
+			    		 $scope.data = data;				    		 
+			    		 
+			    		 for (var i=0; i< data.length; i++){
+			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;			    			 
+			    			 			    			 
+			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorByMakeModelTolerance)){
+			    				 data[i].increase_spike = errorCountDifference;
+			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorByMakeModelTolerance)){
+			    				 data[i].decrease_spike = errorCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    		 
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
 			    	 }
 						           
 			}). error(function(data, status) {
