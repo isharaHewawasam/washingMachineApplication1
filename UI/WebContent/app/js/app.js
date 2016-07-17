@@ -1946,13 +1946,17 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
-App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', 'iot.config.Notification', function ($scope, $http, configApiClient, configNotification) {
+App.controller('notificationController', ['$rootScope', '$scope', '$http', '$window', 'iot.config.ApiClient', 'iot.config.Notification', function ($rootScope, $scope, $http, $window, configApiClient, configNotification) {
 	$scope.isDisabled = false;
     $scope.isError = false;
     //$scope.isNoDataDB = false;
     $scope.msg1 = "Loading.....Please wait";
     $scope.msg2="No Data Found";
     $scope.msg3 = "Service is Unavailable";
+    
+    var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+	var userid = loginCredentails.email;
+    
 	$scope.getTwitterSentiments = function(){
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;
@@ -1961,14 +1965,13 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
-            	  "Userrole": "mkt_manager",
-            	  "Charttype": "twitter_sentiments"
+            	  "Username": userid
             	}
             
 		}).success(function(data, status) {
 			
-			$scope.positiveTwitterSentimentThreshold = data[0].positive_threshold + data[0].positive_tolerance;
-			$scope.negativeTwitterSentimentThreshold = data[0].negative_threshold + data[0].negative_tolerance;
+			$scope.positiveTwitterSentimentThreshold = parseInt(data[0].PositiveScore) + parseInt(data[0].PositiveBaseline);
+			$scope.negativeTwitterSentimentThreshold = parseInt(data[0].NegativeScore) + parseInt(data[0].NegativeBaseline);
 			
 			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {				    	 			    	
@@ -2022,12 +2025,11 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-            data: {"Userrole": "mkt_manager",
-            	  "Charttype": "spikes_in_connected_machines"
-            	  }            
+            data: {"Username": userid}  
+            
 		}).success(function(data, status) {
-			$scope.spikeByConnectedMachinesIncreaseTolerance = data[0].increase_tolerance;
-			$scope.spikeByConnectedMachinesDecreaseTolerance = data[0].decrease_tolerance;
+			$scope.spikeByConnectedMachinesIncreaseTolerance = data[0].PositiveTolerance;
+			$scope.spikeByConnectedMachinesDecreaseTolerance = data[0].NegativeTolerance;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
@@ -2088,15 +2090,13 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-            data: {"Userrole": "eng_manager",
-            	  "Charttype": "spikes_in_specific_errors"
-            	  }
+            data: {"Username": userid}
             
 		}).success(function(data, status) {
 			
 			$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
-			$scope.spikeErrorTypeIncrease = data[0].error_type_increase;
-			$scope.spikeErrorTypeDecrease = data[0].error_type_decrease;
+			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype1;
+			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype1;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
@@ -2106,7 +2106,7 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
 			    		 $scope.data = data;	
 			    		 
 			    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
-			    		 // Remove the data that is not in the specified types and not within the specified ranges
+			    		 // Remove the data that is not a specified error type and not within the specified ranges
 			    		 for (var i=0; i< data.length; i++){
 			    			 var errorCountDifference = (data[i].current_error_count - data[i].previous_error_count)/data[i].previous_error_count*100;
 			    			 
@@ -2156,15 +2156,14 @@ App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClie
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
-            	  "Userrole": "eng_manager",
-            	  "Charttype": "spikes_in_connected_machines_by_make_model"
+            	  "Username": userid
             	}
             
 		}).success(function(data, status) {
 			
 			$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
-			$scope.spikeErrorTypeIncrease = data[0].error_type_increase;
-			$scope.spikeErrorTypeDecrease = data[0].error_type_decrease;
+			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype2;
+			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype2;
 			
 			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
