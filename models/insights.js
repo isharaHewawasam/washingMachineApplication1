@@ -220,7 +220,7 @@ exports.getTwitterhandle = function(callback) {
 exports.getNotificationconfigsettings = function(callback) {
       var options = { q: '*:*'};
       
-      dbconfig.view('notificationconfig', 'notificationconfig', options, function(err, result) {
+      dbconfig.view('notificationconfig', 'sendrequestfornotifications', options, function(err, result) {
             if (err) {
                   console.error(err);
                   return callback(err, null);
