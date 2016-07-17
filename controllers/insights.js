@@ -141,23 +141,31 @@ module.exports.getTwitterhandle = function(req, res, next) {
 //Notification configuration settings send response
 module.exports.getNotificationconfigsettings = function(req, res, next) { 
 	insights.getNotificationconfigsettings(function(err, result){ 
-		console.log(req.body);
-		var userRole=req.body.Userrole;
-		var chartType=req.body.Charttype;
-
+		var userName=req.body.Username;
+		
 		var responseArray=[];
-		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
-			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
+
+		for(var i=0;i<result.rows.length;i++){
+			var usernamedb=result.rows[i].key[0].UserName;
+			if(userName==usernamedb){
+
+				if(userName=="mkt_manager@bluemix.com"){
+					responseArray.push({'Make':result.rows[i].key[0].Make,'Model':result.rows[i].key[0].Model,
+									'PositiveScore':result.rows[i].key[0].PositiveScore,
+									'PositiveBaseline':result.rows[i].key[0].PositiveBaseline,'NegativeScore':result.rows[i].key[0].NegativeScore,
+									'NegativeBaseline':result.rows[i].key[0].NegativeBaseline,'PositiveTolerance':result.rows[i].key[0].PositiveTolerance,
+									'NegativeTolerance':result.rows[i].key[0].NegativeTolerance});
+
+				}
+				else if(userName=="eng_manager@bluemix.com"){
+					responseArray.push({'IncreaseErrortype1':result.rows[i].key[0].IncreaseErrortype1,
+						'DecreaseErrortype1':result.rows[i].key[0].DecreaseErrortype1,'IncreaseErrortype2':result.rows[i].key[0].IncreaseErrortype2,
+						'DecreaseErrortype2':result.rows[i].key[0].DecreaseErrortype2});
+				}
+				
+			}
 		}
-		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
-			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
-		}
-		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
-			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
-		}
-		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
-			responseArray.push({'error_type_increase':"Water","error_type_decrease": "Water"});
-		}
+
 	    helper.sendResponse(res, err, responseArray); 
 	});
 };
