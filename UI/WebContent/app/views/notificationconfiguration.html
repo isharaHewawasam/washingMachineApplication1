@@ -79,7 +79,7 @@
 					Show notification when number of wash errors increase by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control"
+					<select class="form-control"
 						ng-model="errorInc.name">
 						<option class="option-text-style" value="" disabled selected>Select Error
 						<option class="option-text-style" ng-repeat="errorInc in washErrorsIncrease"
@@ -94,7 +94,7 @@
 					Show notification when number of wash errors decrease by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control"
+					<select class="form-control"
 						ng-model="errorDec.name">
 						<option class="option-text-style" value="" disabled selected>Select Error
 						<option class="option-text-style" ng-repeat="errorDec in washErrorsDecrease"
@@ -107,8 +107,8 @@
 			</div>
 			
 			<div style="width:95%; position: absolute; bottom: 30px">
-				<button type="button" class="mb-sm btn btn-primary searchbtn">Save</button>
-        		<button type="button" class="mb-sm btn btn-primary searchbtn">Cancel</button>
+				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
+        		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
         	
 		</div>
@@ -124,14 +124,14 @@
 					Show notification when Twitter negative sentiment score is more by (x%) for baseline value (y%)
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedScore">
+					<select class="form-control" ng-model="notificationConfig.selectedNegativeScore">
 						<option class="option-text-style" value="" disabled selected>Score
 						<option class="option-text-style" ng-repeat="score in scores"
 							value={{score.value}}>{{score.value}}</option>
 					</select>
 				</div>
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedBaseline">
+					<select class="form-control" ng-model="notificationConfig.selectedNegativeBaseline">
 						<option class="option-text-style" value="" disabled selected>Baseline
 						<option class="option-text-style" ng-repeat="baseline in baselines"
 							value={{baseline.value}}>{{baseline.value}}</option>
@@ -144,14 +144,14 @@
 					Show notification when Twitter positive sentiment score is more by (x%) for baseline value (y%)
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedScore">
+					<select class="form-control" ng-model="notificationConfig.selectedPositiveScore">
 						<option class="option-text-style" value="" disabled selected>Score
 						<option class="option-text-style" ng-repeat="score in scores"
 							value={{score.value}}>{{score.value}}</option>
 					</select>
 				</div>
 				<div class="col-lg-2">
-					<select name="" class="form-control" ng-model="selectedBaseline">
+					<select class="form-control" ng-model="notificationConfig.selectedPositiveBaseline">
 						<option class="option-text-style" value="" disabled selected>Baseline
 						<option class="option-text-style" ng-repeat="baseline in baselines"
 							value={{baseline.value}}>{{baseline.value}}</option>
@@ -165,8 +165,8 @@
 					Show notification when connected washing machines are increased by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control"
-						ng-model="selectedIncreasedTolernce">
+					<select class="form-control"
+						ng-model="notificationConfig.selectedIncreasedTolernce">
 						<option class="option-text-style" value="" disabled selected>Tolernce
 						<option class="option-text-style" ng-repeat="tolernce in tolernces"
 							value={{tolernce.value}}>{{tolernce.value}}</option>
@@ -180,8 +180,8 @@
 					Show notification when connected washing machines are lower by (x%) in last 4 weeks
 				</div>		
 				<div class="col-lg-2">
-					<select name="" class="form-control"
-						ng-model="selectedLowerTolernce">
+					<select class="form-control"
+						ng-model="notificationConfig.selectedLowerTolernce">
 						<option class="option-text-style" value="" disabled selected>Tolernce
 						<option class="option-text-style" ng-repeat="tolernce in tolernces"
 							value={{tolernce.value}}>{{tolernce.value}}</option>
@@ -193,8 +193,8 @@
 			</div>
 			
 			<div style="width:95%; position: absolute; bottom: 30px">
-				<button type="button" class="mb-sm btn btn-primary searchbtn">Save</button>
-        		<button type="button" class="mb-sm btn btn-primary searchbtn">Cancel</button>
+				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
+        		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
 		</div>
 	
