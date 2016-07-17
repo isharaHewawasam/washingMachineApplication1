@@ -141,8 +141,25 @@ module.exports.getTwitterhandle = function(req, res, next) {
 //Notification configuration settings send response
 module.exports.getNotificationconfigsettings = function(req, res, next) { 
 	insights.getNotificationconfigsettings(function(err, result){ 
+		console.log(req.body);
+		var userRole=req.body.Userrole;
+		var chartType=req.body.Charttype;
 		
-	    helper.sendResponse(res, err, result); 
+		var responseArray=[];
+		if(userRole=="mkt_manager"&&chartType=="twitter_sentiments"){
+			responseArray.push({'positive_threshold':10,'positive_tolerance':10,'negative_threshold':10,'negative_tolerance':10});
+		}
+		else if(userRole=="mkt_manager"&&chartType=="spikes_in_connected_machines"){
+			responseArray.push({'increase_tolerance':50,'decrease_tolerance':20});
+			console.log("asasas");
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_specific_errors"){
+			responseArray.push({'error_type_increase':"Water"});
+		}
+		else if(userRole=="eng_manager"&&chartType=="spikes_in_connected_machines_by_make_model"){
+			responseArray.push({'error_type_descrese':"Water"});
+		}
+	    helper.sendResponse(res, err, responseArray); 
 	});
 };
 

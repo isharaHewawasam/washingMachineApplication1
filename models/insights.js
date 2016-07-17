@@ -218,7 +218,7 @@ exports.getTwitterhandle = function(callback) {
 
 //Notification area chart response api
 exports.getNotificationconfigsettings = function(callback) {
-  callback(null, "Success");  
+  callback(null, callback);  
 }; 
 
 
