@@ -316,8 +316,10 @@ function addMissingData(payload, callback) {
   var FilterClass = require("./filters"); 
   var filter = new FilterClass(payload, 1)
    
+
   /*if ( filter.isFilterByNone() ||  
        filter.isFilterByModel() ||
+       filter.isFilterCategoryByRegion() ||
        filter.isFilterByYear() ||
        filter.isFilterCategoryByFamily() ||
        filter.isFilterCategoryMixed_(payload)
@@ -325,7 +327,7 @@ function addMissingData(payload, callback) {
        callback(null, payload);
   }*/
        
-  //callback(null, payload)
+
   
   if (filter.isFilterByMake()) {
     var Config = require("./config");
@@ -350,6 +352,7 @@ function addMissingData(payload, callback) {
     
     //console.log("end");
   }
+  
   callback(null, payload);
   /*if (filter.isFilterByCity()) {
     var Config = require("../config");

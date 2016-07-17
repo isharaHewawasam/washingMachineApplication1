@@ -3,7 +3,7 @@
         
         z-index: 899988;
         /*width:80px;*/ 
-        height:80px; 
+        height:71px; 
         border-bottom:1px solid #4E4E4E;
         margin-top: 0px;
         color: #979797;
@@ -19,9 +19,55 @@
          background-color: #4A88C9;
         color: #fff;
     }
-
+    
+.sidebarItemActive::after {    display: block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    float: none;
+    z-index: auto;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    content: "";
+    cursor: default;
+    opacity: 1;
+    top: 5px;
+    /* right: 100%; */
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 18px solid rgba(0,0,0,0);
+    border-right: 26px solid rgb(250,250,250);
+    border-left: 0 solid;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    font: normal 100%/normal Arial, Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: 50% 50% 0;
+    transform-origin: 50% 50% 0;
+    position: relative;
+    float: right;
+    z-index: 999;
+    font-size: 30px;
+    margin-top: -54px;
+    margin-right: -13px;
+}
     .md-datepicker-calendar-pane {
         z-index: 1151;
+        width: 310px;
     }
     
     .element-margin{
@@ -47,9 +93,16 @@
         width: 32px;
         height: 32px;
     }
-    
+    .fontSubText{
+         text-align: left;
+        font-family: Roboto;light;
+        font-size:14px;
+           margin-bottom: 0px;
+        padding: 10px;
+
+    }
        
-#filterPanel {
+#filterPanel,#reportsPanel {
     background: #000;
     width: 231px;
     height: auto;
@@ -126,12 +179,12 @@
     <div class="aside-inner" >
         <nav class="sidebar">
             <div class="nav">
-                <div id="dashboardNav" class="leftbar-icon sidebarItemActive">
+                <div id="dashboardNav" class="leftbar-icon sidebarItemActive" ng-controller="MyviewController">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="app/img/Dashboardassets/dashboard.png">
+                        <a href="" ng-click="getUrl()"><img class="iconpos" src="app/img/Dashboardassets/dashboard.png"></a>
                     </div>
-                    <div class="menu-text">Dashboard</div>
-                </div>
+                    <a href="" ng-click="getUrl()"style="color: inherit; text-decoration: none;"><div class="menu-text">Dashboard</div></a>
+				</div>
                 <div  id="filterNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
                         <img class="iconpos" src="app/img/Dashboardassets/machine.png">
@@ -144,6 +197,12 @@
                     </div>
                     <div class="menu-text">Demographics</div>
                 </div>
+                <div  id="reportsNav" class="leftbar-icon">
+					<div class="sidebarIconContainer">
+						<img class="iconpos" src="app/img/Dashboardassets/reports.png">
+					</div>
+					<div class="menu-text">Reports</div>
+				</div>        
             </div>
         </nav>
     </div>
@@ -214,81 +273,129 @@
            <select class="form-control" ng-model="search.incomeRange">
                 <option class="option-text-style" value="" disabled selected>Income Range</option>
                 <!-- <option class="option-text-style" value="" >All -->
-                <option class="option-text-style" ng-repeat="income in demoIncomeRange" value={{income.range}}>{{income.range}}</option>
+                <option class="option-text-style" ng-repeat="income in demoIncomeRange" value={{income.id}}>{{income.range}}</option>
             </select>
         </div>
         
         <div class="form-group element-margin">
             <select  class="form-control" ng-model="search.occupation">
                 <option class="option-text-style" value="" disabled selected>Family members</option>
-                <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count.count}}>{{count.count}}</option>
+                <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count.id}}>{{count.count}}</option>
             </select>
         </div>
         
         <div class="form-group element-margin">
              <select  class="form-control" ng-model="search.ageGroup">
                 <option class="option-text-style" value="" disabled selected>Age Group</option>
-                <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age.range}}>{{age.range}}</option>
+                <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age.id}}>{{age.range}}</option>
             </select>
         </div>
         
         <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()">Apply Filter 
         </button>
     </div>
+    <!--reports-->
+
+    <div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
+       <div class="divSpacePad">
+            <label>Reports</label>
+        </div>
+		<div style="width:100%; background:#e7eef6" class="fontSubText">
+       		<span><a ng-click="getReports()" style="">Washing machine Status Report</a></span>
+           <!-- <button  class="btn btn-primary clearfltrbtn " ng-click="getReports()">  Washing machine Status Report</button>  -->
+        </div>
+       
+	</div>
 
 <script>
 
-        $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
-            $('#filterPanel').show();
-            $('#filterNav').addClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
-            $('#dashboardNav').removeClass('sidebarItemActive');
-            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
-            $('#calenderNav').removeClass('sidebarItemActive');
-            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
-            /* $('#demographicsNav').removeClass('sidebarItemActive');
-            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png'); */
-            
-        });
-        $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
-            if($('.md-pane-open').is(":visible")){
-                return;
-            }
-            $('#filterPanel').hide();
-            $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
-            $('#dashboardNav').addClass('sidebarItemActive');
-            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
-            $('#calenderNav').addClass('sidebarItemActive');
-            $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');
-            /* $('#demographicsNav').addClass('sidebarItemActive');
-            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png'); */
-            event.stopPropagation();
-        });
+$(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
+    $('#filterPanel').show();
+    $('#filterNav').addClass('sidebarItemActive');
+    $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+   /* $('#calenderNav').removeClass('sidebarItemActive');
+    $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');*/
+    $('#demographicsNav').removeClass('sidebarItemActive');
+    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png'); 
+    $('#reportsNav').removeClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png'); 
+    
+});
+$(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
+    if($('.md-pane-open').is(":visible")){
+        return;
+    }
+    $('#filterPanel').hide();
+    $('#filterNav').removeClass('sidebarItemActive');
+    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#dashboardNav').addClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    /*$('#calenderNav').addClass('sidebarItemActive');
+    $('#calenderNav img').attr('src','app/img/Dashboardassets/calendar.png');*/
+    $('#demographicsNav').removeClass('sidebarItemActive');
+    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png'); 
+    $('#reportsNav').removeClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png'); 
+    event.stopPropagation();
+});
 
 
-        $(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", function(event) {
-            $('#demographicsFilterPanel').show();
-            $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
-            $('#dashboardNav').removeClass('sidebarItemActive');
-            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
-            $('#demographicsNav').addClass('sidebarItemActive');
-            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png');
-        });
+$(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", function(event) {
+    $('#demographicsFilterPanel').show();
+    $('#filterNav').removeClass('sidebarItemActive');
+    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+    $('#demographicsNav').addClass('sidebarItemActive');
+    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png');
+    $('#reportsNav').removeClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+});
 
-        $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
-            if($('.md-pane-open').is(":visible")){
-                return;
-            }
-            $('#demographicsFilterPanel').hide();
-            $('#filterNav').removeClass('sidebarItemActive');
-            $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
-            $('#dashboardNav').addClass('sidebarItemActive');
-            $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
-            $('#demographicsNav').removeClass('sidebarItemActive');
-            $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
-            event.stopPropagation();
-        });
+$(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
+    if($('.md-pane-open').is(":visible")){
+        return;
+    }
+    $('#demographicsFilterPanel').hide();
+    $('#filterNav').removeClass('sidebarItemActive');
+    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#dashboardNav').addClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#demographicsNav').removeClass('sidebarItemActive');
+    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+    $('#reportsNav').removeClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    event.stopPropagation();
+});
+
+//reports
+$(document).on("mouseover", "#reportsNav, #reportsPanel", function(event) {
+   $('#reportsPanel').show();
+   $('#filterNav').removeClass('sidebarItemActive');
+   $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+   $('#reportsNav').addClass('sidebarItemActive');
+   $('#reportsNav img').attr('src','app/img/Dashboardassets/reports_hover.png');
+   $('#dashboardNav').removeClass('sidebarItemActive');
+   $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+   $('#demographicsNav').removeClass('sidebarItemActive');
+   $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+});
+$(document).on("mouseleave", "#reportsNav, #reportsPanel", function(event) {
+   if($('.md-pane-open').is(":visible")){
+       return;
+   }
+   $('#reportsPanel').hide();
+   $('#reportsNav').removeClass('sidebarItemActive');
+   $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+   $('#dashboardNav').addClass('sidebarItemActive');
+   $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+   $('#demographicsNav').removeClass('sidebarItemActive');
+   $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+   $('#filterNav').removeClass('sidebarItemActive');
+   $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+   event.stopPropagation();
+});
 
 </script>

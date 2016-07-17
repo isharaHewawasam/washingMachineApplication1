@@ -1,6 +1,10 @@
 //'use strict';
 var db = require('../database/faultWashes_db.js');
+var dbconfig = require('../database/notificationConfigDb.js');
 var COLLECTION_NAME = 'stores';
+
+var DB_NAME = 'washdatafailedwashes';
+
 
 //most fault recrds models
 exports.getMostFaultModels = function(callback) {
@@ -112,8 +116,46 @@ exports.getmostFault = function(callback) {
   });
 };
 
-//twitter notification
+//spike in number of specific error by make with real db
+exports.getspikeerrorBymake = function(callback) {
+      var options = { q: '*:*', group_level:3 };
+      var optionsforalldata = { q: '*:*', group_level:3 };
+      db.view('insights', 'specific-error-bymake', options, function(err, result) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  db.view('insights', 'specific-error-bymakeall', optionsforalldata, function(err, resultall) {
+                    if(err){
+                      console.log(err);
+                      return callback(err, null);
+                    }
+                    else{
+                      var arryforData = [];
+                      var fourweekBackdataarray=result.rows.length;
+                      var allyearData=resultall.rows.length;
 
+                      if(fourweekBackdataarray==allyearData){
+
+                        for (var i = 0; i < resultall.rows.length; i++) {
+                          arryforData.push({'make':resultall.rows[i].key[0],'model':resultall.rows[i].key[1],'error_type':resultall.rows[i].key[2],
+                            'countAlldata':resultall.rows[i].value,'countfourweekBack':result.rows[i].value});
+                        }
+                      }              
+                      return callback(err, arryforData);
+                    }
+                  });
+                  
+            }
+      });
+}
+
+//Login Authentication
+exports.getAuthentication = function(callback) {
+  callback(null, "Success");  
+};
+
+//twitter notification
 exports.getTwitternotificationsentiments = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotifications);  
 };
@@ -121,3 +163,89 @@ exports.getTwitternotificationsentiments = function(callback) {
 exports.getTwitternotificationspike = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitternotificationsspike);  
 };
+//spike in number of specific error
+exports.getTwitternotificationspikeerrors = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerror);  
+};
+//spike in number of specific error by make
+exports.getTwitternotificationspikeerrorsbymake = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitternotificationsspikeerrorbymake);  
+};
+
+//Twitter inner page apis
+
+//Twitter insights table api
+exports.getTwitterinsightstable = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsights);  
+};
+
+//Twitter insights table api for requested id
+exports.getTwittersentimentsforid = function(callback) {
+  var tweets_count=Math.floor(Math.random() * 15)+5;
+  var tweetsimpress_count=Math.floor(Math.random() * 3900)+2500;
+  var profilevisits_count=Math.floor(Math.random() * 1000)+500;
+  var mentions_count=Math.floor(Math.random() * 20)+10;
+  var twitter_count=Math.floor(Math.random() * 300)+200;
+  var twitter_percentage=Math.floor(Math.random() * 90)+50;
+  var sentimate_positive=Math.floor(Math.random() * 90)+50;
+  var sentimate_neutral=Math.floor(Math.random() * 90)+50;
+  var sentimate_negative=Math.floor(Math.random() * 90)+50;
+
+  var randomDataarry=[{'tweets_count':tweets_count,'tweetsimpress_count':tweetsimpress_count,'profilevisits_count':profilevisits_count,
+                        'mentions_count':mentions_count,'twitter_count':twitter_count,"tweets_percentage":78.3,"tweetsimpress_percentage":68.8,
+                        "profilevisits_percentage":34.6,"mentions_percentage":23.1,'twitter_percentage':twitter_percentage,
+                        'sentimate_positive':sentimate_positive,'sentimate_neutral':sentimate_neutral,'sentimate_negative':sentimate_negative}];
+  callback(null,randomDataarry);
+  //callback(null, require("./twiiternotification_dummy").twitterinnerpagesentimentsforrequestedid);  
+};
+
+//Twitter Sentiments grpah api
+exports.getTwittersentiments = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpagesentiments);  
+};
+
+//Notification APi
+exports.getNotificationonload = function(callback) {
+  var randomnumber=Math.floor(Math.random() * 4) + 1 ;
+  var arrayRandom=[{'notification_count':randomnumber}]
+  callback(null, arrayRandom);  
+};
+
+//Twitter Handles graph api in single view
+exports.getTwitterhandle = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterhandle);  
+}; 
+
+//Notification area chart response api
+exports.getNotificationconfigsettings = function(callback) {
+      var options = { q: '*:*'};
+      
+      dbconfig.view('notificationconfig', 'sendrequestfornotifications', options, function(err, result) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  
+                  return callback(err, result);
+                  
+            }
+      });  
+}; 
+
+
+//Notification configuration setting insert to db api
+exports.getNotificationconfigsettingsfrompage = function(callback) {
+      var options = { q: '*:*'};
+      
+      dbconfig.view('notificationconfig', 'notificationconfig', options, function(err, result) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  
+                  return callback(err, result);
+                  
+            }
+      });
+
+}; 

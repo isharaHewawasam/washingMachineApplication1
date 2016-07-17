@@ -8,6 +8,8 @@
    <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
    <title ng-bind="$state.current.data.title"></title>
    
+   <link rel="shortcut icon" href="app/img/favicon.ico" type="image/x-icon" />
+   
    <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
    <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
@@ -15,13 +17,17 @@
    <link rel="stylesheet" href="app/js/bootstrap/css/bootstrap.css">
    <link href="app/js/bootstrap/css/bootstrap-multiselect.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.css">
+   <link href="app/css/style.css" rel="stylesheet">
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat}">
    <div data-ui-view="" data-autoscroll="false" class="wrapper"></div>
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
+   <script src="app/js/twitterinsights.js"></script>
+   <script src="app/js/notificationconfiguration.js"></script>
    <script src="app/components/config/config.js"></script>
+   <script src="app/components/notification/notification_config_thresholds.js"></script>
    <script src="http://maps.googleapis.com/maps/api/js"></script>
    <script type="text/javascript" src="app/js/jquery/jquery-2.2.3.js"></script>
 	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -45,10 +51,13 @@
     
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-messages.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js"></script>  
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-messages.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js"></script>
+	  
+	<script src="app/js/html2canvas.js"></script>
+	<script src="app/js/pdfmake.min.js"></script>
+	<script src="app/js/reportconfig.js"></script>	
 	
 	
 </body>

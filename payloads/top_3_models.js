@@ -3,7 +3,7 @@ var payload = {
     "makes": [],
     "models": [],
     "skus": [],
-    "mfg_date": {
+    "mfg_date_": {
       "start_date": "07/01/2015",
       "end_date": "07/01/2016"
     }

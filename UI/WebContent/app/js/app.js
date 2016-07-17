@@ -13,11 +13,20 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 
 //  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
 
+var login = angular.module('myLoginCheck',[]).
+factory('$logincheck', function(){
+  return function(isLogin){
+	  console.log('isLogin : ', isLogin);
+	  if(isLogin) return true;
+	  return false;  
+  };
+});
+
 // APP START
 // ----------------------------------- 
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages'])
+var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -130,6 +139,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('engmanagerview.html'),
         data:{title: 'IoT for Electronics - Engineering Manager Dashboard'}
     })
+    .state('app.reports', {
+        url: '/reports',
+        title: 'Reports View',
+        controller: 'reportController',
+        templateUrl: helper.basepath('reports.html'),
+        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+    })
 	.state('app.myownview', {
         url: '/myownview',
         title: 'My own view',
@@ -141,14 +157,20 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'Submenu',
        
         templateUrl: helper.basepath('submenu.html')
-    })
-    
+    })   
     .state('app.twitterinsights', {
         url: '/twitterinsights',
         title: 'Twitter Insights View',
         controller: 'TwitterInsightsController',
         templateUrl: helper.basepath('twitterinsights.html'),
         data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+    })
+    .state('app.notificationconf', {
+        url: '/notificationconf',
+        title: 'Notification Configuration View',
+        controller: 'NotificationConfController',
+        templateUrl: helper.basepath('notificationconfiguration.html'),
+        data:{title: 'Notification Configuration - Marketing Manager Dashboard'}
     })
     
     // 
@@ -170,7 +192,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     ;
 
 
-}]).config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
+}]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
+	  if(!$logincheck($window.sessionStorage.loginCredentails)) {
+		  $location.path('/login');
+	  }
+}]);
+App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
 
     // Lazy Load modules configuration
@@ -258,54 +285,43 @@ App
   })
 ;
 
-
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state,$rootScope) {
+App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
 	//alert("loaded");
 	
 	
-	
+	$rootScope.credentials = {};
 	$scope.postForm = function() {
-
+		var loginCredentials = {
+			username: $scope.inputData.username,
+			password: $scope.inputData.password
+		};
+		$http({url:configApiClient.baseUrl + 'login/authentication',
+              method: "POST",
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              data: loginCredentials
+         }).success(function(data, status) {
+     			if (data.response == 'Success') {
+     				$rootScope.credentials.Name = data.name;
+     				$rootScope.credentials.email = data.username;
+     				$rootScope.credentials.roleKey = data.role;
+     				$rootScope.credentials.Role = data.rolename;
+     				localStorage.setItem('rolename', data.rolename);
+     				if (data.role == 'mkt_manager') {
+     					$state.go('app.singleview');
+     				} else if(data.role == 'eng_manager') {
+     					$state.go('app.engmanagerview');
+     				}
+     				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
+     			} else {
+     				$scope.errorMsg = 'The user name or password you entered is incorrect.';
+     			}
+         }). error(function(data, status) {
+                console.log("error in login :", data);
+                $scope.errorMsg = 'Network issue, please try after some time.';
+         });
 		
-		//{ success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-		 var response1 = { success: $scope.inputData.username === 'eng_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	        if(!response1.success) {
-	      	//  $scope.errorMsg  = 'Not Authorised';
-	        	
-	        	 var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-	             if(!response.success) {
-	           	  $scope.errorMsg  = 'We weren\'t able to find the email address and password combination you entered';
-	             }else{
-	           	//  $scope.errorMsg = 'success';
-	           	  $state.go('app.singleview');
-	           	  
-	           	$rootScope.Role="Marketing Manager";
-	        	$rootScope.Name="John Smith";
-	             };
-	        	
-	        	
-	        }else{
-	      	 // $scope.errorMsg = 'success';
-	      	$state.go('app.engmanagerview');
-	      	$rootScope.Role="Engineering Manager";
-	      	$rootScope.Name="Alan Mcdormet";
-	      	  // window.location.href = 'success.html';
-	      	 // $state.go('app.singleview');
-	      	  
-	      //	 $state.go('app.engmanagerview');
-	      	//return
-	        };
 		
-		/*
-		  var response = { success: $scope.inputData.username === 'mkt_manager@bluemix.com' &&  $scope.inputData.password === 'test123' };
-        if(!response.success) {
-      	  $scope.errorMsg  = 'Not Authorised';
-        }else{
-      	  $scope.errorMsg = 'success';
-      	  $state.go('app.singleview');
-      	  
-      	
-        };*/
+//	        $window.sessionStorage.isLoggedIn = true;
 //alert("loaded");
 //$state.go('app.login');
 
@@ -339,22 +355,43 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 
 
 
-
-App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', function($rootScope,$scope, $http, $state) {
-	//alert("loaded");
-	console.log("name from rootscope "+$rootScope.Name);
-	$scope.rolename=$rootScope.Role;
-	$scope.names=$rootScope.Name;
-	console.log("names from scope "+$scope.names);
+App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', '$window', '$localStorage', "iot.config.ApiClient", function($rootScope,$scope, $http, $state, $window, $localStorage, configApiClient) {
+	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+	$scope.rolename=loginCredentails.Role;
+	$scope.names=loginCredentails.Name;
+	$scope.notificationAlertFlag = false;
+	$scope.roleKey=loginCredentails.roleKey;
 	
-	
-	
-	
-	 $scope.logOut=function(){
+	$scope.getNewNotificationCount = function() {
 		
-		 $state.go('page.login');
-		   }
-	}]);
+		$http({url:configApiClient.baseUrl + 'notifications/notification-alert', 
+		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+		     
+		    $scope.notificationCount = data[0].notification_count;
+		 	$scope.notificationAlertFlag = true;
+					           
+		}). error(function(data, status) {
+		       console.log("Error getting data for most fault models, status: " + status);
+		});	
+	}
+	
+	$scope.clearNotificationCount = function() {
+		$scope.notificationAlertFlag = false;
+	}
+	
+	
+	$scope.logOut=function(){
+		delete $window.sessionStorage.loginCredentails;
+		$state.go('page.login');
+ 	}
+	
+	$scope.loadNotificationConf = function() {
+		console.log("-------------Notification Conf---------------");
+		$localStorage.showTwitterInnerLint = false;
+		$state.go('app.notificationconf');
+	};
+	
+}]);
 /**=========================================================
  * Module: main.js
  * Main Application Controller
@@ -527,12 +564,22 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	}]);
 
 
-App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $timeout, $http, $state, configApiClient) {
+App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $rootScope, $timeout, $http, $state, configApiClient) {
 	
+		$scope.isDisabled = false;
+		$scope.isError = false;
+		//$scope.isNoDataDB = false;
+		$scope.msg1 = "Loading.....Please wait";
+		//$scope.msg2="No data Found";
+		$scope.msg3 = "Service is Unavailable";
+    
 	  $scope.getMostFaults = function(divId) {
+		  	$scope.isDisabled = true;
+	        $scope.msg = $scope.msg1;
 		  
 		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostFaultDataStr = JSON.stringify(data);
 					  
@@ -544,15 +591,21 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Fault');		               
 						           
 			}). error(function(data, status) {
+					$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most fault models, status: " + status);
 			});			 
 	  };
 	  
 	  $scope.getLeastFaults = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			               
+			    	 
+			    	 $scope.isDisabled = false;      
 			    	 var leastFaultDataStr = JSON.stringify(data);
 					  
 			    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
@@ -563,15 +616,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Least Fault');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for least fault models, status: " + status);
 			});			  
 	  };
 	  
 	  $scope.getCommonFaults = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 		               
+			    	 $scope.isDisabled = false;		               
 			    	 var commonFaultDataStr = JSON.stringify(data.faults);
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
@@ -581,13 +639,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Common Fault');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most common faults, status: " + status);
 			});	
 	  };
 	   
 	  $scope.getMostUsedModel = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostUsedProductDataStr = JSON.stringify(data.data);
 					  
@@ -599,13 +664,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Used Models');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most used models, status: " + status);
 			});		  		  
 	  };
 	  
 	  $scope.getMostUsedCycles = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var mostUsedCyclesDataStr = JSON.stringify(data);
 					  
@@ -617,13 +689,20 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Most Used Wash Cycles');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for most used wash cycles, status: " + status);
 			});
 	  };
 	  
 	  $scope.getNotConnectedMachines = function(divId) {
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
+		  
 		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
 			               
 			    	 var notConnectedDataStr = JSON.stringify(data);
 					  
@@ -635,6 +714,9 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 					 renderPieChart(divId, data, 'Not Connected Machines');		               
 						           
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
 			       console.log("Error getting data for disconnected machines, status: " + status);
 			});	
 	  };
@@ -654,28 +736,9 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 		  var twitterTitle = "Twitter Handles";
 		  
 		  renderPieChart(divId, twitterData, twitterTitle);
-		  
-		  /*$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			               
-			    	 var mostFaultDataStr = JSON.stringify(data);
-					  
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
-							
-					 data = JSON.parse(mostFaultDataStr);
-					 
-					 var twitterTitle = "Twitter Handles " + "<img src='app/img/Dashboardassets/twitter.png' alt='' align='right' style='margin-left: 65px;margin-bottom: 20px'/>";
-						 
-					 renderPieChart(divId, data, twitterTitle);		               
-						           
-			}). error(function(data, status) {
-			       console.log("Error getting data for most fault models, status: " + status);
-			});*/	
 	  };
 	  
 	  $scope.loadTwitterinsights = function() {
-		  console.log("----------Load Twitter Insights Page --------------- ;")
 		  $state.go('app.twitterinsights');
 	  };
 	  
@@ -701,6 +764,22 @@ App.controller('InfiniteScrollController', ["$scope", "$timeout", "$http", "$sta
 
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
+	
+		var monthNames = [
+		  "January", "February", "March",
+		  "April", "May", "June", "July",
+		  "August", "September", "October",
+		  "November", "December"
+		];
+
+		var date = new Date();
+		var day = date.getDate();
+		var monthIndex = date.getMonth();
+		var year = date.getFullYear();
+
+   
+   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
+	
 	$scope.searchButtonText = "Apply Filter";
   $scope.test = false;
 	$scope.isDisabled = false;
@@ -767,150 +846,102 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 					            "value":$scope.region.zip_codes
 					         }
 					      ]
-					   }
+					   },
+					   "income":[{"value": $scope.sidebarObj.incomeRange}],
+					   "age": [{"value": $scope.sidebarObj.ageGroup}],
+					   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
 					};
 		
 		$rootScope.applyFilterBoolean=true;
 		$rootScope.setUsageData($scope.usagedata);
 		
 	}
+
+	//for reports section 
+	$scope.myDate = new Date();
+	
+	$scope.minDate = new Date(
+	$scope.myDate.getFullYear(),
+	$scope.myDate.getMonth() - 2,
+	$scope.myDate.getDate());
+	
+	$scope.maxDate = new Date(
+	$scope.myDate.getFullYear(),
+	$scope.myDate.getMonth() + 2,
+	$scope.myDate.getDate());
+	
+	$scope.myDate1 = new Date();
+
+	$scope.minDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() - 2,
+	$scope.myDate1.getDate());
+
+	$scope.maxDate1 = new Date(
+	$scope.myDate1.getFullYear(),
+	$scope.myDate1.getMonth() + 2,
+	$scope.myDate1.getDate());
+	//for reports section -finish
 	
 	
 	$rootScope.tryit = function() {
-			$scope.searchButtonText = "Filtering...";    
-	  $scope.isDisabled = true;
-	  $scope.test = true;
+		$scope.searchButtonText = "Filtering...";    
+		$scope.isDisabled = true;
+		$scope.test = true;
 		$rootScope.applyFilterBoolean=true;
-	/*
-		if($scope.region.states==undefined)
-			{
-			
-			console.log("states undefined");
-			$scope.usagedata.region.states=[];
-			}
-		
-		if($scope.region.cities==undefined)
-		{
-
-			console.log("cities undefined");
-			$scope.usagedata.region.cities=[];
-		}
-		
-		if($scope.region.zip_codes==undefined)
-		{
-
-			console.log("zip_codes undefined");
-			$scope.usagedata.region.zip_codes=[];
-		}
-		*/
-		/*
-		console.log("region form data  : "+$scope.region);	
-		console.log("states form data  : "+$scope.region.states);	
-		console.log("cities form data  : "+$scope.region.cities);	
-		console.log("codes form data  : "+$scope.region.zip_codes);	*/
-
-		/*$scope.usagedata={
-  				  "productAttrs": {
-  	    		    "makes": [  ],
-  	    		    "models": [],
-  	    		    "skus": [],
-  	    		    "mfg_date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    }
-  	    		  },
-  	    		"timescale": {
-  	      		    "years": [{
-  	    		        "value": parseInt($scope.timescale.years)
-  	    		      } ],
-  	      		    "quarters": [ {
-  	    		        "value": parseInt($scope.timescale.quarters)
-  	    		      }],
-  	      		    "months": [{
-  	    		        "value": parseInt($scope.timescale.months)
-  	    		      } ],
-  	    		    "date": {
-  	    		      "start_date": "01/01/2015",
-  	    		      "end_date": "01/01/2016"
-  	    		    },
-  	    		    "relative": {
-  	    		      "unit": "2",
-  	    		      "value": 0
-  	    		    }
-  	    		  },
-  	    		  "region": {
-  	    		    "states": [
-  	    		      {
-  	    		        
-  	    		    	  "value": $scope.region.states
-  	    		      }
-  	    		    ],
-  	    		    "cities": [
-  	    		               {
-  	    		            	   "value": $scope.region.cities
-  	 	   
-  	    		               }
-  	    		               ],
-  	    		    "zip_codes": [
-  						{
-  							   "value": $scope.region.zip_codes
-  						
-  						}
-  	    		                  ]
-  	    		  }
-  	    		};
-		*/
-		
 		$scope.usagedata={  
-						   "productAttrs":{  
-							   "makes":[{"value":$scope.sidebarObj.selectedMake}],
-							      "models":[{"value":$scope.sidebarObj.selectedModel}],
-							      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-							      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
-							   },
-							   "timescale":{  
-							      "years":[  
-							         {  
-							            "value":parseInt($scope.timescale.years)
-							         }
-							      ],
-							      "quarters":[  
-							         {  
-							            "value":parseInt($scope.timescale.quarters)
-							         }
-							      ],
-							      "months":[  
-							         {  
-							            "value":parseInt($scope.timescale.months)
-							         }
-							      ],
-							      "date":{  
-							         "start_date":"01/01/2015",
-							         "end_date":"01/01/2016"
-							      },
-							      "relative":{  
-							         "unit":"2",
-							         "value":0
-							      }
-							   },
-							   "region":{  
-							      "states":[  
-							         {  
-							            "value":$scope.region.states
-							         }
-							      ],
-							      "cities":[  
-							         {  
-							            "value":$scope.region.cities
-							         }
-							      ],
-							      "zip_codes":[  
-							         {  
-							            "value":$scope.region.zip_codes
-							         }
-							      ]
-							   }
-							};
+		   "productAttrs":{  
+			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
+			      "models":[{"value":$scope.sidebarObj.selectedModel}],
+			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+			      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
+			   },
+			   "timescale":{  
+			      "years":[  
+			         {  
+			            "value":parseInt($scope.timescale.years)
+			         }
+			      ],
+			      "quarters":[  
+			         {  
+			            "value":parseInt($scope.timescale.quarters)
+			         }
+			      ],
+			      "months":[  
+			         {  
+			            "value":parseInt($scope.timescale.months)
+			         }
+			      ],
+			      "date":{  
+			         "start_date":"01/01/2015",
+			         "end_date":"01/01/2016"
+			      },
+			      "relative":{  
+			         "unit":"2",
+			         "value":0
+			      }
+			   },
+			   "region":{  
+			      "states":[  
+			         {  
+			            "value":$scope.region.states
+			         }
+			      ],
+			      "cities":[  
+			         {  
+			            "value":$scope.region.cities
+			         }
+			      ],
+			      "zip_codes":[  
+			         {  
+			            "value":$scope.region.zip_codes
+			         }
+			      ]
+			   },
+			   "income":[{"value": $scope.sidebarObj.incomeRange}],
+			   "age": [{"value": $scope.sidebarObj.ageGroup}],
+			   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+		};
 		
 		//////////start gopal
 		if($scope.region.states==undefined || $scope.region.states=="")
@@ -960,6 +991,18 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		if($scope.sidebarObj.mfgDate==undefined || $scope.sidebarObj.mfgDate=="")
 		{
 			$scope.usagedata.productAttrs.mfg_date=[];
+		}
+		if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+		{
+			$scope.usagedata.income=[];
+		}
+		if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+		{
+			$scope.usagedata.age=[];
+		}
+		if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+		{
+			$scope.usagedata.family_members_count=[];
 		}
 		/*if($scope.region.cities==undefined)
 				$scope.usagedata.region.cities=[];
@@ -1245,7 +1288,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax #gridCloseImg").removeClass("hidden");
 		//$("#gridCloseImg").removeClass("hidden");
 		
-		  $("#gridAdjustHeight").height(560);
+		 $(".tbody").height(600);
 
 	$("#gridMax").removeClass("hidden");
 	
@@ -1256,8 +1299,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$("body").on("click","#gridCloseImg",function(){
 		$("#gridMax").empty();
 		$("#gridMax").addClass("hidden");
-		  $("#gridAdjustHeight").height(160);
-
+		//  $("#gridAdjustHeight").height(160);
+		  $(".tbody").height(200);
 		//$scope.plotChartFunction("container");
     });
 	
@@ -1274,393 +1317,6 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$("#gridMax").addClass("hidden");
 	}
 */}]);
-
-
-App.controller('TwitterInsightsController', 
-		['$rootScope', '$scope', '$state', '$http', '$timeout', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $timeout, configApiClient){
-	
-	$scope.twitter_insights_griddata = [];
-	
-	// dummey data
-	var obj 		= {};
-	obj.make 		= 1;
-	obj.model 		= '#1201';
-	obj.tweets 		= 100;
-	obj.likes 		= 120;
-	obj.dislikes 	= 45;
-	obj.followers 	= 260;
-	obj.comments 	= 521;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 2;
-	obj.model 		= '#1202';
-	obj.tweets 		= 90;
-	obj.likes 		= 170;
-	obj.dislikes 	= 15;
-	obj.followers 	= 560;
-	obj.comments 	= 121;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	var obj 		= {};
-	obj.make 		= 3;
-	obj.model 		= '#1203';
-	obj.tweets 		= 100;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 11;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 4;
-	obj.model 		= '#1204';
-	obj.tweets 		= 60;
-	obj.likes 		= 10;
-	obj.dislikes 	= 150;
-	obj.followers 	= 56;
-	obj.comments 	= 12;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	var obj 		= {};
-	obj.make 		= 5;
-	obj.model 		= '#1205';
-	obj.tweets 		= 50;
-	obj.likes 		= 190;
-	obj.dislikes 	= 18;
-	obj.followers 	= 560;
-	obj.comments 	= 123;
-	$scope.twitter_insights_griddata.push(obj);
-	
-	
-	$("#gridAdjustHeight").height(400);
-	
-	/*$http({url:configApiClient.baseUrl + "twitterinsights/data", //api url
-        method: "POST",
-        Accept: "text/plain"}).success(function(data, status) {
-        		console.log("*****************twitterinsights success ****************");
-        		$scope.twitter_insights_griddata = data; 
-          
-        		//console.log("TwitterInsightsGriddata"+JSON.stringify(data));
-                
-           }). error(function(data, status) {
-        	   console.log("*****************twitterinsights error ****************");
-               console.log("usageerror:"+status);
-             
-    });*/
-	
-	$scope.tweetsData = {};
-	$scope.tweetsData.tweets_color = 'red';
-	$scope.tweetsData.tweets_count = 7;
-	$scope.tweetsData.tweets_percentage = 69.3;
-	
-	$scope.tweetsData.tweetsimpress_color = 'red';
-	$scope.tweetsData.tweetsimpress_count = 3564;
-	$scope.tweetsData.tweetsimpress_percentage = 81.8;
-	
-	$scope.tweetsData.profilevisits_color = 'green';
-	$scope.tweetsData.profilevisits_count = 997;
-	$scope.tweetsData.profilevisits_percentage = 28.6;
-	
-	$scope.tweetsData.mentions_color = 'red';
-	$scope.tweetsData.mentions_count =10;
-	$scope.tweetsData.mentions_percentage = 23.1;
-	
-	$scope.tweetsData.twitter_color = 'red';
-	$scope.tweetsData.twitter_count = 248;
-	$scope.tweetsData.twitter_percentage = 30;
-	
-	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
-	
-	$scope.loadDashboard = function() {
-		$state.go('app.singleview');
-	};
-	
-	$scope.getTextColor = function(color){
-		return (color=='red'? 'twitter_percentage twitter_arrow_red' : 'twitter_percentage twitter_arrow_green');
-	}
-	
-	$scope.maximizeGrid=function(){
-		var gridNormal = $("#gridNormal").clone();
-		
-		$("#gridMax").empty();
-		$("#gridMax").append(gridNormal);
-		
-		$("#gridMax #gridMaxImg").addClass("hidden");
-		$("#gridMax #gridCloseImg").removeClass("hidden");
-		//$("#gridCloseImg").removeClass("hidden");
-		
-		$("#gridAdjustHeight").height(560);
-
-	$("#gridMax").removeClass("hidden");
-	
-	};
-	
-	$("body").on("click","#gridCloseImg",function(){
-		$("#gridMax").empty();
-		$("#gridMax").addClass("hidden");
-		  $("#gridAdjustHeight").height(400);
-    });
-	
-	$scope.getTwitterSentiments = function(divId){
-		  
-			var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Likes","count": 47,"totalComments": 66},
-		                     {"product": "Make 1 - Model C","preferenceName": "Dislikes","count": 10,"totalComments": 66}];
-		  
-		
-		  var twitterData = 
-			  [{"name": "positive", "y": 59, "totalComments": 66},
-			   {"name": "othres", "y": 41, "totalComments": 66}];
-		  
-		  //var twitterDataStr = JSON.stringify(twitterData);
-		  
-		  //twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
-		  //twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-					
-		  //twitterData = JSON.parse(twitterDataStr);
-		  
-		 var twitterTitle = "<img height='30px' width='30' src='app/img/Dashboardassets/twitter.png' alt=''/> Twitter Sentiments";
-			 
-		 var innerText = "<div width='100%' style='text-align:center'>59%</div><div>Positive<div>"; //data.centerText;
-		 renderTwitterSentimentsPieChart(divId+'_pos', twitterData, twitterTitle, innerText); 
-		  
-		  var twitterData = 
-			  [{"name": "Neutral", "y": 27, "totalComments": 66},
-			   {"name": "othres", "y": 73, "totalComments": 66}];
-		  
-		  var innerText = "<div width='100%' style='text-align:center'>27%</div><div>Neutral<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neu', twitterData, twitterTitle, innerText);
-		  
-		  var twitterData = 
-			  [{"name": "Negative", "y": 14, "totalComments": 66},
-			   {"name": "othres", "y": 86, "totalComments": 66}];
-		
-		  var innerText = "<div width='100%' style='text-align:center'>14%</div><div>Negative<div>"; //data.centerText;
-		  renderTwitterSentimentsPieChart(divId+'_neg', twitterData, twitterTitle, innerText);
-		  
-	
-	  };
-	  
-	  $scope.getTwitterData = function(divId) {
-		  
-		  var data = [
-		  			[1247529600000,20.32],
-		  			[1247616000000,20.98],
-		  			[1247702400000,-21.07],
-		  			[1247788800000,25.68],
-		  			[1248048000000,-21.84],
-		  			[1248134400000,21.64],
-		  			[1248220800000,-22.39],
-		  			[1248307200000,22.55],
-		  			[1248393600000,-22.86],
-		  			[1248652800000,22.87],
-		  			[1248739200000,-22.86],
-		  			[1248825600000,22.86],
-		  			[1248912000000,-23.26],
-		  			[1248998400000,23.34]
-		  			];
-		  if(divId == 'mentions_div') {
-			  var data = [
-			  			[1247529600000,-20.32],
-			  			[1247616000000,20.98],
-			  			[1247702400000,21.07],
-			  			[1247788800000,-25.68],
-			  			[1248048000000,-21.84],
-			  			[1248134400000,-21.64],
-			  			[1248220800000,22.39],
-			  			[1248307200000,-22.55],
-			  			[1248393600000,22.86],
-			  			[1248652800000,22.87],
-			  			[1248739200000,22.86],
-			  			[1248825600000,-22.86],
-			  			[1248912000000,-23.26],
-			  			[1248998400000,23.34]
-			  			];
-		  }else if(divId == 'impressions_div'){
-			  var data = [
-			  			[1247529600000,20.32],
-			  			[1247616000000,-20.98],
-			  			[1247702400000,-21.07],
-			  			[1247788800000,25.68],
-			  			[1248048000000,-21.84],
-			  			[1248134400000,-21.64],
-			  			[1248220800000,22.39],
-			  			[1248307200000,22.55],
-			  			[1248393600000,-22.86],
-			  			[1248652800000,-22.87],
-			  			[1248739200000,-22.86],
-			  			[1248825600000,22.86],
-			  			[1248912000000,-23.26],
-			  			[1248998400000,23.34]
-			  			];
-		  }
-		  renderTwitterSentimentsLineChart(divId, data);
-    	
-	  }
-}]);
-
-function renderTwitterSentimentsLineChart(divId, insightsData) {
-	  var pieChart = new Highcharts.Chart({
-	      chart: {
-	        	renderTo: divId,
-	        	width: 140,
-	        	height:70,
-//	        	margin: [0, 10, 10, 10]
-	        	spacingLeft: 0,
-	        	spacingTop: 0
-	      },
-	      credits: {
-	          enabled: false
-	      },
-          rangeSelector: {
-              selected: 1
-          },
-          exporting: { enabled: false },
-          title: {
-              text: ''
-          },
-          tooltip: false,
-          xAxis: {
-                categories: [''],
-                title: {
-                    text: null
-                },
-                labels: {enabled:false,y : 20, rotation: -45, align: 'right' }
-            },
-          yAxis: {
-              title: {
-                  text: ''
-              },
-              visible: false
-          },
-          series: [{
-              name: '',
-              showInLegend: false,
-              data: insightsData,
-              type: 'spline',
-              tooltip: {
-                  valueDecimals: 2
-              }
-          }]
-	  });
-}
-function renderTwitterSentimentsPieChart(divId, insightsData, chartTitle, innerText){
-	
-	var colorCode = ['#339933', '#808080']; // For Positive
-	if(divId == 'twitter_sentiments_neg'){
-		colorCode = ['#FF0000', '#808080']; // For Negative
-	}else if(divId == 'twitter_sentiments_neu'){
-		colorCode = ['#5DADE2', '#808080']; // For Neutral
-	}
-	
-	var chart = new Highcharts.Chart({
-        chart: {
-        	renderTo:divId,
-        	width: 120,
-        	height: 120,
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie',
-            /*marginRight:140,*/
-            margin: [0, 0, 0, 0],
-            events: {
-            	load: function(event) {
-            		/*if (divId == 'twitter-handle-container'){
-            			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +this.series[0].data[0].totalComments + '</b></div>');
-            		}*/
-            	}
-            }
-        },
-        credits: {
-	    	enabled: false
-	    },
-	    exporting: { 
-	    	enabled: false 
-	    },
-        title: {
-            text: '',
-            useHTML: true,
-            align: 'left',
-            style: {
-                color: '#0099cc'
-            },
-            floating: true,
-            y: 24,
-            x: 15
-        },
-        tooltip: false,
-        
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true,
-                colors: colorCode, //divId != 'twitter-handle-container'?['#339933', '#808080', '#ffcc00', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
-                size: 10,
-                center: ['50%', '50%']
-            }
-        },
-        
-        series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            size: '80%',
-            innerSize: '80%',
-            showInLegend:false,
-            data: insightsData
-        }]
-    },
-    function(chart) { // on complete
-    	
-    	var div = '#'+divId;
-    	
-    	/*console.log("------div ",div);
-    	var offsets = $(div).offset();
-    	var top = offsets.top;
-    	var left = offsets.left;
-    	console.log("------- top left ",left);*/
-    	
-    	var position = $(div).position();
-    	console.log('X: ' + position.left + ", Y: " + position.top );
-    	  
-        var textX = position.left + 45; // chart.plotLeft + (chart.plotWidth  * 0.5);
-        var textY = chart.plotTop  + (chart.plotHeight * 0.5);
-        console.log(" textX ",textX);
-        console.log(" textY ",textY);
-        /*var span = '<span id="pieChartInfoText" style="position:absolute; width:100px; text-align:center">';
-        span += '<span style="font-size: 25px; font-weight: bold; text-align:center;">'+chart.series[1].data[1].y+'%</span><br>';
-        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">Targets recovered</span><br>';
-        span += '<span style="font-size: 10px; font-weight: bolder; text-align:center;">before breach</span>';
-        span += '</span>';*/
-        	        
-        span = innerText;
-        
-        //if(data.showCenterText){
-	        //$('#'+divId+'_text').remove();
-        	console.log('-----------id ','#'+divId+'_text');
-        
-        	//$('#'+divId+'_text').remove();
-	        $('#'+divId+'_text').append(span);
-	        	span = $('#'+divId+'_text');
-	        	console.log("span id "+span.id);
-	        	
-	        	console.log("X = "+(textX + (span.width() * -0.5)+30));
-	            console.log("Y = "+(textY + (span.height() * -0.5)+2));
-	            
-	        	span.css('left', textX + (span.width() * -0.5)+30);
-	        	span.css('top', textY + (span.height() * -0.5)+2);
-        //}
-    }
-	
-    );	
-};
 
 /**=========================================================
  * Module: sidebar-menu.js
@@ -1688,6 +1344,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           
          $rootScope.search={};
          $rootScope.filterIcons=[];
+         $rootScope.setUsageObjectFromSidebar($rootScope.search);
+         $rootScope.tryit();
       }
     
    $scope.createIconArray=function(){
@@ -1826,10 +1484,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
        	 	 obj.incomeRange=$rootScope.search.incomeRange;
        	 	 obj.occupation=$rootScope.search.occupation;
        	 	 obj.ageGroup=$rootScope.search.ageGroup;
-             //$rootScope.setUsageObjectFromSidebar(obj);
-             console.log("applied demographic filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+             $rootScope.setUsageObjectFromSidebar(obj);
+             console.log("applied demographic filter  incomeRange :"+$rootScope.search.incomeRange+", occupation :"+$rootScope.search.occupation+",ageGroup :"+$rootScope.search.ageGroup);
              $scope.createIconArray();
-             document.getElementById('filterPanel').style.display = 'none';
+             document.getElementById('demographicsFilterPanel').style.display = 'none';
+             $rootScope.tryit();
          };
 
     
@@ -2024,7 +1683,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
        console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
        if(filter.key=="make"){
-           $rootScope.search.make=undefined;
+           $rootScope.search.selectedMake=undefined;
            $rootScope.search.selectedModel=undefined;
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgDate=undefined;
@@ -2060,17 +1719,22 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        	$rootScope.search.ageGroup=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }
-      
-   }  
+       console.log('$rootScope.search in removefilter : ', $rootScope.search);
+       $rootScope.setUsageObjectFromSidebar($rootScope.search);
+      $rootScope.tryit();
+   };  
 }]);
 
 App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
+    $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
+              $scope.progress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
 			    	console.log("Sales Volume List : "+JSON.stringify(data));
 			    	
 			    	renderMap(divId, data);
-			    	
+                      salesDataSet = data;                      
+                      $scope.progress = false;
 			    }). error(function(data, status) {
 			      // alert("error"  +status);
 			       console.log('Error : ' + status);
@@ -2079,26 +1743,27 @@ App.controller('mapController',['$scope','$http','iot.config.ApiClient',function
 	}
 	
 	$scope.maximizeMap=function(){        
-	        
+        
 		var mapNormal = $("#mapNormal").clone();        
 	        
-	    $("#hiddenDiv").empty();
-	    $("#hiddenDiv").append(mapNormal);	        
-	    $("#hiddenDiv").removeClass("hidden");    	        
+	    $("#hiddenDivMap").empty();
+	    $("#hiddenDivMap").append(mapNormal);	        
+	    $("#hiddenDivMap").removeClass("hidden");    	        
 	    $("#mapMaxImg").addClass("hidden");       
-	    $("#map-container").height(660); 	        
+	    $("#map-container").height(660); 
+	    //$("#map-container").width(1424); 
 	    $("#mapMinImg").removeClass("hidden");    
 	     
-	    $scope.plotMapFunction("map-container");        
+        renderMap("#map-container",salesDataSet );        
 	 }
 	 
 	$("body").on("click"," #mapMinImg",function(){
 	    var elem = $("#map-container");
-	    $("#hiddenDiv").empty();
-	    $("#hiddenDiv").addClass("hidden");       
+	    $("#hiddenDivMap").empty();
+	    $("#hiddenDivMap").addClass("hidden");       
 	    elem.addClass("map-mapDiv");  
-	    $scope.plotMapFunction("map-container");
-	});
+        renderMap("#map-container",salesDataSet );
+	}); 
 
 }]);
 
@@ -2113,28 +1778,46 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
+    
+    
+    
+    var zipcode;
+    if(salesDataStr.includes("zip_code")){
+        zipcode = true;
+    }else{
+       zipcode = false;
+    } 
+    
 	// Initiate the map
-	var chart = Highcharts.Map({
-        chart: {
-            renderTo: divId
-        },
-        credits:{
-        	enabled:false
-        },
+    $(function () {
+          
+    //var chart = Highcharts.Map({
+    $('#map-container').highcharts('Map', {
+      chart: {
+          //renderTo: divId
+          
+      },
+      credits:{
+      	enabled:false
+      },
 	    exporting: { 
 	    	enabled: false 
 	    },
 	    title: {
-	        text: 'Sales Volume Distribution'
+	        text: ''
 	    },
 	
 	    mapNavigation: {
 	        enabled: true
 	    },
 	
+    
 	    tooltip: {
 	        headerFormat: '',
-	        pointFormat: '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+            pointFormat: zipcode == true ? 
+                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+                    
 	    },
 	    
 	    plotOptions: {
@@ -2171,7 +1854,7 @@ function renderMap(divId, salesData){
 	        }
 	    }]
 	});
-	
+});
 	//console.log('Rendered the app successfully');
 	
 }
@@ -2263,43 +1946,271 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
-App.controller('notificationController', ['$scope', '$http', 'iot.config.ApiClient', function ($scope, $http, configApiClient) {
-	$scope.getTwitterSentimates = function(){
+App.controller('notificationController', ['$rootScope', '$scope', '$http', '$window', 'iot.config.ApiClient', 'iot.config.Notification', function ($rootScope, $scope, $http, $window, configApiClient, configNotification) {
+	$scope.isDisabled = false;
+    $scope.isError = false;
+    //$scope.isNoDataDB = false;
+    $scope.msg1 = "Loading.....Please wait";
+    $scope.msg2="No Data Found";
+    $scope.msg3 = "Service is Unavailable";
+    
+    var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+	var userid = loginCredentails.email;
+    
+	$scope.getTwitterSentiments = function(){
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
 		
-		$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-sentiments', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 
-		    	 $scope.data = data;
-					           
-		}). error(function(data, status) {
-				$scope.data = [{name:'#1234', Model: 'Model3', Make:'Make1', twitter_count:60, full_count: 100}];
-				console.log("Error getting data for twitter notification sentiments, status: " + status);
-		});	
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
+            data: {
+            	  "Username": userid
+            	}
+            
+		}).success(function(data, status) {
+			
+			$scope.positiveTwitterSentimentThreshold = parseInt(data[0].PositiveScore) + parseInt(data[0].PositiveBaseline);
+			$scope.negativeTwitterSentimentThreshold = parseInt(data[0].NegativeScore) + parseInt(data[0].NegativeBaseline);
+			
+			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {				    	 			    	
+			    	 
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    	 	$scope.data = data;
+			    	 	
+			    	 	for (var i=0; i< data.length; i++){
+			    			 
+			    			 var twitterCountDifference = data[i].twitter_count/data[i].full_count*100;
+			    			 
+			    			 if (data[i].twitter_response_type == 'Positive' && twitterCountDifference >= $scope.positiveTwitterSentimentThreshold){
+			    				 data[i].twitter_positives_increase_spike = twitterCountDifference;
+			    			 } else if (data[i].twitter_response_type == 'Positive' && twitterCountDifference < $scope.positiveTwitterSentimentThreshold){
+			    				 data[i].twitter_positives_decrease_spike = twitterCountDifference;			    				 
+			    			 } else if (data[i].twitter_response_type == 'Negative' && twitterCountDifference >= $scope.negativeTwitterSentimentThreshold){
+			    				 data[i].twitter_negatives_increase_spike = twitterCountDifference;
+			    			 } else {
+			    				 data[i].twitter_negatives_decrease_spike = twitterCountDifference;
+			    			 } 
+			    		 }			    	 	
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+					console.log("Error getting data for twitter notification sentiments, status: " + status);
+			});
+    	 	
+        }). error(function(data, status) {
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+				console.log("Error getting configuration data for twitter notification sentiments, status: " + status);
+        });
 		
-		/*$scope.data = [{name:'#1234', count:60, total: 100}];*/
 	};
 	
-	$scope.getSpikesInMachines = function() {
-		/*$http({url:configApiClient.baseUrl + 'insights/twitter-notifications-spike', 
-		     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-		    	 
-		    	 $scope.data = data;
-					           
-		}). error(function(data, status) {
-				$scope.data = [{make:'LG', model: 'SKU 6', reason: 'Not happy with the programs', count:30, total: 100}];
-				console.log("Error getting data for twitter notification sentiments, status: " + status);
-		});*/
+	$scope.getSpikesInConnectedMachines = function() {
 		
-		$scope.data = [{make:'Make12', model: 'Model6', reason: 'Not happy with the programs', count:30, total: 100}];
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;			
+		
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {"Username": userid}  
+            
+		}).success(function(data, status) {
+			$scope.spikeByConnectedMachinesIncreaseTolerance = parseInt(data[0].PositiveTolerance);
+			$scope.spikeByConnectedMachinesDecreaseTolerance = parseInt(data[0].NegativeTolerance);
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;
+			    		 
+			    		 // Calculate the difference between connected machines as of today and the connected machines 4 weeks ago.
+			    		 // Remove the data that is not above increase tolerance or below decrease tolerance
+			    		 for (var i=0; i< data.length; i++){
+			    			 
+			    			 var connectdMachineCountDifference = (data[i].current_connected_machines - data[i].previous_connected_machines)/data[i].previous_connected_machines*100;
+			    			 
+			    			 if (connectdMachineCountDifference > $scope.spikeByConnectedMachinesIncreaseTolerance){
+			    				 data[i].increase_spike = connectdMachineCountDifference;
+			    			 } else if (connectdMachineCountDifference < $scope.spikeByConnectedMachinesDecreaseTolerance){
+			    				 data[i].decrease_spike = connectdMachineCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+					console.log("Error getting data for spikes in connected machines, status: " + status);
+			});
+  	 	  
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+				console.log("Error getting configuration data for spikes in connected machines, status: " + status);
+        });
+		
 	};
 	
-	$scope.getSpikesOfSpecificErrors = function() {
-		$scope.data = [{name:'#1234', errorsNew:45, errorsOld: 30}];
+	$scope.getSpikesInSpecificErrors = function() {
+		
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
+		
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {"Username": userid}
+            
+		}).success(function(data, status) {
+			
+			$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
+			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype1;
+			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype1;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;	
+			    		 
+			    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
+			    		 // Remove the data that is not a specified error type and not within the specified ranges
+			    		 for (var i=0; i< data.length; i++){
+			    			 var errorCountDifference = (data[i].current_error_count - data[i].previous_error_count)/data[i].previous_error_count*100;
+			    			 
+			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorsTolerance)){
+			    				 data[i].increase_spike = errorCountDifference;
+			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorsTolerance)){
+			    				 data[i].decrease_spike = errorCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }			    		 			    		 
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
+			    	 }
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+				console.log("Error getting data for spikes in specific errors, status: " + status);
+			});
+			
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+			console.log("Error getting configuration data for spikes in specific errors, status: " + status);
+        });
 	};
 	
-	$scope.getSpikesByMakeModel = function() {
-		$scope.data = [{make:'make1', model: 'Model2', reason: 'Not happy with the programs', current_error_count:30, previous_error_count: 25}];
-		//$scope.spikeCount = 10;
+	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
+		
+		$scope.isDisabled = true;
+		$scope.msg = $scope.msg1;
+		
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            data: {
+            	  "Username": userid
+            	}
+            
+		}).success(function(data, status) {
+			
+			$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
+			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype2;
+			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype2;
+			
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+			    	 $scope.isDisabled = false;
+			    	 if (data || data.length != 0) {
+			    		 $scope.data = data;				    		 
+			    		 
+			    		 for (var i=0; i< data.length; i++){
+			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;			    			 
+			    			 			    			 
+			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorByMakeModelTolerance)){
+			    				 data[i].increase_spike = errorCountDifference;
+			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorByMakeModelTolerance)){
+			    				 data[i].decrease_spike = errorCountDifference;
+			    			 } else {
+			    				 data.splice(i, 1);
+			    			 }
+			    		 }
+			    		 
+			    		 if (data.length == 0){
+			    			 $scope.isDisabled = false;
+			 				 $scope.isError = true;
+			 				 $scope.isNoData = true;
+			    			 $scope.msg = $scope.msg2;
+			    		 }
+			    		 
+			    	 } else {
+			    		 $scope.isDisabled = false;
+		 				 $scope.isError = true;
+		 				 $scope.isNoData = true;
+		    			 $scope.msg = $scope.msg2;
+			    	 }
+						           
+			}). error(function(data, status) {
+					$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
+					console.log("Error getting data for spikes in specific errors by make model, status: " + status);
+			});
+			
+        }). error(function(data, status) {          
+        	$scope.isDisabled = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+			console.log("Error getting configuration data for spikes in specific errors by make model, status: " + status);
+        });	
+		
 	};
 	
 	
@@ -2493,7 +2404,18 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
 	  
-	  
+	  $scope.isActive1 = false;
+	    $scope.isActive2 = false;
+	    $scope.isActive3 = false;
+	  $scope.activeButton = function(index) {
+	    if(index ==1)
+	      $scope.isActive1 = !$scope.isActive1;
+	    else if(index == 2)
+	      $scope.isActive2 = !$scope.isActive2;
+	    else
+	      $scope.isActive3 = !$scope.isActive3;
+	  }
+
 	  
 	$scope.disp=function(index){
 		if(index==0)
@@ -2524,13 +2446,15 @@ $scope.plotPieChart=function(divID){
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
+	  console.log('$scope.data : ', $scope.data);
 	if($scope.data==null){
+		console.log('in if piechart');
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
-	    	console.log("Pie Chart response :"+JSON.stringify(data));
+	    	console.log("Pie Chart sucess :", data);
 	    	$scope.progress = false;
 	    	$scope.data=[];
 	    	$scope.data[0]=data.unitsSold;
@@ -2574,13 +2498,14 @@ $scope.plotPieChart=function(divID){
 	        });
 	    }). error(function(data, status) {
 	    	$scope.progress = false;
-	       console.log(JSON.stringify(data));
+	       console.log('in piechart error : ',data);
 	       $scope.progress = false;
 	    })
 	   
 	}else{
-		
+		console.log('in else piechart');
 		if($rootScope.applyFilterBoolean){
+			console.log('in applyFilterBoolean if');
 			$http({
 				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
@@ -2595,7 +2520,7 @@ $scope.plotPieChart=function(divID){
 					 
 				}).success(function(data, status) {
 					$scope.progress = false;
-			    	console.log("Pie Chart response With Filter:"+JSON.stringify(data));
+			    	console.log("Pie Chart response With Filter success : ", data);
 			    	$scope.data[0]=data[0].unitsSold;
 			    	$scope.data[1]=data[0].unitsConnected;
 			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
@@ -2638,12 +2563,13 @@ $scope.plotPieChart=function(divID){
 			    	})
 			    .error(function(data,status){
 			    	$scope.progress = false;
-			    	console.log("Error:"+JSON.stringify(data));
+			    	console.log("Pie Chart response With Filter error : ", data);
 			    });
 				
 			$rootScope.applyFilterBoolean=false;
 		}
 		else{
+			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
 		
 			$(function() {
@@ -2710,6 +2636,9 @@ $scope.plotPieChart=function(divID){
 				        title: {
 				            text: 'Top 3 Selling Models'
 				        },
+				        credits:{
+				        	enabled:false
+				        	},
 				        xAxis: {
 				            categories: [
 				                '2016'
@@ -2724,8 +2653,7 @@ $scope.plotPieChart=function(divID){
 				        },
 				        tooltip: {
 				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-				                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 				            footerFormat: '</table>',
 				            shared: true,
 				            useHTML: true
@@ -2796,8 +2724,7 @@ $scope.plotPieChart=function(divID){
 						        },
 						        tooltip: {
 						            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 						            footerFormat: '</table>',
 						            shared: true,
 						            useHTML: true
@@ -2853,8 +2780,7 @@ $scope.plotPieChart=function(divID){
 			        },
 			        tooltip: {
 			            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-			                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
 			            footerFormat: '</table>',
 			            shared: true,
 			            useHTML: true
@@ -2919,11 +2845,36 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
+		    		legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                y: 50,   
+		                padding: 1,
+		                itemMarginTop: 3,
+		                itemMarginBottom: 3,        
+		                itemStyle: {
+		                    lineHeight: '10px',
+		                    fontSize: '8px',
+		                    fontWeight: 'normal',
+		                   // symbolHeight: 12,
+		                    //symbolWidth: 10,
+		                    symbolRadius: 4
+		                }
+		            },
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
 		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',
@@ -2972,11 +2923,37 @@ $scope.plotPieChart=function(divID){
 				    		credits:false,
 				    		title:false,
 				    		legend: {enabled:false},
+				    		title: {
+				    			text: 'Sales Volumes'
+				    		},
+				    		legend: {
+				                layout: 'vertical',
+				                align: 'right',
+				                verticalAlign: 'top',
+				                y: 50,   
+				                padding: 1,
+				                itemMarginTop: 3,
+				                itemMarginBottom: 3,        
+				                itemStyle: {
+				                    lineHeight: '10px',
+				                    fontSize: '8px',
+				                    fontWeight: 'normal',
+				                   // symbolHeight: 12,
+				                    //symbolWidth: 10,
+				                    symbolRadius: 4
+				                }
+				            },
 				    	    xAxis: {
+				                title: {
+		                            text: 'Time Scale' //new lable for X
+		                        },
+
 				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 				    	    },
 				    	    yAxis: {
-				    			title:false
+				    			title: {
+		                            text: 'Units Sold' //new lable for Y
+		                        }
 				    		    },
 				    		    tooltip: {
 				    		    	backgroundColor: '#87C1E6',
@@ -3013,11 +2990,37 @@ $scope.plotPieChart=function(divID){
 		    		credits:false,
 		    		title:false,
 		    		legend: {enabled:false},
+		    		title: {
+		    			text: 'Sales Volumes'
+		    		},
+		    		legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                y: 50,   
+		                padding: 1,
+		                itemMarginTop: 3,
+		                itemMarginBottom: 3,        
+		                itemStyle: {
+		                    lineHeight: '10px',
+		                    fontSize: '8px',
+		                    fontWeight: 'normal',
+		                   // symbolHeight: 12,
+		                    //symbolWidth: 10,
+		                    symbolRadius: 4
+		                }
+		            },
 		    	    xAxis: {
+		                title: {
+                            text: 'Time Scale' //new lable for X
+                        },
+
 		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
 		    	    },
 		    	    yAxis: {
-		    			title:false
+		    			title: {
+                            text: 'Units Sold' //new lable for Y
+                        }
 		    		    },
 		    		    tooltip: {
 		    		    	backgroundColor: '#87C1E6',
@@ -3069,6 +3072,23 @@ $scope.plotPieChart=function(divID){
 			credits:false,
 			title:false,
 			legend: {enabled:false},
+			title: {
+    			text: ""+$scope.sensortype
+    		},
+            legend: {
+                align: 'right',
+                verticalAlign: 'top',
+                y: 50,
+                padding: 1,
+                itemMarginTop: 5,
+                itemMarginBottom: 5,
+                itemStyle: {
+                    lineHeight: '10px',
+                    fontSize: '10px',
+                    fontWeight: 'normal',
+                     itemWidth: 100
+                }
+            },
 		    xAxis: {
 		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
 		    },
@@ -3872,3 +3892,16 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
+App.controller('MyviewController', ['$scope', function($scope) {
+	  /* controller code */
+	  //console.log("my controller running");
+	  $scope.getUrl = function(){
+	    if(localStorage.getItem('rolename') == "Engineer Manager"){
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
+	    }
+	    else{
+	      $('#dashboardNav a').attr('href','#/app/singleview');
+	    }
+	  }
+}]);
+

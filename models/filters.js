@@ -125,7 +125,9 @@ var Filter = function Filter(payload, view_name){
      this.filter_type = FILTER.BY_USER_INCOME;
   }
     
+  //console.log(JSON.stringify(payload));  
   if (payload.productAttrs.mfg_date !== undefined) {
+    console.log("1");
     this.filter_type = FILTER.BY_MFG_DATE;
   }    
   //Mixed
@@ -140,6 +142,7 @@ var Filter = function Filter(payload, view_name){
       this.filter_category = FILTER_CATEGORY.BY_PRODUCT;
       break;
     case FILTER.BY_MFG_DATE:
+      console.log("2");
       this.filter_category = FILTER_CATEGORY.BY_MFG_DATE;
       break;
     case FILTER.BY_STATE:

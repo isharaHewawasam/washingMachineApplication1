@@ -372,7 +372,7 @@ var fillRecord = function(result, params) {
   }
   
   
-  console.log("record : " + JSON.stringify(record));  
+  //console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
@@ -384,23 +384,25 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if (params.filter.isFilterCategoryByMfgDate()) {
-    var dates_arr = params.payload.productAttrs.mfg_date.start_date.split("/");
-    var start_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
-    
-    dates_arr = params.payload.productAttrs.mfg_date.end_date.split("/");
-    var end_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
-    
-    //console.log("xxx : " + keys);
-    //console.log("x2 : " + params.key_maps.key.MFG_DATE);
-    //console.log("---------------------------");
-    dates_arr = keys[params.key_maps.key.MFG_DATE].split("/");
-    var mfg_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
-    
-    if (mfg_date <= start_date || mfg_date >= end_date) {
-      //console.log("Start Date : " + params.payload.productAttrs.mfg_date.start_date);
-      //console.log("End Date : " + params.payload.productAttrs.mfg_date.end_date);
-      //console.log("Mfg Date : " + keys[params.key_maps.key.MFG_DATE]);
-      return false;
+    if (params.payload.productAttrs.mfg_date.start_date.length > 0) {
+      var dates_arr = params.payload.productAttrs.mfg_date.start_date.split("/");
+      var start_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+      
+      dates_arr = params.payload.productAttrs.mfg_date.end_date.split("/");
+      var end_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+      
+      //console.log("xxx : " + keys);
+      //console.log("x2 : " + params.key_maps.key.MFG_DATE);
+      //console.log("---------------------------");
+      dates_arr = keys[params.key_maps.key.MFG_DATE].split("/");
+      var mfg_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
+      
+      if (mfg_date <= start_date || mfg_date >= end_date) {
+        //console.log("Start Date : " + params.payload.productAttrs.mfg_date.start_date);
+        //console.log("End Date : " + params.payload.productAttrs.mfg_date.end_date);
+        //console.log("Mfg Date : " + keys[params.key_maps.key.MFG_DATE]);
+        return false;
+      }
     }
   }
   

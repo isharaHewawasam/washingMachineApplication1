@@ -9,11 +9,16 @@
 * A configurable value to be changed according to deployment environment. When calling an api from ui, requests will be sent to 
 * the api in this configured host.
 */
-var host= 'http://ibm-iot.mybluemix.net';
-//var applicatio_route = process.env.app_route;
-//console.log("============================My user defined====== " + applicatio_route);
+var host;
+if(location.hostname == 'localhost') {
+	host= 'ibm-iot.mybluemix.net';
+} else {
+	host = location.hostname;
+}
+console.log('host in config file : ', host);
+//var host = location.hostname;
 App.constant('iot.config.buildVersion','0.1') // updated by Grunt
 
 	.constant('iot.config.ApiClient', {
-		baseUrl: host + '/api/v1/'
+		baseUrl: 'http://' + host + '/api/v1/'
 	});

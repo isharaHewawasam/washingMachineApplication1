@@ -137,9 +137,11 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 1)
    
+
   
   /*if ( filter.isFilterByNone() ||  
        filter.isFilterByModel() ||
+       filter.isFilterCategoryByRegion() ||
        filter.isFilterByYear() ||
        filter.isFilterCategoryByFamily() ||
        filter.isFilterCategoryMixed_(payload)

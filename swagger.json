@@ -283,11 +283,34 @@
         }
       }
     },
-    "/insights/twitter-notifications-sentiments": {
+    "/insights/twitter-handles": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterhandle",
+        "tags": ["Insights"],
+        "description": "Return the data to twitter handle graph",
+        "responses": {
+          "default": {
+            "description": "data to twitter handle graph",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-handel"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/twitter-notifications-sentiments": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationsentiments",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "twitter notifications-sentimate",
         "responses": {
           "default": {
@@ -306,11 +329,11 @@
         }
       }
     },
-    "/insights/twitter-notifications-spike": {
+    "/notifications/spike-in-connected-machines": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwitternotificationspike",
-        "tags": ["Insights"],
+        "tags": ["Notifications"],
         "description": "Return twitter notification spike",
         "responses": {
           "default": {
@@ -324,6 +347,361 @@
             "schema": {
               "type": "array",
               "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/spikes-by-specific-errors": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationspikeerrors",
+        "tags": ["Notifications"],
+        "description": "Return twitter notification spike with error",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/twitter-notifications-spike-errors-bymake": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitternotificationspikeerrorsbymake",
+        "tags": ["Notifications"],
+        "description": "Return twitter notification spike with error by make",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error by make",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/most_common_fault"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/spikes-by-specific-errors-by-make-model": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getspikeerrorBymake",
+        "tags": ["Notifications"],
+        "description": "Return twitter notification spike with error by make from real db",
+        "responses": {
+          "default": {
+            "description": "twitter notifications-spike-with-error by make from real db",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/spike_specificerror-bymake"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/configurations/settings": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationconfigsettings",
+        "tags": ["Notifications"],
+        "description": "Returns notifications area chart configuration data",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "notifications area chart configuration data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Notificationsareacharts"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/notificationsAreachart"
+            }
+          }
+        }
+      }
+    },
+    "/notifications/configurations/settings/frompage": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationconfigsettingsfrompage",
+        "tags": ["Notifications"],
+        "description": "update notifications configuration settings in database",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "update notifications configuration settings in database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Notificationsareachartsfrompage"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/notificationsAreachart"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twitter-insights": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterinsightstable",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter insights table data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter insights table data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-twitterinsights"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/tweets": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTweets",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Tweets graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Tweets graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/tweetsimpressions": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTweetsimpressions",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Tweetsimpressions graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Tweetsimpressions graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/profilevisits": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getProfilevisits",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Profile visits graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Profile visits graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/mentions": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getMentions",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page mentions graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page mentions graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twitter": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitter",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-tweets"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twittersentiments": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwittersentiments",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter sentiments graph data",
+        "responses": {
+          "default": {
+            "description": "twitter inner page Twitter sentiments graph data",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/twittersentiments/withid": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwittersentimentsforid",
+        "tags": ["Twitter"],
+        "description": "Return twitter inner page Twitter sentiments graph data for paticular id",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "twitter inner page Twitter sentiments graph data for paticular id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/twitter-innerpage-sentiments-forid"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
+   "/notifications/notification-alert": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getNotificationonload",
+        "tags": ["Notifications"],
+        "description": "Return notification by onload function",
+        "responses": {
+          "default": {
+            "description": "Return notification by onload function",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Notifications"
             }
           }
         }
@@ -725,6 +1103,40 @@
           }
         }
       }
+    },
+    "/login/authentication": {
+      "post": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getAuthentication",
+        "tags": ["Login"],
+        "description": "Returns washing machines usage paramters like water load, detergent, power etc.",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginAuthentication"
+            }
+          }             
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/loginAutentications"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -764,6 +1176,187 @@
         },
         "no_of_faults": {
           "type": "integer"
+        }
+      }
+    },
+    "Notificationsareacharts": {
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "charttype": {
+          "type": "string"
+        }
+      }
+    },
+    "notificationsAreachart": {
+      "properties": {        
+        "positive_threshold": {
+          "type": "integer"         
+        },
+        "positive_tolerance": {
+          "type": "integer"         
+        },
+        "negative_threshold": {
+          "type": "integer"         
+        },
+        "negative_tolerance": {
+          "type": "integer"         
+        }
+      }
+    },  
+    "Notificationsareachartsfrompage": {
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "charttype": {
+          "type": "string"
+        },
+        "value1": {
+          "type": "integer"
+        },
+        "value2": {
+          "type": "integer"
+        }
+      }
+    }, 
+    "twitter-handel":{
+      "properties":{
+        "Make":{
+          "type":"string"
+        },
+        "Model":{
+          "type":"string"
+        },
+        "Error_Type":{
+          "type":"string"
+        },
+        "Allcount":{
+          "type":"integer"
+        },
+        "Countfourweekback":{
+          "type":"integer"
+        }
+      }
+    },
+    "spike_specificerror-bymake": {
+      "properties": {
+        "Make": {
+          "type": "string"
+        },
+        "Model": {
+          "type": "string"
+        },
+        "Reason": {
+          "type": "string"
+        },
+        "Current_error_count":{
+          "type":"integer"
+        },
+        "Previous_error_count":{
+          "type":"integer"
+        },
+        "Error_Type":{
+          "type":"integer"
+        }
+      }
+    },
+    "twitter-innerpage-twitterinsights": {
+      "properties": {
+        "Id":{
+          "type":"integer"
+        },
+        "Make": {
+          "type": "string"
+        },
+        "Model": {
+          "type": "string"
+        },
+        "tweets": {
+          "type": "integer"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "dislikes": {
+          "type": "integer"
+        },
+        "followers": {
+          "type": "integer"
+        },
+        "comments": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-tweets": {
+      "properties": {
+        "Color": {
+          "type": "string"
+        },
+        "Count": {
+          "type": "integer"
+        },
+        "Precenatage": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-sentiments-forid":{
+      "properties":{
+         "tweetsid": {
+          "type": "integer"
+        }
+      }
+    },
+    "twitter-innerpage-sentiments": {
+      "properties": {
+        "tweets": {
+          "type": "integer"
+        },
+        "tweetsimpress_count": {
+          "type": "integer"
+        },
+        "profilevisits_count": {
+          "type": "integer"
+        },
+        "mentions_count": {
+          "type": "integer"
+        },
+        "twitter_count": {
+          "type": "integer"
+        },
+        "tweets_percentage": {
+          "type": "integer"
+        },
+        "tweetsimpress_percentage": {
+          "type": "integer"
+        },
+        "profilevisits_percentage": {
+          "type": "integer"
+        },
+        "mentions_percentage": {
+          "type": "integer"
+        },
+        "twitter_percentage": {
+          "type": "integer"
+        },
+        "sentimate_positive": {
+          "type": "integer"
+        },
+        "sentimate_neutral": {
+          "type": "integer"
+        },
+        "sentimate_negative": {
+          "type": "integer"
+        }
+      }
+    },
+    "Notifications":{
+      "properties":{
+        "Notification":{
+          "type":"integer" 
         }
       }
     },
@@ -981,6 +1574,17 @@
          }
       }
     },
+    "LoginAuthentication": {
+      "properties": {
+        "username": {                   
+           "type": "string"                    
+         },
+         "password": {                   
+           "type":"string"                    
+         }
+         
+      }
+    },
     "SalesByChartPayload": {
       "properties": {
         "xaxis": {                   
@@ -1043,6 +1647,25 @@
         },
         "connected": {                   
            "type": "integer"                    
+        }
+      }
+    },
+    "loginAutentications": {
+      "properties": {        
+        "name": {
+          "type": "string"         
+        },
+        "username": {
+          "type": "string"         
+        },
+        "role": {
+          "type": "string"         
+        },
+        "rolename": {
+          "type": "string"         
+        },
+        "response": {
+          "type": "string"         
         }
       }
     },
