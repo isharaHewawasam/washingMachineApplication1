@@ -297,7 +297,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 		};
 		$http({url:configApiClient.baseUrl + 'login/authentication',
               method: "POST",
-              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
               data: loginCredentials
          }).success(function(data, status) {
      			if (data.response == 'Success') {
@@ -313,7 +313,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
      				}
      				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
      			} else {
-     				$scope.errorMsg = 'The user name or password you entered is incorrect.';
+     				$scope.errorMsg = data;
      			}
          }). error(function(data, status) {
                 console.log("error in login :", data);
@@ -1077,7 +1077,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		//For map
 		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
-                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
                   data: $scope.usagedata
                   
          }).success(function(data, status) {
@@ -1099,25 +1099,32 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
-		$scope.isNoDataFound = null;
+		$scope.isNoDataFound = false;
+		$scope.isError =  false;
+		$scope.isDisabled = true;
+		$scope.msg1 = "Applying Filters... Please wait";
+		$scope.msg2 = "No Data Found";
+		$scope.msg3 =  "Service is Unavailable";
+		$scope.msg = $scope.msg1;
 		
 		//for grid mkt_mgr
 		  $http({url:configApiClient.baseUrl +  'usage', 
 	          method: "POST",
-	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
 	          
 	         }).success(function(data, status) {
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false
+	       	  		$scope.isDisabled = false;
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
 	        		 console.log("empty data");
 	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
 	        		//alert("No data found");
-	                $scope.isNoDataFound = true; //make it true if no data found instead of alert
+	                $scope.isNoDataFound = true; //make it true if no data found instead of alert 
+	                $scope.msg = $scope.msg2;
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
@@ -1126,7 +1133,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	         }). error(function(data, status) {
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false     
+	       	  		$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
 	        	 //alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
@@ -1135,17 +1144,19 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		//For grid from eng manager
 		  $http({url:configApiClient.baseUrl + 'sensors/data', 
 	            method: "POST",
-	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
 	            
 	           }).success(function(data, status) {
 	            console.log("*****************Eng manager_Filter****************");
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
-	                $scope.isDisabled = false
+	                $scope.isDisabled = false;
 	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
 	               console.log("empty data");
+	               $scope.isNoDataFound = true; 
+	               $scope.msg = $scope.msg2;
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
 
 	              //alert("No data found");
@@ -1159,7 +1170,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	            console.log("*****************Eng manager Error_Filter****************");
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
-	                $scope.isDisabled = false     
+	                $scope.isDisabled = false;
+	                $scope.isError = true;
+	                $scope.msg = $scope.msg3;
 	             //alert("No data found");
 	             console.log("error:"+status);
 	             
@@ -1313,7 +1326,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	 $scope.selectZip=function(){
 		
 		 $scope.region.zip_codes=undefined;
-		 //http://washing-machines-api.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
+		 //http://ibm-iot.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
 		 $http({url:configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
@@ -1711,7 +1724,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		
 		console.log("in select make"); 
 		 // alert($scope.selected_make);
-		 $http({url:"http://washing-machines-api.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
+		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -2022,7 +2035,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
             	  "Username": userid
             	}
@@ -2083,7 +2096,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}  
             
 		}).success(function(data, status) {
@@ -2148,7 +2161,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}
             
 		}).success(function(data, status) {
@@ -2213,7 +2226,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
             	  "Username": userid
             	}
@@ -2571,7 +2584,7 @@ $scope.plotPieChart=function(divID){
 				  headers: { 
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
-	                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+	                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
 	                	'Access-Control-Allow-Credentials':true  
           		 },
@@ -2750,7 +2763,7 @@ $scope.plotPieChart=function(divID){
 					  headers: { 
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
 		                	'Access-Control-Allow-Credentials':true  
 	          		 },
@@ -2969,7 +2982,7 @@ $scope.plotPieChart=function(divID){
 					  headers: { 
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://washing-machines-api.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
 		                	'Access-Control-Allow-Credentials':true  
 	          		 },
@@ -3296,9 +3309,9 @@ $scope.plotPieChart=function(divID){
 
 /*App.controller('filterController', function ($scope,$http) {
 	
-	var url = 'http://washing-machines-api.mybluemix.net/api/v1/config/states';
+	var url = 'http://ibm-iot.mybluemix.net/api/v1/config/states';
     
-	$http.get("https://washing-machines-api.mybluemix.net/api/v1/config/states")
+	$http.get("https://ibm-iot.mybluemix.net/api/v1/config/states")
 	 .success(function(response){
 		 $scope.states=[];
 		 $scope.states = response.states; 

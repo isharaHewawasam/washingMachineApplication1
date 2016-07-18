@@ -305,7 +305,7 @@ var isItemPresent = function(array, key_name, item, isRange, ranges){
         }
       }
     } else {
-      if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true 
+      if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
     }      
   }
   

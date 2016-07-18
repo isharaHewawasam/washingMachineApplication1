@@ -286,7 +286,7 @@
         <div class="form-group element-margin">
             <select  class="form-control" ng-model="search.occupation">
                 <option class="option-text-style" value="" disabled selected>Family members</option>
-                <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count.id}}>{{count.count}}</option>
+                <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count.id}}>{{count.range}}</option>
             </select>
         </div>
         
@@ -302,16 +302,19 @@
     </div>
     <!--reports-->
 
-    <div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
-       <div class="divSpacePad">
-            <label>Reports</label>
-        </div>
-		<div style="width:100%; background:#e7eef6" class="fontSubText">
-       		<span><a ng-click="getReports()" style="">Washing machine Status Report</a></span>
-           <!-- <button  class="btn btn-primary clearfltrbtn " ng-click="getReports()">  Washing machine Status Report</button>  -->
-        </div>
-       
-	</div>
+<div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
+                      <div class="divSpacePad">
+                           <label>Reports</label>
+                       </div>
+                        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+                           <span>Washing Machine Status Reports</span>
+                       </div>
+                                             <div style="width:100%; " class="fontSubText">
+                                             <!-- <span><a ng-click="getReports()" style="">Washing machine Status Report</a></span> -->
+                          <button id="clickView" class="mb-sm btn btn-primary searchbtn" style="margin-left:-5px;" ng-click="getReports()">  View Report</button> 
+                       </div>     
+               </div>   
+
 
 <script>
 

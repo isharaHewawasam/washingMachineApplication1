@@ -2,7 +2,7 @@
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div> 
 <div class="hidden gridMaximize" id="gridMax"></div>
-<h3 style="padding-top: 20px; padding-bottom: 10px">
+<h3 style="padding-top: 20px; padding-bottom: 10px; margin-bottom: 0px">
 	<link href="app/css/charts.css" rel="stylesheet" />
 	<link href="app/css/table.css" rel="stylesheet" />
 
@@ -38,7 +38,7 @@
 
 
 
-<div class="row">
+<div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" >
 
 	<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
 
@@ -48,11 +48,9 @@
 
 
 
-	<div class="form-group filter-filterDiv col-lg-12"
-		style="width: 100% auto; margin-top: -26px;" id="filterDivId">
+	<div  class=" col-lg-10"  id="filterDivId" style=" margin-left: inherit">
 
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
 				<option class="option-text-style" value="" disabled selected>States
@@ -77,8 +75,7 @@
 		</div>
 		<!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px !important; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected>Cities
@@ -95,8 +92,7 @@
 		</div>
 		<!-- <div class="col-sm-1" style="padding-left: 3px;" >
                </div> -->
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px !important; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.zip_codes">
 				<option class="option-text-style" value="" disabled selected>Zip
@@ -113,8 +109,7 @@
 		</div>
 		<!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px !important; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.years">
 				<option class="option-text-style" value="" disabled selected>Year
@@ -132,8 +127,7 @@
 		</div>
 		<!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px !important; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.quarters" ng-change="quarterMonths()">
 				<option class="option-text-style" value="" selected disabled>Quarter
@@ -148,8 +142,7 @@
 		</div>
 		<!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
-		<div class="col-lg-2"
-			style="max-width: 150px; margin-left: 15px !important; padding-right: 0px; padding-left: 0px;">
+		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.months">
 				<option class="option-text-style" value="" selected disabled>Month
@@ -163,23 +156,19 @@
 
 		</div>
 
-		<div class="col-lg-1 "
-			style="max-width: 114px; margin-left: 15px !important padding-left:0px;">
-			<button ng-disabled="isDisabled" class="btn btn-default"
-				style="min-width: 114px;; background-color: #4C74E2; height: 34px; font-family: Roboto; font-size: 15px; color: #FFFFFF; margin-left: 42px;"
-				id="applyFilter" ng-click="tryit()">
-				<span ng-show="test"><i
-					class="glyphicon glyphicon-refresh spinning"></i></span>
-				{{searchButtonText}}
-			</button>
-
-		</div>
+		
 
 
 
 
 	</div>
-
+ <div class="col-lg-2 " style="    margin-left: 15px;padding: 0px;" >
+             		<button ng-disabled="isDisabled" class="btn btn-default pull-right "  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;     margin: auto;
+                            margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="tryit()">
+                <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+                {{searchButtonText}}</button>         
+            		
+				</div>
 	<!-- </fieldset> -->
 
 </div>
@@ -188,17 +177,12 @@
 <!-- </div> -->
 
 
-<div class="row" ng-controller="filterIconController">
-	<div ng-show="someArray.length > 0" class="form-group  col-lg-12"
-		style="width: 100% auto;">
-		<div ng-repeat="va in someArray"
-			style="height: 26px; background: #91aed3; padding: 4px; margin: 1px; display: inline-block; color: fff; border-radius: 2px !important; font-size: 11pt;">
-			{{va.value}} <span style="color: #fff; font-size: 11pt;"
-				ng-click='removeFilter(va)'>X</span>
-		</div>
+<div class="row" ng-controller="filterIconController" style="margin-top: 58px;">
+	<div  ng-show="someArray.length > 0" class="form-group  col-lg-12" style="width: 100% auto;">
+	    <div  ng-repeat="va in someArray" 
+	         style="height:26px;background:#91aed3;padding: 4px;margin:1px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va.value}} <span style="color:#fff;font-size:11pt;" ng-click='removeFilter(va)'>X</span></div>
 	</div>
 </div>
-
 
 <div class="row">
 	<!-- START dashboard main content-->
@@ -209,7 +193,7 @@
 			<div class="chart-filterDiv " id="chartFilterDivId">
 				<select ng-class="{'chart-selectStyle2': isActive1}"
 					ng-click="activeButton(1)" id="first-chart-select"
-					class="chart-selectStyle col-md-5 " ng-change="Engdisp($index)"
+					class="chart-selectStyle col-md-4 " ng-change="Engdisp($index)"
 					ng-model="selectedSensors"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 
@@ -254,6 +238,10 @@
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
 					src="app/img/Dashboardassets/close.png" ng-click="closing()">
+					<img class="col-md-1 pull-right"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:9px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."></img>
 			</div>
 
 			<div id="container" class="graphDiv">
@@ -291,6 +279,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png"></img>
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."></img>
 			</div>
 			<div id="map-container" class="map-mapDiv"
 				style="width: 99%; height: 325px">
@@ -305,13 +297,14 @@
 	</div>
 
 
-	<div class="col-lg-4" style="width: 374px; height: 373px">
-		<div class="panel panel-default" style="width: 450px; height: 373px">
+	<div class="col-lg-4" style="height: 373px">
+		<div class="panel panel-default" style="height: 373px">
 			<div class="panel-heading" style="background-color: #ffffff;">
 				<div class="pull-right ">
 					<img class="col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png"></img>
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Insights area frames up more specific details to convey an idea about the cause and effect on the information filtered."></img>
 				</div>
 
 				<div class="panel-title md-body-2"
@@ -415,10 +408,10 @@
 </div>
 
 
+</div>
 
 
-
-<div class="row" style="padding-top: 20px">
+<div class="row" style="padding-top: 0px">
 
 	<!-- START dashboard main content-->
 
@@ -440,7 +433,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
-
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."></img>
 			</div>
 
 
@@ -476,7 +472,7 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed">
-
+							<div ng-show="isDisabled||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 "style="font-weight:bold;  padding-top: 10%; ">{{msg}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
@@ -511,18 +507,19 @@
 	<aside class="col-lg-4" style="">
 
 		<!-- START messages and activity-->
-		<div class="panel panel-default" style="width: 450px; height: 355px">
+		<div class="panel panel-default" style=" height: 355px">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
 					style="font-family: Roboto; font-size: 15px;">
 					Notification<img class="pull-right col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png">
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid.">
 				</div>
 
 			</div>
 
-			<div style="width: 450px; height: 325px; overflow-y: scroll"
+			<div style="height: 325px; overflow-y: scroll"
 				class="panel panel-default">
 				<!-- START list group-->
 				<div class="list-group">

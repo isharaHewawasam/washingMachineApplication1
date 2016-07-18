@@ -127,14 +127,19 @@ var Filter = function Filter(payload, view_name){
     
   //console.log(JSON.stringify(payload));  
   if (payload.productAttrs.mfg_date !== undefined) {
-    console.log("1");
+    if ( (payload.productAttrs.mfg_date.start_date !== undefined) &&
+         (payload.productAttrs.mfg_date.start_date.length > 0) &&
+         (payload.productAttrs.mfg_date.end_date !== undefined) &&
+         (payload.productAttrs.mfg_date.end_date.length > 0) ) {
     this.filter_type = FILTER.BY_MFG_DATE;
+      }
   }    
   //Mixed
+  //console.log("xxx " + this.filter_type);
   this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
   //If no filter is applied set to by state
   
-  
+  //console.log("Ffdsgjggghj " + this.filter_type);
   switch(this.filter_type){
     case FILTER.BY_MAKE:
     case FILTER.BY_MODEL:
