@@ -20,6 +20,7 @@ factory('$logincheck', function(){
 	  if(isLogin) return true;
 	  return false;  
   };
+  
 });
 
 // APP START
