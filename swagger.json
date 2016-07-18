@@ -650,7 +650,7 @@
         }
       }
     },
-    "/twitter/innerpage/twittersentiments/withid/{twitterid}": {
+    "/twitter/innerpage/twittersentiments/{twitterid}": {
       "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwittersentimentsforid",

@@ -33,7 +33,7 @@ module.exports.twitternotificationsspike = [
                                "State":"New York",
                                "City":"New York",
                                "Zipcode":10001,
-                               "Reason": "Not Happy with the programs",
+                               "Reason": "Satisfied with the programs",
                                "date":"06/07/2016"
                          }
                        ];  
