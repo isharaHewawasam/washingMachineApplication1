@@ -71,7 +71,28 @@ App.controller('NotificationConfController',
 				console.log("else ture ");
 				$state.go('app.singleview');
 			}
+			
 		}
+		$http({url:configApiClient.baseUrl + 'config/makes', 
+			method: "GET", Accept: "text/plain"}).success(function(data, status) {     
+			 $scope.makes=data.makes;		           
+			}). error(function(data, status) {
+			// alert("error"  +status);
+			console.log(JSON.stringify(data));
+			});
+
+
+			$scope.selectedMake=function(){  
+			$rootScope.search.selectedModel="";
+			$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake, 
+			method: "GET", Accept: "text/plain"}).success(function(data, status) {
+				//console.log("//////////make");   
+			 $scope.models=data[$rootScope.search.selectedMake];	           
+			}). error(function(data, status) {
+			console.log(JSON.stringify(data));
+			});
+
+			}
 			var monthNames = [
 			  "January", "February", "March",
 			  "April", "May", "June", "July",

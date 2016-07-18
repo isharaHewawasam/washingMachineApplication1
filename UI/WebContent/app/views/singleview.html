@@ -215,7 +215,7 @@
 						years
 				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
-					class="chart-selectStyle col-md-4 "
+					class="chart-selectStyle col-md-3 "
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 					<option class="chart-option-text-style" selected
@@ -227,6 +227,10 @@
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
 					src="app/img/Dashboardassets/close.png" ng-click="closing()">
+					<img class="col-md-1 pull-right"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:9px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."></img>
 			</div>
 
 
@@ -270,6 +274,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png"></img>
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."></img>
 			</div>
 
 			<div id="map-container" class="map-mapDiv"
@@ -287,9 +295,13 @@
 		<div class="panel panel-default" style="height: 373px">
 			<div class="panel-heading" style="background-color: #ffffff;">
 				<div class="pull-right ">
-					<img class="col-md-1"
+					<!-- <img class="col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png"></img>
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" uib-tooltip="Insights"></img> -->
+						<img class="col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Insights area frames up more specific details to convey an idea about the cause and effect on the information filtered."></img>
 				</div>
 
 				<div class="panel-title md-body-2"
@@ -471,7 +483,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
-
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."></img>
 			</div>
 
 
@@ -535,7 +550,8 @@
 					style="font-family: Roboto; font-size: 15px;">
 					Notification<img class="pull-right col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png">
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid.">
 				</div>
 
 			</div>

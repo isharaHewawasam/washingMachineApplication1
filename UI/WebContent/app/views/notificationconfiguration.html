@@ -1,7 +1,4 @@
-<div class="somediv hidden" id="hiddenDiv"></div>
-<div class="chart-somediv hidden" id="hiddenDiv"></div>
-<div class="hidden gridMaximize" id="gridMax"></div>
-<h3 style="padding-top: 20px; padding-bottom: 10px">
+<h3 style="padding-top: 20px; padding-bottom: 10px; margin-bottom: 0px">
 	<link href="app/css/charts.css" rel="stylesheet" />
 	<!-- START Language list-->
 
@@ -37,17 +34,24 @@
 
 </h3>
 
+<div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" >
+
+	<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
+
+	<!-- <div class="panel-body" style="padding: 0px;"> -->
+	<!--  <form role="form" class="form-inline"> -->
+	<!-- <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px "> -->
 
 
 
-<div class="row">
+	<div  class=" col-lg-12"  id="filterDivId" style=" margin-left: inherit">
 
-	<div class="form-group filter-filterDiv col-lg-12"
-		style="width: 100% auto;" id="filterDivId">
+		<div class="col-lg-12 filterItem notificationHeader">
+			
+			Notification Configuration
 
-		<div class="col-lg-2 notificationHeader" style="width: 400px !important;">
-			Notification Configuration</div>
-		<div class="col-lg-10"></div>
+		</div>
+		
 
 	</div>
 
@@ -55,26 +59,55 @@
 
 </div>
 
+
 <!-- </form>    -->
 <!-- </div> -->
 
 <div class="notificationContainer">
 
-	<div>
 		<!-- START Twitter Insights Chart -->
 		<div class="notificationTitleDiv">
 			Set up notification tolerances
 		</div>
 	
 		<!-- END Twitter Insights Chart -->
-	</div>
 	
 	
-	<div>
+	
+
 	
 		<!-- START Eng Manager Contents -->
+		
 		<div class="notificationBodyDiv" ng-if="isEngManager">
 			<div class="row" style="padding-left: 10px; padding-top: 20px;">
+			<div class="col-lg-5">
+					Make
+				</div>
+				<div class="col-lg-2">
+				<select name="" class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
+				<option class="option-text-style" value="" disabled selected>Select Make
+				<option class="option-text-style" ng-repeat="make in makes"
+						value={{make.name}}>{{make.name}}</option>
+				</select>
+				</div>
+				<div class="col-lg-5">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>	
+				<div class="col-lg-5">
+					Model
+				</div>
+				<div class="col-lg-2">
+				<select name="" class="form-control" ng-model="search.selectedModel"  ng-change="selectedModel()">
+				<option class="option-text-style" value="" disabled selected>Select Model
+				<option class="option-text-style" ng-repeat="model in models"
+						value={{model.model}}>{{model.model}}</option>
+				</select>
+				</div>
+				<div class="col-lg-5">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>	
 				<div class="col-lg-5">
 					Show notification when number of wash errors increase by (x%) in last 4 weeks
 				</div>		
@@ -106,7 +139,7 @@
 				</div>
 			</div>
 			
-			<div style="width:95%; position: absolute; bottom: 30px">
+			<div style="width:95%; position: absolute; bottom: 30px; text-align: right;">
 				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
         		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
@@ -192,7 +225,7 @@
 				</div>
 			</div>
 			
-			<div style="width:95%; position: absolute; bottom: 30px">
+			<div style="width:95%; position: absolute; bottom: 30px; text-align: right">
 				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
         		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
@@ -200,6 +233,5 @@
 	
 		<!-- END Mar Manager Contents -->
 		
-	</div>
 
 </div>
