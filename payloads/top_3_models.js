@@ -3,9 +3,9 @@ var payload = {
     "makes": [],
     "models": [],
     "skus": [],
-    "mfg_date_": {
-      "start_date": "07/01/2015",
-      "end_date": "07/01/2016"
+    "mfg_date": {
+      "start_date":"",
+      "end_date": ""
     }
   },
   "timescale": {
@@ -22,17 +22,13 @@ var payload = {
     }
   },
   "region": {
-    "states": [],
-  "cities": [],
+    "states": [{"value": "Arizona"}],
+  "cities": [{"value": "Chandler"}],
     "zip_codes": []
   },
-  "age_": [{
-    "value": 1
-  }],
-  "family_members_count_": [{
-    "value": 3
-  }],
-  "income_": [{"value": 1}]
+  "age": [],
+  "family_members_count": [],
+  "income": []
 };
 
 module.exports.payload = payload;
