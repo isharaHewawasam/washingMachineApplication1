@@ -6931,6 +6931,7 @@ body {
   width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   margin-top: -1px;
+  background-color: white;
 }
 
 .content-wrapper > .unwrap {
@@ -12296,6 +12297,7 @@ display : block;
 }
 
 .notificationContainer {
+	margin-top: 80px;
 	/* margin-left: 10px; */
 	/* margin-right: 10px; */
 	/* background-color: red; */
@@ -12303,12 +12305,12 @@ display : block;
 
 .notificationContainer .notificationTitleDiv {
 	
-	height: 30px;
+	height: 40px;
 	background-color: #E7EEF6;
 	vertical-align: middle;
 	/* display:table-cell; */
 	font-weight: bold;
-	padding: 6px; 
+	padding: 9px; 
 }
 
 .notificationContainer .notificationBodyDiv {
@@ -12316,7 +12318,7 @@ display : block;
 	height: 500px;
 	margin-top: 10px;
 	background-color: white;
-	text-align: right;
+	text-align: left;
 	vertical-align: middle;
 	/* display:table-cell; */
 	padding-left: 5px;
@@ -12327,4 +12329,26 @@ display : block;
 	
 	max-width: 150px;margin-left:15px !important ; padding-right: 0px; padding-left:0px;
 	
+}
+
+
+.export-button {
+	min-width:156px;
+	height: 32px;
+	/* background-color:#FFFFFF; */
+	border: 1px solid #D4D4D4;
+	vertical-align: center;
+	float: left;
+	/* margin-left: 22px; */
+	background-image:url('../img/Dashboardassets/export.png') repeat-x 0 0;
+   	background-repeat: no-repeat;
+	background-position: right 5px center;
+	background-position-x: 95%;
+	background-position-y: 50%; 
+
+	-moz-appearance:none; /* Firefox */
+	-webkit-appearance:none; /* Safari and Chrome */
+	-ms-appearance:none;
+	appearance:none;
+	/* padding: 6px; */
 }
