@@ -568,9 +568,9 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 	
 		$scope.isDisabled = false;
 		$scope.isError = false;
-		//$scope.isNoDataDB = false;
+		$scope.isNoDataDB = false;
 		$scope.msg1 = "Loading.....Please wait";
-		//$scope.msg2="No data Found";
+		$scope.msg2="No data Found";
 		$scope.msg3 = "Service is Unavailable";
     
 	  $scope.getMostFaults = function(divId) {
@@ -580,15 +580,20 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			               
-			    	 var mostFaultDataStr = JSON.stringify(data);
-					  
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
-							
-					 data = JSON.parse(mostFaultDataStr);
-						 
-					 renderPieChart(divId, data, 'Most Fault');		               
+			    	 if (data && data.length != 0) {			    	 
+				               
+				    	 var mostFaultDataStr = JSON.stringify(data);
+						  
+				    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+				    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
+								
+						 data = JSON.parse(mostFaultDataStr);
+							 
+						 renderPieChart(divId, data, 'Most Fault');	
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 					$scope.isDisabled = false;
@@ -604,16 +609,20 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 
-			    	 $scope.isDisabled = false;      
-			    	 var leastFaultDataStr = JSON.stringify(data);
-					  
-			    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			    	 leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
-							
-					 data = JSON.parse(leastFaultDataStr);
-						 
-					 renderPieChart(divId, data, 'Least Fault');		               
+			    	 $scope.isDisabled = false;
+			    	 if (data && data.length != 0) {				    	       
+				    	 var leastFaultDataStr = JSON.stringify(data);
+						  
+				    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+				    	 leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
+								
+						 data = JSON.parse(leastFaultDataStr);
+							 
+						 renderPieChart(divId, data, 'Least Fault');	
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
@@ -629,14 +638,19 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  
 		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 $scope.isDisabled = false;		               
-			    	 var commonFaultDataStr = JSON.stringify(data.faults);
-			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-			    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
-							
-					 data = JSON.parse(commonFaultDataStr);
-						 
-					 renderPieChart(divId, data, 'Common Fault');		               
+			    	 $scope.isDisabled = false;	
+			    	 if (data && data.length != 0) {	
+				    	 var commonFaultDataStr = JSON.stringify(data.faults);
+				    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+				    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
+								
+						 data = JSON.parse(commonFaultDataStr);
+							 
+						 renderPieChart(divId, data, 'Common Fault');	
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
@@ -653,15 +667,19 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			               
-			    	 var mostUsedProductDataStr = JSON.stringify(data.data);
-					  
-			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
-			    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
-							
-					 data = JSON.parse(mostUsedProductDataStr);
-						 
-					 renderPieChart(divId, data, 'Most Used Models');		               
+			    	 if (data.data && data.data.length != 0) {     
+				    	 var mostUsedProductDataStr = JSON.stringify(data.data);
+						  
+				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
+				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
+								
+						 data = JSON.parse(mostUsedProductDataStr);
+							 
+						 renderPieChart(divId, data, 'Most Used Models');	
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
@@ -678,15 +696,20 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			               
-			    	 var mostUsedCyclesDataStr = JSON.stringify(data);
-					  
-			    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"cyclesAndCount":/g, '"y":');
-			    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"washCycles":/g, '"name":');
-							
-					 data = JSON.parse(mostUsedCyclesDataStr);
-						 
-					 renderPieChart(divId, data, 'Most Used Wash Cycles');		               
+			    	 if (data && data.length != 0) {				    	 
+				               
+				    	 var mostUsedCyclesDataStr = JSON.stringify(data);
+						  
+				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"cyclesAndCount":/g, '"y":');
+				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"washCycles":/g, '"name":');
+								
+						 data = JSON.parse(mostUsedCyclesDataStr);
+							 
+						 renderPieChart(divId, data, 'Most Used Wash Cycles');	
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
@@ -703,15 +726,19 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			               
-			    	 var notConnectedDataStr = JSON.stringify(data);
-					  
-			    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
-			    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
-							
-					 data = JSON.parse(notConnectedDataStr);
-						 
-					 renderPieChart(divId, data, 'Not Connected Machines');		               
+			    	 if (data && data.length != 0) {      
+				    	 var notConnectedDataStr = JSON.stringify(data);
+						  
+				    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
+				    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
+								
+						 data = JSON.parse(notConnectedDataStr);
+							 
+						 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
@@ -729,15 +756,19 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/twitter-handles', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			               
-			    	 var twitterDataStr = JSON.stringify(data);
-					  
-			    	 twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
-			    	 twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-							
-					 data = JSON.parse(twitterDataStr);
-						 
-					 renderPieChart(divId, data, 'Twitter Handles');
+			    	 if (data && data.length != 0) {        
+				    	 var twitterDataStr = JSON.stringify(data);
+						  
+				    	 twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
+				    	 twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
+								
+						 data = JSON.parse(twitterDataStr);
+							 
+						 renderPieChart(divId, data, 'Twitter Handles');
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
 						           
 			}). error(function(data, status) {
 				$scope.isDisabled = false;

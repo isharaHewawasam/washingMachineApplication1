@@ -345,7 +345,19 @@
 					<div class="col-lg-6" id="nav2" style="height: 100%; width: 310px">
 						<div id="twitter-handle-container"
 							ng-init="getTwitterHandles('twitter-handle-container')"
-							class="insights-insightsDiv"></div>
+							class="insights-insightsDiv">
+							<span
+								style="display: block; height: 50%; text-align: center; color: #4C74E2; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
+								ng-show="isDisabled" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span> <span
+								style="display: block; height: 50%; text-align: center; color: #e60000; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
+								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span>
+						</div>
 						<div id="most-used-model-container"
 							ng-init="getMostUsedModel('most-used-model-container')"
 							class="insights-insightsDiv">
