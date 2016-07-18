@@ -828,7 +828,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	$scope.sidebarObj.selectedMake="";
 	$scope.sidebarObj.selectedModel="";
 	$scope.sidebarObj.selectedSKU="";
-	$scope.sidebarObj.mfgDate="";
+	$scope.sidebarObj.mfgStartDate="";
+	$scope.sidebarObj.mfgEndDate="";
 	
 	
 	
@@ -843,7 +844,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
 					      "models":[{"value":$scope.sidebarObj.selectedModel}],
 					      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-					      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
+					      "mfg_date": {
+					          "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
+					          "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+					        }
 					   },
 					   "timescale":{  
 					      "years":[  
@@ -934,7 +938,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
 			      "models":[{"value":$scope.sidebarObj.selectedModel}],
 			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-			      "mfg_date":[{"value":$scope.sidebarObj.mfgDate}]
+			      "mfg_date": {
+			          "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
+			          "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+			        }
 			   },
 			   "timescale":{  
 			      "years":[  
@@ -1028,9 +1035,13 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		{
 			$scope.usagedata.productAttrs.skus=[];
 		}
-		if($scope.sidebarObj.mfgDate==undefined || $scope.sidebarObj.mfgDate=="")
+		if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
 		{
-			$scope.usagedata.productAttrs.mfg_date=[];
+			$scope.usagedata.productAttrs.mfgStartDate=[];
+		}
+		if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
+		{
+			$scope.usagedata.productAttrs.mfgEndDate=[];
 		}
 		if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
 		{
@@ -1080,8 +1091,6 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                   }
                   console.log("data from server  :"+JSON.stringify(data));
                  }). error(function(data, status) {
-                   
-                        //alert("No data found");
                         console.log("error:"+status);
                          
           });
@@ -1416,11 +1425,18 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                     key:"sku"    
                 });
         
-        if($rootScope.search.mfgDate && $rootScope.search.mfgDate.length != 0)
+        if($rootScope.search.mfgStartDate && $rootScope.search.mfgStartDate.length != 0)
         	$scope.someArr.push(
         			{
-        				value:$rootScope.search.mfgDate.toLocaleDateString(),
-        				key:"mfg-date"
+        				value:$rootScope.search.mfgStartDate.toLocaleDateString(),
+        				key:"mfg-start-date"
+        			});
+        
+        if($rootScope.search.mfgEndDate && $rootScope.search.mfgEndDate.length != 0)
+        	$scope.someArr.push(
+        			{
+        				value:$rootScope.search.mfgEndDate.toLocaleDateString(),
+        				key:"mfg-end-date"
         			});
         
         if ($rootScope.search.incomeRange) {
@@ -1507,11 +1523,13 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       	 	obj.selectedMake=$rootScope.search.selectedMake;
       	 	obj.selectedModel=$rootScope.search.selectedModel;
       	 	obj.selectedSKU=$rootScope.search.selectedSKU;
-      	 	obj.mfgDate=$rootScope.search.mfgDate;
+      	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
+      	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
       	 	
             $rootScope.setUsageObjectFromSidebar(obj);
 
-            console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+            console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+
+            		$rootScope.search.selectedSKU+", MFG Start Date :"+$rootScope.search.mfgStartDate+", MFG End Date :"+$rootScope.search.mfgEndDate);
 
             $scope.createIconArray();
             
@@ -1721,22 +1739,27 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
     
    $scope.removeFilter=function(filter){
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
-       console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+$rootScope.search.selectedSKU+", MFG Date :"+$rootScope.search.mfgDate);
+       console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+
+    		   $rootScope.search.selectedSKU+", MFG Start Date :"+$rootScope.search.mfgStartDate+", MFG End Date :"+$rootScope.search.mfgEndDate);
        if(filter.key=="make"){
            $rootScope.search.selectedMake=undefined;
            $rootScope.search.selectedModel=undefined;
            $rootScope.search.selectedSKU=undefined;
-           $rootScope.search.mfgDate=undefined;
+           $rootScope.search.mfgStartDate=undefined;
+           $rootScope.search.mfgEndDate=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
            angular.forEach($rootScope.filterIcons,function(obj ,key){
-               if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-date"){
+               if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
                    $rootScope.filterIcons.splice(key,1);
                }
            });
-       }else if(filter.key=="mfg-date"){
-       	$rootScope.search.mfgDate=undefined;
+       }else if(filter.key=="mfg-start-date"){
+       	$rootScope.search.mfgStartDate=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);        	
-       }else if(filter.key=="sku"){         
+       }else if(filter.key=="mfg-end-date"){
+          	$rootScope.search.mfgEndDate=undefined;
+            $rootScope.filterIcons.splice(indexofvar,1);        	
+        }else if(filter.key=="sku"){         
            $rootScope.search.selectedSKU=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }else if(filter.key=="model"){
@@ -1899,10 +1922,6 @@ function renderMap(divId, salesData){
 	
 }
 
-function displayDetailedTwitterView(){
-	alert('In details twitter view');
-}
-
 function renderPieChart(divId, insightsData, chartTitle){
 	
 	var pieChart = new Highcharts.Chart({
@@ -1996,7 +2015,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
     
     var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	var userid = loginCredentails.email;
-    
+	
 	$scope.getTwitterSentiments = function(){
 		$scope.isDisabled = true;
 		$scope.msg = $scope.msg1;

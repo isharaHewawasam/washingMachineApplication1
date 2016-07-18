@@ -243,10 +243,16 @@
             </select>
         </div>
         
-        <div class="form-group element-margin">
+        <!-- Temporally hide mfg start and end dates till databases are updated with MfDate -->
+        <div class="form-group element-margin" ng-hide="true">
         <md-datepicker
-                ng-model="search.mfgDate"
-                md-placeholder="MFG Date">
+                ng-model="search.mfgStartDate"
+                md-placeholder="MFG Start Date">
+        </md-datepicker>
+        
+        <md-datepicker
+                ng-model="search.mfgEndDate"
+                md-placeholder="MFG End Date">
         </md-datepicker>
         
         </div>
