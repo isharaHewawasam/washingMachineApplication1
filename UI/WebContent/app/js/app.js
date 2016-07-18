@@ -1090,7 +1090,13 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
-		$scope.isNoDataFound = null;
+		$scope.isNoDataFound = false;
+		$scope.isError =  false;
+		$scope.isDisabled = true;
+		$scope.msg1 = "Applying Filters... Please wait";
+		$scope.msg2 = "No Data Found";
+		$scope.msg3 =  "Service is Unavailable";
+		$scope.msg = $scope.msg1;
 		
 		//for grid mkt_mgr
 		  $http({url:configApiClient.baseUrl +  'usage', 
@@ -1101,14 +1107,15 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	         }).success(function(data, status) {
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false
+	       	  		$scope.isDisabled = false;
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
 	        		 console.log("empty data");
 	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
 	        		//alert("No data found");
-	                $scope.isNoDataFound = true; //make it true if no data found instead of alert
+	                $scope.isNoDataFound = true; //make it true if no data found instead of alert 
+	                $scope.msg = $scope.msg2;
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
@@ -1117,7 +1124,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	         }). error(function(data, status) {
 	           $scope.test = false;
                 $scope.searchButtonText = "Apply filter";
-	       	  		$scope.isDisabled = false     
+	       	  		$scope.isDisabled = false;
+					$scope.isError = true;
+					$scope.msg = $scope.msg3;
 	        	 //alert("No data found");
 	        	 console.log("error:"+status);
 	        	 
@@ -1133,10 +1142,12 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	            console.log("*****************Eng manager_Filter****************");
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
-	                $scope.isDisabled = false
+	                $scope.isDisabled = false;
 	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
 	               console.log("empty data");
+	               $scope.isNoDataFound = true; 
+	               $scope.msg = $scope.msg2;
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
 
 	              //alert("No data found");
@@ -1150,7 +1161,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	            console.log("*****************Eng manager Error_Filter****************");
 	             $scope.test = false;
 	                $scope.searchButtonText = "Apply filter";
-	                $scope.isDisabled = false     
+	                $scope.isDisabled = false;
+	                $scope.isError = true;
+	                $scope.msg = $scope.msg3;
 	             //alert("No data found");
 	             console.log("error:"+status);
 	             

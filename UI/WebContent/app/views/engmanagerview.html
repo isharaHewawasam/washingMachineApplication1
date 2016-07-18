@@ -460,7 +460,7 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed">
-
+							<div ng-show="isDisabled||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 "style="font-weight:bold;  padding-top: 10%; ">{{msg}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
