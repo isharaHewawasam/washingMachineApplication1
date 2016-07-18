@@ -1455,21 +1455,21 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         
         if ($rootScope.search.incomeRange) {
         	$scope.someArr.push({
-				value:$rootScope.search.incomeRange,
+				value:JSON.parse($rootScope.search.incomeRange).range,
 				key:"incomeRange"
 			});
         }
         
         if ($rootScope.search.occupation) {
         	$scope.someArr.push({
-				value:$rootScope.search.occupation,
+				value:JSON.parse($rootScope.search.occupation).range,
 				key:"occupation"
 			});
         }
         
         if ($rootScope.search.ageGroup) {
         	$scope.someArr.push({
-				value:$rootScope.search.ageGroup,
+				value:JSON.parse($rootScope.search.ageGroup).range,
 				key:"ageGroup"
 			});
         }
@@ -1553,11 +1553,16 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
          
          $scope.applyDemographicsFilter=function(){
     		 var obj={};
-       	 	 obj.incomeRange=$rootScope.search.incomeRange;
-       	 	 obj.occupation=$rootScope.search.occupation;
-       	 	 obj.ageGroup=$rootScope.search.ageGroup;
+    		 if ($rootScope.search.incomeRange) {
+       	 	 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+    		 }
+    		 if ($rootScope.search.occupation) {
+    			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
+    		 }
+       	 	 if ($rootScope.search.ageGroup) {
+       	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+       	 	 }
              $rootScope.setUsageObjectFromSidebar(obj);
-             console.log("applied demographic filter  incomeRange :"+$rootScope.search.incomeRange+", occupation :"+$rootScope.search.occupation+",ageGroup :"+$rootScope.search.ageGroup);
              $scope.createIconArray();
              document.getElementById('demographicsFilterPanel').style.display = 'none';
              $rootScope.tryit();
