@@ -77,8 +77,37 @@
 
 	
 		<!-- START Eng Manager Contents -->
+		
 		<div class="notificationBodyDiv" ng-if="isEngManager">
 			<div class="row" style="padding-left: 10px; padding-top: 20px;">
+			<div class="col-lg-5">
+					Make
+				</div>
+				<div class="col-lg-2">
+				<select name="" class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
+				<option class="option-text-style" value="" disabled selected>Select Make
+				<option class="option-text-style" ng-repeat="make in makes"
+						value={{make.name}}>{{make.name}}</option>
+				</select>
+				</div>
+				<div class="col-lg-5">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>	
+				<div class="col-lg-5">
+					Model
+				</div>
+				<div class="col-lg-2">
+				<select name="" class="form-control" ng-model="search.selectedModel"  ng-change="selectedModel()">
+				<option class="option-text-style" value="" disabled selected>Select Model
+				<option class="option-text-style" ng-repeat="model in models"
+						value={{model.model}}>{{model.model}}</option>
+				</select>
+				</div>
+				<div class="col-lg-5">
+				
+				</div>
+				<div class="col-lg-12">&nbsp;</div>	
 				<div class="col-lg-5">
 					Show notification when number of wash errors increase by (x%) in last 4 weeks
 				</div>		
