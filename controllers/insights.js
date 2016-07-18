@@ -27,8 +27,10 @@ module.exports.getAuthentication = function(req, res, next) {
 				
 			}
 			else{
-				helper.sendResponse(res, err, "The username or password you enteered is incorrect");
+				helper.sendResponse(res, err, "The username or password you entered is incorrect");
 			}
+		}else {
+			helper.sendResponse(res, err, "The username or password you entered is incorrect");
 		}
 	     
 	});

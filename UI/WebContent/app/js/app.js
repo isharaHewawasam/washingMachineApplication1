@@ -313,7 +313,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
      				}
      				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
      			} else {
-     				$scope.errorMsg = 'The user name or password you entered is incorrect.';
+     				$scope.errorMsg = data;
      			}
          }). error(function(data, status) {
                 console.log("error in login :", data);
