@@ -650,32 +650,33 @@
         }
       }
     },
-    "/twitter/innerpage/twittersentiments/withid": {
-      "post": {
+    "/twitter/innerpage/twittersentiments/withid/{twitterid}": {
+      "get": {
         "x-swagger-router-controller": "insights",
         "operationId": "getTwittersentimentsforid",
         "tags": ["Twitter"],
-        "description": "Return twitter inner page Twitter sentiments graph data for paticular id",
-        "parameters": [
+        "description": "Return notification by onload function",
+         "parameters": [
           {
-            "name": "Payload",
-            "in": "body",
-            "description": "twitter inner page Twitter sentiments graph data for paticular id",
+            "name": "twitterid",
+            "in": "path",
+            "description": "Twitter id",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/twitter-innerpage-sentiments-forid"
-            }
-          }             
-        ],      
+            "type": "integer",
+            "items": {
+                      "type": "integer"                      
+                    }
+            }          
+          ],       
         "responses": {
           "default": {
-            "description": "Invalid request.",
+            "description": "Return notification by onload function",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "200": {
-            "description": "Successful request.",            
+            "description": "Successful request.",
             "schema": {
               "type": "array",
               "$ref": "#/definitions/twitter-innerpage-sentiments"
@@ -687,7 +688,7 @@
    "/notifications/notification-alert": {
       "get": {
         "x-swagger-router-controller": "insights",
-        "operationId": "getNotificationonload",
+        "operationId": "getTwittersentimentsforid",
         "tags": ["Notifications"],
         "description": "Return notification by onload function",
         "responses": {
