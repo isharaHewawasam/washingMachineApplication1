@@ -7,7 +7,7 @@ var FILTER_CATEGORY = {
   'BY_YEAR': 3,
   'BY_FAMILY': 4,
   'BY_MFG_DATE': 5,
-  'MIXED': 5
+  'MIXED': 6
 };
 
 var FILTER = {
@@ -284,7 +284,7 @@ Filter.prototype.filterDescription = function() {
 
 
 Filter.prototype.groupLevel = function(){
-  if(this.filter_category === FILTER_CATEGORY.MIXED) return 13;
+  if(this.filter_category === FILTER_CATEGORY.MIXED) return 14;
   
   if (this.isFilterByNone()) {
     switch(this.report_type) {
@@ -319,22 +319,30 @@ Filter.prototype.groupLevel = function(){
   
   switch (this.report_type) {
     case  REPORT_TYPE.SOLD_UNGROUPED:
-      if ( this.isFilterByYear() ) return 3;  
-      if ( this.isFilterByQuarter() ) return 4;
-      if ( this.isFilterByMonth() ) return 5;
+      if ( this.isFilterByMake() ) return 1; 
+      if ( this.isFilterByModel() ) return 2;
+      if ( this.isFilterBySKU() ) return 3;
       
-      if ( this.isFilterByState() ) return 6;  
-      if ( this.isFilterByCity() ) return 7;
-      if ( this.isFilterByZipCode() ) return 8;
+      if ( this.isFilterByYear() ) return 4;  
+      if ( this.isFilterByQuarter() ) return 5;
+      if ( this.isFilterByMonth() ) return 6;
+      
+      if ( this.isFilterByState() ) return 7;  
+      if ( this.isFilterByCity() ) return 8;
+      if ( this.isFilterByZipCode() ) return 9;
       break;
     case  REPORT_TYPE.CONNECTED_UNGROUPED:
-      if ( this.isFilterByYear() ) return 3;  
-      if ( this.isFilterByQuarter() ) return 4;
-      if ( this.isFilterByMonth() ) return 5;
+      if ( this.isFilterByMake() ) return 1; 
+      if ( this.isFilterByModel() ) return 2;
+      if ( this.isFilterBySKU() ) return 3;
       
-      if ( this.isFilterByState() ) return 6;  
-      if ( this.isFilterByCity() ) return 7;
-      if ( this.isFilterByZipCode() ) return 8;  
+      if ( this.isFilterByYear() ) return 4;  
+      if ( this.isFilterByQuarter() ) return 5;
+      if ( this.isFilterByMonth() ) return 6;
+      
+      if ( this.isFilterByState() ) return 7;  
+      if ( this.isFilterByCity() ) return 8;
+      if ( this.isFilterByZipCode() ) return 9;  
        break;
     case  REPORT_TYPE.SALES_BY_REGION_AND_PRODUCT:
     case  REPORT_TYPE.CONNECTED_BY_REGION_AND_PRODUCT:
