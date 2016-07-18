@@ -1115,8 +1115,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
 	        		//alert("No data found");
-	                $scope.isNoDataFound = true; //make it true if no data found instead of alert 
-	                $scope.msg = $scope.msg2;
+	                //$scope.isNoDataFound = true; //make it true if no data found instead of alert 
+	               // $scope.msg = $scope.msg2;
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
@@ -1147,8 +1147,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
 	               console.log("empty data");
-	               $scope.isNoDataFound = true; 
-	               $scope.msg = $scope.msg2;
+	              // $scope.isNoDataFound = true; 
+	              // $scope.msg = $scope.msg2;
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
 
 	              //alert("No data found");
