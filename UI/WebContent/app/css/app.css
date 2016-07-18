@@ -12306,11 +12306,11 @@ display : block;
 .notificationContainer .notificationTitleDiv {
 	
 	height: 40px;
-	background-color: #E7EEF6;
+	background-color: #F2F2F2;
 	vertical-align: middle;
 	/* display:table-cell; */
 	font-weight: bold;
-	padding: 9px; 
+	padding: 11px; 
 }
 
 .notificationContainer .notificationBodyDiv {
@@ -12351,4 +12351,12 @@ display : block;
 	-ms-appearance:none;
 	appearance:none;
 	/* padding: 6px; */
+}
+
+#tableTitle {
+	padding:11px; border-style: solid; 
+	border-width: 1px 1px 0px 1px; 
+	border-bottom:none; 
+	border-color: #ddd; 
+	font-weight: bold;
 }

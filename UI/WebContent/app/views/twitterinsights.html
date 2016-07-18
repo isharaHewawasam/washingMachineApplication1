@@ -1,6 +1,10 @@
-
+<div class="somediv hidden" id="hiddenDiv"></div>
+<div class="chart-somediv hidden" id="hiddenDiv"></div>
+<div class="map-somediv hidden" id="hiddenDivMap"></div> 
+<div class="hidden gridMaximize" id="gridMax"></div>
 <h3 style="padding-top: 20px; padding-bottom: 10px; margin-bottom: 0px">
 	<link href="app/css/charts.css" rel="stylesheet" />
+	<link href="app/css/mkttable.css" rel="stylesheet" />
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
@@ -137,8 +141,8 @@
 <div class="row" style="margin-top:0"> 
 	      <!-- START panel -->
 	  
-	    	<div class="panel-body " id="gridHideNodata" ng-controller="reportController" ng-if="!isEngManager">
-	          <!--   START table-responsive -->
+	    	<!-- <div class="panel-body " id="gridHideNodata" ng-controller="reportController" ng-if="!isEngManager">
+	            START table-responsive
 	            <div id="gridAdjustHeight" class="panel panel-default" style="height:auto;">
 	             <table  class="table table-striped table-bordered table-hover" border=0 id="pagination">  
 	                 <tr>
@@ -187,11 +191,85 @@
 	               </table>
 	               
 	            </div>
-	        </div>
+	        </div> -->
 	    <!--   END panel -->
-	</div>
-	
+	    
+	    
+	    <!-- START panel -->
 
+		<div id="gridNormal">
+			<!-- <div class="panel-heading md-body-2"
+				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
+				<b>Twitter Insights </b> <img id="gridMaxImg"
+					class="pull-right col-md-1"
+					style="padding: 0px; height: 15px; width: 15px;"
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1 "
+					style="padding: 0px; height: 15px; width: 15px;"
+					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+
+			</div> -->
+
+
+			<div class="panel-body" id="gridHideNodata">
+				<div id="tableTitle">
+					Twitter Insights
+					<img src="app/img/Dashboardassets/help.png" style="float: right">
+				</div>
+				<!--   START table-responsive -->
+				<div class="panel panel-default">
+
+					
+					<div class="tableHeader">
+						<p class="text-left">Make</p>
+						<p class="text-left">Model</p>
+						<p class="text-left">Tweets</p>
+						<p class="text-left">Likes</p>
+						<p class="text-left">Dislikes</p>
+						<p class="text-left">Followers</p>
+						<p class="text-left">Comments</p>
+						<!-- <p class="text-left" style="width: 100px">&nbsp;</p> -->
+
+					</div>
+					<div class="tbody"  style="height: 400px !important;">
+						<div class="tableScroll">
+							<table class="table table-condensed" ng-if="twitter_insights_griddata.length > 0">
+							
+								<tbody id="tabody">
+								
+									<tr ng-repeat="itm in twitter_insights_griddata">
+										<td style="text-align:left">{{itm.make}}</td>
+				                        <td style="text-align:left">{{itm.model}}</td>
+				                        <td style="text-align:left">{{itm.tweets}}</td>
+				                        <td style="text-align:left">{{itm.likes}}</td>
+				                        <td style="text-align:left">{{itm.dislikes}}</td>
+				                        <td style="text-align:left">{{itm.followers}}</td>
+				                        <td style="text-align:left">
+				                        	<div style="float: left">{{itm.comments}}</div>
+				                        	<div style="float: right">
+				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
+				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
+				                        	</div>
+				                        </td>
+				                        <!-- <td style="width: 100px">
+				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
+				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
+				                        </td> -->
+
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!--   END panel -->
+	
+</div>
 
 
 
