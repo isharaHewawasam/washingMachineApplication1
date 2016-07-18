@@ -422,7 +422,7 @@
 	<div class="col-lg-8">
 		<!-- START panel -->
 
-		<div class="panel panel-default" id="gridNormal">
+		<div class="panel panel-default" id="gridNormal" style="height: 372px;">
 			<div class="panel-heading md-body-2"
 				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
 				Washing Machines status <img id="gridMaxImg"
@@ -477,14 +477,14 @@
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
 										<td class="text-center">{{itm.model}}</td>
-										<td class="text-center">{{itm.avgWaterUsage}}</td>
-										<td class="text-center">{{itm.avgPowerUsage}}</td>
-										<td class="text-center">{{itm.avgWashCycleDurationUsage}}</td>
-										<td class="text-center">{{itm.avgWashCyclesUsage}}</td>
-										<td class="text-center">{{itm.avgTemperatureUsage}}</td>
-										<td class="text-center">{{itm.avgDetergentUsage}}</td>
-										<td class="text-center">{{itm.avgHumidityUsage}}</td>
-										<td class="text-center">{{itm.avgLoadUsage}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
 									</tr>
 								</tbody>
 							</table>
