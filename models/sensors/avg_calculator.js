@@ -184,10 +184,13 @@ var addOrUpdateUsages = function(params, new_usage) {
         if (params.buffer[each_usage].hasOwnProperty(params.statsKeyName)) {
           switch(params.stats) {
             case "sum":
-              params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName] + new_usage[params.statsKeyName]);
+              params.buffer[each_usage][params.statsKeyName] = params.buffer[each_usage][params.statsKeyName] + new_usage[params.statsKeyName];
+              //console.log("1 : " + params.buffer[each_usage][params.statsKeyName]);
               break;
             case "average":
               params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName] + new_usage[params.statsKeyName])/2;
+              //params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName]).toFixed(2);
+              //params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName]).toFixed();
               break;
           }
         } else {
@@ -239,7 +242,7 @@ var usageExists = function(payload, usages, usage_to_find, xxx_007) {
       //console.log("2");
       
       if(payload.region.zip_codes.length > 0) {         
-        all_match = (usages[each_usage].zip_code == usage_to_find.city);
+        all_match = (usages[each_usage].zip_code == usage_to_find.zip_code);
         //console.log("zip " + all_match);
         if(!all_match) return;
       }
@@ -385,6 +388,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   
   if (params.filter.isFilterCategoryByMfgDate()) {
     if ( (params.payload.productAttrs.mfg_date.start_date) && (params.payload.productAttrs.mfg_date.start_date.length > 0)) {
+      console.log("mfg date");
       var dates_arr = params.payload.productAttrs.mfg_date.start_date.split("/");
       var start_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
       
@@ -397,11 +401,18 @@ var doesRecordFallsInFilter = function(params, keys) {
       dates_arr = keys[params.key_maps.key.MFG_DATE].split("/");
       var mfg_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
       
+      console.log("Start Date : " + params.payload.productAttrs.mfg_date.start_date);
+        console.log("End Date : " + params.payload.productAttrs.mfg_date.end_date);
+        console.log("Mfg Date : " + keys[params.key_maps.key.MFG_DATE]);
+      
       if (mfg_date <= start_date || mfg_date >= end_date) {
-        //console.log("Start Date : " + params.payload.productAttrs.mfg_date.start_date);
-        //console.log("End Date : " + params.payload.productAttrs.mfg_date.end_date);
-        //console.log("Mfg Date : " + keys[params.key_maps.key.MFG_DATE]);
+        console.log("False");
+        console.log("====================");
         return false;
+      } else {
+        console.log("TRUE");
+        console.log("====================");
+        return true;
       }
     }
   }
