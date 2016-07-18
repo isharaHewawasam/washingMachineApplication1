@@ -193,7 +193,7 @@
 			<div class="chart-filterDiv " id="chartFilterDivId">
 				<select ng-class="{'chart-selectStyle2': isActive1}"
 					ng-click="activeButton(1)" id="first-chart-select"
-					class="chart-selectStyle col-md-5 " ng-change="Engdisp($index)"
+					class="chart-selectStyle col-md-4 " ng-change="Engdisp($index)"
 					ng-model="selectedSensors"
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
 
@@ -238,6 +238,10 @@
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
 					src="app/img/Dashboardassets/close.png" ng-click="closing()">
+					<img class="col-md-1 pull-right"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:9px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."></img>
 			</div>
 
 			<div id="container" class="graphDiv">
@@ -275,6 +279,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png"></img>
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."></img>
 			</div>
 			<div id="map-container" class="map-mapDiv"
 				style="width: 99%; height: 325px">
@@ -295,7 +303,8 @@
 				<div class="pull-right ">
 					<img class="col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png"></img>
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Insights area frames up more specific details to convey an idea about the cause and effect on the information filtered."></img>
 				</div>
 
 				<div class="panel-title md-body-2"
@@ -413,7 +422,7 @@
 	<div class="col-lg-8">
 		<!-- START panel -->
 
-		<div class="panel panel-default" id="gridNormal">
+		<div class="panel panel-default" id="gridNormal" style="height: 372px;">
 			<div class="panel-heading md-body-2"
 				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
 				Washing Machines status <img id="gridMaxImg"
@@ -424,7 +433,10 @@
 					class="pull-right hidden col-md-1 "
 					style="padding: 0px; height: 15px; width: 15px;"
 					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
-
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."></img>
 			</div>
 
 
@@ -465,14 +477,14 @@
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
 										<td class="text-center">{{itm.model}}</td>
-										<td class="text-center">{{itm.avgWaterUsage}}</td>
-										<td class="text-center">{{itm.avgPowerUsage}}</td>
-										<td class="text-center">{{itm.avgWashCycleDurationUsage}}</td>
-										<td class="text-center">{{itm.avgWashCyclesUsage}}</td>
-										<td class="text-center">{{itm.avgTemperatureUsage}}</td>
-										<td class="text-center">{{itm.avgDetergentUsage}}</td>
-										<td class="text-center">{{itm.avgHumidityUsage}}</td>
-										<td class="text-center">{{itm.avgLoadUsage}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -501,7 +513,8 @@
 					style="font-family: Roboto; font-size: 15px;">
 					Notification<img class="pull-right col-md-1"
 						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png">
+						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
+						uib-tooltip="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid.">
 				</div>
 
 			</div>

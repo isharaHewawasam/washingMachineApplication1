@@ -476,11 +476,13 @@ var isFilterBySKU = function(){
 
 Filter.prototype.isFilterBySKU = isFilterBySKU;
 
-var isFilterByMFGDate = function(){
+
+var isFilterByMfgDate = function(){
   return this.filter_type === FILTER.BY_MFG_DATE;
 };
 
-Filter.prototype.isFilterByMFGDate = isFilterByMFGDate;
+Filter.prototype.isFilterByMfgDate = isFilterByMfgDate;
+
 
 var isFilterByState = function(){  
   return this.filter_type === FILTER.BY_STATE;
@@ -528,7 +530,7 @@ var isFilterByUserFamilyMembersCount = function(){
   return this.filter_type === FILTER.BY_USER_FAMILY_MEMBERS_COUNT;
 };
 
-Filter.prototype.isFilterByUserFamilyMembersCount = isFilterByUserFamilyMembersCount
+Filter.prototype.isFilterByUserFamilyMembersCount = isFilterByUserFamilyMembersCount;
 
 var isFilterByUserAge = function(){
   return this.filter_type === FILTER.BY_USER_AGE;

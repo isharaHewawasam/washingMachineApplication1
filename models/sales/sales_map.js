@@ -43,7 +43,7 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 7)
    
-  if ( filter.isFilterByNone() ||  filter.isFilterByZipCode() ||  filter.isFilterByMFGDate())  callback(null, payload);
+  if ( filter.isFilterByNone() ||  filter.isFilterByZipCode() ||  filter.isFilterByMfgDate())  callback(null, payload);
   
   //callback(null, payload)
   

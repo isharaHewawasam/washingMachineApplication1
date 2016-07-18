@@ -181,22 +181,7 @@ exports.getTwitterinsightstable = function(callback) {
 
 //Twitter insights table api for requested id
 exports.getTwittersentimentsforid = function(callback) {
-  var tweets_count=Math.floor(Math.random() * 15)+5;
-  var tweetsimpress_count=Math.floor(Math.random() * 3900)+2500;
-  var profilevisits_count=Math.floor(Math.random() * 1000)+500;
-  var mentions_count=Math.floor(Math.random() * 20)+10;
-  var twitter_count=Math.floor(Math.random() * 300)+200;
-  var twitter_percentage=Math.floor(Math.random() * 90)+50;
-  var sentimate_positive=Math.floor(Math.random() * 90)+50;
-  var sentimate_neutral=Math.floor(Math.random() * 90)+50;
-  var sentimate_negative=Math.floor(Math.random() * 90)+50;
-
-  var randomDataarry=[{'tweets_count':tweets_count,'tweetsimpress_count':tweetsimpress_count,'profilevisits_count':profilevisits_count,
-                        'mentions_count':mentions_count,'twitter_count':twitter_count,"tweets_percentage":78.3,"tweetsimpress_percentage":68.8,
-                        "profilevisits_percentage":34.6,"mentions_percentage":23.1,'twitter_percentage':twitter_percentage,
-                        'sentimate_positive':sentimate_positive,'sentimate_neutral':sentimate_neutral,'sentimate_negative':sentimate_negative}];
-  callback(null,randomDataarry);
-  //callback(null, require("./twiiternotification_dummy").twitterinnerpagesentimentsforrequestedid);  
+  callback(null,"Success"); 
 };
 
 //Twitter Sentiments grpah api
