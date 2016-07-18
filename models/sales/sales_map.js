@@ -75,14 +75,14 @@ function addMissingData(payload, callback) {
     
     states_names.push(payload.region.cities[0].value);
     Config.getAllZipCodesByCities(states_names, function(err, result) {
-      //console.log("Result : " + JSON.stringify(result));
+      console.log("Result : " + JSON.stringify(result));
       if (result) {
         //console.log(JSON.stringify(result));
         for (var each_city in result) {
-          //console.log("State : " + JSON.stringify(result[each_state]));
+          //console.log("State : " + JSON.stringify(result[each_city]));
           for (var each_zip in result[each_city]) {
             var zip = {"value": result[each_city][each_zip]["zip_code"]};
-            //console.log(JSON.stringify(city));
+            //console.log(JSON.stringify(zip));
             payload.region.zip_codes.push( zip );
           }
         }

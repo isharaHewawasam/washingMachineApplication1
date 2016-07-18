@@ -414,6 +414,9 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if ( params.filter.isFilterCategoryByRegion() ) {
+     // console.log("keys : " + keys);
+      //console.log("params.key_maps.key.ZIP_CODE : " + params.key_maps.key.ZIP_CODE);
+      //console.log("==================================");
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
               isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) && 
@@ -474,7 +477,7 @@ var isItemPresent = function(array, key_name, item, isRange, ranges){
         }
       }
     } else {
-      if(array[array_item][key_name].toString().toUpperCase() === item.toUpperCase()) return true 
+      if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
     }      
   }
   
