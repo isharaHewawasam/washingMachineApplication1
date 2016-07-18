@@ -26,9 +26,9 @@
 				<span class="badge" style="background-color: #FEBD2D;margin-top: -22px;margin-left: -15px;" ng-show="notificationAlertFlag">{{notificationCount}}</span>
 			</li> 
 			<li style="padding-left: 25px;padding-top: 8px">
-				<div dropdown="" class="dropdown dropdown-list " class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
+				<div dropdown class="dropdown" class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
 				
-					<a id="userInfoLink" dropdown-toggle="" style="  text-decoration: none;"> 
+					<a id="userInfoLink" data-toggle="dropdown" class="dropdown-toggle" style="  text-decoration: none;"> 
 						<div >
 							<span class="media-box-body">
 								<span class="media-heading">
@@ -48,7 +48,7 @@
 						</div>
 					</a>
 					<!-- START Dropdown menu-->
-					<ul id="userOptionListUl" class="dropdown-menu animated dropdown-menu.pull-right">
+					<ul id="userOptionListUl" dropdown-menu class="dropdown-menu">
 						<li id="userOptionList">
 							<!-- START list group-->
 							<div class="list-group" >
