@@ -723,19 +723,28 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 	  
 	  $scope.getTwitterHandles = function(divId){
 		  
-		  var twitterData = [{"product": "Make 1 - Model C","preferenceName": "Tweets","count": 47,"totalComments": 66},
-		                     {"product": "Make 1 - Model C","preferenceName": "Re-Tweets","count": 10,"totalComments": 66}];
+		  $scope.isDisabled = true;
+		  $scope.msg = $scope.msg1;
 		  
-		  var twitterDataStr = JSON.stringify(twitterData);
-		  
-		  twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
-		  twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-					
-		  twitterData = JSON.parse(twitterDataStr);
-		  
-		  var twitterTitle = "Twitter Handles";
-		  
-		  renderPieChart(divId, twitterData, twitterTitle);
+		  $http({url:configApiClient.baseUrl + 'insights/twitter-handles', 
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isDisabled = false;
+			               
+			    	 var twitterDataStr = JSON.stringify(data);
+					  
+			    	 twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
+			    	 twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
+							
+					 data = JSON.parse(twitterDataStr);
+						 
+					 renderPieChart(divId, data, 'Twitter Handles');
+						           
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+			       console.log("Error getting data for disconnected machines, status: " + status);
+			});
 	  };
 	  
 	  $scope.loadTwitterinsights = function() {
