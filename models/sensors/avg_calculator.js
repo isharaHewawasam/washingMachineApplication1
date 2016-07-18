@@ -384,7 +384,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if (params.filter.isFilterCategoryByMfgDate()) {
-    if (params.payload.productAttrs.mfg_date.start_date.length > 0) {
+    if ( (params.payload.productAttrs.mfg_date.start_date) && (params.payload.productAttrs.mfg_date.start_date.length > 0)) {
       var dates_arr = params.payload.productAttrs.mfg_date.start_date.split("/");
       var start_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
       
