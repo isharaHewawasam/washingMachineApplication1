@@ -10,7 +10,7 @@
 
 
  </style> -->
-<h3 style="padding-top: 20px; padding-bottom: 10px">
+<h3 style="padding-top: 20px; padding-bottom: 10px ;margin-bottom: 0px">
  <div class="pull-right" ng-controller="DashboardController" >   
       Application Dashboard Last Updated {{currentDate}}
    </div>
@@ -175,7 +175,7 @@
       
     <!--   END panel -->
     </div>
-    <button type="button"  class="mb-sm btn btn-primary searchbtn" style="margin-left:14px;" ng-click="downloadReport()" ng-if="!isEngManager">Download Report 
+    <button type="button"  class="mb-sm btn btn-primary searchbtn" style="margin-left:14px; marker-offset: -18px" ng-click="downloadReport()" ng-if="!isEngManager">Download Report 
         </button>
     
       </div> 
@@ -184,7 +184,7 @@
 
 
  <!-- for Eng mgr-->
-         <div class="panel-body" id="gridHideNodata" ng-controller="reportController" ng-if="isEngManager">
+         <div class="panel-body" id="gridHideNodata" ng-controller="reportController" ng-if="isEngManager" style="margin-top: 15% ">
           <!--   START table-responsive -->
             <h4 style="text-align:center">No Records Available</h4>
        <!--      END table-responsive -->
