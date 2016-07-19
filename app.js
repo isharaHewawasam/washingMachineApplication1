@@ -18,6 +18,7 @@ var utility = require("./middle_ware/utility");
 app.use(serveStatic("./UI/WebContent"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 //app.use(logErrors);
 
 /*function logErrors(err, req, res, next) {
@@ -51,6 +52,8 @@ function exitHandler(reason) {
   }
 }
 
+
+
 function LogExcpetion(reason) {	
   if(reason) {
     console.log("*********APP CRASHED****************************************");
@@ -61,9 +64,23 @@ function LogExcpetion(reason) {
   }
 }
 
+
+
 process.on('SIGINT', exitHandler);
 process.on('exit', exitHandler);
 process.on('uncaughtException', LogExcpetion);
+
+app.use(function(req, res, next){
+  console.log("URL : " + req.originalUrl);
+  console.log("Request Body : " + JSON.stringify(req.body));
+  console.log("==================================================");
+  
+  require('./middle_ware/sanitize_request').sanitize(req.body);
+  console.log("Request after sanitizing: " + JSON.stringify(req.body));
+  
+  next();
+});
+
 
 
 var salesDb = new Database();
@@ -79,15 +96,25 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Interpret Swagger resources and attach metadata to request - must be first .in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
   app.use(cors());
-
+ 
+  /*app.use(function (req, res, next) {
+    console.log("Request : " + req.toString());
+    next();
+  });*/
+  
+  
   // Validate Swagger requests
   app.use(middleware.swaggerValidator());
 
   // Route validated requests to appropriate controller
   app.use(middleware.swaggerRouter(options));
 
+  
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
+  
+  
+  //app.use(sanitizeRequest());
    
   /*salesDb.open(config.WashDailyAggregateDatabase, function(err){
     if(err) {
@@ -148,6 +175,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	  }
   });
   
+  
   // Start the server
   /*http.createServer(app).listen(serverPort, function () {
     console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
@@ -162,6 +190,6 @@ var getAllLatLong = function(){
   require("./models/region_lat_long").getCityLocation("Florida", "Miami", function(loc) {
     console.log("Miami " + JSON.stringify(loc));
   });
-  
-  
 };
+
+

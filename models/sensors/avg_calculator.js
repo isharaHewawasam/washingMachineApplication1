@@ -188,8 +188,10 @@ var addOrUpdateUsages = function(params, new_usage) {
               //console.log("1 : " + params.buffer[each_usage][params.statsKeyName]);
               break;
             case "average":
+            
               params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName] + new_usage[params.statsKeyName])/2;
-              //params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName]).toFixed(2);
+              //params.buffer[each_usage][params.statsKeyName] = Number(params.buffer[each_usage][params.statsKeyName]).toFixed(2);
+              //params.buffer[each_usage][params.statsKeyName] = params.buffer[each_usage][params.statsKeyName].toFixed(2);
               //params.buffer[each_usage][params.statsKeyName] = (params.buffer[each_usage][params.statsKeyName]).toFixed();
               break;
           }
