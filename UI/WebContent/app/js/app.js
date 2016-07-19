@@ -806,6 +806,10 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
 	
+		//Clear filter on dashboard load
+		$rootScope.search={};
+	    $rootScope.filterIcons=[];
+	
 		var monthNames = [
 		  "January", "February", "March",
 		  "April", "May", "June", "July",
