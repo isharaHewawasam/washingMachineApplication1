@@ -8,7 +8,7 @@ exports.sanitize = function(request) {
   var idx = 0;
   
   while (idx < keys.length) {
-    if (sanitizeNode(keys[idx] === undefined) return;
+    if (sanitizeNode(keys[idx] === undefined)) return;
     sanitizeNode(keys[idx]);
     idx++;
   }
