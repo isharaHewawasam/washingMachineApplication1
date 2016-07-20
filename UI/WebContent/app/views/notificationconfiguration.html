@@ -113,10 +113,10 @@
 				</div>		
 				<div class="col-lg-2">
 					<select class="form-control"
-						ng-model="errorInc.name">
+						ng-model="errorInc.value">
 						<option class="option-text-style" value="" disabled selected>Select Error
-						<option class="option-text-style" ng-repeat="errorInc in washErrorsIncrease"
-							value={{errorInc.name}}>{{errorInc.name}}</option>
+						<option class="option-text-style" ng-repeat="errorInc in washErrors"
+							value={{errorInc.value}}>{{errorInc.value}}</option>
 					</select>
 				</div>
 				<div class="col-lg-5">
@@ -128,10 +128,10 @@
 				</div>		
 				<div class="col-lg-2">
 					<select class="form-control"
-						ng-model="errorDec.name">
+						ng-model="errorDec.value">
 						<option class="option-text-style" value="" disabled selected>Select Error
-						<option class="option-text-style" ng-repeat="errorDec in washErrorsDecrease"
-							value={{errorDec.name}}>{{errorDec.name}}</option>
+						<option class="option-text-style" ng-repeat="errorDec in washErrors"
+							value={{errorDec.value}}>{{errorDec.value}}</option>
 					</select>
 				</div>
 				<div class="col-lg-5">

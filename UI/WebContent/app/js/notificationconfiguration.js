@@ -55,7 +55,9 @@ App.controller('NotificationConfController',
 		$scope.baselines = [{"value" : 30}, {"value" : 40}];
 		
 		$scope.tolernces = [{"value" : 10}, {"value" : 20}];
-				
+		
+		$scope.washErrors = [{"value" : 10}, {"value" : 20}];
+		
 		var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 		var rolename = loginCredentails.Role;
 		var roleKey 	= loginCredentails.roleKey;

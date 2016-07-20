@@ -41,11 +41,8 @@ exports.getData = function(payload, drilldown, callback) {
 
 function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
-  var filter = new FilterClass(payload, 7)
+  var filter = new FilterClass(payload, 7);
    
-  //if ( filter.isFilterByNone() ||  filter.isFilterByZipCode() ||  filter.isFilterByMfgDate())  callback(null, payload);
-  
-  //callback(null, payload)
   
   if (filter.isFilterByState()) {
     var Config = require("../config");
@@ -57,7 +54,6 @@ function addMissingData(payload, callback) {
       if (result) {
         //console.log(JSON.stringify(result));
         for (var each_state in result) {
-          console.log("State : " + JSON.stringify(result[each_state]));
           for (var each_city in result[each_state]) {
             var city = {"value": result[each_state][each_city]["city"]};
             //console.log(JSON.stringify(city));
@@ -75,7 +71,7 @@ function addMissingData(payload, callback) {
     
     states_names.push(payload.region.cities[0].value);
     Config.getAllZipCodesByCities(states_names, function(err, result) {
-      console.log("Result : " + JSON.stringify(result));
+//      console.log("Result : " + JSON.stringify(result));
       if (result) {
         //console.log(JSON.stringify(result));
         for (var each_city in result) {
