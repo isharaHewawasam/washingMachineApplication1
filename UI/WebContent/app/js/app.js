@@ -727,15 +727,27 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			    	 if (data && data.length != 0) {      
-				    	 var notConnectedDataStr = JSON.stringify(data);
-						  
-				    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
-				    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
-								
-						 data = JSON.parse(notConnectedDataStr);
-							 
-						 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 
+			    	 if (data && data.length != 0) {  
+			    		 
+			    		 var total = 0;
+			             for(var i=0; i<data.length; i++){
+			                    total += data[i].unitsDisconnected;
+			             }
+			    		 
+			             if (total > 0)	{		             
+					    	 var notConnectedDataStr = JSON.stringify(data);
+							  
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
+									
+							 data = JSON.parse(notConnectedDataStr);
+								 
+							 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 	} else {
+			    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
+			    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
+			    	 	} 
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
