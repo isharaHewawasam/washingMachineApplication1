@@ -11,8 +11,14 @@ exports.getAllStates = function(callback) {
     } else {  
 	  var all_states = {'states': []};
 		
-	  for(var state in result.counts.State) {	  	
-	    all_states.states.push({'name': state});
+    console.log(result.counts);
+    var states = [];
+	  for(var state in result.counts.State) {	  
+      //console.log("x " + JSON.stringify(result.counts.State));
+      states = state.split(",");
+      //all_states.states.push({'name': state});    
+	    //all_states.states.push({'name': state});
+      all_states.states.push({'id': states[0], 'name': states[1]});    
 	  }	
 	
       callback(err, all_states);

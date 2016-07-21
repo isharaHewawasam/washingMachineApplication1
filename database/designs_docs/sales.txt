@@ -1,4 +1,6 @@
 Sales Database
+
+Searches Indexes
 ==================================================
 1] Design Doc Name: CitiesByStates
 Search Index Name : CitiesByStates
@@ -39,15 +41,35 @@ function (doc) {
   }
   index("CityState", doc.Store.City + "," + doc.Store.State, {facet: true});
 }
-
 ----------------------------------------------------------------
-5] Design Doc Name: sales
+5] Design Doc Name: yearsByMfgDate
+index : yearsByMfgDate 
+function (doc) {
+  if(doc.MFDate) {
+    index("MfgYear", doc.MFDate, {"store": true, "facet": true});
+  }
+}
+----------------------------------------------------------------
+6] Design Doc Name: yearsBySoldDate
+index : yearsBySoldDate 
+function (doc) {
+  if(doc.Solddate) {
+    index("SoldYear", doc.Solddate.slice(-4), {"store": true, "facet": true});
+  }
+}
+
+Search Views
+----------------------------------------------------------------
+Design Doc Name: sales
 view : connected 
 function (doc) {
   if (doc.Connected === "true") {
     var sold_date = new Date(doc.Solddate);
     var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-    emit([doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode], 1);
+    var age = (doc.Buyer.Age).toString();
+    var members_count = (doc.Buyer.FamilyMembers).toString();
+    var income = (doc.Buyer.income).toString();
+    emit([doc.DeviceType.Make, doc.DeviceType.Model, doc.SKU, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode.toString(), age, members_count, income, doc.MFDate], 1);
  }
 }
 stats - count
@@ -57,7 +79,10 @@ function (doc) {
   if (doc.Connected === "true") {
     var sold_date = new Date(doc.Solddate);
     var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-    emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode, doc.DeviceType.Make, doc.DeviceType.Model,sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], 1);
+    var age = (doc.Buyer.Age).toString();
+    var members_count = (doc.Buyer.FamilyMembers).toString();
+    var income = (doc.Buyer.income).toString();
+    emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode.toString(), doc.DeviceType.Make, doc.DeviceType.Model, doc.SKU, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), age, members_count, income, doc.MFDate], 1);
  }
 }
 stats - count
@@ -66,7 +91,10 @@ view : sales
 function (doc) {
   var sold_date = new Date(doc.Solddate);
   var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-  emit([doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode], 1);
+  var age = (doc.Buyer.Age).toString();
+  var members_count = (doc.Buyer.FamilyMembers).toString();
+  var income = (doc.Buyer.income).toString();
+  emit([doc.DeviceType.Make, doc.DeviceType.Model, doc.SKU, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.Store.State, doc.Store.City, doc.Store.Zipcode.toString(), age, members_count, income, doc.MFDate], 1);
 }
 stats - count
 ******************** 
@@ -74,7 +102,10 @@ view : salesByRegionAndProduct
 function (doc) {
   var sold_date = new Date(doc.Solddate);
   var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-  emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode, doc.DeviceType.Make, doc.DeviceType.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], 1);
+  var age = (doc.Buyer.Age).toString();
+  var members_count = (doc.Buyer.FamilyMembers).toString();
+  var income = (doc.Buyer.income).toString();
+  emit([doc.Store.State, doc.Store.City, doc.Store.Zipcode.toString(), doc.DeviceType.Make, doc.DeviceType.Model, doc.SKU, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), age, members_count, income, doc.MFDate], 1);
 } 
 stats - count
 ***************
@@ -82,26 +113,11 @@ view : salesByYear
 function (doc) {
   var sold_date = new Date(doc.Solddate);
   var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-  emit([sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.DeviceType.Make, doc.DeviceType.Model], 1);
-}  
+  var age = (doc.Buyer.Age).toString();
+  var members_count = (doc.Buyer.FamilyMembers).toString();
+  var income = (doc.Buyer.income).toString();
+  emit([sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString(), doc.DeviceType.Make, doc.DeviceType.Model, doc.SKU, age, members_count, income, doc.MFDate], 1);
+} 
 stats - count
 
-----------------------------------------------------------------
-6] Design Doc Name: yearsByMfgDate
-index : yearsByMfgDate 
-function (doc) {
-  if(doc.MFDate) {
-    index("MfgYear", doc.MFDate, {"store": true, "facet": true});
-  }
-}
-----------------------------------------------------------------
-7] Design Doc Name: yearsBySoldDate
-index : yearsBySoldDate 
-function (doc) {
-  if(doc.Solddate) {
-    index("SoldYear", doc.Solddate.slice(-4), {"store": true, "facet": true});
-  }
-}
 
-Daily Wash Database
-==================================================
