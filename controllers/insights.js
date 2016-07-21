@@ -121,9 +121,9 @@ module.exports.getTwittersentimentsforid = function(req, res, next) {
   var mentions_count=Math.floor(Math.random() * 20)+10;
   var twitter_count=Math.floor(Math.random() * 300)+200;
   var twitter_percentage=Math.floor(Math.random() * 90)+50;
-  var sentimate_positive=Math.floor(Math.random() * 90)+50;
-  var sentimate_neutral=Math.floor(Math.random() * 90)+50;
-  var sentimate_negative=Math.floor(Math.random() * 90)+50;
+  var sentimate_positive=Math.floor(Math.random() * 100)+1;
+  var sentimate_neutral=Math.floor(Math.random() * 100)+1;
+  var sentimate_negative=Math.floor(Math.random() * 100)+1;
 
   var randomDataarry=[{'id':req.swagger.params.twitterid.value,'tweets_count':tweets_count,'tweetsimpress_count':tweetsimpress_count,
   						'profilevisits_count':profilevisits_count,
