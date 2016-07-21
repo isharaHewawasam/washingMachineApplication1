@@ -944,6 +944,202 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$scope.myDate1.getDate());
 	//for reports section -finish
 	
+	//start report apply filter
+	$scope.iniReport=function(){
+
+	$scope.searchButtonText = "Filtering...";  
+	    $scope.isDisabled = true;
+	    $scope.test = true;
+	    $rootScope.applyFilterBoolean=true;
+	    $scope.usagedata={  
+	       "productAttrs":{  
+	         "makes":[{"value":$scope.sidebarObj.selectedMake}],
+	            "models":[{"value":$scope.sidebarObj.selectedModel}],
+	            "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+	            "mfg_date": {
+	                "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
+	                "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+	              }
+	         },
+	        "timescale":{  
+	            "years":[  
+	               {  
+	                  "value":parseInt($scope.timescale.years)
+	               }
+	            ],
+	            "quarters":[  
+	               {  
+	                  "value":parseInt($scope.timescale.quarters)
+	               }
+	            ],
+	            "months":[  
+	               {  
+	                  "value":parseInt($scope.timescale.months)
+	               }
+	            ],
+	            "date":{  
+	               "start_date":"01/01/2015",
+	               "end_date":"01/01/2016"
+	            },
+	            "relative":{  
+	               "unit":"2",
+	               "value":0
+	            }
+	         },
+	         "region":{  
+	            "states":[  
+	               {  
+	                  "value":$scope.region.states
+	               }
+	            ],
+	            "cities":[  
+	               {  
+	                  "value":$scope.region.cities
+	               }
+	            ],
+	            "zip_codes":[  
+	               {  
+	                  "value":$scope.region.zip_codes
+	               }
+	            ]
+	         },
+	         "income":[{"value": $scope.sidebarObj.incomeRange}],
+	         "age": [{"value": $scope.sidebarObj.ageGroup}],
+	         "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+	    };
+	  
+
+	    if($scope.region.states==undefined || $scope.region.states=="")
+	    {
+	    
+	    console.log("states undefined");
+	    $scope.usagedata.region.states=[];
+	    }
+	    console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
+	    if($scope.region.cities==undefined || $scope.region.cities=="")
+	    {
+	      
+	      console.log("cities undefined");
+	      $scope.usagedata.region.cities=[];
+	    }
+	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
+	    {
+
+	      console.log("zip_codes undefined");
+	      $scope.usagedata.region.zip_codes=[];
+	    }
+	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
+	    {
+	      $scope.usagedata.timescale.years=[];
+	    } 
+	    if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
+	    {
+	      $scope.usagedata.timescale.quarters=[];
+	    }
+	    
+	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
+	    {
+	      $scope.usagedata.timescale.months=[];
+	    }
+	    if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
+	    {
+	      $scope.usagedata.productAttrs.makes=[];
+	    }
+	    if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
+	    {
+	      $scope.usagedata.productAttrs.models=[];
+	    }
+	    if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
+	    {
+	      $scope.usagedata.productAttrs.skus=[];
+	    }
+	    if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
+	    {
+	      $scope.usagedata.productAttrs.mfgStartDate=[];
+	    }
+	    if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
+	    {
+	      $scope.usagedata.productAttrs.mfgEndDate=[];
+	    }
+	    if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+	    {
+	      $scope.usagedata.income=[];
+	    }
+	    if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+	    {
+	      $scope.usagedata.age=[];
+	    }
+	    if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+	    {
+	      $scope.usagedata.family_members_count=[];
+	    }
+	  
+	    
+	    
+
+	    console.log("timescale form data  : "+$scope.timescale);  
+	    console.log("years form data  : "+$scope.timescale.years);  
+	    console.log("quaters form data  : "+$scope.timescale.quarters); 
+	    console.log("month form data  : "+$scope.timescale.months); 
+	    
+	    console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
+
+	    
+	 
+	   $rootScope.mkt_griddata_filter=[];
+	    $scope.isNoDataFound = false;
+	    $scope.isError =  false;
+	    $scope.isDisabled = true;
+	    $scope.isOnFilter = false;
+
+	    console.log('usage data in Report grid : '+JSON.stringify($scope.usagedata));
+	    //alert(JSON.stringify($scope.usagedata));
+	   
+	    
+	    //for grid mkt_mgr
+	      $http({url:configApiClient.baseUrl +  'usage', 
+	            method: "POST",
+	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	             data: $scope.usagedata
+	            
+	           }).success(function(data, status) {
+	             $scope.test = false;
+	                $scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false;
+	             if(!data || data.data.length === 0){
+	                  
+	                                                            console.log("empty data");
+	                                                            $rootScope.isOnFilter=true;
+	                $rootScope.isOnLoad=false;
+	                //$("#gridMax #gridMaxImg").addClass("hidden");
+
+	             
+	                }
+	             else {  
+	                     
+	                $rootScope.mkt_griddata_filter=data.data; 
+	                 // alert(JSON.stringify(data));
+	                console.log("data for report from server  :"+JSON.stringify(data));
+	                $rootScope.isOnFilter=true;
+	                $rootScope.isOnLoad=false;
+	              }
+	           }). error(function(data, status) {
+	             $scope.test = false;
+	                $scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false;
+	          $scope.isError = true;
+	          //$scope.msg = $scope.msg3;
+	             //alert("No data found");
+	             console.log("error:"+status);
+	             
+	           });
+	      
+	    
+	   
+	      }
+	               //end iniReport
+
+	
 	
 	$rootScope.tryit = function() {
 		$scope.searchButtonText = "Filtering...";    
@@ -1203,6 +1399,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     		// load all usage data on dashboard		
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
+    		$scope.mkt_griddata=[];
     		
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
@@ -1233,7 +1430,22 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                              console.log("usageerror:"+status);
                        
                      });
-    						
+    		  
+    		  ///////////////////////Report on load
+              $http({url:configApiClient.baseUrl +  "usage", 
+              method: "GET",
+              Accept: "text/plain"}).success(function(data, status) {
+                   
+                        $scope.mkt_griddata=data.data; 
+                        $rootScope.isOnLoad=true;
+                
+                    //  console.log("Griddata"+JSON.stringify($scope.griddata));
+                      
+                 }). error(function(data, status) {
+                         console.log("usageerror:"+status);
+                   
+                 }); 			   
+  			   						
   	    
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'

@@ -28,7 +28,7 @@
 </h3>
 
    
-<div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" >
+<div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" ng-controller="DashboardController">
    
 
 <!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
@@ -41,7 +41,7 @@
             
             <div class=" col-lg-10"  id="filterDivId" style=" margin-left: inherit">
               
-               <div class="col-lg-2" style="max-width: 200px; margin-left:30px; padding-right: 0px; padding-left:0px;"  >
+               <div class="col-lg-2" style="max-width: 200px; margin-left:15px; padding-right: 0px; padding-left:0px;"  >
                   <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
                   <option class="option-text-style" value="" disabled selected>States
                     <option class="option-text-style" value="" >All
@@ -53,7 +53,7 @@
                <!-- <div class="col-sm-1" style="padding-left: 3px;">
                </div> -->
                <div class="col-lg-2" style="max-width: 200px;margin-left:15px !important ; padding-right: 0px; padding-left:0px;" >
-                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities" ng-change="selectZip()"  >
+                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities"   >
                     <option class="option-text-style" value="" disabled selected>Cities
                     <option class="option-text-style" value="" >All 
                               <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
@@ -93,11 +93,11 @@
                
                
             </div>
-               <div class="col-lg-2 " style="    margin-right: 15px! important;padding: 0px;" >
+               <div class="col-lg-2 " style="    margin-right: 15px! important;padding: 0px;">
              		<button ng-disabled="isDisabled" class="btn btn-default pull-right "  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;     margin: auto;
-                            margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="tryit()">
-                <span ng-show="test"></span>
-                Apply Filter</button>         
+                            margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="iniReport()">
+                <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+                {{searchButtonText}}</button>         
            
             </div>
               </div>
@@ -113,9 +113,9 @@
         </div> -->
       
        
-         <div class="panel-body " id="gridHideNodata" ng-controller="reportController" ng-if="!isEngManager">
+         <div class="panel-body " id="gridHideNodata" ng-controller="DashboardController" ng-if="!isEngManager">
           <!--   START table-responsive -->
-            <div id="gridAdjustHeight" class="panel panel-default" style="height:auto;">
+            <div id="gridAdjustHeight" class="panel panel-default" style="height:auto; margin-left:-15px;" ng-show="isOnLoad">
              <table  class="table table-striped table-bordered table-hover" border=0 id="pagination">  
                  <tr>
                     <strong> <div style="height:30px; padding-top:5px; padding-left:10px;"> Washing Machine Status Reports </div></strong>
@@ -123,6 +123,8 @@
 
           </tr>
           <div class="tbody">
+
+          
           
                   <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
                     
@@ -140,7 +142,7 @@
                   </thead>
                   
                   <tbody id="tabody">
-                      <tr ng-repeat="itm in r_griddata">
+                      <tr ng-repeat="itm in mkt_griddata">
                       <!-- <tr ng-repeat="itm in r_griddata | startFrom:currentPage*pageSize | limitTo:pageSize"> -->
                         <td style="text-align:center">{{itm.make}}</td>
                         <td style="text-align:center">{{itm.model}}</td>
@@ -149,6 +151,53 @@
                         <td style="text-align:center">{{itm.popularTime}}</td>
 
                      </tr>
+
+                    
+                 </tbody>
+
+               </table>
+               
+            </div>
+
+
+<div id="gridAdjustHeight" class="panel panel-default" style="height:auto; margin-left:-15px;" ng-show="!isOnLoad">
+             <table  class="table table-striped table-bordered table-hover" border=0 id="pagination">  
+                 <tr>
+                    <strong> <div style="height:30px; padding-top:5px; padding-left:10px;"> Washing Machine Status Reports </div></strong>
+                   
+
+          </tr>
+          <div class="tbody">
+            <div class="tbody">
+
+          
+          
+                  <thead class="md-body-2" style="font-family: Roboto; font-size: 15px;" >
+                    
+                 
+                        <tr>
+                       <th style="text-align: center"> Make  <select id="dropdown"></select></th> 
+                        <th style="text-align: center">Model <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Total Loads <select id="dropdown"></select> </th>
+                        <th style="text-align:center">Most Popular Wash Day <select id="dropdown"></select> </th>
+                        <th style="text-align: center">Most Popular Time of Day <select id="dropdown"></select> </th>
+
+                     </tr>
+                  
+                  
+                  </thead>
+                  
+                  <tbody id="tabody">
+                      <tr ng-repeat="itm in mkt_griddata_filter">
+                      <!-- <tr ng-repeat="itm in r_griddata | startFrom:currentPage*pageSize | limitTo:pageSize"> -->
+                        <td style="text-align:center">{{itm.make}}</td>
+                        <td style="text-align:center">{{itm.model}}</td>
+                        <td style="text-align:center">{{itm.totalLoad}}</td>
+                        <td style="text-align:center">{{itm.popularDay}}</td>
+                        <td style="text-align:center">{{itm.popularTime}}</td>
+
+                     </tr>
+
                     
                  </tbody>
 
@@ -175,7 +224,7 @@
       
     <!--   END panel -->
     </div>
-    <button type="button"  class="mb-sm btn btn-primary searchbtn" style="margin-left:14px; marker-offset: -18px" ng-click="downloadReport()" ng-if="!isEngManager">Download Report 
+    <button type="button"  class="mb-sm btn btn-primary searchbtn" style="margin-left:1px; marker-offset: -18px" ng-click="downloadReport()" ng-if="!isEngManager">Download Report 
         </button>
     
       </div> 
@@ -184,7 +233,7 @@
 
 
  <!-- for Eng mgr-->
-         <div class="panel-body" id="gridHideNodata" ng-controller="reportController" ng-if="isEngManager" style="margin-top: 15% ">
+         <div class="panel-body" id="gridHideNodata" ng-controller="DashboardController" ng-if="isEngManager" style="margin-top: 15% ">
           <!--   START table-responsive -->
             <h4 style="text-align:center">No Records Available</h4>
        <!--      END table-responsive -->
