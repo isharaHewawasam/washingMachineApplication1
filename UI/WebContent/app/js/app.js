@@ -23,6 +23,9 @@ factory('$logincheck', function(){
   
 });
 
+// Using my renderMap function to zoom the map
+var salesDataJoin;
+
 // APP START
 // ----------------------------------- 
 var Role;
@@ -1301,6 +1304,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                   }  else{
                       console.log("Got data for map..." );
                       renderMap("map-container", data);
+                      $scope.zoomMap();
                   }
                   console.log("data from server  :"+JSON.stringify(data));
                  }). error(function(data, status) {
@@ -1308,7 +1312,25 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                          
           });
 		
-	
+		$scope.zoomMap = function () {
+			var selectedState = $scope.region.states;
+			console.log("selectedState " +  selectedState);
+			if(selectedState && selectedState != '') {
+				var stateCode = undefined;
+				var states = $scope.states;
+				// Assign id's
+		        for(var i=0; i < states.length; i++) {
+		        	if(states[i].name == selectedState) {
+		        		stateCode = states[i].id;
+		        		break;
+		        	}
+		        }
+		        if(stateCode){
+		        	$('#map-container').highcharts().get(stateCode).zoomTo();
+		        	//$('#map-container').highcharts().mapZoom(0.02);
+		        }
+			}
+		};
 		
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
@@ -1509,8 +1531,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
-	               
-				           
+	         
+	    	 //Using may renderMap function to zoom the map
+	    	 salesDataJoin = $scope.states;
+	    	 
 	    }). error(function(data, status) {
 	   
 	       console.log(JSON.stringify(data));
@@ -2088,9 +2112,6 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
-    
-    
-    
     var zipcode;
     if(salesDataStr.includes("zip_code")){
         zipcode = true;
@@ -2140,7 +2161,10 @@ function renderMap(divId, salesData){
 	    series: [{
 	        //mapData: Highcharts.maps['custom/world'],
 	        mapData: Highcharts.maps['countries/us/us-all'],
+	        joinBy: ['hc-a2', 'id'],
+			data: salesDataJoin,
 	        name: 'Basemap',
+	        color: '#EEEEEE',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
 	        showInLegend: false
@@ -2163,6 +2187,33 @@ function renderMap(divId, salesData){
 	            color:'#000000'
 	        }
 	    }]
+	    
+	    /*series: [{
+	        //mapData: Highcharts.maps['custom/world'],
+	        mapData: Highcharts.maps['countries/us/us-all'],
+	        name: 'Basemap',
+	        borderColor: '#A0A0A0',
+	        nullColor: 'rgba(200, 200, 200, 0.3)',
+	        showInLegend: false
+	    }, {
+	        name: 'Separators',
+	        type: 'mapline',
+	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+	        color: '#E0E0E0',
+	        showInLegend: false,
+	        enableMouseTracking: false
+	    }, {
+	        type: 'mapbubble',
+	        name: 'Sales Volume',
+	        color: '#4682B4',
+	        data: salesData,
+	        dataLabels: {
+	            enabled: true,
+	            format: '{point.z}',
+	            color:'#000000'
+	        }
+	    }]*/
 	});
 });
 	//console.log('Rendered the app successfully');

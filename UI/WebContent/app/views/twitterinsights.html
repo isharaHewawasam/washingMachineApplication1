@@ -241,7 +241,7 @@
 							
 								<tbody id="tabody">
 								
-									<tr ng-repeat="itm in twitter_insights_griddata">
+									<tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}" ng-click="getTwitterInsightsData(itm.tweetsid, $index)">
 										<td style="text-align:left">{{itm.make}}</td>
 				                        <td style="text-align:left">{{itm.model}}</td>
 				                        <td style="text-align:left">{{itm.tweets}}</td>
