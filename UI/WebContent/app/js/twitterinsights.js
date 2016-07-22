@@ -35,21 +35,26 @@ App.controller('TwitterInsightsController',
 	
 	$scope.tweetsData = {};
 	
-	$http({url:configApiClient.baseUrl + "twitter/innerpage/twittersentiments ", //api url
-        method: "GET",
-        Accept: "text/plain"}).success(function(data, status) {
-        		
-        		$scope.tweetsData = data.data[0];
-        		if($scope.tweetsData){
-        			getTwitterSentiments('twitter_sentiments', $scope.tweetsData);
-        			$scope.showPerSign = true;
-        		}
-	        	
-           }). error(function(data, status) {
-        	   console.log("*****************twitterinsights error ****************");
-               console.log("usageerror:"+status);
-             
-    });
+	$scope.loadTwitterInsightsData = function (id) {
+		var url = "twitter/innerpage/twittersentiments/"+id;
+		$http({url:configApiClient.baseUrl + url, //api url
+	        method: "GET",
+	        Accept: "text/plain"}).success(function(data, status) {
+	        		$scope.tweetsData = data.data[0];
+	        		if($scope.tweetsData){
+	        			getTwitterSentiments('twitter_sentiments', $scope.tweetsData);
+	        			$scope.showPerSign = true;
+	        		}
+		        	
+	           }). error(function(data, status) {
+	        	   console.log("*****************twitterinsights error ****************");
+	               console.log("usageerror:"+status);
+	             
+	    });
+		
+	};	
+	
+	$scope.loadTwitterInsightsData('');
 	
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 	
@@ -141,6 +146,14 @@ App.controller('TwitterInsightsController',
 		  renderTwitterSentimentsLineChart(divId, data);
     	
 	  }
+		
+		$scope.selectedRowIndex = -1;
+		
+		$scope.getTwitterInsightsData = function(id, index){
+			console.log("Clicked id ", id);
+			$scope.loadTwitterInsightsData(id)
+			$scope.selectedRowIndex = index;
+		} 
 }]);
 
 function getTwitterSentiments (divId, twitter_sentiments) {
@@ -248,6 +261,8 @@ function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 	}else if(divId == 'twitter_sentiments_neu'){
 		colorCode = ['#5DADE2', '#808080']; // For Neutral
 	}
+	
+	console.log("-----PiChart ", divId );
 	
 	var chart1 = new Highcharts.Chart({
         chart: {

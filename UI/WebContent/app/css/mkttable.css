@@ -63,3 +63,7 @@ width: 20%;
         border-bottom: 1px solid #c1c1c1;
             font-weight: 600;
 }
+
+.highlightRow {
+	background-color: #B1C5DB !important;
+}
