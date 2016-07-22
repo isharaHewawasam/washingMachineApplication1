@@ -1,6 +1,6 @@
 var payload = {
   "productAttrs": {
-    "makes": [],
+    "makes": [{"value": "Make1"}],
     "models": [],
     "skus": [],
     "mfg_date": {
@@ -22,8 +22,8 @@ var payload = {
     }
   },
   "region": {
-    "states": [{"value": "Arizona"}],
-  "cities": [{"value": "Chandler"}],
+    "states": [],
+  "cities": [],
     "zip_codes": []
   },
   "age": [],
