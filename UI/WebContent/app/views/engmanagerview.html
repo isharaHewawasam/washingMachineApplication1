@@ -165,8 +165,9 @@
  <div class="col-lg-2 " style="    margin-left: 15px;padding: 0px;" >
              		<button ng-disabled="isDisabled" class="btn btn-default pull-right "  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;     margin: auto;
                             margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="tryit()">
-                <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-                {{searchButtonText}}</button>         
+                <!-- <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{searchButtonText}}</button>    -->
+               		Apply Filter
+                    </button>
             		
 				</div>
 	<!-- </fieldset> -->
@@ -246,9 +247,10 @@
 						data-trigger="hover"></img>
 			</div>
 
-			<div id="container" class="graphDiv">
+			<div class="graphDiv">
 				<span ng-show="progress" class="progress-chart"><img alt=""
 					src="app/img/icon-load.gif" width="25%" ;height="25%"> </span>
+				<div id="container" style="width: 100%; height: 100%"></div>
 			</div>
 
 			<!-- 		<div ng-if="selectedChart=='Pie'" id="piecontainer" class="graphDiv"ng-init="plotPieChart('piecontainer')"></div>
@@ -288,13 +290,14 @@
 						data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
 						data-trigger="hover"></img>
 			</div>
-			<div id="map-container" class="map-mapDiv"
+			<div class="map-mapDiv"
 				style="width: 99%; height: 325px">
 
-				<span ng-show="progress" class="progress-chart"> <img
+				<span ng-show="mapProgress" class="progress-chart"> <img
 					id="loading" alt="" src="app/img/icon-load.gif" width="25%"
 					;height="25%">
 				</span>
+				<div id="map-container" style="width: 100%; height: 100%"></div>
 			</div>
 
 		</div>

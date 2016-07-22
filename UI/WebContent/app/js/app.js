@@ -1174,7 +1174,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                   }  else{
                       console.log("Got data for map..." );
                       renderMap("map-container", data);
-                      $scope.zoomMap();
+                      $scope.zoomMap('map-container');
                   }
                   console.log("data from server  :"+JSON.stringify(data));
                  })
@@ -1186,7 +1186,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
           });
 	}
 	
-	$scope.zoomMap = function () {
+	$scope.zoomMap = function (id) {
 		var selectedState = $scope.region.states;
 		console.log("selectedState " +  selectedState);
 		if(selectedState && selectedState != '') {
@@ -1200,8 +1200,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        	}
 	        }
 	        if(stateCode){
-	        	$('#map-container').highcharts().get(stateCode).zoomTo();
-	        	//$('#map-container').highcharts().mapZoom(0.02);
+	        	var chart = $('#'+id).highcharts();
+	    		if (chart) {
+	    			chart.get(stateCode).zoomTo();
+	    		}
 	        }
 		}
 	};
@@ -2129,7 +2131,6 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 }]);
 
 function renderMap(divId, salesData){
-	     
 	var salesDataStr = JSON.stringify(salesData);
 	
 	// Modify the json data set according to required highmap data format
@@ -2145,10 +2146,9 @@ function renderMap(divId, salesData){
     }else{
        zipcode = false;
     } 
-    
 	// Initiate the map
-    $(function () {
-          
+//    $(function () {
+    	console.log('in render map salesData : ', salesData);
     //var chart = Highcharts.Map({
     $('#map-container').highcharts('Map', {
       chart: {
@@ -2242,7 +2242,7 @@ function renderMap(divId, salesData){
 	        }
 	    }]*/
 	});
-});
+//});
 	//console.log('Rendered the app successfully');
 	
 }
