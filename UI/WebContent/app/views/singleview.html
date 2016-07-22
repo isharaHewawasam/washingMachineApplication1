@@ -156,8 +156,10 @@
       <div class="col-lg-2 " style="    margin-left: 15px;padding: 0px;" >
              		<button ng-disabled="isDisabled" class="btn btn-default pull-right "  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;     margin: auto;
                             margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="tryit()">
-                <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-                {{searchButtonText}}</button>         
+                            Apply Filter
+                    </button>
+                <!-- <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+                {{searchButtonText}}</button> -->         
             		
 				</div>
 	<!-- </fieldset> -->
@@ -234,38 +236,34 @@
 						data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 						data-trigger="hover"></img>
 			</div>
-
-
-			<div ng-if="selectedChart=='Pie'" id="piecontainer" class="graphDiv"
-				ng-init="plotPieChart('piecontainer')">
-				<span ng-show="progress" class="progress-chart"><img alt=""
-					src="app/img/icon-load.gif" width="25%" ;height="25%"> </span>
-			</div>
-			<div ng-if="selectedChart=='Bar'" class="graphDiv" id="bar"
-				ng-init="plotBarChart('bar')">
-				<span ng-show="progress" class="progress-chart"><img alt=""
-					src="app/img/icon-load.gif" width="25%" ;height="25%"> </span>
-
-				<!-- <div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
-				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
+			<div ng-if="selectedChart=='Pie'" class="graphDiv" ng-init="plotPieChart('piecontainer')">
+				<span ng-show="progress" class="progress-chart"> 
+					<img alt="" src="app/img/icon-load.gif" width="25%";height="25%">
+				</span>
+				<div id="piecontainer" style="width: 100%; height: 100%"></div>
 			</div>
 			
-			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas>  -->
+			<div ng-if="selectedChart=='Bar'" class="graphDiv" ng-init="plotBarChart('bar')">
+				<span ng-show="progress" class="progress-chart"> 
+					<img alt="" src="app/img/icon-load.gif" width="25%";height="25%">
+				</span>
+				<div id="bar" style="width: 100%; height: 100%"></div>
 			</div>
-			<div ng-if="selectedChart=='Multiline'" id="container"
-				class="graphDiv" ng-init="plotChartFunction('container')">
-				<span ng-show="progress" class="progress-chart"><img alt=""
-					src="app/img/icon-load.gif" width="25%" ;height="25%"> </span>
+			
+			<div ng-if="selectedChart=='Multiline'" class="graphDiv" ng-init="plotChartFunction('container')">
+				<span ng-show="progress" class="progress-chart"> 
+					<img alt="" src="app/img/icon-load.gif" width="25%";height="25%">
+				</span>
+				<div id="container" style="width: 100%; height: 100%"></div>
 			</div>
+			
 		</div>
 
 	</div>
 
-	<div class="col-lg-4" ng-controller="mapController"
-		ng-init="plotMapFunction('map-container')">
+	<div class="col-lg-4" ng-controller="mapController" ng-init="plotMapFunction('map-container')">
 		<div class="panel panel-default" style="width: 100%; height: 373px"
 			id="mapNormal">
-
 			<div class="panel-heading md-body-2"
 				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
 				<b>Sales Volume Distribution </b> <img id="mapMaxImg"
@@ -284,12 +282,12 @@
 						data-trigger="hover"></img>
 			</div>
 
-			<div id="map-container" class="map-mapDiv"
+			<div class="map-mapDiv"
 				style="width: 99%; height: 325px">
-				<span ng-show="progress" class="progress-chart"> <img
-					id="loading" alt="" src="app/img/icon-load.gif" width="25%"
-					;height="25%">
+				<span ng-show="mapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="app/img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div id="map-container" style="width: 100%; height: 100%"></div>
 			</div>
 		</div>
 	</div>

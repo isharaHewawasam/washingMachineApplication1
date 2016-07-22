@@ -23,6 +23,9 @@ factory('$logincheck', function(){
   
 });
 
+// Using my renderMap function to zoom the map
+var salesDataJoin;
+
 // APP START
 // ----------------------------------- 
 var Role;
@@ -298,7 +301,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 		};
 		$http({url:configApiClient.baseUrl + 'login/authentication',
               method: "POST",
-              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
               data: loginCredentials
          }).success(function(data, status) {
      			if (data.response == 'Success') {
@@ -727,15 +730,27 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isDisabled = false;
-			    	 if (data && data.length != 0) {      
-				    	 var notConnectedDataStr = JSON.stringify(data);
-						  
-				    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
-				    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
-								
-						 data = JSON.parse(notConnectedDataStr);
-							 
-						 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 
+			    	 if (data && data.length != 0) {  
+			    		 
+			    		 var total = 0;
+			             for(var i=0; i<data.length; i++){
+			                    total += data[i].unitsDisconnected;
+			             }
+			    		 
+			             if (total > 0)	{		             
+					    	 var notConnectedDataStr = JSON.stringify(data);
+							  
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
+									
+							 data = JSON.parse(notConnectedDataStr);
+								 
+							 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 	} else {
+			    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
+			    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
+			    	 	} 
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
@@ -825,8 +840,8 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
    
    $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
 	
-	$scope.searchButtonText = "Apply Filter";
-  $scope.test = false;
+	//$scope.searchButtonText = "Apply Filter";
+  //$scope.test = false;
 	$scope.isDisabled = false;
 	
 	$scope.sidebarObj={};
@@ -932,9 +947,268 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$scope.myDate1.getDate());
 	//for reports section -finish
 	
+	//start report apply filter
+	$scope.iniReport=function(){
+
+	//$scope.searchButtonText = "Filtering...";  
+	    $scope.isDisabled = true;
+	    //$scope.test = true;
+	    $rootScope.applyFilterBoolean=true;
+	    $scope.usagedata={  
+	       "productAttrs":{  
+	         "makes":[{"value":$scope.sidebarObj.selectedMake}],
+	            "models":[{"value":$scope.sidebarObj.selectedModel}],
+	            "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+	            "mfg_date": {
+	                "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
+	                "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+	              }
+	         },
+	        "timescale":{  
+	            "years":[  
+	               {  
+	                  "value":parseInt($scope.timescale.years)
+	               }
+	            ],
+	            "quarters":[  
+	               {  
+	                  "value":parseInt($scope.timescale.quarters)
+	               }
+	            ],
+	            "months":[  
+	               {  
+	                  "value":parseInt($scope.timescale.months)
+	               }
+	            ],
+	            "date":{  
+	               "start_date":"01/01/2015",
+	               "end_date":"01/01/2016"
+	            },
+	            "relative":{  
+	               "unit":"2",
+	               "value":0
+	            }
+	         },
+	         "region":{  
+	            "states":[  
+	               {  
+	                  "value":$scope.region.states
+	               }
+	            ],
+	            "cities":[  
+	               {  
+	                  "value":$scope.region.cities
+	               }
+	            ],
+	            "zip_codes":[  
+	               {  
+	                  "value":$scope.region.zip_codes
+	               }
+	            ]
+	         },
+	         "income":[{"value": $scope.sidebarObj.incomeRange}],
+	         "age": [{"value": $scope.sidebarObj.ageGroup}],
+	         "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+	    };
+	  
+
+	    if($scope.region.states==undefined || $scope.region.states=="")
+	    {
+	    
+	    console.log("states undefined");
+	    $scope.usagedata.region.states=[];
+	    }
+	    console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
+	    if($scope.region.cities==undefined || $scope.region.cities=="")
+	    {
+	      
+	      console.log("cities undefined");
+	      $scope.usagedata.region.cities=[];
+	    }
+	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
+	    {
+
+	      console.log("zip_codes undefined");
+	      $scope.usagedata.region.zip_codes=[];
+	    }
+	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
+	    {
+	      $scope.usagedata.timescale.years=[];
+	    } 
+	    if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
+	    {
+	      $scope.usagedata.timescale.quarters=[];
+	    }
+	    
+	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
+	    {
+	      $scope.usagedata.timescale.months=[];
+	    }
+	    if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
+	    {
+	      $scope.usagedata.productAttrs.makes=[];
+	    }
+	    if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
+	    {
+	      $scope.usagedata.productAttrs.models=[];
+	    }
+	    if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
+	    {
+	      $scope.usagedata.productAttrs.skus=[];
+	    }
+	    if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
+	    {
+	      $scope.usagedata.productAttrs.mfgStartDate=[];
+	    }
+	    if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
+	    {
+	      $scope.usagedata.productAttrs.mfgEndDate=[];
+	    }
+	    if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+	    {
+	      $scope.usagedata.income=[];
+	    }
+	    if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+	    {
+	      $scope.usagedata.age=[];
+	    }
+	    if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+	    {
+	      $scope.usagedata.family_members_count=[];
+	    }
+	  
+	    
+	    
+
+	    console.log("timescale form data  : "+$scope.timescale);  
+	    console.log("years form data  : "+$scope.timescale.years);  
+	    console.log("quaters form data  : "+$scope.timescale.quarters); 
+	    console.log("month form data  : "+$scope.timescale.months); 
+	    
+	    console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
+
+	    
+	 
+	   $rootScope.mkt_griddata_filter=[];
+	    $scope.isNoDataFound = false;
+	    $scope.isError =  false;
+	    $scope.isDisabled = true;
+	    $scope.isOnFilter = false;
+
+	    console.log('usage data in Report grid : '+JSON.stringify($scope.usagedata));
+	    //alert(JSON.stringify($scope.usagedata));
+	   
+	    
+	    //for grid mkt_mgr
+	      $http({url:configApiClient.baseUrl +  'usage', 
+	            method: "POST",
+	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	             data: $scope.usagedata
+	            
+	           }).success(function(data, status) {
+	             //$scope.test = false;
+	                //$scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false;
+	             if(!data || data.data.length === 0){
+	                  
+	                                                            console.log("empty data");
+	                                                            $rootScope.isOnFilter=true;
+	                $rootScope.isOnLoad=false;
+	                //$("#gridMax #gridMaxImg").addClass("hidden");
+
+	             
+	                }
+	             else {  
+	                     
+	                $rootScope.mkt_griddata_filter=data.data; 
+	                 // alert(JSON.stringify(data));
+	                console.log("data for report from server  :"+JSON.stringify(data));
+	                $rootScope.isOnFilter=true;
+	                $rootScope.isOnLoad=false;
+	              }
+	           }). error(function(data, status) {
+	             //$scope.test = false;
+	                //$scope.searchButtonText = "Apply filter";
+	                $scope.isDisabled = false;
+	          $scope.isError = true;
+	          //$scope.msg = $scope.msg3;
+	             //alert("No data found");
+	             console.log("error:"+status);
+	             
+	           });
+	      
+	    
+	   
+	      }
+	               //end iniReport
+	removechart = function (id) {
+		var chart = $('#'+id).highcharts();
+		if (chart) {
+			var seriesLength = chart.series.length;
+	        for(var i = seriesLength -1; i > -1; i--) {
+	            chart.series[i].remove();
+	        }
+		}
+	};
+	
+	showMap = function () {
+		removechart('map-container');
+		console.log('in show Map');
+		$scope.loadingText = "Loading data...";    
+		$rootScope.isDisabled = true;
+		$rootScope.mapProgress = true;
+		console.log('$rootScope.mapProgress : ', $rootScope.mapProgress);
+		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
+                  method: "POST",
+                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+                  data: $scope.usagedata
+                  
+         })
+         .success(function(data, status) {
+        	 $rootScope.isDisabled = false;
+        	 $rootScope.mapProgress = false;
+        	 	  console.log("usagedata : " + $scope.usagedata.toString());
+                  if(!data || data.length === 0){
+                       console.log("empty data");
+            
+                  }  else{
+                      console.log("Got data for map..." );
+                      renderMap("map-container", data);
+                      $scope.zoomMap();
+                  }
+                  console.log("data from server  :"+JSON.stringify(data));
+                 })
+                 .error(function(data, status) {
+                	 $rootScope.isDisabled = false;
+                	 $rootScope.mapProgress = false;
+                        console.log("error:"+status);
+                         
+          });
+	}
+	
+	$scope.zoomMap = function () {
+		var selectedState = $scope.region.states;
+		console.log("selectedState " +  selectedState);
+		if(selectedState && selectedState != '') {
+			var stateCode = undefined;
+			var states = $scope.states;
+			// Assign id's
+	        for(var i=0; i < states.length; i++) {
+	        	if(states[i].name == selectedState) {
+	        		stateCode = states[i].id;
+	        		break;
+	        	}
+	        }
+	        if(stateCode){
+	        	$('#map-container').highcharts().get(stateCode).zoomTo();
+	        	//$('#map-container').highcharts().mapZoom(0.02);
+	        }
+		}
+	};
+	
 	
 	$rootScope.tryit = function() {
-		$scope.searchButtonText = "Filtering...";    
+		//$scope.searchButtonText = "Filtering...";    
 		$scope.isDisabled = true;
 		$scope.test = true;
 		$rootScope.applyFilterBoolean=true;
@@ -1080,27 +1354,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$rootScope.setUsageData($scope.usagedata);
 		//code added by sanket
 		//For map
-		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
-                  method: "POST",
-                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-                  data: $scope.usagedata
-                  
-         }).success(function(data, status) {
-        	 	  /*console.log("usagedata : " + $scope.usagedata.toString());*/
-                  if(!data || data.length === 0){
-                       console.log("empty data");
-            
-                  }  else{
-                      console.log("Got data for map..." );
-                      renderMap("map-container", data);
-                  }
-                  console.log("data from server  :"+JSON.stringify(data));
-                 }). error(function(data, status) {
-                        console.log("error:"+status);
-                         
-          });
+		showMap();
 		
-	
+		
 		
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
@@ -1115,12 +1371,12 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		//for grid mkt_mgr
 		  $http({url:configApiClient.baseUrl +  'usage', 
 	          method: "POST",
-	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
 	          
 	         }).success(function(data, status) {
-	           $scope.test = false;
-                $scope.searchButtonText = "Apply filter";
+	           //$scope.test = false;
+               // $scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false;
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
@@ -1136,8 +1392,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	       	  			//alert(data);
 	       	  		console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
-	           $scope.test = false;
-                $scope.searchButtonText = "Apply filter";
+	          // $scope.test = false;
+                //$scope.searchButtonText = "Apply filter";
 	       	  		$scope.isDisabled = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
@@ -1149,13 +1405,13 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		//For grid from eng manager
 		  $http({url:configApiClient.baseUrl + 'sensors/data', 
 	            method: "POST",
-	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
 	            
 	           }).success(function(data, status) {
 	            console.log("*****************Eng manager_Filter****************");
-	             $scope.test = false;
-	                $scope.searchButtonText = "Apply filter";
+	            /* $scope.test = false;*/
+	                //$scope.searchButtonText = "Apply filter";
 	                $scope.isDisabled = false;
 	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
@@ -1173,8 +1429,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 
 	           }). error(function(data, status) {
 	            console.log("*****************Eng manager Error_Filter****************");
-	             $scope.test = false;
-	                $scope.searchButtonText = "Apply filter";
+	             //$scope.test = false;
+	                //$scope.searchButtonText = "Apply filter";
 	                $scope.isDisabled = false;
 	                $scope.isError = true;
 	                $scope.msg = $scope.msg3;
@@ -1191,6 +1447,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     		// load all usage data on dashboard		
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
+    		$scope.mkt_griddata=[];
     		
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
@@ -1221,7 +1478,22 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                              console.log("usageerror:"+status);
                        
                      });
-    						
+    		  
+    		  ///////////////////////Report on load
+              $http({url:configApiClient.baseUrl +  "usage", 
+              method: "GET",
+              Accept: "text/plain"}).success(function(data, status) {
+                   
+                        $scope.mkt_griddata=data.data; 
+                        $rootScope.isOnLoad=true;
+                
+                    //  console.log("Griddata"+JSON.stringify($scope.griddata));
+                      
+                 }). error(function(data, status) {
+                         console.log("usageerror:"+status);
+                   
+                 }); 			   
+  			   						
   	    
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'
@@ -1285,8 +1557,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.states=data.states;
-	               
-				           
+	         
+	    	 //Using may renderMap function to zoom the map
+	    	 salesDataJoin = $scope.states;
+	    	 
 	    }). error(function(data, status) {
 	   
 	       console.log(JSON.stringify(data));
@@ -1331,7 +1605,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	 $scope.selectZip=function(){
 		
 		 $scope.region.zip_codes=undefined;
-		 //http://ibm-iot.mybluemix.net/api/v1/config/states/texas/cities/austin/zipcodes
+		 //http://localhost:3000/api/v1/config/states/texas/cities/austin/zipcodes
 		 $http({url:configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
@@ -1734,7 +2008,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		
 		console.log("in select make"); 
 		 // alert($scope.selected_make);
-		 $http({url:"http://ibm-iot.mybluemix.net/api/v1/config/makes/models?make_names="+$scope.selected_make, 
+		 $http({url:"http://localhost:3000/api/v1/config/makes/models?make_names="+$scope.selected_make, 
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
@@ -1811,17 +2085,18 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
    };  
 }]);
 
-App.controller('mapController',['$scope','$http','iot.config.ApiClient',function($scope,$http,configApiClient){
+App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiClient',function($scope,$rootScope,$http,configApiClient){
     $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
-              $scope.progress = true;
+              $rootScope.mapProgress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
 			    	console.log("Sales Volume List : "+JSON.stringify(data));
 			    	
 			    	renderMap(divId, data);
                       salesDataSet = data;                      
-                      $scope.progress = false;
+                      $rootScope.mapProgress = false;
 			    }). error(function(data, status) {
+			    	$rootScope.mapProgress = false;
 			      // alert("error"  +status);
 			       console.log('Error : ' + status);
 			       renderMap(divId, data);
@@ -1864,9 +2139,6 @@ function renderMap(divId, salesData){
 	
 	salesData = JSON.parse(salesDataStr);
 	
-    
-    
-    
     var zipcode;
     if(salesDataStr.includes("zip_code")){
         zipcode = true;
@@ -1916,7 +2188,10 @@ function renderMap(divId, salesData){
 	    series: [{
 	        //mapData: Highcharts.maps['custom/world'],
 	        mapData: Highcharts.maps['countries/us/us-all'],
+	        joinBy: ['hc-a2', 'id'],
+			data: salesDataJoin,
 	        name: 'Basemap',
+	        color: '#EEEEEE',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
 	        showInLegend: false
@@ -1939,6 +2214,33 @@ function renderMap(divId, salesData){
 	            color:'#000000'
 	        }
 	    }]
+	    
+	    /*series: [{
+	        //mapData: Highcharts.maps['custom/world'],
+	        mapData: Highcharts.maps['countries/us/us-all'],
+	        name: 'Basemap',
+	        borderColor: '#A0A0A0',
+	        nullColor: 'rgba(200, 200, 200, 0.3)',
+	        showInLegend: false
+	    }, {
+	        name: 'Separators',
+	        type: 'mapline',
+	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+	        color: '#E0E0E0',
+	        showInLegend: false,
+	        enableMouseTracking: false
+	    }, {
+	        type: 'mapbubble',
+	        name: 'Sales Volume',
+	        color: '#4682B4',
+	        data: salesData,
+	        dataLabels: {
+	            enabled: true,
+	            format: '{point.z}',
+	            color:'#000000'
+	        }
+	    }]*/
 	});
 });
 	//console.log('Rendered the app successfully');
@@ -2045,7 +2347,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
             	  "Username": userid
             	}
@@ -2106,7 +2408,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}  
             
 		}).success(function(data, status) {
@@ -2171,7 +2473,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}
             
 		}).success(function(data, status) {
@@ -2236,7 +2538,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
             	  "Username": userid
             	}
@@ -2524,6 +2826,8 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 	//code by Babagouda
 	
 $scope.plotPieChart=function(divID){
+	//var divid = '#'+divID;
+	removechart(divID);
 	$scope.loadingText = "Loading data...";    
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
@@ -2537,6 +2841,7 @@ $scope.plotPieChart=function(divID){
 			 
 		}).success(function(data, status) {
 	    	console.log("Pie Chart sucess :", data);
+	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
 	    	$scope.data=[];
 	    	$scope.data[0]=data.unitsSold;
@@ -2580,6 +2885,7 @@ $scope.plotPieChart=function(divID){
 	        });
 	    }). error(function(data, status) {
 	    	$scope.progress = false;
+	    	$scope.isDisabled = false;
 	       console.log('in piechart error : ',data);
 	       $scope.progress = false;
 	    })
@@ -2594,7 +2900,7 @@ $scope.plotPieChart=function(divID){
 				  headers: { 
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
-	                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
+	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
 	                	'Access-Control-Allow-Credentials':true  
           		 },
@@ -2602,6 +2908,7 @@ $scope.plotPieChart=function(divID){
 					 
 				}).success(function(data, status) {
 					$scope.progress = false;
+					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
 			    	$scope.data[0]=data[0].unitsSold;
 			    	$scope.data[1]=data[0].unitsConnected;
@@ -2644,6 +2951,7 @@ $scope.plotPieChart=function(divID){
 			        });
 			    	})
 			    .error(function(data,status){
+			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
 			    	console.log("Pie Chart response With Filter error : ", data);
 			    });
@@ -2651,6 +2959,7 @@ $scope.plotPieChart=function(divID){
 			$rootScope.applyFilterBoolean=false;
 		}
 		else{
+			$scope.isDisabled = false;
 			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
 		
@@ -2695,6 +3004,7 @@ $scope.plotPieChart=function(divID){
 	}
 
 	$scope.plotBarChart=function(divId){
+		removechart(divId);
 		$scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
@@ -2705,6 +3015,7 @@ $scope.plotPieChart=function(divID){
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
+				$scope.isDisabled = false;
 				$scope.progress = false;
 				
 		    	$scope.barchartData=data;
@@ -2762,6 +3073,7 @@ $scope.plotPieChart=function(divID){
 				    });
 				});
 			}). error(function(data, status) {
+				$scope.isDisabled = false;
 				$scope.progress = false;
 			       console.log(JSON.stringify(data));
 			    });
@@ -2773,13 +3085,14 @@ $scope.plotPieChart=function(divID){
 					  headers: { 
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
 		                	'Access-Control-Allow-Credentials':true  
 	          		 },
 					  data:$scope.usagedata
 						 
 					}).success(function(data, status) {
+						$scope.isDisabled = false;
 						$scope.progress = false;
 						
 				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
@@ -2833,6 +3146,7 @@ $scope.plotPieChart=function(divID){
 						    });
 						});
 					}).error(function(data,status){
+						$scope.isDisabled = false;
 						$scope.progress = false;
 						console.log("Error:"+JSON.stringify(data));
 					});
@@ -2840,6 +3154,7 @@ $scope.plotPieChart=function(divID){
 			}	
 			else{
 			$scope.progress = false;
+			$scope.isDisabled = false;
 			$(function () {
 			    $('#bar').highcharts({
 			        chart: {
@@ -2894,6 +3209,7 @@ $scope.plotPieChart=function(divID){
 		
 	}
 	$scope.plotChartFunction = function(divId){
+		removechart(divId);
 		console.log("In line chart function");
 		$scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
@@ -2906,6 +3222,7 @@ $scope.plotPieChart=function(divID){
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
+				$scope.isDisabled = false;
 				$scope.progress = false;
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
 		    	$scope.linechartData=data.data;
@@ -2979,6 +3296,7 @@ $scope.plotPieChart=function(divID){
 		    	    series:$scope.lineChartSeriesData
 		    	});
 		    }). error(function(data, status) {
+		    	$scope.isDisabled = false;
 		    	$scope.progress = false;
 		       console.log(JSON.stringify(data));
 		    });
@@ -2992,13 +3310,14 @@ $scope.plotPieChart=function(divID){
 					  headers: { 
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
+		                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
 		                	'Access-Control-Allow-Credentials':true  
 	          		 },
 					  data:$scope.usagedata
 						 
 					}).success(function(data, status) {
+						$scope.isDisabled = false;
 						$scope.progress = false;						
 				    	console.log("Line Chart response With Filter:"+JSON.stringify(data));
 				    	$("#"+divId).highcharts( {
@@ -3059,12 +3378,14 @@ $scope.plotPieChart=function(divID){
 				    	});
 				    	
 				   }).error(function(data,status){
+					   $scope.isDisabled = false;
 					   $scope.progress = false;	
 					   console.log("Error:"+JSON.stringify(data));
 				   });
 				$rootScope.applyFilterBoolean=false;
 			}
 			else{
+				$scope.isDisabled = false;
 				console.log("In line chart function in else else");
 				console.log("Series Data:: "+JSON.stringify($scope.lineChartSeriesData));
 				$scope.progress = false;
@@ -3319,9 +3640,9 @@ $scope.plotPieChart=function(divID){
 
 /*App.controller('filterController', function ($scope,$http) {
 	
-	var url = 'http://ibm-iot.mybluemix.net/api/v1/config/states';
+	var url = 'http://localhost:3000/api/v1/config/states';
     
-	$http.get("https://ibm-iot.mybluemix.net/api/v1/config/states")
+	$http.get("https://localhost:3000/api/v1/config/states")
 	 .success(function(response){
 		 $scope.states=[];
 		 $scope.states = response.states; 
