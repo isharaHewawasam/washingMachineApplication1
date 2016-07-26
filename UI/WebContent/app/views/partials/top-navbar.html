@@ -5,7 +5,7 @@
 	<!-- END navbar header-->
 	<!-- START Nav wrapper-->
 	<div class="nav-wrapper" style="height: 100%; vertical-align: middle;">
-		<ul class="nav navbar-nav pull-left" style="  ">
+		<ul class="nav navbar-nav pull-left" style="cursor:default;">
 			<!-- Search icon-->
 			<li style="padding-top: 8px">
 				<div class="navbar-header "
@@ -60,7 +60,7 @@
 							<!-- START list group-->
 							<div class="list-group" >
 								<!-- list item-->
-								<a href="#" class="list-group-item" ng-if="roleKey != 'mkt_manager'">
+								<a href="#/app/notificationconf" class="list-group-item" ng-if="roleKey != 'mkt_manager'">
 									<div class="media-box">
 
 										<div class="media-box-body clearfix">
@@ -90,16 +90,13 @@
 									</div>
 								</a>
 								<!-- list item-->
-								<a href="#" class="list-group-item">
+								<a href="#" class="list-group-item" ng-click="logOut()">
 									<div class="media-box">
-
 										<div class="media-box-body clearfix">
-											<p ng-click="logOut()" class="m0 option-text-style">Logout</p>
-
+											<p class="m0 option-text-style" style="height:100%; width:100%" >Logout</p>
 										</div>
-									</div>
+								    </div>
 								</a>
-
 							</div> <!-- END list group-->
 						</li>
 					</ul>

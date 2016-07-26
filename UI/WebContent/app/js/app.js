@@ -174,7 +174,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'Notification Configuration View',
         controller: 'NotificationConfController',
         templateUrl: helper.basepath('notificationconfiguration.html'),
-        data:{title: 'Notification Configuration - Marketing Manager Dashboard'}
+        data:{title: 'Notification Configuration'}
     })
     
     // 
