@@ -27,7 +27,7 @@ exports.getAllStates = function(callback) {
 };
 
 exports.getAllSalesYears = function(callback) {
-	  var opts = { q: '*:*', counts: ['SoldYear'], limit:0 };  
+	  var opts = { q: '*:*', counts: ['newSearchyearsBySoldDate'], limit:0 };  
 	  
 	  db.search('yearsBySoldDate', 'yearsBySoldDate', opts, function(err, result) {
 	    if(err) {
