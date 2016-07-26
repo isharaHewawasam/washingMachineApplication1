@@ -688,7 +688,7 @@
    "/notifications/notification-alert": {
       "get": {
         "x-swagger-router-controller": "insights",
-        "operationId": "getTwittersentimentsforid",
+        "operationId": "getNotificationonload",
         "tags": ["Notifications"],
         "description": "Return notification by onload function",
         "responses": {
