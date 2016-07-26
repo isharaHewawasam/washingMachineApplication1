@@ -375,7 +375,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 		 	$scope.notificationAlertFlag = true;
 					           
 		}). error(function(data, status) {
-		       console.log("Error getting data for most fault models, status: " + status);
+		       console.log("Error getting data for notification alerts, status: " + status);
 		});	
 	}
 	
@@ -2362,10 +2362,9 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    	 
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    	 	$scope.data = data;
-			    	 	
-			    	 	for (var i=0; i< data.length; i++){
-			    			 
+			   			    	 	
+			    	 	 var i=data.length;
+			    		 while (i--){			    			 
 			    			 var twitterCountDifference = data[i].twitter_count/data[i].full_count*100;
 			    			 
 			    			 if (data[i].twitter_response_type == 'Positive' && twitterCountDifference >= $scope.positiveTwitterSentimentThreshold){
@@ -2377,7 +2376,8 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    			 } else {
 			    				 data[i].twitter_negatives_decrease_spike = twitterCountDifference;
 			    			 } 
-			    		 }			    	 	
+			    		 }
+			    	 	$scope.data = data;
 			    	 } else {
 			    		 $scope.isDisabled = false;
 		 				 $scope.isError = true;
@@ -2420,12 +2420,11 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    	 
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    		 $scope.data = data;
 			    		 
 			    		 // Calculate the difference between connected machines as of today and the connected machines 4 weeks ago.
 			    		 // Remove the data that is not above increase tolerance or below decrease tolerance
-			    		 for (var i=0; i< data.length; i++){
-			    			 
+			    		 var i=data.length;
+			    		 while (i--){			    			 
 			    			 var connectdMachineCountDifference = (data[i].current_connected_machines - data[i].previous_connected_machines)/data[i].previous_connected_machines*100;
 			    			 
 			    			 if (connectdMachineCountDifference > $scope.spikeByConnectedMachinesIncreaseTolerance){
@@ -2436,6 +2435,8 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    				 data.splice(i, 1);
 			    			 }
 			    		 }
+			    		 
+			    		 $scope.data = data;
 			    		 
 			    		 if (data.length == 0){
 			    			 $scope.isDisabled = false;
@@ -2486,12 +2487,12 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 			    	 
 			    	 $scope.isDisabled = false;
-			    	 if (data || data.length != 0) {
-			    		 $scope.data = data;	
+			    	 if (data || data.length != 0) {	
 			    		 
 			    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
 			    		 // Remove the data that is not a specified error type and not within the specified ranges
-			    		 for (var i=0; i< data.length; i++){
+			    		 var i=data.length;
+			    		 while (i--){
 			    			 var errorCountDifference = (data[i].current_error_count - data[i].previous_error_count)/data[i].previous_error_count*100;
 			    			 
 			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorsTolerance)){
@@ -2501,7 +2502,9 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    			 } else {
 			    				 data.splice(i, 1);
 			    			 }
-			    		 }			    		 			    		 
+			    		 }	
+			    		 
+			    		 $scope.data = data;
 			    		 
 			    		 if (data.length == 0){
 			    			 $scope.isDisabled = false;
@@ -2553,19 +2556,20 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    		 $scope.data = data;				    		 
-			    		 
-			    		 for (var i=0; i< data.length; i++){
-			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;			    			 
+			    		 var i=data.length;
+			    		 while (i--){
+			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;
 			    			 			    			 
 			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorByMakeModelTolerance)){
 			    				 data[i].increase_spike = errorCountDifference;
 			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorByMakeModelTolerance)){
 			    				 data[i].decrease_spike = errorCountDifference;
 			    			 } else {
-			    				 data.splice(i, 1);
+			    				 data.splice(i, 1);			    				 
 			    			 }
 			    		 }
+			    		 
+			    		 $scope.data = data;
 			    		 
 			    		 if (data.length == 0){
 			    			 $scope.isDisabled = false;
