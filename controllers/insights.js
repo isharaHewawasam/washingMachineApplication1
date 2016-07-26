@@ -107,6 +107,21 @@ module.exports.getTwitterinsightstable = function(req, res, next) {
 	    helper.sendResponse(res, err, dataArray); 
 	});
 };
+//Twitter insights table api when select day 5 filter
+module.exports.getTwitterinsightstabledayfive = function(req, res, next) { 
+	insights.getTwitterinsightstabledayfive(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
+
+//Twitter insights table api when select day 10 filter
+module.exports.getTwitterinsightstabledayten = function(req, res, next) { 
+	insights.getTwitterinsightstabledayten(function(err, result){  
+		var dataArray={'data':result};
+	    helper.sendResponse(res, err, dataArray); 
+	});
+};
 
 //Twitter insights table api for requested id
 

@@ -161,6 +161,102 @@ module.exports.twitterinnerpageTwitterinsights = [
                          }
                        ];   
 
+module.exports.twitterinnerpageTwitterinsightsfiveday=[
+                               {      
+                               "tweetsid":1,              
+                               "make":"Make1",
+                               "model":"Model3",
+                               "tweets":50,
+                               "likes":190,
+                               "dislikes":18,
+                               "followers":560,
+                               "comments":123
+                         },
+                         {        
+                               "tweetsid":2,             
+                               "make":"Make2",
+                               "model":"Model5",
+                               "tweets":40,
+                               "likes":160,
+                               "dislikes":12,
+                               "followers":670,
+                               "comments":100
+                         },
+                         {        
+                               "tweetsid":3,             
+                               "make":"Make3",
+                               "model":"Model8",
+                               "tweets":50,
+                               "likes":190,
+                               "dislikes":150,
+                               "followers":56,
+                               "comments":12
+                         }
+                  ];
+
+module.exports.twitterinnerpageTwitterinsightstenday=[
+                               {      
+                               "tweetsid":1,              
+                               "make":"Make1",
+                               "model":"Model3",
+                               "tweets":50,
+                               "likes":190,
+                               "dislikes":18,
+                               "followers":560,
+                               "comments":123
+                         },
+                         {        
+                               "tweetsid":2,             
+                               "make":"Make2",
+                               "model":"Model5",
+                               "tweets":40,
+                               "likes":160,
+                               "dislikes":12,
+                               "followers":670,
+                               "comments":100
+                         },
+                         {        
+                               "tweetsid":3,             
+                               "make":"Make3",
+                               "model":"Model8",
+                               "tweets":50,
+                               "likes":190,
+                               "dislikes":150,
+                               "followers":56,
+                               "comments":12
+                         },
+                         {        
+                               "tweetsid":4,             
+                               "make":"Make3",
+                               "model":"Model7",
+                               "tweets":60,
+                               "likes":200,
+                               "dislikes":10,
+                               "followers":600,
+                               "comments":170
+                         },
+                          {        
+                               "tweetsid":5,             
+                               "make":"Make2",
+                               "model":"Model5",
+                               "tweets":45,
+                               "likes":127,
+                               "dislikes":5,
+                               "followers":430,
+                               "comments":125
+                         },
+                         {       
+                               "tweetsid":6,              
+                               "make":"Make1",
+                               "model":"Model2",
+                               "tweets":25,
+                               "likes":50,
+                               "dislikes":15,
+                               "followers":260,
+                               "comments":120
+                         }
+                  ];
+
 module.exports.twitterinnerpagesentiments = [
                          {      
                                "twitterid":2,
