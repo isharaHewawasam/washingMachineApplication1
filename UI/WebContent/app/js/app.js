@@ -3016,76 +3016,8 @@ $scope.plotPieChart=function(divID){
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
 		  
-		if($scope.barchartData==null){
-		 $http({
-			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
-			  method: 'POST'
-			 
-			}).success(function(data, status) {
-				$scope.isDisabled = false;
-				$scope.progress = false;
 				
-		    	$scope.barchartData=data;
-		    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
-		    	
-		    	$(function () {
-				    $('#bar').highcharts({
-				        chart: {
-				            type: 'column'
-				        },
-				        title: {
-				            text: 'Top 3 Selling Models'
-				        },
-				        credits:{
-				        	enabled:false
-				        	},
-				        xAxis: {
-				            categories: [
-				                '2016'
-				            ],
-				            crosshair: true
-				        },
-				        yAxis: {
-				            min: 0,
-				            title: {
-				                text: 'Sales'
-				            }
-				        },
-				        tooltip: {
-				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-				            footerFormat: '</table>',
-				            shared: true,
-				            useHTML: true
-				        },
-				        plotOptions: {
-				            column: {
-				                pointPadding: 0.2,
-				                borderWidth: 0
-				            }
-				        },
-				        series: [{
-				            name: $scope.barchartData.sales[0].item,
-				            data: [$scope.barchartData.sales[0].unitsSold]
-
-				        }, {
-				            name: $scope.barchartData.sales[1].item,
-				            data: [$scope.barchartData.sales[1].unitsSold]
-
-				        }, {
-				            name: $scope.barchartData.sales[2].item,
-				            data: [$scope.barchartData.sales[2].unitsSold]
-
-				        }]
-				    });
-				});
-			}). error(function(data, status) {
-				$scope.isDisabled = false;
-				$scope.progress = false;
-			       console.log(JSON.stringify(data));
-			    });
-		}else{
-			if($rootScope.applyFilterBoolean){
+			if($rootScope.applyFilterBoolean=true){
 				$http({
 					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
 					  method: 'POST',
@@ -3158,10 +3090,18 @@ $scope.plotPieChart=function(divID){
 						console.log("Error:"+JSON.stringify(data));
 					});
 				$rootScope.applyFilterBoolean=false;
-			}	
-			else{
+			}	else{
+				 $http({
+					  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
+					  method: 'POST'
+					 
+					}).success(function(data, status) {
+						$scope.isDisabled = false;
 			$scope.progress = false;
-			$scope.isDisabled = false;
+						
+				    	$scope.barchartData=data;
+				    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
+				    	
 			$(function () {
 			    $('#bar').highcharts({
 			        chart: {
@@ -3170,6 +3110,9 @@ $scope.plotPieChart=function(divID){
 			        title: {
 			            text: 'Top 3 Selling Models'
 			        },
+						        credits:{
+						        	enabled:false
+						        	},
 			        xAxis: {
 			            categories: [
 			                '2016'
@@ -3210,9 +3153,16 @@ $scope.plotPieChart=function(divID){
 			        }]
 			    });
 			});
+					}). error(function(data, status) {
+						$scope.isDisabled = false;
+						$scope.progress = false;
+					       console.log(JSON.stringify(data));
+					    });
+				
+					
 		}
 	   
-		}
+	
 		
 	}
 	$scope.plotChartFunction = function(divId){
