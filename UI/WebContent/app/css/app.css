@@ -12359,4 +12359,10 @@ display : block;
 	border-bottom:none; 
 	border-color: #ddd; 
 	font-weight: bold;
+}/* Date picker */
+
+.md-datepicker-input-mask {
+   
+    width: 100% !important;
+   
 }
