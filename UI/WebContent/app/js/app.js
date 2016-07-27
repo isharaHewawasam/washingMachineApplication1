@@ -1185,7 +1185,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                       renderMap("map-container", data);
                       $scope.zoomMap('map-container');
                   }
-                  console.log("data from server  :"+JSON.stringify(data));
+                  //console.log("data from server  :"+JSON.stringify(data));
                  })
                  .error(function(data, status) {
                 	 $rootScope.isDisabled = false;
@@ -1401,7 +1401,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
 	       	  			//alert(data);
-	       	  		console.log("data from server  :"+JSON.stringify(data));
+	       	  		//console.log("data from server  :"+JSON.stringify(data));
 	         }). error(function(data, status) {
 	          // $scope.test = false;
                 //$scope.searchButtonText = "Apply filter";
@@ -1436,7 +1436,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	             else            
 	                $scope.eng_griddata=data; 
 	                  //alert(data);
-	                console.log("data from server  :"+JSON.stringify(data));
+	                //console.log("data from server  :"+JSON.stringify(data));
 
 	           }). error(function(data, status) {
 	            console.log("*****************Eng manager Error_Filter****************");
@@ -1482,7 +1482,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                      console.log("*****************Eng manager_onLoad****************");
                             $scope.eng_griddata=data; //.states: array name--check in browser
                     
-                        console.log("Griddata"+JSON.stringify(data));
+                        //console.log("Griddata"+JSON.stringify(data));
                           
                      }). error(function(data, status) {
                       console.log("*****************Eng manager error_onLoad****************");
@@ -2102,7 +2102,7 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 	$scope.plotMapFunction = function(divId){
               $rootScope.mapProgress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
-			    	console.log("Sales Volume List : "+JSON.stringify(data));
+			    	//console.log("Sales Volume List : "+JSON.stringify(data));
 			    	
 			    	renderMap(divId, data);
                       salesDataSet = data;                      
@@ -2740,7 +2740,7 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 		  method: 'GET',
 		}).success(function(data, status) {
 			$scope.sensorsList=data;
-	    	console.log("Sensors Name List: :"+JSON.stringify(data));					           
+	    	//console.log("Sensors Name List: :"+JSON.stringify(data));					           
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
 	       console.log(JSON.stringify(data));
@@ -2836,7 +2836,7 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 	
 	$scope.dispChart=function(selectedChart){
 		console.log("in disp chart"+selectedChart);
-		console.log("in disp sensors"+selectedSensors);
+		//console.log("in disp sensors"+selectedSensors);
 
 	}
 	
@@ -2857,7 +2857,6 @@ $scope.plotPieChart=function(divID){
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
-	    	console.log("Pie Chart sucess :", data);
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
 	    	$scope.data=[];
@@ -2865,7 +2864,12 @@ $scope.plotPieChart=function(divID){
 	    	$scope.data[1]=data.unitsConnected;
 	    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
 	    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
-	    	$(function() {
+	    	
+	    	// Check for div availability 
+	    	// div "piecontainer" is not available for eng manager.
+	    	var obj = $('#'+divID);
+	    	if(obj != null && obj.length != 0){
+	    	//$(function() {
 	            // Create the chart
 	            chart = new Highcharts.Chart({
 	                chart: {
@@ -2899,7 +2903,8 @@ $scope.plotPieChart=function(divID){
 	                    }
 	                }]
 	            });
-	        });
+	        //});
+	    	}
 	    }). error(function(data, status) {
 	    	$scope.progress = false;
 	    	$scope.isDisabled = false;
@@ -2927,45 +2932,47 @@ $scope.plotPieChart=function(divID){
 					$scope.progress = false;
 					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
-			    	$scope.data[0]=data[0].unitsSold;
-			    	$scope.data[1]=data[0].unitsConnected;
-			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
-			    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
-			    	$(function() {
-			            // Create the chart
-			            chart = new Highcharts.Chart({
-			                chart: {
-			                    renderTo: ''+divID,
-			                    type: 'pie'
-			                },
-			                title: {
-			                    text: 'Connected Vs Disconnected'
-			                },
-			                credits:{
-			                	enabled: false
-			                },			               
-			                plotOptions: {
-			                    pie: {
-			                        shadow: false
-			                    }
-			                },
-			                tooltip: {
-			                    formatter: function() {
-			                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-			                    }
-			                },
-			                series: [{
-			                    name: 'Browsers',
-			                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
-			                    size: '80%',
-			                    innerSize: '80%',
-			                    showInLegend:true,
-			                    dataLabels: {
-			                        enabled: false
-			                    }
-			                }]
-			            });
-			        });
+			    	if(data && data.length > 0){
+					    	$scope.data[0]=data[0].unitsSold;
+					    	$scope.data[1]=data[0].unitsConnected;
+					    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
+					    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+					    	$(function() {
+					            // Create the chart
+					            chart = new Highcharts.Chart({
+					                chart: {
+					                    renderTo: ''+divID,
+					                    type: 'pie'
+					                },
+					                title: {
+					                    text: 'Connected Vs Disconnected'
+					                },
+					                credits:{
+					                	enabled: false
+					                },			               
+					                plotOptions: {
+					                    pie: {
+					                        shadow: false
+					                    }
+					                },
+					                tooltip: {
+					                    formatter: function() {
+					                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+					                    }
+					                },
+					                series: [{
+					                    name: 'Browsers',
+					                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+					                    size: '80%',
+					                    innerSize: '80%',
+					                    showInLegend:true,
+					                    dataLabels: {
+					                        enabled: false
+					                    }
+					                }]
+					            });
+					        });
+			    		};
 			    	})
 			    .error(function(data,status){
 			    	$scope.isDisabled = false;
