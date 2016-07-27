@@ -1164,7 +1164,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	showMap = function () {
 		removechart('map-container');
 		console.log('in show Map');
-		$scope.loadingText = "Loading data...";
+		$scope.loadingText = "Loading data...";    
 		$rootScope.isDisabled = true;
 		$rootScope.mapProgress = true;
 		console.log('$rootScope.mapProgress : ', $rootScope.mapProgress);
@@ -1178,8 +1178,9 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
         	 $rootScope.isDisabled = false;
         	 $rootScope.mapProgress = false;
         	 	  console.log("usagedata : " + $scope.usagedata.toString());
-                  if(!data || data.length == 0 || !JSON.stringify(data).includes("latitude") || !JSON.stringify(data).includes("longitude")){
+                  if(!data || data.length === 0){
                        console.log("empty data");
+            
                   }  else{
                       console.log("Got data for map..." );
                       renderMap("map-container", data);
@@ -1459,6 +1460,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
     		$scope.mkt_griddata=[];
+    		$scope.isDisabled=true;
     		
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
@@ -1468,6 +1470,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
     	       	  			$scope.griddata=data.data; 
+    	       	  			$scope.isDisabled=false;
     	       	
     	       	  	//	console.log("Griddata"+JSON.stringify($scope.griddata));
     	       	  		
@@ -1483,6 +1486,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                             $scope.eng_griddata=data; //.states: array name--check in browser
                     
                         //console.log("Griddata"+JSON.stringify(data));
+                        $scope.isDisabled=false;
                           
                      }). error(function(data, status) {
                       console.log("*****************Eng manager error_onLoad****************");
@@ -1497,6 +1501,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                    
                         $scope.mkt_griddata=data.data; 
                         $rootScope.isOnLoad=true;
+                        $scope.isDisabled=false;
                 
                     //  console.log("Griddata"+JSON.stringify($scope.griddata));
                       
@@ -2573,9 +2578,6 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
-			    		 
-			    		 // Calculate the error count difference for make, models, as of today and the error count 4 weeks ago.
-			    		 // Remove the data that is not a specified error type and not within the specified ranges
 			    		 var i=data.length;
 			    		 while (i--){
 			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;
@@ -3040,8 +3042,76 @@ $scope.plotPieChart=function(divID){
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
 		  
+		if($scope.barchartData==null){
+		 $http({
+			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
+			  method: 'POST'
+			 
+			}).success(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.progress = false;
 				
-			if($rootScope.applyFilterBoolean=true){
+		    	$scope.barchartData=data;
+		    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
+		    	
+		    	$(function () {
+				    $('#bar').highcharts({
+				        chart: {
+				            type: 'column'
+				        },
+				        title: {
+				            text: 'Top 3 Selling Models'
+				        },
+				        credits:{
+				        	enabled:false
+				        	},
+				        xAxis: {
+				            categories: [
+				                '2016'
+				            ],
+				            crosshair: true
+				        },
+				        yAxis: {
+				            min: 0,
+				            title: {
+				                text: 'Sales'
+				            }
+				        },
+				        tooltip: {
+				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +'<td></td>'+'<td></td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+				            footerFormat: '</table>',
+				            shared: true,
+				            useHTML: true
+				        },
+				        plotOptions: {
+				            column: {
+				                pointPadding: 0.2,
+				                borderWidth: 0
+				            }
+				        },
+				        series: [{
+				            name: $scope.barchartData.sales[0].item,
+				            data: [$scope.barchartData.sales[0].unitsSold]
+
+				        }, {
+				            name: $scope.barchartData.sales[1].item,
+				            data: [$scope.barchartData.sales[1].unitsSold]
+
+				        }, {
+				            name: $scope.barchartData.sales[2].item,
+				            data: [$scope.barchartData.sales[2].unitsSold]
+
+				        }]
+				    });
+				});
+			}). error(function(data, status) {
+				$scope.isDisabled = false;
+				$scope.progress = false;
+			       console.log(JSON.stringify(data));
+			    });
+		}else{
+			if($rootScope.applyFilterBoolean){
 				$http({
 					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
 					  method: 'POST',
@@ -3114,18 +3184,10 @@ $scope.plotPieChart=function(divID){
 						console.log("Error:"+JSON.stringify(data));
 					});
 				$rootScope.applyFilterBoolean=false;
-			}	else{
-				 $http({
-					  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
-					  method: 'POST'
-					 
-					}).success(function(data, status) {
-						$scope.isDisabled = false;
+			}	
+			else{
 			$scope.progress = false;
-						
-				    	$scope.barchartData=data;
-				    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
-				    	
+			$scope.isDisabled = false;
 			$(function () {
 			    $('#bar').highcharts({
 			        chart: {
@@ -3134,9 +3196,6 @@ $scope.plotPieChart=function(divID){
 			        title: {
 			            text: 'Top 3 Selling Models'
 			        },
-						        credits:{
-						        	enabled:false
-						        	},
 			        xAxis: {
 			            categories: [
 			                '2016'
@@ -3177,16 +3236,9 @@ $scope.plotPieChart=function(divID){
 			        }]
 			    });
 			});
-					}). error(function(data, status) {
-						$scope.isDisabled = false;
-						$scope.progress = false;
-					       console.log(JSON.stringify(data));
-					    });
-				
-					
 		}
 	   
-	
+		}
 		
 	}
 	$scope.plotChartFunction = function(divId){
