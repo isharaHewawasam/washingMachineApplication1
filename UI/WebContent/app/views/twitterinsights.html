@@ -69,38 +69,38 @@
 
 </div>
 
-<div class="row" style="margin-top:0; margin-top: 80px;">
+<div class="row" style="margin-top:0; margin-top: 66px;">
 
 	<!-- START Twitter Insights Chart -->
 			
-			<div class="col-sm-8 col-md-8 col-lg-8 nopadding">
+			<div class="col-sm-8 col-md-8 col-lg-8 nopadding" style="border-right: 1px solid #dddddd;">
 				
 					<table  style="width:100%;">
 						<tr class="twitter_label">
 							<td width="20%">
 								<div>Tweets</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweets_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.tweets_color)" ><label ng-bind="tweetsData.tweets_percentage"></label><label ng-show="showPerSign">%</label></div>	
+								<div ng-class="getTextColor(tweetsData.tweets_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.tweets_percentage"></label><label ng-show="showPerSign">%</label></div>	
 							</td>
 							<td width="20%">
 								<div>Tweets impressions</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweetsimpress_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><label ng-bind="tweetsData.tweetsimpress_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
+								<div ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.tweetsimpress_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
 								<div>Profile visits</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.profilevisits_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.profilevisits_color)" ><label ng-bind="tweetsData.profilevisits_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>	
+								<div ng-class="getTextColor(tweetsData.profilevisits_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.profilevisits_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>	
 							</td>
 							<td width="20%">
 								<div>Mentions</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.mentions_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.mentions_color)" ><label ng-bind="tweetsData.mentions_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
+								<div ng-class="getTextColor(tweetsData.mentions_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.mentions_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
 								<div>Twitter</div>
 								<div class="twitter_count"><label ng-bind="tweetsData.twitter_count"></label></div>
-								<div ng-class="getTextColor(tweetsData.twitter_color)" ><label ng-bind="tweetsData.twitter_percentage"></label></div>
+								<div ng-class="getTextColor(tweetsData.twitter_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.twitter_percentage"></label></div>
 							</td>
 						</tr>
 						<tr style="background-color: white">
@@ -116,7 +116,7 @@
 			<div class="col-sm-4 col-md-4 col-lg-4">
 				
 				<div class="col-lg-12">
-					<img height="30px" width="30px" src='app/img/Dashboardassets/twitter.png' alt='' style="margin-left: 20px"/><label style='margin-top: 5px'>Twitter Sentiments</label>
+				<img height="25px" width="30px" src='app/img/Dashboardassets/twitter.png' alt='' style="margin-left: 20px"/><label style="margin-top: 5px;color: #23b7e5;">Twitter Sentiments</label>
 				</div>
 				<div class="col-sm-11 col-md-11 col-lg-11" style="width:400px"> <!-- ng-init="getTwitterSentiments('twitter_sentiments')"> -->
 
@@ -138,7 +138,7 @@
 
 </div>
 
-<div class="row" style="margin-top:0"> 
+<div class="row" style="margin-top:-15px"> 
 	      <!-- START panel -->
 	  
 	    	<!-- <div class="panel-body " id="gridHideNodata" ng-controller="reportController" ng-if="!isEngManager">
@@ -225,13 +225,13 @@
 
 					
 					<div class="tableHeader">
-						<p class="text-left">Make</p>
-						<p class="text-left">Model</p>
-						<p class="text-left">Tweets</p>
-						<p class="text-left">Likes</p>
-						<p class="text-left">Dislikes</p>
-						<p class="text-left">Followers</p>
-						<p class="text-left">Comments</p>
+						<p class="text-center">Make</p>
+						<p class="text-center">Model</p>
+						<p class="text-center">Tweets</p>
+						<p class="text-center">Likes</p>
+						<p class="text-center">Dislikes</p>
+						<p class="text-center">Followers</p>
+						<p class="text-center">Comments</p>
 						<!-- <p class="text-left" style="width: 100px">&nbsp;</p> -->
 
 					</div>
@@ -242,14 +242,14 @@
 								<tbody id="tabody">
 								
 									<tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}" ng-click="getTwitterInsightsData(itm.tweetsid, $index)">
-										<td style="text-align:left">{{itm.make}}</td>
-				                        <td style="text-align:left">{{itm.model}}</td>
-				                        <td style="text-align:left">{{itm.tweets}}</td>
-				                        <td style="text-align:left">{{itm.likes}}</td>
-				                        <td style="text-align:left">{{itm.dislikes}}</td>
-				                        <td style="text-align:left">{{itm.followers}}</td>
-				                        <td style="text-align:left">
-				                        	<div style="float: left">{{itm.comments}}</div>
+										<td class="text-center">{{itm.make}}</td>
+				                        <td class="text-center">{{itm.model}}</td>
+				                        <td class="text-center">{{itm.tweets}}</td>
+				                        <td class="text-center">{{itm.likes}}</td>
+				                        <td class="text-center">{{itm.dislikes}}</td>
+				                        <td class="text-center">{{itm.followers}}</td>
+				                        <td class="text-center">
+				                        	<div class="text-center">{{itm.comments}}
 				                        	<div style="float: right">
 				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
 				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
