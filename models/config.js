@@ -29,7 +29,7 @@ exports.getAllStates = function(callback) {
 exports.getAllSalesYears = function(callback) {
 	  var opts = { q: '*:*', counts: ['SoldYear'], limit:0 };  
 	  
-	  db.search('yearsBySoldDate', 'yearsBySoldDate', opts, function(err, result) {
+	  db.search('yearsBySoldDate', 'newSearchyearsBySoldDate', opts, function(err, result) {
 	    if(err) {
 	    	callback(err, null)
 	    } else {  
