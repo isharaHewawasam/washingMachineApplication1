@@ -1570,7 +1570,14 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    	 $scope.states=data.states;
 	         
 	    	 //Using may renderMap function to zoom the map
-	    	 salesDataJoin = $scope.states;
+	    	 //Using may renderMap function to zoom the map
+	    	 salesDataJoin = [];
+	    	 if($scope.states){
+	    		 $.each($scope.states, function () {
+	    			 salesDataJoin.push(this);
+	    		 });
+	    	 }
+	    	 //salesDataJoin = $scope.states;
 	    	 
 	    }). error(function(data, status) {
 	   
