@@ -1460,6 +1460,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
     		$scope.mkt_griddata=[];
+    		$scope.isDisabled=true;
     		
     	
     		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
@@ -1469,6 +1470,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
     	       	  			$scope.griddata=data.data; 
+    	       	  			$scope.isDisabled=false;
     	       	
     	       	  	//	console.log("Griddata"+JSON.stringify($scope.griddata));
     	       	  		
@@ -1484,6 +1486,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                             $scope.eng_griddata=data; //.states: array name--check in browser
                     
                         console.log("Griddata"+JSON.stringify(data));
+                        $scope.isDisabled=false;
                           
                      }). error(function(data, status) {
                       console.log("*****************Eng manager error_onLoad****************");
@@ -1498,6 +1501,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
                    
                         $scope.mkt_griddata=data.data; 
                         $rootScope.isOnLoad=true;
+                        $scope.isDisabled=false;
                 
                     //  console.log("Griddata"+JSON.stringify($scope.griddata));
                       
