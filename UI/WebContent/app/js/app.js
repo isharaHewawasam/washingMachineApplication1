@@ -1154,7 +1154,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	showMap = function () {
 		removechart('map-container');
 		console.log('in show Map');
-		$scope.loadingText = "Loading data...";    
+		$scope.loadingText = "Loading data...";
 		$rootScope.isDisabled = true;
 		$rootScope.mapProgress = true;
 		console.log('$rootScope.mapProgress : ', $rootScope.mapProgress);
@@ -1168,9 +1168,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
         	 $rootScope.isDisabled = false;
         	 $rootScope.mapProgress = false;
         	 	  console.log("usagedata : " + $scope.usagedata.toString());
-                  if(!data || data.length === 0){
+                  if(!data || data.length == 0 || !JSON.stringify(data).includes("latitude") || !JSON.stringify(data).includes("longitude")){
                        console.log("empty data");
-            
                   }  else{
                       console.log("Got data for map..." );
                       renderMap("map-container", data);
@@ -2557,6 +2556,9 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
 			    	 $scope.isDisabled = false;
 			    	 if (data || data.length != 0) {
+			    		 
+			    		 // Calculate the error count difference for make, models, as of today and the error count 4 weeks ago.
+			    		 // Remove the data that is not a specified error type and not within the specified ranges
 			    		 var i=data.length;
 			    		 while (i--){
 			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;
