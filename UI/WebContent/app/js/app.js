@@ -380,7 +380,17 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	}
 	
 	$scope.clearNotificationCount = function() {
-		$scope.notificationAlertFlag = false;
+		var rolename = $scope.rolename;
+	    
+	    if((window.location.hash=="#/app/twitterinsights"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/notificationconf"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/reports"&&rolename=="Marketing Manager")){
+	      $state.go('app.singleview');
+	      $scope.notificationAlertFlag = false;
+	    }else if((window.location.hash=="#/app/notificationconf"&&rolename=="Engineer Manager")||(window.location.hash=="#/app/reports"&&rolename=="Engineer Manager")){
+	      $state.go('app.engmanagerview');
+	      $scope.notificationAlertFlag = false;
+	    }else{
+	      $scope.notificationAlertFlag = false;
+	    }
 	}
 	
 	
