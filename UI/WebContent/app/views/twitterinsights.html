@@ -241,7 +241,8 @@
 							
 								<tbody id="tabody">
 								
-									<tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}" ng-click="getTwitterInsightsData(itm.tweetsid, $index)">
+									<!-- <tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}" ng-click="getTwitterInsightsData(itm.tweetsid, $index)"> -->
+									<tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}">
 										<td class="text-center">{{itm.make}}</td>
 				                        <td class="text-center">{{itm.model}}</td>
 				                        <td class="text-center">{{itm.tweets}}</td>
@@ -252,7 +253,8 @@
 				                        	<div class="text-center">{{itm.comments}}
 				                        	<div style="float: right">
 				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
-				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
+				                        	<!-- <a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a> -->
+				                        	<img src="app/img/Dashboardassets/delete.png"/>
 				                        	</div>
 				                        </td>
 				                        <!-- <td style="width: 100px">
