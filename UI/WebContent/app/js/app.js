@@ -3111,6 +3111,7 @@ $scope.plotPieChart=function(divID){
 			       console.log(JSON.stringify(data));
 			    });
 		}else{
+			$rootScope.barDetails = $scope.barchartData;
 			if($rootScope.applyFilterBoolean){
 				$http({
 					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
@@ -3129,7 +3130,13 @@ $scope.plotPieChart=function(divID){
 						$scope.progress = false;
 						
 				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
-				    	$scope.barchartData=data;
+				    	if(($rootScope.search.selectedMake) == undefined ){
+			                $scope.barchartData=data;
+			              }
+			              else{
+			                $scope.barchartData=$rootScope.barDetails;
+			              }
+				    	//$scope.barchartData=data;
 				    	$(function () {
 						    $('#bar').highcharts({
 						        chart: {
@@ -3138,6 +3145,9 @@ $scope.plotPieChart=function(divID){
 						        title: {
 						            text: 'Top 3 Selling Models'
 						        },
+						        credits:{
+						        	enabled:false
+						        	},
 						        xAxis: {
 						            categories: [
 						                '2016'
