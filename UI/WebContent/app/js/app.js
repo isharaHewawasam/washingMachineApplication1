@@ -1662,10 +1662,11 @@ $rootScope.isApplyFiterButton = true;
 		$("#gridMax #gridCloseImg").removeClass("hidden");
 		//$("#gridCloseImg").removeClass("hidden");
 		
-		 $(".tbody").height(600);
-
+	 $(".tbody").height(300);
+		 
+		 $("#gridNormal").height(447);
+		
 	$("#gridMax").removeClass("hidden");
-	
 	
 	
 	}
@@ -1675,6 +1676,8 @@ $rootScope.isApplyFiterButton = true;
 		$("#gridMax").addClass("hidden");
 		//  $("#gridAdjustHeight").height(160);
 		  $(".tbody").height(200);
+		  $("#gridNormal").height(355);
+		
 		//$scope.plotChartFunction("container");
     });
 	

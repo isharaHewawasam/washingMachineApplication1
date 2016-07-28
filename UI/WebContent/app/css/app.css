@@ -12186,16 +12186,16 @@ display : block;
 }
 
 .gridMaximize{
-	position: absolute;
+	position: fixed;
 	width:80% !important;
-	height:80% !important;
-	top: 10%;
-	left: 10%;
+	height:45% !important;
+	top: 30%;
+	left: 7%;
 	background-color: #ffffff;
 	/* border: 1px solid #d4d4d4; */
 	border-left: 1px solid #d4d4d4;
 	box-shadow: 1px 1px 1px #d4d4d4;
-	z-index:99;
+	z-index:999;
 }
 
 .glyphicon.spinning {
