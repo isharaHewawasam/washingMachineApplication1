@@ -2958,8 +2958,18 @@ $scope.plotPieChart=function(divID){
           $rootScope.isApplyFiterButton = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
 			    	if(data && data.length > 0){
-					    	$scope.data[0]=data[0].unitsSold;
-					    	$scope.data[1]=data[0].unitsConnected;
+			    		$scope.totalSold = 0;
+			            $scope.totalconnected = 0;
+			            for(var i=0;i<data.length;i++){
+			                $scope.totalSold += data[i].unitsSold;
+			                $scope.totalconnected += data[i].unitsConnected;
+			              }
+			             // console.log($scope.totalSold);
+			  			    $scope.data[0]=$scope.totalSold;
+			  			    $scope.data[1]=$scope.totalconnected;
+			    		
+//					    	$scope.data[0]=data[0].unitsSold;
+//					    	$scope.data[1]=data[0].unitsConnected;
 					    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
 					    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
 					    	$(function() {
