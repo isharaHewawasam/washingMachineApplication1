@@ -4,5 +4,5 @@ applications:
   instances: 1
   domain: mybluemix.net
   name: ibm-iot
-  host: apiconnect
+  host: api-connect
   disk_quota: 2G
