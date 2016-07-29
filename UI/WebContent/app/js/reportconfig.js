@@ -1,5 +1,7 @@
-App.controller('reportController',['$scope','$state','$http','iot.config.ApiClient','$window',function($scope,$state,$http,configApiClient,$window){
+App.controller('reportController',['$rootScope','$scope','$state','$http','iot.config.ApiClient','$window',function($rootScope,$scope,$state,$http,configApiClient,$window){
       $scope.getReports=function(){
+        $rootScope.isReportFiltering = true;
+
        // alert('reports');
         $state.go('app.reports');
         console.log("Reports page loaded");
@@ -10,12 +12,13 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
       $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
                       method: "GET",
                       Accept: "text/plain"}).success(function(data, status) {
-                     
+                     $rootScope.isReportFiltering = false;
                                         $scope.r_griddata=data.data; 
                                         // console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
                                   
                    }). error(function(data, status) {
                                         console.log("reporterror:"+status);
+                                       $rootScope.isReportFiltering = false;
                        
                    });
 
@@ -67,8 +70,9 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
              var roleKey   = loginCredentails.roleKey;
     
              $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
-    
+     
              $scope.openReport = function () {
+             $rootScope.isApplyFiterButton = true;
              console.log(" for Reports ", $scope.isEngManager);
              if($scope.isEngManager){
                   console.log("if ture ");

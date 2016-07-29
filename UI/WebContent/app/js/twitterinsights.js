@@ -59,6 +59,7 @@ App.controller('TwitterInsightsController',
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 	
 	$scope.loadDashboard = function() {
+		$rootScope.isApplyFiterButton = true;
 		$state.go('app.singleview');
 	};
 	
