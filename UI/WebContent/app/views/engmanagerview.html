@@ -419,7 +419,83 @@
 
 	<div class="col-lg-8">
 		<!-- START panel -->
+<div class="panel panel-default hidden" id="gridNormal1" style="height: 455px;">
+			<div class="panel-heading md-body-2"
+				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
+				Washing Machines status <img id="gridMaxImg"
+					class="pull-right col-md-1"
+					style="padding: 0px; height: 15px; width: 15px;"
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1 "
+					style="padding: 0px; height: 15px; width: 15px;"
+					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+					<img class="pull-right col-md-1"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
+						src="app/img/Dashboardassets/help.png" 
+						data-toggle="popover" data-placement="left"
+						data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+						data-trigger="hover"></img>
+			</div>
 
+
+			<div class="panel-body" id="gridHideNodata">
+				<!--   START table-responsive -->
+				<div id="gridAdjustHeight" class="panel panel-default">
+					<div class="tableHeader">
+						<p class="text-center">Make</p>
+						<p class="text-center">Model</p>
+						<p class="text-center">
+							Water used<span class='notbold'> (G)</span>
+						</p>
+						<p class="text-center">
+							Energy used<span class='notbold'> (kw)</span>
+						</p>
+						<p class="text-center">
+							Wash cycle<span class='notbold'> (min)</span>
+						</p>
+						<p class="text-center">Wash cycles</p>
+						<p class="text-center">
+							Temperature<span class='notbold'> (f)</span>
+						</p>
+						<p class="text-center">
+							Detergent used<span class='notbold'> (gms)</span>
+						</p>
+						<p class="text-center">
+							Humidity<span class='notbold'> (%)</span>
+						</p>
+						<p class="text-center">
+							Load<span class='notbold'> (kgs)</span>
+						</p>
+					</div>
+					<div class="tbody">
+						<div class="tableScroll">
+							<table class="table table-condensed">
+							<div ng-show="isDisabled||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 "style="font-weight:bold;  padding-top: 10%; ">{{msg}}</div>
+								<tbody id="tabody">
+									<tr ng-repeat="itm in eng_griddata">
+										<td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+				<!--      END table-responsive -->
+				<label class="pull-right " ng-if="eng_griddata.length > 0">{{eng_griddata.length}}
+					records found</label>
+			</div>
+		</div>
 		<div class="panel panel-default" id="gridNormal" style="height: 355px;">
 			<div class="panel-heading md-body-2"
 				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">

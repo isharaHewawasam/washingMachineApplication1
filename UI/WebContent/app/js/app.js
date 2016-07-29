@@ -1656,34 +1656,42 @@ $rootScope.isApplyFiterButton = true;
 		    
 		    }
 		
-	$scope.maximizeGrid=function(){
-		var gridNormal = $("#gridNormal").clone();
+	 $scope.maximizeGrid=function(){
+			var gridNormal = $("#gridNormal1").clone();
+			
+			$("#gridMax").empty();
+			$("#gridMax").append(gridNormal);
 		
-		$("#gridMax").empty();
-		$("#gridMax").append(gridNormal);
+			$("#gridMax #gridMaxImg").addClass("hidden");
+			$("#gridMax #gridCloseImg").removeClass("hidden");
+			$("#gridNormal1").removeClass("hidden");
+			//$("#gridCloseImg").removeClass("hidden");
+			
+			 $(".maxtbody").height(300);
 		
-		$("#gridMax #gridMaxImg").addClass("hidden");
-		$("#gridMax #gridCloseImg").removeClass("hidden");
-		//$("#gridCloseImg").removeClass("hidden");
+			 
 		
-	 $(".tbody").height(300);
-		 
-		 $("#gridNormal").height(447);
+			
+		$("#gridMax").removeClass("hidden");
 		
-	$("#gridMax").removeClass("hidden");
-	
-	
-	}
-	
-	$("body").on("click","#gridCloseImg",function(){
-		$("#gridMax").empty();
-		$("#gridMax").addClass("hidden");
-		//  $("#gridAdjustHeight").height(160);
-		  $(".tbody").height(200);
-		  $("#gridNormal").height(355);
+			
+		//$("#gridMax").css("","");
 		
-		//$scope.plotChartFunction("container");
-    });
+		
+		}
+		
+		$("body").on("click","#gridCloseImg",function(){
+			$("#gridMax").empty();
+			$("#gridMax").addClass("hidden");
+			//  $("#gridAdjustHeight").height(160);
+			  $(".tbody").height(200);
+			  $("#gridNormal").height(355);
+			
+			//  $(".gridNormal").height(355);
+
+			//$scope.plotChartFunction("container");
+	    });
+		
 	
 	/*$scope.closeGrid=function(){
 		
