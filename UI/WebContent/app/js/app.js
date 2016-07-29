@@ -1732,14 +1732,12 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
      }
 	
     $scope.clearfilter1 = function(){
-    	 console.log("<><><><><><><><>>>< $rootScope.search " ,$rootScope.search);
-         //$rootScope.search={};
+    	 //$rootScope.search={};
     	 //$rootScope.filterIcons=[];
     	 $scope.clearFilterIcons(1);
          
          //$rootScope.barchartData = null;
          //$rootScope.piechartData = null
-    	 console.log("<><><><><><><><>>>< $rootScope.search " ,$rootScope.search);
     	 
 		 var obj={};
 		 obj.selectedMake=$rootScope.search.selectedMake;
@@ -1812,8 +1810,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
             $rootScope.search.occupation=undefined;
             $rootScope.search.ageGroup=undefined;
             angular.forEach($rootScope.filterIcons,function(obj ,key){
-            	console.log(key, "----obj.key ", obj.key);
-                if(obj.key=="incomeRange" || obj.key=="occupation" || obj.key=="ageGroup"){
+            	if(obj.key=="incomeRange" || obj.key=="occupation" || obj.key=="ageGroup"){
                     //$rootScope.filterIcons.splice(key-1,1);
                 	isRemoved = true;
                 }else{
@@ -1975,7 +1972,6 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
             document.getElementById('filterPanel').style.display = 'none';
             $rootScope.tryit(); 
             
-            console.log("<><><><><>apply product <><><>>>< $rootScope.search " ,$rootScope.search);
         }
          
          $scope.applyDemographicsFilter=function(){
@@ -1998,7 +1994,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
              $scope.createIconArray();
              document.getElementById('demographicsFilterPanel').style.display = 'none';
              $rootScope.tryit();
-             console.log("<><><><><>demographics <><><>>>< $rootScope.search " ,$rootScope.search);
+             
          };
 
     
@@ -3059,9 +3055,6 @@ $scope.plotPieChart=function(divID){
 	 // $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
-	  console.log("------------------->>>>>>>>>>>>> $rootScope.piechartData ", $rootScope.piechartData);
-	  console.log("------------------->>>>>>>>>>>>> $rootScope.applyFilterBoolean ", $rootScope.applyFilterBoolean);
-	  console.log("------------------->>>>>>>>>>>>> $rootScope.usagedata ", JSON.stringify($scope.usagedata));
 	  
 	if($rootScope.piechartData==null){
 		console.log('in if piechart');
@@ -3151,24 +3144,30 @@ $scope.plotPieChart=function(divID){
 			    	console.log("Pie Chart response With Filter success : ", data);
 			    	var obj = $('#'+divID);
 			    	if(obj != null && obj.length != 0){
-				    	if(data && data.length > 0){
-				    		$scope.totalSold = 0;
-				            $scope.totalconnected = 0;
-				            for(var i=0;i<data.length;i++){
-				                $scope.totalSold += data[i].unitsSold;
-				                $scope.totalconnected += data[i].unitsConnected;
-				              }
-				             // console.log($scope.totalSold);
-				            	$rootScope.piechartData=[];
-				  			    $rootScope.piechartData[0]=$scope.totalSold;
-				  			    $rootScope.piechartData[1]=$scope.totalconnected;
-				    		
-	//					    	$scope.data[0]=data[0].unitsSold;
-	//					    	$scope.data[1]=data[0].unitsConnected;
-						    	$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
-						    	$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
-	
-						    	//$(function() {
+				    	if(data){
+				    		// by default series data should be empty so highchart can show the message for no data. 
+				    		var seriesData = [];
+				    		if(data.length > 0) {
+								$scope.totalSold = 0;
+								$scope.totalconnected = 0;
+								for(var i=0;i<data.length;i++){
+								    $scope.totalSold += data[i].unitsSold;
+								    $scope.totalconnected += data[i].unitsConnected;
+								  }
+								 // console.log($scope.totalSold);
+								$rootScope.piechartData=[];
+								$rootScope.piechartData[0]=$scope.totalSold;
+								$rootScope.piechartData[1]=$scope.totalconnected;
+								
+								//					    	$scope.data[0]=data[0].unitsSold;
+								//					    	$scope.data[1]=data[0].unitsConnected;
+								$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
+								$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
+								
+								seriesData = [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]]
+							    	
+				    		}
+				    		//$(function() {
 						            // Create the chart
 						            chart = new Highcharts.Chart({
 						                chart: {
@@ -3193,7 +3192,7 @@ $scope.plotPieChart=function(divID){
 						                },
 						                series: [{
 						                    name: 'Browsers',
-						                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+						                    data: seriesData,
 						                    size: '80%',
 						                    innerSize: '80%',
 						                    showInLegend:true,
@@ -3202,6 +3201,7 @@ $scope.plotPieChart=function(divID){
 						                    }
 						                }]
 						            });
+						            Highcharts.setOptions({lang: {noData: "No data to display"}});
 						        //});
 				    		};
 						}
