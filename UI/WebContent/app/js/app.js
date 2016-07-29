@@ -3356,7 +3356,8 @@ $scope.plotPieChart=function(divID){
             $rootScope.isApplyFiterButton = false;
 						
 				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
-				    	
+				  // To prevent the top 3 selling models chart from updating according to the side-bar product filter
+				  //Made this change because we cannot plot the chart if the user select Make and Model  	
 				    	if(($rootScope.search.selectedMake) == undefined ){
 			                $rootScope.barchartData=data;
 			              }
