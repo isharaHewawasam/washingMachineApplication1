@@ -3524,12 +3524,13 @@ $scope.plotPieChart=function(divID){
 				 
 				}).success(function(data, status) {
 					$scope.isDisabled = false;					
-					
+					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
 					var timeScales = getTimeScales(data.data);	
 					$scope.progress = false;
 			    	renderLineChart(divId, timeScales, lineChartSeriesData);
 			    }). error(function(data, status) {
+			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
 			    	console.log('Error retrieving data for sales volume chart, status : ' + status);
