@@ -197,7 +197,7 @@
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
 					<option class="chart-option-text-style" ng-if="$index!=0"
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
-				</select> <select ng-class="{'chart-selectStyle2': isActive2}"
+				</select> <select ng-disabled="{'chart-selectStyle2': isActive2}"
 					ng-click="activeButton(2)" id="second-chart-select"
 					class="chart-selectStyle col-md-3 chart-border "
 					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
