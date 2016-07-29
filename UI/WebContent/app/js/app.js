@@ -1159,15 +1159,17 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    
 	   
 	      }
-	               //end iniReport
+	//end iniReport
 	removechart = function (id) {
 		var chart = $('#'+id).highcharts();
 		if (chart) {
-			var seriesLength = chart.series.length;
+			/*seriesLength = chart.series.length;
 	        for(var i = seriesLength -1; i > -1; i--) {
 	            chart.series[i].remove();
-	        }
+	        }*/
+			chart.destroy();
 		}
+		
 	};
 	
 	showMap = function () {
@@ -1181,8 +1183,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-                  data: $scope.usagedata
-                  
+                  data: $scope.usagedata                  
          })
          .success(function(data, status) {
         	
@@ -2367,6 +2368,75 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
+function renderLineChart(divId, xAxisCategories, seriesData){
+		
+	$("#"+divId).highcharts( {
+		credits:false,
+		title: {
+			text: 'Sales Volumes'
+		},
+		legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            y: 50,   
+            padding: 1,
+            itemMarginTop: 3,
+            itemMarginBottom: 3,        
+            itemStyle: {
+                lineHeight: '10px',
+                fontSize: '10px',
+                fontWeight: 'normal',
+                symbolRadius: 4
+            }
+        },
+	    xAxis: {
+            title: {
+                text: 'Time Scale'
+            },
+	        categories: xAxisCategories
+	    },
+	    yAxis: {
+			title: {
+                text: 'Units Sold'
+            }
+		},
+	    plotOptions: {
+	         series: {
+	            }
+	        },
+	    series:seriesData
+	});
+}
+
+function createLineChartSeriesDataForMktManager(data){
+	var lineChartSeriesData = [];
+		
+		for(var i=0;i<data[0].sales.length;i++){
+			
+			var unitsSoldDataForItem = [];
+			for (var j=0; j<data.length; j++){
+				unitsSoldDataForItem.push(data[j].sales[i].unitsSold);
+			}
+				obj={
+		    			name:data[0].sales[i].item,
+		    			data:unitsSoldDataForItem
+		    	}
+				lineChartSeriesData.push(obj);
+				obj={};		
+	}
+		
+		return lineChartSeriesData;
+}
+
+function getTimeScales(data){
+	var timeScales = [];
+	for (var i=0; i< data.length; i++){
+		timeScales.push(data[i].time_scale);
+	}
+	return timeScales;
+}
+
 App.controller('notificationController', ['$rootScope', '$scope', '$http', '$window', 'iot.config.ApiClient', 'iot.config.Notification', function ($rootScope, $scope, $http, $window, configApiClient, configNotification) {
 	$scope.isLoading = false;
     $scope.isError = false;
@@ -2746,7 +2816,6 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 		  console.log("In rootScope Usage data:: "+JSON.stringify($scope.usagedata)+":: "+$scope.selectedSales);
 		  if($scope.selectedSales==0){
 			  $scope.plotPieChart("piecontainer");	
-				
 			}
 			else if($scope.selectedSales== 1){
 				$scope.plotBarChart("bar");
@@ -3289,247 +3358,57 @@ $scope.plotPieChart=function(divID){
 	}
 	$scope.plotChartFunction = function(divId){
 		removechart(divId);
-		console.log("In line chart function");
 		$scope.loadingText = "Loading data...";    
-		//  $scope.isDisabled = true;
-		  $scope.progress = true;
-		  var obj={};
-		if($scope.linechartData==null){
-			console.log("In line chart function in if");
-		 $http({
-			  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
-			  method: 'POST'
-			 
-			}).success(function(data, status) {
-			//	$scope.isDisabled = false;
-				$scope.progress = false;
-        $rootScope.isApplyFiterButton = false;
-		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
-		    	$scope.linechartData=data.data;
-		    	console.log("Multiline Chart response Line Chart Data sachin:"+JSON.stringify($scope.linechartData[0].sales.length.length));	
-		    	
-		    		for(var j=0;j<$scope.linechartData[0].sales.length;j++){
-			    			console.log("in for loop");
-				    		obj={
-					    			name:$scope.linechartData[0].sales[j].item,
-					    			data:[$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold,$scope.linechartData[0].sales[j].unitsSold]
-					    	}
-				    		$scope.lineChartSeriesData.push(obj);
-				    		obj={};
-			    		}
-			    		console.log("Series Data:: "+JSON.stringify($scope.lineChartSeriesData));
+		$scope.isDisabled = true;
+		$scope.progress = true;
+		var obj={};
+		
+		if($rootScope.applyFilterBoolean){
+			$http({
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true', 
+				  method: 'POST',
+				  headers: { 
+	                	'Content-Type': 'application/json',
+	                	'Accept':'text/plain' ,
+	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+	                	'Access-Control-Allow-Methods':'POST',
+	                	'Access-Control-Allow-Credentials':true  
+        		 },
+				  data:$scope.usagedata
+					 
+				}).success(function(data, status) {
+					$scope.isDisabled = false;					
+					
+					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+					var timeScales = getTimeScales(data.data);	
+					$scope.progress = false;
+			    	renderLineChart(divId, timeScales, lineChartSeriesData);
 			    	
-		    	//linechart data
-		    	$("#"+divId).highcharts( {
-		    		credits:false,
-		    		title:false,
-		    		legend: {enabled:false},
-		    		title: {
-		    			text: 'Sales Volumes'
-		    		},
-		    		legend: {
-		                layout: 'vertical',
-		                align: 'right',
-		                verticalAlign: 'top',
-		                y: 50,   
-		                padding: 1,
-		                itemMarginTop: 3,
-		                itemMarginBottom: 3,        
-		                itemStyle: {
-		                    lineHeight: '10px',
-		                    fontSize: '8px',
-		                    fontWeight: 'normal',
-		                   // symbolHeight: 12,
-		                    //symbolWidth: 10,
-		                    symbolRadius: 4
-		                }
-		            },
-		    	    xAxis: {
-		                title: {
-                            text: 'Time Scale' //new lable for X
-                        },
-		    	        categories: [$scope.linechartData[0].time_scale, $scope.linechartData[1].time_scale, $scope.linechartData[2].time_scale, $scope.linechartData[3].time_scale]
-		    	    },
-		    	    yAxis: {
-		    			title: {
-                            text: 'Units Sold' //new lable for Y
-                        }
-		    		    },
-		    		    tooltip: {
-		    		    	backgroundColor: '#87C1E6',
-		    		    	shared: true,
-		    			    style:{
-		    					color:'#ffffff'
-		    				}
-		    	        },
-		    	        plotOptions: {
-		    	            series: {
-		    	            	 color: "#f0f0f0", 
-		    	                marker: {
-		    	                	fillColor: '#FFFFFF', 
-		    	                    lineWidth: 2,
-		    	                    lineColor: "#6BD500",  // inherit from series 
-		    	                    radius: 6
-		    	                }
-		    	            }
-		    	        },
-		    	    series:$scope.lineChartSeriesData
-		    	});
-		    }). error(function(data, status) {
-		    //	$scope.isDisabled = false;
-		    	$scope.progress = false;
-          $rootScope.isApplyFiterButton = false;
-		       console.log(JSON.stringify(data));
-		    });
-		}else{
-			console.log("In line chart function in else");
-			if($rootScope.applyFilterBoolean){
-				console.log("In line chart function in else if");
-				$http({
-					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
-					  method: 'POST',
-					  headers: { 
-		                	'Content-Type': 'application/json',
-		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
-		                	'Access-Control-Allow-Methods':'POST',
-		                	'Access-Control-Allow-Credentials':true  
-	          		 },
-					  data:$scope.usagedata
-						 
-					}).success(function(data, status) {
-					//	$scope.isDisabled = false;
-						$scope.progress = false;						
-				    	console.log("Line Chart response With Filter:"+JSON.stringify(data));
-				    	$("#"+divId).highcharts( {
-				    		credits:false,
-				    		title:false,
-				    		legend: {enabled:false},
-				    		title: {
-				    			text: 'Sales Volumes'
-				    		},
-				    		legend: {
-				                layout: 'vertical',
-				                align: 'right',
-				                verticalAlign: 'top',
-				                y: 50,   
-				                padding: 1,
-				                itemMarginTop: 3,
-				                itemMarginBottom: 3,        
-				                itemStyle: {
-				                    lineHeight: '10px',
-				                    fontSize: '8px',
-				                    fontWeight: 'normal',
-				                   // symbolHeight: 12,
-				                    //symbolWidth: 10,
-				                    symbolRadius: 4
-				                }
-				            },
-				    	    xAxis: {
-				                title: {
-		                            text: 'Time Scale' //new lable for X
-		                        },
-
-				    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
-				    	    },
-				    	    yAxis: {
-				    			title: {
-		                            text: 'Units Sold' //new lable for Y
-		                        }
-				    		    },
-				    		    tooltip: {
-				    		    	backgroundColor: '#87C1E6',
-				    		    	shared: true,
-				    			    style:{
-				    					color:'#ffffff'
-				    				}
-				    	        },
-				    	        plotOptions: {
-				    	            series: {
-				    	            	 color: "#f0f0f0", 
-				    	                marker: {
-				    	                	fillColor: '#FFFFFF', 
-				    	                    lineWidth: 2,
-				    	                    lineColor: "#6BD500",  // inherit from series 
-				    	                    radius: 6
-				    	                }
-				    	            }
-				    	        },
-				    	    series: $scope.lineChartSeriesData
-				    	});
-				    	
-				   }).error(function(data,status){
-					 //  $scope.isDisabled = false;
-					   $scope.progress = false;	
-             $rootScope.isApplyFiterButton = false;
-					   console.log("Error:"+JSON.stringify(data));
-				   });
-				$rootScope.applyFilterBoolean=false;
-			}
-			else{
-			//	$scope.isDisabled = false;
-				console.log("In line chart function in else else");
-				console.log("Series Data:: "+JSON.stringify($scope.lineChartSeriesData));
-				$scope.progress = false;
-				$("#"+divId).highcharts( {
-		    		credits:false,
-		    		title:false,
-		    		legend: {enabled:false},
-		    		title: {
-		    			text: 'Sales Volumes'
-		    		},
-		    		legend: {
-		                layout: 'vertical',
-		                align: 'right',
-		                verticalAlign: 'top',
-		                y: 50,   
-		                padding: 1,
-		                itemMarginTop: 3,
-		                itemMarginBottom: 3,        
-		                itemStyle: {
-		                    lineHeight: '10px',
-		                    fontSize: '8px',
-		                    fontWeight: 'normal',
-		                   // symbolHeight: 12,
-		                    //symbolWidth: 10,
-		                    symbolRadius: 4
-		                }
-		            },
-		    	    xAxis: {
-		                title: {
-                            text: 'Time Scale' //new lable for X
-                        },
-
-		    	        categories: ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016']
-		    	    },
-		    	    yAxis: {
-		    			title: {
-                            text: 'Units Sold' //new lable for Y
-                        }
-		    		    },
-		    		    tooltip: {
-		    		    	backgroundColor: '#87C1E6',
-		    		    	shared: true,
-		    			    style:{
-		    					color:'#ffffff'
-		    				}
-		    	        },
-		    	        plotOptions: {
-		    	            series: {
-		    	            	 color: "#f0f0f0", 
-		    	                marker: {
-		    	                	fillColor: '#FFFFFF', 
-		    	                    lineWidth: 2,
-		    	                    lineColor: "#6BD500",  // inherit from series 
-		    	                    radius: 6
-		    	                }
-		    	            }
-		    	        },
-		    	    series: $scope.lineChartSeriesData
-		    	});
-			}
-		}
-	
+			   }).error(function(data,status){
+				   $scope.isDisabled = false;
+				   $scope.progress = false;	
+				   console.log('Error retrieving data for sales volume chart, status : ' + status);
+			   });
+			$rootScope.applyFilterBoolean=false;						
+		 
+		} else {
+			$http({
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
+				  method: 'POST'
+				 
+				}).success(function(data, status) {
+					$scope.isDisabled = false;					
+					
+					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+					var timeScales = getTimeScales(data.data);	
+					$scope.progress = false;
+			    	renderLineChart(divId, timeScales, lineChartSeriesData);
+			    }). error(function(data, status) {
+			    	$scope.isDisabled = false;
+			    	$scope.progress = false;
+			    	console.log('Error retrieving data for sales volume chart, status : ' + status);
+			    });	
+		}	
 	}	
 	
 	
@@ -3538,11 +3417,11 @@ $scope.plotPieChart=function(divID){
 		  $scope.loadingText = "Loading data...";    
 	//	  $scope.isDisabled = true;
 		  $scope.progress = true;
-		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;
-		
-			
-		
-		 $http({
+		  
+		  //alert(key);
+		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;		
+					
+		  $http({
 			  url:url, 
 			  method: 'POST'
 			 
@@ -3552,7 +3431,8 @@ $scope.plotPieChart=function(divID){
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
 		    	$scope.linechartData=data;
 		    	 $scope.progress = false;
-		
+		    	 
+		    	 //alert(JSON.stringify(data));		
 		
 		$("#"+divId).highcharts( {
 			credits:false,
