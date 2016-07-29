@@ -43,13 +43,12 @@ function removeUnwantedKeys(payload) {
 
 function mix_res(sales_result, connected_buffer) {
   var found = false;
-  
   for (var each_sales_item in sales_result) {
     found = false;
     for (var each_conn_item in connected_buffer) {
       if ( are_same(sales_result[each_sales_item], connected_buffer[each_conn_item]) ) {
         //console.log("same");
-        sales_result[each_sales_item].unitsConnected  = connected_buffer[each_conn_item].unitsConnected;
+        sales_result[each_sales_item].unitsConnected  = connected_buffer[each_sales_item].unitsConnected;
       }
     }
   }
