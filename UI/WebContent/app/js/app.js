@@ -3054,7 +3054,8 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 $scope.plotPieChart=function(divID){
 	//var divid = '#'+divID;
 	removechart(divID);
-	$scope.loadingText = "Loading data...";    
+	$scope.loadingText = "Loading data...";  
+	$rootScope.isApplyFiterButton = true;
 	 // $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
@@ -3262,7 +3263,8 @@ $scope.plotPieChart=function(divID){
 
 	$scope.plotBarChart=function(divId){
 		removechart(divId);
-		$scope.loadingText = "Loading data...";    
+		$scope.loadingText = "Loading data..."; 
+		$rootScope.isApplyFiterButton = true;
 	
 		  $scope.progress = true;
 		if($rootScope.barchartData==null){
@@ -3487,6 +3489,7 @@ $scope.plotPieChart=function(divID){
 		$scope.loadingText = "Loading data...";    
 		$scope.isDisabled = true;
 		$scope.progress = true;
+		$rootScope.isApplyFiterButton = true;
 		var obj={};
 		
 		if($rootScope.applyFilterBoolean){
@@ -3504,7 +3507,7 @@ $scope.plotPieChart=function(divID){
 					 
 				}).success(function(data, status) {
 					$scope.isDisabled = false;					
-					
+					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
 					var timeScales = getTimeScales(data.data);	
 					$scope.progress = false;
@@ -3513,6 +3516,7 @@ $scope.plotPieChart=function(divID){
 			   }).error(function(data,status){
 				   $scope.isDisabled = false;
 				   $scope.progress = false;	
+				   $rootScope.isApplyFiterButton = false;
 				   console.log('Error retrieving data for sales volume chart, status : ' + status);
 			   });
 			$rootScope.applyFilterBoolean=false;						
@@ -3544,6 +3548,7 @@ $scope.plotPieChart=function(divID){
 		  $scope.loadingText = "Loading data...";    
 	//	  $scope.isDisabled = true;
 		  $scope.progress = true;
+		  $rootScope.isApplyFiterButton = true;
 		  
 		  //alert(key);
 		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;		
