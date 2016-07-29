@@ -927,7 +927,8 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 					};
 		
 		$rootScope.applyFilterBoolean=true;
-		$rootScope.setUsageData($scope.usagedata);
+		// This method is already calling from tryit() 
+		//$rootScope.setUsageData($scope.usagedata);
 		
 	}
 
@@ -1703,14 +1704,112 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		console.log("calling"+p);
 	}
 	
-    
-    $scope.clearfilter=function(){
-          
-         $rootScope.search={};
-         $rootScope.filterIcons=[];
-         $rootScope.setUsageObjectFromSidebar($rootScope.search);
+	$scope.clearfilter = function(){
+        
+        $rootScope.search={};
+   	    
+        $rootScope.filterIcons=[];
+        $rootScope.barchartData = null;
+        $rootScope.piechartData = null
+        $rootScope.setUsageObjectFromSidebar($rootScope.search);
+        $rootScope.tryit();
+     }
+	
+    $scope.clearfilter1 = function(){
+    	 console.log("<><><><><><><><>>>< $rootScope.search " ,$rootScope.search);
+         //$rootScope.search={};
+    	 //$rootScope.filterIcons=[];
+    	 $scope.clearFilterIcons(1);
+         
+         //$rootScope.barchartData = null;
+         //$rootScope.piechartData = null
+    	 console.log("<><><><><><><><>>>< $rootScope.search " ,$rootScope.search);
+    	 
+		 var obj={};
+		 obj.selectedMake=$rootScope.search.selectedMake;
+		 obj.selectedModel=$rootScope.search.selectedModel;
+		 obj.selectedSKU=$rootScope.search.selectedSKU;
+		 obj.mfgStartDate=$rootScope.search.mfgStartDate;
+		 obj.mfgEndDate=$rootScope.search.mfgEndDate;
+		 if ($rootScope.search.incomeRange) {
+		 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+		 }
+		 if ($rootScope.search.occupation) {
+			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
+		 }
+		 if ($rootScope.search.ageGroup) {
+			obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+		 }
+   	 	
+         $rootScope.setUsageObjectFromSidebar(obj);
          $rootScope.tryit();
       }
+    
+    $scope.clearfilter2 = function(){
+        
+        //$rootScope.search={};
+    	//$rootScope.filterIcons=[];
+    	$scope.clearFilterIcons(2);
+        
+        //$rootScope.barchartData = null;
+        //$rootScope.piechartData = null
+    	var obj={};
+    	obj.selectedMake=$rootScope.search.selectedMake;
+  	 	obj.selectedModel=$rootScope.search.selectedModel;
+  	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+  	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
+  	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
+		if ($rootScope.search.incomeRange) {
+  	 	 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+		}
+		if ($rootScope.search.occupation) {
+			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
+		}
+  	 	if ($rootScope.search.ageGroup) {
+  	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+  	 	}
+  	 	 
+        $rootScope.setUsageObjectFromSidebar(obj);
+        $rootScope.tryit();
+     }
+    
+    $scope.clearFilterIcons = function (filterType) {
+    	var tempArr = [];
+    	var isRemoved = false;
+    	if(filterType == 1){
+    		$rootScope.search.selectedMake=undefined;
+            $rootScope.search.selectedModel=undefined;
+            $rootScope.search.selectedSKU=undefined;
+            $rootScope.search.mfgStartDate=undefined;
+            $rootScope.search.mfgEndDate=undefined;
+            angular.forEach($rootScope.filterIcons,function(obj ,key){
+                if(obj.key=="make" || obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
+                    //$rootScope.filterIcons.splice(key,1);
+                	isRemoved = true;
+                }else{
+                	tempArr.push(obj);
+                }
+            });
+            
+    	}else if(filterType == 2) {
+    		$rootScope.search.incomeRange=undefined;
+            $rootScope.search.occupation=undefined;
+            $rootScope.search.ageGroup=undefined;
+            angular.forEach($rootScope.filterIcons,function(obj ,key){
+            	console.log(key, "----obj.key ", obj.key);
+                if(obj.key=="incomeRange" || obj.key=="occupation" || obj.key=="ageGroup"){
+                    //$rootScope.filterIcons.splice(key-1,1);
+                	isRemoved = true;
+                }else{
+                	tempArr.push(obj);
+                }
+            });
+    	}
+    	
+    	if(isRemoved){
+    		$rootScope.filterIcons = tempArr;
+    	}
+    }
     
    $scope.createIconArray=function(){
         $scope.someArr=[];
@@ -1834,12 +1933,21 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       }
     
          $scope.applyProductFilter=function(){
-			var obj={};
-      	 	obj.selectedMake=$rootScope.search.selectedMake;
-      	 	obj.selectedModel=$rootScope.search.selectedModel;
-      	 	obj.selectedSKU=$rootScope.search.selectedSKU;
-      	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
-      	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
+        	 var obj={};
+         	obj.selectedMake=$rootScope.search.selectedMake;
+       	 	obj.selectedModel=$rootScope.search.selectedModel;
+       	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+       	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
+       	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
+     		if ($rootScope.search.incomeRange) {
+       	 	 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+     		}
+     		if ($rootScope.search.occupation) {
+     			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
+     		}
+       	 	if ($rootScope.search.ageGroup) {
+       	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+       	 	}
       	 	
             $rootScope.setUsageObjectFromSidebar(obj);
 
@@ -1850,23 +1958,31 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
             
             document.getElementById('filterPanel').style.display = 'none';
             $rootScope.tryit(); 
+            
+            console.log("<><><><><>apply product <><><>>>< $rootScope.search " ,$rootScope.search);
         }
          
          $scope.applyDemographicsFilter=function(){
-    		 var obj={};
-    		 if ($rootScope.search.incomeRange) {
+        	 var obj={};
+         	obj.selectedMake=$rootScope.search.selectedMake;
+       	 	obj.selectedModel=$rootScope.search.selectedModel;
+       	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+       	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
+       	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
+     		if ($rootScope.search.incomeRange) {
        	 	 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
-    		 }
-    		 if ($rootScope.search.occupation) {
-    			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
-    		 }
-       	 	 if ($rootScope.search.ageGroup) {
+     		}
+     		if ($rootScope.search.occupation) {
+     			 obj.occupation=JSON.parse($rootScope.search.occupation).id;
+     		}
+       	 	if ($rootScope.search.ageGroup) {
        	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
-       	 	 }
+       	 	}
              $rootScope.setUsageObjectFromSidebar(obj);
              $scope.createIconArray();
              document.getElementById('demographicsFilterPanel').style.display = 'none';
              $rootScope.tryit();
+             console.log("<><><><><>demographics <><><>>>< $rootScope.search " ,$rootScope.search);
          };
 
     
@@ -2716,8 +2832,8 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 	
 	$scope.linechartData=null;
-	  $scope.data = null;
-	  $scope.barchartData=null;
+	  $rootScope.piechartData = null;
+	  $rootScope.barchartData=null;
 	  $scope.lineChartSeriesData=[];
 	  $scope.barLabels = ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016'];
 	  $scope.barSeries = ['Sold', 'Connected'];
@@ -2858,21 +2974,25 @@ $scope.plotPieChart=function(divID){
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
-	  console.log('$scope.data : ', $scope.data);
-	if($scope.data==null){
+	  console.log("------------------->>>>>>>>>>>>> $rootScope.piechartData ", $rootScope.piechartData);
+	  console.log("------------------->>>>>>>>>>>>> $rootScope.applyFilterBoolean ", $rootScope.applyFilterBoolean);
+	  console.log("------------------->>>>>>>>>>>>> $rootScope.usagedata ", JSON.stringify($scope.usagedata));
+	  
+	if($rootScope.piechartData==null){
 		console.log('in if piechart');
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
+			console.log("Pie Chart response Without Filter success : ", data);
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
-	    	$scope.data=[];
-	    	$scope.data[0]=data.unitsSold;
-	    	$scope.data[1]=data.unitsConnected;
-	    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
-	    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+	    	$rootScope.piechartData=[];
+	    	$rootScope.piechartData[0]=data.unitsSold;
+	    	$rootScope.piechartData[1]=data.unitsConnected;
+	    	$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
+	    	$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
 	    	
 	    	// Check for div availability 
 	    	// div "piecontainer" is not available for eng manager.
@@ -2942,10 +3062,10 @@ $scope.plotPieChart=function(divID){
 					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
 			    	if(data && data.length > 0){
-					    	$scope.data[0]=data[0].unitsSold;
-					    	$scope.data[1]=data[0].unitsConnected;
-					    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
-					    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+					    	$rootScope.piechartData[0]=data[0].unitsSold;
+					    	$rootScope.piechartData[1]=data[0].unitsConnected;
+					    	$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
+					    	$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
 					    	$(function() {
 					            // Create the chart
 					            chart = new Highcharts.Chart({
@@ -3041,8 +3161,7 @@ $scope.plotPieChart=function(divID){
 		$scope.loadingText = "Loading data...";    
 		  $scope.isDisabled = true;
 		  $scope.progress = true;
-		  
-		if($scope.barchartData==null){
+		if($rootScope.barchartData==null){
 		 $http({
 			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
 			  method: 'POST'
@@ -3051,10 +3170,10 @@ $scope.plotPieChart=function(divID){
 				$scope.isDisabled = false;
 				$scope.progress = false;
 				
-		    	$scope.barchartData=data;
-		    	console.log("Bar Chart response :"+JSON.stringify($scope.barchartData=data));
+		    	$rootScope.barchartData=data;
+		    	console.log("Bar Chart response without filter :"+JSON.stringify($rootScope.barchartData));
 		    	
-		    	$(function () {
+		    	//$(function () {
 				    $('#bar').highcharts({
 				        chart: {
 				            type: 'column'
@@ -3091,20 +3210,20 @@ $scope.plotPieChart=function(divID){
 				            }
 				        },
 				        series: [{
-				            name: $scope.barchartData.sales[0].item,
-				            data: [$scope.barchartData.sales[0].unitsSold]
+				            name: $rootScope.barchartData.sales[0].item,
+				            data: [$rootScope.barchartData.sales[0].unitsSold]
 
 				        }, {
-				            name: $scope.barchartData.sales[1].item,
-				            data: [$scope.barchartData.sales[1].unitsSold]
+				            name: $rootScope.barchartData.sales[1].item,
+				            data: [$rootScope.barchartData.sales[1].unitsSold]
 
 				        }, {
-				            name: $scope.barchartData.sales[2].item,
-				            data: [$scope.barchartData.sales[2].unitsSold]
+				            name: $rootScope.barchartData.sales[2].item,
+				            data: [$rootScope.barchartData.sales[2].unitsSold]
 
 				        }]
 				    });
-				});
+				//});
 			}). error(function(data, status) {
 				$scope.isDisabled = false;
 				$scope.progress = false;
@@ -3129,7 +3248,7 @@ $scope.plotPieChart=function(divID){
 						$scope.progress = false;
 						
 				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
-				    	$scope.barchartData=data;
+				    	$rootScope.barchartData=data;
 				    	$(function () {
 						    $('#bar').highcharts({
 						        chart: {
@@ -3164,16 +3283,16 @@ $scope.plotPieChart=function(divID){
 						            }
 						        },
 						        series: [{
-						            name: $scope.barchartData.sales[0].item,
-						            data: [$scope.barchartData.sales[0].unitsSold]
+						            name: $rootScope.barchartData.sales[0].item,
+						            data: [$rootScope.barchartData.sales[0].unitsSold]
 
 						        }, {
-						            name: $scope.barchartData.sales[1].item,
-						            data: [$scope.barchartData.sales[1].unitsSold]
+						            name: $rootScope.barchartData.sales[1].item,
+						            data: [$rootScope.barchartData.sales[1].unitsSold]
 
 						        }, {
-						            name: $scope.barchartData.sales[2].item,
-						            data: [$scope.barchartData.sales[2].unitsSold]
+						            name: $rootScope.barchartData.sales[2].item,
+						            data: [$rootScope.barchartData.sales[2].unitsSold]
 
 						        }]
 						    });
@@ -3222,16 +3341,16 @@ $scope.plotPieChart=function(divID){
 			            }
 			        },
 			        series: [{
-			            name: $scope.barchartData.sales[0].item,
-			            data: [$scope.barchartData.sales[0].unitsSold]
+			            name: $rootScope.barchartData.sales[0].item,
+			            data: [$rootScope.barchartData.sales[0].unitsSold]
 
 			        }, {
-			            name: $scope.barchartData.sales[1].item,
-			            data: [$scope.barchartData.sales[1].unitsSold]
+			            name: $rootScope.barchartData.sales[1].item,
+			            data: [$rootScope.barchartData.sales[1].unitsSold]
 
 			        }, {
-			            name: $scope.barchartData.sales[2].item,
-			            data: [$scope.barchartData.sales[2].unitsSold]
+			            name: $rootScope.barchartData.sales[2].item,
+			            data: [$rootScope.barchartData.sales[2].unitsSold]
 
 			        }]
 			    });
