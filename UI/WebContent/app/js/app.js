@@ -3336,7 +3336,7 @@ $scope.plotPieChart=function(divID){
 			       console.log(JSON.stringify(data));
 			    });
 		}else{
-			$rootScope.barDetails = $scope.barchartData;
+			$rootScope.barDetails = $rootScope.barchartData;
 			if($rootScope.applyFilterBoolean){
 				$http({
 					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
