@@ -30,9 +30,21 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
+
+    function sortResponse(name){
+      return function(a,b){
+        if( a[name] > b[name]){
+            return 1;
+        }else if( a[name] < b[name] ){
+          return -1;
+        }
+        return 0;
+      }
+    }
+
     var response = {};
-     response.description = "Sales Volume for " + Filter.filterDescription();
-    response.data = processResult(result);
+    response.description = "Sales Volume for " + Filter.filterDescription();
+    response.data = processResult(result.sort(sortResponse("time_scale")));
     callback(err, response);
   });      
 };
