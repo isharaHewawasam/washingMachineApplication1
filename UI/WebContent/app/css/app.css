@@ -12185,18 +12185,6 @@ display : block;
        font-weight: bold !important;
 }
 
-.gridMaximize{
-	position: fixed;
-	width:80% !important;
-	height:45% !important;
-	top: 30%;
-	left: 7%;
-	background-color: #ffffff;
-	/* border: 1px solid #d4d4d4; */
-	border-left: 1px solid #d4d4d4;
-	box-shadow: 1px 1px 1px #d4d4d4;
-	z-index:999;
-}
 
 .glyphicon.spinning {
     animation: spin 1s infinite linear;
@@ -12365,4 +12353,60 @@ display : block;
    
     width: 100% !important;
    
+}
+@media screen and (min-width: 1280px) {
+   .gridMaximize{
+	position: fixed;
+	width:80% !important;
+	height:45% !important;
+	top: 42% !important;
+	left: 6% !important;
+	background-color: #ffffff;
+	/* border: 1px solid #d4d4d4; */
+	border-left: 1px solid #d4d4d4;
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:999;
+}
+}
+@media screen and (min-width: 1366px) {
+   .gridMaximize{
+	position: fixed;
+	width:80% !important;
+	height:45% !important;
+	top: 32% !important;
+	left: 6% !important;
+	background-color: #ffffff;
+	/* border: 1px solid #d4d4d4; */
+	border-left: 1px solid #d4d4d4;
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:999;
+}
+}
+@media screen and (min-width: 1440px) {
+   .gridMaximize{
+	position: fixed;
+	width:80% !important;
+	height:45% !important;
+	top: 46% !important;
+	left: 6% !important;
+	background-color: #ffffff;
+	/* border: 1px solid #d4d4d4; */
+	border-left: 1px solid #d4d4d4;
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:999;
+}
+}
+@media screen and (min-width: 1920px) {
+   .gridMaximize{
+	position: fixed;
+	width:80% !important;
+	height:45% !important;
+	top: 45% !important;
+	left: 4% !important;
+	background-color: #ffffff;
+	/* border: 1px solid #d4d4d4; */
+	border-left: 1px solid #d4d4d4;
+	box-shadow: 1px 1px 1px #d4d4d4;
+	z-index:999;
+}
 }
