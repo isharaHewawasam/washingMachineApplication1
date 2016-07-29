@@ -1,8 +1,8 @@
 applications:
 - path: .
-  memory: 2G
+  memory: 1G
   instances: 1
   domain: mybluemix.net
-  name: api_connect
-  host: api_connect
+  name: ibm-iot
+  host: apiconnect
   disk_quota: 2G
