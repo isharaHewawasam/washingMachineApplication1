@@ -11,7 +11,7 @@
 */
 var host;
 if(location.hostname == 'localhost') {
-	host= 'ibm-iot.mybluemix.net';
+	host= 'https://api.us.apiconnect.ibmcloud.com/chinthakaak-dev/sb';
 } else {
 	host = location.hostname;
 }
