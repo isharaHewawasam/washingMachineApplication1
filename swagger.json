@@ -135,7 +135,7 @@
     "/insights/product-score": {
       "get": {
         "x-swagger-router-controller": "product_score",
-        "operationId": "getData",
+        "operationId": "getProductScoreData",
         "tags": ["Insights"],
         "description": "Returns products sentiments on social media",
         "parameters": [
@@ -169,7 +169,7 @@
     "/insights/most-used-wash-cycles": {
       "get": {
         "x-swagger-router-controller": "most_used_wash_cycles",
-        "operationId": "getData",
+        "operationId": "getMostUsedWachCyclesData",
         "tags": ["Insights"],
         "description": "Returns most used wash cycles",
         "responses": {
@@ -194,7 +194,7 @@
     "/insights/disconnected": {
       "get": {
         "x-swagger-router-controller": "disconnected",
-        "operationId": "getData",
+        "operationId": "getDisconnectedData",
         "tags": ["Insights"],
         "description": "Returns washing machines which are not connected.",
         "responses": {
@@ -757,7 +757,7 @@
     "/demographics/family/age-ranges": {
       "get": {
         "x-swagger-router-controller": "age-ranges",
-        "operationId": "getData",
+        "operationId": "getDemographicAgeRangesData",
         "tags": ["Demographics"],
         "description": "Returns age ranges for users of washing machines",
         "responses": {
@@ -780,7 +780,7 @@
     "/demographics/family/income-ranges": {
       "get": {
         "x-swagger-router-controller": "income-ranges",
-        "operationId": "getData",
+        "operationId": "getDemographicIncomeRangesData",
         "tags": ["Demographics"],
         "description": "Returns income ranges for users of washing machines",
         "responses": {
@@ -803,7 +803,7 @@
     "/demographics/family/members-count": {
       "get": {
         "x-swagger-router-controller": "members-count-ranges",
-        "operationId": "getData",
+        "operationId": "getMemberCountRangesData",
         "tags": ["Demographics"],
         "description": "Returns number of family members to select from",
         "responses": {
@@ -1035,7 +1035,7 @@
     "/usage": {
       "post": {
         "x-swagger-router-controller": "usage",
-        "operationId": "getAllUsage",
+        "operationId": "postAllUsage",
         "tags": ["Usage"],
         "description": "Returns washing machines usage paramters like water load, detergent, power etc. You can specify State, City, Zip code etc to filter data.",
         "parameters": [
