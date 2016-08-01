@@ -11,7 +11,7 @@
 */
 var host;
 // if(location.hostname == 'localhost') {
-	host= 'https://api.us.apiconnect.ibmcloud.com/chinthakaak-dev/sb';
+	host= 'api.us.apiconnect.ibmcloud.com/chinthakaak-dev/sb';
 // } else {
 // 	host = location.hostname;
 // }
@@ -20,5 +20,5 @@ console.log('host in config file : ', host);
 App.constant('iot.config.buildVersion','0.1') // updated by Grunt
 
 	.constant('iot.config.ApiClient', {
-		baseUrl: 'http://' + host + '/api/v1/'
+		baseUrl: 'https://' + host + '/api/v1/'
 	});
