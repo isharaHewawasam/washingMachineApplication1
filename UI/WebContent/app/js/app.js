@@ -1192,7 +1192,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
         	 	  console.log("usagedata : " + $scope.usagedata.toString());
                   if(!data || data.length === 0){
                        console.log("empty data");
-            
+                       renderMap("map-container", []);
                   }  else{
                       console.log("Got data for map..." );
                       renderMap("map-container", data);
@@ -2305,24 +2305,57 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 }]);
 
 function renderMap(divId, salesData){
-	var salesDataStr = JSON.stringify(salesData);
+	var seriesData = [];
+	if(salesData && salesData.length > 0){
+		var salesDataStr = JSON.stringify(salesData);
+		
+		// Modify the json data set according to required highmap data format
+		salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
+		salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
+		salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
+		
+		salesData = JSON.parse(salesDataStr);
+		
+	    var zipcode;
+	    if(salesDataStr.includes("zip_code")){
+	        zipcode = true;
+	    }else{
+	       zipcode = false;
+	    } 
+		
+	    seriesData = [{
+	        //mapData: Highcharts.maps['custom/world'],
+	        mapData: Highcharts.maps['countries/us/us-all'],
+	        joinBy: ['hc-a2', 'id'],
+			data: salesDataJoin,
+	        name: 'Basemap',
+	        color: '#EEEEEE',
+	        borderColor: '#A0A0A0',
+	        nullColor: 'rgba(200, 200, 200, 0.3)',
+	        showInLegend: false
+	    }, {
+	        name: 'Separators',
+	        type: 'mapline',
+	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
+	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+	        color: '#E0E0E0',
+	        showInLegend: false,
+	        enableMouseTracking: false
+	    }, {
+	        type: 'mapbubble',
+	        name: 'Sales Volume',
+	        color: '#4682B4',
+	        data: salesData,
+	        dataLabels: {
+	            enabled: true,
+	            format: '{point.z}',
+	            color:'#000000'
+	        }
+	    }]
+	}    
 	
-	// Modify the json data set according to required highmap data format
-	salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
-	salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
-	salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
-	
-	salesData = JSON.parse(salesDataStr);
-	
-    var zipcode;
-    if(salesDataStr.includes("zip_code")){
-        zipcode = true;
-    }else{
-       zipcode = false;
-    } 
-	// Initiate the map
-//    $(function () {
-    	console.log('in render map salesData : ', salesData);
+    console.log('in render map salesData : ', salesData);
+    
     //var chart = Highcharts.Map({
     $('#map-container').highcharts('Map', {
       chart: {
@@ -2359,62 +2392,8 @@ function renderMap(divId, salesData){
 	        }
 	    },
 	    
-	    series: [{
-	        //mapData: Highcharts.maps['custom/world'],
-	        mapData: Highcharts.maps['countries/us/us-all'],
-	        joinBy: ['hc-a2', 'id'],
-			data: salesDataJoin,
-	        name: 'Basemap',
-	        color: '#EEEEEE',
-	        borderColor: '#A0A0A0',
-	        nullColor: 'rgba(200, 200, 200, 0.3)',
-	        showInLegend: false
-	    }, {
-	        name: 'Separators',
-	        type: 'mapline',
-	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
-	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
-	        color: '#E0E0E0',
-	        showInLegend: false,
-	        enableMouseTracking: false
-	    }, {
-	        type: 'mapbubble',
-	        name: 'Sales Volume',
-	        color: '#4682B4',
-	        data: salesData,
-	        dataLabels: {
-	            enabled: true,
-	            format: '{point.z}',
-	            color:'#000000'
-	        }
-	    }]
+	    series: seriesData
 	    
-	    /*series: [{
-	        //mapData: Highcharts.maps['custom/world'],
-	        mapData: Highcharts.maps['countries/us/us-all'],
-	        name: 'Basemap',
-	        borderColor: '#A0A0A0',
-	        nullColor: 'rgba(200, 200, 200, 0.3)',
-	        showInLegend: false
-	    }, {
-	        name: 'Separators',
-	        type: 'mapline',
-	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
-	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
-	        color: '#E0E0E0',
-	        showInLegend: false,
-	        enableMouseTracking: false
-	    }, {
-	        type: 'mapbubble',
-	        name: 'Sales Volume',
-	        color: '#4682B4',
-	        data: salesData,
-	        dataLabels: {
-	            enabled: true,
-	            format: '{point.z}',
-	            color:'#000000'
-	        }
-	    }]*/
 	});
 //});
 	//console.log('Rendered the app successfully');
