@@ -10,11 +10,11 @@
 * the api in this configured host.
 */
 var host;
-if(location.hostname == 'localhost') {
+// if(location.hostname == 'localhost') {
 	host= 'https://api.us.apiconnect.ibmcloud.com/chinthakaak-dev/sb';
-} else {
-	host = location.hostname;
-}
+// } else {
+// 	host = location.hostname;
+// }
 console.log('host in config file : ', host);
 //var host = location.hostname;
 App.constant('iot.config.buildVersion','0.1') // updated by Grunt
