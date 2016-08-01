@@ -2240,8 +2240,24 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
            $rootScope.filterIcons.splice(indexofvar,1);
        }
        console.log('$rootScope.search in removefilter : ', $rootScope.search);
-       $rootScope.setUsageObjectFromSidebar($rootScope.search);
-      $rootScope.tryit();
+       var obj={};
+       obj.selectedMake=$rootScope.search.selectedMake;
+                      obj.selectedModel=$rootScope.search.selectedModel;
+                      obj.selectedSKU=$rootScope.search.selectedSKU;
+                      obj.mfgStartDate=$rootScope.search.mfgStartDate;
+                      obj.mfgEndDate=$rootScope.search.mfgEndDate;
+                      if ($rootScope.search.incomeRange) {
+                                     obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+                      }
+                      if ($rootScope.search.occupation) {
+                                     obj.occupation=JSON.parse($rootScope.search.occupation).id;
+                      }
+                      if ($rootScope.search.ageGroup) {
+                                     obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+                      }
+                       
+		$rootScope.setUsageObjectFromSidebar(obj);
+		$rootScope.tryit();
    };  
 }]);
 
