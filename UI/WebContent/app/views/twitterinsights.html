@@ -215,10 +215,13 @@
 			<div class="panel-body" id="gridHideNodata">
 				<div id="tableTitle">
 					Twitter Insights
-					<img class="pull-right col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px; float: right"
-						src="app/img/Dashboardassets/help.png" tooltip-placement="left" 
-						uib-tooltip="Help Text."></img>
+					<img class="col-md-1 pull-right"
+						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:5px;"
+						src="app/img/Dashboardassets/help.png"
+						data-toggle="popover" data-placement="left"
+						data-content="Twitter Insights Data Grid provides more elaborated details about Tweets and Re-Tweets of buyers as per their preferences."
+						data-trigger="hover"></img>	
+						
 				</div>
 				<!--   START table-responsive -->
 				<div class="panel panel-default">
@@ -231,8 +234,8 @@
 						<p class="text-center">Likes</p>
 						<p class="text-center">Dislikes</p>
 						<p class="text-center">Followers</p>
-						<p class="text-center">Comments</p>
-						<!-- <p class="text-left" style="width: 100px">&nbsp;</p> -->
+						<p class="text-center" style="border-right:hidden !important;">Comments</p>
+						<p class="text-center" style="width: 100px;">&nbsp;</p>
 
 					</div>
 					<div class="tbody"  style="height: 400px !important;">
@@ -240,27 +243,24 @@
 							<table class="table table-condensed" ng-if="twitter_insights_griddata.length > 0">
 							
 								<tbody id="tabody">
-								
-									<!-- <tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}" ng-click="getTwitterInsightsData(itm.tweetsid, $index)"> -->
+									<!-- Click event applied on TD rather than TR to avoid the exec event twice on last TD so that 
+										 Edit and Delete click event work separately -->
 									<tr ng-repeat="itm in twitter_insights_griddata" ng-class="{'highlightRow' : (selectedRowIndex == $index)}">
-										<td class="text-center">{{itm.make}}</td>
-				                        <td class="text-center">{{itm.model}}</td>
-				                        <td class="text-center">{{itm.tweets}}</td>
-				                        <td class="text-center">{{itm.likes}}</td>
-				                        <td class="text-center">{{itm.dislikes}}</td>
-				                        <td class="text-center">{{itm.followers}}</td>
-				                        <td class="text-center">
-				                        	<div class="text-center">{{itm.comments}}
-				                        	<div style="float: right">
+										<td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.make}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.model}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.tweets}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.likes}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.dislikes}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center">{{itm.followers}}</td>
+				                        <td ng-click="getTwitterInsightsData(itm.tweetsid, $index)" class="text-center" style="border-right:hidden !important;">
+				                        	{{itm.comments}}
+				                        </td>
+				                        <td style="width: 100px;">
+				                        	<div style="float: right; margin-right: 2px">
 				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
-				                        	<!-- <a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a> -->
-				                        	<img src="app/img/Dashboardassets/delete.png"/>
+				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>&nbsp;
 				                        	</div>
 				                        </td>
-				                        <!-- <td style="width: 100px">
-				                        	<a href="javascript:void(0)"><img ng-click="editTwitterInsights(itm.make, itm.model)" src="app/img/Dashboardassets/edit.png"/></a>&nbsp;
-				                        	<a href="javascript:void(0)"><img ng-click="deleteTwitterInsights()" src="app/img/Dashboardassets/delete.png"/></a>
-				                        </td> -->
 
 									</tr>
 								</tbody>
