@@ -227,6 +227,13 @@ var fillRecord = function(result) {
       record.user_income = result.key[11];
     //}
   }
+
+  //year
+  if(filter.isFilterByYear()||filter.isFilterByQuarter()||filter.isFilterByMonth()){
+    record.sold.year = result.key[3]; 
+    record.sold.quarter = result.key[4];
+    record.sold.month = result.key[5];
+  }
   
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
