@@ -289,10 +289,10 @@ App
       // { name: 'toaster', files: ['vendor/angularjs-toaster/toaster.js','vendor/angularjs-toaster/toaster.css'] }
     ]
 
-  })
+  })'Access-Control-Allow-Origin
 ;
 
-App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
+App.controller('LoginFormController', ['$scope', '$https', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
 	//alert("loaded");
 	
 	
