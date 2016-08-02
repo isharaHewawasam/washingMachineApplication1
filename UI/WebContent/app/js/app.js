@@ -2350,7 +2350,13 @@ function renderMap(divId, salesData){
 	            enabled: true,
 	            format: '{point.z}',
 	            color:'#000000'
-	        }
+	        }, tooltip: {
+		        headerFormat: '',
+	            pointFormat: zipcode == true ? 
+	                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+	                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
+	                    
+		    },
 	    }]
 	}    
 	
@@ -2377,13 +2383,13 @@ function renderMap(divId, salesData){
 	    },
 	
     
-	    tooltip: {
+	  /*  tooltip: {
 	        headerFormat: '',
             pointFormat: zipcode == true ? 
                       '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
                   : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
                     
-	    },
+	    },*/
 	    
 	    plotOptions: {
 	        mapbubble:{
