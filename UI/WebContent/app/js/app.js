@@ -3071,10 +3071,10 @@ $scope.plotPieChart=function(divID){
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
 	    	$scope.data=[];
-	    	$scope.data[0]=data.unitsSold;
-	    	$scope.data[1]=data.unitsConnected;
-	    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
-	    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+         $scope.data[0]=data.unitsSold;
+          $scope.data[1]=data.unitsConnected;
+          $scope.data[2]=data.unitsSold - data.unitsConnected; 
+	    	
 	    	$(function() {
 	            // Create the chart
 	            chart = new Highcharts.Chart({
@@ -3094,13 +3094,11 @@ $scope.plotPieChart=function(divID){
 	                    }
 	                },
 	                tooltip: {
-	                    formatter: function() {
-	                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-	                    }
+	                    pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
 	                },
 	                series: [{
 	                    name: 'Browsers',
-	                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+	                     data: [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]],
 	                    size: '80%',
 	                    innerSize: '80%',
 	                    showInLegend:true,
@@ -3139,10 +3137,19 @@ $scope.plotPieChart=function(divID){
 					$scope.progress = false;
 					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
-			    	$scope.data[0]=data[0].unitsSold;
-			    	$scope.data[1]=data[0].unitsConnected;
+            var totalSold = 0;
+            var totalconnected = 0;
+            var seriesData = [];
+            for(var i=0;i<data.length;i++){
+              totalSold +=data[i].unitsSold;
+              totalconnected += data[i].unitsConnected ;
+            }
+            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]] 
+			    	/*$scope.data[0]=totalSold;
+			    	$scope.data[1]=totalconnected;
 			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
 			    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+            */
 			    	$(function() {
 			            // Create the chart
 			            chart = new Highcharts.Chart({
@@ -3162,13 +3169,11 @@ $scope.plotPieChart=function(divID){
 			                    }
 			                },
 			                tooltip: {
-			                    formatter: function() {
-			                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-			                    }
+                       pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
 			                },
 			                series: [{
 			                    name: 'Browsers',
-			                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+			                    data:seriesData,
 			                    size: '80%',
 			                    innerSize: '80%',
 			                    showInLegend:true,
@@ -3213,13 +3218,11 @@ $scope.plotPieChart=function(divID){
                     }
                 },
                 tooltip: {
-                    formatter: function() {
-                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-                    }
+                     pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
                 },
                 series: [{
                     name: 'Browsers',
-                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+                     data: [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]],
                     size: '80%',
                     innerSize: '80%',
                     showInLegend:true,
