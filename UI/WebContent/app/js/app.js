@@ -305,7 +305,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 		};
 		$http({url:configApiClient.baseUrl + 'login/authentication',
               method: "POST",
-              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :configApiClient.baseUrl,'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
               data: loginCredentials
          }).success(function(data, status) {
      			if (data.response == 'Success') {
@@ -1656,34 +1656,42 @@ $rootScope.isApplyFiterButton = true;
 		    
 		    }
 		
-	$scope.maximizeGrid=function(){
-		var gridNormal = $("#gridNormal").clone();
+	 $scope.maximizeGrid=function(){
+			var gridNormal = $("#gridNormal1").clone();
+			
+			$("#gridMax").empty();
+			$("#gridMax").append(gridNormal);
 		
-		$("#gridMax").empty();
-		$("#gridMax").append(gridNormal);
+			$("#gridMax #gridMaxImg").addClass("hidden");
+			$("#gridMax #gridCloseImg").removeClass("hidden");
+			$("#gridNormal1").removeClass("hidden");
+			//$("#gridCloseImg").removeClass("hidden");
+			
+			 $(".maxtbody").height(300);
 		
-		$("#gridMax #gridMaxImg").addClass("hidden");
-		$("#gridMax #gridCloseImg").removeClass("hidden");
-		//$("#gridCloseImg").removeClass("hidden");
+			 
 		
-	 $(".tbody").height(300);
-		 
-		 $("#gridNormal").height(447);
+			
+		$("#gridMax").removeClass("hidden");
 		
-	$("#gridMax").removeClass("hidden");
-	
-	
-	}
-	
-	$("body").on("click","#gridCloseImg",function(){
-		$("#gridMax").empty();
-		$("#gridMax").addClass("hidden");
-		//  $("#gridAdjustHeight").height(160);
-		  $(".tbody").height(200);
-		  $("#gridNormal").height(355);
+			
+		//$("#gridMax").css("","");
 		
-		//$scope.plotChartFunction("container");
-    });
+		
+		}
+		
+		$("body").on("click","#gridCloseImg",function(){
+			$("#gridMax").empty();
+			$("#gridMax").addClass("hidden");
+			//  $("#gridAdjustHeight").height(160);
+			  $(".tbody").height(200);
+			  $("#gridNormal").height(355);
+			
+			//  $(".gridNormal").height(355);
+
+			//$scope.plotChartFunction("container");
+	    });
+		
 	
 	/*$scope.closeGrid=function(){
 		
@@ -2232,8 +2240,24 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
            $rootScope.filterIcons.splice(indexofvar,1);
        }
        console.log('$rootScope.search in removefilter : ', $rootScope.search);
-       $rootScope.setUsageObjectFromSidebar($rootScope.search);
-      $rootScope.tryit();
+       var obj={};
+       obj.selectedMake=$rootScope.search.selectedMake;
+                      obj.selectedModel=$rootScope.search.selectedModel;
+                      obj.selectedSKU=$rootScope.search.selectedSKU;
+                      obj.mfgStartDate=$rootScope.search.mfgStartDate;
+                      obj.mfgEndDate=$rootScope.search.mfgEndDate;
+                      if ($rootScope.search.incomeRange) {
+                                     obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
+                      }
+                      if ($rootScope.search.occupation) {
+                                     obj.occupation=JSON.parse($rootScope.search.occupation).id;
+                      }
+                      if ($rootScope.search.ageGroup) {
+                                     obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
+                      }
+                       
+		$rootScope.setUsageObjectFromSidebar(obj);
+		$rootScope.tryit();
    };  
 }]);
 
@@ -3057,7 +3081,6 @@ $scope.plotPieChart=function(divID){
 	  console.log("in plot pie chart");
 	  
 	if($rootScope.piechartData==null){
-		console.log('in if piechart');
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
@@ -3067,11 +3090,10 @@ $scope.plotPieChart=function(divID){
 	    //	$scope.isDisabled = false;
 	    	$scope.progress = false;
         	$rootScope.isApplyFiterButton = false;
-	    	$rootScope.piechartData=[];
-	    	$rootScope.piechartData[0]=data.unitsSold;
-	    	$rootScope.piechartData[1]=data.unitsConnected;
-	    	$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
-	    	$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
+        	$rootScope.piechartData=[];
+        	$rootScope.piechartData[0]=data.unitsSold;
+        	$rootScope.piechartData[1]=data.unitsConnected;
+        	$rootScope.piechartData[2]=data.unitsSold - data.unitsConnected;
 	    	
 	    	// Check for div availability 
 	    	// div "piecontainer" is not available for eng manager.
@@ -3096,13 +3118,11 @@ $scope.plotPieChart=function(divID){
 	                    }
 	                },
 	                tooltip: {
-	                    formatter: function() {
-	                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-	                    }
-	                },
+	                    pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
+	                }, 
 	                series: [{
 	                    name: 'Browsers',
-	                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+	                    data: [["Connected",$rootScope.piechartData[1]],["Disconnected",$rootScope.piechartData[2]]],
 	                    size: '80%',
 	                    innerSize: '80%',
 	                    showInLegend:true,
@@ -3122,9 +3142,7 @@ $scope.plotPieChart=function(divID){
 	    })
 	   
 	}else{
-		console.log('in else piechart');
 		if($rootScope.applyFilterBoolean){
-			console.log('in applyFilterBoolean if');
 			$http({
 				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
@@ -3138,6 +3156,7 @@ $scope.plotPieChart=function(divID){
 				  data:$scope.usagedata
 					 
 				}).success(function(data, status) {
+					
 					$scope.progress = false;
 					//	$scope.isDisabled = false;
           			$rootScope.isApplyFiterButton = false;
@@ -3148,23 +3167,14 @@ $scope.plotPieChart=function(divID){
 				    		// by default series data should be empty so highchart can show the message for no data. 
 				    		var seriesData = [];
 				    		if(data.length > 0) {
-								$scope.totalSold = 0;
-								$scope.totalconnected = 0;
+								var totalSold = 0;
+								var totalconnected = 0;
 								for(var i=0;i<data.length;i++){
-								    $scope.totalSold += data[i].unitsSold;
-								    $scope.totalconnected += data[i].unitsConnected;
+								    totalSold += data[i].unitsSold;
+								    totalconnected += data[i].unitsConnected;
 								  }
-								 // console.log($scope.totalSold);
-								$rootScope.piechartData=[];
-								$rootScope.piechartData[0]=$scope.totalSold;
-								$rootScope.piechartData[1]=$scope.totalconnected;
 								
-								//					    	$scope.data[0]=data[0].unitsSold;
-								//					    	$scope.data[1]=data[0].unitsConnected;
-								$scope.connPercentage=parseFloat(($rootScope.piechartData[1]/$rootScope.piechartData[0])*100).toFixed(2);
-								$scope.unconnPercentage=parseFloat((($rootScope.piechartData[0]-$rootScope.piechartData[1])/$rootScope.piechartData[0])*100).toFixed(2);
-								
-								seriesData = [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]]
+								seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
 							    	
 				    		}
 				    		//$(function() {
@@ -3186,10 +3196,8 @@ $scope.plotPieChart=function(divID){
 						                    }
 						                },
 						                tooltip: {
-						                    formatter: function() {
-						                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
-						                    }
-						                },
+						                    pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
+						                }, 
 						                series: [{
 						                    name: 'Browsers',
 						                    data: seriesData,
