@@ -3053,32 +3053,27 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 $scope.plotPieChart=function(divID){
 	//var divid = '#'+divID;
 	removechart(divID);
-	$scope.loadingText = "Loading data...";  
-	$rootScope.isApplyFiterButton = true;
-	 // $scope.isDisabled = true;
+	$scope.loadingText = "Loading data...";    
+	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
-	  
-	if($rootScope.piechartData==null){
+	  console.log('$scope.data : ', $scope.data);
+	if($scope.data==null){
+		console.log('in if piechart');
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
-			console.log("Pie Chart response Without Filter success : ", data);
-	    //	$scope.isDisabled = false;
+	    	console.log("Pie Chart sucess :", data);
+	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
-        	$rootScope.isApplyFiterButton = false;
-        	$rootScope.piechartData=[];
-        	$rootScope.piechartData[0]=data.unitsSold;
-        	$rootScope.piechartData[1]=data.unitsConnected;
-        	$rootScope.piechartData[2]=data.unitsSold - data.unitsConnected;
-	    	
-	    	// Check for div availability 
-	    	// div "piecontainer" is not available for eng manager.
-	    	var obj = $('#'+divID);
-	    	if(obj != null && obj.length != 0){
-	    	//$(function() {
+	    	$scope.data=[];
+	    	$scope.data[0]=data.unitsSold;
+	    	$scope.data[1]=data.unitsConnected;
+	    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
+	    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+	    	$(function() {
 	            // Create the chart
 	            chart = new Highcharts.Chart({
 	                chart: {
@@ -3097,11 +3092,13 @@ $scope.plotPieChart=function(divID){
 	                    }
 	                },
 	                tooltip: {
-	                    pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
-	                }, 
+	                    formatter: function() {
+	                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+	                    }
+	                },
 	                series: [{
 	                    name: 'Browsers',
-	                    data: [["Connected",$rootScope.piechartData[1]],["Disconnected",$rootScope.piechartData[2]]],
+	                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
 	                    size: '80%',
 	                    innerSize: '80%',
 	                    showInLegend:true,
@@ -3110,18 +3107,18 @@ $scope.plotPieChart=function(divID){
 	                    }
 	                }]
 	            });
-	        //});
-	    	}
+	        });
 	    }). error(function(data, status) {
 	    	$scope.progress = false;
-	    //	$scope.isDisabled = false;
-        $rootScope.isApplyFiterButton = false;
+	    	$scope.isDisabled = false;
 	       console.log('in piechart error : ',data);
 	       $scope.progress = false;
 	    })
 	   
 	}else{
+		console.log('in else piechart');
 		if($rootScope.applyFilterBoolean){
+			console.log('in applyFilterBoolean if');
 			$http({
 				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
@@ -3135,78 +3132,61 @@ $scope.plotPieChart=function(divID){
 				  data:$scope.usagedata
 					 
 				}).success(function(data, status) {
-					
 					$scope.progress = false;
-					//	$scope.isDisabled = false;
-          			$rootScope.isApplyFiterButton = false;
+					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
-			    	var obj = $('#'+divID);
-			    	if(obj != null && obj.length != 0){
-				    	if(data){
-				    		// by default series data should be empty so highchart can show the message for no data. 
-				    		var seriesData = [];
-				    		if(data.length > 0) {
-								var totalSold = 0;
-								var totalconnected = 0;
-								for(var i=0;i<data.length;i++){
-								    totalSold += data[i].unitsSold;
-								    totalconnected += data[i].unitsConnected;
-								  }
-								
-								seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
-							    	
-				    		}
-				    		//$(function() {
-						            // Create the chart
-						            chart = new Highcharts.Chart({
-						                chart: {
-						                    renderTo: ''+divID,
-						                    type: 'pie'
-						                },
-						                title: {
-						                    text: 'Connected Vs Disconnected'
-						                },
-						                credits:{
-						                	enabled: false
-						                },			               
-						                plotOptions: {
-						                    pie: {
-						                        shadow: false
-						                    }
-						                },
-						                tooltip: {
-						                    pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
-						                }, 
-						                series: [{
-						                    name: 'Browsers',
-						                    data: seriesData,
-						                    size: '80%',
-						                    innerSize: '80%',
-						                    showInLegend:true,
-						                    dataLabels: {
-						                        enabled: false
-						                    }
-						                }]
-						            });
-						            Highcharts.setOptions({lang: {noData: "No data to display"}});
-						        //});
-				    		};
-						}
+			    	$scope.data[0]=data[0].unitsSold;
+			    	$scope.data[1]=data[0].unitsConnected;
+			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
+			    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
+			    	$(function() {
+			            // Create the chart
+			            chart = new Highcharts.Chart({
+			                chart: {
+			                    renderTo: ''+divID,
+			                    type: 'pie'
+			                },
+			                title: {
+			                    text: 'Connected Vs Disconnected'
+			                },
+			                credits:{
+			                	enabled: false
+			                },			               
+			                plotOptions: {
+			                    pie: {
+			                        shadow: false
+			                    }
+			                },
+			                tooltip: {
+			                    formatter: function() {
+			                        return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+			                    }
+			                },
+			                series: [{
+			                    name: 'Browsers',
+			                    data: [["Connected",parseFloat($scope.connPercentage)],["Disconnected",parseFloat($scope.unconnPercentage)]],
+			                    size: '80%',
+			                    innerSize: '80%',
+			                    showInLegend:true,
+			                    dataLabels: {
+			                        enabled: false
+			                    }
+			                }]
+			            });
+			        });
 			    	})
 			    .error(function(data,status){
-			   // 	$scope.isDisabled = false;
+			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-            $rootScope.isApplyFiterButton = false;
 			    	console.log("Pie Chart response With Filter error : ", data);
 			    });
 				
 			$rootScope.applyFilterBoolean=false;
 		}
 		else{
-		//	$scope.isDisabled = false;
+			$scope.isDisabled = false;
 			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
-      $rootScope.isApplyFiterButton = false;
 		
 			$(function() {
 	            // Create the chart
