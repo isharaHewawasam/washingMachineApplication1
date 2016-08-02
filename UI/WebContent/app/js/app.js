@@ -2483,12 +2483,12 @@ function renderPieChart(divId, insightsData, chartTitle){
     });	
 }
 
-function renderLineChart(divId, xAxisCategories, seriesData){
+function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTitle, yAxisTitle){
 		
 	$("#"+divId).highcharts( {
 		credits:false,
 		title: {
-			text: 'Sales Volumes'
+			text: chartTitle
 		},
 		legend: {
             layout: 'vertical',
@@ -2507,13 +2507,13 @@ function renderLineChart(divId, xAxisCategories, seriesData){
         },
 	    xAxis: {
             title: {
-                text: 'Time Scale'
+                text: xAxisTitle
             },
 	        categories: xAxisCategories
 	    },
 	    yAxis: {
 			title: {
-                text: 'Units Sold'
+                text: yAxisTitle
             }
 		},
 	    plotOptions: {
@@ -2904,7 +2904,7 @@ function renderHorizontalBarChart(divId, notificationData){
     });
 }
 
-App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.ApiClient', function ($scope, $http, $rootScope, configApiClient) {
+App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot.config.ApiClient', function ($scope, $http, $rootScope, $window, configApiClient) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
@@ -2926,19 +2926,30 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 	                    [28, 48, 40, 19]];
 	 
 	  
-	  $rootScope.setUsageData=function(usagedata){
+	  $rootScope.setUsageData=function(usagedata){		 
 		  $scope.usagedata=usagedata;
 		  console.log("In rootScope Usage data:: "+JSON.stringify($scope.usagedata)+":: "+$scope.selectedSales);
-		  if($scope.selectedSales==0){
-			  $scope.plotPieChart("piecontainer");	
-			}
-			else if($scope.selectedSales== 1){
-				$scope.plotBarChart("bar");
-				
-			} else if($scope.selectedSales==2){
-				$scope.plotChartFunction('container');
-				
-			}
+		  
+		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+          var rolename = loginCredentails.Role;
+          var roleKey  = loginCredentails.roleKey;
+          
+          $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
+          if($scope.isEngManager){
+                if($scope.selectedSensors >= 0 && $scope.selectedSensors <= 7){
+                   $scope.plotEngManagerChartFunction('container' , $scope.seneorkey);
+                }                 
+          }else{
+			  if($scope.selectedSales==0){
+				  $scope.plotPieChart("piecontainer");	
+			  }
+			  else if($scope.selectedSales== 1){
+				  $scope.plotBarChart("bar");
+					
+			  } else if($scope.selectedSales==2){
+				  $scope.plotChartFunction('container');				
+			  }
+          }
 	  }
 	  
 	  
@@ -3487,7 +3498,7 @@ $scope.plotPieChart=function(divID){
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
 					var timeScales = getTimeScales(data.data);	
 					$scope.progress = false;
-			    	renderLineChart(divId, timeScales, lineChartSeriesData);
+			    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 			    	
 			   }).error(function(data,status){
 				   $scope.isDisabled = false;
@@ -3508,7 +3519,7 @@ $scope.plotPieChart=function(divID){
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
 					var timeScales = getTimeScales(data.data);	
 					$scope.progress = false;
-			    	renderLineChart(divId, timeScales, lineChartSeriesData);
+			    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 			    }). error(function(data, status) {
 			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
@@ -3519,23 +3530,25 @@ $scope.plotPieChart=function(divID){
 	}	
 	
 	
-	$scope.plotEngManagerChartFunction = function(divId,key){
+	/*$scope.plotEngManagerChartFunction = function(divId,key){
 		
+		  removechart(divId);
 		  $scope.loadingText = "Loading data...";    
 	//	  $scope.isDisabled = true;
 		  $scope.progress = true;
 		  $rootScope.isApplyFiterButton = true;
 		  
-		  //alert(key);
 		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;		
-					
+				
+		  alert(key);
+		  
 		  $http({
 			  url:url, 
 			  method: 'POST'
 			 
 			}).success(function(data, status) {
 				$scope.progress = false;
-        $rootScope.isApplyFiterButton = false;
+				$rootScope.isApplyFiterButton = false;
 		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
 		    	$scope.linechartData=data;
 		    	 $scope.progress = false;
@@ -3603,6 +3616,65 @@ $scope.plotPieChart=function(divID){
 		}]
 		});
 		})
+	}*/
+	
+	$scope.plotEngManagerChartFunction = function(divId,key){
+		removechart(divId);
+		$scope.loadingText = "Loading data...";    
+		$scope.isDisabled = true;
+		$scope.progress = true;
+		$rootScope.isApplyFiterButton = true;
+		var obj={};
+		
+		if($rootScope.applyFilterBoolean){
+			$http({
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true', 
+				  method: 'POST',
+				  headers: { 
+	                	'Content-Type': 'application/json',
+	                	'Accept':'text/plain' ,
+	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+	                	'Access-Control-Allow-Methods':'POST',
+	                	'Access-Control-Allow-Credentials':true  
+        		 },
+				  data:$scope.usagedata
+					 
+				}).success(function(data, status) {
+					$scope.isDisabled = false;					
+					$rootScope.isApplyFiterButton = false;
+					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+					var timeScales = getTimeScales(data.data);	
+					$scope.progress = false;
+			    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
+			    	
+			   }).error(function(data,status){
+				   $scope.isDisabled = false;
+				   $scope.progress = false;	
+				   $rootScope.isApplyFiterButton = false;
+				   console.log('Error retrieving data for sales volume chart, status : ' + status);
+			   });
+			$rootScope.applyFilterBoolean=false;						
+		 
+		} else {
+			$http({
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
+				  method: 'POST'
+				 
+				}).success(function(data, status) {
+					$scope.isDisabled = false;					
+					$rootScope.isApplyFiterButton = false;
+					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+					var timeScales = getTimeScales(data.data);	
+					$scope.progress = false;
+			    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
+			    }). error(function(data, status) {
+			    	$rootScope.isApplyFiterButton = false;
+			    	$scope.isDisabled = false;
+			    	$scope.progress = false;
+			    	console.log('Error retrieving data for sales volume chart, status : ' + status);
+			    });	
+		}
+		
 	}
 	
 	$scope.maximize = function(){
