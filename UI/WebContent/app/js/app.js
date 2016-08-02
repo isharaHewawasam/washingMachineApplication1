@@ -3053,7 +3053,8 @@ App.controller('myController', ['$scope', '$http', '$rootScope', 'iot.config.Api
 $scope.plotPieChart=function(divID){
 	//var divid = '#'+divID;
 	removechart(divID);
-	$scope.loadingText = "Loading data...";    
+	$scope.loadingText = "Loading data...";   
+  $rootScope.isApplyFiterButton = true; 
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	  console.log("in plot pie chart");
@@ -3066,6 +3067,7 @@ $scope.plotPieChart=function(divID){
 			 
 		}).success(function(data, status) {
 	    	console.log("Pie Chart sucess :", data);
+        $rootScope.isApplyFiterButton = false;
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
 	    	$scope.data=[];
@@ -3109,6 +3111,7 @@ $scope.plotPieChart=function(divID){
 	            });
 	        });
 	    }). error(function(data, status) {
+        $rootScope.isApplyFiterButton = false;
 	    	$scope.progress = false;
 	    	$scope.isDisabled = false;
 	       console.log('in piechart error : ',data);
@@ -3132,6 +3135,7 @@ $scope.plotPieChart=function(divID){
 				  data:$scope.usagedata
 					 
 				}).success(function(data, status) {
+          $rootScope.isApplyFiterButton = false;
 					$scope.progress = false;
 					$scope.isDisabled = false;
 			    	console.log("Pie Chart response With Filter success : ", data);
@@ -3176,6 +3180,7 @@ $scope.plotPieChart=function(divID){
 			        });
 			    	})
 			    .error(function(data,status){
+            $rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
 			    	console.log("Pie Chart response With Filter error : ", data);
@@ -3185,6 +3190,7 @@ $scope.plotPieChart=function(divID){
 		}
 		else{
 			$scope.isDisabled = false;
+      $rootScope.isApplyFiterButton = false;
 			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
 		
