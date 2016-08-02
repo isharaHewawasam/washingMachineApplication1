@@ -305,7 +305,7 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
 		};
 		$http({url:configApiClient.baseUrl + 'login/authentication',
               method: "POST",
-              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :configApiClient.baseUrl,'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+              headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
               data: loginCredentials
          }).success(function(data, status) {
      			if (data.response == 'Success') {
