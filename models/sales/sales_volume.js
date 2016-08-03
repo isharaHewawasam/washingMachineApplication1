@@ -30,7 +30,7 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
-
+    //sort result from quarter
     function sortResponse(name){
       return function(a,b){
         if( a[name] > b[name]){
