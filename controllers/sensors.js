@@ -7,7 +7,7 @@ var helper = require('./helpers/utility.js');
 //get all sensors details
 module.exports.getSensors = function(req, res, next) { 
   sensors.getSensors(function(err, result){  	  
-	    helper.sendResponse(res, err, result); 
+	    helper.sendResponse(res, errs, result); 
 	});
 };
 
@@ -16,7 +16,7 @@ module.exports.getSensorsAvgUsage = function(req, res, next) {
   var sensor_name = req.swagger.params.sensor_name === undefined ? null : req.swagger.params.sensor_name.value;  
 	console.log("controller sensor name : " + sensor_name);
   sensors.getSensorsAvgUsage(sensor_name, req.body, function(err, result){  	  
-	    helper.sendResponse(res, err, result); 
+	    helper.sendResponse(res, err, result);
 	});
 };
 
