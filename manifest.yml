@@ -1,8 +1,8 @@
 applications:
 - path: .
-  memory: 4G
+  memory: 0.5G
   instances: 1
   domain: mybluemix.net
   name: ibm-iot
   host: ibm-iot
-  disk_quota: 2G
+  disk_quota: 1G
