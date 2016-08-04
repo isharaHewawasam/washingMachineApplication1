@@ -7,7 +7,7 @@ var helper = require('./helpers/utility.js');
 //get all sensors details
 module.exports.getSensors = function(req, res, next) { 
   sensors.getSensors(function(err, result){  	  
-	    helper.sendResponse(res, errs, result); 
+	    helper.sendResponse(res, err, result); 
 	});
 };
 
