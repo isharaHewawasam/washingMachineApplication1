@@ -96,7 +96,7 @@ var addOrUpdateUsages = function(payload, usages, new_usage) {
       if( (each_usage.make == new_usage.make) && (each_usage.model == new_usage.model) ) {
         console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
         usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
-        //console.log("After " + JSON.stringify(new_usage));
+        console.log("After " + JSON.stringify(new_usage));
         return;
       }
     }
@@ -123,7 +123,7 @@ var fillFavourites = function(payload, usage, callback) {
 
 var usageExists = function(payload, usages, usage_to_find) {  
   for(var each_usage in usages) {   
-   console.log(usage_to_find);  
+   //console.log(usage_to_find);  
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
     var all_match = true;
@@ -240,7 +240,7 @@ var fillRecord = function(result) {
   record.popularTime = "";
   
   //console.log("keys : " + JSON.stringify(result.key));
-  //console.log("record : " + JSON.stringify(record));  
+  console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
@@ -256,7 +256,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
        var result = isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
               isItemPresent(payload.productAttrs.models, "value", keys[1]) &&
               isItemPresent(payload.productAttrs.sku, "value", keys[2]);
-       //console.log("Recore falling in filter : " + result);
+       console.log("Recore falling in filter : " + result);
        return result;       
   }
   
@@ -356,7 +356,7 @@ function addMissingData(payload, callback) {
             payload.productAttrs.models.push( model );
           }
         }
-         //console.log("Hell2 " + JSON.stringify(payload));
+         console.log("Hell2 " + JSON.stringify(payload));
         callback(err, result);
         return;
       }
