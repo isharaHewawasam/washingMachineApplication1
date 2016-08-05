@@ -16,7 +16,7 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 var login = angular.module('myLoginCheck',[]).
 factory('$logincheck', function(){
   return function(isLogin){
-	  console.log('isLogin : ', isLogin);
+	  
 	  if(isLogin) return true;
 	  return false;  
   };
@@ -379,7 +379,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 		 	$scope.notificationAlertFlag = true;
 					           
 		}). error(function(data, status) {
-		       console.log("Error getting data for notification alerts, status: " + status);
+		       
 		});	
 	}
 	
@@ -407,7 +407,6 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
  	}
 	
 	$scope.loadNotificationConf = function() {
-		console.log("-------------Notification Conf---------------");
 		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
@@ -446,14 +445,11 @@ App.controller('AppController',
     // Hook not found
     $rootScope.$on('$stateNotFound',
       function(event, unfoundState, fromState, fromParams) {
-          console.log(unfoundState.to); // "lazy.state"
-          console.log(unfoundState.toParams); // {a:1, b:2}
-          console.log(unfoundState.options); // {inherit:false} + default options
       });
     // Hook error
     $rootScope.$on('$stateChangeError',
       function(event, toState, toParams, fromState, fromParams, error){
-        console.log(error);
+      
       });
     // Hook success
     $rootScope.$on('$stateChangeSuccess',
@@ -540,7 +536,7 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	  var dtInstance1;
 	 
 
-	  console.log("IN datatablecontroller");
+	  
 	  
 	  $timeout(function(){
 
@@ -620,7 +616,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 					$scope.isLoading = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
-			       console.log("Error getting data for most fault models, status: " + status);
 			});			 
 	  };
 	  
@@ -649,7 +644,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for least fault models, status: " + status);
 			});			  
 	  };
 	  
@@ -677,7 +671,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for most common faults, status: " + status);
 			});	
 	  };
 	   
@@ -706,7 +699,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for most used models, status: " + status);
 			});		  		  
 	  };
 	  
@@ -736,7 +728,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for most used wash cycles, status: " + status);
 			});
 	  };
 	  
@@ -777,7 +768,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for disconnected machines, status: " + status);
 			});	
 	  };
 	  
@@ -807,7 +797,6 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			       console.log("Error getting data for disconnected machines, status: " + status);
 			});
 	  };
 	  
@@ -1034,20 +1023,16 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    if($scope.region.states==undefined || $scope.region.states=="")
 	    {
 	    
-	    console.log("states undefined");
 	    $scope.usagedata.region.states=[];
 	    }
-	    console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
 	    if($scope.region.cities==undefined || $scope.region.cities=="")
 	    {
 	      
-	      console.log("cities undefined");
 	      $scope.usagedata.region.cities=[];
 	    }
 	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
 	    {
 
-	      console.log("zip_codes undefined");
 	      $scope.usagedata.region.zip_codes=[];
 	    }
 	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
@@ -1095,28 +1080,14 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    {
 	      $scope.usagedata.family_members_count=[];
 	    }
-	  
-	    
-	    
-
-	    console.log("timescale form data  : "+$scope.timescale);  
-	    console.log("years form data  : "+$scope.timescale.years);  
-	    console.log("quaters form data  : "+$scope.timescale.quarters); 
-	    console.log("month form data  : "+$scope.timescale.months); 
-	    
-	    console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
-
-	    
 	 
 	   $rootScope.mkt_griddata_filter=[];
 	    $scope.isNoDataFound = false;
 	    $scope.isError =  false;
 	    $scope.isOnFilter = false;
 
-	    console.log('usage data in Report grid : '+JSON.stringify($scope.usagedata));
-	    //alert(JSON.stringify($scope.usagedata));
-	   
 	    
+	   
 	    //for grid mkt_mgr
 	      $http({url:configApiClient.baseUrl +  'usage', 
 	            method: "POST",
@@ -1128,19 +1099,13 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	                //$scope.searchButtonText = "Apply filter";
 	           
 	             if(!data || data.data.length === 0){
-	                  
-	                                                            console.log("empty data");
-	                                                            $rootScope.isOnFilter=true;
+	                $rootScope.isOnFilter=true;
 	                $rootScope.isOnLoad=false;
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
-
-	             
 	                }
 	             else {  
 	                     
 	                $rootScope.mkt_griddata_filter=data.data; 
-	                 // alert(JSON.stringify(data));
-	                console.log("data for report from server  :"+JSON.stringify(data));
 	                $rootScope.isOnFilter=true;
 	                $rootScope.isOnLoad=false;
                   $scope.isReportFiltering = false;
@@ -1150,10 +1115,7 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	                //$scope.searchButtonText = "Apply filter";
 	           
 	          $scope.isError = true;
-	          //$scope.msg = $scope.msg3;
-	             //alert("No data found");
-	             console.log("error:"+status);
-               $scope.isReportFiltering = false;
+	          $scope.isReportFiltering = false;
 	             
 	           });
 	      
@@ -1175,12 +1137,10 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	
 	showMap = function () {
 		removechart('map-container');
-		console.log('in show Map');
 		$scope.loadingText = "Loading data...";    
 		
    // $rootScope.isApplyFiterButton = true;
 		$rootScope.mapProgress = true;
-		console.log('$rootScope.mapProgress : ', $rootScope.mapProgress);
 		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
@@ -1189,28 +1149,25 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
          .success(function(data, status) {
         	
         	 $rootScope.mapProgress = false;
-        	 	  console.log("usagedata : " + $scope.usagedata.toString());
+        	 	  
                   if(!data || data.length === 0){
-                       console.log("empty data");
                        renderMap("map-container", []);
                   }  else{
-                      console.log("Got data for map..." );
                       renderMap("map-container", data);
                       $scope.zoomMap('map-container');
                   }
-                  //console.log("data from server  :"+JSON.stringify(data));
+                 
                  })
                  .error(function(data, status) {
               //  	 $rootScope.isDisabled = false;
                 	 $rootScope.mapProgress = false;
-                        console.log("error:"+status);
+                       
                          
           });
 	}
 	
 	$scope.zoomMap = function (id) {
 		var selectedState = $scope.region.states;
-		console.log("selectedState " +  selectedState);
 		if(selectedState && selectedState != '') {
 			var stateCode = undefined;
 			var states = $scope.states;
@@ -1299,20 +1256,17 @@ $rootScope.isApplyFiterButton = true;
 		if($scope.region.states==undefined || $scope.region.states=="")
 		{
 		
-		console.log("states undefined");
 		$scope.usagedata.region.states=[];
 		}
-		console.log("gopal cities:"+$scope.region.cities  || $scope.region.cities=="");
+		
 		if($scope.region.cities==undefined || $scope.region.cities=="")
 		{
 			
-			console.log("cities undefined");
 			$scope.usagedata.region.cities=[];
 		}
 		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
 		{
 
-			console.log("zip_codes undefined");
 			$scope.usagedata.region.zip_codes=[];
 		}
 		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
@@ -1367,14 +1321,7 @@ $rootScope.isApplyFiterButton = true;
 		if($scope.region.zip_codes==undefined)
 			$scope.usagedata.region.zip_codes=[];*/
 		
-		
-
-		console.log("timescale form data  : "+$scope.timescale);	
-		console.log("years form data  : "+$scope.timescale.years);	
-		console.log("quaters form data  : "+$scope.timescale.quarters);	
-		console.log("month form data  : "+$scope.timescale.months);	
-		
-		console.log("my usagedata object :"+JSON.stringify($scope.usagedata));
+	
 		
 		// to set usage object in anotehr controllr
 		$rootScope.setUsageData($scope.usagedata);
@@ -1406,7 +1353,6 @@ $rootScope.isApplyFiterButton = true;
 	       	  		$scope.isLoadingFilters = false;
 	        	 if(!data || data.data.length === 0){
 	                 //$('<p>no updates found</p>').appendTo('#rr');
-	        		 console.log("empty data");
 	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
 	        		//alert("No data found");
@@ -1415,8 +1361,7 @@ $rootScope.isApplyFiterButton = true;
 	              }
 	        	 else	        	 
 	       	  		$scope.griddata=data.data; 
-	       	  			//alert(data);
-	       	  		//console.log("data from server  :"+JSON.stringify(data));
+	       	  		
 	         }). error(function(data, status) {
 	          // $scope.test = false;
                 //$scope.searchButtonText = "Apply filter";
@@ -1424,9 +1369,7 @@ $rootScope.isApplyFiterButton = true;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
 	        	 //alert("No data found");
-	        	 console.log("error:"+status);
-	        	 
-	         });
+	        	  });
 		  
 		//For grid from eng manager
 		  $http({url:configApiClient.baseUrl + 'sensors/data', 
@@ -1435,13 +1378,11 @@ $rootScope.isApplyFiterButton = true;
 	             data: $scope.usagedata
 	            
 	           }).success(function(data, status) {
-	            console.log("*****************Eng manager_Filter****************");
 	            /* $scope.test = false;*/
 	                //$scope.searchButtonText = "Apply filter";
 	                $scope.isLoadingFilters = false;
 	             if(!data || data.length === 0){
 	                   //$('<p>no updates found</p>').appendTo('#rr');
-	               console.log("empty data");
 	              // $scope.isNoDataFound = true; 
 	              // $scope.msg = $scope.msg2;
 	                //$("#gridMax #gridMaxImg").addClass("hidden");
@@ -1451,17 +1392,13 @@ $rootScope.isApplyFiterButton = true;
 	             else            
 	                $scope.eng_griddata=data; 
 	                  //alert(data);
-	                //console.log("data from server  :"+JSON.stringify(data));
-
+	            
 	           }). error(function(data, status) {
-	            console.log("*****************Eng manager Error_Filter****************");
-	             //$scope.test = false;
-	                //$scope.searchButtonText = "Apply filter";
+	           //$scope.searchButtonText = "Apply filter";
 	                $scope.isLoadingFilters = false;
 	                $scope.isError = true;
 	                $scope.msg = $scope.msg3;
 	             //alert("No data found");
-	             console.log("error:"+status);
 	             
 	           });
 		
@@ -1475,36 +1412,27 @@ $rootScope.isApplyFiterButton = true;
     		$scope.eng_griddata=[];
     		$scope.mkt_griddata=[];
     		
-    		
-    	
-    		//  console.log("json.scope.usage  :"+JSON.stringify($scope.usagedata)); 
+    	 
 
     		  $http({url:configApiClient.baseUrl +  "usage", 
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
     	           
     	       	  			$scope.griddata=data.data; 
-    	       	  			
-    	       	
-    	       	  	//	console.log("Griddata"+JSON.stringify($scope.griddata));
+    	       	  		
     	       	  		
     	         }). error(function(data, status) {
-    	              	 console.log("usageerror:"+status);
-    	        	 
+    	             
     	         });
     		  
     		  $http({url:configApiClient.baseUrl + "sensors/data", //api url
                   method: "POST",
                   Accept: "text/plain"}).success(function(data, status) {
-                     console.log("*****************Eng manager_onLoad****************");
-                            $scope.eng_griddata=data; //.states: array name--check in browser
+                       $scope.eng_griddata=data; //.states: array name--check in browser
                     
-                        //console.log("Griddata"+JSON.stringify(data));
-                       
                           
                      }). error(function(data, status) {
-                      console.log("*****************Eng manager error_onLoad****************");
-                             console.log("usageerror:"+status);
+                          
                        
                      });
     		  
@@ -1517,10 +1445,9 @@ $rootScope.isApplyFiterButton = true;
                         $rootScope.isOnLoad=true;
                       
                 
-                    //  console.log("Griddata"+JSON.stringify($scope.griddata));
                       
                  }). error(function(data, status) {
-                         console.log("usageerror:"+status);
+                        
                    
                  }); 			   
   			   						
@@ -1600,13 +1527,10 @@ $rootScope.isApplyFiterButton = true;
 	    	 
 	    }). error(function(data, status) {
 	   
-	       console.log(JSON.stringify(data));
+	      
 	    });
 	
 	
-	 
-	
-	 
 	  
 	 
 	 //sanket changes
@@ -1617,10 +1541,10 @@ $rootScope.isApplyFiterButton = true;
 	     	})
 	     .success(function(data, status) {
 	    	 $scope.sales_years=data.sales_years;
-//	    	 console.log($scope.sales_years);
+
 	     })
 	    . error(function(data, status) {
-	       console.log(JSON.stringify(data));
+	    
 	    });
 	 $scope.cities;
 	 $scope.selectCities=function(){
@@ -1632,10 +1556,9 @@ $rootScope.isApplyFiterButton = true;
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		    	 $scope.cities=data[$scope.region.states];
-		    	 console.log("gopalcity:"+JSON.stringify($scope.cities));
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
-		       //console.log(JSON.stringify(data));
+		      
 		    });
 		    
 		    }
@@ -1651,7 +1574,7 @@ $rootScope.isApplyFiterButton = true;
 		     	
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
-		       //console.log(JSON.stringify(data));
+		      
 		    });
 		    
 		    }
@@ -1725,7 +1648,6 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     
       
 	$scope.getCall=function(p){
-		console.log("calling"+p);
 	}
 	
 	$scope.clearfilter = function(){
@@ -1898,7 +1820,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         $scope.valArr=$scope.someArr;
         
         $rootScope.filterIcons=$scope.someArr;
-        console.log($rootScope.filterIcons);
+       
         
     };
     
@@ -1920,7 +1842,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.models=data[$rootScope.search.selectedMake];
-	    	 //console.log("manufacture year :"+JSON.stringify(data));
+	    	
               
                 /*$scope.valArr.push($rootScope.search.selectedMake);
               alert($scope.valArr);*/
@@ -1929,7 +1851,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 				           
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
-	      // console.log(JSON.stringify(data));
+	      
 	    });
       }
       
@@ -1941,15 +1863,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
-              console.log($scope.SKUs);
-	    	 //console.log("manufacture year :"+JSON.stringify(data));
-              
-              
-				           
-				           
+       
+                 
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
-	      // console.log(JSON.stringify(data));
+	      
 	    });
       }
     
@@ -1971,9 +1889,6 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
        	 	}
       	 	
             $rootScope.setUsageObjectFromSidebar(obj);
-
-            console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+
-            		$rootScope.search.selectedSKU+", MFG Start Date :"+$rootScope.search.mfgStartDate+", MFG End Date :"+$rootScope.search.mfgEndDate);
 
             $scope.createIconArray();
             
@@ -2051,7 +1966,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       $http.get(menuURL)
         .success(function(items) {
            $rootScope.menuItems = items;
-//           console.log(JSON.stringify( $rootScope.menuItems ));
+
         })
         .error(function(data, status, headers, config) {
           alert('Failure loading menu');
@@ -2073,9 +1988,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
     $scope.toggleCollapse = function($index, isParentItem,subitem) {
     	$rootScope.intete+=1;
-    	console.log("Toggle collapse"+$rootScope.intete+""+$scope.makeData+""+subitem);
     	
-
       // collapsed sidebar doesn't toggle drodopwn
       if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
 
@@ -2118,41 +2031,40 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 				           
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
-	       console.log(JSON.stringify(data));
+	     
 	    });
     
     $http({url: configApiClient.baseUrl + 'demographics/family/age-ranges', 
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoAgeRange=data;
       }). error(function(data, status) {
-         console.log(data);
       });
 
       $http({url: configApiClient.baseUrl + 'demographics/family/income-ranges', 
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoIncomeRange=data;
       }). error(function(data, status) {
-         console.log(data);
+         
       });
 
       $http({url: configApiClient.baseUrl + 'demographics/family/members-count', 
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoMembersCount=data;
       }). error(function(data, status) {
-         console.log(data);
+         
       });
     
     $http({url:configApiClient.baseUrl + 'config/manufacture/years', 
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 	               
 	    	 $scope.years=data.years;
-	    	 console.log("manufacture year :"+data);
+	    	 
 				       
 				           
 				           
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
-	       console.log(JSON.stringify(data));
+	      
 	    });
 	 
     
@@ -2164,8 +2076,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     }
 	 
 	 /*$scope.selectMake=function(){
-		
-		console.log("in select make"); 
+		 
 		 // alert($scope.selected_make);
 		 $http({url:"http://localhost:3000/api/v1/config/makes/models?make_names="+$scope.selected_make, 
 		     	method: "get",
@@ -2174,10 +2085,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		    	 $scope.models=data[$scope.selected_make];
 		    	 
 		    //	 alert(JSON.stringify($scope.models));
-		    	 console.log(JSON.stringify($scope.models));
+		    	 
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
-		       //console.log(JSON.stringify(data));
+		       
 		    });
 		    
 		    }*/
@@ -2195,8 +2106,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
     
    $scope.removeFilter=function(filter){
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
-       console.log("applied product filter  make :"+$rootScope.search.selectedMake+", model :"+$rootScope.search.selectedModel+", sku :"+
-    		   $rootScope.search.selectedSKU+", MFG Start Date :"+$rootScope.search.mfgStartDate+", MFG End Date :"+$rootScope.search.mfgEndDate);
+       
        if(filter.key=="make"){
            $rootScope.search.selectedMake=undefined;
            $rootScope.search.selectedModel=undefined;
@@ -2239,7 +2149,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        	$rootScope.search.ageGroup=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }
-       console.log('$rootScope.search in removefilter : ', $rootScope.search);
+       
        var obj={};
        obj.selectedMake=$rootScope.search.selectedMake;
                       obj.selectedModel=$rootScope.search.selectedModel;
@@ -2266,7 +2176,7 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 	$scope.plotMapFunction = function(divId){
               $rootScope.mapProgress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
-			    	//console.log("Sales Volume List : "+JSON.stringify(data));
+			    	
 			    	
 			    	renderMap(divId, data);
                       salesDataSet = data;                      
@@ -2274,7 +2184,6 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 			    }). error(function(data, status) {
 			    	$rootScope.mapProgress = false;
 			      // alert("error"  +status);
-			       console.log('Error : ' + status);
 			       renderMap(divId, data);
 			    });	
 	}
@@ -2360,7 +2269,7 @@ function renderMap(divId, salesData){
 	    }]
 	}    
 	
-    console.log('in render map salesData : ', salesData);
+    
     
     //var chart = Highcharts.Map({
     $('#map-container').highcharts('Map', {
@@ -2402,7 +2311,7 @@ function renderMap(divId, salesData){
 	    
 	});
 //});
-	//console.log('Rendered the app successfully');
+	
 	
 }
 
@@ -2617,14 +2526,14 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-					console.log("Error getting data for twitter notification sentiments, status: " + status);
+					
 			});
     	 	
         }). error(function(data, status) {
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				console.log("Error getting configuration data for twitter notification sentiments, status: " + status);
+				
         });
 		
 	};
@@ -2683,14 +2592,14 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-					console.log("Error getting data for spikes in connected machines, status: " + status);
+					
 			});
   	 	  
         }). error(function(data, status) {          
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				console.log("Error getting configuration data for spikes in connected machines, status: " + status);
+				
         });
 		
 	};
@@ -2751,14 +2660,14 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-				console.log("Error getting data for spikes in specific errors, status: " + status);
+				
 			});
 			
         }). error(function(data, status) {          
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-			console.log("Error getting configuration data for spikes in specific errors, status: " + status);
+			
         });
 	};
 	
@@ -2817,14 +2726,14 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 					$scope.isLoading = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
-					console.log("Error getting data for spikes in specific errors by make model, status: " + status);
+				
 			});
 			
         }). error(function(data, status) {          
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-			console.log("Error getting configuration data for spikes in specific errors by make model, status: " + status);
+			
         });	
 		
 	};
@@ -2934,7 +2843,7 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 	  
 	  $rootScope.setUsageData=function(usagedata){		 
 		  $scope.usagedata=usagedata;
-		  console.log("In rootScope Usage data:: "+JSON.stringify($scope.usagedata)+":: "+$scope.selectedSales);
+		 
 		  
 		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
           var rolename = loginCredentails.Role;
@@ -2965,10 +2874,10 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 		  method: 'GET',
 		}).success(function(data, status) {
 			$scope.sensorsList=data;
-	    	//console.log("Sensors Name List: :"+JSON.stringify(data));					           
+	    				           
 	    }). error(function(data, status) {
 	      // alert("error"  +status);
-	       console.log(JSON.stringify(data));
+	       
 	    });
 	  
 	  $http({
@@ -2977,10 +2886,10 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 			}).success(function(data, status) {
 				$scope.salesList=data;
 //				$scope.chartTypes=data[parseInt($scope.selectedSales)].chartTypes;
-		    	console.log("Sales Volume List: :"+JSON.stringify(data));					           
+		    					           
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
-		       console.log(JSON.stringify(data));
+		       
 		    });
 	  
 	  
@@ -3025,7 +2934,6 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 				$scope.Unit="Load in KGS ";
 			}
 	
-			console.log("Sensor types:"+$scope.sensortype+ $scope.seneorkey);
 					
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
@@ -3054,15 +2962,11 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 		}
 		else
 				$scope.chartTypes="";
-		
-		console.log("Chart types:"+$scope.chartTypes+"::"+index);
-		console.log("selectedSales:"+$scope.selectedSales+":Chart :"+$scope.selectedChart);
+	
 	}
 	
 	$scope.dispChart=function(selectedChart){
-		console.log("in disp chart"+selectedChart);
-		//console.log("in disp sensors"+selectedSensors);
-
+		
 	}
 	
 	//code by Babagouda
@@ -3074,16 +2978,14 @@ $scope.plotPieChart=function(divID){
   $rootScope.isApplyFiterButton = true; 
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
-	  console.log("in plot pie chart");
-	  console.log('$scope.data : ', $scope.data);
 	if($scope.data==null){
-		console.log('in if piechart');
+		
 	 $http({
 		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
 		  method: 'POST'
 			 
 		}).success(function(data, status) {
-	    	console.log("Pie Chart sucess :", data);
+	    	
         $rootScope.isApplyFiterButton = false;
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
@@ -3129,14 +3031,13 @@ $scope.plotPieChart=function(divID){
         $rootScope.isApplyFiterButton = false;
 	    	$scope.progress = false;
 	    	$scope.isDisabled = false;
-	       console.log('in piechart error : ',data);
 	       $scope.progress = false;
 	    })
 	   
 	}else{
-		console.log('in else piechart');
+		
 		if($rootScope.applyFilterBoolean){
-			console.log('in applyFilterBoolean if');
+			
 			$http({
 				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
 				  method: 'POST',
@@ -3153,7 +3054,7 @@ $scope.plotPieChart=function(divID){
           $rootScope.isApplyFiterButton = false;
 					$scope.progress = false;
 					$scope.isDisabled = false;
-			    	console.log("Pie Chart response With Filter success : ", data);
+			    	
             var totalSold = 0;
             var totalconnected = 0;
             var seriesData = [];
@@ -3205,7 +3106,7 @@ $scope.plotPieChart=function(divID){
             $rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	console.log("Pie Chart response With Filter error : ", data);
+			    	
 			    });
 				
 			$rootScope.applyFilterBoolean=false;
@@ -3213,7 +3114,6 @@ $scope.plotPieChart=function(divID){
 		else{
 			$scope.isDisabled = false;
       $rootScope.isApplyFiterButton = false;
-			console.log('in applyFilterBoolean else');
 			$scope.progress = false;
 		
 			$(function() {
@@ -3271,7 +3171,6 @@ $scope.plotPieChart=function(divID){
         $rootScope.isApplyFiterButton = false;
 				
 		    	$rootScope.barchartData=data;
-		    	console.log("Bar Chart response without filter :"+JSON.stringify($rootScope.barchartData));
 		    	
 		    	//$(function () {
 				    $('#bar').highcharts({
@@ -3328,7 +3227,7 @@ $scope.plotPieChart=function(divID){
 				//$scope.isDisabled = false;
 			
         $rootScope.isApplyFiterButton = false;
-			       console.log(JSON.stringify(data));
+			      
 			    });
 		}else{
 			$rootScope.barDetails = $rootScope.barchartData;
@@ -3350,7 +3249,7 @@ $scope.plotPieChart=function(divID){
 						$scope.progress = false;
             $rootScope.isApplyFiterButton = false;
 						
-				    	console.log("Bar Chart response With Filter:"+JSON.stringify(data));
+				    	
 				  // To prevent the top 3 selling models chart from updating according to the side-bar product filter
 				  //Made this change because we cannot plot the chart if the user select Make and Model  	
 				    	if(($rootScope.search.selectedMake) == undefined ){
@@ -3416,7 +3315,7 @@ $scope.plotPieChart=function(divID){
 					//	$scope.isDisabled = false;
 						$scope.progress = false;
             $rootScope.isApplyFiterButton = false;
-						console.log("Error:"+JSON.stringify(data));
+						
 					});
 				$rootScope.applyFilterBoolean=false;
 			}	
@@ -3510,7 +3409,7 @@ $scope.plotPieChart=function(divID){
 				   $scope.isDisabled = false;
 				   $scope.progress = false;	
 				   $rootScope.isApplyFiterButton = false;
-				   console.log('Error retrieving data for sales volume chart, status : ' + status);
+				   
 			   });
 			$rootScope.applyFilterBoolean=false;						
 		 
@@ -3530,7 +3429,7 @@ $scope.plotPieChart=function(divID){
 			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	console.log('Error retrieving data for sales volume chart, status : ' + status);
+			    	
 			    });	
 		}	
 	}	
@@ -3555,7 +3454,7 @@ $scope.plotPieChart=function(divID){
 			}).success(function(data, status) {
 				$scope.progress = false;
 				$rootScope.isApplyFiterButton = false;
-		    	console.log("Multiline Chart response :"+JSON.stringify(data));	
+		    	
 		    	$scope.linechartData=data;
 		    	 $scope.progress = false;
 		    	 
@@ -3657,7 +3556,7 @@ $scope.plotPieChart=function(divID){
 				   $scope.isDisabled = false;
 				   $scope.progress = false;	
 				   $rootScope.isApplyFiterButton = false;
-				   console.log('Error retrieving data for sales volume chart, status : ' + status);
+				  
 			   });
 			$rootScope.applyFilterBoolean=false;						
 		 
@@ -3677,7 +3576,7 @@ $scope.plotPieChart=function(divID){
 			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	console.log('Error retrieving data for sales volume chart, status : ' + status);
+			    	
 			    });	
 		}
 		
@@ -3782,7 +3681,7 @@ $scope.plotPieChart=function(divID){
 		}
     });
 	/* $scope.closing = function(){
-		console.log("ha ha ha");
+		
 	}; */
 			
 }]);
@@ -3853,8 +3752,7 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
  =========================================================*/
 
 App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope, $window, Utils) {
-  	console.log("inside sidebar directive");
-
+ 
   var $win  = $($window);
   var $body = $('body');
   var $scope;
@@ -3884,7 +3782,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
 
         //  subNav.trigger('mouseleave');
           subNav = toggleMenuItem( $(this) );
-          	console.log("inside sidebar directive condition");
+          	
           // Used to detect click and touch events outside the sidebar          
           sidebarAddBackdrop();
 
@@ -3895,7 +3793,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
      
 
       scope.$on('closeSidebarMenu', function() {
-    	  console.log("inside sidebar directive");
+    	 
         removeFloatingNav();
       });
 
@@ -4434,7 +4332,7 @@ myApp.config(["RouteHelpersProvider", function(RouteHelpersProvider) {
 
 App.controller('MyController', ['$scope', function($scope) {
   /* controller code */
-  console.log("my controller running");
+ 
 }]);
 
 myApp.directive('oneOfMyOwnDirectives', function() {
@@ -4446,7 +4344,7 @@ myApp.config(["$stateProvider", function($stateProvider /* ... */) {
 }]);
 App.controller('MyviewController', ['$scope', function($scope) {
 	  /* controller code */
-	  //console.log("my controller running");
+	
 	  $scope.getUrl = function(){
 
 	    if(localStorage.getItem('rolename') == "Engineer Manager"){
