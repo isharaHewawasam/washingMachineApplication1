@@ -2,7 +2,7 @@ App.controller('NotificationConfController',
 		['$rootScope', '$scope', '$state', '$http', '$window', '$localStorage', "iot.config.ApiClient",
                  function($rootScope, $scope, $state, $http, $window, $localStorage, configApiClient){
 
-		console.log(">>>>>>>>>Notification Configuration<<<<<<<<<<<")
+		
 
 		var twitterinsights = $localStorage.twitterinsights;
 		
@@ -23,7 +23,7 @@ App.controller('NotificationConfController',
 			         
 		    }). error(function(data, status) {
 		      // alert("error"  +status);
-		      // console.log(JSON.stringify(data));
+		      
 		    });
 			
 			
@@ -33,7 +33,7 @@ App.controller('NotificationConfController',
 			    	$scope.selectedModel = twitterinsights.model;	           
 		    }). error(function(data, status) {
 			      // alert("error"  +status);
-			      // console.log(JSON.stringify(data));
+			     
 		    });
 		}
 		
@@ -45,7 +45,7 @@ App.controller('NotificationConfController',
 			    	$scope.models = data[$scope.selectedMake];
 		    }). error(function(data, status) {
 			      // alert("error"  +status);
-			      // console.log(JSON.stringify(data));
+			      
 		    });
 	     }
 		
@@ -65,12 +65,12 @@ App.controller('NotificationConfController',
 		$scope.isEngManager = (roleKey == 'eng_manager'?true:false);
 		
 		$scope.openMyDashboard = function () {
-			console.log("00000>>>> openMyDashboard ", $scope.isEngManager);
+			
 			if($scope.isEngManager){
-				console.log("if ture ");
+				
 				$state.go('app.engmanagerview');
 			}else{
-				console.log("else ture ");
+				
 				$state.go('app.singleview');
 			}
 			
@@ -80,7 +80,7 @@ App.controller('NotificationConfController',
 			 $scope.makes=data.makes;		           
 			}). error(function(data, status) {
 			// alert("error"  +status);
-			console.log(JSON.stringify(data));
+			
 			});
 
 
@@ -88,10 +88,10 @@ App.controller('NotificationConfController',
 			$rootScope.search.selectedModel="";
 			$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake, 
 			method: "GET", Accept: "text/plain"}).success(function(data, status) {
-				//console.log("//////////make");   
+			
 			 $scope.models=data[$rootScope.search.selectedMake];	           
 			}). error(function(data, status) {
-			console.log(JSON.stringify(data));
+			
 			});
 
 			}
@@ -149,7 +149,7 @@ App.controller('NotificationConfController',
 			     .success(function(data, status) {
 			    	 $state.go(redirecto);
 		    }). error(function(data, status) {
-		    	console.log('in error of notification');
+		    	
 		    });
 			
 		}
