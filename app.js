@@ -38,9 +38,8 @@ function exitHandler(reason) {
   if(reason) {
     console.log("*********APP CRASHED****************************************");
 	  console.trace(reason.stack);
-    console.log("------------------------------------------------------------");
     console.log("Reason : " + reason);
-    console.log("************************************************************");
+    
   }
   
   process.exit(0);
@@ -58,9 +57,8 @@ function LogExcpetion(reason) {
   if(reason) {
     console.log("*********APP CRASHED****************************************");
 	  console.trace(reason.stack);
-    console.log("------------------------------------------------------------");
     console.log("Reason : " + reason);
-    console.log("************************************************************");
+    
   }
 }
 
@@ -73,7 +71,7 @@ process.on('uncaughtException', LogExcpetion);
 app.use(function(req, res, next){
   console.log("URL : " + req.originalUrl);
   console.log("Request Body : " + JSON.stringify(req.body));
-  console.log("==================================================");
+  
   
   require('./middle_ware/sanitize_request').sanitize(req.body);
   console.log("Request after sanitizing: " + JSON.stringify(req.body));
@@ -131,7 +129,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
       var params = { reduce: true, group_level: 2 };
     
       salesDb.view('averages', "averages", params, function(err, result) {
-        //console.log(err);
+       
         console.log(JSON.stringify(result));
       });
     
@@ -178,17 +176,17 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   
   // Start the server
   /*http.createServer(app).listen(serverPort, function () {
-    console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
+    
   });*/
 });
 
 var getAllLatLong = function(){
   require("./models/region_lat_long").getStateLocation("Washington", function(loc) {
-    console.log("Washington " + JSON.stringify(loc));
+   
   });
   
   require("./models/region_lat_long").getCityLocation("Florida", "Miami", function(loc) {
-    console.log("Miami " + JSON.stringify(loc));
+   
   });
 };
 
