@@ -15,8 +15,7 @@ App.controller('TwitterInsightsController',
         		$scope.twitter_insights_griddata = data.data; 
           
            }). error(function(data, status) {
-        	   console.log("*****************twitterinsights error ****************");
-               console.log("usageerror:"+status);
+        	  
              
     });
 	
@@ -47,8 +46,7 @@ App.controller('TwitterInsightsController',
 	        		}
 		        	
 	           }). error(function(data, status) {
-	        	   console.log("*****************twitterinsights error ****************");
-	               console.log("usageerror:"+status);
+	        	
 	             
 	    });
 		
@@ -151,7 +149,7 @@ App.controller('TwitterInsightsController',
 		$scope.selectedRowIndex = -1;
 		
 		$scope.getTwitterInsightsData = function(id, index){
-			console.log("Clicked id ", id);
+			
 			$scope.loadTwitterInsightsData(id)
 			$scope.selectedRowIndex = index;
 		} 
@@ -263,7 +261,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 		colorCode = ['#5DADE2', '#808080']; // For Neutral
 	}
 	
-	console.log("-----PiChart ", divId );
+	
 	
 	var chart1 = new Highcharts.Chart({
         chart: {
@@ -331,7 +329,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
     	var div = '#'+divId;
     	
     	var position = $(div).position();
-    	//console.log('--X: ' + position.left + ", Y: " + position.top );
+    	
     	  
         var textX = position.left + (chart.plotWidth  * 0.4) - 4; // chart.plotLeft + (chart.plotWidth  * 0.5);
         var textY = position.top + (chart.plotHeight * 0.5); //chart.plotTop  + (chart.plotHeight * 0.5);
@@ -342,8 +340,7 @@ function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 	        $('#'+divId+'_text').append(span);
 	        	span = $('#'+divId+'_text');
 	        	
-	        	//console.log("X = "+(textX + (span.width() * -0.5)+30));
-	            //console.log("Y = "+(textY + (span.height() * -0.5)+2));
+	        	
 	            
 	        	span.css('left', textX + (span.width() * -0.5)+30);
 	        	span.css('top', textY + (span.height() * -0.5)+2);
