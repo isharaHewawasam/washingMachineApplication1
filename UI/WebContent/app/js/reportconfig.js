@@ -4,7 +4,7 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
 
        // alert('reports');
         $state.go('app.reports');
-        console.log("Reports page loaded");
+        
                                  };
       
             //api call for washing machine status
@@ -14,10 +14,10 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
                       Accept: "text/plain"}).success(function(data, status) {
                      $rootScope.isReportFiltering = false;
                                         $scope.r_griddata=data.data; 
-                                        // console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
+                                      
                                   
                    }). error(function(data, status) {
-                                        console.log("reporterror:"+status);
+                                       
                                        $rootScope.isReportFiltering = false;
                        
                    });
@@ -73,12 +73,12 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
      
              $scope.openReport = function () {
              $rootScope.isApplyFiterButton = true;
-             console.log(" for Reports ", $scope.isEngManager);
+           
              if($scope.isEngManager){
-                  console.log("if ture ");
+                 
              $state.go('app.engmanagerview');
              }else{
-                 console.log("else ture ");
+                
                 $state.go('app.singleview');
                   }
     }
