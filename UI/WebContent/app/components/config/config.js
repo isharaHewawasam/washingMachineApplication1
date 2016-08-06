@@ -11,7 +11,7 @@
 */
 var host;
 // if(location.hostname == 'localhost') {
-	host= 'api.us.apiconnect.ibmcloud.com/chinthakaak-dev/sb';
+	host= 'api.us.apiconnect.ibmcloud.com/org-bluevega-bluevega/bv';
 // } else {
 // 	host = location.hostname;
 // }
