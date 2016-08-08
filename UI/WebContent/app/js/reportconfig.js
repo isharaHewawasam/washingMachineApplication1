@@ -77,9 +77,15 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
              if($scope.isEngManager){
                  
              $state.go('app.engmanagerview');
+             $('#dashboardNav').addClass('sidebarItemActive');
+              $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+              $('#reportsNav').removeClass('sidebarItemActive');
              }else{
                 
                 $state.go('app.singleview');
+                $('#dashboardNav').addClass('sidebarItemActive');
+              $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+              $('#reportsNav').removeClass('sidebarItemActive');
                   }
     }
     var monthNames = [

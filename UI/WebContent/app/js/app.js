@@ -2253,13 +2253,17 @@ function renderMap(divId, salesData){
 	    }, {
 	        type: 'mapbubble',
 	        name: 'Sales Volume',
-	        color: '#4682B4',
+	        color: '#EEEEEE',  //'#4682B4',
 	        data: salesData,
-	        dataLabels: {
-	            enabled: true,
-	            format: '{point.z}',
-	            color:'#000000'
-	        }, tooltip: {
+	        marker: {
+				  fillOpacity:0.1
+			},
+	        //dataLabels: {
+	        //   enabled: true,
+	        //   format: '{point.z}',
+	        //    color:'#000000'
+	        //}, 
+			tooltip: {
 		        headerFormat: '',
 	            pointFormat: zipcode == true ? 
 	                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
@@ -2275,7 +2279,30 @@ function renderMap(divId, salesData){
     $('#map-container').highcharts('Map', {
       chart: {
           //renderTo: divId
-          
+    	  events: {
+				redraw: function() {
+					
+					var chart = this; 
+					var series = this.series;
+					var points = series[2].points;
+					var index = 0;
+					Highcharts.each(points, function (point) {
+						removePie(point);
+						drawPie(point, index++);
+						if(index==5) index = 0 ;
+					});
+				},
+              load: function () {
+					
+					var chart = this; //$('#container').highcharts();
+					var points = chart.series[2].points;
+					var index = 0;
+					Highcharts.each(points, function (point) {
+						drawPie(point, index++);
+						if(index==5) {index = 0} ;
+					});
+				}
+			}
       },
       credits:{
       	enabled:false
@@ -2302,7 +2329,7 @@ function renderMap(divId, salesData){
 	    
 	    plotOptions: {
 	        mapbubble:{
-	            minSize:20,
+	            minSize:25,
 	            maxSize:'12%'
 	        }
 	    },
@@ -2313,6 +2340,107 @@ function renderMap(divId, salesData){
 //});
 	
 	
+}
+
+function removePie(point) {
+	var ser = point.series;
+	var	trackball = point.pie1;
+	if (trackball) {
+		point.pie1 = trackball.destroy();
+	}
+	var	trackball = point.cir1;
+	if (trackball) {
+		point.cir1 = trackball.destroy();
+	}
+	var	trackball = point.text1;
+	if (trackball) {
+		point.text1 = trackball.destroy();
+	}
+	var	trackball = point.pie2;
+	if (trackball) {
+		point.pie2 = trackball.destroy();
+	}
+
+}
+
+
+function drawPie(point, index) {
+	
+	var series = point.series,
+	chart = series.chart,
+	pointX = point.plotX + series.xAxis.pos,
+	pointY = Highcharts.pick(point.plotClose, point.plotY) + series.yAxis.pos;
+	//console.log("-----pointX ", pointX+ " : " +pointY);
+	if(pointX && pointY) {
+		
+		var conn = point.z;
+		var uConn = point.unitsConnected;
+		var connPercentage = parseFloat((uConn/conn)*100).toFixed(2);
+	    var unconnPercentage = parseFloat(((conn-uConn)/conn)*100).toFixed(2);
+		
+	    //var outerRadius = 18;
+		//var innerRadius = 12;
+		var connStr = conn.toString();
+		var textLenth = connStr.length;
+		var innerRadius = 8 + (textLenth - 1)*3;
+		var outerRadius = innerRadius + 5  + (textLenth - 2);
+		
+		var startDegrees = -90;
+		var mathPI = Math.PI;
+		var percent = connPercentage;
+		var degrees = 360 * (percent / 100);
+		var endDegrees = startDegrees + degrees; 
+		// Degrees to radians
+		var startAngle = startDegrees / 180 * mathPI;
+		var endAngle = endDegrees / 180 * mathPI;
+		
+		point.pie1 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, -mathPI/2, mathPI+mathPI/2).attr({
+				fill: 'white', //'#555555',
+				stroke: 'black',
+				'stroke-width': 1,
+				zIndex: index + 3
+		}).add();
+		
+		point.pie2 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, startAngle, endAngle).attr({
+			fill: '#6CD153',
+			stroke: 'black',
+			'stroke-width': 1,
+			zIndex: index + 3
+		}).add();
+		point.cir1 = chart.renderer.circle(pointX, pointY-2, innerRadius).attr({
+			fill: 'black',
+			stroke: 'black',
+			'stroke-width': 1,
+			'stroke-linejoin': 'round',
+			zIndex: index + 3
+		}).add().on('mouseover', function () {
+			chart.tooltip.refresh(point);
+		}).on('mouseout', function () {
+			chart.tooltip.hide();
+		});
+		
+		point.text1 = chart.renderer.text(conn.toString(), pointX-(textLenth*4), pointY+2)
+			.attr({
+				//rotation: -25
+				zIndex: index + 4,
+				cursor: 'default'
+			})
+			.css({
+				color: 'white', //'#4572A7',
+				fontSize: '11px',
+				fontWeight: 'bold',
+				//textShadow: '0 0 6px contrast, 0 0 3px contrast',
+				fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif', // default font
+			})
+			.add().on('mouseover', function () {
+				chart.tooltip.refresh(point);
+			}).on('mouseout', function () {
+				chart.tooltip.hide();
+			});
+		
+		
+		
+	}
 }
 
 function renderPieChart(divId, insightsData, chartTitle){
