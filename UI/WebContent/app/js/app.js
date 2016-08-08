@@ -2253,10 +2253,10 @@ function renderMap(divId, salesData){
 	    }, {
 	        type: 'mapbubble',
 	        name: 'Sales Volume',
-	        color: '#EEEEEE',  //'#4682B4',
+	        color: '#4682B4',  //'#4682B4',
 	        data: salesData,
 	        marker: {
-				  fillOpacity:0.1
+				  fillOpacity:0.0
 			},
 	        //dataLabels: {
 	        //   enabled: true,
@@ -2329,8 +2329,8 @@ function renderMap(divId, salesData){
 	    
 	    plotOptions: {
 	        mapbubble:{
-	            minSize:25,
-	            maxSize:'12%'
+	            minSize:0,
+	            maxSize:0
 	        }
 	    },
 	    
