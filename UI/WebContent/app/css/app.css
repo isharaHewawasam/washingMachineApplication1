@@ -6997,9 +6997,9 @@ body {
   }
   .content-wrapper > h3,
   .content-wrapper > .content-heading {
-    margin: -20px;
-    margin-bottom: 20px;
-    padding: 20px;
+    padding-top: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 0px;
   }
   .content-wrapper > button,
   .content-wrapper > .btn {
