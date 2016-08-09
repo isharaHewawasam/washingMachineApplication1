@@ -1,0 +1,46 @@
+Express server listening on port 3000
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
