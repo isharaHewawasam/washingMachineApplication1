@@ -1,4 +1,3 @@
-
 App.controller('TwitterInsightsController', 
 		['$rootScope', '$scope', '$state', '$http', '$localStorage', "iot.config.ApiClient",
                  function($rootScope, $scope, $state, $http, $localStorage, configApiClient){
@@ -15,9 +14,7 @@ App.controller('TwitterInsightsController',
         		$scope.twitter_insights_griddata = data.data; 
           
            }). error(function(data, status) {
-        	  
-             
-    });
+      });
 	
 	$scope.editTwitterInsights = function(make, model) {
 		$localStorage.showTwitterInnerLint = true;
@@ -29,7 +26,7 @@ App.controller('TwitterInsightsController',
 	};
 	
 	$scope.deleteTwitterInsights = function() {
-			
+		alert("deleteTwitterInsights");
 	};
 	
 	$scope.tweetsData = {};
@@ -65,7 +62,7 @@ App.controller('TwitterInsightsController',
 		return (color=='red'? 'twitter_percentage twitter_arrow_red' : 'twitter_percentage twitter_arrow_green');
 	}
 	
-	$scope.maximizeGrid=function(){
+	$scope.maximizeGrid=function(){		
 		var gridNormal = $("#gridNormal").clone();
 		
 		$("#gridMax").empty();
@@ -90,7 +87,6 @@ App.controller('TwitterInsightsController',
 	
 	  
 	$scope.getTwitterData = function(divId) {
-		  
 		  var data = [
 		  			[1247529600000,20.32],
 		  			[1247616000000,20.98],

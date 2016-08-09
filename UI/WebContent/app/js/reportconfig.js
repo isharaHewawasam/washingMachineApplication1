@@ -1,8 +1,9 @@
 App.controller('reportController',['$rootScope','$scope','$state','$http','iot.config.ApiClient','$window',function($rootScope,$scope,$state,$http,configApiClient,$window){
-      $scope.getReports=function(){
-        $rootScope.isReportFiltering = true;
-
-       // alert('reports');
+   
+	// Route to reports url
+	$scope.getReports=function(){
+        $rootScope.isReportFiltering = true;       
+       
         $state.go('app.reports');
         
                                  };
@@ -24,10 +25,10 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
 
                   
 
-          //  download report
+          //  Download Washing Machine Status report
             $scope.downloadReport=function(){
                 html2canvas(document.getElementById('gridHideNodata'), {
-                onrendered: function (canvas) {
+                onrendered: function (canvas) {                	 
                     var data = canvas.toDataURL();
                     var docDefinition = {
                         content: [{
@@ -61,19 +62,16 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
             //                                           }
             //           });
 
-
-
-
-              //session handling
+              
              var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
              var rolename = loginCredentails.Role;
              var roleKey   = loginCredentails.roleKey;
     
              $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
      
+          //Session handling- used to display respective views for managers and return back to respective Dashboard pages.
              $scope.openReport = function () {
-             $rootScope.isApplyFiterButton = true;
-           
+             $rootScope.isApplyFiterButton = true;            
              if($scope.isEngManager){
                  
              $state.go('app.engmanagerview');
