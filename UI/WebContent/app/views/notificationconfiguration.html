@@ -9,10 +9,10 @@
  		#dropdown{
          	color: blue;
          	border:0;
-         	  } 
-		
+         	  }
+
    </style>
-      
+
       Application Dashboard Last Updated {{currentDate}}
    </div>
 
@@ -25,9 +25,9 @@
 			<a ng-click="loadTwitterInsights()" ng-if="showTwitterInsightsLink"
 			style="font-size: 14px; font: Roboto Light; color: #0F64BC;">
 			Twitter Insights</a>
-			<span ng-if="showTwitterInsightsLink"	
+			<span ng-if="showTwitterInsightsLink"
 			style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
-			></span> 
+			></span>
 			Notification Configuration
 	</div>
 
@@ -36,32 +36,27 @@
 
 <div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" >
 
-	<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
 
-	<!-- <div class="panel-body" style="padding: 0px;"> -->
-	<!--  <form role="form" class="form-inline"> -->
-	<!-- <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px "> -->
 
 
 
 	<div  class=" col-lg-12"  id="filterDivId" style=" margin-left: inherit">
 
 		<div class="col-lg-12 filterItem notificationHeader">
-			
+
 			Notification Configuration
 
 		</div>
-		
+
 
 	</div>
 
-	<!-- </fieldset> -->
+
 
 </div>
 
 
-<!-- </form>    -->
-<!-- </div> -->
+
 
 <div class="notificationContainer">
 
@@ -69,15 +64,15 @@
 		<div class="notificationTitleDiv">
 			Set up notification tolerances
 		</div>
-	
-		<!-- END Twitter Insights Chart -->
-	
-	
-	
 
-	
+		<!-- END Twitter Insights Chart -->
+
+
+
+
+
 		<!-- START Eng Manager Contents -->
-		
+
 		<div class="notificationBodyDiv" ng-if="isEngManager">
 			<div class="row" style="padding-left: 10px; padding-top: 20px;">
 			<div class="col-lg-5">
@@ -91,9 +86,9 @@
 				</select>
 				</div>
 				<div class="col-lg-5">
-				
+
 				</div>
-				<div class="col-lg-12">&nbsp;</div>	
+				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-5">
 					Model
 				</div>
@@ -105,12 +100,12 @@
 				</select>
 				</div>
 				<div class="col-lg-5">
-				
+
 				</div>
-				<div class="col-lg-12">&nbsp;</div>	
+				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-5">
 					Show notification when number of wash errors increase by (x%) in last 4 weeks
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control"
 						ng-model="errorInc.value">
@@ -120,12 +115,12 @@
 					</select>
 				</div>
 				<div class="col-lg-5">
-				
+
 				</div>
 				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-5">
 					Show notification when number of wash errors decrease by (x%) in last 4 weeks
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control"
 						ng-model="errorDec.value">
@@ -135,27 +130,27 @@
 					</select>
 				</div>
 				<div class="col-lg-5">
-				
+
 				</div>
 			</div>
-			
+
 			<div style="width:95%; position: absolute; bottom: 30px; text-align: right;">
 				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
         		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
-        	
+
 		</div>
-	
+
 		<!-- END Eng Manager Contents -->
-		
-		
-		
+
+
+
 		<!-- START Mar Manager Contents -->
 		<div class="notificationBodyDiv" ng-if="!isEngManager">
 			<div class="row" style="padding-left: 10px; padding-top: 20px;">
 				<div class="col-lg-6">
 					Show notification when Twitter negative sentiment score is more by (x%) for baseline value (y%)
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control" ng-model="notificationConfig.selectedNegativeScore">
 						<option class="option-text-style" value="" disabled selected>Score
@@ -171,11 +166,11 @@
 					</select>
 				</div>
 				<div class="col-lg-2"></div>
-				
+
 				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-6">
 					Show notification when Twitter positive sentiment score is more by (x%) for baseline value (y%)
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control" ng-model="notificationConfig.selectedPositiveScore">
 						<option class="option-text-style" value="" disabled selected>Score
@@ -191,12 +186,12 @@
 					</select>
 				</div>
 				<div class="col-lg-2">
-					
+
 				</div>
 				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-6">
 					Show notification when connected washing machines are increased by (x%) in last 4 weeks
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control"
 						ng-model="notificationConfig.selectedIncreasedTolernce">
@@ -206,12 +201,12 @@
 					</select>
 				</div>
 				<div class="col-lg-4">
-				
+
 				</div>
 				<div class="col-lg-12">&nbsp;</div>
 				<div class="col-lg-6">
 					Show notification when connected washing machines are lower by (x%) in last 4 weeks
-				</div>		
+				</div>
 				<div class="col-lg-2">
 					<select class="form-control"
 						ng-model="notificationConfig.selectedLowerTolernce">
@@ -221,17 +216,17 @@
 					</select>
 				</div>
 				<div class="col-lg-4">
-					
+
 				</div>
 			</div>
-			
+
 			<div style="width:95%; position: absolute; bottom: 30px; text-align: right">
 				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()">Save</button>
         		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()">Cancel</button>
         	</div>
 		</div>
-	
+
 		<!-- END Mar Manager Contents -->
-		
+
 
 </div>
