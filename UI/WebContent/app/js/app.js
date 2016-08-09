@@ -28,10 +28,9 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
                     $templateCache.remove(toState.templateUrl);
                   }
               });*/
+
               
-              /**Scope Globals **/
-        
-           
+
               $rootScope.app = {
                 name: 'Angle',
                 description: 'Angular Bootstrap Admin Template',
@@ -66,9 +65,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
    You may have to set <base> tag in index and a routing configuration in your server **/
  
   $locationProvider.html5Mode(false);
-  
-  /** default route **/
- 
+
   $urlRouterProvider.otherwise('/page/login');
 
   $stateProvider
@@ -1365,7 +1362,7 @@ $rootScope.isApplyFiterButton = true;
 
 
 
-	 //sanket changes
+
 
 	 $http({url:configApiClient.baseUrl + 'config/sales/years',
 	     	method: "get",
