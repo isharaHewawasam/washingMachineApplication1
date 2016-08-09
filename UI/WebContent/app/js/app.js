@@ -1,33 +1,33 @@
 /*!
- * 
+ *
  * Angle - Bootstrap Admin App + AngularJS
- * 
+ *
  * Author: @themicon_co
  * Website: http://themicon.co
  * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
- * 
+ *
  */
 
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
-//  var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+
 
 var login = angular.module('myLoginCheck',[]).
 factory('$logincheck', function(){
   return function(isLogin){
-	  
+
 	  if(isLogin) return true;
-	  return false;  
+	  return false;
   };
-  
+
 });
 
-// Using my renderMap function to zoom the map
+
 var salesDataJoin;
 
 // APP START
-// ----------------------------------- 
+// -----------------------------------
 var Role;
 var Name;
 var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
@@ -48,7 +48,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               });*/
 
               // Scope Globals
-              // ----------------------------------- 
+              // -----------------------------------
               $rootScope.app = {
                 name: 'Angle',
                 description: 'Angular Bootstrap Admin Template',
@@ -74,15 +74,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 
           }]);
 
-/**=========================================================
-*
-*
-===========================================================*/
-//App.value('filterIcons', { value: []} );
-/**=========================================================
- * Module: config.js
- * App routes and resources configuration
- =========================================================*/
+
 
 App.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider',
 function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
@@ -95,9 +87,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   // default route
   //$urlRouterProvider.otherwise('/app/singleview');
   $urlRouterProvider.otherwise('/page/login');
-  // 
-  // Application Routes
-  // -----------------------------------   
+
   $stateProvider
     .state('app', {
         url: '/app',
@@ -106,7 +96,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         controller: 'AppController',
         resolve: helper.resolveFor('modernizr', 'icons')
     })
-     
+
     .state('page', {
         url: '/page',
         templateUrl: 'app/views/page.html',
@@ -123,14 +113,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl:helper.basepath('Login.html'),
         data:{title: 'IoT for Electronics - Login'}
         })
-    
-    /*.state('app.login', {
-        url: '/login',
-        title: "Login",
-        controller: 'LoginFormController',
-        templateUrl:helper.basepath('Login.html')
-        //templateUrl: 'app/pages/login.html'
-    })*/
+
+
     .state('app.singleview', {
         url: '/singleview',
         title: 'Single View',
@@ -138,7 +122,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('singleview.html'),
         data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
     })
-    
+
     .state('app.engmanagerview', {
         url: '/engmanagerview',
         title: 'engmanagerview',
@@ -162,9 +146,9 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.submenu', {
         url: '/submenu',
         title: 'Submenu',
-       
+
         templateUrl: helper.basepath('submenu.html')
-    })   
+    })
     .state('app.twitterinsights', {
         url: '/twitterinsights',
         title: 'Twitter Insights View',
@@ -179,23 +163,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('notificationconfiguration.html'),
         data:{title: 'Notification Configuration'}
     })
-    
-    // 
-    // CUSTOM RESOLVES
-    //   Add your own resolves properties
-    //   following this object extend
-    //   method
-    // ----------------------------------- 
-    // .state('app.someroute', {
-    //   url: '/some_url',
-    //   templateUrl: 'path_to_template.html',
-    //   controller: 'someController',
-    //   resolve: angular.extend(
-    //     helper.resolveFor(), {
-    //     // YOUR RESOLVES GO HERE
-    //     }
-    //   )
-    // })
+
+
     ;
 
 
@@ -282,20 +251,20 @@ App
     },
     // Angular based script (use the right module name)
     modules: [
-             	
-              
-              
-              
-      // { name: 'toaster', files: ['vendor/angularjs-toaster/toaster.js','vendor/angularjs-toaster/toaster.css'] }
+
+
+
+
+
     ]
 
   })
 ;
 
 App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
-	//alert("loaded");
-	
-	
+
+
+
 	$rootScope.credentials = {};
 	$scope.postForm = function() {
     $rootScope.isApplyFiterButton = true;
@@ -327,37 +296,9 @@ App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope',
                 console.log("error in login :", data);
                 $scope.errorMsg = 'Network issue, please try after some time.';
          });
-		
-		
-//	        $window.sessionStorage.isLoggedIn = true;
-//alert("loaded");
-//$state.go('app.login');
 
-/*	  // bind here all data from the form
- $scope.account = {};
-	  // place the message if something goes wrong
-	  $scope.authMsg = '';
 
-	  $scope.login = function() {
-	    $scope.authMsg = '';
 
-	    $http
-	      .post('api/account/login', {email: $scope.account.email, password: $scope.account.password})
-	      .then(function(response) {
-	        // assumes if ok, response is an object with some data, if not, a string with error
-	        // customize according to your api
-	        if ( !response.account ) {
-	          $scope.authMsg = 'Incorrect credentials.';
-	        }else{
-	          $state.go('app.dashboard');
-	        }
-	      }, function(x) {
-	        $scope.authMsg = 'Server Request Error';
-	      });
-	  };*/
-	//  $state.go('app.singleview');
-
-	 // app.login
 	}
 	}]);
 
@@ -369,24 +310,24 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	$scope.names=loginCredentails.Name;
 	$scope.notificationAlertFlag = false;
 	$scope.roleKey=loginCredentails.roleKey;
-	
+
 	$scope.getNewNotificationCount = function() {
-		
-		$http({url:configApiClient.baseUrl + 'notifications/notification-alert', 
+
+		$http({url:configApiClient.baseUrl + 'notifications/notification-alert',
 		     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-		     
+
 		    $scope.notificationCount = data[0].notification_count;
 		 	$scope.notificationAlertFlag = true;
-					           
+
 		}). error(function(data, status) {
-		       
-		});	
+
+		});
 	}
-	
+
 	$scope.clearNotificationCount = function() {
-    
+
 		var rolename = $scope.rolename;
-	    
+
 	    if((window.location.hash=="#/app/twitterinsights"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/notificationconf"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/reports"&&rolename=="Marketing Manager")){
 	    	$rootScope.isApplyFiterButton = true;
 	    	$state.go('app.singleview');
@@ -399,18 +340,18 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	      $scope.notificationAlertFlag = false;
 	    }
 	}
-	
-	
+
+
 	$scope.logOut=function(){
 		delete $window.sessionStorage.loginCredentails;
 		$state.go('page.login');
  	}
-	
+
 	$scope.loadNotificationConf = function() {
 		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
-	
+
 }]);
 /**=========================================================
  * Module: main.js
@@ -426,7 +367,7 @@ App.controller('AppController',
     $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout == 'app-h') ;
 
     // Loading bar transition
-    // ----------------------------------- 
+
     var thBar;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if($('.wrapper > section').length) // check if bar container exists
@@ -449,7 +390,7 @@ App.controller('AppController',
     // Hook error
     $rootScope.$on('$stateChangeError',
       function(event, toState, toParams, fromState, fromParams, error){
-      
+
       });
     // Hook success
     $rootScope.$on('$stateChangeSuccess',
@@ -460,11 +401,7 @@ App.controller('AppController',
         $rootScope.currTitle = $state.current.title;
       });
 
-    // iPad may presents ghost click issues
-    // if( ! browser.ipad )
-      // FastClick.attach(document.body);
 
-    // Close submenu when sidebar change from collapsed to normal
     $rootScope.$watch('app.layout.isCollapsed', function(newValue, oldValue) {
       if( newValue === false )
         $rootScope.$broadcast('closeSidebarMenu');
@@ -480,13 +417,13 @@ App.controller('AppController',
       $localStorage.layout = $scope.app.layout;
     }, true);
 
-    
+
     // Allows to use branding color with interpolation
-    // {{ colorByName('primary') }}
+
     $scope.colorByName = colors.byName;
 
     // Internationalization
-    // ----------------------
+
 
     $scope.language = {
       // Handles language dropdown
@@ -522,9 +459,9 @@ App.controller('AppController',
       $event.stopPropagation();
     };
 
-    
-   // $state.go('app.singleview');
-    
+
+
+
 }]);
 
 
@@ -534,23 +471,21 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
 	  // Define global instance we'll use to destroy later
 	  var dtInstance1;
-	 
 
-	  
-	  
+
+
+
 	  $timeout(function(){
 
 	    if ( ! $.fn.dataTable ) return;
 
-	    //
-	    // Zero configuration
-	    // 
+
 
 	    dtInstance1 = $('#datatable1').dataTable({
-	    	
-	    	
+
+
 	        'paging':   true,  // Table pagination
-	        'ordering': true,  // Column ordering 
+	        'ordering': true,  // Column ordering
 	        'info':     true,  // Bottom left status text
 	        // Text translation options
 	        // Note the required keywords between underscores (e.g _MENU_)
@@ -562,19 +497,19 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 	            infoEmpty:    'No records available',
 	            infoFiltered: '(filtered from _MAX_ total records)'
 	        }
-	    
+
 	    });
 
 
 
 	  });
-	  
-	  // When scope is destroyed we unload all DT instances 
+
+	  // When scope is destroyed we unload all DT instances
 	  // Also ColVis requires special attention since it attaches
 	  // elements to body and will not be removed after unload DT
 	  $scope.$on('$destroy', function(){
 	    dtInstance1.fnDestroy();
-	  
+
 	    $('[class*=ColVis]').remove();
 	  });
 
@@ -582,228 +517,228 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
 
 App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $rootScope, $timeout, $http, $state, configApiClient) {
-	
+
 		$scope.isLoading = false;
 		$scope.isError = false;
 		$scope.isNoDataDB = false;
 		$scope.msg1 = "Loading.....Please wait";
 		$scope.msg2="No data Found";
 		$scope.msg3 = "Service is Unavailable";
-    
+
 	  $scope.getMostFaults = function(divId) {
 		  	$scope.isLoading = true;
 	        $scope.msg = $scope.msg1;
-		  
-		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models', 
+
+		  	$http({url:configApiClient.baseUrl + 'insights/most-fault-models',
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isLoading = false;
-			    	 if (data && data.length != 0) {			    	 
-				               
+			    	 if (data && data.length != 0) {
+
 				    	 var mostFaultDataStr = JSON.stringify(data);
-						  
+
 				    	 mostFaultDataStr = mostFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 				    	 mostFaultDataStr = mostFaultDataStr.replace(/"Model":/g, '"name":');
-								
+
 						 data = JSON.parse(mostFaultDataStr);
-							 
-						 renderPieChart(divId, data, 'Most Fault');	
+
+						 renderPieChart(divId, data, 'Most Fault');
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 					$scope.isLoading = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
-			});			 
+			});
 	  };
-	  
+
 	  $scope.getLeastFaults = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models', 
+
+		  $http({url:configApiClient.baseUrl + 'insights/least-fault-models',
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isLoading = false;
-			    	 if (data && data.length != 0) {				    	       
+			    	 if (data && data.length != 0) {
 				    	 var leastFaultDataStr = JSON.stringify(data);
-						  
+
 				    	 leastFaultDataStr = leastFaultDataStr.replace(/"no_of_faults":/g, '"y":');
 				    	 leastFaultDataStr = leastFaultDataStr.replace(/"Model":/g, '"name":');
-								
+
 						 data = JSON.parse(leastFaultDataStr);
-							 
-						 renderPieChart(divId, data, 'Least Fault');	
+
+						 renderPieChart(divId, data, 'Least Fault');
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
 			    	 }
-						           
-			}). error(function(data, status) {
-				$scope.isLoading = false;
-				$scope.isError = true;
-				$scope.msg = $scope.msg3;
-			});			  
-	  };
-	  
-	  $scope.getCommonFaults = function(divId) {
-		  $scope.isLoading = true;
-		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 $scope.isLoading = false;	
-			    	 if (data && data.length != 0) {	
-				    	 var commonFaultDataStr = JSON.stringify(data.faults);
-				    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
-				    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
-								
-						 data = JSON.parse(commonFaultDataStr);
-							 
-						 renderPieChart(divId, data, 'Common Fault');	
-			    	 } else {
-			    		 $scope.isNoDataDB = true;
-			    		 $scope.msg = $scope.msg2;
-			    	 }
-						           
-			}). error(function(data, status) {
-				$scope.isLoading = false;
-				$scope.isError = true;
-				$scope.msg = $scope.msg3;
-			});	
-	  };
-	   
-	  $scope.getMostUsedModel = function(divId) {
-		  $scope.isLoading = true;
-		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/most-used-products', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 $scope.isLoading = false;
-			    	 if (data.data && data.data.length != 0) {     
-				    	 var mostUsedProductDataStr = JSON.stringify(data.data);
-						  
-				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
-				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
-								
-						 data = JSON.parse(mostUsedProductDataStr);
-							 
-						 renderPieChart(divId, data, 'Most Used Models');	
-			    	 } else {
-			    		 $scope.isNoDataDB = true;
-			    		 $scope.msg = $scope.msg2;
-			    	 }
-						           
-			}). error(function(data, status) {
-				$scope.isLoading = false;
-				$scope.isError = true;
-				$scope.msg = $scope.msg3;
-			});		  		  
-	  };
-	  
-	  $scope.getMostUsedCycles = function(divId) {
-		  $scope.isLoading = true;
-		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 $scope.isLoading = false;
-			    	 if (data && data.length != 0) {				    	 
-				               
-				    	 var mostUsedCyclesDataStr = JSON.stringify(data);
-						  
-				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"cyclesAndCount":/g, '"y":');
-				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"washCycles":/g, '"name":');
-								
-						 data = JSON.parse(mostUsedCyclesDataStr);
-							 
-						 renderPieChart(divId, data, 'Most Used Wash Cycles');	
-			    	 } else {
-			    		 $scope.isNoDataDB = true;
-			    		 $scope.msg = $scope.msg2;
-			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
 			});
 	  };
-	  
-	  $scope.getNotConnectedMachines = function(divId) {
+
+	  $scope.getCommonFaults = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/disconnected', 
+
+		  $http({url:configApiClient.baseUrl + 'insights/most-common-fault',
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isLoading = false;
-			    	 
-			    	 if (data && data.length != 0) {  
-			    		 
-			    		 var total = 0;
-			             for(var i=0; i<data.length; i++){
-			                    total += data[i].unitsDisconnected;
-			             }
-			    		 
-			             if (total > 0)	{		             
-					    	 var notConnectedDataStr = JSON.stringify(data);
-							  
-					    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
-					    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
-									
-							 data = JSON.parse(notConnectedDataStr);
-								 
-							 renderPieChart(divId, data, 'Not Connected Machines');
-			    	 	} else {
-			    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
-			    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
-			    	 	} 
+			    	 if (data && data.length != 0) {
+				    	 var commonFaultDataStr = JSON.stringify(data.faults);
+				    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
+				    	 commonFaultDataStr = commonFaultDataStr.replace(/"Fault":/g, '"name":');
+
+						 data = JSON.parse(commonFaultDataStr);
+
+						 renderPieChart(divId, data, 'Common Fault');
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			});	
+			});
 	  };
-	  
-	  $scope.getTwitterHandles = function(divId){
-		  
+
+	  $scope.getMostUsedModel = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
-		  
-		  $http({url:configApiClient.baseUrl + 'insights/twitter-handles', 
+
+		  $http({url:configApiClient.baseUrl + 'insights/most-used-products',
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isLoading = false;
-			    	 if (data && data.length != 0) {        
+			    	 if (data.data && data.data.length != 0) {
+				    	 var mostUsedProductDataStr = JSON.stringify(data.data);
+
+				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
+				    	 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
+
+						 data = JSON.parse(mostUsedProductDataStr);
+
+						 renderPieChart(divId, data, 'Most Used Models');
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
+
+			}). error(function(data, status) {
+				$scope.isLoading = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+			});
+	  };
+
+	  $scope.getMostUsedCycles = function(divId) {
+		  $scope.isLoading = true;
+		  $scope.msg = $scope.msg1;
+
+		  $http({url:configApiClient.baseUrl + 'insights/most-used-wash-cycles',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isLoading = false;
+			    	 if (data && data.length != 0) {
+
+				    	 var mostUsedCyclesDataStr = JSON.stringify(data);
+
+				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"cyclesAndCount":/g, '"y":');
+				    	 mostUsedCyclesDataStr = mostUsedCyclesDataStr.replace(/"washCycles":/g, '"name":');
+
+						 data = JSON.parse(mostUsedCyclesDataStr);
+
+						 renderPieChart(divId, data, 'Most Used Wash Cycles');
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
+
+			}). error(function(data, status) {
+				$scope.isLoading = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+			});
+	  };
+
+	  $scope.getNotConnectedMachines = function(divId) {
+		  $scope.isLoading = true;
+		  $scope.msg = $scope.msg1;
+
+		  $http({url:configApiClient.baseUrl + 'insights/disconnected',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isLoading = false;
+
+			    	 if (data && data.length != 0) {
+
+			    		 var total = 0;
+			             for(var i=0; i<data.length; i++){
+			                    total += data[i].unitsDisconnected;
+			             }
+
+			             if (total > 0)	{
+					    	 var notConnectedDataStr = JSON.stringify(data);
+
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"unitsDisconnected":/g, '"y":');
+					    	 notConnectedDataStr = notConnectedDataStr.replace(/"state":/g, '"name":');
+
+							 data = JSON.parse(notConnectedDataStr);
+
+							 renderPieChart(divId, data, 'Not Connected Machines');
+			    	 	} else {
+			    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
+			    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
+			    	 	}
+			    	 } else {
+			    		 $scope.isNoDataDB = true;
+			    		 $scope.msg = $scope.msg2;
+			    	 }
+
+			}). error(function(data, status) {
+				$scope.isLoading = false;
+				$scope.isError = true;
+				$scope.msg = $scope.msg3;
+			});
+	  };
+
+	  $scope.getTwitterHandles = function(divId){
+
+		  $scope.isLoading = true;
+		  $scope.msg = $scope.msg1;
+
+		  $http({url:configApiClient.baseUrl + 'insights/twitter-handles',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+			    	 $scope.isLoading = false;
+			    	 if (data && data.length != 0) {
 				    	 var twitterDataStr = JSON.stringify(data);
-						  
+
 				    	 twitterDataStr = twitterDataStr.replace(/"count":/g, '"y":');
 				    	 twitterDataStr = twitterDataStr.replace(/"preferenceName":/g, '"name":');
-								
+
 						 data = JSON.parse(twitterDataStr);
-							 
+
 						 renderPieChart(divId, data, 'Twitter Handles');
 			    	 } else {
 			    		 $scope.isNoDataDB = true;
 			    		 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
 			});
 	  };
-	  
+
 	  $scope.loadTwitterinsights = function() {
 		  $state.go('app.twitterinsights');
 	  };
-	  
+
 	}]).factory('datasource', [
 	    '$log', '$timeout', function(console, $timeout) {
 	        'use strict';
@@ -826,11 +761,11 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 
 
 App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
-	
+
 		//Clear filter on dashboard load
 		$rootScope.search={};
 	    $rootScope.filterIcons=[];
-	
+
 		var monthNames = [
 		  "January", "February", "March",
 		  "April", "May", "June", "July",
@@ -843,77 +778,74 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 		var monthIndex = date.getMonth();
 		var year = date.getFullYear();
 
-   
-   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
-	
-	//$scope.searchButtonText = "Apply Filter";
-  //$scope.test = false;
 
-//	$scope.isDisabled = false;
-	
+   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
+
+
+
 	$scope.sidebarObj={};
 	$scope.sidebarObj.selectedMake="";
 	$scope.sidebarObj.selectedModel="";
 	$scope.sidebarObj.selectedSKU="";
 	$scope.sidebarObj.mfgStartDate="";
 	$scope.sidebarObj.mfgEndDate="";
-	
-	
-	
-	
+
+
+
+
 	$scope.region=[];
 	$scope.timescale=[];
-	
-$rootScope.setUsageObjectFromSidebar=function(obj){
+
+  $rootScope.setUsageObjectFromSidebar=function(obj){
 		$scope.sidebarObj=obj;
-		$scope.usagedata={  
-				   "productAttrs":{  
+		$scope.usagedata={
+				   "productAttrs":{
 					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
 					      "models":[{"value":$scope.sidebarObj.selectedModel}],
 					      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
 					      "mfg_date": {
-					          "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
-					          "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+					          "start_date": $scope.sidebarObj.mfgStartDate,
+					          "end_date": $scope.sidebarObj.mfgEndDate
 					        }
 					   },
-					   "timescale":{  
-					      "years":[  
-					         {  
+					   "timescale":{
+					      "years":[
+					         {
 					            "value":parseInt($scope.timescale.years)
 					         }
 					      ],
-					      "quarters":[  
-					         {  
+					      "quarters":[
+					         {
 					            "value":parseInt($scope.timescale.quarters)
 					         }
 					      ],
-					      "months":[  
-					         {  
+					      "months":[
+					         {
 					            "value":parseInt($scope.timescale.months)
 					         }
 					      ],
-					      "date":{  
+					      "date":{
 					         "start_date":"01/01/2015",
 					         "end_date":"01/01/2016"
 					      },
-					      "relative":{  
+					      "relative":{
 					         "unit":"2",
 					         "value":0
 					      }
 					   },
-					   "region":{  
-					      "states":[  
-					         {  
+					   "region":{
+					      "states":[
+					         {
 					            "value":$scope.region.states
 					         }
 					      ],
-					      "cities":[  
-					         {  
+					      "cities":[
+					         {
 					            "value":$scope.region.cities
 					         }
 					      ],
-					      "zip_codes":[  
-					         {  
+					      "zip_codes":[
+					         {
 					            "value":$scope.region.zip_codes
 					         }
 					      ]
@@ -922,26 +854,26 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 					   "age": [{"value": $scope.sidebarObj.ageGroup}],
 					   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
 					};
-		
+
 		$rootScope.applyFilterBoolean=true;
-		// This method is already calling from tryit() 
-		//$rootScope.setUsageData($scope.usagedata);
-		
+		// This method is already calling from tryit()
+
+
 	}
 
-	//for reports section 
+	//for reports section
 	$scope.myDate = new Date();
-	
+
 	$scope.minDate = new Date(
 	$scope.myDate.getFullYear(),
 	$scope.myDate.getMonth() - 2,
 	$scope.myDate.getDate());
-	
+
 	$scope.maxDate = new Date(
 	$scope.myDate.getFullYear(),
 	$scope.myDate.getMonth() + 2,
 	$scope.myDate.getDate());
-	
+
 	$scope.myDate1 = new Date();
 
 	$scope.minDate1 = new Date(
@@ -954,62 +886,61 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	$scope.myDate1.getMonth() + 2,
 	$scope.myDate1.getDate());
 	//for reports section -finish
-	
+
 	//start report apply filter
 	$scope.iniReport=function(){
 
-	//$scope.searchButtonText = "Filtering...";  
+
 	    $scope.isReportFiltering = true;
-	    //$scope.test = true;
 	    $rootScope.applyFilterBoolean=true;
-	    $scope.usagedata={  
-	       "productAttrs":{  
+	    $scope.usagedata={
+	       "productAttrs":{
 	         "makes":[{"value":$scope.sidebarObj.selectedMake}],
 	            "models":[{"value":$scope.sidebarObj.selectedModel}],
 	            "skus":[{"value":$scope.sidebarObj.selectedSKU}],
 	            "mfg_date": {
-	                "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
-	                "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+	                "start_date": $scope.sidebarObj.mfgStartDate,
+	                "end_date": $scope.sidebarObj.mfgEndDate
 	              }
 	         },
-	        "timescale":{  
-	            "years":[  
-	               {  
+	        "timescale":{
+	            "years":[
+	               {
 	                  "value":parseInt($scope.timescale.years)
 	               }
 	            ],
-	            "quarters":[  
-	               {  
+	            "quarters":[
+	               {
 	                  "value":parseInt($scope.timescale.quarters)
 	               }
 	            ],
-	            "months":[  
-	               {  
+	            "months":[
+	               {
 	                  "value":parseInt($scope.timescale.months)
 	               }
 	            ],
-	            "date":{  
+	            "date":{
 	               "start_date":"01/01/2015",
 	               "end_date":"01/01/2016"
 	            },
-	            "relative":{  
+	            "relative":{
 	               "unit":"2",
 	               "value":0
 	            }
 	         },
-	         "region":{  
-	            "states":[  
-	               {  
+	         "region":{
+	            "states":[
+	               {
 	                  "value":$scope.region.states
 	               }
 	            ],
-	            "cities":[  
-	               {  
+	            "cities":[
+	               {
 	                  "value":$scope.region.cities
 	               }
 	            ],
-	            "zip_codes":[  
-	               {  
+	            "zip_codes":[
+	               {
 	                  "value":$scope.region.zip_codes
 	               }
 	            ]
@@ -1018,16 +949,16 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	         "age": [{"value": $scope.sidebarObj.ageGroup}],
 	         "family_members_count": [{"value": $scope.sidebarObj.occupation}]
 	    };
-	  
+
 
 	    if($scope.region.states==undefined || $scope.region.states=="")
 	    {
-	    
+
 	    $scope.usagedata.region.states=[];
 	    }
 	    if($scope.region.cities==undefined || $scope.region.cities=="")
 	    {
-	      
+
 	      $scope.usagedata.region.cities=[];
 	    }
 	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
@@ -1038,12 +969,12 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
 	    {
 	      $scope.usagedata.timescale.years=[];
-	    } 
+	    }
 	    if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
 	    {
 	      $scope.usagedata.timescale.quarters=[];
 	    }
-	    
+
 	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
 	    {
 	      $scope.usagedata.timescale.months=[];
@@ -1080,92 +1011,86 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	    {
 	      $scope.usagedata.family_members_count=[];
 	    }
-	 
+
 	   $rootScope.mkt_griddata_filter=[];
 	    $scope.isNoDataFound = false;
 	    $scope.isError =  false;
 	    $scope.isOnFilter = false;
 
-	    
-	   
+
+
 	    //for grid mkt_mgr
-	      $http({url:configApiClient.baseUrl +  'usage', 
+	      $http({url:configApiClient.baseUrl +  'usage',
 	            method: "POST",
 	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
-	            
+
 	           }).success(function(data, status) {
-	             //$scope.test = false;
-	                //$scope.searchButtonText = "Apply filter";
-	           
+
+
 	             if(!data || data.data.length === 0){
 	                $rootScope.isOnFilter=true;
 	                $rootScope.isOnLoad=false;
-	                //$("#gridMax #gridMaxImg").addClass("hidden");
+
 	                }
-	             else {  
-	                     
-	                $rootScope.mkt_griddata_filter=data.data; 
+	             else {
+
+	                $rootScope.mkt_griddata_filter=data.data;
 	                $rootScope.isOnFilter=true;
 	                $rootScope.isOnLoad=false;
                   $scope.isReportFiltering = false;
 	              }
 	           }). error(function(data, status) {
-	             //$scope.test = false;
-	                //$scope.searchButtonText = "Apply filter";
-	           
+
 	          $scope.isError = true;
 	          $scope.isReportFiltering = false;
-	             
+
 	           });
-	      
-	    
-	   
+
+
+
 	      }
 	//end iniReport
 	removechart = function (id) {
 		var chart = $('#'+id).highcharts();
 		if (chart) {
-			/*seriesLength = chart.series.length;
-	        for(var i = seriesLength -1; i > -1; i--) {
-	            chart.series[i].remove();
-	        }*/
+
 			chart.destroy();
 		}
-		
+
 	};
-	
+
 	showMap = function () {
 		removechart('map-container');
-		$scope.loadingText = "Loading data...";    
-		
-   // $rootScope.isApplyFiterButton = true;
+		$scope.loadingText = "Loading data...";
+
+
 		$rootScope.mapProgress = true;
-		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
+		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true',
                   method: "POST",
                   headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-                  data: $scope.usagedata                  
+                  data: $scope.usagedata
          })
          .success(function(data, status) {
-        	
+
         	 $rootScope.mapProgress = false;
-        	 	  
+
                   if(!data || data.length === 0){
                        renderMap("map-container", []);
                   }  else{
                       renderMap("map-container", data);
                       $scope.zoomMap('map-container');
                   }
-                 
+
                  })
                  .error(function(data, status) {
-              //  	 $rootScope.isDisabled = false;
+
                 	 $rootScope.mapProgress = false;
-                       
-                         
+
+
           });
 	}
-	
+
 	$scope.zoomMap = function (id) {
 		var selectedState = $scope.region.states;
 		if(selectedState && selectedState != '') {
@@ -1186,63 +1111,63 @@ $rootScope.setUsageObjectFromSidebar=function(obj){
 	        }
 		}
 	};
-	
-	
+
+
 	$rootScope.tryit = function() {
-		//$scope.searchButtonText = "Filtering...";    
+
 		$scope.isLoadingFilters = true;
     $scope.isReportFiltering = false;
 $rootScope.isApplyFiterButton = true;
 		$scope.test = true;
 		$rootScope.applyFilterBoolean=true;
-		$scope.usagedata={  
-		   "productAttrs":{  
+		$scope.usagedata={
+		   "productAttrs":{
 			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
 			      "models":[{"value":$scope.sidebarObj.selectedModel}],
 			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
 			      "mfg_date": {
-			          "start_date": $scope.sidebarObj.mfgStartDate,/*$scope.sidebarObj.mfgStartDate.toLocaleDateString('en-GB'),*/
-			          "end_date": $scope.sidebarObj.mfgEndDate/*$scope.sidebarObj.mfgEndDate.toLocaleDateString('en-GB')*/
+			          "start_date": $scope.sidebarObj.mfgStartDate,
+			          "end_date": $scope.sidebarObj.mfgEndDate
 			        }
 			   },
-			   "timescale":{  
-			      "years":[  
-			         {  
+			   "timescale":{
+			      "years":[
+			         {
 			            "value":parseInt($scope.timescale.years)
 			         }
 			      ],
-			      "quarters":[  
-			         {  
+			      "quarters":[
+			         {
 			            "value":parseInt($scope.timescale.quarters)
 			         }
 			      ],
-			      "months":[  
-			         {  
+			      "months":[
+			         {
 			            "value":parseInt($scope.timescale.months)
 			         }
 			      ],
-			      "date":{  
+			      "date":{
 			         "start_date":"01/01/2015",
 			         "end_date":"01/01/2016"
 			      },
-			      "relative":{  
+			      "relative":{
 			         "unit":"2",
 			         "value":0
 			      }
 			   },
-			   "region":{  
-			      "states":[  
-			         {  
+			   "region":{
+			      "states":[
+			         {
 			            "value":$scope.region.states
 			         }
 			      ],
-			      "cities":[  
-			         {  
+			      "cities":[
+			         {
 			            "value":$scope.region.cities
 			         }
 			      ],
-			      "zip_codes":[  
-			         {  
+			      "zip_codes":[
+			         {
 			            "value":$scope.region.zip_codes
 			         }
 			      ]
@@ -1251,17 +1176,17 @@ $rootScope.isApplyFiterButton = true;
 			   "age": [{"value": $scope.sidebarObj.ageGroup}],
 			   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
 		};
-		
-		//////////start gopal
+
+
 		if($scope.region.states==undefined || $scope.region.states=="")
 		{
-		
+
 		$scope.usagedata.region.states=[];
 		}
-		
+
 		if($scope.region.cities==undefined || $scope.region.cities=="")
 		{
-			
+
 			$scope.usagedata.region.cities=[];
 		}
 		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
@@ -1272,12 +1197,12 @@ $rootScope.isApplyFiterButton = true;
 		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
 		{
 			$scope.usagedata.timescale.years=[];
-		}	
+		}
 		if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
 		{
 			$scope.usagedata.timescale.quarters=[];
 		}
-		
+
 		if($scope.timescale.months==undefined || $scope.timescale.months=="")
 		{
 			$scope.usagedata.timescale.months=[];
@@ -1314,23 +1239,18 @@ $rootScope.isApplyFiterButton = true;
 		{
 			$scope.usagedata.family_members_count=[];
 		}
-		/*if($scope.region.cities==undefined)
-				$scope.usagedata.region.cities=[];
-		if($scope.region.states==undefined)
-			$scope.usagedata.region.states=[];
-		if($scope.region.zip_codes==undefined)
-			$scope.usagedata.region.zip_codes=[];*/
-		
-	
-		
+
+
+
+
 		// to set usage object in anotehr controllr
 		$rootScope.setUsageData($scope.usagedata);
-		//code added by sanket
+
 		//For map
 		showMap();
-		
-		
-		
+
+
+
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
 		$scope.isNoDataFound = false;
@@ -1340,139 +1260,116 @@ $rootScope.isApplyFiterButton = true;
 		$scope.msg2 = "No Data Found";
 		$scope.msg3 =  "Service is Unavailable";
 		$scope.msg = $scope.msg1;
-		
+
 		//for grid mkt_mgr
-		  $http({url:configApiClient.baseUrl +  'usage', 
+		  $http({url:configApiClient.baseUrl +  'usage',
 	          method: "POST",
 	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	           data: $scope.usagedata
-	          
+
 	         }).success(function(data, status) {
-	           //$scope.test = false;
-               // $scope.searchButtonText = "Apply filter";
+
 	       	  		$scope.isLoadingFilters = false;
 	        	 if(!data || data.data.length === 0){
-	                 //$('<p>no updates found</p>').appendTo('#rr');
-	        			//$("#gridMax #gridMaxImg").addClass("hidden");
 
-	        		//alert("No data found");
-	                //$scope.isNoDataFound = true; //make it true if no data found instead of alert 
-	               // $scope.msg = $scope.msg2;
 	              }
-	        	 else	        	 
-	       	  		$scope.griddata=data.data; 
-	       	  		
+	        	 else
+	       	  		$scope.griddata=data.data;
+
 	         }). error(function(data, status) {
-	          // $scope.test = false;
-                //$scope.searchButtonText = "Apply filter";
+
 	       	  		$scope.isLoadingFilters = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
-	        	 //alert("No data found");
+
 	        	  });
-		  
+
 		//For grid from eng manager
-		  $http({url:configApiClient.baseUrl + 'sensors/data', 
+		  $http({url:configApiClient.baseUrl + 'sensors/data',
 	            method: "POST",
 	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
 	             data: $scope.usagedata
-	            
+
 	           }).success(function(data, status) {
-	            /* $scope.test = false;*/
-	                //$scope.searchButtonText = "Apply filter";
+
 	                $scope.isLoadingFilters = false;
 	             if(!data || data.length === 0){
-	                   //$('<p>no updates found</p>').appendTo('#rr');
-	              // $scope.isNoDataFound = true; 
-	              // $scope.msg = $scope.msg2;
-	                //$("#gridMax #gridMaxImg").addClass("hidden");
 
-	              //alert("No data found");
 	                }
-	             else            
-	                $scope.eng_griddata=data; 
-	                  //alert(data);
-	            
+	             else
+	                $scope.eng_griddata=data;
+
+
 	           }). error(function(data, status) {
-	           //$scope.searchButtonText = "Apply filter";
+
 	                $scope.isLoadingFilters = false;
 	                $scope.isError = true;
 	                $scope.msg = $scope.msg3;
-	             //alert("No data found");
-	             
+
+
 	           });
-		
+
 	};
-	
- 
-  
-    		
-    		// load all usage data on dashboard		
+
+
+
+
+    		// load all usage data on dashboard
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
     		$scope.mkt_griddata=[];
-    		
-    	 
 
-    		  $http({url:configApiClient.baseUrl +  "usage", 
+
+
+    		  $http({url:configApiClient.baseUrl +  "usage",
   		     	method: "GET",
   		     	Accept: "text/plain"}).success(function(data, status) {
-    	           
-    	       	  			$scope.griddata=data.data; 
-    	       	  		
-    	       	  		
+
+    	       	  			$scope.griddata=data.data;
+
+
     	         }). error(function(data, status) {
-    	             
+
     	         });
-    		  
+
     		  $http({url:configApiClient.baseUrl + "sensors/data", //api url
                   method: "POST",
                   Accept: "text/plain"}).success(function(data, status) {
                        $scope.eng_griddata=data; //.states: array name--check in browser
-                    
-                          
+
+
                      }). error(function(data, status) {
-                          
-                       
+
+
                      });
-    		  
+
     		  ///////////////////////Report on load
-              $http({url:configApiClient.baseUrl +  "usage", 
+              $http({url:configApiClient.baseUrl +  "usage",
               method: "GET",
               Accept: "text/plain"}).success(function(data, status) {
-                   
-                        $scope.mkt_griddata=data.data; 
+
+                        $scope.mkt_griddata=data.data;
                         $rootScope.isOnLoad=true;
-                      
-                
-                      
+
+
+
                  }). error(function(data, status) {
-                        
-                   
-                 }); 			   
-  			   						
-  	    
+
+
+                 });
+
+
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'
 										+'"Quarter2":["Apr","May","Jun"],'
 										+'"Quarter3":["Jul","Aug","Sep"],'
 										+'"Quarter4":["Oct","Nov","Dec"]'
-										+'}');	
-			
-			
-			
-		
-		
-			/*$scope.quarters = [];
-			for(var keyName in quarterMonthMapping){        
-				$scope.quarters.push(keyName);
-			}
-			
-			$scope.quarterMonths=function(){
-				$scope.months = quarterMonthMapping[$scope.timescale.quarters];
-		    } */
+										+'}');
 
-		
+
+
+
+
 		var quartersNew = JSON.parse(
 				'{"0":[{'+
 					'"id": 1,'+
@@ -1496,25 +1393,25 @@ $rootScope.isApplyFiterButton = true;
 				'"4":[{"id":10,"value":"Oct"},{"id":11,"value":"Nov"},{"id":12,"value":"Dec"}]'+
 			'}'
 		);
-		
-		
+
+
 		$scope.quarters = [];
-		
+
 		$scope.quarters=(quartersNew[0]);
-		
+
 		$scope.quarterMonths=function(){
-			//$scope.months = quarterMonthMapping[$scope.timescale.quarters];
+
 			$scope.months=[];
 			$scope.timescale.months=undefined;
 			$scope.months=quarterMonthMap[$scope.timescale.quarters];
-	    } 
+	    }
 
-	
-	 $http({url:configApiClient.baseUrl + 'config/states', 
+
+	 $http({url:configApiClient.baseUrl + 'config/states',
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
+
 	    	 $scope.states=data.states;
-	         
+
 	    	 //Using may renderMap function to zoom the map
 	    	 //Using may renderMap function to zoom the map
 	    	 salesDataJoin = [];
@@ -1523,19 +1420,19 @@ $rootScope.isApplyFiterButton = true;
 	    			 salesDataJoin.push(this);
 	    		 });
 	    	 }
-	    	 //salesDataJoin = $scope.states;
-	    	 
+
+
 	    }). error(function(data, status) {
-	   
-	      
+
+
 	    });
-	
-	
-	  
-	 
+
+
+
+
 	 //sanket changes
-	 
-	 $http({url:configApiClient.baseUrl + 'config/sales/years', 
+
+	 $http({url:configApiClient.baseUrl + 'config/sales/years',
 	     	method: "get",
 	     	Accept: "text/plain"
 	     	})
@@ -1544,91 +1441,74 @@ $rootScope.isApplyFiterButton = true;
 
 	     })
 	    . error(function(data, status) {
-	    
+
 	    });
 	 $scope.cities;
 	 $scope.selectCities=function(){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
 		 $scope.zips=[];
-		 $http({url:configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states, 
+		 $http({url:configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states,
 		     	method: "get",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		    	 $scope.cities=data[$scope.region.states];
 		    }). error(function(data, status) {
-		      // alert("error"  +status);
-		      
+
+
 		    });
-		    
+
 		    }
 	 $scope.selectZip=function(){
-		
+
 		 $scope.region.zip_codes=undefined;
-		 //http://localhost:3000/api/v1/config/states/texas/cities/austin/zipcodes
+
 		 $http({url:configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities,
 		     	method: "GET",
 		     	Accept: "text/plain"})
 		     	.success(function(data, status) {
 		     	$scope.zips = data[$scope.region.cities];
-		     	
+
 		    }). error(function(data, status) {
-		      // alert("error"  +status);
-		      
+
 		    });
-		    
+
 		    }
-		
+
 	 $scope.maximizeGrid=function(){
 			var gridNormal = $("#gridNormal1").clone();
-			
+
 			$("#gridMax").empty();
 			$("#gridMax").append(gridNormal);
-		
+
 			$("#gridMax #gridMaxImg").addClass("hidden");
 			$("#gridMax #gridCloseImg").removeClass("hidden");
 			$("#gridNormal1").removeClass("hidden");
-			//$("#gridCloseImg").removeClass("hidden");
-			
+
 			 $(".maxtbody").height(300);
-		
-			 
-		
-			
+
+
+
+
 		$("#gridMax").removeClass("hidden");
-		
-			
-		//$("#gridMax").css("","");
-		
-		
+
+
+
+
 		}
-		
+
 		$("body").on("click","#gridCloseImg",function(){
 			$("#gridMax").empty();
 			$("#gridMax").addClass("hidden");
-			//  $("#gridAdjustHeight").height(160);
+
 			  $(".tbody").height(200);
 			  $("#gridNormal").height(355);
-			
-			//  $(".gridNormal").height(355);
 
-			//$scope.plotChartFunction("container");
+
 	    });
-		
-	
-	/*$scope.closeGrid=function(){
-		
-		alert("closeGrid");
 
-		$("#gridMax").empty();
-		
-		
-		$("#gridMax #gridMaxImg").removeClass("hidden");
-		$("#gridMax #gridCloseImg").addClass("hidden");
-		
-		$("#gridMax").addClass("hidden");
-	}
-*/}]);
+
+	}]);
 
 /**=========================================================
  * Module: sidebar-menu.js
@@ -1638,37 +1518,35 @@ $rootScope.isApplyFiterButton = true;
 
 App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils', "iot.config.ApiClient",
   function($rootScope, $scope, $state, $http, $timeout, Utils, configApiClient){
-	
+
 	$rootScope.intete=1;
 	$scope.make;
 	$scope.makeData;
     $scope.valArr=[2,3,4,56,7567,2345];
       $rootScope.filterIcons=[];
-      
-    
-      
+
+
+
 	$scope.getCall=function(p){
 	}
-	
+
 	$scope.clearfilter = function(){
-        
+
         $rootScope.search={};
-   	    
+
         $rootScope.filterIcons=[];
         $rootScope.barchartData = null;
         $rootScope.piechartData = null
         $rootScope.setUsageObjectFromSidebar($rootScope.search);
         $rootScope.tryit();
      }
-	
+
     $scope.clearfilter1 = function(){
-    	 //$rootScope.search={};
-    	 //$rootScope.filterIcons=[];
+
     	 $scope.clearFilterIcons(1);
-         
-         //$rootScope.barchartData = null;
-         //$rootScope.piechartData = null
-    	 
+
+
+
 		 var obj={};
 		 obj.selectedMake=$rootScope.search.selectedMake;
 		 obj.selectedModel=$rootScope.search.selectedModel;
@@ -1684,19 +1562,17 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 		 if ($rootScope.search.ageGroup) {
 			obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
 		 }
-   	 	
+
          $rootScope.setUsageObjectFromSidebar(obj);
          $rootScope.tryit();
       }
-    
+
     $scope.clearfilter2 = function(){
-        
-        //$rootScope.search={};
-    	//$rootScope.filterIcons=[];
+
+
     	$scope.clearFilterIcons(2);
-        
-        //$rootScope.barchartData = null;
-        //$rootScope.piechartData = null
+
+
     	var obj={};
     	obj.selectedMake=$rootScope.search.selectedMake;
   	 	obj.selectedModel=$rootScope.search.selectedModel;
@@ -1712,11 +1588,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
   	 	if ($rootScope.search.ageGroup) {
   	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
   	 	}
-  	 	 
+
         $rootScope.setUsageObjectFromSidebar(obj);
         $rootScope.tryit();
      }
-    
+
     $scope.clearFilterIcons = function (filterType) {
     	var tempArr = [];
     	var isRemoved = false;
@@ -1728,37 +1604,37 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
             $rootScope.search.mfgEndDate=undefined;
             angular.forEach($rootScope.filterIcons,function(obj ,key){
                 if(obj.key=="make" || obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
-                    //$rootScope.filterIcons.splice(key,1);
+
                 	isRemoved = true;
                 }else{
                 	tempArr.push(obj);
                 }
             });
-            
+
     	}else if(filterType == 2) {
     		$rootScope.search.incomeRange=undefined;
             $rootScope.search.occupation=undefined;
             $rootScope.search.ageGroup=undefined;
             angular.forEach($rootScope.filterIcons,function(obj ,key){
             	if(obj.key=="incomeRange" || obj.key=="occupation" || obj.key=="ageGroup"){
-                    //$rootScope.filterIcons.splice(key-1,1);
+
                 	isRemoved = true;
                 }else{
                 	tempArr.push(obj);
                 }
             });
     	}
-    	
+
     	if(isRemoved){
     		$rootScope.filterIcons = tempArr;
     	}
     }
-    
+
    $scope.createIconArray=function(){
         $scope.someArr=[];
-        
-        
-        
+
+
+
         if($rootScope.search.selectedMake && $rootScope.search.selectedMake.length != 0)
             $scope.someArr.push(
                 {
@@ -1766,7 +1642,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                     key:"make"
                 }
             );
-        
+
         if($rootScope.search.selectedModel && $rootScope.search.selectedModel.length != 0)
             $scope.someArr.push(
                 {
@@ -1774,103 +1650,100 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
                     key:"model"
                 }
             );
-        
+
         if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0)
             $scope.someArr.push(
                 {
                     value:$rootScope.search.selectedSKU,
-                    key:"sku"    
+                    key:"sku"
                 });
-        
+
         if($rootScope.search.mfgStartDate && $rootScope.search.mfgStartDate.length != 0)
         	$scope.someArr.push(
         			{
         				value:$rootScope.search.mfgStartDate.toLocaleDateString(),
         				key:"mfg-start-date"
         			});
-        
+
         if($rootScope.search.mfgEndDate && $rootScope.search.mfgEndDate.length != 0)
         	$scope.someArr.push(
         			{
         				value:$rootScope.search.mfgEndDate.toLocaleDateString(),
         				key:"mfg-end-date"
         			});
-        
+
         if ($rootScope.search.incomeRange) {
         	$scope.someArr.push({
 				value:JSON.parse($rootScope.search.incomeRange).range,
 				key:"incomeRange"
 			});
         }
-        
+
         if ($rootScope.search.occupation) {
         	$scope.someArr.push({
 				value:JSON.parse($rootScope.search.occupation).range,
 				key:"occupation"
 			});
         }
-        
+
         if ($rootScope.search.ageGroup) {
         	$scope.someArr.push({
 				value:JSON.parse($rootScope.search.ageGroup).range,
 				key:"ageGroup"
 			});
         }
-        
+
         $scope.valArr=$scope.someArr;
-        
+
         $rootScope.filterIcons=$scope.someArr;
-       
-        
+
+
     };
-    
-    
+
+
     $scope.myDate = new Date();
-      
+
       $scope.selectedSKU=function(){
-        //  $scope.createIconArray();
-          
+
+
       }
 
     $rootScope.search={};
       $scope.selectedMake=function(){
-          
+
           $rootScope.search.selectedModel="";
           $rootScope.search.selectedSKU="";
-        //  $scope.createIconArray();
-          $http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake, 
+
+          $http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
+
 	    	 $scope.models=data[$rootScope.search.selectedMake];
-	    	
-              
-                /*$scope.valArr.push($rootScope.search.selectedMake);
-              alert($scope.valArr);*/
-                
-				           
-				           
+
+
+
+
 	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	      
+
+
 	    });
       }
-      
+
       $scope.selectedModel=function(){
           $rootScope.search.selectedSKU="";
-       //   $scope.createIconArray();
-          
-          $http({url:configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel, 
+
+
+          $http({url:configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel,
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
+
 	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
-       
-                 
+
+
 	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	      
+
+
 	    });
       }
-    
+
          $scope.applyProductFilter=function(){
         	 var obj={};
          	obj.selectedMake=$rootScope.search.selectedMake;
@@ -1887,16 +1760,16 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
        	 	if ($rootScope.search.ageGroup) {
        	 		obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
        	 	}
-      	 	
+
             $rootScope.setUsageObjectFromSidebar(obj);
 
             $scope.createIconArray();
-            
+
             document.getElementById('filterPanel').style.display = 'none';
-            $rootScope.tryit(); 
-            
+            $rootScope.tryit();
+
         }
-         
+
          $scope.applyDemographicsFilter=function(){
         	 var obj={};
          	obj.selectedMake=$rootScope.search.selectedMake;
@@ -1917,23 +1790,15 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
              $scope.createIconArray();
              document.getElementById('demographicsFilterPanel').style.display = 'none';
              $rootScope.tryit();
-             
+
          };
 
-    
-    
+
+
     var collapseList = [];
-    
+
     $rootScope.name="";
-    // demo: when switch from collapse to hover, close all items
-//    $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
-//      if ( newVal === false && oldVal === true) {
-//        closeAllBut(-1);
-//      }
-//    });
-    
-   
-  //  $rootScope.types;
+
     $rootScope.test="gopal";
     // Check item and children active state
     var isActive = function(item) {
@@ -1952,8 +1817,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     };
 
     // Load menu from json file
-    // ----------------------------------- 
-    
+
+
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
              (isActive(item) ? ' active' : '') ;
@@ -1976,7 +1841,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
      $scope.loadSidebarMenu();
 
     // Handle sidebar collapse items
-    // ----------------------------------- 
+
 
     $scope.addCollapse = function($index, item) {
       collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
@@ -1988,7 +1853,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
     $scope.toggleCollapse = function($index, isParentItem,subitem) {
     	$rootScope.intete+=1;
-    	
+
       // collapsed sidebar doesn't toggle drodopwn
       if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
 
@@ -2002,11 +1867,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       else if ( isParentItem ) {
         closeAllBut(-1);
       }
-      
+
       $scope.lastEventFromChild = isChild($index);
 
       return true;
-    
+
     };
 
     function closeAllBut(index) {
@@ -2021,99 +1886,83 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-    $http({url:configApiClient.baseUrl + 'config/makes', 
+    $http({url:configApiClient.baseUrl + 'config/makes',
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
+
 	    	 $scope.makes=data.makes;
-	    	 
-				       
-				           
-				           
+
+
+
+
 	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	     
+
+
 	    });
-    
-    $http({url: configApiClient.baseUrl + 'demographics/family/age-ranges', 
+
+    $http({url: configApiClient.baseUrl + 'demographics/family/age-ranges',
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoAgeRange=data;
       }). error(function(data, status) {
       });
 
-      $http({url: configApiClient.baseUrl + 'demographics/family/income-ranges', 
+      $http({url: configApiClient.baseUrl + 'demographics/family/income-ranges',
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoIncomeRange=data;
       }). error(function(data, status) {
-         
+
       });
 
-      $http({url: configApiClient.baseUrl + 'demographics/family/members-count', 
+      $http({url: configApiClient.baseUrl + 'demographics/family/members-count',
        method: "GET", Accept: "text/plain"}).success(function(data, status) {
       	 $scope.demoMembersCount=data;
       }). error(function(data, status) {
-         
+
       });
-    
-    $http({url:configApiClient.baseUrl + 'config/manufacture/years', 
+
+    $http({url:configApiClient.baseUrl + 'config/manufacture/years',
 	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-	               
+
 	    	 $scope.years=data.years;
-	    	 
-				       
-				           
-				           
+
+
+
+
 	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	      
+
+
 	    });
-	 
-    
-    
+
+
+
     $scope.selectMake=function()
     {
-    	
+
     	alert("SELECTED");
     }
-	 
-	 /*$scope.selectMake=function(){
-		 
-		 // alert($scope.selected_make);
-		 $http({url:"http://localhost:3000/api/v1/config/makes/models?make_names="+$scope.selected_make, 
-		     	method: "get",
-		     	Accept: "text/plain"})
-		     	.success(function(data, status) {
-		    	 $scope.models=data[$scope.selected_make];
-		    	 
-		    //	 alert(JSON.stringify($scope.models));
-		    	 
-		    }). error(function(data, status) {
-		      // alert("error"  +status);
-		       
-		    });
-		    
-		    }*/
-	 
-	
+
+
+
+
 }]);
 
 App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.config.ApiClient',function($rootScope,$scope,$interval, configApiClient){
-    
+
    function callMe(){
        $scope.someArray=$rootScope.filterIcons;
    }
-   
+
    $interval(callMe,1000);
-    
+
    $scope.removeFilter=function(filter){
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
-       
+
        if(filter.key=="make"){
            $rootScope.search.selectedMake=undefined;
            $rootScope.search.selectedModel=undefined;
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgStartDate=undefined;
            $rootScope.search.mfgEndDate=undefined;
-           $rootScope.filterIcons=[]; 
+           $rootScope.filterIcons=[];
            $rootScope.filterIcons.splice(indexofvar,1);
            angular.forEach($rootScope.filterIcons,function(obj ,key){
                if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
@@ -2122,11 +1971,11 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
            });
        }else if(filter.key=="mfg-start-date"){
        	$rootScope.search.mfgStartDate=undefined;
-           $rootScope.filterIcons.splice(indexofvar,1);        	
+           $rootScope.filterIcons.splice(indexofvar,1);
        }else if(filter.key=="mfg-end-date"){
           	$rootScope.search.mfgEndDate=undefined;
-            $rootScope.filterIcons.splice(indexofvar,1);        	
-        }else if(filter.key=="sku"){         
+            $rootScope.filterIcons.splice(indexofvar,1);
+        }else if(filter.key=="sku"){
            $rootScope.search.selectedSKU=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }else if(filter.key=="model"){
@@ -2135,7 +1984,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
            $rootScope.filterIcons.splice(indexofvar,1);
            angular.forEach($rootScope.filterIcons,function(value,key){
                if(value.key=="sku"){
-                   /*var indexofvar= $rootScope.filterIcons.indexOf(value);*/
+
                    $rootScope.filterIcons.splice(key,1);
                }
            });
@@ -2149,7 +1998,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
        	$rootScope.search.ageGroup=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
        }
-       
+
        var obj={};
        obj.selectedMake=$rootScope.search.selectedMake;
                       obj.selectedModel=$rootScope.search.selectedModel;
@@ -2165,10 +2014,10 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
                       if ($rootScope.search.ageGroup) {
                                      obj.ageGroup=JSON.parse($rootScope.search.ageGroup).id;
                       }
-                       
+
 		$rootScope.setUsageObjectFromSidebar(obj);
 		$rootScope.tryit();
-   };  
+   };
 }]);
 
 App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiClient',function($scope,$rootScope,$http,configApiClient){
@@ -2176,40 +2025,39 @@ App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiCli
 	$scope.plotMapFunction = function(divId){
               $rootScope.mapProgress = true;
 			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
-			    	
-			    	
+
+
 			    	renderMap(divId, data);
-                      salesDataSet = data;                      
+                      salesDataSet = data;
                       $rootScope.mapProgress = false;
 			    }). error(function(data, status) {
 			    	$rootScope.mapProgress = false;
-			      // alert("error"  +status);
+
 			       renderMap(divId, data);
-			    });	
+			    });
 	}
-	
-	$scope.maximizeMap=function(){        
-        
-		var mapNormal = $("#mapNormal").clone();        
-	        
+
+	$scope.maximizeMap=function(){
+
+		var mapNormal = $("#mapNormal").clone();
+
 	    $("#hiddenDivMap").empty();
-	    $("#hiddenDivMap").append(mapNormal);	        
-	    $("#hiddenDivMap").removeClass("hidden");    	        
-	    $("#mapMaxImg").addClass("hidden");       
-	    $("#map-container").height(660); 
-	    //$("#map-container").width(1424); 
-	    $("#mapMinImg").removeClass("hidden");    
-	     
-        renderMap("#map-container",salesDataSet );        
+	    $("#hiddenDivMap").append(mapNormal);
+	    $("#hiddenDivMap").removeClass("hidden");
+	    $("#mapMaxImg").addClass("hidden");
+	    $("#map-container").height(660);
+	    $("#mapMinImg").removeClass("hidden");
+
+        renderMap("#map-container",salesDataSet );
 	 }
-	 
+
 	$("body").on("click"," #mapMinImg",function(){
 	    var elem = $("#map-container");
 	    $("#hiddenDivMap").empty();
-	    $("#hiddenDivMap").addClass("hidden");       
-	    elem.addClass("map-mapDiv");  
+	    $("#hiddenDivMap").addClass("hidden");
+	    elem.addClass("map-mapDiv");
         renderMap("#map-container",salesDataSet );
-	}); 
+	});
 
 }]);
 
@@ -2217,23 +2065,23 @@ function renderMap(divId, salesData){
 	var seriesData = [];
 	if(salesData && salesData.length > 0){
 		var salesDataStr = JSON.stringify(salesData);
-		
+
 		// Modify the json data set according to required highmap data format
 		salesDataStr = salesDataStr.replace(/"latitude":/g, '"lat":');
 		salesDataStr = salesDataStr.replace(/"longitude":/g, '"lon":');
 		salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
-		
+
 		salesData = JSON.parse(salesDataStr);
-		
+
 	    var zipcode;
 	    if(salesDataStr.includes("zip_code")){
 	        zipcode = true;
 	    }else{
 	       zipcode = false;
-	    } 
-		
+	    }
+
 	    seriesData = [{
-	        //mapData: Highcharts.maps['custom/world'],
+
 	        mapData: Highcharts.maps['countries/us/us-all'],
 	        joinBy: ['hc-a2', 'id'],
 			data: salesDataJoin,
@@ -2245,7 +2093,6 @@ function renderMap(divId, salesData){
 	    }, {
 	        name: 'Separators',
 	        type: 'mapline',
-	        //data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mapline'),
 	        data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
 	        color: '#E0E0E0',
 	        showInLegend: false,
@@ -2253,36 +2100,32 @@ function renderMap(divId, salesData){
 	    }, {
 	        type: 'mapbubble',
 	        name: 'Sales Volume',
-	        color: '#4682B4',  //'#4682B4',
+	        color: '#4682B4',
 	        data: salesData,
 	        marker: {
 				  fillOpacity:0.0
 			},
-	        //dataLabels: {
-	        //   enabled: true,
-	        //   format: '{point.z}',
-	        //    color:'#000000'
-	        //}, 
+
 			tooltip: {
 		        headerFormat: '',
-	            pointFormat: zipcode == true ? 
+	            pointFormat: zipcode == true ?
 	                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
 	                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
-	                    
+
 		    },
 	    }]
-	}    
-	
-    
-    
-    //var chart = Highcharts.Map({
+	}
+
+
+
+
     $('#map-container').highcharts('Map', {
       chart: {
-          //renderTo: divId
+
     	  events: {
 				redraw: function() {
-					
-					var chart = this; 
+
+					var chart = this;
 					var series = this.series;
 					var points = series[2].points;
 					var index = 0;
@@ -2293,8 +2136,8 @@ function renderMap(divId, salesData){
 					});
 				},
               load: function () {
-					
-					var chart = this; //$('#container').highcharts();
+
+					var chart = this;
 					var points = chart.series[2].points;
 					var index = 0;
 					Highcharts.each(points, function (point) {
@@ -2307,39 +2150,33 @@ function renderMap(divId, salesData){
       credits:{
       	enabled:false
       },
-	    exporting: { 
-	    	enabled: false 
+	    exporting: {
+	    	enabled: false
 	    },
 	    title: {
 	        text: ''
 	    },
-	
+
 	    mapNavigation: {
 	        enabled: true
 	    },
-	
-    
-	  /*  tooltip: {
-	        headerFormat: '',
-            pointFormat: zipcode == true ? 
-                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
-                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
-                    
-	    },*/
-	    
+
+
+
+
 	    plotOptions: {
 	        mapbubble:{
 	            minSize:0,
 	            maxSize:0
 	        }
 	    },
-	    
+
 	    series: seriesData
-	    
+
 	});
-//});
-	
-	
+
+
+
 }
 
 function removePie(point) {
@@ -2365,42 +2202,41 @@ function removePie(point) {
 
 
 function drawPie(point, index) {
-	
+
 	var series = point.series,
 	chart = series.chart,
 	pointX = point.plotX + series.xAxis.pos,
 	pointY = Highcharts.pick(point.plotClose, point.plotY) + series.yAxis.pos;
-	//console.log("-----pointX ", pointX+ " : " +pointY);
+
 	if(pointX && pointY) {
-		
+
 		var conn = point.z;
 		var uConn = point.unitsConnected;
 		var connPercentage = parseFloat((uConn/conn)*100).toFixed(2);
 	    var unconnPercentage = parseFloat(((conn-uConn)/conn)*100).toFixed(2);
-		
-	    //var outerRadius = 18;
-		//var innerRadius = 12;
+
+
 		var connStr = conn.toString();
 		var textLenth = connStr.length;
 		var innerRadius = 8 + (textLenth - 1)*3;
 		var outerRadius = innerRadius + 5  + (textLenth - 2);
-		
+
 		var startDegrees = -90;
 		var mathPI = Math.PI;
 		var percent = connPercentage;
 		var degrees = 360 * (percent / 100);
-		var endDegrees = startDegrees + degrees; 
+		var endDegrees = startDegrees + degrees;
 		// Degrees to radians
 		var startAngle = startDegrees / 180 * mathPI;
 		var endAngle = endDegrees / 180 * mathPI;
-		
+
 		point.pie1 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, -mathPI/2, mathPI+mathPI/2).attr({
-				fill: 'white', //'#555555',
+				fill: 'white',
 				stroke: 'black',
 				'stroke-width': 1,
 				zIndex: index + 3
 		}).add();
-		
+
 		point.pie2 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, startAngle, endAngle).attr({
 			fill: '#6CD153',
 			stroke: 'black',
@@ -2418,33 +2254,33 @@ function drawPie(point, index) {
 		}).on('mouseout', function () {
 			chart.tooltip.hide();
 		});
-		
+
 		point.text1 = chart.renderer.text(conn.toString(), pointX-(textLenth*4), pointY+2)
 			.attr({
-				//rotation: -25
+
 				zIndex: index + 4,
 				cursor: 'default'
 			})
 			.css({
-				color: 'white', //'#4572A7',
+				color: 'white',
 				fontSize: '11px',
 				fontWeight: 'bold',
-				//textShadow: '0 0 6px contrast, 0 0 3px contrast',
-				fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif', // default font
+
+				fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
 			})
 			.add().on('mouseover', function () {
 				chart.tooltip.refresh(point);
 			}).on('mouseout', function () {
 				chart.tooltip.hide();
 			});
-		
-		
-		
+
+
+
 	}
 }
 
 function renderPieChart(divId, insightsData, chartTitle){
-	
+
 	var pieChart = new Highcharts.Chart({
         chart: {
         	renderTo:divId,
@@ -2458,8 +2294,7 @@ function renderPieChart(divId, insightsData, chartTitle){
             events: {
             	load: function(event) {
             		if (divId == 'twitter-handle-container'){
-            			/*$('.highcharts-legend-item').last().append('<img src="app/img/Dashboardassets/icon_arrow.png" style="margin-left: 112px" onclick="displayDetailedTwitterView()"/><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
-            			 		this.series[0].data[0].totalComments + '</b></div>');*/
+
             			$('.highcharts-legend-item').last().append('<br><br><div style="font-size:12px; font-family:Lucida Sans Unicode; width:200px"><b>Comments-' +
             					this.series[0].data[0].totalComments + '</b></div>');
             		}
@@ -2469,8 +2304,8 @@ function renderPieChart(divId, insightsData, chartTitle){
         credits: {
 	    	enabled: false
 	    },
-	    exporting: { 
-	    	enabled: false 
+	    exporting: {
+	    	enabled: false
 	    },
         title: {
             text: chartTitle,
@@ -2497,7 +2332,7 @@ function renderPieChart(divId, insightsData, chartTitle){
             labelFormatter: function () {
             	if (divId != 'twitter-handle-container')
             		return this.name + ' - ' + this.percentage.toFixed(2) + '%';
-            	else 
+            	else
             		return this.name + '-' + this.y;
             },
             margin:30
@@ -2523,11 +2358,11 @@ function renderPieChart(divId, insightsData, chartTitle){
             showInLegend:true,
             data: insightsData
         }]
-    });	
+    });
 }
 
 function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTitle, yAxisTitle){
-		
+
 	$("#"+divId).highcharts( {
 		credits:false,
 		title: {
@@ -2537,10 +2372,10 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'top',
-            y: 50,   
+            y: 50,
             padding: 1,
             itemMarginTop: 3,
-            itemMarginBottom: 3,        
+            itemMarginBottom: 3,
             itemStyle: {
                 lineHeight: '10px',
                 fontSize: '10px',
@@ -2569,9 +2404,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 
 function createLineChartSeriesDataForMktManager(data){
 	var lineChartSeriesData = [];
-		
+
 		for(var i=0;i<data[0].sales.length;i++){
-			
+
 			var unitsSoldDataForItem = [];
 			for (var j=0; j<data.length; j++){
 				unitsSoldDataForItem.push(data[j].sales[i].unitsSold);
@@ -2581,9 +2416,9 @@ function createLineChartSeriesDataForMktManager(data){
 		    			data:unitsSoldDataForItem
 		    	}
 				lineChartSeriesData.push(obj);
-				obj={};		
+				obj={};
 	}
-		
+
 		return lineChartSeriesData;
 }
 
@@ -2598,49 +2433,48 @@ function getTimeScales(data){
 App.controller('notificationController', ['$rootScope', '$scope', '$http', '$window', 'iot.config.ApiClient', 'iot.config.Notification', function ($rootScope, $scope, $http, $window, configApiClient, configNotification) {
 	$scope.isLoading = false;
     $scope.isError = false;
-    //$scope.isNoDataDB = false;
     $scope.msg1 = "Loading.....Please wait";
     $scope.msg2="No Data Found";
     $scope.msg3 = "Service is Unavailable";
-    
+
     var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	var userid = loginCredentails.email;
-	
+
 	$scope.getTwitterSentiments = function(){
 		$scope.isLoading = true;
 		$scope.msg = $scope.msg1;
-		
-		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
             	  "Username": userid
             	}
-            
+
 		}).success(function(data, status) {
-			
+
 			$scope.positiveTwitterSentimentThreshold = parseInt(data[0].PositiveScore) + parseInt(data[0].PositiveBaseline);
 			$scope.negativeTwitterSentimentThreshold = parseInt(data[0].NegativeScore) + parseInt(data[0].NegativeBaseline);
-			
-			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {				    	 			    	
-			    	 
+
+			$http({url:configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+
 			    	 $scope.isLoading = false;
 			    	 if (data || data.length != 0) {
-			   			    	 	
+
 			    	 	 var i=data.length;
-			    		 while (i--){			    			 
+			    		 while (i--){
 			    			 var twitterCountDifference = data[i].twitter_count/data[i].full_count*100;
-			    			 
+
 			    			 if (data[i].twitter_response_type == 'Positive' && twitterCountDifference >= $scope.positiveTwitterSentimentThreshold){
 			    				 data[i].twitter_positives_increase_spike = twitterCountDifference;
 			    			 } else if (data[i].twitter_response_type == 'Positive' && twitterCountDifference < $scope.positiveTwitterSentimentThreshold){
-			    				 data[i].twitter_positives_decrease_spike = twitterCountDifference;			    				 
+			    				 data[i].twitter_positives_decrease_spike = twitterCountDifference;
 			    			 } else if (data[i].twitter_response_type == 'Negative' && twitterCountDifference >= $scope.negativeTwitterSentimentThreshold){
 			    				 data[i].twitter_negatives_increase_spike = twitterCountDifference;
 			    			 } else {
 			    				 data[i].twitter_negatives_decrease_spike = twitterCountDifference;
-			    			 } 
+			    			 }
 			    		 }
 			    	 	$scope.data = data;
 			    	 } else {
@@ -2649,49 +2483,49 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		 				 $scope.isNoData = true;
 		    			 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-					
+
 			});
-    	 	
+
         }). error(function(data, status) {
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				
+
         });
-		
+
 	};
-	
+
 	$scope.getSpikesInConnectedMachines = function() {
-		
+
 		$scope.isLoading = true;
-		$scope.msg = $scope.msg1;			
-		
-		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+		$scope.msg = $scope.msg1;
+
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-            data: {"Username": userid}  
-            
+            data: {"Username": userid}
+
 		}).success(function(data, status) {
 			$scope.spikeByConnectedMachinesIncreaseTolerance = parseInt(data[0].PositiveTolerance);
 			$scope.spikeByConnectedMachinesDecreaseTolerance = parseInt(data[0].NegativeTolerance);
-			
-			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines', 
+
+			$http({url:configApiClient.baseUrl + 'notifications/spike-in-connected-machines',
 			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-			    	 
+
 			    	 $scope.isLoading = false;
 			    	 if (data || data.length != 0) {
-			    		 
+
 			    		 // Calculate the difference between connected machines as of today and the connected machines 4 weeks ago.
 			    		 // Remove the data that is not above increase tolerance or below decrease tolerance
 			    		 var i=data.length;
-			    		 while (i--){			    			 
+			    		 while (i--){
 			    			 var connectdMachineCountDifference = (data[i].current_connected_machines - data[i].previous_connected_machines)/data[i].previous_connected_machines*100;
-			    			 
+
 			    			 if (connectdMachineCountDifference > $scope.spikeByConnectedMachinesIncreaseTolerance){
 			    				 data[i].increase_spike = connectdMachineCountDifference;
 			    			 } else if (connectdMachineCountDifference < $scope.spikeByConnectedMachinesDecreaseTolerance){
@@ -2700,9 +2534,9 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    				 data.splice(i, 1);
 			    			 }
 			    		 }
-			    		 
+
 			    		 $scope.data = data;
-			    		 
+
 			    		 if (data.length == 0){
 			    			 $scope.isLoading = false;
 			 				 $scope.isError = true;
@@ -2715,51 +2549,51 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		 				 $scope.isNoData = true;
 		    			 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-					
+
 			});
-  	 	  
-        }). error(function(data, status) {          
+
+        }). error(function(data, status) {
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-				
+
         });
-		
+
 	};
-	
+
 	$scope.getSpikesInSpecificErrors = function() {
-		
+
 		$scope.isLoading= true;
 		$scope.msg = $scope.msg1;
-		
-		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}
-            
+
 		}).success(function(data, status) {
-			
+
 			$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
 			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype1;
 			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype1;
-			
-			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
-			    	 
+
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+
 			    	 $scope.isLoading = false;
-			    	 if (data || data.length != 0) {	
-			    		 
+			    	 if (data || data.length != 0) {
+
 			    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
 			    		 // Remove the data that is not a specified error type and not within the specified ranges
 			    		 var i=data.length;
 			    		 while (i--){
 			    			 var errorCountDifference = (data[i].current_error_count - data[i].previous_error_count)/data[i].previous_error_count*100;
-			    			 
+
 			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorsTolerance)){
 			    				 data[i].increase_spike = errorCountDifference;
 			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorsTolerance)){
@@ -2767,10 +2601,10 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 			    			 } else {
 			    				 data.splice(i, 1);
 			    			 }
-			    		 }	
-			    		 
+			    		 }
+
 			    		 $scope.data = data;
-			    		 
+
 			    		 if (data.length == 0){
 			    			 $scope.isLoading = false;
 			 				 $scope.isError = true;
@@ -2783,90 +2617,90 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 		 				 $scope.isNoData = true;
 		    			 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-				
+
 			});
-			
-        }). error(function(data, status) {          
+
+        }). error(function(data, status) {
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-			
+
         });
 	};
-	
+
 	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
-		
+
 		$scope.isLoading = true;
 		$scope.msg = $scope.msg1;
-		
-		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings', 
+
+		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
             headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
             	  "Username": userid
             	}
-            
+
 		}).success(function(data, status) {
-			
+
 			$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
 			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype2;
 			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype2;
-			
-			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model', 
-			     method: "GET", Accept: "text/plain"}).success(function(data, status) {	
+
+			$http({url:configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model',
+			     method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			    	 $scope.isLoading = false;
 			    	 if (data || data.length != 0) {
 			    		 var i=data.length;
 			    		 while (i--){
 			    			 var errorCountDifference = (data[i].countAlldata - data[i].countfourweekBack)/data[i].countfourweekBack*100;
-			    			 			    			 
+
 			    			 if (($scope.spikeErrorTypeIncrease == data[i].error_type) && (errorCountDifference > $scope.spikeBySpecificErrorByMakeModelTolerance)){
 			    				 data[i].increase_spike = errorCountDifference;
 			    			 } else if (($scope.spikeErrorTypeDecrease == data[i].error_type) && (errorCountDifference < $scope.spikeBySpecificErrorByMakeModelTolerance)){
 			    				 data[i].decrease_spike = errorCountDifference;
 			    			 } else {
-			    				 data.splice(i, 1);			    				 
+			    				 data.splice(i, 1);
 			    			 }
 			    		 }
-			    		 
+
 			    		 $scope.data = data;
-			    		 
+
 			    		 if (data.length == 0){
 			    			 $scope.isLoading = false;
 			 				 $scope.isError = true;
 			 				 $scope.isNoData = true;
 			    			 $scope.msg = $scope.msg2;
 			    		 }
-			    		 
+
 			    	 } else {
 			    		 $scope.isLoading = false;
 		 				 $scope.isError = true;
 		 				 $scope.isNoData = true;
 		    			 $scope.msg = $scope.msg2;
 			    	 }
-						           
+
 			}). error(function(data, status) {
 					$scope.isLoading = false;
 					$scope.isError = true;
 					$scope.msg = $scope.msg3;
-				
+
 			});
-			
-        }). error(function(data, status) {          
+
+        }). error(function(data, status) {
         	$scope.isLoading = false;
 			$scope.isError = true;
 			$scope.msg = $scope.msg3;
-			
-        });	
-		
+
+        });
+
 	};
-	
-	
+
+
 }])
 .directive('toggle', function(){
 	  return {
@@ -2891,7 +2725,7 @@ function renderHorizontalBarChart(divId, notificationData){
             text: 'Twitter Sentimate'
         },
         xAxis: {
-            lineWidth: 0, 
+            lineWidth: 0,
             tickWidth: 0,
             labels: {
                 enabled: false,
@@ -2916,31 +2750,19 @@ function renderHorizontalBarChart(divId, notificationData){
         legend: {
             reversed: true
         },
-        
+
 
     	colors:['#5DADE2', '#339933'],
-        
+
         plotOptions: {
             series: {
                 stacking: 'normal',
-                pointWidth: 15/*,
-                colors:['#5DADE2', '#D6EAF8']*/
+                pointWidth: 15
             },
             bar: {
             	colorByPoint: true
-                /*dataLabels: {
-                    enabled: true,
-                    distance : -50,
-                    formatter: function() {
-                        var dlabel = this.series.name + '<br/>';
-                        dlabel += Math.round(this.percentage*100)/100 + ' %';
-                            return dlabel
-                     },
-                    style: {
-                        color: 'white',
-                    },
-                },*/
-                
+
+
             },
         },
         series: notificationData
@@ -2957,7 +2779,7 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 	$rootScope.baseUrl=configApiClient.baseUrl;
 	$scope.EngchartTypes=['Line Chart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
-	
+
 	$scope.linechartData=null;
 	  $rootScope.piechartData = null;
 	  $rootScope.barchartData=null;
@@ -2967,105 +2789,104 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 
 	  $scope.barData = [[65, 59, 80, 81],
 	                    [28, 48, 40, 19]];
-	 
-	  
-	  $rootScope.setUsageData=function(usagedata){		 
+
+
+	  $rootScope.setUsageData=function(usagedata){
 		  $scope.usagedata=usagedata;
-		 
-		  
+
+
 		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
           var rolename = loginCredentails.Role;
           var roleKey  = loginCredentails.roleKey;
-          
+
           $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
           if($scope.isEngManager){
                 if($scope.selectedSensors >= 0 && $scope.selectedSensors <= 7){
                    $scope.plotEngManagerChartFunction('container' , $scope.seneorkey);
-                }                 
+                }
           }else{
 			  if($scope.selectedSales==0){
-				  $scope.plotPieChart("piecontainer");	
+				  $scope.plotPieChart("piecontainer");
 			  }
 			  else if($scope.selectedSales== 1){
 				  $scope.plotBarChart("bar");
-					
+
 			  } else if($scope.selectedSales==2){
-				  $scope.plotChartFunction('container');				
+				  $scope.plotChartFunction('container');
 			  }
           }
 	  }
-	  
-	  
+
+
 	  // display sensors Name for Engg Manager
 	  $http({
-		  url:configApiClient.baseUrl + 'sensors', 
+		  url:configApiClient.baseUrl + 'sensors',
 		  method: 'GET',
 		}).success(function(data, status) {
 			$scope.sensorsList=data;
-	    				           
+
 	    }). error(function(data, status) {
-	      // alert("error"  +status);
-	       
+
+
 	    });
-	  
+
 	  $http({
-			  url:configApiClient.baseUrl + 'sales/charts', 
+			  url:configApiClient.baseUrl + 'sales/charts',
 			  method: 'GET',
 			}).success(function(data, status) {
 				$scope.salesList=data;
-//				$scope.chartTypes=data[parseInt($scope.selectedSales)].chartTypes;
-		    					           
+
+
 		    }). error(function(data, status) {
-		      // alert("error"  +status);
-		       
+
+
 		    });
-	  
-	  
+
+
 	  $scope.Engdisp=function(index){
 			if(index==0)
 				$scope.selectedSensors=""+0;
-		
+
 
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
-//				$rootScope.selectedSales=$scope.selectedSales;
 				 $scope.sensortype=$scope.sensorsList[$scope.selectedSensors].displayName;
 				 $scope.seneorkey=$scope.sensorsList[$scope.selectedSensors].key;
-				 
-			
-				
+
+
+
 			}
 			else
 					$scope.sensortype="";
 			if( $scope.sensortype=="Average Water Usage"){
-				
+
 				$scope.Unit="Water usage in Gallons";
 			}else if( $scope.sensortype=="Average Power"){
-				
+
 				$scope.Unit="Power in kWh";
 			}else if( $scope.sensortype=="Average Wash Cycle Duration"){
-				
+
 				$scope.Unit="wash cycle duration in mins";
 			}else if( $scope.sensortype=="Average Wash Cycles"){
-				
+
 				$scope.Unit="Cycle wash in RPM";
 			}else if( $scope.sensortype=="Average Temperature"){
-				
+
 				$scope.Unit="Temperature in  F";
 			}else if( $scope.sensortype=="Average Detergent Used"){
-				
+
 				$scope.Unit="Detergent in gms";
 			}else if( $scope.sensortype=="Average Humidity"){
-				
+
 				$scope.Unit="Humidity in %";
 			}else if( $scope.sensortype=="Average Load"){
-				
+
 				$scope.Unit="Load in KGS ";
 			}
-	
-					
+
+
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
-	  
+
 	  $scope.isActive1 = false;
 	    $scope.isActive2 = false;
 	    $scope.isActive3 = false;
@@ -3078,50 +2899,50 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 	      $scope.isActive3 = !$scope.isActive3;
 	  }
 
-	  
+
 	$scope.disp=function(index){
 		if(index==0)
 			$scope.selectedSales=""+0;
 
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
-//			$rootScope.selectedSales=$scope.selectedSales;
+
 			 $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
 			 $scope.selectedChart=$scope.chartTypes[0];
 		}
 		else
 				$scope.chartTypes="";
-	
+
 	}
-	
+
 	$scope.dispChart=function(selectedChart){
-		
+
 	}
-	
-	//code by Babagouda
-	
+
+
+
 $scope.plotPieChart=function(divID){
-	//var divid = '#'+divID;
+
 	removechart(divID);
-	$scope.loadingText = "Loading data...";   
-  $rootScope.isApplyFiterButton = true; 
+	$scope.loadingText = "Loading data...";
+  $rootScope.isApplyFiterButton = true;
 	  $scope.isDisabled = true;
 	  $scope.progress = true;
 	if($scope.data==null){
-		
+
 	 $http({
-		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false', 
+		  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=false',
 		  method: 'POST'
-			 
+
 		}).success(function(data, status) {
-	    	
+
         $rootScope.isApplyFiterButton = false;
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
 	    	$scope.data=[];
          $scope.data[0]=data.unitsSold;
           $scope.data[1]=data.unitsConnected;
-          $scope.data[2]=data.unitsSold - data.unitsConnected; 
-	    	
+          $scope.data[2]=data.unitsSold - data.unitsConnected;
+
 	    	$(function() {
 	            // Create the chart
 	            chart = new Highcharts.Chart({
@@ -3134,7 +2955,7 @@ $scope.plotPieChart=function(divID){
 	                },
 	                credits:{
 	                	enabled: false
-	                },	               
+	                },
 	                plotOptions: {
 	                    pie: {
 	                        shadow: false
@@ -3161,28 +2982,28 @@ $scope.plotPieChart=function(divID){
 	    	$scope.isDisabled = false;
 	       $scope.progress = false;
 	    })
-	   
+
 	}else{
-		
+
 		if($rootScope.applyFilterBoolean){
-			
+
 			$http({
-				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true', 
+				  url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true',
 				  method: 'POST',
-				  headers: { 
+				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
 	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
-	                	'Access-Control-Allow-Credentials':true  
+	                	'Access-Control-Allow-Credentials':true
           		 },
 				  data:$scope.usagedata
-					 
+
 				}).success(function(data, status) {
           $rootScope.isApplyFiterButton = false;
 					$scope.progress = false;
 					$scope.isDisabled = false;
-			    	
+
             var totalSold = 0;
             var totalconnected = 0;
             var seriesData = [];
@@ -3190,12 +3011,8 @@ $scope.plotPieChart=function(divID){
               totalSold +=data[i].unitsSold;
               totalconnected += data[i].unitsConnected ;
             }
-            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]] 
-			    	/*$scope.data[0]=totalSold;
-			    	$scope.data[1]=totalconnected;
-			    	$scope.connPercentage=parseFloat(($scope.data[1]/$scope.data[0])*100).toFixed(2);
-			    	$scope.unconnPercentage=parseFloat((($scope.data[0]-$scope.data[1])/$scope.data[0])*100).toFixed(2);
-            */
+            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
+
 			    	$(function() {
 			            // Create the chart
 			            chart = new Highcharts.Chart({
@@ -3208,7 +3025,7 @@ $scope.plotPieChart=function(divID){
 			                },
 			                credits:{
 			                	enabled: false
-			                },			               
+			                },
 			                plotOptions: {
 			                    pie: {
 			                        shadow: false
@@ -3234,16 +3051,16 @@ $scope.plotPieChart=function(divID){
             $rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	
+
 			    });
-				
+
 			$rootScope.applyFilterBoolean=false;
 		}
 		else{
 			$scope.isDisabled = false;
       $rootScope.isApplyFiterButton = false;
 			$scope.progress = false;
-		
+
 			$(function() {
 	            // Create the chart
 	            chart = new Highcharts.Chart({
@@ -3279,28 +3096,28 @@ $scope.plotPieChart=function(divID){
         });
 	  }
 	 }
-	
+
 	}
 
 	$scope.plotBarChart=function(divId){
 		removechart(divId);
-		$scope.loadingText = "Loading data..."; 
+		$scope.loadingText = "Loading data...";
 		$rootScope.isApplyFiterButton = true;
-	
+
 		  $scope.progress = true;
 		if($rootScope.barchartData==null){
 		 $http({
-			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false', 
+			  url:configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false',
 			  method: 'POST'
-			 
+
 			}).success(function(data, status) {
-			
+
 				$scope.progress = false;
         $rootScope.isApplyFiterButton = false;
-				
+
 		    	$rootScope.barchartData=data;
-		    	
-		    	//$(function () {
+
+
 				    $('#bar').highcharts({
 				        chart: {
 				            type: 'column'
@@ -3350,43 +3167,43 @@ $scope.plotPieChart=function(divID){
 
 				        }]
 				    });
-				//});
+
 			}). error(function(data, status) {
-				//$scope.isDisabled = false;
-			
+
+
         $rootScope.isApplyFiterButton = false;
-			      
+
 			    });
 		}else{
 			$rootScope.barDetails = $rootScope.barchartData;
 			if($rootScope.applyFilterBoolean){
 				$http({
-					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true', 
+					  url:configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true',
 					  method: 'POST',
-					  headers: { 
+					  headers: {
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
 		                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
-		                	'Access-Control-Allow-Credentials':true  
+		                	'Access-Control-Allow-Credentials':true
 	          		 },
 					  data:$scope.usagedata
-						 
+
 					}).success(function(data, status) {
-					//	$scope.isDisabled = false;
+
 						$scope.progress = false;
             $rootScope.isApplyFiterButton = false;
-						
-				    	
+
+
 				  // To prevent the top 3 selling models chart from updating according to the side-bar product filter
-				  //Made this change because we cannot plot the chart if the user select Make and Model  	
+				  //Made this change because we cannot plot the chart if the user select Make and Model
 				    	if(($rootScope.search.selectedMake) == undefined ){
 			                $rootScope.barchartData=data;
 			              }
 			              else{
 			                $rootScope.barchartData=$rootScope.barDetails;
 			              }
-				    	//$scope.barchartData=data;
+
 
 				    	$(function () {
 						    $('#bar').highcharts({
@@ -3440,16 +3257,16 @@ $scope.plotPieChart=function(divID){
 						    });
 						});
 					}).error(function(data,status){
-					//	$scope.isDisabled = false;
+
 						$scope.progress = false;
             $rootScope.isApplyFiterButton = false;
-						
+
 					});
 				$rootScope.applyFilterBoolean=false;
-			}	
+			}
 			else{
 			$scope.progress = false;
-		//	$scope.isDisabled = false;
+
       $rootScope.isApplyFiterButton = false;
 			$(function () {
 			    $('#bar').highcharts({
@@ -3500,334 +3317,233 @@ $scope.plotPieChart=function(divID){
 			    });
 			});
 		}
-	   
+
 		}
-		
+
 	}
 	$scope.plotChartFunction = function(divId){
 		removechart(divId);
-		$scope.loadingText = "Loading data...";    
+		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
 		$scope.progress = true;
 		$rootScope.isApplyFiterButton = true;
 		var obj={};
-		
+
 		if($rootScope.applyFilterBoolean){
 			$http({
-				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true', 
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true',
 				  method: 'POST',
-				  headers: { 
+				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
 	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
-	                	'Access-Control-Allow-Credentials':true  
+	                	'Access-Control-Allow-Credentials':true
         		 },
 				  data:$scope.usagedata
-					 
+
 				}).success(function(data, status) {
-					$scope.isDisabled = false;					
+					$scope.isDisabled = false;
 					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-					var timeScales = getTimeScales(data.data);	
+					var timeScales = getTimeScales(data.data);
 					$scope.progress = false;
 			    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
-			    	
+
 			   }).error(function(data,status){
 				   $scope.isDisabled = false;
-				   $scope.progress = false;	
+				   $scope.progress = false;
 				   $rootScope.isApplyFiterButton = false;
-				   
+
 			   });
-			$rootScope.applyFilterBoolean=false;						
-		 
+			$rootScope.applyFilterBoolean=false;
+
 		} else {
 			$http({
-				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false',
 				  method: 'POST'
-				 
+
 				}).success(function(data, status) {
-					$scope.isDisabled = false;					
+					$scope.isDisabled = false;
 					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-					var timeScales = getTimeScales(data.data);	
+					var timeScales = getTimeScales(data.data);
 					$scope.progress = false;
 			    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 			    }). error(function(data, status) {
 			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	
-			    });	
-		}	
-	}	
-	
-	
-	/*$scope.plotEngManagerChartFunction = function(divId,key){
-		
-		  removechart(divId);
-		  $scope.loadingText = "Loading data...";    
-	//	  $scope.isDisabled = true;
-		  $scope.progress = true;
-		  $rootScope.isApplyFiterButton = true;
-		  
-		  var url=configApiClient.baseUrl + "sensors/data?sensor_name="+key;		
-				
-		  alert(key);
-		  
-		  $http({
-			  url:url, 
-			  method: 'POST'
-			 
-			}).success(function(data, status) {
-				$scope.progress = false;
-				$rootScope.isApplyFiterButton = false;
-		    	
-		    	$scope.linechartData=data;
-		    	 $scope.progress = false;
-		    	 
-		    	 //alert(JSON.stringify(data));		
-		
-		$("#"+divId).highcharts( {
-			credits:false,
-			title:false,
-			legend: {enabled:false},
-			title: {
-    			text: ""+$scope.sensortype
-    		},
-            legend: {
-                align: 'right',
-                verticalAlign: 'top',
-                y: 50,
-                padding: 1,
-                itemMarginTop: 5,
-                itemMarginBottom: 5,
-                itemStyle: {
-                    lineHeight: '10px',
-                    fontSize: '10px',
-                    fontWeight: 'normal',
-                     itemWidth: 100
-                }
-            },
-		    xAxis: {
-		        categories: ['SUN','MON','TUE','WED','THU','FRI','SAT']
-		    },
-		    yAxis: {
-		    	 title: {
-		                text: ""+$scope.Unit
-		            },
-			    },
-			    tooltip: {
-			    	backgroundColor: '#87C1E6',
-			    	shared: true,
-				    style:{
-						color:'#ffffff'
-					}
-		        },
-		        plotOptions: {
-		            series: {
-		            	 color: "#f0f0f0", 
-		                marker: {
-		                	fillColor: '#FFFFFF', 
-		                    lineWidth: 2,
-		                    lineColor: "#6BD500",  // inherit from series 
-		                    radius: 6
-		                }
-		            }
-		        },
-		        series: [{
-		    		name:$scope.linechartData[0].make,
-	        		data: [$scope.linechartData[0].avgUsage,$scope.linechartData[1].avgUsage,$scope.linechartData[2].avgUsage,$scope.linechartData[2].avgUsage]
-	    },
-	    {
-    		name:""+$scope.linechartData[3].make,
-    		data: [$scope.linechartData[3].avgUsage,$scope.linechartData[4].avgUsage,$scope.linechartData[5].avgUsage,$scope.linechartData[5].avgUsage]
-		},
-		{
-			name:""+$scope.linechartData[6].make,
-    		data: [$scope.linechartData[6].avgUsage,$scope.linechartData[7].avgUsage,$scope.linechartData[8].avgUsage,$scope.linechartData[8].avgUsage]
-		}]
-		});
-		})
-	}*/
-	
+
+			    });
+		}
+	}
+
+
+
+
 	$scope.plotEngManagerChartFunction = function(divId,key){
 		removechart(divId);
-		$scope.loadingText = "Loading data...";    
+		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
 		$scope.progress = true;
 		$rootScope.isApplyFiterButton = true;
 		var obj={};
-		
+
 		if($rootScope.applyFilterBoolean){
 			$http({
-				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true', 
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true',
 				  method: 'POST',
-				  headers: { 
+				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
 	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
-	                	'Access-Control-Allow-Credentials':true  
+	                	'Access-Control-Allow-Credentials':true
         		 },
 				  data:$scope.usagedata
-					 
+
 				}).success(function(data, status) {
-					$scope.isDisabled = false;					
+					$scope.isDisabled = false;
 					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-					var timeScales = getTimeScales(data.data);	
+					var timeScales = getTimeScales(data.data);
 					$scope.progress = false;
 			    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
-			    	
+
 			   }).error(function(data,status){
 				   $scope.isDisabled = false;
-				   $scope.progress = false;	
+				   $scope.progress = false;
 				   $rootScope.isApplyFiterButton = false;
-				  
+
 			   });
-			$rootScope.applyFilterBoolean=false;						
-		 
+			$rootScope.applyFilterBoolean=false;
+
 		} else {
 			$http({
-				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false', 
+				  url:configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false',
 				  method: 'POST'
-				 
+
 				}).success(function(data, status) {
-					$scope.isDisabled = false;					
+					$scope.isDisabled = false;
 					$rootScope.isApplyFiterButton = false;
 					var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-					var timeScales = getTimeScales(data.data);	
+					var timeScales = getTimeScales(data.data);
 					$scope.progress = false;
 			    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
 			    }). error(function(data, status) {
 			    	$rootScope.isApplyFiterButton = false;
 			    	$scope.isDisabled = false;
 			    	$scope.progress = false;
-			    	
-			    });	
+
+			    });
 		}
-		
+
 	}
-	
+
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
-		
+
 		//give new IDs for identification
 		chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
 		chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
 		chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
-		
+
      	$("#hiddenDiv").empty();
      	$("#hiddenDiv").append(chartParent);
-     	
+
      	//remove the elements with new ID
 		 $("#filter1").remove();
 		 $("#filter2").remove();
 		 $("#filter3").remove();
-		 
+
      	$("#hiddenDiv").removeClass("hidden");
      	$("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
      	if($scope.selectedChart=='Multiline'){
      		$("#hiddenDiv #container").removeClass("graphDiv");
      		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
-         	
+
          	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
-         	
+
          	$("#hiddenDiv #container").addClass("graphDiv-maximize");
          	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
-         	
+
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	
+
          	$scope.plotChartFunction("hiddenDiv #container");
-     	
-     	
+
+
      	}if($scope.selectedChart=='Line Chart'){
-     		
-     	
+
+
      		$("#hiddenDiv #container").removeClass("graphDiv");
      		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
-         	
+
          	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
-         	
+
          	$("#hiddenDiv #container").addClass("graphDiv-maximize");
          	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
-         	
+
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	
-         	
-         	
+
+
+
          	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
-     	
-     	
+
+
      	}
-     	
+
      	if($scope.selectedChart=='Pie'){
      		$("#hiddenDiv #piecontainer").removeClass("graphDiv");
      		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
-         	
+
          	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
-         	
+
          	$("#hiddenDiv #piecontainer").addClass("graphDiv-maximize");
          	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
-         	
+
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
          	$scope.plotPieChart("piecontainer");
          }
-     	
+
      	if($scope.selectedChart=='Bar'){
      		$("#hiddenDiv #bar").removeClass("graphDiv");
      		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
-         	
+
          	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
-         	
+
          	$("#hiddenDiv #bar").addClass("graphDiv-maximize");
          	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
-         	
+
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
          	$scope.plotBarChart("hiddenDiv #bar");
          }
-     	
+
 	};
 	$("body").on("click","#hiddenDiv #close",function(){
 		$("#hiddenDiv").empty();
 		$("#hiddenDiv").addClass("hidden");
 		if($scope.selectedChart=='Multiline'){
-			
+
 			$scope.plotChartFunction("container");
 		}else if($scope.selectedChart=='Bar'){
 			$scope.plotBarChart("bar");
 		}else if($scope.selectedChart=='Pie'){
 			$scope.plotPieChart("piecontainer");
 		}else if($scope.selectedChart=='Line Chart'){
-			
+
          	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
-	/* $scope.closing = function(){
-		
-	}; */
-			
+
+
 }]);
 
-/*App.controller('filterController', function ($scope,$http) {
-	
-	var url = 'http://localhost:3000/api/v1/config/states';
-    
-	$http.get("https://localhost:3000/api/v1/config/states")
-	 .success(function(response){
-		 $scope.states=[];
-		 $scope.states = response.states; 
-	    })
-	 .error(function(response){
-	        alert(response);
-	    });
-	
-});*/
+
 
 /**=========================================================
  * Module: navbar-search.js
@@ -3861,7 +3577,7 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
           if (e.keyCode == 27) // ESC
             navSearch.dismiss();
         });
-        
+
       // click anywhere closes the search
       $(document).on('click', navSearch.dismiss);
       // dismissable options
@@ -3880,48 +3596,48 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
  =========================================================*/
 
 App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope, $window, Utils) {
- 
+
   var $win  = $($window);
   var $body = $('body');
   var $scope;
   var $sidebar;
   var currentState = $rootScope.$state.current.name;
 
-  
-  
+
+
   return {
     restrict: 'EA',
     template: '<nav class="sidebar" ng-transclude></nav>',
     transclude: true,
     replace: true,
     link: function(scope, element, attrs) {
-    	
-    	
-      
+
+
+
       $scope   = scope;
       $sidebar = element;
 
-     
+
       var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
       var subNav = $();
       $sidebar.on( eventName, '.nav > li', function() {
-    	//  
+
         if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) {
 
-        //  subNav.trigger('mouseleave');
+
           subNav = toggleMenuItem( $(this) );
-          	
-          // Used to detect click and touch events outside the sidebar          
+
+          // Used to detect click and touch events outside the sidebar
           sidebarAddBackdrop();
 
         }
 
       });
-      
-     
+
+
 
       scope.$on('closeSidebarMenu', function() {
-    	 
+
         removeFloatingNav();
       });
 
@@ -3950,7 +3666,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
     });
   }
 
-  // Open the collapse sidebar submenu items when on touch devices 
+  // Open the collapse sidebar submenu items when on touch devices
   // - desktop only opens on hover
   function toggleTouchItem($element){
     $element
@@ -3961,13 +3677,13 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
   }
 
   // Handles hover to open items under collapsed menu
-  // ----------------------------------- 
+
   function toggleMenuItem($listItem) {
 
     removeFloatingNav();
 
     var ul = $listItem.children('ul');
-    
+
     if( !ul.length ) return $();
     if( $listItem.hasClass('open') ) {
       toggleTouchItem($listItem);
@@ -3979,7 +3695,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
     // float aside uses extra padding on aside
     var mar = parseInt( $asideInner.css('padding-top'), 0) + parseInt( $aside.css('padding-top'), 0);
     var subNav = ul.clone().appendTo( $aside );
-    
+
     toggleTouchItem($listItem);
 
     var itemTop = ($listItem.position().top + mar) - $sidebar.scrollTop();
@@ -3995,7 +3711,7 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
 
     subNav.on('mouseleave', function() {
       toggleTouchItem($listItem);
-     /* subNav.remove();*/
+
     });
 
     return subNav;
@@ -4007,25 +3723,25 @@ App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope,
     $('.sidebar li.open').removeClass('open');
   }
 
-  
+
   $scope.selectMake=function()
   {
-  	
+
   	alert("SELECTED");
   }
-  
+
 }]);
 /**=========================================================
  * Module: toggle-state.js
- * Toggle a classname from the BODY Useful to change a state that 
- * affects globally the entire layout or more than one item 
+ * Toggle a classname from the BODY Useful to change a state that
+ * affects globally the entire layout or more than one item
  * Targeted elements must have [toggle-state="CLASS-NAME-TO-TOGGLE"]
  * User no-persist to avoid saving the sate in browser storage
  =========================================================*/
 
 App.directive('toggleState', ['toggleStateService', function(toggle) {
   'use strict';
-  
+
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -4036,7 +3752,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
         .on('click', function (e) {
           e.preventDefault();
           var classname = attrs.toggleState;
-          
+
           if(classname) {
             if( $body.hasClass(classname) ) {
               $body.removeClass(classname);
@@ -4048,13 +3764,13 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
               if( ! attrs.noPersist)
                 toggle.addState(classname);
             }
-            
+
           }
 
       });
     }
   };
-  
+
 }]);
 
 /**=========================================================
@@ -4164,9 +3880,9 @@ App.service('browser', function(){
  * Module: colors.js
  * Services to retrieve global colors
  =========================================================*/
- 
+
 App.factory('colors', ['APP_COLORS', function(colors) {
-  
+
   return {
     byName: function(name) {
       return (colors[name] || '#fff');
@@ -4179,18 +3895,18 @@ App.factory('colors', ['APP_COLORS', function(colors) {
  * Module: nav-search.js
  * Services to share navbar search functions
  =========================================================*/
- 
+
 App.service('navSearch', function() {
   var navbarFormSelector = 'form.navbar-form';
   return {
     toggle: function() {
-      
+
       var navbarForm = $(navbarFormSelector);
 
       navbarForm.toggleClass('open');
-      
+
       var isOpen = navbarForm.hasClass('open');
-      
+
       navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
 
     },
@@ -4298,7 +4014,7 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
     // Add a state to the browser storage to be restored later
     addState: function(classname){
       var data = angular.fromJson($rootScope.$storage[storageKeyName]);
-      
+
       if(!data)  {
         data = classname;
       }
@@ -4319,11 +4035,11 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
 
       $rootScope.$storage[storageKeyName] = angular.toJson(data);
     },
-    
+
     // Load the state string and restore the classlist
     restoreState: function($elem) {
       var data = angular.fromJson($rootScope.$storage[storageKeyName]);
-      
+
       // nothing to restore
       if(!data) return;
       $elem.addClass(data);
@@ -4339,7 +4055,7 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
 
 App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQUERY) {
     'use strict';
-    
+
     var $html = angular.element("html"),
         $win  = angular.element($window),
         $body = angular.element('body');
@@ -4438,11 +4154,11 @@ App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQU
       }
     };
 }]);
-// To run this code, edit file 
+// To run this code, edit file
 // index.html or index.jade and change
 // html data-ng-app attribute from
 // angle to myAppName
-// ----------------------------------- 
+
 
 var myApp = angular.module('myAppName', ['angle']);
 
@@ -4455,12 +4171,12 @@ myApp.run(["$log", function($log) {
 myApp.config(["RouteHelpersProvider", function(RouteHelpersProvider) {
 
   // Custom Route definition
-  
+
 }]);
 
 App.controller('MyController', ['$scope', function($scope) {
   /* controller code */
- 
+
 }]);
 
 myApp.directive('oneOfMyOwnDirectives', function() {
@@ -4472,7 +4188,7 @@ myApp.config(["$stateProvider", function($stateProvider /* ... */) {
 }]);
 App.controller('MyviewController', ['$scope', function($scope) {
 	  /* controller code */
-	
+
 	  $scope.getUrl = function(){
 
 	    if(localStorage.getItem('rolename') == "Engineer Manager"){
@@ -4483,4 +4199,3 @@ App.controller('MyviewController', ['$scope', function($scope) {
 	    }
 	  }
 }]);
-
