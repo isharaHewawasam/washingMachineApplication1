@@ -1,17 +1,5 @@
-/*!
- *
- * Angle - Bootstrap Admin App + AngularJS
- *
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
- *
- */
 
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
-
-
-
 
 var login = angular.module('myLoginCheck',[]).
 factory('$logincheck', function(){
@@ -22,12 +10,7 @@ factory('$logincheck', function(){
   };
 
 });
-
-
 var salesDataJoin;
-
-// APP START
-// -----------------------------------
 var Role;
 var Name;
 var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
@@ -39,16 +22,16 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               $rootScope.isApplyFiterButton = true;
               $rootScope.isReportFiltering = true;
 
-
               // Uncomment this to disable template cache
               /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
                   if (typeof(toState) !== 'undefined'){
                     $templateCache.remove(toState.templateUrl);
                   }
               });*/
-
-              // Scope Globals
-              // -----------------------------------
+              
+              /**Scope Globals **/
+        
+           
               $rootScope.app = {
                 name: 'Angle',
                 description: 'Angular Bootstrap Admin Template',
@@ -79,13 +62,13 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 App.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider',
 function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   'use strict';
-
-  // Set the following to true to enable the HTML5 Mode
-  // You may have to set <base> tag in index and a routing configuration in your server
+/** Set the following to true to enable the HTML5 Mode
+   You may have to set <base> tag in index and a routing configuration in your server **/
+ 
   $locationProvider.html5Mode(false);
-
-  // default route
-  //$urlRouterProvider.otherwise('/app/singleview');
+  
+  /** default route **/
+ 
   $urlRouterProvider.otherwise('/page/login');
 
   $stateProvider
@@ -162,12 +145,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         controller: 'NotificationConfController',
         templateUrl: helper.basepath('notificationconfiguration.html'),
         data:{title: 'Notification Configuration'}
-    })
-
-
-    ;
-
-
+    });
+  
 }]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
 	  if(!$logincheck($window.sessionStorage.loginCredentails)) {
 		  $location.path('/login');
@@ -175,8 +154,9 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 }]);
 App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
-
-    // Lazy Load modules configuration
+    
+    /**  Lazy Load modules configuration**/
+  
     $ocLazyLoadProvider.config({
       debug: false,
       events: true,
@@ -186,7 +166,8 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
 }]).config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
     function ( $controllerProvider, $compileProvider, $filterProvider, $provide) {
       'use strict';
-      // registering components after bootstrap
+      
+      /** registering components after bootstrap **/
       App.controller = $controllerProvider.register;
       App.directive  = $compileProvider.directive;
       App.filter     = $filterProvider.register;
@@ -213,10 +194,10 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
   }])
 ;
 
-/**=========================================================
- * Module: constants.js
+/**
+ * 
  * Define constants to inject across the application
- =========================================================*/
+*/
 App
   .constant('APP_COLORS', {
     'primary':                '#5d9cec',
@@ -243,13 +224,16 @@ App
     'mobile':                 480
   })
   .constant('APP_REQUIRES', {
-    // jQuery based and standalone scripts
+	  
+	  /** jQuery based and standalone scripts**/
+
     scripts: {
       'modernizr':          ['vendor/modernizr/modernizr.js'],
       'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
                              'vendor/simple-line-icons/css/simple-line-icons.css']
     },
-    // Angular based script (use the right module name)
+    
+    /**Angular based script (use the right module name)**/
     modules: [
 
 
@@ -260,7 +244,10 @@ App
 
   })
 ;
-
+/**
+ *
+ * login api
+ */
 App.controller('LoginFormController', ['$scope', '$http', '$state','$rootScope','$window', 'iot.config.ApiClient', function($scope, $http, $state,$rootScope,$window, configApiClient) {
 
 
@@ -353,10 +340,9 @@ App.controller('TopnavbarController', ['$rootScope','$scope','$http', '$state', 
 	};
 
 }]);
-/**=========================================================
- * Module: main.js
+/**
  * Main Application Controller
- =========================================================*/
+*/
 
 App.controller('AppController',
   ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar',
@@ -463,57 +449,6 @@ App.controller('AppController',
 
 
 }]);
-
-
-
-App.controller('DataTableController', ['$scope', '$timeout', function($scope, $timeout) {
-	  'use strict';
-
-	  // Define global instance we'll use to destroy later
-	  var dtInstance1;
-
-
-
-
-	  $timeout(function(){
-
-	    if ( ! $.fn.dataTable ) return;
-
-
-
-	    dtInstance1 = $('#datatable1').dataTable({
-
-
-	        'paging':   true,  // Table pagination
-	        'ordering': true,  // Column ordering
-	        'info':     true,  // Bottom left status text
-	        // Text translation options
-	        // Note the required keywords between underscores (e.g _MENU_)
-	        oLanguage: {
-	            sSearch:      'Search all columns:',
-	            sLengthMenu:  '_MENU_ records per page',
-	            info:         'Showing page _PAGE_ of _PAGES_',
-	            zeroRecords:  'Nothing found - sorry',
-	            infoEmpty:    'No records available',
-	            infoFiltered: '(filtered from _MAX_ total records)'
-	        }
-
-	    });
-
-
-
-	  });
-
-	  // When scope is destroyed we unload all DT instances
-	  // Also ColVis requires special attention since it attaches
-	  // elements to body and will not be removed after unload DT
-	  $scope.$on('$destroy', function(){
-	    dtInstance1.fnDestroy();
-
-	    $('[class*=ColVis]').remove();
-	  });
-
-	}]);
 
 
 App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$http", "$state", "iot.config.ApiClient", function($scope, $rootScope, $timeout, $http, $state, configApiClient) {
@@ -2851,9 +2786,6 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
 				 $scope.sensortype=$scope.sensorsList[$scope.selectedSensors].displayName;
 				 $scope.seneorkey=$scope.sensorsList[$scope.selectedSensors].key;
-
-
-
 			}
 			else
 					$scope.sensortype="";
@@ -3544,200 +3476,12 @@ $scope.plotPieChart=function(divID){
 }]);
 
 
-
-/**=========================================================
- * Module: navbar-search.js
- * Navbar search toggler * Auto dismiss on ESC key
- =========================================================*/
-
-App.directive('searchOpen', ['navSearch', function(navSearch) {
-  'use strict';
-
-  return {
-    restrict: 'A',
-    controller: ["$scope", "$element", function($scope, $element) {
-      $element
-        .on('click', function (e) { e.stopPropagation(); })
-        .on('click', navSearch.toggle);
-    }]
-  };
-
-}]).directive('searchDismiss', ['navSearch', function(navSearch) {
-  'use strict';
-
-  var inputSelector = '.navbar-form input[type="text"]';
-
-  return {
-    restrict: 'A',
-    controller: ["$scope", "$element", function($scope, $element) {
-
-      $(inputSelector)
-        .on('click', function (e) { e.stopPropagation(); })
-        .on('keyup', function(e) {
-          if (e.keyCode == 27) // ESC
-            navSearch.dismiss();
-        });
-
-      // click anywhere closes the search
-      $(document).on('click', navSearch.dismiss);
-      // dismissable options
-      $element
-        .on('click', function (e) { e.stopPropagation(); })
-        .on('click', navSearch.dismiss);
-    }]
-  };
-
-}]);
-
-
-/**=========================================================
- * Module: sidebar.js
- * Wraps the sidebar and handles collapsed state
- =========================================================*/
-
-App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope, $window, Utils) {
-
-  var $win  = $($window);
-  var $body = $('body');
-  var $scope;
-  var $sidebar;
-  var currentState = $rootScope.$state.current.name;
-
-
-
-  return {
-    restrict: 'EA',
-    template: '<nav class="sidebar" ng-transclude></nav>',
-    transclude: true,
-    replace: true,
-    link: function(scope, element, attrs) {
-
-
-
-      $scope   = scope;
-      $sidebar = element;
-
-
-      var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
-      var subNav = $();
-      $sidebar.on( eventName, '.nav > li', function() {
-
-        if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) {
-
-
-          subNav = toggleMenuItem( $(this) );
-
-          // Used to detect click and touch events outside the sidebar
-          sidebarAddBackdrop();
-
-        }
-
-      });
-
-
-
-      scope.$on('closeSidebarMenu', function() {
-
-        removeFloatingNav();
-      });
-
-      // Normalize state when resize to mobile
-      $win.on('resize', function() {
-        if( ! Utils.isMobile() )
-          $body.removeClass('aside-toggled');
-      });
-
-      // Adjustment on route changes
-      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        currentState = toState.name;
-        // Hide sidebar automatically on mobile
-        $('body.aside-toggled').removeClass('aside-toggled');
-
-        $rootScope.$broadcast('closeSidebarMenu');
-      });
-
-    }
-  };
-
-  function sidebarAddBackdrop() {
-    var $backdrop = $('<div/>', { 'class': 'dropdown-backdrop'} );
-    $backdrop.insertAfter('.aside-inner').on("click mouseenter", function () {
-      removeFloatingNav();
-    });
-  }
-
-  // Open the collapse sidebar submenu items when on touch devices
-  // - desktop only opens on hover
-  function toggleTouchItem($element){
-    $element
-      .siblings('li')
-      .removeClass('open')
-      .end()
-      .toggleClass('open');
-  }
-
-  // Handles hover to open items under collapsed menu
-
-  function toggleMenuItem($listItem) {
-
-    removeFloatingNav();
-
-    var ul = $listItem.children('ul');
-
-    if( !ul.length ) return $();
-    if( $listItem.hasClass('open') ) {
-      toggleTouchItem($listItem);
-      return $();
-    }
-
-    var $aside = $('.aside');
-    var $asideInner = $('.aside-inner'); // for top offset calculation
-    // float aside uses extra padding on aside
-    var mar = parseInt( $asideInner.css('padding-top'), 0) + parseInt( $aside.css('padding-top'), 0);
-    var subNav = ul.clone().appendTo( $aside );
-
-    toggleTouchItem($listItem);
-
-    var itemTop = ($listItem.position().top + mar) - $sidebar.scrollTop();
-    var vwHeight = $win.height();
-
-    subNav
-      .addClass('nav-floating')
-      .css({
-        position: $scope.app.layout.isFixed ? 'fixed' : 'absolute',
-        top:      itemTop,
-        bottom:   (subNav.outerHeight(true) + itemTop > vwHeight) ? 0 : 'auto'
-      });
-
-    subNav.on('mouseleave', function() {
-      toggleTouchItem($listItem);
-
-    });
-
-    return subNav;
-  }
-
-  function removeFloatingNav() {
-    $('.dropdown-backdrop').remove();
-    $('.sidebar-subnav.nav-floating').remove();
-    $('.sidebar li.open').removeClass('open');
-  }
-
-
-  $scope.selectMake=function()
-  {
-
-  	alert("SELECTED");
-  }
-
-}]);
-/**=========================================================
- * Module: toggle-state.js
+/**
  * Toggle a classname from the BODY Useful to change a state that
  * affects globally the entire layout or more than one item
  * Targeted elements must have [toggle-state="CLASS-NAME-TO-TOGGLE"]
  * User no-persist to avoid saving the sate in browser storage
- =========================================================*/
+ **/
 
 App.directive('toggleState', ['toggleStateService', function(toggle) {
   'use strict';
@@ -3773,10 +3517,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
 
 }]);
 
-/**=========================================================
- * Module: browser.js
- * Browser detection
- =========================================================*/
+/** Browser detection**/
 
 App.service('browser', function(){
   "use strict";
@@ -3876,10 +3617,7 @@ App.service('browser', function(){
   return browser;
 
 });
-/**=========================================================
- * Module: colors.js
- * Services to retrieve global colors
- =========================================================*/
+/**Services to retrieve global colors**/
 
 App.factory('colors', ['APP_COLORS', function(colors) {
 
@@ -3891,40 +3629,8 @@ App.factory('colors', ['APP_COLORS', function(colors) {
 
 }]);
 
-/**=========================================================
- * Module: nav-search.js
- * Services to share navbar search functions
- =========================================================*/
 
-App.service('navSearch', function() {
-  var navbarFormSelector = 'form.navbar-form';
-  return {
-    toggle: function() {
-
-      var navbarForm = $(navbarFormSelector);
-
-      navbarForm.toggleClass('open');
-
-      var isOpen = navbarForm.hasClass('open');
-
-      navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
-
-    },
-
-    dismiss: function() {
-      $(navbarFormSelector)
-        .removeClass('open')      // Close control
-        .find('input[type="text"]').blur() // remove focus
-        .val('')                    // Empty input
-        ;
-    }
-  };
-
-});
-/**=========================================================
- * Module: helpers.js
- * Provides helper functions for routes definition
- =========================================================*/
+/**Provides helper functions for routes definition**/
 
 App.provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
   "use strict";
@@ -3983,10 +3689,7 @@ App.provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
 }]);
 
 
-/**=========================================================
- * Module: toggle-state.js
- * Services to share toggle state functionality
- =========================================================*/
+/**Services to share toggle state functionality**/
 
 App.service('toggleStateService', ['$rootScope', function($rootScope) {
 
@@ -4048,10 +3751,8 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
   };
 
 }]);
-/**=========================================================
- * Module: utils.js
- * Utility library to use across the theme
- =========================================================*/
+
+/**Utility library to use across the theme**/
 
 App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQUERY) {
     'use strict';
