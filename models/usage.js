@@ -23,8 +23,7 @@ exports.getAllUsage = function(payload, callback) {
             //console.log(JSON.stringify(payload));   
             //console.log(JSON.stringify(result.rows[row].key));
             //console.log("****************************");               
-            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {   
-              console.log("adding");             
+            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {                
               addOrUpdateUsages(payload, usage.data, fillRecord(result.rows[row]));
             }                    
           }   
@@ -240,7 +239,7 @@ var fillRecord = function(result) {
   record.popularTime = "";
   
   //console.log("keys : " + JSON.stringify(result.key));
-  console.log("record : " + JSON.stringify(record));  
+  //console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
@@ -256,7 +255,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
        var result = isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
               isItemPresent(payload.productAttrs.models, "value", keys[1]) &&
               isItemPresent(payload.productAttrs.sku, "value", keys[2]);
-       console.log("Recore falling in filter : " + result);
+       //console.log("Recore falling in filter : " + result);
        return result;       
   }
   
