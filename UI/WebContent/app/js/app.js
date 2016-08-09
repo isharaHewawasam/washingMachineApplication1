@@ -2037,7 +2037,7 @@ function renderMap(divId, salesData){
 	        marker: {
 				  fillOpacity:0.0
 			},
-
+			//showInLegend: false,      
 			tooltip: {
 		        headerFormat: '',
 	            pointFormat: zipcode == true ?
@@ -2053,7 +2053,6 @@ function renderMap(divId, salesData){
 
     $('#map-container').highcharts('Map', {
       chart: {
-
     	  events: {
 				redraw: function() {
 
@@ -2113,6 +2112,10 @@ function renderMap(divId, salesData){
 
 function removePie(point) {
 	var ser = point.series;
+	var	trackball = point.pie0;
+	if (trackball) {
+		point.pie0 = trackball.destroy();
+	}
 	var	trackball = point.pie1;
 	if (trackball) {
 		point.pie1 = trackball.destroy();
@@ -2161,26 +2164,39 @@ function drawPie(point, index) {
 		// Degrees to radians
 		var startAngle = startDegrees / 180 * mathPI;
 		var endAngle = endDegrees / 180 * mathPI;
-
+		point.pie0 = chart.renderer.arc(pointX, pointY-2, outerRadius+1, innerRadius, -mathPI/2, mathPI+mathPI/2).attr({
+			fill: 'black',
+			stroke: 'black',
+			'stroke-width': 1,
+			zIndex: 3 //index + 3
+		}).add();
 		point.pie1 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, -mathPI/2, mathPI+mathPI/2).attr({
 				fill: 'white',
-				stroke: 'black',
+				stroke: 'white',
 				'stroke-width': 1,
-				zIndex: index + 3
-		}).add();
+				zIndex: 3 // index + 3
+		}).add().on('mouseover', function () {
+			chart.tooltip.refresh(point);
+		}).on('mouseout', function () {
+			chart.tooltip.hide();
+		});
 
 		point.pie2 = chart.renderer.arc(pointX, pointY-2, outerRadius, innerRadius, startAngle, endAngle).attr({
 			fill: '#6CD153',
-			stroke: 'black',
+			stroke: '#6CD153',
 			'stroke-width': 1,
-			zIndex: index + 3
-		}).add();
+			zIndex: 3 // index + 3
+		}).add().on('mouseover', function () {
+			chart.tooltip.refresh(point);
+		}).on('mouseout', function () {
+			chart.tooltip.hide();
+		});
 		point.cir1 = chart.renderer.circle(pointX, pointY-2, innerRadius).attr({
 			fill: 'black',
 			stroke: 'black',
 			'stroke-width': 1,
 			'stroke-linejoin': 'round',
-			zIndex: index + 3
+			zIndex: 3 // index + 3
 		}).add().on('mouseover', function () {
 			chart.tooltip.refresh(point);
 		}).on('mouseout', function () {
@@ -2189,9 +2205,8 @@ function drawPie(point, index) {
 
 		point.text1 = chart.renderer.text(conn.toString(), pointX-(textLenth*4), pointY+2)
 			.attr({
-
-				zIndex: index + 4,
-				cursor: 'default'
+				cursor: 'default',
+				zIndex: 3 //index + 4
 			})
 			.css({
 				color: 'white',
