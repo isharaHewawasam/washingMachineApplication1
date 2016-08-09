@@ -1,24 +1,19 @@
    .leftbar-icon{
-        
+
         z-index: 899988;
-        /*width:80px;*/ 
-        height:71px; 
+
+        height:71px;
         border-bottom:1px solid #4E4E4E;
         margin-top: 0px;
         color: #979797;
-        /*
-       
-        color: #F0F0F0;
-        font-size: 12px;
-        text-align: center;
-        padding: 15px   */
+
      }
 
     .sidebarItemActive {
          background-color: #4A88C9;
         color: #fff;
     }
-    
+
 .sidebarItemActive::after {    display: block;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -32,7 +27,6 @@
     cursor: default;
     opacity: 1;
     top: 5px;
-    /* right: 100%; */
     margin: 0;
     padding: 0;
     overflow: visible;
@@ -68,26 +62,26 @@
         z-index: 1151;
         width: 310px;
     }
-    
+
     .element-margin{
         margin-bottom: 0px;
         padding: 10px;
-        
+
     }
-    
+
     .menu-text{
         font-family: Roboto;light;
         font-size:11px;
         color: inherit;
         text-align: center
-        
+
     }
-    
+
     .sidebarIconContainer {
         text-align: center;
         padding: 10px;
     }
-    
+
     .iconpos{
         width: 32px;
         height: 32px;
@@ -100,7 +94,7 @@
         padding: 10px;
 
     }
-       
+
 #filterPanel,#reportsPanel {
     background: #000;
     width: 231px;
@@ -111,10 +105,9 @@
     -moz-box-shadow: 10px 10px 5px #888;
     -webkit-box-shadow: 10px 10px 5px #888;
     box-shadow: 10px 10px 5px #888;
-    /* height: 499px; */
-    /* overflow-y: scroll; */
+
 }
-    
+
     #calenderPanel {
     background: #000;
     width: 231px;
@@ -125,7 +118,7 @@
     -moz-box-shadow: 10px 10px 5px #888;
     -webkit-box-shadow: 10px 10px 5px #888;
     box-shadow: 10px 10px 5px #888;
-  
+
 }
 	#demographicsFilterPanel {
     background: #000;
@@ -137,39 +130,36 @@
     -moz-box-shadow: 10px 10px 5px #888;
     -webkit-box-shadow: 10px 10px 5px #888;
     box-shadow: 10px 10px 5px #888;
-  
+
 }
 
     .divSpacePad{
-        /*padding-left: 10px;
-        padding-top: 10px;
-        padding-bottom: 10px;*/
+
         padding: 10px;
     }
      .datepickerdemo md-content {
-            padding-bottom: 200px; 
+            padding-bottom: 200px;
          }
         .datepickerdemo .validation-messages {
             font-size: 11px;
             color: darkred;
-            margin: 10px 0 0 25px; 
+            margin: 10px 0 0 25px;
          }
-    
+
     .searchbtn{
-     padding-bottom:8px ; 
-        width:180px;   
+     padding-bottom:8px ;
+        width:180px;
         font-family: Roboto;light;
         font-size:14px;
         padding-top: 9px;
        margin-left: 12px;
     }
-    
-    
+
+
     .clearfltrbtn{
-        
-        width:auto;   
+
+        width:auto;
         font-family: Roboto;light;
         font-size:12px;
-        
+
     }
-    
