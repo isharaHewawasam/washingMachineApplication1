@@ -11752,13 +11752,7 @@ body {
   max-width: 100%;
   min-width: 100%;
 }
-/**
- * Displays hidden content on hover. Add this class to the parent element.
- * Markup
- *   <div class="hover-visible">
- *    <div class="hover-hidden"></div>
- *   </div>
- */
+
 .hover-visible .hover-hidden {
   display: none;
 }
@@ -12332,7 +12326,6 @@ display : block;
 	top: 10%;
 	left: 10%;
 	background-color: #ffffff;
-	/* border: 1px solid #d4d4d4; */
 	border-left: 1px solid #d4d4d4;
 	box-shadow: 1px 1px 1px #d4d4d4;
 	z-index:99;
