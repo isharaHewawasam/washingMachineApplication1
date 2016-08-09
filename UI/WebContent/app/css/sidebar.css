@@ -163,3 +163,35 @@
         font-size:12px;
 
     }
+ #filterPanel{
+	margin-left:69px; 
+	top: 135px; 
+	background:#fff; 
+	display:none;
+}
+ .divSpacePad{
+  width:100%;;
+  background:#e7eef6;
+	
+}
+.form-control{
+	height:32px;
+}
+#demographicsFilterPanel{
+	margin-left:69px; 
+	top: 215px; 
+	background:#fff; 
+	display:none;
+}
+#reportsPanel{
+	margin-left:69px;
+	 top: 295px; 
+	 background:#fff; 
+	 display:none;
+}
+#clickView{
+	margin-left:-5px;
+}
+.fontSubText{
+	width:100%;
+}

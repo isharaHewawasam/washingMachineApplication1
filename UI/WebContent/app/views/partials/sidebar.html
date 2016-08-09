@@ -30,13 +30,13 @@
             </div>
         </nav>
     </div>
-    <div id="filterPanel" style="margin-left:69px; top: 135px; background:#fff; display:none">
+    <div id="filterPanel" >
         <div class="divSpacePad">
             <label>Products</label>
 
             <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()">  clear filter</button>
         </div>
-        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+        <div class="divSpacePad">
             <span>Search by Product</span>
         </div>
 
@@ -56,7 +56,7 @@
         </div>
 
         <div class="form-group element-margin">
-            <input type="text" ng-model="skuFilter" class="form-control" placeholder="SKU Search..." style="height:32px">
+            <input type="text" ng-model="skuFilter" class="form-control" placeholder="SKU Search..." >
         </div>
 
         <div class="form-group element-margin">
@@ -86,7 +86,7 @@
 
     </div>
 
-    <div id="demographicsFilterPanel" style="margin-left:69px; top: 215px; background:#fff; display:none">
+    <div id="demographicsFilterPanel">
 
         <div class="divSpacePad">
             <label>Demographics</label>
@@ -94,7 +94,7 @@
             <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()">  clear filter</button>
         </div>
 
-        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+        <div  class="divSpacePad">
             <span>Search by Demographics</span>
         </div>
 
@@ -126,16 +126,16 @@
     </div>
     <!--reports-->
 
-<div id="reportsPanel" style="margin-left:69px; top: 295px; background:#fff; display:none" ng-controller="reportController">
+<div id="reportsPanel" ng-controller="reportController">
                       <div class="divSpacePad">
                            <label>Reports</label>
                        </div>
-                        <div style="width:100%; background:#e7eef6" class="divSpacePad">
+                        <div  class="divSpacePad">
                            <span>Washing Machine Status Reports</span>
                        </div>
-                                             <div style="width:100%; " class="fontSubText">
+                                             <div  class="fontSubText">
 
-                          <button id="clickView" class="mb-sm btn btn-primary searchbtn" style="margin-left:-5px;" ng-click="getReports()">  View Report</button>
+                          <button id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()">  View Report</button>
                        </div>
                </div>
 
