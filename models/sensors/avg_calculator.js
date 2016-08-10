@@ -49,19 +49,9 @@ function getStats(params, callback) {
         } else {
          
           for(var row in result.rows) {
-            //try{
               if(doesRecordFallsInFilter(params, result.rows[row].key)) {
-                //console.log("adding " + params.statsKeyName);
-                //console.log(JSON.stringify(result.rows[row].key));
                 addOrUpdateUsages(params, fillRecord(result.rows[row], params));
-              } 
-            //}   
-            //catch(ex) {
-             // console.log("Exception occured");
-              //console.log(ex);
-              //console.trace(ex.stack);
-              //continue;
-            //}              
+              }        
           }   
         }      
         
@@ -102,6 +92,8 @@ var getData = function(params, callback) {
     view_name = params.view.byYear;
   } else if (params.filter.isFilterCategoryByFamily()) {
     view_name = params.view.byFamily;
+  } else if (params.filter.isFilterByRelativeTimescale()) {
+    view_name = params.view.byDate;  
   } else {
     view_name = params.view.default;
   }
@@ -384,7 +376,15 @@ var fillRecord = function(result, params) {
 var doesRecordFallsInFilter = function(params, keys) {
   //filter.setPayload(payload);
   
+  
   if(params.filter.isFilterCategoryNone()) {
+    return true;
+  }
+  
+  if ( params.filter.isFilterByRelativeTimescale() ) {
+    //console.log("filter by relative");
+    //no need to check/validate here since startkey and endkey for views
+    //are used
     return true;
   }
   
@@ -418,6 +418,7 @@ var doesRecordFallsInFilter = function(params, keys) {
       }
     }
   }
+  
   
   if ( params.filter.isFilterCategoryByProduct() ) {
     console.log(JSON.stringify(keys));

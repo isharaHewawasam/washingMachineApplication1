@@ -6,8 +6,9 @@ var FILTER_CATEGORY = {
   'BY_REGION': 2,
   'BY_YEAR': 3,
   'BY_FAMILY': 4,
-  'BY_MFG_DATE': 5,
-  'MIXED': 6
+  'BY_LAST_TIME_SCALE': 5,
+  'BY_MFG_DATE': 6,
+  'MIXED': 7
 };
 
 var FILTER = {
@@ -25,7 +26,8 @@ var FILTER = {
   'BY_USER_FAMILY_MEMBERS_COUNT': 11,
   'BY_USER_INCOME': 12,
   'BY_MFG_DATE': 13,
-  'MIXED': 14
+  'BY_LAST_TIME_SCALE': 14,
+  'MIXED': 15
 };
 
 var REPORT_TYPE = {
@@ -44,7 +46,8 @@ var REPORT_TYPE = {
   "INSIGHTS": 12,
   "USER_AGE": 13,
   "USER_FAMILY_MEMBERS_COUNT": 14,
-  "USER_INCOME": 15
+  "USER_INCOME": 15,
+  "RELATIVE_TIME_SCALE": 16
 };
 
 module.exports.REPORT_TYPE = REPORT_TYPE;
@@ -108,6 +111,13 @@ var Filter = function Filter(payload, view_name){
        this.quarters = payload.timescale.quarters
        this.months = payload.timescale.months;
     }
+    
+    if (payload.timescale.relative) {
+       this.filter_type = FILTER.BY_LAST_TIME_SCALE; 
+       this.relative_unit = payload.timescale.relative.unit;
+       this.relative_value = payload.timescale.relative.value;
+       
+    }
   }
   
   // user age
@@ -134,6 +144,11 @@ var Filter = function Filter(payload, view_name){
     this.filter_type = FILTER.BY_MFG_DATE;
       }
   }    
+  if ((payload.income) && (payload.income.length)) {
+     this.filter_type = FILTER.BY_USER_INCOME;
+  }
+  
+  
   //Mixed
   //console.log("xxx " + this.filter_type);
   this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
@@ -160,6 +175,9 @@ var Filter = function Filter(payload, view_name){
     case FILTER.BY_MONTH:
       this.filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
+    case FILTER.BY_LAST_TIME_SCALE:
+      this.filter_category = FILTER_CATEGORY.BY_LAST_TIME_SCALE;
+      break;  
     case FILTER.BY_USER_INCOME:
     case FILTER.BY_USER_FAMILY_MEMBERS_COUNT:
     case FILTER.BY_USER_AGE:
@@ -241,7 +259,8 @@ var isFilterCategoryMixed_ = function(payload) {
   if (payload.timescale) {
     if( (payload.timescale.years.length > 0) ||
         (payload.timescale.quarters.length > 0) ||   
-        (payload.timescale.months.length > 0) ) {
+        (payload.timescale.months.length > 0) ||
+        (payload.timescale.relative) ) {
         filtersCount++;  
     }        
   }
@@ -287,15 +306,14 @@ Filter.prototype.filterDescription = function() {
 };
 
 
-
 Filter.prototype.groupLevel = function(){
-  if(this.filter_category === FILTER_CATEGORY.MIXED) return 14;
-  
+  if(this.filter_category === FILTER_CATEGORY.MIXED) return 15;
+     
   if (this.isFilterByNone()) {
     switch(this.report_type) {
       case REPORT_TYPE.NONE:
       case REPORT_TYPE.SENSOR:
-        return 2;
+        return 2;       
       case REPORT_TYPE.FAVOURITE:
         return 3;  
       case REPORT_TYPE.SALES_VOLUME:
@@ -316,8 +334,9 @@ Filter.prototype.groupLevel = function(){
       case REPORT_TYPE.CONNECTED_BY_STATE:
       case REPORT_TYPE.INSIGHTS:
         return 1;        
+      case REPORT_TYPE.RELATIVE_TIME_SCALE:
+        return 3;   
       default:
-        console.log("filters::groupLevel() : Invalid Report or View Name");
         return -1;      
     }    
   }
@@ -389,6 +408,9 @@ Filter.prototype.groupLevel = function(){
       
       if ( this.isFilterByMfgDate() ) return 13;
       break;         
+    case  REPORT_TYPE.RELATIVE_TIME_SCALE:
+      return 3;
+      break;     
     default:  
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;
@@ -448,6 +470,10 @@ Filter.prototype.isFilterCategoryByRegion = function(){
 
 Filter.prototype.isFilterCategoryByYear = function(){
   return this.filter_category === FILTER_CATEGORY.BY_YEAR;
+};
+
+Filter.prototype.isFilterCategoryByRelativeTimescale = function(){
+  return this.filter_category === FILTER_CATEGORY.BY_LAST_TIME_SCALE;
 };
 
 Filter.prototype.isFilterCategoryMixed = function(){
@@ -537,3 +563,15 @@ var isFilterByUserAge = function(){
 };
 
 Filter.prototype.isFilterByUserAge = isFilterByUserAge;
+
+var isFilterByRelativeTimescale = function(){
+  return this.filter_type === FILTER.BY_LAST_TIME_SCALE;
+};
+
+Filter.prototype.isFilterByRelativeTimescale = isFilterByRelativeTimescale;
+
+var reportType = function(view_name){
+  this.report_type = view_name;
+};
+
+Filter.prototype.reportType = reportType;

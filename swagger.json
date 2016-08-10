@@ -9,8 +9,6 @@
   "host": "localhost:3000",
   "basePath": "/api/v1",
   "paths": {
-    
-
     "/config/states": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -1105,6 +1103,40 @@
         }
       }
     },
+    "/sensors/vibrations": {
+      "post": {
+        "x-swagger-router-controller": "vibrations",
+        "operationId": "getAvgUsage",
+        "tags": ["Sensors"],
+        "description": "Returns average vibrations",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "Washing Machine, Date and Region information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }      
+        ],      
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",            
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/MultipleVibrationsDataResponse"
+            }
+          }
+        }
+      }
+    },
     "/login/authentication": {
       "post": {
         "x-swagger-router-controller": "insights",
@@ -1704,6 +1736,29 @@
            "type": "number"                    
         },
         "avgDetergentUsed": {                   
+           "type": "number"                    
+        }
+      }
+    },
+    "MultipleVibrationsDataResponse": {
+      "properties": {        
+        "data": {
+          "type": "array",
+          "items": {            
+            "$ref": "#/definitions/VibrationsDataResponse" 
+          }          
+        }
+      }
+    },
+    "VibrationsDataResponse": {
+      "properties": {
+        "make": {                   
+           "type": "string"                    
+        },
+        "model": {                   
+           "type": "string"                    
+        },
+        "avgUsage": {                   
            "type": "number"                    
         }
       }

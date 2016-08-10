@@ -182,6 +182,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   });*/
 });
 
+
 var getAllLatLong = function(){
   require("./models/region_lat_long").getStateLocation("Washington", function(loc) {
     console.log("Washington " + JSON.stringify(loc));

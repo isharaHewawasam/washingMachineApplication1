@@ -1,5 +1,5 @@
 'use strict';
-var avg = require('./avg_calculator');
+
 
 exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, callback) {
   var SENSOR_NAME = "Power";

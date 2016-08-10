@@ -13,6 +13,7 @@ var ViewKeysMappings = function() {
   this.REPORT_TYPE.SENSOR_BY_FAMILY = 8;
   this.REPORT_TYPE.MOST_USED_WM = 9;
   this.REPORT_TYPE.INSIGHTS = 10;
+  this.REPORT_TYPE_BY_LAST_TIME_SCALE = 11;
   this.key = {};
 };
 
@@ -68,8 +69,11 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       this.key.MAKE = 1; this.key.MODEL = 2;
       this.key.STATE = 3; this.key.CITY = 4; this.key.ZIP_CODE = 5;
       this.key.YEAR = 6; this.key.MONTH = 7; this.key.QUARTER = 8; 
-      
-      break;   
+      break;  
+    case this.REPORT_TYPE.REPORT_TYPE_BY_LAST_TIME_SCALE:
+      this.key.STATS_KEY_X = 0;
+      this.key.MAKE = 1; this.key.MODEL = 2;
+      break;        
     default:
       console.log("Invalid report key");
       break;
@@ -120,6 +124,10 @@ ViewKeysMappings.prototype.setReportType2Sales = setReportType2Sales;
 
 ViewKeysMappings.prototype.setReportType2Connected = function() {
   this.setKeys(this.REPORT_TYPE.CONNECTED);
+};
+
+ViewKeysMappings.prototype.setReportType2RelativeTimescale = function() {
+  this.setKeys(this.REPORT_TYPE.REPORT_TYPE_BY_LAST_TIME_SCALE);
 };
 
 var dumpReportType = function() {
