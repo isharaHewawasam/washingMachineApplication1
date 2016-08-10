@@ -133,7 +133,7 @@
                         <div  class="divSpacePad">
                            <span>Washing Machine Status Reports</span>
                        </div>
-                                             <div  class="fontSubText">
+                                             <div id="subpanel" style="width:100%; " class="fontSubText">
 
                           <button id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()">  View Report</button>
                        </div>
@@ -226,6 +226,23 @@ $(dashboardNav).on("click", function(){
   $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
   $('#reportsNav').removeClass('sidebarItemActive');
 
+  if(event){
+  $("#dashboardNav").on("mouseleave", function(){
+  $('#dashboardNav').addClass('sidebarItemActive');
+  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#reportsNav').removeClass('sidebarItemActive');
+
+
+});}
+     if(event){
+  $("#dashboardNav").on("mouseover", function(){
+  $('#dashboardNav').addClass('sidebarItemActive');
+  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#reportsNav').removeClass('sidebarItemActive');
+
+
+});}
+
 });
 $(dashboardNav).on("mouseover", function(){
   $('#dashboardNav').addClass('sidebarItemActive');
@@ -248,6 +265,47 @@ $(reportsNav).on("mouseleave", function(event){
     $('#reportsNav').removeClass('sidebarItemActive');
     $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
     event.stopPropagation();
+});
+
+$(subpanel).on("click", function(){
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav').addClass('sidebarItemActive');
+    $('#filterNav').removeClass('sidebarItemActive');
+    $('#demographicsNav').removeClass('sidebarItemActive');
+      if(event){
+    $("#dashboardNav").on("mouseover", function(){
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#reportsNav').addClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+
+});}
+      if(event){
+    $("#dashboardNav").on("mouseleave", function(){
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#reportsNav').addClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+
+});}
+      if(event){
+    $("#filterNav").on("mouseleave", function(){
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#reportsNav').addClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+
+});}
+      if(event){
+    $("#demographicsNav").on("mouseleave", function(){
+    $('#dashboardNav').removeClass('sidebarItemActive');
+    $('#reportsNav').addClass('sidebarItemActive');
+    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+
+});}
+
+
 });
 
 </script>
