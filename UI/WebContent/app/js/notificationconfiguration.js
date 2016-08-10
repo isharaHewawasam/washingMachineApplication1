@@ -1,6 +1,6 @@
 App.controller('NotificationConfController',
-		['$rootScope', '$scope', '$state', '$http', '$window', '$localStorage', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $window, $localStorage, configApiClient){
+		['$rootScope', '$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService',
+                 function($rootScope, $scope, $state, $window, $localStorage, configApiClient, HttpService){
 
 
 
@@ -34,24 +34,41 @@ App.controller('NotificationConfController',
 			}
 
 		}
-		$http({url:configApiClient.baseUrl + 'config/makes',
+		
+		var url = configApiClient.baseUrl + 'config/makes';
+		HttpService.get(url).then(function(data){
+			// on success
+			 $scope.makes=data.makes;
+		},function(data){
+			// on error
+		});
+		
+		/*$http({url:configApiClient.baseUrl + 'config/makes',
 			method: "GET", Accept: "text/plain"}).success(function(data, status) {
 			 $scope.makes=data.makes;
 			}). error(function(data, status) {
 			
 
-			});
+			});*/
 
          // Retrieve model names for respective make
 			$scope.selectedMake=function(){
 			$rootScope.search.selectedModel="";
-			$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
+			var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
+			HttpService.get(url).then(function(data){
+				// on success
+				$scope.models=data[$rootScope.search.selectedMake];
+			},function(data){
+				// on error
+			});
+			
+			/*$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
 			method: "GET", Accept: "text/plain"}).success(function(data, status) {
 
 			 $scope.models=data[$rootScope.search.selectedMake];
 			}). error(function(data, status) {
 
-			});
+			});*/
 
 			}
 			var monthNames = [
@@ -104,7 +121,17 @@ App.controller('NotificationConfController',
 				};
 				redirecto = 'app.twitterinsights';
 			}
-			$http({url:configApiClient.baseUrl + 'notifications/configurations/settings/frompage',
+			
+			var url = configApiClient.baseUrl + 'notifications/configurations/settings/frompage';
+			var param = requestBody;
+			HttpService.post(url).then(function(data, param){
+				// on success
+				 $state.go(redirecto);
+			},function(data){
+				// on error
+			});
+			
+			/*$http({url:configApiClient.baseUrl + 'notifications/configurations/settings/frompage',
 			     method: "POST",
 			     headers: { 'Content-Type': 'application/json'},
 			     data: requestBody})
@@ -112,7 +139,7 @@ App.controller('NotificationConfController',
 			    	 $state.go(redirecto);
 		    }). error(function(data, status) {
 
-		    });
+		    });*/
 
 		}
     // Cancel the Set up notification tolerances and Route to Twitter Insights page
