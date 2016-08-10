@@ -1589,38 +1589,27 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$timeout
 
     $rootScope.search={};
       $scope.selectedMake=function(){
-
           $rootScope.search.selectedModel="";
           $rootScope.search.selectedSKU="";
-
-          $http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-
-	    	 $scope.models=data[$rootScope.search.selectedMake];
-
-
-
-
-	    }). error(function(data, status) {
-
-
-	    });
+          var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
+          HttpService.get(url).then(function(data){
+	  			// on success
+        	  	$scope.models=data[$rootScope.search.selectedMake];
+	  		},function(data){
+	  			// on error
+	  		});
       }
 
       $scope.selectedModel=function(){
           $rootScope.search.selectedSKU="";
-
-
-          $http({url:configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel,
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-
-	    	 $scope.SKUs=data[$rootScope.search.selectedModel];
-
-
-	    }). error(function(data, status) {
-
-
-	    });
+          	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
+          	HttpService.get(url).then(function(data){
+	  			// on success
+        	  	$scope.SKUs=data[$rootScope.search.selectedModel];
+	  		},function(data){
+	  			// on error
+	  			
+	  		});
       }
 
          $scope.applyProductFilter=function(){
