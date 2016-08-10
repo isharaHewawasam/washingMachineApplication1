@@ -701,7 +701,8 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 
 
 
-App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state', 'iot.config.ApiClient', function($rootScope, $scope, $http, $state, configApiClient) {
+App.controller('DashboardController', ['$rootScope','$scope', '$state', 'iot.config.ApiClient', 'HttpService', 
+                                       function($rootScope, $scope, $state, configApiClient, HttpService) {
 
 		//Clear filter on dashboard load
 		$rootScope.search={};
@@ -958,39 +959,26 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 	    $scope.isError =  false;
 	    $scope.isOnFilter = false;
 
-
-
 	    //for grid mkt_mgr
-	      $http({url:configApiClient.baseUrl +  'usage',
-	            method: "POST",
-	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-	             data: $scope.usagedata
-
-	           }).success(function(data, status) {
-
-
-	             if(!data || data.data.length === 0){
-	                $rootScope.isOnFilter=true;
-	                $rootScope.isOnLoad=false;
-
-	                }
-	             else {
-
-	                $rootScope.mkt_griddata_filter=data.data;
-	                $rootScope.isOnFilter=true;
-	                $rootScope.isOnLoad=false;
-                  $scope.isReportFiltering = false;
-	              }
-	           }). error(function(data, status) {
-
-	          $scope.isError = true;
-	          $scope.isReportFiltering = false;
-
-	           });
-
-
-
-	      }
+	    var url = configApiClient.baseUrl +  'usage';
+	    var param = $scope.usagedata;
+		HttpService.post(url, param).then(function(data){
+			// on success
+			if(!data || data.data.length === 0){
+                $rootScope.isOnFilter=true;
+                $rootScope.isOnLoad=false;
+            } else {
+                $rootScope.mkt_griddata_filter=data.data;
+                $rootScope.isOnFilter=true;
+                $rootScope.isOnLoad=false;
+                $scope.isReportFiltering = false;
+            }
+		},function(data){
+			// on error
+			$scope.isError = true;
+	        $scope.isReportFiltering = false;
+		});
+    }
 	//end iniReport
 	removechart = function (id) {
 		var chart = $('#'+id).highcharts();
@@ -1007,29 +995,22 @@ App.controller('DashboardController', ['$rootScope','$scope', '$http', '$state',
 
 
 		$rootScope.mapProgress = true;
-		$http({url:configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true',
-                  method: "POST",
-                  headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-                  data: $scope.usagedata
-         })
-         .success(function(data, status) {
+		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
+	    var param = $scope.usagedata;
+		HttpService.post(url, param).then(function(data){
+			// on success
+			$rootScope.mapProgress = false;
 
-        	 $rootScope.mapProgress = false;
-
-                  if(!data || data.length === 0){
-                       renderMap("map-container", []);
-                  }  else{
-                      renderMap("map-container", data);
-                      $scope.zoomMap('map-container');
-                  }
-
-                 })
-                 .error(function(data, status) {
-
-                	 $rootScope.mapProgress = false;
-
-
-          });
+            if(!data || data.length === 0){
+                 renderMap("map-container", []);
+            }  else{
+                renderMap("map-container", data);
+                $scope.zoomMap('map-container');
+            }
+		},function(data){
+			// on error
+			 $rootScope.mapProgress = false;
+		});
 	}
 
 	$scope.zoomMap = function (id) {
@@ -1203,53 +1184,41 @@ $rootScope.isApplyFiterButton = true;
 		$scope.msg = $scope.msg1;
 
 		//for grid mkt_mgr
-		  $http({url:configApiClient.baseUrl +  'usage',
-	          method: "POST",
-	          headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-	           data: $scope.usagedata
-
-	         }).success(function(data, status) {
-
-	       	  		$scope.isLoadingFilters = false;
-	        	 if(!data || data.data.length === 0){
-
-	              }
-	        	 else
-	       	  		$scope.griddata=data.data;
-
-	         }). error(function(data, status) {
-
-	       	  		$scope.isLoadingFilters = false;
-					$scope.isError = true;
-					$scope.msg = $scope.msg3;
-
-	        	  });
+		var url = configApiClient.baseUrl +  'usage';
+	    var param = $scope.usagedata;
+		HttpService.post(url, param).then(function(data){
+			// on success
+			$scope.isLoadingFilters = false;
+	       	 if(!data || data.data.length === 0){
+	
+	         } else {
+      	  		$scope.griddata=data.data;
+	       	 }
+		},function(data){
+			// on error
+			$scope.isLoadingFilters = false;
+			$scope.isError = true;
+			$scope.msg = $scope.msg3;
+		});
 
 		//For grid from eng manager
-		  $http({url:configApiClient.baseUrl + 'sensors/data',
-	            method: "POST",
-	            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
-	             data: $scope.usagedata
+		var url = configApiClient.baseUrl + 'sensors/data';
+	    var param = $scope.usagedata;
+		HttpService.post(url, param).then(function(data){
+			// on success
+			$scope.isLoadingFilters = false;
+            if(!data || data.length === 0){
 
-	           }).success(function(data, status) {
-
-	                $scope.isLoadingFilters = false;
-	             if(!data || data.length === 0){
-
-	                }
-	             else
-	                $scope.eng_griddata=data;
-
-
-	           }). error(function(data, status) {
-
-	                $scope.isLoadingFilters = false;
-	                $scope.isError = true;
-	                $scope.msg = $scope.msg3;
-
-
-	           });
-
+            } else {
+            	$scope.eng_griddata=data;
+            }
+		},function(data){
+			// on error
+			$scope.isLoadingFilters = false;
+            $scope.isError = true;
+            $scope.msg = $scope.msg3;
+		});
+		  
 	};
 
 
@@ -1261,44 +1230,32 @@ $rootScope.isApplyFiterButton = true;
     		$scope.mkt_griddata=[];
 
 
+    		var url = configApiClient.baseUrl +  "usage";
+    	    HttpService.get(url).then(function(data){
+    			// on success
+    	    	$scope.griddata=data.data;
+    		},function(data){
+    			// on error
+    		});
+    		
+    	    var url = configApiClient.baseUrl + "sensors/data";
+    	    var param = null;
+    	    HttpService.post(url, param).then(function(data){
+    			// on success
+    	    	 $scope.eng_griddata=data; //.states: array name--check in browser
+    		},function(data){
+    			// on error
+    		});
 
-    		  $http({url:configApiClient.baseUrl +  "usage",
-  		     	method: "GET",
-  		     	Accept: "text/plain"}).success(function(data, status) {
-
-    	       	  			$scope.griddata=data.data;
-
-
-    	         }). error(function(data, status) {
-
-    	         });
-
-    		  $http({url:configApiClient.baseUrl + "sensors/data", //api url
-                  method: "POST",
-                  Accept: "text/plain"}).success(function(data, status) {
-                       $scope.eng_griddata=data; //.states: array name--check in browser
-
-
-                     }). error(function(data, status) {
-
-
-                     });
-
-    		  ///////////////////////Report on load
-              $http({url:configApiClient.baseUrl +  "usage",
-              method: "GET",
-              Accept: "text/plain"}).success(function(data, status) {
-
-                        $scope.mkt_griddata=data.data;
-                        $rootScope.isOnLoad=true;
-
-
-
-                 }). error(function(data, status) {
-
-
-                 });
-
+    		///////////////////////Report on load
+    	    var url = configApiClient.baseUrl +  "usage";
+    	    HttpService.get(url).then(function(data){
+    			// on success
+    	    	$scope.mkt_griddata=data.data;
+                $rootScope.isOnLoad=true;
+    		},function(data){
+    			// on error
+    		});
 
 		var quarterMonthMapping = JSON.parse('{'
 										+'"Quarter1":["Jan","Feb","Mar"],'
@@ -1347,74 +1304,55 @@ $rootScope.isApplyFiterButton = true;
 			$scope.months=quarterMonthMap[$scope.timescale.quarters];
 	    }
 
-
-	 $http({url:configApiClient.baseUrl + 'config/states',
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-
+		var url = configApiClient.baseUrl + 'config/states';
+	    HttpService.get(url).then(function(data){
+			 // on success
 	    	 $scope.states=data.states;
-
-	    	 //Using may renderMap function to zoom the map
-	    	 //Using may renderMap function to zoom the map
+	    	 //Using this array in renderMap function to zoom the map
 	    	 salesDataJoin = [];
 	    	 if($scope.states){
 	    		 $.each($scope.states, function () {
 	    			 salesDataJoin.push(this);
 	    		 });
 	    	 }
+		},function(data){
+			// on error
+		});
 
-
-	    }). error(function(data, status) {
-
-
-	    });
-
-
-
-
-
-
-	 $http({url:configApiClient.baseUrl + 'config/sales/years',
-	     	method: "get",
-	     	Accept: "text/plain"
-	     	})
-	     .success(function(data, status) {
-	    	 $scope.sales_years=data.sales_years;
-
-	     })
-	    . error(function(data, status) {
-
-	    });
+	    var url = configApiClient.baseUrl + 'config/sales/years';
+	    HttpService.get(url).then(function(data){
+			 // on success
+	    	$scope.sales_years=data.sales_years;
+		},function(data){
+			// on error
+		});
+	    
+	
 	 $scope.cities;
 	 $scope.selectCities=function(){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
 		 $scope.zips=[];
-		 $http({url:configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states,
-		     	method: "get",
-		     	Accept: "text/plain"})
-		     	.success(function(data, status) {
-		    	 $scope.cities=data[$scope.region.states];
-		    }). error(function(data, status) {
-
-
-		    });
-
-		    }
+		 
+		 var url = configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states;
+	     HttpService.get(url).then(function(data){
+			 // on success
+	    	 $scope.cities=data[$scope.region.states];
+		 },function(data){
+			// on error
+		 });
+    }
 	 $scope.selectZip=function(){
 
 		 $scope.region.zip_codes=undefined;
-
-		 $http({url:configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities,
-		     	method: "GET",
-		     	Accept: "text/plain"})
-		     	.success(function(data, status) {
-		     	$scope.zips = data[$scope.region.cities];
-
-		    }). error(function(data, status) {
-
-		    });
-
-		    }
+		 var url = configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities;
+	     HttpService.get(url).then(function(data){
+			 // on success
+	    	 $scope.zips = data[$scope.region.cities];
+		 },function(data){
+			// on error
+		 });
+    }
 
 	 $scope.maximizeGrid=function(){
 			var gridNormal = $("#gridNormal1").clone();
