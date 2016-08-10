@@ -23,8 +23,7 @@ exports.getAllUsage = function(payload, callback) {
             //console.log(JSON.stringify(payload));   
             //console.log(JSON.stringify(result.rows[row].key));
             //console.log("****************************");               
-            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {   
-              console.log("adding");             
+            if(doesRecordFallsInFilter(payload, result.rows[row].key)) {                
               addOrUpdateUsages(payload, usage.data, fillRecord(result.rows[row]));
             }                    
           }   
@@ -123,7 +122,7 @@ var fillFavourites = function(payload, usage, callback) {
 
 var usageExists = function(payload, usages, usage_to_find) {  
   for(var each_usage in usages) {   
-   console.log(usage_to_find);  
+   //console.log(usage_to_find);  
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
     var all_match = true;
@@ -227,13 +226,20 @@ var fillRecord = function(result) {
       record.user_income = result.key[11];
     //}
   }
+
+  //year
+  if(filter.isFilterByYear()||filter.isFilterByQuarter()||filter.isFilterByMonth()){
+    record.sold.year = result.key[3]; 
+    record.sold.quarter = result.key[4];
+    record.sold.month = result.key[5];
+  }
   
   record.totalLoad = (result.value[0].sum / result.value[0].count).toFixed(2);
   record.popularDay = "";
   record.popularTime = "";
   
   //console.log("keys : " + JSON.stringify(result.key));
-  console.log("record : " + JSON.stringify(record));  
+  //console.log("record : " + JSON.stringify(record));  
   return record;
 };
 
@@ -249,7 +255,7 @@ var doesRecordFallsInFilter = function(payload, keys) {
        var result = isItemPresent(payload.productAttrs.makes, "value", keys[0]) && 
               isItemPresent(payload.productAttrs.models, "value", keys[1]) &&
               isItemPresent(payload.productAttrs.sku, "value", keys[2]);
-       console.log("Recore falling in filter : " + result);
+       //console.log("Recore falling in filter : " + result);
        return result;       
   }
   

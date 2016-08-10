@@ -648,6 +648,52 @@
         }
       }
     },
+    "/twitter/innerpage/dayfilterbyfive": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterinsightstabledayfive",
+        "tags": ["Twitter"],
+        "description": "Return data to twitter insights table when date filter apply",
+        "responses": {
+          "default": {
+            "description": "data to twitter insights table when date filter apply",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
+    "/twitter/innerpage/dayfilterbyten": {
+      "get": {
+        "x-swagger-router-controller": "insights",
+        "operationId": "getTwitterinsightstabledayten",
+        "tags": ["Twitter"],
+        "description": "Return data to twitter insights table when date filter apply",
+        "responses": {
+          "default": {
+            "description": "data to twitter insights table when date filter apply",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/twitter-innerpage-sentiments"
+            }
+          }
+        }
+      }
+    },
     "/twitter/innerpage/twittersentiments/{twitterid}": {
       "get": {
         "x-swagger-router-controller": "insights",
@@ -686,7 +732,7 @@
    "/notifications/notification-alert": {
       "get": {
         "x-swagger-router-controller": "insights",
-        "operationId": "getTwittersentimentsforid",
+        "operationId": "getNotificationonload",
         "tags": ["Notifications"],
         "description": "Return notification by onload function",
         "responses": {

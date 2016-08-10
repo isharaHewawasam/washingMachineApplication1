@@ -5,7 +5,6 @@ exports.getCharts = function(callback){
 
 exports.getReportData = function(report_name, group, payload, callback) {
   var reportName = require("./charts").reportNames;
-  
   switch(report_name) {
     case reportName.soldVsConnected:
       //to be shown on map

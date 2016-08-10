@@ -179,6 +179,16 @@ exports.getTwitterinsightstable = function(callback) {
   callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsights);  
 };
 
+//Twitter insights table filter by day 5
+exports.getTwitterinsightstabledayfive = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsightsfiveday);  
+};
+
+//Twitter insights table filter by day 10
+exports.getTwitterinsightstabledayten = function(callback) {
+  callback(null, require("./twiiternotification_dummy").twitterinnerpageTwitterinsightstenday);  
+};
+
 //Twitter insights table api for requested id
 exports.getTwittersentimentsforid = function(callback) {
   callback(null,"Success"); 

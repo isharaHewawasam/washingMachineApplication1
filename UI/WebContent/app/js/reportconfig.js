@@ -1,27 +1,43 @@
-App.controller('reportController',['$scope','$state','$http','iot.config.ApiClient','$window',function($scope,$state,$http,configApiClient,$window){
-      $scope.getReports=function(){
-       // alert('reports');
+App.controller('reportController',['$rootScope','$scope','$state', 'iot.config.ApiClient','$window', 'HttpService',
+                                   function($rootScope,$scope,$state, configApiClient,$window, HttpService){
+
+	// Route to reports url
+	$scope.getReports=function(){
+        $rootScope.isReportFiltering = true;
+
         $state.go('app.reports');
-        console.log("Reports page loaded");
+
                                  };
-      
+
             //api call for washing machine status
       $scope.r_griddata=[];
-      $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage", 
+      
+      	var url = configApiClient.baseUrl + 'usage';
+      	HttpService.get(url).then(function(data){
+			// on success
+			$rootScope.isReportFiltering = false;
+		    $scope.r_griddata=data.data;
+		},function(data){
+			// on error
+			$rootScope.isReportFiltering = false;
+		});
+		
+      /*$http({url:"http://ibm-iot.mybluemix.net/api/v1/usage",
                       method: "GET",
                       Accept: "text/plain"}).success(function(data, status) {
-                     
-                                        $scope.r_griddata=data.data; 
-                                        // console.log("Report Griddata"+JSON.stringify($scope.r_griddata));
-                                  
+                     $rootScope.isReportFiltering = false;
+                                        $scope.r_griddata=data.data;
+
+
                    }). error(function(data, status) {
-                                        console.log("reporterror:"+status);
-                       
-                   });
 
-                  
+                                       $rootScope.isReportFiltering = false;
 
-          //  download report
+                   });*/
+
+
+
+          //  Download Washing Machine Status report
             $scope.downloadReport=function(){
                 html2canvas(document.getElementById('gridHideNodata'), {
                 onrendered: function (canvas) {
@@ -34,48 +50,32 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
                     };
                     pdfMake.createPdf(docDefinition).download("reports.pdf");
                 }
-            }); 
+            });
             }
-            //pagination
-
-            //  $scope.currentPage = 0;
-            //  $scope.pageSize = 4;
-            //  $scope.r_griddata = [];
-            //  $scope.numberOfPages=function(){
-            //   return Math.ceil($scope.r_griddata.length/$scope.pageSize);                
-            //                                 }       
-            //   for (var i=0; i<45; i++) {
-            //          $scope.r_griddata.push("Item "+i);
-            //                            }
-
-
-            //   //We already have a limitTo filter built-in to angular,
-            //   //let's make a startFrom filter
-            // App.filter('startFrom', function() {
-            //             return function(input, start) {
-            //             start = +start; //parse to int
-            //             return input.slice(start);
-            //                                           }
-            //           });
 
 
 
-
-              //session handling
              var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
              var rolename = loginCredentails.Role;
              var roleKey   = loginCredentails.roleKey;
-    
+
              $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
-    
+
+          //Session handling- used to display respective views for managers and return back to respective Dashboard pages.
              $scope.openReport = function () {
-             console.log(" for Reports ", $scope.isEngManager);
+             $rootScope.isApplyFiterButton = true;
              if($scope.isEngManager){
-                  console.log("if ture ");
+
              $state.go('app.engmanagerview');
+             $('#dashboardNav').addClass('sidebarItemActive');
+             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+             $('#reportsNav').removeClass('sidebarItemActive');
              }else{
-                 console.log("else ture ");
-                $state.go('app.singleview');
+
+             $state.go('app.singleview');
+             $('#dashboardNav').addClass('sidebarItemActive');
+             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+             $('#reportsNav').removeClass('sidebarItemActive');
                   }
     }
     var monthNames = [
@@ -90,7 +90,7 @@ App.controller('reportController',['$scope','$state','$http','iot.config.ApiClie
             		var monthIndex = date.getMonth();
             		var year = date.getFullYear();
 
-               
+
     $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
 
     }]);

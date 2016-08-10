@@ -16,7 +16,7 @@
   
  <div style="background:0A427D !important" class="jumbotron">
  <img src="app/img/Dashboardassets/logo.png" alt="App Logo" class="img-responsive btnPendingGoals"  style="padding-left: 20px;" />
-<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">IOT for Electronics</strong>
+<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">IoT for Electronics</strong>
   
  
 </div>
@@ -35,13 +35,12 @@
         <label for=>Password</label>
       
         <input type="password" id="inputPassword"  name="password" class="form-control" placeholder="Password" required ng-model="inputData.password">
-		
-		<br>
-	
-		<div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
-		 <a href="#" class="pull-left forgot-password" ><u>Forgot Password </u></a>
-        <button class="btn btn-primary" type="submit" ng-disabled="userForm.$invalid" >Login</button>
-		
+                                 <p ng-show="userForm.password.$touched && userForm.password.$invalid" class="help-block">The password is required.</p> 
+                              <br>
+               
+                              <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
+                              <a href="#" class="pull-left forgot-password" ><u>Forgot Password </u></a>
+     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$touched && userForm.email.$invalid) ||(userForm.password.$touched && userForm.password.$invalid) " >Login</button>
       </form>
     </div> 
   </body>

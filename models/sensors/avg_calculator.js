@@ -8,7 +8,6 @@ var utility = require("../../middle_ware/utility");
 
 exports.getSum = function(params, callback) {  
   params.stats = "sum";
-  
   if (params.top !== undefined) {
     params.sort = { "value": true, "order": "desc" }
   }
@@ -399,7 +398,6 @@ var doesRecordFallsInFilter = function(params, keys) {
       
       //console.log("xxx : " + keys);
       //console.log("x2 : " + params.key_maps.key.MFG_DATE);
-      //console.log("---------------------------");
       dates_arr = keys[params.key_maps.key.MFG_DATE].split("/");
       var mfg_date = new Date(dates_arr[2], dates_arr[1], dates_arr[0]);
       
@@ -421,7 +419,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   
   
   if ( params.filter.isFilterCategoryByProduct() ) {
-    console.log(JSON.stringify(keys));
+    //console.log(JSON.stringify(keys));
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) &&
               isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU])
@@ -448,7 +446,6 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
             isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
   }
-  
   if(params.filter.isFilterCategoryByFamily()) {
     //console.log("Keys : " + JSON.stringify(keys));
     //console.log("Age key id :" + keys[params.key_maps.key.MEMBERS]);

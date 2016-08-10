@@ -1,34 +1,30 @@
+<link href="app/css/charts.css" rel="stylesheet" />
+<link href="app/css/table.css" rel="stylesheet" />
+<link href="app/css/dashboard.css" rel="stylesheet" />
 <div class="somediv hidden" id="hiddenDiv"></div>
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
-<div class="map-somediv hidden" id="hiddenDivMap"></div> 
+<div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
-<h3 style="padding-top: 20px; padding-bottom: 10px; margin-bottom: 0px">
-	<link href="app/css/charts.css" rel="stylesheet" />
-	<link href="app/css/table.css" rel="stylesheet" />
+<h3>
+	
 
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
 
 	<div class="pull-right" >
-    <style>
- 		#dropdown{
-         	color: blue;
-         	border:0;
-         	  } 
-		
-   </style>
-      
+    
+
       Application Dashboard Last Updated {{currentDate}}
    </div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
 		<a ng-click="getUrl()"
-			style="font-size: 14px; font: Roboto Light; color: #0F64BC;">Washing
+			>Washing
 			Machine Monitor System </a> <span
-			style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
+			>
 			></span> <a href="#"
-			style="font-size: 14px; font: Roboto Light; color: #222222">
+			>
 			Dashboard </a>
 	</div>
 
@@ -38,17 +34,13 @@
 
 
 
-<div class="row col-lg-12  filter-filterDiv" style="position: absolute;z-index: 99;" >
-
-	<!-- <div class="panel panel-default" style="padding-bottom:10px; padding-top:10px; background-color: #E7EEF6;">-->
-
-	<!-- <div class="panel-body" style="padding: 0px;"> -->
-	<!--  <form role="form" class="form-inline"> -->
-	<!-- <fieldset class="last-child" style="padding-bottom: 0px; margin-bottom:0px "> -->
+<div class="row col-lg-12  filter-filterDiv" id="filterdive" >
 
 
 
-	<div  class=" col-lg-10"  id="filterDivId" style=" margin-left: inherit">
+
+
+	<div  class=" col-lg-10"  id="filterDivId" id="filterDivId">
 
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
@@ -56,42 +48,30 @@
 				<option class="option-text-style" value="" disabled selected>States
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="state in states"
 					value={{state.name}}>{{state.name}}</option>
 			</select>
-			<!--  <option class="option-text-style" value="" disabled selected>States
-						<option class="option-text-style" value="Arizona" >Arizona
-						<option class="option-text-style" value="California" >California
-						<option class="option-text-style" value="Florida" >Florida
-						<option class="option-text-style" value="New York" >New York
-						<option class="option-text-style" value="Tennessee" >Tennessee
-						<option class="option-text-style" value="Texas" >Texas
-						<option class="option-text-style" value="Virginia" >Virginia
-						<option class="option-text-style" value="Washington" >Washington
-						<option class="option-text-style" value="Wisconsin" >Wisconsin -->
+
 
 		</div>
-		<!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
+
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected>Cities
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="city in cities"
 					value={{city.city}}>{{city.city}}
-					<!--<option class="option-text-style" value="" >San Diego
-					<option class="option-text-style" value="" >San Jose -->
+
 			</select>
 
 		</div>
-		<!-- <div class="col-sm-1" style="padding-left: 3px;" >
-               </div> -->
+
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.zip_codes">
@@ -100,55 +80,49 @@
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="zip in zips"
 					value={{zip.zip_code}}>{{zip.zip_code}}
-					<!-- <option class="option-text-style" value="" disabled selected>Zip Code
-					<option class="option-text-style" value="" >1001
-					<option class="option-text-style" value="" >1001
-					<option class="option-text-style" value="" >1001 -->
+
 			</select>
 
 		</div>
-		<!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
+
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.years">
 				<option class="option-text-style" value="" disabled selected>Year
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style"
 					ng-repeat="sales_year in sales_years" value={{sales_year.year}}>{{sales_year.year}}
 
 
-				
+
 			</select>
 
 		</div>
-		<!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
+
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.quarters" ng-change="quarterMonths()">
 				<option class="option-text-style" value="" selected disabled>Quarter
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="quarter in quarters"
 					value={{quarter.id}}>{{quarter.value}}
 			</select>
 
 		</div>
-		<!-- <div class="col-sm-1" style="padding-left: 3px;">
-               </div> -->
+
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.months">
 				<option class="option-text-style" value="" selected disabled>Month
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="month in months"
 					value={{month.id}}>{{month.value}}
@@ -156,31 +130,30 @@
 
 		</div>
 
-		
+
 
 
 
 
 	</div>
- <div class="col-lg-2 " style="    margin-left: 15px;padding: 0px;" >
-             		<button ng-disabled="isDisabled" class="btn btn-default pull-right "  style="min-width: 114px; ;background-color: #4C74E2;  height:34px;  font-family: Roboto; font-size: 15px;     margin: auto;
-                            margin-left: 15px;   color: #FFFFFF;" id="applyFilter" ng-click="tryit()">
-                <span ng-show="test"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-                {{searchButtonText}}</button>         
-            		
+ <div class="col-lg-2 "   id="applyFilterdiv" >
+             		<button ng-disabled="isApplyFiterButton" class="btn btn-default pull-right "  id="applyFilter" ng-click="tryit()">
+
+               		Apply Filter
+                    </button>
+
 				</div>
-	<!-- </fieldset> -->
+
 
 </div>
 
-<!-- </form>    -->
-<!-- </div> -->
 
 
-<div class="row" ng-controller="filterIconController" style="margin-top: 58px;">
-	<div  ng-show="someArray.length > 0" class="form-group  col-lg-12" style="width: 100% auto;">
-	    <div  ng-repeat="va in someArray" 
-	         style="height:26px;background:#91aed3;padding: 4px;margin:1px; display: inline-block;color:fff;border-radius:2px !important;font-size:11pt;"> {{va.value}} <span style="color:#fff;font-size:11pt;" ng-click='removeFilter(va)'>X</span></div>
+
+<div class="row" ng-controller="filterIconController" id="filtericoncontroller">
+	<div  ng-show="someArray.length > 0" class="form-group  col-lg-12" id="formgrp">
+	    <div  ng-repeat="va in someArray"
+	         id="formarray"> {{va.value}} <span style="color:#fff;font-size:11pt;" ng-click='removeFilter(va)'>X</span></div>
 	</div>
 </div>
 
@@ -193,9 +166,9 @@
 			<div class="chart-filterDiv " id="chartFilterDivId">
 				<select ng-class="{'chart-selectStyle2': isActive1}"
 					ng-click="activeButton(1)" id="first-chart-select"
-					class="chart-selectStyle col-md-4 " ng-change="Engdisp($index)"
+					class="chart-selectStyle col-md-4 salesname" ng-change="Engdisp($index)"
 					ng-model="selectedSensors"
-					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
+					>
 
 					<option class="chart-option-text-style" disabled value="">Please
 						select</option>
@@ -208,8 +181,8 @@
 						value="{{$index}}">{{sensor.displayName}}</option>
 				</select> <select ng-class="{'chart-selectStyle2': isActive2}"
 					ng-click="activeButton(2)" id="second-chart-select"
-					class="chart-selectStyle col-md-3 chart-border "
-					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
+					class="chart-selectStyle col-md-3 chart-border salesname"
+					>
 					<option class="chart-option-text-style" value="">Last 1
 						day
 					<option class="chart-option-text-style" value="" selected>Last
@@ -226,95 +199,85 @@
 						years
 				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
-					class="chart-selectStyle col-md-3"
+					class="chart-selectStyle col-md-3 salesname"
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
-					style="padding-right: 0px; padding-left: 3px; margin-top: 2px">
+					>
 					<option class="chart-option-text-style"
 						ng-init="dispChart(selectedChart)"
 						ng-repeat="chart in EngchartTypes" value="{{chart}}">{{chart}}</option>
 				</select> <img id="maximize" class="pull-right col-md-1"
-					style="padding: 0px; margin-top: 10px; margin-right: 9px; height: 15px; width: 15px;"
+					
 					src="app/img/Dashboardassets/icon_maximize.png"
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
 					src="app/img/Dashboardassets/close.png" ng-click="closing()">
 					<img class="col-md-1 pull-right"
-						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:9px;"
-						src="app/img/Dashboardassets/help.png" 
+						id="infoicons"
+						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
 						data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 						data-trigger="hover"></img>
 			</div>
 
-			<div id="container" class="graphDiv">
+			<div class="graphDiv">
 				<span ng-show="progress" class="progress-chart"><img alt=""
 					src="app/img/icon-load.gif" width="25%" ;height="25%"> </span>
+				<div id="container" ></div>
 			</div>
 
-			<!-- 		<div ng-if="selectedChart=='Pie'" id="piecontainer" class="graphDiv"ng-init="plotPieChart('piecontainer')"></div>
-			<div ng-if="selectedChart=='Bar'" class="graphDiv" id="bar"ng-init="plotBarChart('bar')">
-
-				<div class="row pull-right" style="margin-top: -60px;margin-right: 10px;">
-				<div class="circle circle-color-sold" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[0]}}</label> &nbsp;&nbsp;<div class="circle circle-color-connected" style="display: inline-block;"></div>&nbsp;&nbsp;<label class="chart-label">{{labels[1]}}</label>
-			</div>
-			
-			<canvas  id="bar" class="chart chart-bar" chart-data="barData" chart-labels="barLabels" chart-series="barSeries"></canvas> 
-			</div>
-			<div ng-if="selectedChart=='Multiline'" id="container"
-				class="graphDiv" ng-init="plotChartFunction('container')"></div> -->
 		</div>
 
 	</div>
 
 	<div class="col-lg-4" ng-controller="mapController"
 		ng-init="plotMapFunction('map-container')">
-		<div class="panel panel-default" style="width: 100%; height: 373px"
+		<div class="panel panel-default" 
 			id="mapNormal">
 
 			<div class="panel-heading md-body-2"
-				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
+				 id="mapNormalinner">
 				<b>Sales Volume Distribution </b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
-					style="padding: 0px; height: 15px; width: 15px;"
+					
 					src="app/img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeMap()"></img> <img id="mapMinImg"
 					class="pull-right hidden col-md-1 "
-					style="padding: 0px; height: 15px; width: 15px;"
+					
 					src="app/img/Dashboardassets/close.png"></img>
 					<img class="pull-right col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
-						src="app/img/Dashboardassets/help.png" 
+						id="mapinfo"
+						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
 						data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
 						data-trigger="hover"></img>
 			</div>
-			<div id="map-container" class="map-mapDiv"
-				style="width: 99%; height: 325px">
+			<div class="map-mapDiv"
+			>
 
-				<span ng-show="progress" class="progress-chart"> <img
-					id="loading" alt="" src="app/img/icon-load.gif" width="25%"
-					;height="25%">
+				<span ng-show="mapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="app/img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div id="map-container" ></div>
 			</div>
 
 		</div>
 	</div>
 
 
-	<div class="col-lg-4" style="height: 373px">
-		<div class="panel panel-default" style="height: 373px">
-			<div class="panel-heading" style="background-color: #ffffff;">
+	<div class="col-lg-4 insite" >
+		<div class="panel panel-default insite">
+			<div class="panel-heading">
 				<div class="pull-right ">
 					<img class="col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;"
+						id="insiteinfo"
 						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
 						data-content="Insights area frames up more specific details to convey an idea about the cause and effect on the information filtered."
 						data-trigger="hover"></img>
 				</div>
 
-				<div class="panel-title md-body-2"
-					style="font-family: Roboto; font-size: 15px;">Insights</div>
+				<div class="panel-title md-body-2 insitetitle"
+					>Insights</div>
 			</div>
 
 			<scrollable height="230" class="list-group list-scroll"
@@ -322,38 +285,37 @@
 
 
 			<div infinite-scroll-distance="1"
-				style="overflow-y: scroll; overflow-x: hidden;">
+				 id="insitescroll">
 
 
-				<div class="col-lg-6" style="width: 420px; height: 310px;">
+				<div class="col-lg-6 insiteinner">
 
-					<div class="col-lg-6" id="nav1" style="">
-						<div
-							style="width: 25px; height: 175px; background-repeat: repeat-y;">
+					<div class="col-lg-6" id="nav1" >
+						
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33"
-								alt="Image" style="background-repeat: repeat-y;" />
-						</div>
+								alt="Image" class="insitelines" />
+				
 
-						<div style="width: 25px; height: 175px; padding-top: 5px;">
+						
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
 								<h2 class="mv-lg">2</h2>
 							</div>
 							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33"
-								alt="Image" style="background-repeat: repeat-y;" />
-						</div>
-						<div style="width: 25px; height: 175px; padding-top: 25px;">
+								alt="Image" class="insitelines" />
+					
+						
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
 								<h2 class="mv-lg">3</h2>
 							</div>
-						</div>
+						
 					</div>
 
 					<div class="col-lg-6" id="nav2" style="height: 100%;">
@@ -361,12 +323,12 @@
 							ng-init="getMostFaults('most-fault-container')"
 							class="insights-insightsDiv">
 							<span
-								style="display: block; height: 50%; text-align: center; color: #4C74E2; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
-								ng-show="isDisabled" class="glyphicon glyphicon-alert"
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
 							</span> <span
-								style="display: block; height: 50%; text-align: center; color: #e60000; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
+								 class="nodata"
 								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
@@ -377,12 +339,12 @@
 							ng-init="getLeastFaults('least-fault-container')"
 							class="insights-insightsDiv">
 							<span
-								style="display: block; height: 50%; text-align: center; color: #4C74E2; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
-								ng-show="isDisabled" class="glyphicon glyphicon-alert"
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
 							</span> <span
-								style="display: block; height: 50%; text-align: center; color: #e60000; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
+								 class="nodata"
 								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
@@ -392,12 +354,12 @@
 							ng-init="getCommonFaults('common-fault-container')"
 							class="insights-insightsDiv">
 							<span
-								style="display: block; height: 50%; text-align: center; color: #4C74E2; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
-								ng-show="isDisabled" class="glyphicon glyphicon-alert"
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
 							</span> <span
-								style="display: block; height: 50%; text-align: center; color: #e60000; padding-top: 30%; padding-bottom: 15%; border-bottom-color: transparent; background-color: transparent; font-size: 18px"
+								 class="nodata"
 								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
 								aria-hidden="true"> <span class="sr-only">Error:</span>
 								{{msg}}
@@ -417,7 +379,7 @@
 </div>
 
 
-<div class="row" style="padding-top: 0px">
+<div class="row">
 
 	<!-- START dashboard main content-->
 
@@ -427,21 +389,20 @@
 
 	<div class="col-lg-8">
 		<!-- START panel -->
-
-		<div class="panel panel-default" id="gridNormal" style="height: 372px;">
+<div class="panel panel-default hidden" id="gridNormal1">
 			<div class="panel-heading md-body-2"
-				style="font-family: Roboto; font-size: 15px; padding-left: 20px; padding-top: 10px;">
+				id="maximisedgridhead">
 				Washing Machines status <img id="gridMaxImg"
 					class="pull-right col-md-1"
-					style="padding: 0px; height: 15px; width: 15px;"
+					
 					src="app/img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-					style="padding: 0px; height: 15px; width: 15px;"
+				
 					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 					<img class="pull-right col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;"
-						src="app/img/Dashboardassets/help.png" 
+							id="gridinfo"
+						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
 						data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
 						data-trigger="hover"></img>
@@ -480,7 +441,7 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed">
-							<div ng-show="isDisabled||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 "style="font-weight:bold;  padding-top: 10%; ">{{msg}}</div>
+							<div ng-show="isDisabled||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
@@ -501,7 +462,84 @@
 					</div>
 				</div>
 				<!--      END table-responsive -->
-				<label class="pull-right " ng-if="eng_griddata.length > 0">{{eng_griddata.length}}
+				<label class="pull-right " ng-if="eng_griddata.length > 0" id="maxfootr">{{eng_griddata.length}}
+					records found</label>
+			</div>
+		</div>
+		<div class="panel panel-default" id="gridNormal" >
+			<div class="panel-heading md-body-2"
+					id="normalgridhead">
+				Washing Machines status <img id="gridMaxImg"
+					class="pull-right col-md-1"
+					
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1 "
+					
+					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+					<img class="pull-right col-md-1"
+						id="gridinfo"
+						src="app/img/Dashboardassets/help.png"
+						data-toggle="popover" data-placement="left"
+						data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+						data-trigger="hover"></img>
+			</div>
+
+
+			<div class="panel-body" id="gridHideNodata">
+				<!--   START table-responsive -->
+				<div id="gridAdjustHeight" class="panel panel-default">
+					<div class="tableHeader">
+						<p class="text-center">Make</p>
+						<p class="text-center">Model</p>
+						<p class="text-center">
+							Water used<span class='notbold'> (G)</span>
+						</p>
+						<p class="text-center">
+							Energy used<span class='notbold'> (kw)</span>
+						</p>
+						<p class="text-center">
+							Wash cycle<span class='notbold'> (min)</span>
+						</p>
+						<p class="text-center">Wash cycles</p>
+						<p class="text-center">
+							Temperature<span class='notbold'> (f)</span>
+						</p>
+						<p class="text-center">
+							Detergent used<span class='notbold'> (gms)</span>
+						</p>
+						<p class="text-center">
+							Humidity<span class='notbold'> (%)</span>
+						</p>
+						<p class="text-center">
+							Load<span class='notbold'> (kgs)</span>
+						</p>
+					</div>
+					<div class="tbody">
+						<div class="tableScroll">
+							<table class="table table-condensed">
+							<div ng-show="isLoadingFilters||isError||isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
+								<tbody id="tabody">
+									<tr ng-repeat="itm in eng_griddata">
+										<td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+				<!--      END table-responsive -->
+				<label class="pull-right " ng-if="eng_griddata.length > 0" id="gridfootermsg">{{eng_griddata.length}}
 					records found</label>
 			</div>
 		</div>
@@ -509,19 +547,19 @@
 	</div>
 	<!-- END dashboard main content-->
 	<!-- START dashboard sidebar-->
-	<!--  <aside class="col-lg-4"  style=" width: 374px; "> -->
+	
 
 	<!-- START dashboard sidebar-->
-	<aside class="col-lg-4" style="">
+	<aside class="col-lg-4" >
 
 		<!-- START messages and activity-->
-		<div class="panel panel-default" style=" height: 355px">
+		<div class="panel panel-default" id="notifheight">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
-					style="font-family: Roboto; font-size: 15px;">
+				id="notificationtitl">
 					Notification<img class="pull-right col-md-1"
-						style="padding: 0px; height: 15px; width: 15px;"
-						src="app/img/Dashboardassets/help.png" 
+						id="notfinfo"
+						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
 						data-content="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid."
 						data-trigger="hover">
@@ -529,8 +567,8 @@
 
 			</div>
 
-			<div style="height: 325px; overflow-y: scroll"
-				class="panel panel-default">
+			<div 
+				class="panel panel-default notflist">
 				<!-- START list group-->
 				<div class="list-group">
 					<!-- START list group item-->
@@ -541,7 +579,7 @@
 								<h4>Spike in number of specific errors</h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
-								ng-show="data.length">								
+								ng-show="data.length">
 								<div ng-if="itm.increase_spike">
 									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
 									{{itm.increase_spike
@@ -550,7 +588,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.increase_spike"
-										type="pink" class="progress-xs m0" style=" height: 10px;"
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Spike: {{itm.increase_spike - spikeBySpecificErrorsTolerance}}% greater than tolerance"
 										data-trigger="hover"></progressbar>
@@ -564,7 +602,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0" style=" height: 10px;"
+										type="greens" class="progress-xs m0 notifprogress" 
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Spike: {{spikeBySpecificErrorsTolerance - itm.decrease_spike}}% less than tolerance"
 										data-trigger="hover"></progressbar>
@@ -573,17 +611,17 @@
 							</div>
 							<!--Notification alerts handled-->
 							<div class="media-box-body"
-								ng-show="isDisabled||isError||isNoDataDB">
+								ng-show="isLoading||isError||isNoDataDB">
 								<span
-									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 18px"
-									ng-show="isDisabled"
-									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									
+									ng-show="isLoading"
+									class="glyphicon glyphicon-alert notifalrtmsg" aria-hidden="true"> <span
 									class="sr-only">Error:</span> {{msg}}
 								</span>
 								<span
-									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #e60000; background-color: transparent; font-size: 18px"
+								
 									ng-show="isError||isNoDataDB"
-									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="glyphicon glyphicon-alert notifalrtmsg" aria-hidden="true"> <span
 									class="sr-only">Error:</span> {{msg}}
 								</span>
 							</div>
@@ -599,13 +637,13 @@
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.increase_spike">
-									<p class="text-warning m0">{{itm.error_type}} related errors are increased by 
+									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
 									{{itm.increase_spike | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
 									<small class="text-pink pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.increase_spike"
-										type="pink" class="progress-xs m0" style=" height: 10px;"
+										type="pink" class="progress-xs m0 notifprogress" 
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{itm.increase_spike - spikeBySpecificErrorByMakeModelTolerance | number:0}}% greater than tolerance"
@@ -619,7 +657,7 @@
 									<small class="text-greens pull-right ml">{{itm.decrease_spike | number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0" style=" height: 10px;"
+										type="greens" class="progress-xs m0 notifprogress" 
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{spikeBySpecificErrorByMakeModelTolerance - itm.decrease_spike}}% less than tolerance"
@@ -629,17 +667,17 @@
 							</div>
 							<!--Notification alerts handled-->
 							<div class="media-box-body"
-								ng-show="isDisabled||isError||isNoDataDB">
+								ng-show="isLoading||isError||isNoDataDB">
 								<span
-									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 18px"
-									ng-show="isDisabled"
-									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									
+									ng-show="isLoading"
+									class="glyphicon glyphicon-alert notifalrtmsg" aria-hidden="true"> <span
 									class="sr-only">Error:</span> {{msg}}
 								</span>
 								<span
-									style="display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #e60000; background-color: transparent; font-size: 18px"
+									
 									ng-show="isError||isNoDataDB"
-									class="glyphicon glyphicon-alert" aria-hidden="true"> <span
+									class="glyphicon glyphicon-alert notifalrtmsg" aria-hidden="true"> <span
 									class="sr-only">Error:</span> {{msg}}
 								</span>
 							</div>

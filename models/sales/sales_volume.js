@@ -30,12 +30,37 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
+    
+  
     var response = {};
-     response.description = "Sales Volume for " + Filter.filterDescription();
-    response.data = processResult(result);
+    response.description = "Sales Volume for " + Filter.filterDescription();
+    response.data = processResult(result.sort(sortResponse("time_scale")));
+    sortResponsefrommake(response);
     callback(err, response);
   });      
 };
+
+//sort result from quarter
+function sortResponse(name){
+      return function(a,b){
+        if( a[name] > b[name]){
+            return 1;
+        }else if( a[name] < b[name] ){
+          return -1;
+        }
+        return 0;
+      }
+}
+
+//sort response from make and model combination
+function sortResponsefrommake(response){
+    
+    response.data[0].sales.sort(sortResponse("item"));
+    response.data[1].sales.sort(sortResponse("item"));
+    response.data[2].sales.sort(sortResponse("item"));
+    response.data[3].sales.sort(sortResponse("item"));
+
+  }
 
 /*
 [
