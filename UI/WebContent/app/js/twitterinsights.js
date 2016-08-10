@@ -1,6 +1,6 @@
 App.controller('TwitterInsightsController',
-		['$rootScope', '$scope', '$state', '$http', '$localStorage', "iot.config.ApiClient",
-                 function($rootScope, $scope, $state, $http, $localStorage, configApiClient){
+		['$rootScope', '$scope', '$state', '$localStorage', "iot.config.ApiClient", 'HttpService',
+                 function($rootScope, $scope, $state, $localStorage, configApiClient, HttpService){
 
 	$scope.showPerSign = false;
 
@@ -8,13 +8,13 @@ App.controller('TwitterInsightsController',
 
 	$("#gridAdjustHeight").height(400);
 
-	$http({url:configApiClient.baseUrl + "twitter/innerpage/twitter-insights", //api url
-        method: "GET",
-        Accept: "text/plain"}).success(function(data, status) {
-        		$scope.twitter_insights_griddata = data.data;
-
-           }). error(function(data, status) {
-      });
+	var url = configApiClient.baseUrl + "twitter/innerpage/twitter-insights";
+	HttpService.get(url).then(function(data){
+		// on success
+		$scope.twitter_insights_griddata = data.data;
+	},function(data){
+		// on error
+	});
 
 	$scope.editTwitterInsights = function(make, model) {
 		$localStorage.showTwitterInnerLint = true;
@@ -32,21 +32,17 @@ App.controller('TwitterInsightsController',
 	$scope.tweetsData = {};
 
 	$scope.loadTwitterInsightsData = function (id) {
-		var url = "twitter/innerpage/twittersentiments/"+id;
-		$http({url:configApiClient.baseUrl + url, //api url
-	        method: "GET",
-	        Accept: "text/plain"}).success(function(data, status) {
-	        		$scope.tweetsData = data.data[0];
-	        		if($scope.tweetsData){
-	        			getTwitterSentiments('twitter_sentiments', $scope.tweetsData);
-	        			$scope.showPerSign = true;
-	        		}
-
-	           }). error(function(data, status) {
-
-
-	    });
-
+		var url = configApiClient.baseUrl + "twitter/innerpage/twittersentiments/"+id;
+		HttpService.get(url).then(function(data){
+			// on success
+			$scope.tweetsData = data.data[0];
+    		if($scope.tweetsData){
+    			getTwitterSentiments('twitter_sentiments', $scope.tweetsData);
+    			$scope.showPerSign = true;
+    		}
+		},function(data){
+			// on error
+		});
 	};
 
 	$scope.loadTwitterInsightsData('');

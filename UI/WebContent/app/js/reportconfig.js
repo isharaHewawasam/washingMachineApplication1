@@ -1,4 +1,5 @@
-App.controller('reportController',['$rootScope','$scope','$state','$http','iot.config.ApiClient','$window',function($rootScope,$scope,$state,$http,configApiClient,$window){
+App.controller('reportController',['$rootScope','$scope','$state', 'iot.config.ApiClient','$window', 'HttpService',
+                                   function($rootScope,$scope,$state, configApiClient,$window, HttpService){
 
 	// Route to reports url
 	$scope.getReports=function(){
@@ -10,7 +11,18 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
 
             //api call for washing machine status
       $scope.r_griddata=[];
-      $http({url:"http://ibm-iot.mybluemix.net/api/v1/usage",
+      
+      	var url = configApiClient.baseUrl + 'usage';
+      	HttpService.get(url).then(function(data){
+			// on success
+			$rootScope.isReportFiltering = false;
+		    $scope.r_griddata=data.data;
+		},function(data){
+			// on error
+			$rootScope.isReportFiltering = false;
+		});
+		
+      /*$http({url:"http://ibm-iot.mybluemix.net/api/v1/usage",
                       method: "GET",
                       Accept: "text/plain"}).success(function(data, status) {
                      $rootScope.isReportFiltering = false;
@@ -21,7 +33,7 @@ App.controller('reportController',['$rootScope','$scope','$state','$http','iot.c
 
                                        $rootScope.isReportFiltering = false;
 
-                   });
+                   });*/
 
 
 
