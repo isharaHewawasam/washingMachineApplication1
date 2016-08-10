@@ -97,6 +97,12 @@
 	height: 100%;
 }
 
+#mapMinImg {
+	padding: 0px;
+	height: 15px;
+	width: 15px;
+}
+
 #mapNormal {
 	width: 100%;
 	height: 373px;
@@ -261,6 +267,7 @@
 	background-color: transparent;
 	font-size: 18px
 }
-#nav3{
+
+#nav3 {
 	margin-right: 30px;
 }
