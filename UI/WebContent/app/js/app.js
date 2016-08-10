@@ -1395,8 +1395,8 @@ $rootScope.isApplyFiterButton = true;
  =========================================================*/
 
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils', "iot.config.ApiClient",
-  function($rootScope, $scope, $state, $http, $timeout, Utils, configApiClient){
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$timeout', 'Utils', "iot.config.ApiClient", 'HttpService',
+  function($rootScope, $scope, $state, $timeout, Utils, configApiClient, HttpService){
 
 	$rootScope.intete=1;
 	$scope.make;
@@ -1704,17 +1704,18 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     };
 
     $scope.loadSidebarMenu = function() {
+    	
+    	var menuJson = 'server/sidebar-menu.json',
+        menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
+      
+    	HttpService.get(menuURL).then(function(data){
+			// on success
+    		$rootScope.menuItems = data;
+		},function(data){
+			// on error
+			alert('Failure loading menu');
+		});
 
-      var menuJson = 'server/sidebar-menu.json',
-          menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
-      $http.get(menuURL)
-        .success(function(items) {
-           $rootScope.menuItems = items;
-
-        })
-        .error(function(data, status, headers, config) {
-          alert('Failure loading menu');
-        });
      };
 
      $scope.loadSidebarMenu();
@@ -1765,62 +1766,50 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-    $http({url:configApiClient.baseUrl + 'config/makes',
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
+    var url = configApiClient.baseUrl + 'config/makes';
+  	HttpService.get(url).then(function(data){
+		// on success
+  		 $scope.makes=data.makes;
+	},function(data){
+		// on error
+	});
+  	
+  	var url = configApiClient.baseUrl + 'demographics/family/age-ranges';
+  	HttpService.get(url).then(function(data){
+		// on success
+  		$scope.demoAgeRange=data;
+	},function(data){
+		// on error
+	});
 
-	    	 $scope.makes=data.makes;
+  	var url = configApiClient.baseUrl + 'demographics/family/income-ranges';
+  	HttpService.get(url).then(function(data){
+		// on success
+  		$scope.demoIncomeRange=data;
+	},function(data){
+		// on error
+	});
 
+  	var url = configApiClient.baseUrl + 'demographics/family/members-count';
+  	HttpService.get(url).then(function(data){
+		// on success
+  		$scope.demoMembersCount=data;
+	},function(data){
+		// on error
+	});
 
-
-
-	    }). error(function(data, status) {
-
-
-	    });
-
-    $http({url: configApiClient.baseUrl + 'demographics/family/age-ranges',
-       method: "GET", Accept: "text/plain"}).success(function(data, status) {
-      	 $scope.demoAgeRange=data;
-      }). error(function(data, status) {
-      });
-
-      $http({url: configApiClient.baseUrl + 'demographics/family/income-ranges',
-       method: "GET", Accept: "text/plain"}).success(function(data, status) {
-      	 $scope.demoIncomeRange=data;
-      }). error(function(data, status) {
-
-      });
-
-      $http({url: configApiClient.baseUrl + 'demographics/family/members-count',
-       method: "GET", Accept: "text/plain"}).success(function(data, status) {
-      	 $scope.demoMembersCount=data;
-      }). error(function(data, status) {
-
-      });
-
-    $http({url:configApiClient.baseUrl + 'config/manufacture/years',
-	     method: "GET", Accept: "text/plain"}).success(function(data, status) {
-
-	    	 $scope.years=data.years;
-
-
-
-
-	    }). error(function(data, status) {
-
-
-	    });
-
-
+  	var url = configApiClient.baseUrl + 'config/manufacture/years';
+  	HttpService.get(url).then(function(data){
+		// on success
+  		$scope.years=data.years;
+	},function(data){
+		// on error
+	});
 
     $scope.selectMake=function()
     {
-
     	alert("SELECTED");
     }
-
-
-
 
 }]);
 
@@ -1899,21 +1888,24 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
    };
 }]);
 
-App.controller('mapController',['$scope','$rootScope','$http','iot.config.ApiClient',function($scope,$rootScope,$http,configApiClient){
+App.controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
+                                function($scope,$rootScope, configApiClient, HttpService){
     $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
-              $rootScope.mapProgress = true;
-			$http.post(configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true').success(function(data, status) {
+		$rootScope.mapProgress = true;
+		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
+		var param = null;
+      	HttpService.post(url, param).then(function(data){
+			// on success
+      		renderMap(divId, data);
+            salesDataSet = data;
+            $rootScope.mapProgress = false;
+		},function(data){
+			// on error
+			$rootScope.mapProgress = false;
+	       renderMap(divId, data);
+		});      
 
-
-			    	renderMap(divId, data);
-                      salesDataSet = data;
-                      $rootScope.mapProgress = false;
-			    }). error(function(data, status) {
-			    	$rootScope.mapProgress = false;
-
-			       renderMap(divId, data);
-			    });
 	}
 
 	$scope.maximizeMap=function(){
@@ -2005,23 +1997,27 @@ function renderMap(divId, salesData){
 
 					var chart = this;
 					var series = this.series;
-					var points = series[2].points;
-					var index = 0;
-					Highcharts.each(points, function (point) {
-						removePie(point);
-						drawPie(point, index++);
-						if(index==5) index = 0 ;
-					});
+					if(chart.series[2]){
+						var points = series[2].points;
+						var index = 0;
+						Highcharts.each(points, function (point) {
+							removePie(point);
+							drawPie(point, index++);
+							if(index==5) index = 0 ;
+						});
+					}
 				},
               load: function () {
 
 					var chart = this;
-					var points = chart.series[2].points;
-					var index = 0;
-					Highcharts.each(points, function (point) {
-						drawPie(point, index++);
-						if(index==5) {index = 0} ;
-					});
+					if(chart.series[2]){
+						var points = chart.series[2].points;
+						var index = 0;
+						Highcharts.each(points, function (point) {
+							drawPie(point, index++);
+							if(index==5) {index = 0} ;
+						});
+					}	
 				}
 			}
       },
@@ -2663,7 +2659,8 @@ function renderHorizontalBarChart(divId, notificationData){
     });
 }
 
-App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot.config.ApiClient', function ($scope, $http, $rootScope, $window, configApiClient) {
+App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService', 
+                                function ($scope, $http, $rootScope, $window, configApiClient, HttpService) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
@@ -2712,31 +2709,25 @@ App.controller('myController', ['$scope', '$http', '$rootScope', '$window', 'iot
 	  }
 
 
-	  // display sensors Name for Engg Manager
-	  $http({
-		  url:configApiClient.baseUrl + 'sensors',
-		  method: 'GET',
-		}).success(function(data, status) {
+	  	// display sensors Name for Engg Manager
+	  	var url = configApiClient.baseUrl + 'sensors';
+		HttpService.get(url).then(function(data){
+			// on success
 			$scope.sensorsList=data;
+		},function(data){
+			// on error
+			
+		});
 
-	    }). error(function(data, status) {
-
-
-	    });
-
-	  $http({
-			  url:configApiClient.baseUrl + 'sales/charts',
-			  method: 'GET',
-			}).success(function(data, status) {
-				$scope.salesList=data;
-
-
-		    }). error(function(data, status) {
-
-
-		    });
-
-
+		var url = configApiClient.baseUrl + 'sales/charts';
+		HttpService.get(url).then(function(data){
+			// on success
+			$scope.salesList=data;
+		},function(data){
+			// on error
+			
+		});
+	  
 	  $scope.Engdisp=function(index){
 			if(index==0)
 				$scope.selectedSensors=""+0;
