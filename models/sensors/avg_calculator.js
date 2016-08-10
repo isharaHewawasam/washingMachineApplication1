@@ -418,7 +418,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if ( params.filter.isFilterCategoryByProduct() ) {
-    console.log(JSON.stringify(keys));
+    //console.log(JSON.stringify(keys));
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) &&
               isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU])
