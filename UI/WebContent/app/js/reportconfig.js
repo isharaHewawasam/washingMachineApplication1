@@ -11,7 +11,7 @@ App.controller('reportController',['$rootScope','$scope','$state', 'iot.config.A
 
             //api call for washing machine status
       $scope.r_griddata=[];
-      
+
       	var url = configApiClient.baseUrl + 'usage';
       	HttpService.get(url).then(function(data){
 			// on success
@@ -22,21 +22,6 @@ App.controller('reportController',['$rootScope','$scope','$state', 'iot.config.A
 			$rootScope.isReportFiltering = false;
 		});
 		
-      /*$http({url:"http://ibm-iot.mybluemix.net/api/v1/usage",
-                      method: "GET",
-                      Accept: "text/plain"}).success(function(data, status) {
-                     $rootScope.isReportFiltering = false;
-                                        $scope.r_griddata=data.data;
-
-
-                   }). error(function(data, status) {
-
-                                       $rootScope.isReportFiltering = false;
-
-                   });*/
-
-
-
           //  Download Washing Machine Status report
             $scope.downloadReport=function(){
                 html2canvas(document.getElementById('gridHideNodata'), {
