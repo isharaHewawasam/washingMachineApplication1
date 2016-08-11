@@ -2095,7 +2095,7 @@ function drawPie(point, index) {
 		var connStr = conn.toString();
 		var textLenth = connStr.length;
 		var innerRadius = 8 + (textLenth - 1)*3;
-		var outerRadius = innerRadius + 5  + (textLenth - 2);
+		var outerRadius = innerRadius + (textLenth*2 - 1); //5  + (textLenth - 2);
 
 		var startDegrees = -90;
 		var mathPI = Math.PI;
