@@ -1,4 +1,4 @@
-App.controller('TwitterInsightsController',
+angular.module('angle').controller('TwitterInsightsController',
 		['$rootScope', '$scope', '$state', '$localStorage', "iot.config.ApiClient", 'HttpService',
                  function($rootScope, $scope, $state, $localStorage, configApiClient, HttpService){
 

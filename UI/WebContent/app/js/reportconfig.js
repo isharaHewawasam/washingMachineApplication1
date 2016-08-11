@@ -1,4 +1,4 @@
-App.controller('reportController',['$rootScope','$scope','$state', 'iot.config.ApiClient','$window', 'HttpService',
+angular.module('angle').controller('reportController',['$rootScope','$scope','$state', 'iot.config.ApiClient','$window', 'HttpService',
                                    function($rootScope,$scope,$state, configApiClient,$window, HttpService){
 
 	// Route to reports url
