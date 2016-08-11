@@ -1,7 +1,9 @@
 angular.module('angle').controller('reportController',['$rootScope','$scope','$state', 'iot.config.ApiClient','$window', 'HttpService',
                                    function($rootScope,$scope,$state, configApiClient,$window, HttpService){
 
-	// Route to reports url
+	/** 
+	 * Route to reports url
+	 */
 	$scope.getReports=function(){
         $rootScope.isReportFiltering = true;
 
@@ -20,9 +22,9 @@ angular.module('angle').controller('reportController',['$rootScope','$scope','$s
 		},function(data){
 			// on error
 			$rootScope.isReportFiltering = false;
-		});
-		
-          //  Download Washing Machine Status report
+      /** 
+       * Download Washing Machine Status report
+       */
             $scope.downloadReport=function(){
                 html2canvas(document.getElementById('gridHideNodata'), {
                 onrendered: function (canvas) {
@@ -46,7 +48,9 @@ angular.module('angle').controller('reportController',['$rootScope','$scope','$s
 
              $scope.isEngManager = (roleKey == 'eng_manager'?true:false);
 
-          //Session handling- used to display respective views for managers and return back to respective Dashboard pages.
+         /** 
+          * Session handling- used to display respective views for managers and return back to respective Dashboard pages. 
+          */
              $scope.openReport = function () {
              $rootScope.isApplyFiterButton = true;
              if($scope.isEngManager){

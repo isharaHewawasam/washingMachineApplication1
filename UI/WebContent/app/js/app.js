@@ -233,10 +233,6 @@ App
     *//**Angular based script (use the right module name)**//*
     modules: [
 
-
-
-
-
     ]
 
   })
@@ -248,9 +244,11 @@ App
 /*App.controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
                                        function($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 
-
-
 	$rootScope.credentials = {};
+	
+	/** 
+	 * Authenticate login Credentials 
+	 */
 	$scope.postForm = function() {
     $rootScope.isApplyFiterButton = true;
 		var loginCredentials = {
@@ -286,7 +284,6 @@ App
 	}]);*/
 
 
-
 angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService', 
                                        function($rootScope,$scope, $state, $window, $localStorage, configApiClient, HttpService) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
@@ -295,6 +292,9 @@ angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope'
 	$scope.notificationAlertFlag = false;
 	$scope.roleKey=loginCredentails.roleKey;
 
+	/**
+	 * Get new notification count when refresh the Application
+	 */
 	$scope.getNewNotificationCount = function() {
 
 		var url = configApiClient.baseUrl + 'notifications/notification-alert';
@@ -308,13 +308,15 @@ angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope'
 
 	}
 
+	/** 
+	 * Clear notification count
+	 */
 	$scope.clearNotificationCount = function() {
 
-		var rolename = $scope.rolename;
-
+		var rolename = $scope.rolename;		
 	    if((window.location.hash=="#/app/twitterinsights"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/notificationconf"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/reports"&&rolename=="Marketing Manager")){
 	    	$rootScope.isApplyFiterButton = true;
-	    	$state.go('app.singleview');
+	    	$state.go('app.singleview');	    	
 	      $scope.notificationAlertFlag = false;
 	    }else if((window.location.hash=="#/app/notificationconf"&&rolename=="Engineer Manager")||(window.location.hash=="#/app/reports"&&rolename=="Engineer Manager")){
 	    	$rootScope.isApplyFiterButton = true;
@@ -331,7 +333,7 @@ angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope'
 		$state.go('page.login');
  	}
 
-	$scope.loadNotificationConf = function() {
+	$scope.loadNotificationConf = function() {		
 		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
@@ -441,10 +443,7 @@ angular.module('angle').controller('AppController',
     $rootScope.cancel = function($event) {
       $event.stopPropagation();
     };
-
-
-
-
+    
 }]);
 
 
@@ -458,6 +457,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 		$scope.msg2="No data Found";
 		$scope.msg3 = "Service is Unavailable";
 
+	/** 
+	 * Load "Most Fault" data from API file for eng_manager Insights
+	 */
 	  $scope.getMostFaults = function(divId) {
 		  	$scope.isLoading = true;
 	        $scope.msg = $scope.msg1;
@@ -487,7 +489,10 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				$scope.msg = $scope.msg3;
 			});
 	  };
-
+ 
+	 /** 
+	  * Load "Least Fault" data from API file for eng_manager Insights
+	  */
 	  $scope.getLeastFaults = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
@@ -518,6 +523,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 		  
 	  };
 
+	 /** 
+	  * Load "Common Fault" data from API file for eng_manager Insights
+	  */
 	  $scope.getCommonFaults = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
@@ -546,6 +554,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
+	/** 
+	 * Load "Most Used Models" data from API file for mkt_manager Insights 
+	 */
 	  $scope.getMostUsedModel = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
@@ -575,6 +586,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
+	 /**
+	  * Load "Most Used Wash Cycles" data from API file for mkt_manager Insights 
+	  */
 	  $scope.getMostUsedCycles = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
@@ -605,6 +619,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
+	 /** 
+	  * Load "Not Connected Machines" data from API file for mkt_manager Insights
+	  */
 	  $scope.getNotConnectedMachines = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
@@ -646,6 +663,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
+	 /** 
+	  * Load "Twitter Handles" data from API file for mkt_manager Insights 
+	  */ 
 	  $scope.getTwitterHandles = function(divId){
 
 		  $scope.isLoading = true;
@@ -675,8 +695,11 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				$scope.msg = $scope.msg3;
 			});
 	  };
-
-	  $scope.loadTwitterinsights = function() {
+	  
+	  /** 
+	   * Route to Twitter Insight
+	   */
+	  $scope.loadTwitterinsights = function() {		  
 		  $state.go('app.twitterinsights');
 	  };
 
@@ -723,8 +746,6 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 
    $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
 
-
-
 	$scope.sidebarObj={};
 	$scope.sidebarObj.selectedMake="";
 	$scope.sidebarObj.selectedModel="";
@@ -732,13 +753,13 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 	$scope.sidebarObj.mfgStartDate="";
 	$scope.sidebarObj.mfgEndDate="";
 
-
-
-
 	$scope.region=[];
 	$scope.timescale=[];
 
-  $rootScope.setUsageObjectFromSidebar=function(obj){
+/** 
+ * create payload for sibebar filter option 
+ */	 
+  $rootScope.setUsageObjectFromSidebar=function(obj){	 
 		$scope.sidebarObj=obj;
 		$scope.usagedata={
 				   "productAttrs":{
@@ -800,7 +821,6 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 		$rootScope.applyFilterBoolean=true;
 		// This method is already calling from tryit()
 
-
 	}
 
 	//for reports section
@@ -829,9 +849,10 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 	$scope.myDate1.getDate());
 	//for reports section -finish
 
-	//start report apply filter
+	/**
+	 * Filtering Reports
+	 */
 	$scope.iniReport=function(){
-
 
 	    $scope.isReportFiltering = true;
 	    $rootScope.applyFilterBoolean=true;
@@ -895,17 +916,14 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 
 	    if($scope.region.states==undefined || $scope.region.states=="")
 	    {
-
 	    $scope.usagedata.region.states=[];
 	    }
 	    if($scope.region.cities==undefined || $scope.region.cities=="")
 	    {
-
 	      $scope.usagedata.region.cities=[];
 	    }
 	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
 	    {
-
 	      $scope.usagedata.region.zip_codes=[];
 	    }
 	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
@@ -916,7 +934,6 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 	    {
 	      $scope.usagedata.timescale.quarters=[];
 	    }
-
 	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
 	    {
 	      $scope.usagedata.timescale.months=[];
@@ -979,7 +996,7 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 	        $scope.isReportFiltering = false;
 		});
     }
-	//end iniReport
+	
 	removechart = function (id) {
 		var chart = $('#'+id).highcharts();
 		if (chart) {
@@ -989,6 +1006,9 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 
 	};
 
+	/** 
+	 * Load data from API for Sales Volume Distribution map 
+	 */
 	showMap = function () {
 		removechart('map-container');
 		$scope.loadingText = "Loading data...";
@@ -1013,6 +1033,10 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 		});
 	}
 
+	/** 
+	 * Implement map zooming funtionality 
+	 * @param {String} id - div id for map
+	 */
 	$scope.zoomMap = function (id) {
 		var selectedState = $scope.region.states;
 		if(selectedState && selectedState != '') {
@@ -1034,12 +1058,14 @@ angular.module('angle').controller('DashboardController', ['$rootScope','$scope'
 		}
 	};
 
-
+	/** 
+	 * Filter from both top filter and side bar filter
+	 */
 	$rootScope.tryit = function() {
 
 		$scope.isLoadingFilters = true;
-    $scope.isReportFiltering = false;
-$rootScope.isApplyFiterButton = true;
+        $scope.isReportFiltering = false;
+        $rootScope.isApplyFiterButton = true;
 		$scope.test = true;
 		$rootScope.applyFilterBoolean=true;
 		$scope.usagedata={
@@ -1102,18 +1128,14 @@ $rootScope.isApplyFiterButton = true;
 
 		if($scope.region.states==undefined || $scope.region.states=="")
 		{
-
 		$scope.usagedata.region.states=[];
 		}
-
 		if($scope.region.cities==undefined || $scope.region.cities=="")
 		{
-
 			$scope.usagedata.region.cities=[];
 		}
 		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
 		{
-
 			$scope.usagedata.region.zip_codes=[];
 		}
 		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
@@ -1124,7 +1146,6 @@ $rootScope.isApplyFiterButton = true;
 		{
 			$scope.usagedata.timescale.quarters=[];
 		}
-
 		if($scope.timescale.months==undefined || $scope.timescale.months=="")
 		{
 			$scope.usagedata.timescale.months=[];
@@ -1162,16 +1183,13 @@ $rootScope.isApplyFiterButton = true;
 			$scope.usagedata.family_members_count=[];
 		}
 
-
-
-
-		// to set usage object in anotehr controllr
+		// to set usage object in another controller
 		$rootScope.setUsageData($scope.usagedata);
 
-		//For map
+		/** 
+		 * For map
+		 */
 		showMap();
-
-
 
 		$scope.griddata=[];
 		$scope.eng_griddata=[];
@@ -1221,10 +1239,9 @@ $rootScope.isApplyFiterButton = true;
 		  
 	};
 
-
-
-
-    		// load all usage data on dashboard
+    		/**
+    		 * load all usage data on dashboard
+    		 */ 
     		$scope.griddata=[];
     		$scope.eng_griddata=[];
     		$scope.mkt_griddata=[];
@@ -1329,6 +1346,10 @@ $rootScope.isApplyFiterButton = true;
 	    
 	
 	 $scope.cities;
+	 
+	 /** 
+	  * Retrieve cities for relevant states 
+	  */
 	 $scope.selectCities=function(){
 		 $scope.region.cities=undefined;
 		 $scope.region.zip_codes=undefined;
@@ -1342,6 +1363,10 @@ $rootScope.isApplyFiterButton = true;
 			// on error
 		 });
     }
+	 
+	 /** 
+	  * Retrieve zipcodes for relevant cities 
+	  */
 	 $scope.selectZip=function(){
 
 		 $scope.region.zip_codes=undefined;
@@ -1354,6 +1379,9 @@ $rootScope.isApplyFiterButton = true;
 		 });
     }
 
+	 /** 
+	  * Maximize the Washing Machines status grid
+	  */
 	 $scope.maximizeGrid=function(){
 			var gridNormal = $("#gridNormal1").clone();
 
@@ -1365,27 +1393,15 @@ $rootScope.isApplyFiterButton = true;
 			$("#gridNormal1").removeClass("hidden");
 
 			 $(".maxtbody").height(300);
-
-
-
-
 		$("#gridMax").removeClass("hidden");
-
-
-
-
 		}
 
 		$("body").on("click","#gridCloseImg",function(){
 			$("#gridMax").empty();
 			$("#gridMax").addClass("hidden");
-
 			 
 			  $("#gridNormal").height(355);
-
-
 	    });
-
 
 	}]);
 
@@ -1411,8 +1427,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
 	$scope.clearfilter = function(){
 
-        $rootScope.search={};
-
+        $rootScope.search={};  
         $rootScope.filterIcons=[];
         $rootScope.barchartData = null;
         $rootScope.piechartData = null
@@ -1420,12 +1435,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         $rootScope.tryit();
      }
 
-    $scope.clearfilter1 = function(){
+	/** 
+	 * clear side bar product filter selections 
+	 */
+    $scope.clearfilter1 = function(){    	
 
     	 $scope.clearFilterIcons(1);
-
-
-
 		 var obj={};
 		 obj.selectedMake=$rootScope.search.selectedMake;
 		 obj.selectedModel=$rootScope.search.selectedModel;
@@ -1446,12 +1461,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
          $rootScope.tryit();
       }
 
-    $scope.clearfilter2 = function(){
-
-
+    /** 
+     * clear side bar demographics filter selections
+     */
+    $scope.clearfilter2 = function(){  
+    	
     	$scope.clearFilterIcons(2);
-
-
     	var obj={};
     	obj.selectedMake=$rootScope.search.selectedMake;
   	 	obj.selectedModel=$rootScope.search.selectedModel;
@@ -1472,7 +1487,8 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         $rootScope.tryit();
      }
 
-    $scope.clearFilterIcons = function (filterType) {
+    $scope.clearFilterIcons = function (filterType) {  
+    	
     	var tempArr = [];
     	var isRemoved = false;
     	if(filterType == 1){
@@ -1509,10 +1525,11 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     	}
     }
 
+    /** 
+     * create side bar filter seclection array
+     */
    $scope.createIconArray=function(){
         $scope.someArr=[];
-
-
 
         if($rootScope.search.selectedMake && $rootScope.search.selectedMake.length != 0)
             $scope.someArr.push(
@@ -1576,18 +1593,20 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
         $rootScope.filterIcons=$scope.someArr;
 
-
     };
 
 
     $scope.myDate = new Date();
 
       $scope.selectedSKU=function(){
-
-
+    	  
       }
 
     $rootScope.search={};
+    
+    /** 
+     * Retrieve model names for relavent make from API
+     */
       $scope.selectedMake=function(){
           $rootScope.search.selectedModel="";
           $rootScope.search.selectedSKU="";
@@ -1599,8 +1618,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 	  			// on error
 	  		});
       }
-
+      
+      /**
+       *  Retrieve SKU data for relavent make from API
+       */
       $scope.selectedModel=function(){
+    	  
           $rootScope.search.selectedSKU="";
           	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
           	HttpService.get(url).then(function(data){
@@ -1612,6 +1635,9 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 	  		});
       }
 
+      /** 
+       * This is for side bar product filter
+       */
          $scope.applyProductFilter=function(){
         	 var obj={};
          	obj.selectedMake=$rootScope.search.selectedMake;
@@ -1630,14 +1656,15 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
        	 	}
 
             $rootScope.setUsageObjectFromSidebar(obj);
-
             $scope.createIconArray();
-
             document.getElementById('filterPanel').style.display = 'none';
             $rootScope.tryit();
 
         }
 
+         /** 
+          * This is for side bar demographics filter 
+          */
          $scope.applyDemographicsFilter=function(){
         	 var obj={};
          	obj.selectedMake=$rootScope.search.selectedMake;
@@ -1662,13 +1689,15 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
          };
 
 
-
     var collapseList = [];
 
     $rootScope.name="";
 
     $rootScope.test="gopal";
-    // Check item and children active state
+    
+   /**
+    * Check item and children active state
+    */ 
     var isActive = function(item) {
 
       if(!item) return;
@@ -1684,9 +1713,9 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         return $state.is(item.sref) || $state.includes(item.sref);
     };
 
-    // Load menu from json file
-
-
+    /**
+     * Load menu from json file
+     */ 
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
              (isActive(item) ? ' active' : '') ;
@@ -1709,9 +1738,9 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
      $scope.loadSidebarMenu();
 
-    // Handle sidebar collapse items
-
-
+    /**
+     * Handle sidebar collapse items
+     */ 
     $scope.addCollapse = function($index, item) {
       collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
     };
@@ -1723,10 +1752,14 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     $scope.toggleCollapse = function($index, isParentItem,subitem) {
     	$rootScope.intete+=1;
 
-      // collapsed sidebar doesn't toggle drodopwn
+      /**
+       * collapsed side bar doesn't toggle drop down
+       */ 
       if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
 
-      // make sure the item index exists
+      /**
+       * make sure the item index exists
+       */ 
       if( angular.isDefined( collapseList[$index] ) ) {
         if ( ! $scope.lastEventFromChild ) {
           collapseList[$index] = !collapseList[$index];
@@ -1738,7 +1771,6 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
       }
 
       $scope.lastEventFromChild = isChild($index);
-
       return true;
 
     };
@@ -1799,6 +1831,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     {
     	alert("SELECTED");
     }
+}]);
 
 }]);
 
@@ -1810,6 +1843,9 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
 
    $interval(callMe,1000);
 
+   /** 
+    * Remove side bar filter 
+    */
    $scope.removeFilter=function(filter){
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
 
@@ -1819,7 +1855,7 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgStartDate=undefined;
            $rootScope.search.mfgEndDate=undefined;
-           $rootScope.filterIcons=[];
+           $rootScope.filterIcons=[];          
            $rootScope.filterIcons.splice(indexofvar,1);
            angular.forEach($rootScope.filterIcons,function(obj ,key){
                if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
@@ -1896,7 +1932,9 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 		});      
 
 	}
-
+	/** 
+	 * Maximize the sales volume distribution map 
+	 */
 	$scope.maximizeMap=function(){
 
 		var mapNormal = $("#mapNormal").clone();
@@ -1921,6 +1959,9 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 
 }]);
 
+/** 
+ * Generate sales volume distribution map 
+ */
 function renderMap(divId, salesData){
 	var seriesData = [];
 	if(salesData && salesData.length > 0){
@@ -1981,9 +2022,6 @@ function renderMap(divId, salesData){
 	    }]
 	}
 
-
-
-
     $('#map-container').highcharts('Map', {
       chart: {
     	  events: {
@@ -2032,10 +2070,7 @@ function renderMap(divId, salesData){
                 //x : -5	
             }
 	    },
-
-
-
-
+	    
 	    plotOptions: {
 	        mapbubble:{
 	            minSize:0,
@@ -2047,11 +2082,13 @@ function renderMap(divId, salesData){
 
 	});
 
-
-
 }
 
+/** 
+ * Remove pie charts from Sales volume Distribution Map 
+ */
 function removePie(point) {
+	
 	var ser = point.series;
 	var	trackball = point.pie0;
 	if (trackball) {
@@ -2076,7 +2113,9 @@ function removePie(point) {
 
 }
 
-
+/** 
+ * Draw pie charts in Sales volume Distribution Map 
+ */
 function drawPie(point, index) {
 
 	var series = point.series,
@@ -2090,7 +2129,6 @@ function drawPie(point, index) {
 		var uConn = point.unitsConnected;
 		var connPercentage = parseFloat((uConn/conn)*100).toFixed(2);
 	    var unconnPercentage = parseFloat(((conn-uConn)/conn)*100).toFixed(2);
-
 
 		var connStr = conn.toString();
 		var textLenth = connStr.length;
@@ -2161,12 +2199,12 @@ function drawPie(point, index) {
 			}).on('mouseout', function () {
 				chart.tooltip.hide();
 			});
-
-
-
 	}
 }
 
+/** 
+ * Generate Insights pie chart in mkt_manager
+ */
 function renderPieChart(divId, insightsData, chartTitle){
 
 	var pieChart = new Highcharts.Chart({
@@ -2248,7 +2286,9 @@ function renderPieChart(divId, insightsData, chartTitle){
         }]
     });
 }
-
+/** 
+ * Generate Sales Volumes line chart in mkt_manager
+ */
 function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTitle, yAxisTitle){
 
 	$("#"+divId).highcharts( {
@@ -2290,6 +2330,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 	});
 }
 
+/** 
+ * Create series data object to generate line chart in mkt_manager 
+ */
 function createLineChartSeriesDataForMktManager(data){
 	var lineChartSeriesData = [];
 
@@ -2310,6 +2353,9 @@ function createLineChartSeriesDataForMktManager(data){
 		return lineChartSeriesData;
 }
 
+/** 
+ * xAxix data type for line chart in mkt_manager 
+ */
 function getTimeScales(data){
 	var timeScales = [];
 	for (var i=0; i< data.length; i++){
@@ -2329,6 +2375,10 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
     var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	var userid = loginCredentails.email;
 
+	/** 
+	 * Twitter sentiments data for notification chart in mkt_manager.
+	 * Retrieve base and score value from Notification config API 
+	 */
 	$scope.getTwitterSentiments = function(){
 		$scope.isLoading = true;
 		$scope.msg = $scope.msg1;
@@ -2380,6 +2430,10 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
+	/** 
+	 * Connected machine data for Notification chart in mkt_manager.
+	 * Retrieve negative and positive tolerance value from Notification config API 
+	 */
 	$scope.getSpikesInConnectedMachines = function() {
 
 		$scope.isLoading = true;
@@ -2440,6 +2494,10 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
+	/** 
+	 * Specific error count difference between today and 4 weeks ago.
+	 * Get error type from Notification config API for Notification chart in eng_manager
+	 */
 	$scope.getSpikesInSpecificErrors = function() {
 
 		$scope.isLoading= true;
@@ -2502,6 +2560,9 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
+	/** 
+	 * Specific error count MakeModel Tolerance between today and 4 weeks ago for Notification chart in eng_manager.  
+	 */
 	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
 
 		$scope.isLoading = true;
@@ -2658,7 +2719,6 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	  $rootScope.setUsageData=function(usagedata){
 		  $scope.usagedata=usagedata;
 
-
 		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
           var rolename = loginCredentails.Role;
           var roleKey  = loginCredentails.roleKey;
@@ -2681,7 +2741,6 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
           }
 	  }
 
-
 	  	// display sensors Name for Engg Manager
 	  	var url = configApiClient.baseUrl + 'sensors';
 		HttpService.get(url).then(function(data){
@@ -2701,17 +2760,22 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			
 		});
 	  
+	  /** 
+	   * Retrieve sensor type and sensor key data.
+	   * Set yAxix type for sensor data line chart in eng_manager
+	   */
 	  $scope.Engdisp=function(index){
 			if(index==0)
 				$scope.selectedSensors=""+0;
 
-
 			if($scope.selectedSensors != '' && $scope.selectedSensors != null && $scope.selectedSensors != undefined){
 				 $scope.sensortype=$scope.sensorsList[$scope.selectedSensors].displayName;
 				 $scope.seneorkey=$scope.sensorsList[$scope.selectedSensors].key;
+
 			}
 			else
 					$scope.sensortype="";
+			
 			if( $scope.sensortype=="Average Water Usage"){
 
 				$scope.Unit="Water usage in Gallons";
@@ -2737,8 +2801,6 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 				$scope.Unit="Load in KGS ";
 			}
-
-
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
 
@@ -2753,7 +2815,6 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	    else
 	      $scope.isActive3 = !$scope.isActive3;
 	  }
-
 
 	$scope.disp=function(index){
 		if(index==0)
@@ -2773,8 +2834,10 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 	}
 
-
-
+	
+/** 
+ * Retrieve data and generate Sold vs Connected pie chart in mkt_manager 
+ */
 $scope.plotPieChart=function(divID){
 
 	removechart(divID);
@@ -2846,6 +2909,9 @@ $scope.plotPieChart=function(divID){
 
 	}
 
+/** 
+ * Retrieve data and generate Top 3 selling models bar chart in mkt_manager 
+ */
 	$scope.plotBarChart=function(divId){
 		removechart(divId);
 		$scope.loadingText = "Loading data...";
@@ -2934,8 +3000,11 @@ $scope.plotPieChart=function(divID){
 			}
 
 		}
-
 	}
+	
+/** 
+ * Retrieve data for Sales Volumes line chart in mkt_manager 
+ */
 	$scope.plotChartFunction = function(divId){
 		removechart(divId);
 		$scope.loadingText = "Loading data...";
@@ -2985,9 +3054,9 @@ $scope.plotPieChart=function(divID){
 		}
 	}
 
-
-
-
+/** 
+ * generate line charts in eng_manager
+ */
 	$scope.plotEngManagerChartFunction = function(divId,key){
 		removechart(divId);
 		$scope.loadingText = "Loading data...";
@@ -3036,6 +3105,9 @@ $scope.plotPieChart=function(divID){
 		}
 	}
 
+/** 
+ * Maximize Charts in both managers 
+ */
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
 
@@ -3083,11 +3155,7 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
 
-
-
          	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
-
-
      	}
 
      	if($scope.selectedChart=='Pie'){
@@ -3134,7 +3202,6 @@ $scope.plotPieChart=function(divID){
          	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
-
 
 }]);
 

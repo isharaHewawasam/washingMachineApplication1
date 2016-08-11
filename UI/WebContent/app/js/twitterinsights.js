@@ -16,7 +16,10 @@ angular.module('angle').controller('TwitterInsightsController',
 		// on error
 	});
 
-	$scope.editTwitterInsights = function(make, model) {
+ /** 
+  * Route to Notification configuration 
+  */
+	$scope.editTwitterInsights = function(make, model) {		
 		$localStorage.showTwitterInnerLint = true;
 		var twitterinsights = {};
 		twitterinsights.make = make;
@@ -25,13 +28,18 @@ angular.module('angle').controller('TwitterInsightsController',
 		$state.go('app.notificationconf');
 	};
 
-	$scope.deleteTwitterInsights = function() {
-		alert("deleteTwitterInsights");
+  /** 
+   * Delete Twitter Insight rows.
+   */ 
+	$scope.deleteTwitterInsights = function() {		
 	};
 
 	$scope.tweetsData = {};
 
-	$scope.loadTwitterInsightsData = function (id) {
+  /** 
+   * Load data to twitter sentiments 
+   */
+	$scope.loadTwitterInsightsData = function (id) {		
 		var url = configApiClient.baseUrl + "twitter/innerpage/twittersentiments/"+id;
 		HttpService.get(url).then(function(data){
 			// on success
@@ -49,7 +57,10 @@ angular.module('angle').controller('TwitterInsightsController',
 
 	$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
 
-	$scope.loadDashboard = function() {
+  /** 
+   * Session handling-Return back to Dashboard
+   */
+	$scope.loadDashboard = function() {		
 		$rootScope.isApplyFiterButton = true;
 		$state.go('app.singleview');
 	};
@@ -78,11 +89,12 @@ angular.module('angle').controller('TwitterInsightsController',
 		$("#gridMax").empty();
 		$("#gridMax").addClass("hidden");
 		  $("#gridAdjustHeight").height(400);
-    });
-
-
-
-	$scope.getTwitterData = function(divId) {
+    });	
+	
+  /**
+   *  setup data for twitter sentiments line charts
+   */
+	$scope.getTwitterData = function(divId) {		
 		  var data = [
 		  			[1247529600000,20.32],
 		  			[1247616000000,20.98],
@@ -146,9 +158,13 @@ angular.module('angle').controller('TwitterInsightsController',
 			$scope.selectedRowIndex = index;
 		}
 }]);
-
-function getTwitterSentiments (divId, twitter_sentiments) {
-
+  
+/** 
+ * Analyze  data to create twitter sentiment charts
+ * @param {String} divId - The id of the div tag
+ * @param {String} twitter_sentiments - Data set for Twitter Sentiment charts
+ */
+function getTwitterSentiments (divId, twitter_sentiments) {	  
 	 var positive 	= twitter_sentiments.sentimate_positive;
 	 var pos_other	= (100-positive);
 	 var negative 	= twitter_sentiments.sentimate_neutral;
@@ -182,8 +198,14 @@ function getTwitterSentiments (divId, twitter_sentiments) {
 	  });
  };
 
-function sentimentsData (divId, name, yValue, oValue) {
-
+ /**
+  * Pass data object to create twitter sentiments pie chart
+  * @param {String} divId - The id of the div tag 
+  * @param {String} name - Name of the pie chart
+  * @param {String} yValue - first data for pie chart
+  * @param {String} oValue - second data for pie chart
+  */
+function sentimentsData (divId, name, yValue, oValue) {	
 	 var twitterData	= [];
 	 var obj 			= {};
 	 obj.name 			= name;
@@ -199,7 +221,13 @@ function sentimentsData (divId, name, yValue, oValue) {
 
 }
 
+/** 
+ * Create twitter sentiments line chart 
+ *  @param {String} divId - The id of the div tag 
+ *  @param {String} insightsData - Data set for generate line charts
+ */
 function renderTwitterSentimentsLineChart(divId, insightsData) {
+	console.log("renderTwitterSentimentsLineChart  :- "+"divId  "+divId +"insightsData   "+insightsData);
 	  var pieChart = new Highcharts.Chart({
 	      chart: {
 	        	renderTo: divId,
@@ -243,6 +271,13 @@ function renderTwitterSentimentsLineChart(divId, insightsData) {
           }]
 	  });
 }
+
+/** 
+ * Create twitter sentiments pie chart 
+ * @param {String} divId - The id of the div tag 
+ * @param {String} insightsData - JSON data set for generate pie charts
+ * @param {String} innerText - Twitter Sentiments pie chart inner text
+ */
 function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 
 	var colorCode = ['#339933', '#808080']; // For Positive
@@ -250,10 +285,8 @@ function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
 		colorCode = ['#FF0000', '#808080']; // For Negative
 	}else if(divId == 'twitter_sentiments_neu'){
 		colorCode = ['#5DADE2', '#808080']; // For Neutral
-	}
-
-
-
+	}	
+	
 	var chart1 = new Highcharts.Chart({
         chart: {
         	renderTo:divId,
