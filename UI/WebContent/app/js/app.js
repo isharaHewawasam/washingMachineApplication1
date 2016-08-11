@@ -1,7 +1,7 @@
 
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
-var login = angular.module('myLoginCheck',[]).
+/*var login = angular.module('myLoginCheck',[]).
 factory('$logincheck', function(){
   return function(isLogin){
 
@@ -9,11 +9,11 @@ factory('$logincheck', function(){
 	  return false;
   };
 
-});
+});*/
 var salesDataJoin;
 var Role;
 var Name;
-var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
+/*var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource', 'ui.utils', 'ngMaterial','ngMessages','myLoginCheck'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
               // Set reference to access them from any scope
               $rootScope.$state = $state;
@@ -23,11 +23,11 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               $rootScope.isReportFiltering = true;
 
               // Uncomment this to disable template cache
-              /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+              $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
                   if (typeof(toState) !== 'undefined'){
                     $templateCache.remove(toState.templateUrl);
                   }
-              });*/
+              });
 
               
 
@@ -61,8 +61,8 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
 App.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider',
 function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   'use strict';
-/** Set the following to true to enable the HTML5 Mode
-   You may have to set <base> tag in index and a routing configuration in your server **/
+*//** Set the following to true to enable the HTML5 Mode
+   You may have to set <base> tag in index and a routing configuration in your server **//*
  
   $locationProvider.html5Mode(false);
 
@@ -152,7 +152,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
     
-    /**  Lazy Load modules configuration**/
+    *//**  Lazy Load modules configuration**//*
   
     $ocLazyLoadProvider.config({
       debug: false,
@@ -164,7 +164,7 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
     function ( $controllerProvider, $compileProvider, $filterProvider, $provide) {
       'use strict';
       
-      /** registering components after bootstrap **/
+      *//** registering components after bootstrap **//*
       App.controller = $controllerProvider.register;
       App.directive  = $compileProvider.directive;
       App.filter     = $filterProvider.register;
@@ -191,10 +191,10 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
   }])
 ;
 
-/**
+*//**
  * 
  * Define constants to inject across the application
-*/
+*//*
 App
   .constant('APP_COLORS', {
     'primary':                '#5d9cec',
@@ -222,7 +222,7 @@ App
   })
   .constant('APP_REQUIRES', {
 	  
-	  /** jQuery based and standalone scripts**/
+	  *//** jQuery based and standalone scripts**//*
 
     scripts: {
       'modernizr':          ['vendor/modernizr/modernizr.js'],
@@ -230,7 +230,7 @@ App
                              'vendor/simple-line-icons/css/simple-line-icons.css']
     },
     
-    /**Angular based script (use the right module name)**/
+    *//**Angular based script (use the right module name)**//*
     modules: [
 
 
@@ -240,12 +240,12 @@ App
     ]
 
   })
-;
+;*/
 /**
  *
  * login api
  */
-App.controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
+/*App.controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
                                        function($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 
 
@@ -283,11 +283,11 @@ App.controller('LoginFormController', ['$scope', '$state','$rootScope','$window'
             $scope.errorMsg = 'Network issue, please try after some time.';
 		});
 	}
-	}]);
+	}]);*/
 
 
 
-App.controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService', 
+angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService', 
                                        function($rootScope,$scope, $state, $window, $localStorage, configApiClient, HttpService) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
@@ -341,7 +341,7 @@ App.controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window
  * Main Application Controller
 */
 
-App.controller('AppController',
+angular.module('angle').controller('AppController',
   ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar',
   function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar) {
     "use strict";
@@ -448,7 +448,7 @@ App.controller('AppController',
 }]);
 
 
-App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$state", "iot.config.ApiClient", 'HttpService', 
+angular.module('angle').controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$state", "iot.config.ApiClient", 'HttpService', 
                                             function($scope, $rootScope, $timeout, $state, configApiClient, HttpService) {
 
 		$scope.isLoading = false;
@@ -701,7 +701,7 @@ App.controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", 
 
 
 
-App.controller('DashboardController', ['$rootScope','$scope', '$state', 'iot.config.ApiClient', 'HttpService', 
+angular.module('angle').controller('DashboardController', ['$rootScope','$scope', '$state', 'iot.config.ApiClient', 'HttpService', 
                                        function($rootScope, $scope, $state, configApiClient, HttpService) {
 
 		//Clear filter on dashboard load
@@ -1380,7 +1380,7 @@ $rootScope.isApplyFiterButton = true;
 			$("#gridMax").empty();
 			$("#gridMax").addClass("hidden");
 
-			  $(".tbody").height(200);
+			 
 			  $("#gridNormal").height(355);
 
 
@@ -1395,7 +1395,7 @@ $rootScope.isApplyFiterButton = true;
  =========================================================*/
 
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$timeout', 'Utils', "iot.config.ApiClient", 'HttpService',
+angular.module('angle').controller('SidebarController', ['$rootScope', '$scope', '$state', '$timeout', 'Utils', "iot.config.ApiClient", 'HttpService',
   function($rootScope, $scope, $state, $timeout, Utils, configApiClient, HttpService){
 
 	$rootScope.intete=1;
@@ -1802,7 +1802,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$timeout
 
 }]);
 
-App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.config.ApiClient',function($rootScope,$scope,$interval, configApiClient){
+angular.module('angle').controller('filterIconController',['$rootScope','$scope','$interval', 'iot.config.ApiClient',function($rootScope,$scope,$interval, configApiClient){
 
    function callMe(){
        $scope.someArray=$rootScope.filterIcons;
@@ -1877,7 +1877,7 @@ App.controller('filterIconController',['$rootScope','$scope','$interval', 'iot.c
    };
 }]);
 
-App.controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
+angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
                                 function($scope,$rootScope, configApiClient, HttpService){
     $scope.salesDataSet;
 	$scope.plotMapFunction = function(divId){
@@ -1949,7 +1949,12 @@ function renderMap(divId, salesData){
 	        color: '#EEEEEE',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
-	        showInLegend: false
+	        showInLegend: false,
+	        states: {
+	            hover: {
+	                color: '#EEEEEE'
+	            }
+	        }
 	    }, {
 	        name: 'Separators',
 	        type: 'mapline',
@@ -1965,7 +1970,7 @@ function renderMap(divId, salesData){
 	        marker: {
 				  fillOpacity:0.0
 			},
-			//showInLegend: false,      
+			showInLegend: false,      
 			tooltip: {
 		        headerFormat: '',
 	            pointFormat: zipcode == true ?
@@ -2021,7 +2026,11 @@ function renderMap(divId, salesData){
 	    },
 
 	    mapNavigation: {
-	        enabled: true
+	        enabled: true,
+	        buttonOptions: {
+                verticalAlign: 'bottom',
+                //x : -5	
+            }
 	    },
 
 
@@ -2075,7 +2084,7 @@ function drawPie(point, index) {
 	pointX = point.plotX + series.xAxis.pos,
 	pointY = Highcharts.pick(point.plotClose, point.plotY) + series.yAxis.pos;
 
-	if(pointX && pointY && pointY < chart.renderer.plotBox.height) {
+	if(pointX && pointY) {
 
 		var conn = point.z;
 		var uConn = point.unitsConnected;
@@ -2309,7 +2318,7 @@ function getTimeScales(data){
 	return timeScales;
 }
 
-App.controller('notificationController', ['$rootScope', '$scope', '$window', 'iot.config.ApiClient', 'iot.config.Notification', 'HttpService',
+angular.module('angle').controller('notificationController', ['$rootScope', '$scope', '$window', 'iot.config.ApiClient', 'iot.config.Notification', 'HttpService',
                                           function ($rootScope, $scope, $window, configApiClient, configNotification, HttpService) {
 	$scope.isLoading = false;
     $scope.isError = false;
@@ -2623,7 +2632,7 @@ function renderHorizontalBarChart(divId, notificationData){
     });
 }
 
-App.controller('myController', ['$scope', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService', 
+angular.module('angle').controller('myController', ['$scope', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService', 
                                 function ($scope, $rootScope, $window, configApiClient, HttpService) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
@@ -3212,7 +3221,7 @@ function createBarChart(divID, seriesData) {
  * User no-persist to avoid saving the sate in browser storage
  **/
 
-App.directive('toggleState', ['toggleStateService', function(toggle) {
+angular.module('angle').directive('toggleState', ['toggleStateService', function(toggle) {
   'use strict';
 
   return {
@@ -3248,7 +3257,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
 
 /** Browser detection**/
 
-App.service('browser', function(){
+angular.module('angle').service('browser', function(){
   "use strict";
 
   var matched, browser;
@@ -3348,7 +3357,7 @@ App.service('browser', function(){
 });
 /**Services to retrieve global colors**/
 
-App.factory('colors', ['APP_COLORS', function(colors) {
+angular.module('angle').factory('colors', ['APP_COLORS', function(colors) {
 
   return {
     byName: function(name) {
@@ -3361,7 +3370,7 @@ App.factory('colors', ['APP_COLORS', function(colors) {
 
 /**Provides helper functions for routes definition**/
 
-App.provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
+angular.module('angle').provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
   "use strict";
 
   // Set here the base of the relative path
@@ -3420,7 +3429,7 @@ App.provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
 
 /**Services to share toggle state functionality**/
 
-App.service('toggleStateService', ['$rootScope', function($rootScope) {
+angular.module('angle').service('toggleStateService', ['$rootScope', function($rootScope) {
 
   var storageKeyName  = 'toggleState';
 
@@ -3483,7 +3492,7 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
 
 /**Utility library to use across the theme**/
 
-App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQUERY) {
+angular.module('angle').service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQUERY) {
     'use strict';
 
     var $html = angular.element("html"),
@@ -3604,7 +3613,7 @@ myApp.config(["RouteHelpersProvider", function(RouteHelpersProvider) {
 
 }]);
 
-App.controller('MyController', ['$scope', function($scope) {
+angular.module('angle').controller('MyController', ['$scope', function($scope) {
   /* controller code */
 
 }]);
@@ -3616,7 +3625,7 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
-App.controller('MyviewController', ['$scope', function($scope) {
+angular.module('angle').controller('MyviewController', ['$scope', function($scope) {
 	  /* controller code */
 
 	  $scope.getUrl = function(){

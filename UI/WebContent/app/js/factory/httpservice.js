@@ -1,4 +1,4 @@
-App.factory('HttpService',function($http, $rootScope, $q){
+angular.module('angle').factory('HttpService',function($http, $rootScope, $q){
 
 		var allowOrigin = 'http://localhost:3000/api/v1';
 		

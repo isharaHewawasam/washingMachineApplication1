@@ -8,7 +8,7 @@
 /*
 * A configurable value set to be changed according to threshold and tolerance values required for notifications display.
 */
-App.constant('iot.config.buildVersion','0.1') // updated by Grunt
+angular.module('angle').constant('iot.config.buildVersion','0.1') // updated by Grunt
 
 	.constant('iot.config.Notification', {
 		positiveTwitterSentimentThreshold: 10,

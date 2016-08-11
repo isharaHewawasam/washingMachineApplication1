@@ -1,4 +1,4 @@
-App.controller('NotificationConfController',
+angular.module('angle').controller('NotificationConfController',
 		['$rootScope', '$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService',
                  function($rootScope, $scope, $state, $window, $localStorage, configApiClient, HttpService){
 
