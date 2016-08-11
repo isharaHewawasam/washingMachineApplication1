@@ -14,7 +14,7 @@ b) view : averageDetergentUsageByYear
 function (doc) {
   var sold_date = new Date(doc.WashDate);
   var quarter =  (Math.floor((sold_date.getMonth() + 3) / 3)).toString();
-  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totalpowerusage]);
+  emit([doc.Make, doc.Model, doc.State, doc.City, doc.ZipCode.toString(), sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.Totaldetergent]);
 }
 reduce : stats
 
@@ -113,6 +113,62 @@ function (doc) {
   emit([doc.Make, doc.Model, sold_date.getFullYear().toString(), quarter, (sold_date.getMonth() + 1).toString()], [doc.TotalLoadWeight]);
 }
 reduce : stats
+
+o) view : averageWashCyclesByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.Cycles]);
+}
+
+p) averageWaterUsageByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.Totalwaterusage]);
+}
+
+q) averagePowerUsageByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.Totalpowerusage]);
+}
+
+r) averageWashCycleDurationByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.TotalDuration]);
+}
+
+s) averageTemperatureUsageByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.TotalTemperature]);
+}
+
+s) averageDetergentUsageByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.Totaldetergent]);
+}
+
+t) averageHumidityByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.TotalHumidity]);
+}
+
+t) averageLoadByDate
+
+function (doc) {
+  var wash_date = new Date(doc.WashDate);
+  emit([wash_date, doc.Make, doc.Model, doc.SKU], [doc.TotalLoadWeight]);
+}
 
 2] Design Doc Name: favouriteWashDay
 *******************************
