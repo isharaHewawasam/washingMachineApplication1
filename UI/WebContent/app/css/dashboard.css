@@ -271,3 +271,90 @@
 #nav3 {
 	margin-right: 30px;
 }
+
+.reportnvwidth1 {
+	max-width: 200px;
+	margin-left: 15px;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.reportnvwidth2 {
+	max-width: 200px;
+	margin-left: 15px !important;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.reportnvwidth3 {
+	max-width: 134px;
+	padding-right: 0px;
+	padding-left: 50px;
+	padding-top: 10px;
+}
+
+.datepicker {
+	max-width: 150px;
+	margin-left: 15px !important;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.internaldate {
+	padding-top: 0;
+	height: 35px;
+}
+
+.todatepicker {
+	max-width: 150px;
+	padding-right: 0px;
+	padding-left: 80px;
+	padding-top: 10px;
+}
+
+.todatedive {
+	max-width: 150px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 10px;
+}
+
+.reportfiltrdv {
+	margin-right: 15px ! important;
+	padding: 0px;
+}
+
+.reportgrid {
+	margin-top: 41px;
+	padding: 0px;
+}
+
+#gridAdjustHeight {
+	height: auto;
+	margin-left: -15px;
+}
+
+#reportgridtittle {
+	height: 30px;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+#reportgridinfo {
+	margin-right: 5px;
+	margin-top: -20px;
+	padding: 0px;
+	height: 15px;
+	width: 15px;
+}
+
+.reportgridstyle {
+	font-family: Roboto;
+	font-size: 15px;
+}
+
+#downloadreport {
+	margin-left: 1px;
+	marker-offset: -18px;
+}
+
