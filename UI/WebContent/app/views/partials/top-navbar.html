@@ -1,57 +1,50 @@
 <!-- START Top Navbar-->
-<nav role="navigation" class="navbar topnavbar" ng-controller="TopnavbarController" style="height: 60px; border:0px; margin:0px; padding:0px; ">
+<link href="app/css/topnavbar.css" rel="stylesheet" />
+<nav  role="navigation" class="navbar topnavbar" ng-controller="TopnavbarController" >
 	<!-- START navbar header-->
 	<div class="navbar-header"></div>
 	<!-- END navbar header-->
 	<!-- START Nav wrapper-->
-	<div class="nav-wrapper" style="height: 100%; vertical-align: middle;">
-		<ul class="nav navbar-nav pull-left" style="cursor:default;">
+	<div class="nav-wrapper" >
+		<ul class="nav navbar-nav pull-left navstyle" >
 			<!-- Search icon-->
-			<li style="padding-top: 8px">
+			<li class="navitem">
 				<div class="navbar-header "
-					style="float: Left; padding-right: 18px; padding-top: -15px;">
-					<a href="#" class="navbar-brand" style="cursor:default">				
-						<div style="padding-left: 20px; padding-top: 5px; height: auto; width: 200%;">
-							<img src="app/img/logo.png" alt="App Logo" class="img-responsive" style="  margin-left: -5px;" />
+					>
+					<a href="#" class="navbar-brand" >				
+						<div class="logodive">
+							<img src="app/img/logo.png" alt="App Logo" class="img-responsive logo"  />
 							
 						</div>
 					</a>
 				</div> <!-- START Alert menu-->
 			</li>
-			<li style="padding-top: 18px;padding-left: 32px;">
-			<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">IoT for Electronics</strong>
+			<li class="captiondiv">
+			<strong class="captionfont" >IoT for Electronics</strong>
 			</li>
 		</ul>
 		
-		<ul class="nav navbar-nav pull-right" style="">
-		<li style="padding-left: 10px;padding-top: 16px">
+		<ul class="nav navbar-nav pull-right" >
+		<li class="downloadicon">
 						<span><a href="app/img/Dashboardassets/User's Manual_Electronic_Appliance.pdf" title="Download User Manual" download="User's Manual_Electronic_Appliances.pdf" target="_blank" ><img alt="" src="app/img/Dashboardassets/icon_userguide.png"></a></span>
 		</li>  
 
-			<li style="padding-left: 10px;padding-top: 16px" ng-init="getNewNotificationCount()" ng-click="clearNotificationCount()">
+			<li class="alertimag" ng-init="getNewNotificationCount()" ng-click="clearNotificationCount()">
 				<img alt="" src="app/img/Dashboardassets/alert.png">
-				<span class="badge" style="background-color: #FEBD2D;margin-top: -22px;margin-left: -15px;" ng-show="notificationAlertFlag">{{notificationCount}}</span>
+				<span class="badge notificationcount"  ng-show="notificationAlertFlag">{{notificationCount}}</span>
 			</li> 
-			<li style="padding-left: 25px;padding-top: 8px">
-				<div dropdown class="dropdown" class="col-sm-1" style="padding-right: 25px; border-left:1px solid #5195DD; padding-left:25px;">
+			<li class="dropdownli">
+				<div dropdown class="dropdown dropdowndiv" class="col-sm-1 " >
 				
-					<a id="userInfoLink" data-toggle="dropdown" class="dropdown-toggle" style="  text-decoration: none;"> 
+					<a id="userInfoLink" data-toggle="dropdown" class="dropdown-toggle" > 
 						<div >
 							<span class="media-box-body">
 								<span class="media-heading">
-									<img src="app/img/Dashboardassets/user_pic.png" alt="Image"	class="media-box-object img-circle thumb48" style="display:inline;"/>
-									<strong style="font-size: 12px; font: Roboto Light; color: #FEFEFE; display:inline-block;position: relative;
-    top: 1px;
-    margin-right: 5px;"><span>{{names}}</span><span style="
-    position: relative;
-    display: block;
-    top: 9px;
-    left: 0px;
-    line-height: 7px;
-">{{rolename}}</span></strong>
+									<img src="app/img/Dashboardassets/user_pic.png" alt="Image"	class="media-box-object img-circle thumb48" />
+									<strong class="name"><span>{{names}}</span><span class="rolename">{{rolename}}</span></strong>
 								</span>
 							</span>
-							<img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" style="display:inline;"/>
+							<img src="app/img/Dashboardassets/user_dropdown_arrow.png" alt="Image" id="thumb48"/>
 						</div>
 					</a>
 					<!-- START Dropdown menu-->
@@ -93,7 +86,7 @@
 								<a href="#" class="list-group-item" ng-click="logOut()">
 									<div class="media-box">
 										<div class="media-box-body clearfix">
-											<p class="m0 option-text-style" style="height:100%; width:100%" >Logout</p>
+											<p class="m0 option-text-style"  >Logout</p>
 										</div>
 								    </div>
 								</a>

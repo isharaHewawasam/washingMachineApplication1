@@ -1,0 +1,45 @@
+#footrallign {
+	vertical-align: middle;
+	margin-top: -10px;
+}
+
+.footertab {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
+	font-size: 12px;
+	font: Roboto; Light;
+	color: #003A77;
+	padding-left: 22px;
+	padding-right: 20px;
+	padding-bottom: 25px;
+	margin-right: 3px;
+	border-right: 1px solid #003A77;
+	height: 25px;
+	text-decoration: underline;
+}
+
+.tabbtn {
+	font: Roboto; Light;
+	color: #003A77;
+	text-decoration: underline;
+}
+
+.tab_modal {
+	position: fixed;
+	top: -56%;
+	left: 30%;
+}
+
+.tab_modal_content {
+	position: fixed;
+	left: 100%;
+}
+
+.bottom_content {
+	font-size: 12px;
+	font: Roboto; Light;
+	color: #222222;
+	padding-right: 20px;
+	float: right;
+}
