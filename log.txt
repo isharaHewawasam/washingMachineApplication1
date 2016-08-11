@@ -1,0 +1,272 @@
+Express server listening on port 3000
+URL : /api/v1/login/authentication
+Request Body : {"username":"mkt_manager@bluemix.com","password":"test123"}
+Request after sanitizing: {"username":"mkt_manager@bluemix.com","password":"test123"}
+URL : /api/v1/sensors/data
+Request Body : {}
+Request after sanitizing: {}
+controller sensor name : undefined
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {}
+Request after sanitizing: {}
+Exception in sales_map::removeUnwantedKeys
+[TypeError: Cannot set property 'years' of undefined]
+URL : /api/v1/notifications/configurations/settings
+Request Body : {"Username":"mkt_manager@bluemix.com"}
+Request after sanitizing: {"Username":"mkt_manager@bluemix.com"}
+URL : /api/v1/notifications/configurations/settings
+Request Body : {"Username":"mkt_manager@bluemix.com"}
+Request after sanitizing: {"Username":"mkt_manager@bluemix.com"}
+URL : /api/v1/config/makes
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/demographics/family/age-ranges
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/demographics/family/income-ranges
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/demographics/family/members-count
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/fonts/glyphicons-halflings-regular.woff2
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/config/manufacture/years
+Request Body : {}
+Request after sanitizing: {}
+{ total_rows: 2,
+  offset: 0,
+  rows: 
+   [ { id: '43257de129c8bf878010e789b45c70c3',
+       key: [Object],
+       value: 1 },
+     { id: 'e180bcdf15b508a59ab4c1517e1ac365',
+       key: [Object],
+       value: 1 } ] }
+URL : /app/fonts/glyphicons-halflings-regular.woff
+Request Body : {}
+Request after sanitizing: {}
+{ total_rows: 2,
+  offset: 0,
+  rows: 
+   [ { id: '43257de129c8bf878010e789b45c70c3',
+       key: [Object],
+       value: 1 },
+     { id: 'e180bcdf15b508a59ab4c1517e1ac365',
+       key: [Object],
+       value: 1 } ] }
+Time : Thu Aug 11 2016 14:34:44 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsage
+view params {"reduce":true,"group":true,"group_level":2}
+No records  9
+============================================
+*********APP CRASHED****************************************
+Trace: ReferenceError: avg is not defined
+    at Object.exports.getAverageUsage (C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\power.js:36:3)
+    at getAvgPowerUsage (C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\sensors.js:71:22)
+    at C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\sensors.js:65:7
+    at C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\water.js:37:5
+    at C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\avg_calculator.js:58:9
+    at C:\Users\atul_shimpi\git\IotElectronicAppliances\models\sensors\avg_calculator.js:116:5
+    at C:\Users\atul_shimpi\git\IotElectronicAppliances\database\dbWashDailyAggregate.js:57:23
+    at Request._callback (C:\Users\atul_shimpi\git\IotElectronicAppliances\node_modules\cloudant\node_modules\nano\lib\nano.js:217:16)
+    at Request.self.callback (C:\Users\atul_shimpi\git\IotElectronicAppliances\node_modules\cloudant\node_modules\nano\node_modules\request\request.js:200:22)
+    at emitTwo (events.js:87:13)
+    at process.LogExcpetion (C:\Users\atul_shimpi\git\IotElectronicAppliances\app.js:59:12)
+    at emitOne (events.js:77:13)
+    at process.emit (events.js:169:7)
+    at process._fatalException (node.js:211:26)
+Reason : ReferenceError: avg is not defined
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 11 2016 14:34:44 GMT+0530 (India Standard Time)
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 11 2016 14:34:44 GMT+0530 (India Standard Time)
+URL : /api/v1/config/states
+Request Body : {}
+Request after sanitizing: {}
+Time : Thu Aug 11 2016 14:34:44 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":2}
+No records  29
+============================================
+URL : /app/fonts/glyphicons-halflings-regular.ttf
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/config/sales/years
+Request Body : {}
+Request after sanitizing: {}
+Received usage query response Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Time : Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+{ State: 
+   { 'AZ,Arizona': 1456,
+     'CA,California': 395,
+     'FL,Florida': 1860,
+     'NY,New York': 274,
+     'TN,Tennessee': 1897,
+     'TX,Texas': 1786,
+     'VA,Virginia': 1873,
+     'WA,Washington': 738,
+     'WI,Wisconsin': 350 } }
+URL : /api/v1/sensors
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/sales/charts
+Request Body : {}
+Request after sanitizing: {}
+Received usage query response Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Time : Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 11 2016 14:34:45 GMT+0530 (India Standard Time)
+URL : /api/v1/insights/twitter-handles
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/insights/most-used-products
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/insights/most-used-wash-cycles
+Request Body : {}
+Request after sanitizing: {}
+Time : Thu Aug 11 2016 14:34:46 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":2}
+No records  29
+============================================
+Received favoutire day : Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 76
+=========================================
+Sending favtoure time query request Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Received favoutire day : Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 76
+=========================================
+Sending favtoure time query request Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Time : Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Most Used Products for 2016
+Design Doc name insights
+View name MostUsedByYear
+view params {"reduce":true,"group":true,"group_level":4}
+No records  44
+============================================
+URL : /api/v1/insights/disconnected
+Request Body : {}
+Request after sanitizing: {}
+Exception in sales_map::removeUnwantedKeys
+[TypeError: Cannot set property 'years' of undefined]
+Time : Thu Aug 11 2016 14:34:47 GMT+0530 (India Standard Time)
+Most Used Wash Cycles
+Design Doc name favourites
+View name WashCycles
+view params {"reduce":true,"group":true,"group_level":1}
+No records  23
+============================================
+URL : /api/v1/notifications/spike-in-connected-machines
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/notifications/twitter-notifications-sentiments
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/sales?report_name=soldVsConnected&group=false
+Request Body : {}
+Request after sanitizing: {}
+Time : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":1}
+No records  9
+============================================
+Received favoutire time : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
+Favourite wash time records from cloudant : 164
+========================================
+Processing favourites started : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Sending response
+URL : /api/v1/notifications/notification-alert
+Request Body : {}
+Request after sanitizing: {}
+Received favoutire time : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
+Favourite wash time records from cloudant : 164
+========================================
+Processing favourites started : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Sending response
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 11 2016 14:34:48 GMT+0530 (India Standard Time)
+Time : Thu Aug 11 2016 14:34:49 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":1}
+No records  9
+============================================
+db opened
+Received usage query response Thu Aug 11 2016 14:34:50 GMT+0530 (India Standard Time)
+Time : Thu Aug 11 2016 14:34:50 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 11 2016 14:34:50 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 11 2016 14:34:50 GMT+0530 (India Standard Time)
+db opened
+Received favoutire day : Thu Aug 11 2016 14:34:52 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 76
+=========================================
+Sending favtoure time query request Thu Aug 11 2016 14:34:52 GMT+0530 (India Standard Time)
+Received favoutire time : Thu Aug 11 2016 14:34:53 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
+Favourite wash time records from cloudant : 164
+========================================
+Processing favourites started : Thu Aug 11 2016 14:34:53 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 11 2016 14:34:53 GMT+0530 (India Standard Time)
+Sending response
+Time : Thu Aug 11 2016 14:34:53 GMT+0530 (India Standard Time)
+Sold - Pie
+Design Doc name sales
+View name sales
+view params {"reduce":true,"group":true,"group_level":7}
+No records  10620
+============================================
+Time : Thu Aug 11 2016 14:34:58 GMT+0530 (India Standard Time)
+Connected Washing Machines
+Design Doc name sales
+View name connected
+view params {"reduce":true,"group":true,"group_level":4}
+No records  10027
+============================================

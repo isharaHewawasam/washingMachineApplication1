@@ -15,7 +15,6 @@ module.exports = {
 	  "dbNameOld": "erpsalesdata",
     "dbName": "erpsaleswithstatecode"
    },
-   
    "WashDailyAggregateDatabase": {
      "provider": "Cloudant",
 	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",

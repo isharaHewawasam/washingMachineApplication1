@@ -2325,7 +2325,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true},
             data: {
             	  "Username": userid
             	}
@@ -2386,7 +2386,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}
 
 		}).success(function(data, status) {
@@ -2452,7 +2452,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {"Username": userid}
 
 		}).success(function(data, status) {
@@ -2519,7 +2519,7 @@ App.controller('notificationController', ['$rootScope', '$scope', '$http', '$win
 
 		$http({url:configApiClient.baseUrl + 'notifications/configurations/settings',
             method: "POST",
-            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
+            headers: { 'Content-Type': 'application/json','Accept':'text/plain' , 'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1','Access-Control-Allow-Methods':'POST','Access-Control-Allow-Credentials':true  },
             data: {
             	  "Username": userid
             	}
@@ -2864,7 +2864,7 @@ $scope.plotPieChart=function(divID){
 				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
-	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+	                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
 	                	'Access-Control-Allow-Credentials':true
           		 },
@@ -3054,7 +3054,7 @@ $scope.plotPieChart=function(divID){
 					  headers: {
 		                	'Content-Type': 'application/json',
 		                	'Accept':'text/plain' ,
-		                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+		                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 		                	'Access-Control-Allow-Methods':'POST',
 		                	'Access-Control-Allow-Credentials':true
 	          		 },
@@ -3207,7 +3207,7 @@ $scope.plotPieChart=function(divID){
 				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
-	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+	                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
 	                	'Access-Control-Allow-Credentials':true
         		 },
@@ -3268,7 +3268,7 @@ $scope.plotPieChart=function(divID){
 				  headers: {
 	                	'Content-Type': 'application/json',
 	                	'Accept':'text/plain' ,
-	                	'Access-Control-Allow-Origin' :'http://localhost:3000/api/v1',
+	                	'Access-Control-Allow-Origin' :'http://ibm-iot.mybluemix.net/api/v1',
 	                	'Access-Control-Allow-Methods':'POST',
 	                	'Access-Control-Allow-Credentials':true
         		 },
