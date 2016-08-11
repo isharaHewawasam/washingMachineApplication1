@@ -34,6 +34,7 @@ exports.getStateLocation = function(state_name, callback) {
     for (var each_state in lat_long.rows) {
       //console.log(lat_long.rows[each_state].doc.states.name);
       if (lat_long.rows[each_state].doc.states.name == state_name) {
+        
         result = {};
         result.latitude =  lat_long.rows[each_state].doc.states.latitude;
         result.longitude = lat_long.rows[each_state].doc.states.longitude;
@@ -73,6 +74,7 @@ exports.getCityLocation = function(state_name, city_name, callback) {
 };
 
 exports.getZipcodeLocation = function(state_name, city_name, zip_code, callback) {
+  
   var result = null;
   var err = "not found";
   

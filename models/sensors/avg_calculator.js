@@ -82,10 +82,8 @@ var getData = function(params, callback) {
  
   //filter.setPayload(params.payload);  
   var group_level = (params.group_level === undefined) ? params.filter.groupLevel() : params.group_level;
-  
   var view_params = { reduce: true, group: true, group_level: group_level, "startkey": params.start_key, "endkey": params.end_key };  
   //var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
-  
   var view_name = null;
   if (params.filter.isFilterCategoryByYear()) {
     view_name = params.view.byYear;
