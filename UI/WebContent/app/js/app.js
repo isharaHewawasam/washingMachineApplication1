@@ -1380,7 +1380,7 @@ $rootScope.isApplyFiterButton = true;
 			$("#gridMax").empty();
 			$("#gridMax").addClass("hidden");
 
-			  $(".tbody").height(200);
+			 
 			  $("#gridNormal").height(355);
 
 
