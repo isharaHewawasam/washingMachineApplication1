@@ -1,7 +1,23 @@
 Express server listening on port 3000
-URL : /app/js/angular-chart.min.js.map
-Request Body : {}
-Request after sanitizing: {}
-URL : /app/js/pdfmake.min.js.map
-Request Body : {}
-Request after sanitizing: {}
+URL : /api/v1/sensors/data?sensor_name=avg-wash-cycles
+Request Body : {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
+Request after sanitizing: {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
+controller sensor name : avg-wash-cycles
+Time : Thu Aug 11 2016 15:08:35 GMT+0530 (India Standard Time)
+Average Wash Cycles
+Design Doc name averages
+View name averageWashCycles
+view params {"reduce":true,"group":true,"group_level":2}
+No records  9
+============================================
+URL : /api/v1/sensors/data?sensor_name=avg-wash-cycles
+Request Body : {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"d","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
+Request after sanitizing: {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"d","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
+controller sensor name : avg-wash-cycles
+Time : Thu Aug 11 2016 15:08:46 GMT+0530 (India Standard Time)
+Average Wash Cycles
+Design Doc name averages
+View name averageWashCyclesByDate
+view params {"reduce":true,"group":true,"group_level":3,"startkey":["2016-08-05"],"endkey":["2016-08-11"]}
+No records  15
+============================================

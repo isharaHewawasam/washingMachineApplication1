@@ -112,11 +112,10 @@ var Filter = function Filter(payload, view_name){
        this.months = payload.timescale.months;
     }
     
-    if (payload.timescale.relative) {
+    if ((payload.timescale.relative) && (payload.timescale.relative.unit == "d")) {
        this.filter_type = FILTER.BY_LAST_TIME_SCALE; 
        this.relative_unit = payload.timescale.relative.unit;
        this.relative_value = payload.timescale.relative.value;
-       
     }
   }
   
