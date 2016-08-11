@@ -1949,7 +1949,12 @@ function renderMap(divId, salesData){
 	        color: '#EEEEEE',
 	        borderColor: '#A0A0A0',
 	        nullColor: 'rgba(200, 200, 200, 0.3)',
-	        showInLegend: false
+	        showInLegend: false,
+	        states: {
+	            hover: {
+	                color: '#EEEEEE'
+	            }
+	        }
 	    }, {
 	        name: 'Separators',
 	        type: 'mapline',
@@ -1965,7 +1970,7 @@ function renderMap(divId, salesData){
 	        marker: {
 				  fillOpacity:0.0
 			},
-			//showInLegend: false,      
+			showInLegend: false,      
 			tooltip: {
 		        headerFormat: '',
 	            pointFormat: zipcode == true ?
@@ -2021,7 +2026,11 @@ function renderMap(divId, salesData){
 	    },
 
 	    mapNavigation: {
-	        enabled: true
+	        enabled: true,
+	        buttonOptions: {
+                verticalAlign: 'bottom',
+                //x : -5	
+            }
 	    },
 
 
@@ -2075,7 +2084,7 @@ function drawPie(point, index) {
 	pointX = point.plotX + series.xAxis.pos,
 	pointY = Highcharts.pick(point.plotClose, point.plotY) + series.yAxis.pos;
 
-	if(pointX && pointY && pointY < chart.renderer.plotBox.height) {
+	if(pointX && pointY) {
 
 		var conn = point.z;
 		var uConn = point.unitsConnected;
