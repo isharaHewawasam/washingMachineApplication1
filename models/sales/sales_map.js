@@ -43,7 +43,6 @@ function addMissingData(payload, callback) {
   var FilterClass = require("../filters"); 
   var filter = new FilterClass(payload, 7);
    
-  
   if (filter.isFilterByState()) {
     var Config = require("../config");
     var states_names = [];
