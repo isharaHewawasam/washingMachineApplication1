@@ -2368,6 +2368,16 @@ function getTimeScales(data){
 	return timeScales;
 }
 
+function createLineChartSeriesDataForEngManager(data){
+	var dataStr = JSON.stringify(data);
+	
+	dataStr = dataStr.replace(/"product":/g, '"name":');
+	dataStr = dataStr.replace(/"avgUsage":/g, '"data":');
+	data = JSON.parse(dataStr); 
+	
+	return data;
+}
+
 angular.module('angle').controller('notificationController', ['$rootScope', '$scope', '$window', 'iot.config.ApiClient', 'iot.config.Notification', 'HttpService',
                                           function ($rootScope, $scope, $window, configApiClient, configNotification, HttpService) {
 	$scope.isLoading = false;
@@ -2805,6 +2815,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 				$scope.Unit="Load in KGS ";
 			}
+
 			$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
 
@@ -3067,6 +3078,7 @@ $scope.plotPieChart=function(divID){
 		$scope.isDisabled = true;
 		$scope.progress = true;
 		$rootScope.isApplyFiterButton = true;
+		var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		var obj={};
 
 		if($rootScope.applyFilterBoolean){
@@ -3090,16 +3102,22 @@ $scope.plotPieChart=function(divID){
 
 		} else {
 			
-			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false';
-			var param = null;
-	      	HttpService.post(url, param).then(function(data){
+			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key;
+			var param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
+						  "timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
+						 "relative": {"unit": "d","value": 7}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+			HttpService.post(url, param).then(function(data){
 				// on success
 	      		$scope.isDisabled = false;
 				$rootScope.isApplyFiterButton = false;
-				var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-				var timeScales = getTimeScales(data.data);
-				$scope.progress = false;
-		    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
+				if(data && data.length > 0){
+					var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
+					$scope.progress = false;
+			    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
+				} else {
+					$scope.progress = false;
+			    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
+				}
 			},function(data){
 				// on error
 				$rootScope.isApplyFiterButton = false;
@@ -3203,7 +3221,7 @@ $scope.plotPieChart=function(divID){
 			$scope.plotPieChart("piecontainer");
 		}else if($scope.selectedChart=='Line Chart'){
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);        	
 		}
     });
 
