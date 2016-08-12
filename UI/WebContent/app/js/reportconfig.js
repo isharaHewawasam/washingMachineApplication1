@@ -22,6 +22,8 @@ angular.module('angle').controller('reportController',['$rootScope','$scope','$s
 		},function(data){
 			// on error
 			$rootScope.isReportFiltering = false;
+		});
+      	
       /** 
        * Download Washing Machine Status report
        */
@@ -39,8 +41,6 @@ angular.module('angle').controller('reportController',['$rootScope','$scope','$s
                 }
             });
             }
-
-
 
              var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
              var rolename = loginCredentails.Role;

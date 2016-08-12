@@ -241,7 +241,7 @@ App
  *
  * login api
  */
-/*App.controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
+angular.module('angle').controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
                                        function($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 
 	$rootScope.credentials = {};
@@ -281,8 +281,8 @@ App
             $scope.errorMsg = 'Network issue, please try after some time.';
 		});
 	}
-	}]);*/
-
+	
+}]);
 
 angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService', 
                                        function($rootScope,$scope, $state, $window, $localStorage, configApiClient, HttpService) {
@@ -1833,7 +1833,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     }
 }]);
 
-}]);
+
 
 angular.module('angle').controller('filterIconController',['$rootScope','$scope','$interval', 'iot.config.ApiClient',function($rootScope,$scope,$interval, configApiClient){
 
