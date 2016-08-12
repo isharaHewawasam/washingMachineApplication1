@@ -1,0 +1,733 @@
+
+<link href="app/css/charts.css" rel="stylesheet" />
+<link href="app/css/mkttable.css" rel="stylesheet" />
+<link href="app/css/dashboard.css" rel="stylesheet" />
+<div class="somediv hidden" id="hiddenDiv"></div>
+<div class="chart-somediv hidden" id="hiddenDiv"></div>
+<div class="map-somediv hidden" id="hiddenDivMap"></div>
+<div class="hidden gridMaximize" id="gridMax"></div>
+<h3>
+
+	<!-- START Language list-->
+
+	<!-- END Language list    -->
+
+	<div class="pull-right">Application Dashboard Last Updated
+		{{currentDate}}</div>
+
+	<div id="dashboardNav" ng-controller="MyviewController">
+		<a ng-click="getUrl()">Washing Machine Monitor System </a> <span>></span>
+		<a href="#"> Dashboard </a>
+	</div>
+
+
+</h3>
+
+
+
+<div class="row col-lg-12  filter-filterDiv" id="filterdive">
+
+
+
+
+
+	<div class=" col-lg-10" id="filterDivId">
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="region.states" ng-change="selectCities()">
+				<option class="option-text-style" value="" disabled selected>States
+
+
+				
+				<option class="option-text-style" value="">All
+				<option class="option-text-style" ng-repeat="state in states"
+					value={{state.name}}>{{state.name}}</option>
+			</select>
+
+
+		</div>
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="region.cities" ng-change="selectZip()">
+				<option class="option-text-style" value="" disabled selected>Cities
+
+
+				
+				<option class="option-text-style" value="">All
+				<option class="option-text-style" ng-repeat="city in cities"
+					value={{city.city}}>{{city.city}}
+			</select>
+
+		</div>
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="region.zip_codes">
+				<option class="option-text-style" value="" disabled selected>Zip
+					Code
+				<option class="option-text-style" value="">All
+				<option class="option-text-style" ng-repeat="zip in zips"
+					value={{zip.zip_code}}>{{zip.zip_code}}
+			</select>
+
+		</div>
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="timescale.years">
+				<option class="option-text-style" value="" disabled selected>Year
+
+
+				
+				<option class="option-text-style" value="">All
+				<option class="option-text-style"
+					ng-repeat="sales_year in sales_years" value={{sales_year.year}}>{{sales_year.year}}
+
+
+				
+			</select>
+
+		</div>
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="timescale.quarters" ng-change="quarterMonths()">
+				<option class="option-text-style" value="" selected disabled>Quarter
+
+
+				
+				<option class="option-text-style" value="">All
+				<option class="option-text-style" ng-repeat="quarter in quarters"
+					value={{quarter.id}}>{{quarter.value}}
+			</select>
+
+		</div>
+
+		<div class="col-lg-2 filterItem">
+			<select name="" class="form-control filter-selectStyle"
+				ng-model="timescale.months">
+				<option class="option-text-style" value="" selected disabled>Month
+
+
+				
+				<option class="option-text-style" value="">All
+				<option class="option-text-style" ng-repeat="month in months"
+					value={{month.id}}>{{month.value}}
+			</select>
+
+		</div>
+
+
+
+
+
+
+	</div>
+	<div class="col-lg-2 " id="applyFilterdiv">
+		<button ng-disabled="isApplyFiterButton"
+			class="btn btn-default pull-right " id="applyFilter"
+			ng-click="tryit()">Apply Filter</button>
+
+
+	</div>
+
+
+</div>
+
+
+<div class="row" ng-controller="filterIconController"
+	id="filtericoncontroller">
+	<div ng-show="someArray.length > 0" class="form-group  col-lg-12"
+		id="formgrp">
+		<div ng-repeat="va in someArray" id="formarray">
+			{{va.value}} <span ng-click='removeFilter(va)' id="filetclose">X</span>
+		</div>
+	</div>
+</div>
+
+<div class="row" >
+	<!-- START dashboard main content-->
+
+
+	<div class="col-lg-4 " ng-controller="myController">
+		<div class="chart-chartDiv" id="chartParent">
+			<div class="chart-filterDiv " id="chartFilterDivId">
+				<select ng-class="{'chart-selectStyle2': isActive1}"
+					ng-click="activeButton(1)" id="first-chart-select"
+					class="chart-selectStyle col-md-4 salesname" ng-change="disp()"
+					ng-model="selectedSales">
+
+					<option class="chart-option-text-style" disabled value="">Please
+						select</option>
+					<option class="chart-option-text-style" ng-if="$index==0"
+						ng-init="disp($index)" selected
+						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
+					<option class="chart-option-text-style" ng-if="$index!=0"
+						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
+				</select> <select ng-disabled="{'chart-selectStyle2': isActive2}"
+					ng-click="activeButton(2)" id="second-chart-select"
+					class="chart-selectStyle col-md-3 chart-border salesname">
+					<option class="chart-option-text-style" selected value="">Last
+						1 day
+					<option class="chart-option-text-style" value="">Last 7
+						days
+					<option class="chart-option-text-style" value="">Last 30
+						days
+					<option class="chart-option-text-style" value="">Last 3
+						months
+					<option class="chart-option-text-style" value="">Last 6
+						months
+					<option class="chart-option-text-style" value="">Last 1
+						year
+					<option class="chart-option-text-style" value="">Last 3
+						years
+				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
+					ng-click="activeButton(3)" id="third-chart-select"
+					class="chart-selectStyle col-md-3 salesname "
+					ng-change="dispChart(selectedChart)" ng-model="selectedChart">
+					<option class="chart-option-text-style" selected
+						ng-init="dispChart(selectedChart)" ng-repeat="chart in chartTypes"
+						value="{{chart}}">{{chart}}</option>
+				</select> <img id="maximize" class="pull-right col-md-1"
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximize()"></img> <img id="close"
+					class=" col-md-1 image-margin close-image-size hidden pull-right"
+					src="app/img/Dashboardassets/close.png" ng-click="closing()">
+				<img class="col-md-1 pull-right" id="infoicons"
+					src="app/img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+					data-trigger="hover"></img>
+			</div>
+			<div ng-if="selectedChart=='Pie'" class="graphDiv"
+				ng-init="plotPieChart('piecontainer')">
+				<span ng-show="progress" class="progress-chart"> <img alt=""
+					src="app/img/icon-load.gif" width="25%" ;height="25%">
+				</span>
+				<div id="piecontainer"></div>
+			</div>
+
+			<div ng-if="selectedChart=='Bar'" class="graphDiv"
+				ng-init="plotBarChart('bar')">
+				<span ng-show="progress" class="progress-chart"> <img alt=""
+					src="app/img/icon-load.gif" width="25%" ;height="25%">
+				</span>
+				<div id="bar"></div>
+			</div>
+
+			<div ng-if="selectedChart=='Multiline'" class="graphDiv"
+				ng-init="plotChartFunction('container')">
+				<span ng-show="progress" class="progress-chart"> <img alt=""
+					src="app/img/icon-load.gif" width="25%" ;height="25%">
+				</span>
+				<div id="container"></div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="col-lg-4" ng-controller="mapController"
+		ng-init="plotMapFunction('map-container')">
+		<div class="panel panel-default" id="mapNormal">
+			<div class="panel-heading md-body-2" id="mapNormalinner">
+				<b>Sales Volume Distribution </b> <img id="mapMaxImg"
+					class="pull-right col-md-1"
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeMap()"></img> <img id="mapMinImg"
+					class="pull-right hidden col-md-1 "
+					src="app/img/Dashboardassets/close.png"></img> <img
+					class="pull-right col-md-1" id="mapinfo"
+					src="app/img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
+					data-trigger="hover"></img>
+			</div>
+
+			<div class="map-mapDiv">
+				<span ng-show="mapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="app/img/icon-load.gif" width="25%";height="25%">
+				</span>
+				<div id="map-container"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- removed hardcoded vallue   -->
+	<div class="col-lg-4 insite">
+		<div class="panel panel-default insite">
+			<div class="panel-heading ">
+				<div class="pull-right ">
+					<img class="col-md-1" id="insiteinfo"
+						src="app/img/Dashboardassets/help.png" data-toggle="popover"
+						data-placement="left"
+						data-content="Insights area frames up more specific details to convey an idea about the cause and effect on the information filtered."
+						data-trigger="hover"></img>
+				</div>
+
+				<div class="panel-title md-body-2 insitetitle">Insights</div>
+			</div>
+
+			<scrollable height="230" class="list-group"
+				ng-controller="InfiniteScrollController">
+
+			<div infinite-scroll-distance="1" id="insitescroll">
+
+				<div class="col-lg-6 insiteinner" >
+
+					<div class="col-lg-6" id="nav1">
+						
+							<div
+								class="alert-warning media-box-object img-circle thumb32 text-center">
+								<h2 class="mv-lg">1</h2>
+							</div>
+							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33"
+								alt="Image" class="insitelines" />
+					
+
+					
+							<div
+								class="alert-warning media-box-object img-circle thumb32 text-center"
+								>
+								<h2 class="mv-lg">2</h2>
+							</div>
+							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33"
+								alt="Image" class="insitelines" />
+						
+					
+							<div
+								class="alert-warning media-box-object img-circle thumb32 text-center"
+							>
+								<h2 class="mv-lg">3</h2>
+							</div>
+							<img src="app/img/Dashboardassets/lines.jpg" class="thumb33"
+								alt="Image" class="insitelines" />
+				
+					
+							<div
+								class="alert-warning media-box-object img-circle thumb32 text-center"
+								>
+								<h2 class="mv-lg">4</h2>
+							</div>
+					
+					</div>
+
+					<div class="col-lg-6" id="nav2" >
+						<div id="twitter-handle-container"
+							ng-init="getTwitterHandles('twitter-handle-container')"
+							class="insights-insightsDiv">
+							<span
+							class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span> <span
+							     class="nodata"
+								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span>
+						</div>
+						<div id="most-used-model-container"
+							ng-init="getMostUsedModel('most-used-model-container')"
+							class="insights-insightsDiv">
+							<span
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span> <span
+								 class="nodata"
+								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span>
+						</div>
+						<div id="most-used-wash-cycle-container"
+							ng-init="getMostUsedCycles('most-used-wash-cycle-container')"
+							class="insights-insightsDiv">
+							<span
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span> <span
+								 class="nodata"
+								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span>
+						</div>
+						<div id="not-connected-machines-container"
+							ng-init="getNotConnectedMachines('not-connected-machines-container')"
+							class="insights-insightsDiv">
+							<span
+								class="isLoading"
+								ng-show="isLoading" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span> <span
+								 class="nodata"
+								ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert"
+								aria-hidden="true"> <span class="sr-only">Error:</span>
+								{{msg}}
+							</span>
+						</div>
+					</div>
+
+					<div class="col-lg-6" id="nav3" >
+						
+							<img src='app/img/Dashboardassets/twitter.png' alt=''
+							id="twitericon" /> <img
+								ng-click="loadTwitterinsights()"
+								src="app/img/Dashboardassets/icon_arrow.png"
+								id="twiterarrow"
+								 />
+				
+
+
+					</div>
+				</div>
+			</div>
+			</scrollable>
+
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+<div class="row" >
+
+	<!-- START dashboard main content-->
+
+
+
+
+
+	<div class="col-lg-8">
+		<!-- START panel -->
+		<div class="panel panel-default hidden " id="gridNormal1"
+			>
+			<div class="panel-heading md-body-2"
+				id="maximisedgridhead">
+				<b>Washing Machines status </b> <img id="gridMaxImg"
+					class="pull-right col-md-1"
+					
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1  "
+					
+					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+				<img class="pull-right col-md-1"
+					id="gridinfo"
+					src="app/img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+					data-trigger="hover"></img>
+			</div>
+
+
+			<div class="panel-body" id="gridHideNodata">
+				<!--   START table-responsive -->
+				<div id="gridAdjustHeight" class="panel panel-default">
+
+
+					<div class="tableHeader">
+
+						<p class="text-center">Make</p>
+						<p class="text-center">
+							Model</span>
+						</p>
+						<p class="text-center">
+							Total Loads</span>
+						</p>
+						<p class="text-center">
+							Most Popular Wash Day</span>
+						</p>
+						<p class="text-center">Most Popular Time of Day</p>
+
+					</div>
+					<div class="maxtbody">
+						<div class="tableScroll">
+							<table class="table table-condensed" ng-if="griddata.length > 0">
+								<div ng-show="isDisabled||isError||isNoDataFound"
+									class="text-center col-md-4 col-md-offset-4 maxgridnodata"
+									>{{msg}}</div>
+								<tbody id="tabody">
+									<tr ng-repeat="itm in griddata">
+										<td class="text-center" >{{itm.make}}</td>
+										<td class="text-center" >{{itm.model}}</td>
+										<td class="text-center" >{{itm.totalLoad |
+											number:2}}</td>
+										<td class="text-center" >{{itm.popularDay}}</td>
+										<td class="text-center">{{itm.popularTime}}</td>
+
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+				<!--      END table-responsive -->
+				<label class="pull-right " ng-if="griddata.length > 0"
+					id="maxfootr">{{griddata.length}} records
+					found</label>
+			</div>
+		</div>
+		<div class="panel panel-default" id="gridNormal"
+			>
+			<div class="panel-heading md-body-2"
+			id="normalgridhead">
+				<b>Washing Machines status </b> <img id="gridMaxImg"
+					class="pull-right col-md-1"
+					
+					src="app/img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1 "
+					
+					src="app/img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+				<img class="pull-right col-md-1"
+						id="gridinfo"
+					src="app/img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+					data-trigger="hover"></img>
+			</div>
+
+
+			<div class="panel-body" id="gridHideNodata">
+				<!--   START table-responsive -->
+				<div id="gridAdjustHeight" class="panel panel-default">
+
+
+					<div class="tableHeader">
+
+						<p class="text-center">Make</p>
+						<p class="text-center">
+							Model</span>
+						</p>
+						<p class="text-center">
+							Total Loads</span>
+						</p>
+						<p class="text-center">
+							Most Popular Wash Day</span>
+						</p>
+						<p class="text-center">Most Popular Time of Day</p>
+
+					</div>
+					<div class="tbody">
+						<div class="tableScroll">
+							<table class="table table-condensed" ng-if="griddata.length > 0">
+								<div ng-show="isLoadingFilters||isError||isNoDataFound"
+									class="text-center col-md-4 col-md-offset-4 maxgridnodata "
+									>{{msg}}</div>
+								<tbody id="tabody">
+									<tr ng-repeat="itm in griddata">
+										<td class="text-center"">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.totalLoad |
+											number:2}}</td>
+										<td class="text-center">{{itm.popularDay}}</td>
+										<td class="text-center">{{itm.popularTime}}</td>
+
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+				<!--      END table-responsive -->
+				<label class="pull-right 	" ng-if="griddata.length > 0"
+					id="gridfootermsg">{{griddata.length}} records
+					found</label>
+			</div>
+		</div>
+		<!--   END panel -->
+	</div>
+	<!-- END dashboard main content-->
+	<!-- START dashboard sidebar-->
+
+	<!-- START dashboard sidebar-->
+	<aside class="col-lg-4">
+
+		<!-- START messages and activity-->
+		<div class="panel panel-default" id="notifheight">
+			<div class="panel-heading">
+				<div class="panel-title md-body-2"
+					id="notificationtitl">
+					Notification<img class="pull-right col-md-1"
+						id="notfinfo"
+						src="app/img/Dashboardassets/help.png" data-toggle="popover"
+						data-placement="left"
+						data-content="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid."
+						data-trigger="hover"></img>
+				</div>
+
+			</div>
+
+			<!-- START list group-->
+			<div 
+				class="panel panel-default notflist">
+				<div class="list-group">
+					<div class="list-group-item">
+						<div ng-controller="notificationController"
+							ng-init="getTwitterSentiments()">
+							<div class="media-box-heading" ng-show="data.length || isError">
+								<h4>Twitter Sentiments</h4>
+							</div>
+							<div class="media-box-body clearfix" ng-repeat="itm in data"
+								ng-show="data.length">
+								<div ng-if="itm.twitter_positives_increase_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}}
+										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+										above {{positiveTwitterSentimentThreshold}}%</p>
+									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.twitter_positives_increase_spike"
+										type="greens" class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
+	                     Count: {{itm.twitter_count}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+								<div ng-if="itm.twitter_positives_decrease_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}}
+										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+										below {{positiveTwitterSentimentThreshold}}%</p>
+									<small class="text-pink pull-right ml">{{itm.twitter_positives_decrease_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.twitter_positives_decrease_spike"
+										type="pink" class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
+	                     Count: {{itm.twitter_count}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+								<div ng-if="itm.twitter_negatives_increase_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}}
+										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+										above {{negativeTwitterSentimentThreshold}}%</p>
+									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.twitter_negatives_increase_spike"
+										type="pink" class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
+	                     Count: {{itm.twitter_count}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+								<div ng-if="itm.twitter_negatives_decrease_spike">
+									<p class="text-warning m0">{{itm.twitter_response_type}}
+										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+										below {{negativeTwitterSentimentThreshold}}%</p>
+									<small class="text-greens pull-right ml">{{itm.twitter_negatives_decrease_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.twitter_negatives_decrease_spike"
+										type="greens" class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
+	                     Count: {{itm.twitter_count}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+							</div>
+							<!--Notification alerts handled-->
+							<div class="media-box-body"
+								ng-show="isLoading||isError||isNoDataDB">
+								<span
+							
+								 class="isLoading"
+									ng-show="isLoading" class="glyphicon glyphicon-alert "
+									aria-hidden="true"> <span class="sr-only">Error:</span>
+									{{msg}}
+								</span> <span
+									 class="nodata"
+									ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert "
+									aria-hidden="true"> <span class="sr-only">Error:</span>
+									{{msg}}
+								</span>
+							</div>
+							<!--Notofication Handled ended-->
+						</div>
+					</div>
+
+					<div class="list-group-item" ng-controller="notificationController"
+						ng-init="getSpikesInConnectedMachines()">
+						<div class="media-box-heading" ng-show="data.length || isError">
+							<h4>Spike in connected washing machines</h4>
+						</div>
+						<div class="media-box">
+							<div class="media-box-body clearfix" ng-repeat="itm in data"
+								ng-show="data.length">
+								<div ng-if="itm.decrease_spike">
+									<p class="text-warning m0">The number of connected machines
+										are increased by {{itm.decrease_spike}}% in last 4 weeks</p>
+									<small class="text-pink pull-right ml">{{itm.decrease_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.decrease_spike" type="pink"
+										class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
+	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+								<div ng-if="itm.increase_spike">
+									<p class="text-warning m0">The number of connected machines
+										are increased by {{itm.increase_spike}}% in last 4 weeks</p>
+									<small class="text-greens pull-right ml">{{itm.increase_spike
+										| number:0}}%</small> <br>
+									<progressbar value="itm.increase_spike" type="greens"
+										class="progress-xs m0 notifprogress" 
+										data-toggle="popover" data-placement="top" data-html="true"
+										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
+	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"
+										data-trigger="hover"></progressbar>
+									<br>
+								</div>
+							</div>
+							<!--Notification alerts handled-->
+							<div class="media-box-body"
+								ng-show="isLoading||isError||isNoDataDB">
+								<span
+									 class="isLoading"
+									ng-show="isLoading" class="glyphicon glyphicon-alert "
+									aria-hidden="true"> <span class="sr-only">Error:</span>
+									{{msg}}
+								</span> <span
+									 class="nodata"
+									ng-show="isError||isNoDataDB" class="glyphicon glyphicon-alert "
+									aria-hidden="true"> <span class="sr-only">Error:</span>
+									{{msg}}
+								</span>
+							</div>
+							<!--Notofication Handled ended-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END messages and activity-->
+	</aside>
+	<!-- END dashboard sidebar-->
+
+
+	<!-- END messages and activity-->
+	</aside>
+	<!-- END dashboard sidebar-->
+</div>
+</div>
+</div>
