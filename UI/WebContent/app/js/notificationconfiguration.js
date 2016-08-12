@@ -24,7 +24,9 @@ angular.module('angle').controller('NotificationConfController',
 
 		$scope.isEngManager = (roleKey == 'eng_manager'?true:false);
 
-     // Session handling- used to display respective views for managers.
+	/** 
+	 * Session handling- used to display respective views for managers.
+	 */
 		$scope.openMyDashboard = function () {
 
 			if($scope.isEngManager){
@@ -51,7 +53,9 @@ angular.module('angle').controller('NotificationConfController',
 
 			});*/
 
-         // Retrieve model names for respective make
+	/** 
+	 * Retrieve model names for relevant make 
+	 */
 			$scope.selectedMake=function(){
 			$rootScope.search.selectedModel="";
 			var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
@@ -86,13 +90,17 @@ angular.module('angle').controller('NotificationConfController',
 
 			   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
 
-     // Return back to Twitter Insights page
+	/** 
+	 * Return back to Twitter Insights page
+	 */
 		$scope.loadTwitterInsights = function() {
 			$state.go('app.twitterinsights');
 
 		}
 
-	// Save new notification configurations.
+   /** 
+    * Save new notification configurations. 
+    */
 		$scope.saveNotificationConfig = function() {
 			var requestBody;
 			var redirecto;
@@ -142,7 +150,9 @@ angular.module('angle').controller('NotificationConfController',
 		    });*/
 
 		}
-    // Cancel the Set up notification tolerances and Route to Twitter Insights page
+     /** 
+      * Cancel the Set up notification tolerances and Route to Twitter Insights page
+      */
 		$scope.cancelNotificationConfig = function() {
 
 			if($scope.isEngManager){
