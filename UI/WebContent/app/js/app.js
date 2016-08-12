@@ -1986,6 +1986,10 @@ function renderMap(divId, salesData){
 
     $('#map-container').highcharts('Map', {
       chart: {
+    	  spacingLeft 	: 5,
+    	  spacingRight 	: 2,
+    	  spacingTop 	: 2,
+    	  spacingBottom	: 2,
     	  events: {
 				redraw: function() {
 
