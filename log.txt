@@ -1,23 +1,7 @@
 Express server listening on port 3000
-URL : /api/v1/sensors/data?sensor_name=avg-load
-Request Body : {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"d","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
-Request after sanitizing: {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"d","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
-controller sensor name : avg-load
-Time : Thu Aug 11 2016 17:15:14 GMT+0530 (India Standard Time)
-Average Humidity
-Design Doc name averages
-View name averageLoadByDate
-view params {"reduce":true,"group":true,"group_level":3,"startkey":["2016-08-05"],"endkey":["2016-08-11"]}
-No records  15
-============================================
-URL : /api/v1/sensors/data?sensor_name=avg-load
-Request Body : {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
-Request after sanitizing: {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"","value":7}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
-controller sensor name : avg-load
-Time : Thu Aug 11 2016 17:15:24 GMT+0530 (India Standard Time)
-Average Humidity
-Design Doc name averages
-View name averageLoad
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
+URL : /app/js/angular-chart.min.js.map
+Request Body : {}
+Request after sanitizing: {}
+URL : /app/js/pdfmake.min.js.map
+Request Body : {}
+Request after sanitizing: {}
