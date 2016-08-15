@@ -100,6 +100,7 @@ var getData = function(params, callback) {
   //console.log("In Group level");
   //params.keys_map.dumpReportType();
   
+  
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
     
     doGetDataLogging(err, result, params, view_params, view_name);    
@@ -110,7 +111,6 @@ var getData = function(params, callback) {
     //if (params.top !== undefined) {
       //result.rows = getTop(params.top, result.rows);       
     //}
-    
     callback(err, result);
   });
 };  

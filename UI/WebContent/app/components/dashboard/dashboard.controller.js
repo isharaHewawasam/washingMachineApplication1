@@ -473,7 +473,7 @@ $rootScope.isApplyFiterButton = true;
         $rootScope.setUsageData($scope.usagedata);
 
         //For map
-        showMap();
+        $scope.showMap();
 
 
 
