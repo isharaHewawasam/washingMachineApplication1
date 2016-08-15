@@ -12,12 +12,10 @@
     </div>
 
 	<a href="#/app/singleview" ng-click="loadDashboard()"
-		style="font-size: 14px; font: Roboto Light; color: #0F64BC;">Washing
-		Machine Monitor System </a> <span
+		style="font-size: 14px; font: Roboto Light; color: #0F64BC;" translate="{{'dashboard_title'}}"></a> <span
 		style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
 		></span> <a href="#"
-		style="font-size: 14px; font: Roboto Light; color: #222222">
-		Twitter Insights</a>
+		style="font-size: 14px; font: Roboto Light; color: #222222" translate="{{'twitter_insights'}}"></a>
 
 </h3>
 
@@ -29,9 +27,7 @@
 
 	<div  class=" col-lg-12"  id="filterDivId" style=" margin-left: inherit">
 
-		<div class="col-lg-3 filterItem notificationHeader">
-
-			Twitter Insights
+		<div class="col-lg-3 filterItem notificationHeader" translate="{{'twitter_insights'}}">
 
 		</div>
 		<div class="col-lg-9 filterItem">
@@ -43,7 +39,7 @@
 				style="float:left; max-width: 150px; margin-left: 22px; padding-right: 0px; padding-left: 0px;">
 				<select name="" class="form-control filter-selectStyle"
 					ng-model="region.states" ng-change="selectCities()">
-					<option class="option-text-style" value="" disabled selected>Days
+					<option class="option-text-style" value="" disabled selected translate="{{'days'}}">
 					<option class="option-text-style" ng-repeat="day in days"
 						value={{day.day}}>{{day.desc}}</option>
 				</select>
@@ -76,27 +72,27 @@
 					<table  style="width:100%;">
 						<tr class="twitter_label">
 							<td width="20%">
-								<div>Tweets</div>
+								<div translate="{{'tweets'}}"></div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweets_count"></label></div>
 								<div ng-class="getTextColor(tweetsData.tweets_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.tweets_percentage"></label><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
-								<div>Tweets impressions</div>
+								<div translate="{{'tweets_impressions'}}"></div>
 								<div class="twitter_count"><label ng-bind="tweetsData.tweetsimpress_count"></label></div>
 								<div ng-class="getTextColor(tweetsData.tweetsimpress_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.tweetsimpress_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
-								<div>Profile visits</div>
+								<div translate="{{'profile_visits'}}"></div>
 								<div class="twitter_count"><label ng-bind="tweetsData.profilevisits_count"></label></div>
 								<div ng-class="getTextColor(tweetsData.profilevisits_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.profilevisits_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
 							<td width="20%">
-								<div>Mentions</div>
+								<div translate="{{'mentions'}}"></div>
 								<div class="twitter_count"><label ng-bind="tweetsData.mentions_count"></label></div>
 								<div ng-class="getTextColor(tweetsData.mentions_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.mentions_percentage"></label ng-show="showPerSign"><label ng-show="showPerSign">%</label></div>
 							</td>
-							<td width="20%">
-								<div>Twitter</div>
+ 							<td width="20%">
+								<div translate="{{'twitter'}}"></div>
 								<div class="twitter_count"><label ng-bind="tweetsData.twitter_count"></label></div>
 								<div ng-class="getTextColor(tweetsData.twitter_color)" ><img src="app/img/arrow_green_up.png" style="margin-top: -3px;"/><label ng-bind="tweetsData.twitter_percentage"></label></div>
 							</td>
@@ -146,8 +142,7 @@
 
 
 			<div class="panel-body" id="gridHideNodata">
-				<div id="tableTitle">
-					Twitter Insights
+				<div id="tableTitle" translate="{{'twitter_insights'}}">
 					<img class="col-md-1 pull-right"
 						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:5px;"
 						src="app/img/Dashboardassets/help.png"
@@ -161,13 +156,13 @@
 
 
 					<div class="tableHeader">
-						<p class="text-center">Make</p>
-						<p class="text-center">Model</p>
-						<p class="text-center">Tweets</p>
-						<p class="text-center">Likes</p>
-						<p class="text-center">Dislikes</p>
-						<p class="text-center">Followers</p>
-						<p class="text-center" style="border-right:hidden !important;">Comments</p>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}"></p>
+						<p class="text-center" translate="{{'tweets'}}"></p>
+						<p class="text-center" translate="{{'likes'}}"></p>
+						<p class="text-center" translate="{{'dislikes'}}"></p>
+						<p class="text-center" translate="{{'followers'}}"></p>
+						<p class="text-center" style="border-right:hidden !important;" translate="{{'comments'}}"></p>
 						<p class="text-center" style="width: 100px;">&nbsp;</p>
 
 					</div>

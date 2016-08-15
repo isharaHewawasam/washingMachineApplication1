@@ -12,12 +12,11 @@
 
 	<!-- END Language list    -->
 
-	<div class="pull-right">Application Dashboard Last Updated
-		{{currentDate}}</div>
+	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
-		<a ng-click="getUrl()">Washing Machine Monitor System </a> <span>></span>
-		<a href="#"> Dashboard </a>
+		<a ng-click="getUrl()" translate="{{'dashboard_title'}}"></a> <span>></span>
+		<a href="#" translate="{{'dashboard'}}"></a>
 	</div>
 
 
@@ -36,7 +35,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
-				<option class="option-text-style" value="" disabled selected>States
+				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
 
 				
@@ -51,7 +50,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
-				<option class="option-text-style" value="" disabled selected>Cities
+				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
 
 				
@@ -65,8 +64,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.zip_codes">
-				<option class="option-text-style" value="" disabled selected>Zip
-					Code
+				<option class="option-text-style" value="" disabled selected translate="{{'zip_code'}}">
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="zip in zips"
 					value={{zip.zip_code}}>{{zip.zip_code}}
@@ -77,7 +75,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.years">
-				<option class="option-text-style" value="" disabled selected>Year
+				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 
 
 				
@@ -94,7 +92,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.quarters" ng-change="quarterMonths()">
-				<option class="option-text-style" value="" selected disabled>Quarter
+				<option class="option-text-style" value="" selected disabled translate="{{'quarter'}}">
 
 
 				
@@ -108,7 +106,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.months">
-				<option class="option-text-style" value="" selected disabled>Month
+				<option class="option-text-style" value="" selected disabled translate="{{'month'}}">
 
 
 				
@@ -128,7 +126,7 @@
 	<div class="col-lg-2 " id="applyFilterdiv">
 		<button ng-disabled="isApplyFiterButton"
 			class="btn btn-default pull-right " id="applyFilter"
-			ng-click="tryit()">Apply Filter</button>
+			ng-click="tryit()" translate="{{'apply_filter'}}"></button>
 
 
 	</div>
@@ -233,7 +231,7 @@
 		ng-init="plotMapFunction('map-container')">
 		<div class="panel panel-default" id="mapNormal">
 			<div class="panel-heading md-body-2" id="mapNormalinner">
-				<b>Sales Volume Distribution </b> <img id="mapMaxImg"
+				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
 					src="app/img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeMap()"></img> <img id="mapMinImg"
@@ -267,7 +265,7 @@
 						data-trigger="hover"></img>
 				</div>
 
-				<div class="panel-title md-body-2 insitetitle">Insights</div>
+				<div class="panel-title md-body-2 insitetitle" translate="{{'insights_title'}}"></div>
 			</div>
 
 			<scrollable height="230" class="list-group"
@@ -416,7 +414,7 @@
 			>
 			<div class="panel-heading md-body-2"
 				id="maximisedgridhead">
-				<b>Washing Machines status </b> <img id="gridMaxImg"
+				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
 					
 					src="app/img/Dashboardassets/icon_maximize.png"
@@ -440,17 +438,16 @@
 
 					<div class="tableHeader">
 
-						<p class="text-center">Make</p>
-						<p class="text-center">
-							Model</span>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}"></span>
 						</p>
-						<p class="text-center">
-							Total Loads</span>
+						<p class="text-center" translate="{{'total_loads'}}">
+							</span>
 						</p>
-						<p class="text-center">
-							Most Popular Wash Day</span>
+						<p class="text-center" translate="{{'most_popular_wash_day'}}">
+							</span>
 						</p>
-						<p class="text-center">Most Popular Time of Day</p>
+						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
 					</div>
 					<div class="maxtbody">
@@ -478,15 +475,14 @@
 
 				<!--      END table-responsive -->
 				<label class="pull-right " ng-if="griddata.length > 0"
-					id="maxfootr">{{griddata.length}} records
-					found</label>
+					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
 		<div class="panel panel-default" id="gridNormal"
 			>
 			<div class="panel-heading md-body-2"
 			id="normalgridhead">
-				<b>Washing Machines status </b> <img id="gridMaxImg"
+				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
 					
 					src="app/img/Dashboardassets/icon_maximize.png"
@@ -510,17 +506,17 @@
 
 					<div class="tableHeader">
 
-						<p class="text-center">Make</p>
-						<p class="text-center">
-							Model</span>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}">
+							</span>
 						</p>
-						<p class="text-center">
-							Total Loads</span>
+						<p class="text-center" translate="{{'total_loads'}}">
+							</span>
 						</p>
-						<p class="text-center">
-							Most Popular Wash Day</span>
+						<p class="text-center" translate="{{'most_popular_wash_day'}}">
+							</span>
 						</p>
-						<p class="text-center">Most Popular Time of Day</p>
+						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
 					</div>
 					<div class="tbody">
@@ -548,8 +544,7 @@
 
 				<!--      END table-responsive -->
 				<label class="pull-right 	" ng-if="griddata.length > 0"
-					id="gridfootermsg">{{griddata.length}} records
-					found</label>
+					id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
 		<!--   END panel -->
@@ -564,8 +559,8 @@
 		<div class="panel panel-default" id="notifheight">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
-					id="notificationtitl">
-					Notification<img class="pull-right col-md-1"
+					id="notificationtitl" translate="{{'notifications_title'}}">
+					<img class="pull-right col-md-1"
 						id="notfinfo"
 						src="app/img/Dashboardassets/help.png" data-toggle="popover"
 						data-placement="left"
@@ -583,12 +578,12 @@
 						<div ng-controller="notificationController"
 							ng-init="getTwitterSentiments()">
 							<div class="media-box-heading" ng-show="data.length || isError">
-								<h4>Twitter Sentiments</h4>
+								<h4 translate="{{'twitter_sentiments'}}"></h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.twitter_positives_increase_spike">
-									<p class="text-warning m0">{{itm.twitter_response_type}}
+									<p class="text-warning m0" translate="{{'twitter_increase_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{positiveTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										above {{positiveTwitterSentimentThreshold}}%</p>
 									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
@@ -602,7 +597,7 @@
 									<br>
 								</div>
 								<div ng-if="itm.twitter_positives_decrease_spike">
-									<p class="text-warning m0">{{itm.twitter_response_type}}
+									<p class="text-warning m0" translate="{{'twitter_decrease_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{positiveTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										below {{positiveTwitterSentimentThreshold}}%</p>
 									<small class="text-pink pull-right ml">{{itm.twitter_positives_decrease_spike
@@ -616,7 +611,7 @@
 									<br>
 								</div>
 								<div ng-if="itm.twitter_negatives_increase_spike">
-									<p class="text-warning m0">{{itm.twitter_response_type}}
+									<p class="text-warning m0" translate="{{'twitter_increase_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{negativeTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										above {{negativeTwitterSentimentThreshold}}%</p>
 									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
@@ -630,7 +625,7 @@
 									<br>
 								</div>
 								<div ng-if="itm.twitter_negatives_decrease_spike">
-									<p class="text-warning m0">{{itm.twitter_response_type}}
+									<p class="text-warning m0" translate="{{'twitter_decrease_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{negativeTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										below {{negativeTwitterSentimentThreshold}}%</p>
 									<small class="text-greens pull-right ml">{{itm.twitter_negatives_decrease_spike
@@ -667,13 +662,13 @@
 					<div class="list-group-item" ng-controller="notificationController"
 						ng-init="getSpikesInConnectedMachines()">
 						<div class="media-box-heading" ng-show="data.length || isError">
-							<h4>Spike in connected washing machines</h4>
+							<h4 translate="{{'spike_in_connected_machines_title'}}"></h4>
 						</div>
 						<div class="media-box">
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.decrease_spike">
-									<p class="text-warning m0">The number of connected machines
+									<p class="text-warning m0" translate="{{'connected_machines_spike_msg'}}" translate-values="{ spike: '{{itm.decrease_spike}}' }">The number of connected machines
 										are increased by {{itm.decrease_spike}}% in last 4 weeks</p>
 									<small class="text-pink pull-right ml">{{itm.decrease_spike
 										| number:0}}%</small> <br>
@@ -686,7 +681,7 @@
 									<br>
 								</div>
 								<div ng-if="itm.increase_spike">
-									<p class="text-warning m0">The number of connected machines
+									<p class="text-warning m0" translate="{{'connected_machines_spike_msg'}}" translate-values="{ spike: '{{itm.increase_spike}}' }">The number of connected machines
 										are increased by {{itm.increase_spike}}% in last 4 weeks</p>
 									<small class="text-greens pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>

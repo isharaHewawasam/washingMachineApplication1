@@ -13,50 +13,50 @@
                     <div class="sidebarIconContainer">
                         <img class="iconpos" src="app/img/Dashboardassets/machine.png">
                     </div>
-                    <div class="menu-text">Filter</div>
+                    <div class="menu-text" translate="{{'filter'}}"></div>
                 </div>
                 <div id="demographicsNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
                         <img class="iconpos" src="app/img/Dashboardassets/demographics.png">
                     </div>
-                    <div class="menu-text">Demographics</div>
+                    <div class="menu-text" translate="{{'demographics'}}"></div>
                 </div>
                 <div  id="reportsNav" class="leftbar-icon">
 					<div class="sidebarIconContainer">
 						<img class="iconpos" src="app/img/Dashboardassets/reports.png">
 					</div>
-					<div class="menu-text">Reports</div>
+					<div class="menu-text" translate="{{'reports'}}"></div>
 				</div>
             </div>
         </nav>
     </div>
     <div id="filterPanel" >
         <div class="divSpacePad1">
-            <label>Products</label>
+            <label translate="{{'products'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()">  clear filter</button>
+            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()" translate="{{'clear_filter'}}"></button>
         </div>
         <div class="divSpacePad">
-            <span>Search by Product</span>
+            <span translate="{{'search_by_product'}}"></span>
         </div>
 
 
         <div class="form-group element-margin">
             <select class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
-                <option class="option-text-style" value="" disabled selected>Make</option>
+                <option class="option-text-style" value="" disabled selected translate="{{'make'}}"></option>
                 <option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
             </select>
         </div>
 
         <div class="form-group element-margin">
            <select  class="form-control" ng-model="search.selectedModel" ng-change="selectedModel()">
-                <option class="option-text-style" value="" disabled selected>Type</option>
+                <option class="option-text-style" value="" disabled selected translate="{{'type'}}"></option>
                 <option class="option-text-style" ng-repeat="model in models"   value={{model.model}}>{{model.model}}</option>
             </select>
         </div>
 
         <div class="form-group element-margin">
-            <input type="text" ng-model="skuFilter" class="form-control" placeholder="SKU Search..." >
+            <input type="text" ng-model="skuFilter" class="form-control" placeholder="{{'sku_search' | translate}}" >
         </div>
 
         <div class="form-group element-margin">
@@ -81,27 +81,26 @@
 
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()">Apply Filter
-        </button>
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()" translate="{{'apply_filter'}}"></button>
 
     </div>
 
     <div id="demographicsFilterPanel">
 
         <div class="divSpacePad1">
-            <label>Demographics</label>
+            <label translate="{{'demographics'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()">  clear filter</button>
+            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()" translate="{{'clear_filter'}}"></button>
         </div>
 
         <div  class="divSpacePad">
-            <span>Search by Demographics</span>
+            <span translate="{{'search_by_demographics'}}"></span>
         </div>
 
 
         <div class="form-group element-margin">
            <select class="form-control" ng-model="search.incomeRange">
-                <option class="option-text-style" value="" disabled selected>Income Range</option>
+                <option class="option-text-style" value="" disabled selected translate="{{'income_range'}}"></option>
 
                 <option class="option-text-style" ng-repeat="income in demoIncomeRange" value={{income}}>{{income.range}}</option>
             </select>
@@ -109,33 +108,32 @@
 
         <div class="form-group element-margin">
             <select  class="form-control" ng-model="search.occupation">
-                <option class="option-text-style" value="" disabled selected>Family members</option>
+                <option class="option-text-style" value="" disabled selected translate="{{'family_members'}}"></option>
                 <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count}}>{{count.range}}</option>
             </select>
         </div>
 
         <div class="form-group element-margin">
              <select  class="form-control" ng-model="search.ageGroup">
-                <option class="option-text-style" value="" disabled selected>Age Group</option>
+                <option class="option-text-style" value="" disabled selected translate="{{'age_group'}}"></option>
                 <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age}}>{{age.range}}</option>
             </select>
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()">Apply Filter
-        </button>
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()" translate="{{'apply_filter'}}"></button>
     </div>
     <!--reports-->
 
 <div id="reportsPanel" ng-controller="reportController">
                       <div class="divSpacePad1">
-                           <label>Reports</label>
+                           <label translate="{{'reports'}}"></label>
                        </div>
                         <div  class="divSpacePad">
-                           <span>Washing Machine Status Reports</span>
+                           <span translate="{{'washing_machine_status_reports'}}"></span>
                        </div>
                                              <div id="subpanel" style="width:100%; " class="fontSubText">
 
-                          <button id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()">  View Report</button>
+                          <button id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
                        </div>
                </div>
 

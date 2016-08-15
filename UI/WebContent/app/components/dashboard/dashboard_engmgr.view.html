@@ -230,7 +230,7 @@
 
 			<div class="panel-heading md-body-2"
 				 id="mapNormalinner">
-				<b>Sales Volume Distribution </b> <img id="mapMaxImg"
+				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
 					
 					src="app/img/Dashboardassets/icon_maximize.png"
@@ -271,7 +271,7 @@
 				</div>
 
 				<div class="panel-title md-body-2 insitetitle"
-					>Insights</div>
+					translate="{{'insights_title'}}"></div>
 			</div>
 
 			<scrollable height="230" class="list-group list-scroll"
@@ -386,7 +386,7 @@
 <div class="panel panel-default hidden" id="gridNormal1">
 			<div class="panel-heading md-body-2"
 				id="maximisedgridhead">
-				Washing Machines status <img id="gridMaxImg"
+				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
 					
 					src="app/img/Dashboardassets/icon_maximize.png"
@@ -407,29 +407,29 @@
 				<!--   START table-responsive -->
 				<div id="gridAdjustHeight" class="panel panel-default">
 					<div class="tableHeader">
-						<p class="text-center">Make</p>
-						<p class="text-center">Model</p>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}"></p>
 						<p class="text-center">
-							Water used<span class='notbold'> (G)</span>
+							{{'water_used' |translate}}<span class='notbold'> (G)</span>
 						</p>
 						<p class="text-center">
-							Energy used<span class='notbold'> (kw)</span>
+							{{'energy_used' |translate}}<span class='notbold'> (kw)</span>
 						</p>
 						<p class="text-center">
-							Wash cycle<span class='notbold'> (min)</span>
+							{{'wash_cycle' |translate}}<span class='notbold'> (min)</span>
 						</p>
-						<p class="text-center">Wash cycles</p>
+						<p class="text-center">{{'wash_cycles' |translate}}</p>
 						<p class="text-center">
-							Temperature<span class='notbold'> (f)</span>
-						</p>
-						<p class="text-center">
-							Detergent used<span class='notbold'> (gms)</span>
+							{{'temperature' |translate}}<span class='notbold'> (f)</span>
 						</p>
 						<p class="text-center">
-							Humidity<span class='notbold'> (%)</span>
+							{{'detergent_used' |translate}}<span class='notbold'> (gms)</span>
 						</p>
 						<p class="text-center">
-							Load<span class='notbold'> (kgs)</span>
+							{{'humidity' |translate}}<span class='notbold'> (%)</span>
+						</p>
+						<p class="text-center">
+							{{'load' |translate}}<span class='notbold'> (kgs)</span>
 						</p>
 					</div>
 					<div class="tbody">
@@ -457,13 +457,13 @@
 				</div>
 				<!--      END table-responsive -->
 				<label class="pull-right " ng-if="eng_griddata.length > 0" id="maxfootr">{{eng_griddata.length}}
-					records found</label>
+					{{'records_found_text' | translate}}</label>
 			</div>
 		</div>
 		<div class="panel panel-default" id="gridNormal" >
 			<div class="panel-heading md-body-2"
 					id="normalgridhead">
-				Washing Machines status <img id="gridMaxImg"
+				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
 					
 					src="app/img/Dashboardassets/icon_maximize.png"
@@ -484,29 +484,29 @@
 				<!--   START table-responsive -->
 				<div id="gridAdjustHeight" class="panel panel-default">
 					<div class="tableHeader">
-						<p class="text-center">Make</p>
-						<p class="text-center">Model</p>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}"></p>
 						<p class="text-center">
-							Water used<span class='notbold'> (G)</span>
+							{{'water_used' | translate}}<span class='notbold'> (G)</span>
 						</p>
 						<p class="text-center">
-							Energy used<span class='notbold'> (kw)</span>
+							{{'energy_used' | translate}}<span class='notbold'> (kw)</span>
 						</p>
 						<p class="text-center">
-							Wash cycle<span class='notbold'> (min)</span>
+							{{'wash_cycle' | translate}}<span class='notbold'> (min)</span>
 						</p>
-						<p class="text-center">Wash cycles</p>
+						<p class="text-center">{{'wash_cycles' | translate}}</p>
 						<p class="text-center">
-							Temperature<span class='notbold'> (f)</span>
-						</p>
-						<p class="text-center">
-							Detergent used<span class='notbold'> (gms)</span>
+							{{'temperature' | translate}}<span class='notbold'> (f)</span>
 						</p>
 						<p class="text-center">
-							Humidity<span class='notbold'> (%)</span>
+							{{'detergent_used' | translate}}<span class='notbold'> (gms)</span>
 						</p>
 						<p class="text-center">
-							Load<span class='notbold'> (kgs)</span>
+							{{'humidity' | translate}}<span class='notbold'> (%)</span>
+						</p>
+						<p class="text-center">
+							{{'load' | translate}}<span class='notbold'> (kgs)</span>
 						</p>
 					</div>
 					<div class="tbody">
@@ -534,7 +534,7 @@
 				</div>
 				<!--      END table-responsive -->
 				<label class="pull-right " ng-if="eng_griddata.length > 0" id="gridfootermsg">{{eng_griddata.length}}
-					records found</label>
+					{{'records_found_text' | translate}}</label>
 			</div>
 		</div>
 		<!--   END panel -->
@@ -550,8 +550,8 @@
 		<div class="panel panel-default" id="notifheight">
 			<div class="panel-heading">
 				<div class="panel-title md-body-2"
-				id="notificationtitl">
-					Notification<img class="pull-right col-md-1"
+				id="notificationtitl" translate="{{'notifications_title'}}">
+					<img class="pull-right col-md-1"
 						id="notfinfo"
 						src="app/img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
@@ -570,12 +570,12 @@
 						<div class="media-box" ng-controller="notificationController"
 							ng-init="getSpikesInSpecificErrors()">
 							<div class="media-box-heading" ng-show="data.length || isError">
-								<h4>Spike in number of specific errors</h4>
+								<h4 translate="{{'spike_in_specific_errors_title'}}"></h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.increase_spike">
-									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
+									<p class="text-warning m0" translate="{{'specific_errors_spike_msg'}}" translate-values="{ error_type: '{{itm.error_type}}', spike: '{{itm.increase_spike}}' }">{{itm.error_type}} related errors are increased by
 									{{itm.increase_spike
 									| number:0}}% in last 4 weeks</p>
 									<small class="text-pink pull-right ml">{{itm.increase_spike
@@ -589,7 +589,7 @@
 									<br>
 								</div>
 								<div ng-if="itm.decrease_spike">
-									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
+									<p class="text-warning m0" translate="{{'specific_errors_spike_msg'}}" translate-values="{ error_type: '{{itm.error_type}}', spike: '{{itm.decrease_spike}}' }">{{itm.error_type}} related errors are increased by
 									{{itm.decrease_spike
 									| number:0}}% in last 4 weeks</p>
 									<small class="text-greens pull-right ml">{{itm.decrease_spike
@@ -626,12 +626,12 @@
 						<div class="media-box" ng-controller="notificationController"
 							ng-init="getSpikesInSpecificErrorsByMakeModel()">
 							<div class="media-box-heading" ng-show="data.length || isError">
-								<h4>Spike in number of specific errors by make, model</h4>
+								<h4 translate="{{'spike_in_specific_errors_by_make_model_title'}}"></h4>
 							</div>
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.increase_spike">
-									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
+									<p class="text-warning m0" translate="{{'specific_errors_by_make_model_spike_msg'}}" translate-values="{ error_type: '{{itm.error_type}}', make: '{{itm.make}}', model: '{{itm.model}}', spike: '{{itm.increase_spike}}' }">{{itm.error_type}} related errors are increased by
 									{{itm.increase_spike | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
 									<small class="text-pink pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>
@@ -646,7 +646,7 @@
 								</div>
 								<div
 									ng-if="itm.decrease_spike">
-									<p class="text-warning m0">{{itm.error_type}} related errors are increased by
+									<p class="text-warning m0" translate="{{'specific_errors_by_make_model_spike_msg'}}" translate-values="{ error_type: '{{itm.error_type}}', make: '{{itm.make}}', model: '{{itm.model}}', spike: '{{itm.decrease_spike}}' }">{{itm.error_type}} related errors are increased by
 									{{itm.decrease_spike | number:0}}% for {{itm.make}} - {{itm.model}} in last 4 weeks</p>
 									<small class="text-greens pull-right ml">{{itm.decrease_spike | number:0}}%</small> <br>
 									<progressbar
