@@ -20,19 +20,26 @@
 				</div> <!-- START Alert menu-->
 			</li>
 			<li class="captiondiv">
-			<strong class="captionfont" >IoT for Electronics</strong>
+			<strong class="captionfont" translate="{{'app_name'}}"></strong>
 			</li>
 		</ul>
 		
 		<ul class="nav navbar-nav pull-right" >
 		<li class="downloadicon">
-						<span><a href="app/img/Dashboardassets/User's Manual_Electronic_Appliance.pdf" title="Download User Manual" download="User's Manual_Electronic_Appliances.pdf" target="_blank" ><img alt="" src="app/img/Dashboardassets/icon_userguide.png"></a></span>
+						<span><a href="app/img/Dashboardassets/User's Manual_Electronic_Appliance.pdf" title="{{'user_manual_download_tooltip' | translate}}" download="User's Manual_Electronic_Appliances.pdf" target="_blank" ><img alt="" src="app/img/Dashboardassets/icon_userguide.png"></a></span>
 		</li>  
 
 			<li class="alertimag" ng-init="getNewNotificationCount()" ng-click="clearNotificationCount()">
 				<img alt="" src="app/img/Dashboardassets/alert.png">
 				<span class="badge notificationcount"  ng-show="notificationAlertFlag">{{notificationCount}}</span>
 			</li> 
+			<li class="dropdownli">
+  			<select class="dropdown" name="" ng-model="language.selected" ng-change="changeLanguage()" style="margin-top: 18px">
+				<option class="option-text-style" value="" disabled selected>Language</option>
+				<option class="option-text-style" ng-repeat="(key, value) in language.available"
+					value={{key}}>{{value}}</option>
+			</select>
+			</li>
 			<li class="dropdownli">
 				<div dropdown class="dropdown dropdowndiv" class="col-sm-1 " >
 				
@@ -57,7 +64,7 @@
 									<div class="media-box">
 
 										<div class="media-box-body clearfix">
-											<p class="m0 option-text-style" ng-click="loadNotificationConf()">Settings</p>
+											<p class="m0 option-text-style" ng-click="loadNotificationConf()" translate="settings"></p>
 
 										</div>
 									</div>
@@ -67,7 +74,7 @@
 									<div class="media-box">
 
 										<div class="media-box-body clearfix">
-											<p class="m0 option-text-style">Change Password</p>
+											<p class="m0 option-text-style" translate="change_password"></p>
 
 										</div>
 									</div>
@@ -77,7 +84,7 @@
 									<div class="media-box">
 
 										<div class="media-box-body clearfix">
-											<p class="m0 option-text-style">Edit Profile</p>
+											<p class="m0 option-text-style" translate="edit_profile"></p>
 
 										</div>
 									</div>
@@ -86,7 +93,7 @@
 								<a href="#" class="list-group-item" ng-click="logOut()">
 									<div class="media-box">
 										<div class="media-box-body clearfix">
-											<p class="m0 option-text-style"  >Logout</p>
+											<p class="m0 option-text-style"  translate="logout"></p>
 										</div>
 								    </div>
 								</a>

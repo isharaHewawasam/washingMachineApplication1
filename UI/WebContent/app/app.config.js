@@ -25,13 +25,13 @@
     	  angular.module('angle').constant   = $provide.constant;
     	  angular.module('angle').value      = $provide.value;
       
-      /*$translateProvider.useStaticFilesLoader({
+      $translateProvider.useStaticFilesLoader({
           prefix : 'app/i18n/',
           suffix : '.json'
       });
       $translateProvider.preferredLanguage('en');
-      $translateProvider.useLocalStorage();
-      $translateProvider.usePostCompiling(true);*/
+      //$translateProvider.useLocalStorage();
+      $translateProvider.usePostCompiling(true);
       
       cfpLoadingBarProvider.includeBar = true;
       cfpLoadingBarProvider.includeSpinner = false;

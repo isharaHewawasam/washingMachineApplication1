@@ -284,13 +284,23 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
 
 }]);
 
-angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService',
-                                       function($rootScope,$scope, $state, $window, $localStorage, configApiClient, HttpService) {
+angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', '$translate', "iot.config.ApiClient", 'HttpService',
+                                       function($rootScope,$scope, $state, $window, $localStorage, $translate, configApiClient, HttpService) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
 	$scope.names=loginCredentails.Name;
 	$scope.notificationAlertFlag = false;
 	$scope.roleKey=loginCredentails.roleKey;
+	
+	/**
+	 * Define the available language list in ui and change the language according to user requests
+	 */
+	$scope.language.available = {"en": "English",
+			"fr": "French"};
+
+	$scope.changeLanguage = function() {
+		$translate.use($scope.language.selected);
+	}
 
 	/**
 	 * Get new notification count when refresh the Application

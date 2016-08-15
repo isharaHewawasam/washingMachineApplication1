@@ -15,17 +15,15 @@
 	<div class="pull-right" >
     
 
-      Application Dashboard Last Updated {{currentDate}}
+      {{'app_dashboard_last_updated_text' | translate}} {{currentDate}}
    </div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
 		<a ng-click="getUrl()"
-			>Washing
-			Machine Monitor System </a> <span
+			translate="{{'dashboard_title'}}"></a> <span
 			>
 			></span> <a href="#"
-			>
-			Dashboard </a>
+			translate="{{'dashboard'}}"></a>
 	</div>
 
 
@@ -45,7 +43,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
-				<option class="option-text-style" value="" disabled selected>States
+				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
 
 
@@ -60,7 +58,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
-				<option class="option-text-style" value="" disabled selected>Cities
+				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
 
 
@@ -75,8 +73,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.zip_codes">
-				<option class="option-text-style" value="" disabled selected>Zip
-					Code
+				<option class="option-text-style" value="" disabled selected translate="{{'zip_code'}}">
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="zip in zips"
 					value={{zip.zip_code}}>{{zip.zip_code}}
@@ -88,7 +85,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.years">
-				<option class="option-text-style" value="" disabled selected>Year
+				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 
 
 
@@ -105,7 +102,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.quarters" ng-change="quarterMonths()">
-				<option class="option-text-style" value="" selected disabled>Quarter
+				<option class="option-text-style" value="" selected disabled translate="{{'quarter'}}">
 
 
 
@@ -119,7 +116,7 @@
 		<div class="col-lg-2 filterItem">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="timescale.months">
-				<option class="option-text-style" value="" selected disabled>Month
+				<option class="option-text-style" value="" selected disabled translate="{{'month'}}">
 
 
 
@@ -137,10 +134,7 @@
 
 	</div>
  <div class="col-lg-2 "   id="applyFilterdiv" >
-             		<button ng-disabled="isApplyFiterButton" class="btn btn-default pull-right "  id="applyFilter" ng-click="tryit()">
-
-               		Apply Filter
-                    </button>
+             		<button ng-disabled="isApplyFiterButton" class="btn btn-default pull-right "  id="applyFilter" ng-click="tryit()" translate="{{'apply_filter'}}"></button>
 
 				</div>
 
