@@ -1,4 +1,5 @@
 'use strict';
+ var db = require('../../database/db');
  var geo_location = require("../../models/region_lat_long");
 
  //for map
@@ -8,54 +9,31 @@ exports.getData = function(payload, drill_down, callback) {
    var temp = [];
    var response = {};
    
-   
-  require("./sales_map").getData(payload, drill_down, function(err, sales_result) {
-    if (sales_result) {
-      require("./connected_map").getData(payload, drill_down, temp, function(err, connected_buffer) {
-        mix_res(sales_result, connected_buffer);
-        setRegionLocations(payload,sales_result, function() {
-          if(payload.productAttrs.makes[0]!==undefined&&payload.region.states[0]!==undefined&&payload.region.cities[0]==undefined&&
-              payload.region.zip_codes[0]==undefined&&payload.productAttrs.models[0]==undefined&&payload.productAttrs.skus[0]==undefined&&
-              payload.timescale.years[0]==undefined&&payload.timescale.quarters[0]==undefined&&payload.timescale.months[0]==undefined&&
-              payload.income[0]==undefined&&payload.age[0]==undefined&&payload.family_members_count[0]==undefined){
-            callback(err, aggregateData(sales_result));
-          }
-          else{
-            callback(err, sales_result);
-          }
-          
-        });
+   if(payload.productAttrs.makes[0]!==undefined&&payload.region.states[0]!==undefined&&payload.productAttrs.models[0]==undefined&&
+      payload.productAttrs.skus[0]==undefined&&payload.timescale.years[0]==undefined&&payload.timescale.quarters[0]==undefined&&
+      payload.timescale.months[0]==undefined&&payload.region.cities[0]==undefined&&payload.region.zip_codes[0]==undefined&&
+      payload.income[0]==undefined&&payload.age[0]==undefined&&payload.family_members_count[0]==undefined){
+      require("./make_state_filter").getData(payload, drill_down, function(err, sales_result){
+        callback(err,sales_result);
       });
-    } else {
-      callback(err, sales_result);
-    }    
-});
-
-function aggregateData(result){
-  var resultArray=result[0];
-  var unitssoldAll=0;
-  var unitsconnectedAll=0;
-  for(var i=0;i<result.length;i++){
-    unitssoldAll=unitssoldAll+result[i].unitsSold;
-    unitsconnectedAll=unitsconnectedAll+result[i].unitsConnected;
+   }
+   
+  else{
+    require("./sales_map").getData(payload, drill_down, function(err, sales_result) {
+      if (sales_result) {
+        require("./connected_map").getData(payload, drill_down, temp, function(err, connected_buffer) { 
+          mix_res(sales_result, connected_buffer);
+          setRegionLocations(sales_result, function() {
+            callback(err, sales_result);
+          });
+        });
+      } else {
+        callback(err, sales_result);
+      }    
+    });
   }
-  resultArray.model=resultArray.make+'_models';
-  resultArray.sku=resultArray.make+'_skus';
-  resultArray.city="State's cities";
-  resultArray.zip_code="State's zipcode";
-  resultArray.sold.year='Allyear';
-  resultArray.sold.quarter='AllQuartes';
-  resultArray.sold.month='Allmonths';
-  resultArray.time_scale='Timescale';
-  resultArray.age='Age';
-  resultArray.family_members_count='family_members_count';
-  resultArray.user_income='user_income';
-  resultArray.unitsSold=unitssoldAll;
-  resultArray.unitsConnected=unitsconnectedAll;
-
-  var returnArray=[resultArray];
-  return returnArray;
-}
+  
+};
   
 function removeUnwantedKeys(payload) {
   var result = payload;
@@ -72,7 +50,7 @@ function removeUnwantedKeys(payload) {
     
   return result;
 }  
-};
+
 
 
 function mix_res(sales_result, connected_buffer) {
@@ -128,8 +106,7 @@ function setRegionLocations(response, callback) {
 }
 */
 
-function setRegionLocations(payload,response, callback) {
-  
+function setRegionLocations(response, callback) {
   geo_location.getAll(function(){
     for (var each_item in response) {
       //state
@@ -165,26 +142,12 @@ function setRegionLocations(payload,response, callback) {
         });
       }
     }
-
-    //Aggregate data when filter apply for make and state only 
-    if(payload.productAttrs.makes[0]!==undefined&&payload.region.states[0]!==undefined&&payload.region.cities[0]==undefined
-        &&payload.region.zip_codes[0]==undefined&&payload.productAttrs.models[0]==undefined&&payload.productAttrs.skus[0]==undefined){
-        for (var each_item in response) {
-          geo_location.getStateLocation(response[each_item].state, function(err, loc) {
-            if (!err) {
-              response[each_item].latitude = loc.latitude;
-              response[each_item].longitude = loc.longitude;
-            }
-          });
-        }
-      }
     callback();
   });
 }
 
 function filterType(response) {
   var filter = 0;
-  
   if (response.state !== undefined) filter  = 1;
   if (response.city !== undefined) filter  = 2;
   if (response.zip_code !== undefined) filter = 3;
@@ -215,9 +178,6 @@ exports.getUngroupedData = function(payload, callback) {
   });
 };
 
-
-
-
 function getSum(result, key) {
   var sum = 0;
   
@@ -229,3 +189,6 @@ function getSum(result, key) {
   
   return sum;
 }
+
+
+
