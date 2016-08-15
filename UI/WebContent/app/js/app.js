@@ -29,7 +29,7 @@ var Name;
                   }
               });
 
-              
+
 
               $rootScope.app = {
                 name: 'Angle',
@@ -63,7 +63,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   'use strict';
 *//** Set the following to true to enable the HTML5 Mode
    You may have to set <base> tag in index and a routing configuration in your server **//*
- 
+
   $locationProvider.html5Mode(false);
 
   $urlRouterProvider.otherwise('/page/login');
@@ -143,7 +143,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('notificationconfiguration.html'),
         data:{title: 'Notification Configuration'}
     });
-  
+
 }]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
 	  if(!$logincheck($window.sessionStorage.loginCredentails)) {
 		  $location.path('/login');
@@ -151,9 +151,9 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 }]);
 App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
     'use strict';
-    
+
     *//**  Lazy Load modules configuration**//*
-  
+
     $ocLazyLoadProvider.config({
       debug: false,
       events: true,
@@ -163,7 +163,7 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
 }]).config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
     function ( $controllerProvider, $compileProvider, $filterProvider, $provide) {
       'use strict';
-      
+
       *//** registering components after bootstrap **//*
       App.controller = $controllerProvider.register;
       App.directive  = $compileProvider.directive;
@@ -192,7 +192,7 @@ App.config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider
 ;
 
 *//**
- * 
+ *
  * Define constants to inject across the application
 *//*
 App
@@ -221,7 +221,7 @@ App
     'mobile':                 480
   })
   .constant('APP_REQUIRES', {
-	  
+
 	  *//** jQuery based and standalone scripts**//*
 
     scripts: {
@@ -229,7 +229,7 @@ App
       'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
                              'vendor/simple-line-icons/css/simple-line-icons.css']
     },
-    
+
     *//**Angular based script (use the right module name)**//*
     modules: [
 
@@ -241,13 +241,13 @@ App
  *
  * login api
  */
-angular.module('angle').controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', 
+angular.module('angle').controller('LoginFormController', ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService',
                                        function($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 
 	$rootScope.credentials = {};
-	
-	/** 
-	 * Authenticate login Credentials 
+
+	/**
+	 * Authenticate login Credentials
 	 */
 	$scope.postForm = function() {
     $rootScope.isApplyFiterButton = true;
@@ -255,7 +255,7 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
 			username: $scope.inputData.username,
 			password: $scope.inputData.password
 		};
-		
+
 		var url = configApiClient.baseUrl + 'login/authentication';
 		var param = loginCredentials;
 		HttpService.post(url, param).then(function(data){
@@ -281,10 +281,10 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
             $scope.errorMsg = 'Network issue, please try after some time.';
 		});
 	}
-	
+
 }]);
 
-angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService', 
+angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', "iot.config.ApiClient", 'HttpService',
                                        function($rootScope,$scope, $state, $window, $localStorage, configApiClient, HttpService) {
 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	$scope.rolename=loginCredentails.Role;
@@ -308,15 +308,15 @@ angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope'
 
 	}
 
-	/** 
+	/**
 	 * Clear notification count
 	 */
 	$scope.clearNotificationCount = function() {
 
-		var rolename = $scope.rolename;		
+		var rolename = $scope.rolename;
 	    if((window.location.hash=="#/app/twitterinsights"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/notificationconf"&&rolename=="Marketing Manager")||(window.location.hash=="#/app/reports"&&rolename=="Marketing Manager")){
 	    	$rootScope.isApplyFiterButton = true;
-	    	$state.go('app.singleview');	    	
+	    	$state.go('app.singleview');
 	      $scope.notificationAlertFlag = false;
 	    }else if((window.location.hash=="#/app/notificationconf"&&rolename=="Engineer Manager")||(window.location.hash=="#/app/reports"&&rolename=="Engineer Manager")){
 	    	$rootScope.isApplyFiterButton = true;
@@ -333,7 +333,7 @@ angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope'
 		$state.go('page.login');
  	}
 
-	$scope.loadNotificationConf = function() {		
+	$scope.loadNotificationConf = function() {
 		$localStorage.showTwitterInnerLint = false;
 		$state.go('app.notificationconf');
 	};
@@ -443,11 +443,11 @@ angular.module('angle').controller('AppController',
     $rootScope.cancel = function($event) {
       $event.stopPropagation();
     };
-    
+
 }]);
 
 
-angular.module('angle').controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$state", "iot.config.ApiClient", 'HttpService', 
+angular.module('angle').controller('InfiniteScrollController', ["$scope", '$rootScope', "$timeout", "$state", "iot.config.ApiClient", 'HttpService',
                                             function($scope, $rootScope, $timeout, $state, configApiClient, HttpService) {
 
 		$scope.isLoading = false;
@@ -457,13 +457,13 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 		$scope.msg2="No data Found";
 		$scope.msg3 = "Service is Unavailable";
 
-	/** 
+	/**
 	 * Load "Most Fault" data from API file for eng_manager Insights
 	 */
 	  $scope.getMostFaults = function(divId) {
 		  	$scope.isLoading = true;
 	        $scope.msg = $scope.msg1;
-	        
+
 	        var url = configApiClient.baseUrl + 'insights/most-fault-models';
 			HttpService.get(url).then(function(data){
 				// on success
@@ -489,8 +489,8 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				$scope.msg = $scope.msg3;
 			});
 	  };
- 
-	 /** 
+
+	 /**
 	  * Load "Least Fault" data from API file for eng_manager Insights
 	  */
 	  $scope.getLeastFaults = function(divId) {
@@ -519,17 +519,17 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				$scope.isLoading = false;
 				$scope.isError = true;
 				$scope.msg = $scope.msg3;
-			});	
-		  
+			});
+
 	  };
 
-	 /** 
+	 /**
 	  * Load "Common Fault" data from API file for eng_manager Insights
 	  */
 	  $scope.getCommonFaults = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
-		  
+
 		  var url = configApiClient.baseUrl + 'insights/most-common-fault';
 			HttpService.get(url).then(function(data){
 				// on success
@@ -554,25 +554,25 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
-	/** 
-	 * Load "Most Used Models" data from API file for mkt_manager Insights 
+	/**
+	 * Load "Most Used Models" data from API file for mkt_manager Insights
 	 */
 	  $scope.getMostUsedModel = function(divId) {
 		  $scope.isLoading = true;
 		  $scope.msg = $scope.msg1;
-		  
+
 		  	var url = configApiClient.baseUrl + 'insights/most-used-products';
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
 				 if (data.data && data.data.length != 0) {
 					 var mostUsedProductDataStr = JSON.stringify(data.data);
-				
+
 					 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"totalLoadWeight":/g, '"y":');
 					 mostUsedProductDataStr = mostUsedProductDataStr.replace(/"model":/g, '"name":');
-				
+
 					 data = JSON.parse(mostUsedProductDataStr);
-				
+
 					 renderPieChart(divId, data, 'Most Used Models');
 				 } else {
 					 $scope.isNoDataDB = true;
@@ -587,7 +587,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 	  };
 
 	 /**
-	  * Load "Most Used Wash Cycles" data from API file for mkt_manager Insights 
+	  * Load "Most Used Wash Cycles" data from API file for mkt_manager Insights
 	  */
 	  $scope.getMostUsedCycles = function(divId) {
 		  $scope.isLoading = true;
@@ -619,7 +619,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
-	 /** 
+	 /**
 	  * Load "Not Connected Machines" data from API file for mkt_manager Insights
 	  */
 	  $scope.getNotConnectedMachines = function(divId) {
@@ -663,9 +663,9 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			});
 	  };
 
-	 /** 
-	  * Load "Twitter Handles" data from API file for mkt_manager Insights 
-	  */ 
+	 /**
+	  * Load "Twitter Handles" data from API file for mkt_manager Insights
+	  */
 	  $scope.getTwitterHandles = function(divId){
 
 		  $scope.isLoading = true;
@@ -695,11 +695,11 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				$scope.msg = $scope.msg3;
 			});
 	  };
-	  
-	  /** 
+
+	  /**
 	   * Route to Twitter Insight
 	   */
-	  $scope.loadTwitterinsights = function() {		  
+	  $scope.loadTwitterinsights = function() {
 		  $state.go('app.twitterinsights');
 	  };
 
@@ -724,686 +724,686 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 
 
-angular.module('angle').controller('DashboardController', ['$rootScope','$scope', '$state', 'iot.config.ApiClient', 'HttpService', 
-                                       function($rootScope, $scope, $state, configApiClient, HttpService) {
-
-		//Clear filter on dashboard load
-		$rootScope.search={};
-	    $rootScope.filterIcons=[];
-
-		var monthNames = [
-		  "January", "February", "March",
-		  "April", "May", "June", "July",
-		  "August", "September", "October",
-		  "November", "December"
-		];
-
-		var date = new Date();
-		var day = date.getDate();
-		var monthIndex = date.getMonth();
-		var year = date.getFullYear();
-
-
-   $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
-
-	$scope.sidebarObj={};
-	$scope.sidebarObj.selectedMake="";
-	$scope.sidebarObj.selectedModel="";
-	$scope.sidebarObj.selectedSKU="";
-	$scope.sidebarObj.mfgStartDate="";
-	$scope.sidebarObj.mfgEndDate="";
-
-	$scope.region=[];
-	$scope.timescale=[];
-
-/** 
- * create payload for sibebar filter option 
- */	 
-  $rootScope.setUsageObjectFromSidebar=function(obj){	 
-		$scope.sidebarObj=obj;
-		$scope.usagedata={
-				   "productAttrs":{
-					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
-					      "models":[{"value":$scope.sidebarObj.selectedModel}],
-					      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-					      "mfg_date": {
-					          "start_date": $scope.sidebarObj.mfgStartDate,
-					          "end_date": $scope.sidebarObj.mfgEndDate
-					        }
-					   },
-					   "timescale":{
-					      "years":[
-					         {
-					            "value":parseInt($scope.timescale.years)
-					         }
-					      ],
-					      "quarters":[
-					         {
-					            "value":parseInt($scope.timescale.quarters)
-					         }
-					      ],
-					      "months":[
-					         {
-					            "value":parseInt($scope.timescale.months)
-					         }
-					      ],
-					      "date":{
-					         "start_date":"01/01/2015",
-					         "end_date":"01/01/2016"
-					      },
-					      "relative":{
-					         "unit":"2",
-					         "value":0
-					      }
-					   },
-					   "region":{
-					      "states":[
-					         {
-					            "value":$scope.region.states
-					         }
-					      ],
-					      "cities":[
-					         {
-					            "value":$scope.region.cities
-					         }
-					      ],
-					      "zip_codes":[
-					         {
-					            "value":$scope.region.zip_codes
-					         }
-					      ]
-					   },
-					   "income":[{"value": $scope.sidebarObj.incomeRange}],
-					   "age": [{"value": $scope.sidebarObj.ageGroup}],
-					   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
-					};
-
-		$rootScope.applyFilterBoolean=true;
-		// This method is already calling from tryit()
-
-	}
-
-	//for reports section
-	$scope.myDate = new Date();
-
-	$scope.minDate = new Date(
-	$scope.myDate.getFullYear(),
-	$scope.myDate.getMonth() - 2,
-	$scope.myDate.getDate());
-
-	$scope.maxDate = new Date(
-	$scope.myDate.getFullYear(),
-	$scope.myDate.getMonth() + 2,
-	$scope.myDate.getDate());
-
-	$scope.myDate1 = new Date();
-
-	$scope.minDate1 = new Date(
-	$scope.myDate1.getFullYear(),
-	$scope.myDate1.getMonth() - 2,
-	$scope.myDate1.getDate());
-
-	$scope.maxDate1 = new Date(
-	$scope.myDate1.getFullYear(),
-	$scope.myDate1.getMonth() + 2,
-	$scope.myDate1.getDate());
-	//for reports section -finish
-
-	/**
-	 * Filtering Reports
-	 */
-	$scope.iniReport=function(){
-
-	    $scope.isReportFiltering = true;
-	    $rootScope.applyFilterBoolean=true;
-	    $scope.usagedata={
-	       "productAttrs":{
-	         "makes":[{"value":$scope.sidebarObj.selectedMake}],
-	            "models":[{"value":$scope.sidebarObj.selectedModel}],
-	            "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-	            "mfg_date": {
-	                "start_date": $scope.sidebarObj.mfgStartDate,
-	                "end_date": $scope.sidebarObj.mfgEndDate
-	              }
-	         },
-	        "timescale":{
-	            "years":[
-	               {
-	                  "value":parseInt($scope.timescale.years)
-	               }
-	            ],
-	            "quarters":[
-	               {
-	                  "value":parseInt($scope.timescale.quarters)
-	               }
-	            ],
-	            "months":[
-	               {
-	                  "value":parseInt($scope.timescale.months)
-	               }
-	            ],
-	            "date":{
-	               "start_date":"01/01/2015",
-	               "end_date":"01/01/2016"
-	            },
-	            "relative":{
-	               "unit":"2",
-	               "value":0
-	            }
-	         },
-	         "region":{
-	            "states":[
-	               {
-	                  "value":$scope.region.states
-	               }
-	            ],
-	            "cities":[
-	               {
-	                  "value":$scope.region.cities
-	               }
-	            ],
-	            "zip_codes":[
-	               {
-	                  "value":$scope.region.zip_codes
-	               }
-	            ]
-	         },
-	         "income":[{"value": $scope.sidebarObj.incomeRange}],
-	         "age": [{"value": $scope.sidebarObj.ageGroup}],
-	         "family_members_count": [{"value": $scope.sidebarObj.occupation}]
-	    };
-
-
-	    if($scope.region.states==undefined || $scope.region.states=="")
-	    {
-	    $scope.usagedata.region.states=[];
-	    }
-	    if($scope.region.cities==undefined || $scope.region.cities=="")
-	    {
-	      $scope.usagedata.region.cities=[];
-	    }
-	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
-	    {
-	      $scope.usagedata.region.zip_codes=[];
-	    }
-	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
-	    {
-	      $scope.usagedata.timescale.years=[];
-	    }
-	    if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
-	    {
-	      $scope.usagedata.timescale.quarters=[];
-	    }
-	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
-	    {
-	      $scope.usagedata.timescale.months=[];
-	    }
-	    if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
-	    {
-	      $scope.usagedata.productAttrs.makes=[];
-	    }
-	    if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
-	    {
-	      $scope.usagedata.productAttrs.models=[];
-	    }
-	    if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
-	    {
-	      $scope.usagedata.productAttrs.skus=[];
-	    }
-	    if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
-	    {
-	      $scope.usagedata.productAttrs.mfgStartDate=[];
-	    }
-	    if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
-	    {
-	      $scope.usagedata.productAttrs.mfgEndDate=[];
-	    }
-	    if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
-	    {
-	      $scope.usagedata.income=[];
-	    }
-	    if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
-	    {
-	      $scope.usagedata.age=[];
-	    }
-	    if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
-	    {
-	      $scope.usagedata.family_members_count=[];
-	    }
-
-	   $rootScope.mkt_griddata_filter=[];
-	    $scope.isNoDataFound = false;
-	    $scope.isError =  false;
-	    $scope.isOnFilter = false;
-
-	    //for grid mkt_mgr
-	    var url = configApiClient.baseUrl +  'usage';
-	    var param = $scope.usagedata;
-		HttpService.post(url, param).then(function(data){
-			// on success
-			if(!data || data.data.length === 0){
-                $rootScope.isOnFilter=true;
-                $rootScope.isOnLoad=false;
-            } else {
-                $rootScope.mkt_griddata_filter=data.data;
-                $rootScope.isOnFilter=true;
-                $rootScope.isOnLoad=false;
-                $scope.isReportFiltering = false;
-            }
-		},function(data){
-			// on error
-			$scope.isError = true;
-	        $scope.isReportFiltering = false;
-		});
-    }
-	
-	removechart = function (id) {
-		var chart = $('#'+id).highcharts();
-		if (chart) {
-
-			chart.destroy();
-		}
-
-	};
-
-	/** 
-	 * Load data from API for Sales Volume Distribution map 
-	 */
-	showMap = function () {
-		removechart('map-container');
-		$scope.loadingText = "Loading data...";
-
-
-		$rootScope.mapProgress = true;
-		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
-	    var param = $scope.usagedata;
-		HttpService.post(url, param).then(function(data){
-			// on success
-			$rootScope.mapProgress = false;
-
-            if(!data || data.length === 0){
-                 renderMap("map-container", []);
-            }  else{
-                renderMap("map-container", data);
-                $scope.zoomMap('map-container');
-            }
-		},function(data){
-			// on error
-			 $rootScope.mapProgress = false;
-		});
-	}
-
-	/** 
-	 * Implement map zooming funtionality 
-	 * @param {String} id - div id for map
-	 */
-	$scope.zoomMap = function (id) {
-		var selectedState = $scope.region.states;
-		if(selectedState && selectedState != '') {
-			var stateCode = undefined;
-			var states = $scope.states;
-			// Assign id's
-	        for(var i=0; i < states.length; i++) {
-	        	if(states[i].name == selectedState) {
-	        		stateCode = states[i].id;
-	        		break;
-	        	}
-	        }
-	        if(stateCode){
-	        	var chart = $('#'+id).highcharts();
-	    		if (chart) {
-	    			chart.get(stateCode).zoomTo();
-	    		}
-	        }
-		}
-	};
-
-	/** 
-	 * Filter from both top filter and side bar filter
-	 */
-	$rootScope.tryit = function() {
-
-		$scope.isLoadingFilters = true;
-        $scope.isReportFiltering = false;
-        $rootScope.isApplyFiterButton = true;
-		$scope.test = true;
-		$rootScope.applyFilterBoolean=true;
-		$scope.usagedata={
-		   "productAttrs":{
-			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
-			      "models":[{"value":$scope.sidebarObj.selectedModel}],
-			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
-			      "mfg_date": {
-			          "start_date": $scope.sidebarObj.mfgStartDate,
-			          "end_date": $scope.sidebarObj.mfgEndDate
-			        }
-			   },
-			   "timescale":{
-			      "years":[
-			         {
-			            "value":parseInt($scope.timescale.years)
-			         }
-			      ],
-			      "quarters":[
-			         {
-			            "value":parseInt($scope.timescale.quarters)
-			         }
-			      ],
-			      "months":[
-			         {
-			            "value":parseInt($scope.timescale.months)
-			         }
-			      ],
-			      "date":{
-			         "start_date":"01/01/2015",
-			         "end_date":"01/01/2016"
-			      },
-			      "relative":{
-			         "unit":"2",
-			         "value":0
-			      }
-			   },
-			   "region":{
-			      "states":[
-			         {
-			            "value":$scope.region.states
-			         }
-			      ],
-			      "cities":[
-			         {
-			            "value":$scope.region.cities
-			         }
-			      ],
-			      "zip_codes":[
-			         {
-			            "value":$scope.region.zip_codes
-			         }
-			      ]
-			   },
-			   "income":[{"value": $scope.sidebarObj.incomeRange}],
-			   "age": [{"value": $scope.sidebarObj.ageGroup}],
-			   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
-		};
-
-
-		if($scope.region.states==undefined || $scope.region.states=="")
-		{
-		$scope.usagedata.region.states=[];
-		}
-		if($scope.region.cities==undefined || $scope.region.cities=="")
-		{
-			$scope.usagedata.region.cities=[];
-		}
-		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
-		{
-			$scope.usagedata.region.zip_codes=[];
-		}
-		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
-		{
-			$scope.usagedata.timescale.years=[];
-		}
-		if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
-		{
-			$scope.usagedata.timescale.quarters=[];
-		}
-		if($scope.timescale.months==undefined || $scope.timescale.months=="")
-		{
-			$scope.usagedata.timescale.months=[];
-		}
-		if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
-		{
-			$scope.usagedata.productAttrs.makes=[];
-		}
-		if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
-		{
-			$scope.usagedata.productAttrs.models=[];
-		}
-		if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
-		{
-			$scope.usagedata.productAttrs.skus=[];
-		}
-		if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
-		{
-			$scope.usagedata.productAttrs.mfgStartDate=[];
-		}
-		if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
-		{
-			$scope.usagedata.productAttrs.mfgEndDate=[];
-		}
-		if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
-		{
-			$scope.usagedata.income=[];
-		}
-		if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
-		{
-			$scope.usagedata.age=[];
-		}
-		if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
-		{
-			$scope.usagedata.family_members_count=[];
-		}
-
-		// to set usage object in another controller
-		$rootScope.setUsageData($scope.usagedata);
-
-		/** 
-		 * For map
-		 */
-		showMap();
-
-		$scope.griddata=[];
-		$scope.eng_griddata=[];
-		$scope.isNoDataFound = false;
-		$scope.isError =  false;
-		$scope.isLoadingFilters = true;
-		$scope.msg1 = "Applying Filters... Please wait";
-		$scope.msg2 = "No Data Found";
-		$scope.msg3 =  "Service is Unavailable";
-		$scope.msg = $scope.msg1;
-
-		//for grid mkt_mgr
-		var url = configApiClient.baseUrl +  'usage';
-	    var param = $scope.usagedata;
-		HttpService.post(url, param).then(function(data){
-			// on success
-			$scope.isLoadingFilters = false;
-	       	 if(!data || data.data.length === 0){
-	
-	         } else {
-      	  		$scope.griddata=data.data;
-	       	 }
-		},function(data){
-			// on error
-			$scope.isLoadingFilters = false;
-			$scope.isError = true;
-			$scope.msg = $scope.msg3;
-		});
-
-		//For grid from eng manager
-		var url = configApiClient.baseUrl + 'sensors/data';
-	    var param = $scope.usagedata;
-		HttpService.post(url, param).then(function(data){
-			// on success
-			$scope.isLoadingFilters = false;
-            if(!data || data.length === 0){
-
-            } else {
-            	$scope.eng_griddata=data;
-            }
-		},function(data){
-			// on error
-			$scope.isLoadingFilters = false;
-            $scope.isError = true;
-            $scope.msg = $scope.msg3;
-		});
-		  
-	};
-
-    		/**
-    		 * load all usage data on dashboard
-    		 */ 
-    		$scope.griddata=[];
-    		$scope.eng_griddata=[];
-    		$scope.mkt_griddata=[];
-
-
-    		var url = configApiClient.baseUrl +  "usage";
-    	    HttpService.get(url).then(function(data){
-    			// on success
-    	    	$scope.griddata=data.data;
-    		},function(data){
-    			// on error
-    		});
-    		
-    	    var url = configApiClient.baseUrl + "sensors/data";
-    	    var param = null;
-    	    HttpService.post(url, param).then(function(data){
-    			// on success
-    	    	 $scope.eng_griddata=data; //.states: array name--check in browser
-    		},function(data){
-    			// on error
-    		});
-
-    		///////////////////////Report on load
-    	    var url = configApiClient.baseUrl +  "usage";
-    	    HttpService.get(url).then(function(data){
-    			// on success
-    	    	$scope.mkt_griddata=data.data;
-                $rootScope.isOnLoad=true;
-    		},function(data){
-    			// on error
-    		});
-
-		var quarterMonthMapping = JSON.parse('{'
-										+'"Quarter1":["Jan","Feb","Mar"],'
-										+'"Quarter2":["Apr","May","Jun"],'
-										+'"Quarter3":["Jul","Aug","Sep"],'
-										+'"Quarter4":["Oct","Nov","Dec"]'
-										+'}');
-
-
-
-
-
-		var quartersNew = JSON.parse(
-				'{"0":[{'+
-					'"id": 1,'+
-					'"value": "Quarter1"'+
-				'}, {'+
-					'"id": 2,'+
-					'"value": "Quarter2"'+
-				'}, {'+
-					'"id": 3,'+
-					'"value": "Quarter3"'+
-				'}, {'+
-					'"id": 4,'+
-					'"value": "Quarter4"'+
-				'}]}'
-		);
-		var quarterMonthMap = JSON.parse(
-				'{'+
-				'"1":[{"id":1,"value":"Jan"},{"id":2,"value":"Feb"},{"id":3,"value":"Mar"}],'+
-				'"2":[{"id":4,"value":"Apr"},{"id":5,"value":"May"},{"id":6,"value":"Jun"}],'+
-				'"3":[{"id":7,"value":"Jul"},{"id":8,"value":"Aug"},{"id":9,"value":"Sep"}],'+
-				'"4":[{"id":10,"value":"Oct"},{"id":11,"value":"Nov"},{"id":12,"value":"Dec"}]'+
-			'}'
-		);
-
-
-		$scope.quarters = [];
-
-		$scope.quarters=(quartersNew[0]);
-
-		$scope.quarterMonths=function(){
-
-			$scope.months=[];
-			$scope.timescale.months=undefined;
-			$scope.months=quarterMonthMap[$scope.timescale.quarters];
-	    }
-
-		var url = configApiClient.baseUrl + 'config/states';
-	    HttpService.get(url).then(function(data){
-			 // on success
-	    	 $scope.states=data.states;
-	    	 //Using this array in renderMap function to zoom the map
-	    	 salesDataJoin = [];
-	    	 if($scope.states){
-	    		 $.each($scope.states, function () {
-	    			 salesDataJoin.push(this);
-	    		 });
-	    	 }
-		},function(data){
-			// on error
-		});
-
-	    var url = configApiClient.baseUrl + 'config/sales/years';
-	    HttpService.get(url).then(function(data){
-			 // on success
-	    	$scope.sales_years=data.sales_years;
-		},function(data){
-			// on error
-		});
-	    
-	
-	 $scope.cities;
-	 
-	 /** 
-	  * Retrieve cities for relevant states 
-	  */
-	 $scope.selectCities=function(){
-		 $scope.region.cities=undefined;
-		 $scope.region.zip_codes=undefined;
-		 $scope.zips=[];
-		 
-		 var url = configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states;
-	     HttpService.get(url).then(function(data){
-			 // on success
-	    	 $scope.cities=data[$scope.region.states];
-		 },function(data){
-			// on error
-		 });
-    }
-	 
-	 /** 
-	  * Retrieve zipcodes for relevant cities 
-	  */
-	 $scope.selectZip=function(){
-
-		 $scope.region.zip_codes=undefined;
-		 var url = configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities;
-	     HttpService.get(url).then(function(data){
-			 // on success
-	    	 $scope.zips = data[$scope.region.cities];
-		 },function(data){
-			// on error
-		 });
-    }
-
-	 /** 
-	  * Maximize the Washing Machines status grid
-	  */
-	 $scope.maximizeGrid=function(){
-			var gridNormal = $("#gridNormal1").clone();
-
-			$("#gridMax").empty();
-			$("#gridMax").append(gridNormal);
-
-			$("#gridMax #gridMaxImg").addClass("hidden");
-			$("#gridMax #gridCloseImg").removeClass("hidden");
-			$("#gridNormal1").removeClass("hidden");
-
-			 $(".maxtbody").height(300);
-		$("#gridMax").removeClass("hidden");
-		}
-
-		$("body").on("click","#gridCloseImg",function(){
-			$("#gridMax").empty();
-			$("#gridMax").addClass("hidden");
-			 
-			  $("#gridNormal").height(355);
-	    });
-
-	}]);
+// angular.module('angle').controller('DashboardController', ['$rootScope','$scope', '$state', 'iot.config.ApiClient', 'HttpService',
+//                                        function($rootScope, $scope, $state, configApiClient, HttpService) {
+//
+// 		//Clear filter on dashboard load
+// 		$rootScope.search={};
+// 	    $rootScope.filterIcons=[];
+//
+// 		var monthNames = [
+// 		  "January", "February", "March",
+// 		  "April", "May", "June", "July",
+// 		  "August", "September", "October",
+// 		  "November", "December"
+// 		];
+//
+// 		var date = new Date();
+// 		var day = date.getDate();
+// 		var monthIndex = date.getMonth();
+// 		var year = date.getFullYear();
+//
+//
+//    $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
+//
+// 	$scope.sidebarObj={};
+// 	$scope.sidebarObj.selectedMake="";
+// 	$scope.sidebarObj.selectedModel="";
+// 	$scope.sidebarObj.selectedSKU="";
+// 	$scope.sidebarObj.mfgStartDate="";
+// 	$scope.sidebarObj.mfgEndDate="";
+//
+// 	$scope.region=[];
+// 	$scope.timescale=[];
+//
+// /**
+//  * create payload for sibebar filter option
+//  */
+//   $rootScope.setUsageObjectFromSidebar=function(obj){
+// 		$scope.sidebarObj=obj;
+// 		$scope.usagedata={
+// 				   "productAttrs":{
+// 					      "makes":[{"value":$scope.sidebarObj.selectedMake}],
+// 					      "models":[{"value":$scope.sidebarObj.selectedModel}],
+// 					      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+// 					      "mfg_date": {
+// 					          "start_date": $scope.sidebarObj.mfgStartDate,
+// 					          "end_date": $scope.sidebarObj.mfgEndDate
+// 					        }
+// 					   },
+// 					   "timescale":{
+// 					      "years":[
+// 					         {
+// 					            "value":parseInt($scope.timescale.years)
+// 					         }
+// 					      ],
+// 					      "quarters":[
+// 					         {
+// 					            "value":parseInt($scope.timescale.quarters)
+// 					         }
+// 					      ],
+// 					      "months":[
+// 					         {
+// 					            "value":parseInt($scope.timescale.months)
+// 					         }
+// 					      ],
+// 					      "date":{
+// 					         "start_date":"01/01/2015",
+// 					         "end_date":"01/01/2016"
+// 					      },
+// 					      "relative":{
+// 					         "unit":"2",
+// 					         "value":0
+// 					      }
+// 					   },
+// 					   "region":{
+// 					      "states":[
+// 					         {
+// 					            "value":$scope.region.states
+// 					         }
+// 					      ],
+// 					      "cities":[
+// 					         {
+// 					            "value":$scope.region.cities
+// 					         }
+// 					      ],
+// 					      "zip_codes":[
+// 					         {
+// 					            "value":$scope.region.zip_codes
+// 					         }
+// 					      ]
+// 					   },
+// 					   "income":[{"value": $scope.sidebarObj.incomeRange}],
+// 					   "age": [{"value": $scope.sidebarObj.ageGroup}],
+// 					   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+// 					};
+//
+// 		$rootScope.applyFilterBoolean=true;
+// 		// This method is already calling from tryit()
+//
+// 	}
+//
+// 	//for reports section
+// 	$scope.myDate = new Date();
+//
+// 	$scope.minDate = new Date(
+// 	$scope.myDate.getFullYear(),
+// 	$scope.myDate.getMonth() - 2,
+// 	$scope.myDate.getDate());
+//
+// 	$scope.maxDate = new Date(
+// 	$scope.myDate.getFullYear(),
+// 	$scope.myDate.getMonth() + 2,
+// 	$scope.myDate.getDate());
+//
+// 	$scope.myDate1 = new Date();
+//
+// 	$scope.minDate1 = new Date(
+// 	$scope.myDate1.getFullYear(),
+// 	$scope.myDate1.getMonth() - 2,
+// 	$scope.myDate1.getDate());
+//
+// 	$scope.maxDate1 = new Date(
+// 	$scope.myDate1.getFullYear(),
+// 	$scope.myDate1.getMonth() + 2,
+// 	$scope.myDate1.getDate());
+// 	//for reports section -finish
+//
+// 	/**
+// 	 * Filtering Reports
+// 	 */
+// 	$scope.iniReport=function(){
+//
+// 	    $scope.isReportFiltering = true;
+// 	    $rootScope.applyFilterBoolean=true;
+// 	    $scope.usagedata={
+// 	       "productAttrs":{
+// 	         "makes":[{"value":$scope.sidebarObj.selectedMake}],
+// 	            "models":[{"value":$scope.sidebarObj.selectedModel}],
+// 	            "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+// 	            "mfg_date": {
+// 	                "start_date": $scope.sidebarObj.mfgStartDate,
+// 	                "end_date": $scope.sidebarObj.mfgEndDate
+// 	              }
+// 	         },
+// 	        "timescale":{
+// 	            "years":[
+// 	               {
+// 	                  "value":parseInt($scope.timescale.years)
+// 	               }
+// 	            ],
+// 	            "quarters":[
+// 	               {
+// 	                  "value":parseInt($scope.timescale.quarters)
+// 	               }
+// 	            ],
+// 	            "months":[
+// 	               {
+// 	                  "value":parseInt($scope.timescale.months)
+// 	               }
+// 	            ],
+// 	            "date":{
+// 	               "start_date":"01/01/2015",
+// 	               "end_date":"01/01/2016"
+// 	            },
+// 	            "relative":{
+// 	               "unit":"2",
+// 	               "value":0
+// 	            }
+// 	         },
+// 	         "region":{
+// 	            "states":[
+// 	               {
+// 	                  "value":$scope.region.states
+// 	               }
+// 	            ],
+// 	            "cities":[
+// 	               {
+// 	                  "value":$scope.region.cities
+// 	               }
+// 	            ],
+// 	            "zip_codes":[
+// 	               {
+// 	                  "value":$scope.region.zip_codes
+// 	               }
+// 	            ]
+// 	         },
+// 	         "income":[{"value": $scope.sidebarObj.incomeRange}],
+// 	         "age": [{"value": $scope.sidebarObj.ageGroup}],
+// 	         "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+// 	    };
+//
+//
+// 	    if($scope.region.states==undefined || $scope.region.states=="")
+// 	    {
+// 	    $scope.usagedata.region.states=[];
+// 	    }
+// 	    if($scope.region.cities==undefined || $scope.region.cities=="")
+// 	    {
+// 	      $scope.usagedata.region.cities=[];
+// 	    }
+// 	    if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
+// 	    {
+// 	      $scope.usagedata.region.zip_codes=[];
+// 	    }
+// 	    if($scope.timescale.years==undefined || $scope.timescale.years=="" )
+// 	    {
+// 	      $scope.usagedata.timescale.years=[];
+// 	    }
+// 	    if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
+// 	    {
+// 	      $scope.usagedata.timescale.quarters=[];
+// 	    }
+// 	    if($scope.timescale.months==undefined || $scope.timescale.months=="")
+// 	    {
+// 	      $scope.usagedata.timescale.months=[];
+// 	    }
+// 	    if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
+// 	    {
+// 	      $scope.usagedata.productAttrs.makes=[];
+// 	    }
+// 	    if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
+// 	    {
+// 	      $scope.usagedata.productAttrs.models=[];
+// 	    }
+// 	    if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
+// 	    {
+// 	      $scope.usagedata.productAttrs.skus=[];
+// 	    }
+// 	    if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
+// 	    {
+// 	      $scope.usagedata.productAttrs.mfgStartDate=[];
+// 	    }
+// 	    if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
+// 	    {
+// 	      $scope.usagedata.productAttrs.mfgEndDate=[];
+// 	    }
+// 	    if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+// 	    {
+// 	      $scope.usagedata.income=[];
+// 	    }
+// 	    if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+// 	    {
+// 	      $scope.usagedata.age=[];
+// 	    }
+// 	    if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+// 	    {
+// 	      $scope.usagedata.family_members_count=[];
+// 	    }
+//
+// 	   $rootScope.mkt_griddata_filter=[];
+// 	    $scope.isNoDataFound = false;
+// 	    $scope.isError =  false;
+// 	    $scope.isOnFilter = false;
+//
+// 	    //for grid mkt_mgr
+// 	    var url = configApiClient.baseUrl +  'usage';
+// 	    var param = $scope.usagedata;
+// 		HttpService.post(url, param).then(function(data){
+// 			// on success
+// 			if(!data || data.data.length === 0){
+//                 $rootScope.isOnFilter=true;
+//                 $rootScope.isOnLoad=false;
+//             } else {
+//                 $rootScope.mkt_griddata_filter=data.data;
+//                 $rootScope.isOnFilter=true;
+//                 $rootScope.isOnLoad=false;
+//                 $scope.isReportFiltering = false;
+//             }
+// 		},function(data){
+// 			// on error
+// 			$scope.isError = true;
+// 	        $scope.isReportFiltering = false;
+// 		});
+//     }
+//
+// 	removechart = function (id) {
+// 		var chart = $('#'+id).highcharts();
+// 		if (chart) {
+//
+// 			chart.destroy();
+// 		}
+//
+// 	};
+//
+// 	/**
+// 	 * Load data from API for Sales Volume Distribution map
+// 	 */
+// 	showMap = function () {
+// 		removechart('map-container');
+// 		$scope.loadingText = "Loading data...";
+//
+//
+// 		$rootScope.mapProgress = true;
+// 		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
+// 	    var param = $scope.usagedata;
+// 		HttpService.post(url, param).then(function(data){
+// 			// on success
+// 			$rootScope.mapProgress = false;
+//
+//             if(!data || data.length === 0){
+//                  renderMap("map-container", []);
+//             }  else{
+//                 renderMap("map-container", data);
+//                 $scope.zoomMap('map-container');
+//             }
+// 		},function(data){
+// 			// on error
+// 			 $rootScope.mapProgress = false;
+// 		});
+// 	}
+//
+// 	/**
+// 	 * Implement map zooming funtionality
+// 	 * @param {String} id - div id for map
+// 	 */
+// 	$scope.zoomMap = function (id) {
+// 		var selectedState = $scope.region.states;
+// 		if(selectedState && selectedState != '') {
+// 			var stateCode = undefined;
+// 			var states = $scope.states;
+// 			// Assign id's
+// 	        for(var i=0; i < states.length; i++) {
+// 	        	if(states[i].name == selectedState) {
+// 	        		stateCode = states[i].id;
+// 	        		break;
+// 	        	}
+// 	        }
+// 	        if(stateCode){
+// 	        	var chart = $('#'+id).highcharts();
+// 	    		if (chart) {
+// 	    			chart.get(stateCode).zoomTo();
+// 	    		}
+// 	        }
+// 		}
+// 	};
+//
+// 	/**
+// 	 * Filter from both top filter and side bar filter
+// 	 */
+// 	$rootScope.tryit = function() {
+//
+// 		$scope.isLoadingFilters = true;
+//         $scope.isReportFiltering = false;
+//         $rootScope.isApplyFiterButton = true;
+// 		$scope.test = true;
+// 		$rootScope.applyFilterBoolean=true;
+// 		$scope.usagedata={
+// 		   "productAttrs":{
+// 			   "makes":[{"value":$scope.sidebarObj.selectedMake}],
+// 			      "models":[{"value":$scope.sidebarObj.selectedModel}],
+// 			      "skus":[{"value":$scope.sidebarObj.selectedSKU}],
+// 			      "mfg_date": {
+// 			          "start_date": $scope.sidebarObj.mfgStartDate,
+// 			          "end_date": $scope.sidebarObj.mfgEndDate
+// 			        }
+// 			   },
+// 			   "timescale":{
+// 			      "years":[
+// 			         {
+// 			            "value":parseInt($scope.timescale.years)
+// 			         }
+// 			      ],
+// 			      "quarters":[
+// 			         {
+// 			            "value":parseInt($scope.timescale.quarters)
+// 			         }
+// 			      ],
+// 			      "months":[
+// 			         {
+// 			            "value":parseInt($scope.timescale.months)
+// 			         }
+// 			      ],
+// 			      "date":{
+// 			         "start_date":"01/01/2015",
+// 			         "end_date":"01/01/2016"
+// 			      },
+// 			      "relative":{
+// 			         "unit":"2",
+// 			         "value":0
+// 			      }
+// 			   },
+// 			   "region":{
+// 			      "states":[
+// 			         {
+// 			            "value":$scope.region.states
+// 			         }
+// 			      ],
+// 			      "cities":[
+// 			         {
+// 			            "value":$scope.region.cities
+// 			         }
+// 			      ],
+// 			      "zip_codes":[
+// 			         {
+// 			            "value":$scope.region.zip_codes
+// 			         }
+// 			      ]
+// 			   },
+// 			   "income":[{"value": $scope.sidebarObj.incomeRange}],
+// 			   "age": [{"value": $scope.sidebarObj.ageGroup}],
+// 			   "family_members_count": [{"value": $scope.sidebarObj.occupation}]
+// 		};
+//
+//
+// 		if($scope.region.states==undefined || $scope.region.states=="")
+// 		{
+// 		$scope.usagedata.region.states=[];
+// 		}
+// 		if($scope.region.cities==undefined || $scope.region.cities=="")
+// 		{
+// 			$scope.usagedata.region.cities=[];
+// 		}
+// 		if($scope.region.zip_codes==undefined || $scope.region.zip_codes=="" )
+// 		{
+// 			$scope.usagedata.region.zip_codes=[];
+// 		}
+// 		if($scope.timescale.years==undefined || $scope.timescale.years=="" )
+// 		{
+// 			$scope.usagedata.timescale.years=[];
+// 		}
+// 		if($scope.timescale.quarters==undefined || $scope.timescale.quarters=="")
+// 		{
+// 			$scope.usagedata.timescale.quarters=[];
+// 		}
+// 		if($scope.timescale.months==undefined || $scope.timescale.months=="")
+// 		{
+// 			$scope.usagedata.timescale.months=[];
+// 		}
+// 		if($scope.sidebarObj.selectedMake==undefined || $scope.sidebarObj.selectedMake=="")
+// 		{
+// 			$scope.usagedata.productAttrs.makes=[];
+// 		}
+// 		if($scope.sidebarObj.selectedModel==undefined || $scope.sidebarObj.selectedModel=="")
+// 		{
+// 			$scope.usagedata.productAttrs.models=[];
+// 		}
+// 		if($scope.sidebarObj.selectedSKU==undefined || $scope.sidebarObj.selectedSKU=="")
+// 		{
+// 			$scope.usagedata.productAttrs.skus=[];
+// 		}
+// 		if($scope.sidebarObj.mfgStartDate==undefined || $scope.sidebarObj.mfgStartDate=="")
+// 		{
+// 			$scope.usagedata.productAttrs.mfgStartDate=[];
+// 		}
+// 		if($scope.sidebarObj.mfgEndDate==undefined || $scope.sidebarObj.mfgEndDate=="")
+// 		{
+// 			$scope.usagedata.productAttrs.mfgEndDate=[];
+// 		}
+// 		if($scope.sidebarObj.incomeRange==undefined || $scope.sidebarObj.incomeRange=="")
+// 		{
+// 			$scope.usagedata.income=[];
+// 		}
+// 		if($scope.sidebarObj.ageGroup==undefined || $scope.sidebarObj.ageGroup=="")
+// 		{
+// 			$scope.usagedata.age=[];
+// 		}
+// 		if($scope.sidebarObj.occupation==undefined || $scope.sidebarObj.occupation=="")
+// 		{
+// 			$scope.usagedata.family_members_count=[];
+// 		}
+//
+// 		// to set usage object in another controller
+// 		$rootScope.setUsageData($scope.usagedata);
+//
+// 		/**
+// 		 * For map
+// 		 */
+// 		showMap();
+//
+// 		$scope.griddata=[];
+// 		$scope.eng_griddata=[];
+// 		$scope.isNoDataFound = false;
+// 		$scope.isError =  false;
+// 		$scope.isLoadingFilters = true;
+// 		$scope.msg1 = "Applying Filters... Please wait";
+// 		$scope.msg2 = "No Data Found";
+// 		$scope.msg3 =  "Service is Unavailable";
+// 		$scope.msg = $scope.msg1;
+//
+// 		//for grid mkt_mgr
+// 		var url = configApiClient.baseUrl +  'usage';
+// 	    var param = $scope.usagedata;
+// 		HttpService.post(url, param).then(function(data){
+// 			// on success
+// 			$scope.isLoadingFilters = false;
+// 	       	 if(!data || data.data.length === 0){
+//
+// 	         } else {
+//       	  		$scope.griddata=data.data;
+// 	       	 }
+// 		},function(data){
+// 			// on error
+// 			$scope.isLoadingFilters = false;
+// 			$scope.isError = true;
+// 			$scope.msg = $scope.msg3;
+// 		});
+//
+// 		//For grid from eng manager
+// 		var url = configApiClient.baseUrl + 'sensors/data';
+// 	    var param = $scope.usagedata;
+// 		HttpService.post(url, param).then(function(data){
+// 			// on success
+// 			$scope.isLoadingFilters = false;
+//             if(!data || data.length === 0){
+//
+//             } else {
+//             	$scope.eng_griddata=data;
+//             }
+// 		},function(data){
+// 			// on error
+// 			$scope.isLoadingFilters = false;
+//             $scope.isError = true;
+//             $scope.msg = $scope.msg3;
+// 		});
+//
+// 	};
+//
+//     		/**
+//     		 * load all usage data on dashboard
+//     		 */
+//     		$scope.griddata=[];
+//     		$scope.eng_griddata=[];
+//     		$scope.mkt_griddata=[];
+//
+//
+//     		var url = configApiClient.baseUrl +  "usage";
+//     	    HttpService.get(url).then(function(data){
+//     			// on success
+//     	    	$scope.griddata=data.data;
+//     		},function(data){
+//     			// on error
+//     		});
+//
+//     	    var url = configApiClient.baseUrl + "sensors/data";
+//     	    var param = null;
+//     	    HttpService.post(url, param).then(function(data){
+//     			// on success
+//     	    	 $scope.eng_griddata=data; //.states: array name--check in browser
+//     		},function(data){
+//     			// on error
+//     		});
+//
+//     		///////////////////////Report on load
+//     	    var url = configApiClient.baseUrl +  "usage";
+//     	    HttpService.get(url).then(function(data){
+//     			// on success
+//     	    	$scope.mkt_griddata=data.data;
+//                 $rootScope.isOnLoad=true;
+//     		},function(data){
+//     			// on error
+//     		});
+//
+// 		var quarterMonthMapping = JSON.parse('{'
+// 										+'"Quarter1":["Jan","Feb","Mar"],'
+// 										+'"Quarter2":["Apr","May","Jun"],'
+// 										+'"Quarter3":["Jul","Aug","Sep"],'
+// 										+'"Quarter4":["Oct","Nov","Dec"]'
+// 										+'}');
+//
+//
+//
+//
+//
+// 		var quartersNew = JSON.parse(
+// 				'{"0":[{'+
+// 					'"id": 1,'+
+// 					'"value": "Quarter1"'+
+// 				'}, {'+
+// 					'"id": 2,'+
+// 					'"value": "Quarter2"'+
+// 				'}, {'+
+// 					'"id": 3,'+
+// 					'"value": "Quarter3"'+
+// 				'}, {'+
+// 					'"id": 4,'+
+// 					'"value": "Quarter4"'+
+// 				'}]}'
+// 		);
+// 		var quarterMonthMap = JSON.parse(
+// 				'{'+
+// 				'"1":[{"id":1,"value":"Jan"},{"id":2,"value":"Feb"},{"id":3,"value":"Mar"}],'+
+// 				'"2":[{"id":4,"value":"Apr"},{"id":5,"value":"May"},{"id":6,"value":"Jun"}],'+
+// 				'"3":[{"id":7,"value":"Jul"},{"id":8,"value":"Aug"},{"id":9,"value":"Sep"}],'+
+// 				'"4":[{"id":10,"value":"Oct"},{"id":11,"value":"Nov"},{"id":12,"value":"Dec"}]'+
+// 			'}'
+// 		);
+//
+//
+// 		$scope.quarters = [];
+//
+// 		$scope.quarters=(quartersNew[0]);
+//
+// 		$scope.quarterMonths=function(){
+//
+// 			$scope.months=[];
+// 			$scope.timescale.months=undefined;
+// 			$scope.months=quarterMonthMap[$scope.timescale.quarters];
+// 	    }
+//
+// 		var url = configApiClient.baseUrl + 'config/states';
+// 	    HttpService.get(url).then(function(data){
+// 			 // on success
+// 	    	 $scope.states=data.states;
+// 	    	 //Using this array in renderMap function to zoom the map
+// 	    	 salesDataJoin = [];
+// 	    	 if($scope.states){
+// 	    		 $.each($scope.states, function () {
+// 	    			 salesDataJoin.push(this);
+// 	    		 });
+// 	    	 }
+// 		},function(data){
+// 			// on error
+// 		});
+//
+// 	    var url = configApiClient.baseUrl + 'config/sales/years';
+// 	    HttpService.get(url).then(function(data){
+// 			 // on success
+// 	    	$scope.sales_years=data.sales_years;
+// 		},function(data){
+// 			// on error
+// 		});
+//
+//
+// 	 $scope.cities;
+//
+// 	 /**
+// 	  * Retrieve cities for relevant states
+// 	  */
+// 	 $scope.selectCities=function(){
+// 		 $scope.region.cities=undefined;
+// 		 $scope.region.zip_codes=undefined;
+// 		 $scope.zips=[];
+//
+// 		 var url = configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states;
+// 	     HttpService.get(url).then(function(data){
+// 			 // on success
+// 	    	 $scope.cities=data[$scope.region.states];
+// 		 },function(data){
+// 			// on error
+// 		 });
+//     }
+//
+// 	 /**
+// 	  * Retrieve zipcodes for relevant cities
+// 	  */
+// 	 $scope.selectZip=function(){
+//
+// 		 $scope.region.zip_codes=undefined;
+// 		 var url = configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities;
+// 	     HttpService.get(url).then(function(data){
+// 			 // on success
+// 	    	 $scope.zips = data[$scope.region.cities];
+// 		 },function(data){
+// 			// on error
+// 		 });
+//     }
+//
+// 	 /**
+// 	  * Maximize the Washing Machines status grid
+// 	  */
+// 	 $scope.maximizeGrid=function(){
+// 			var gridNormal = $("#gridNormal1").clone();
+//
+// 			$("#gridMax").empty();
+// 			$("#gridMax").append(gridNormal);
+//
+// 			$("#gridMax #gridMaxImg").addClass("hidden");
+// 			$("#gridMax #gridCloseImg").removeClass("hidden");
+// 			$("#gridNormal1").removeClass("hidden");
+//
+// 			 $(".maxtbody").height(300);
+// 		$("#gridMax").removeClass("hidden");
+// 		}
+//
+// 		$("body").on("click","#gridCloseImg",function(){
+// 			$("#gridMax").empty();
+// 			$("#gridMax").addClass("hidden");
+//
+// 			  $("#gridNormal").height(355);
+// 	    });
+//
+// 	}]);
 
 /**=========================================================
  * Module: sidebar-menu.js
@@ -1427,7 +1427,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
 	$scope.clearfilter = function(){
 
-        $rootScope.search={};  
+        $rootScope.search={};
         $rootScope.filterIcons=[];
         $rootScope.barchartData = null;
         $rootScope.piechartData = null
@@ -1435,10 +1435,10 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         $rootScope.tryit();
      }
 
-	/** 
-	 * clear side bar product filter selections 
+	/**
+	 * clear side bar product filter selections
 	 */
-    $scope.clearfilter1 = function(){    	
+    $scope.clearfilter1 = function(){
 
     	 $scope.clearFilterIcons(1);
 		 var obj={};
@@ -1461,11 +1461,11 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
          $rootScope.tryit();
       }
 
-    /** 
+    /**
      * clear side bar demographics filter selections
      */
-    $scope.clearfilter2 = function(){  
-    	
+    $scope.clearfilter2 = function(){
+
     	$scope.clearFilterIcons(2);
     	var obj={};
     	obj.selectedMake=$rootScope.search.selectedMake;
@@ -1487,8 +1487,8 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         $rootScope.tryit();
      }
 
-    $scope.clearFilterIcons = function (filterType) {  
-    	
+    $scope.clearFilterIcons = function (filterType) {
+
     	var tempArr = [];
     	var isRemoved = false;
     	if(filterType == 1){
@@ -1525,7 +1525,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     	}
     }
 
-    /** 
+    /**
      * create side bar filter seclection array
      */
    $scope.createIconArray=function(){
@@ -1599,12 +1599,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     $scope.myDate = new Date();
 
       $scope.selectedSKU=function(){
-    	  
+
       }
 
     $rootScope.search={};
-    
-    /** 
+
+    /**
      * Retrieve model names for relavent make from API
      */
       $scope.selectedMake=function(){
@@ -1618,12 +1618,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 	  			// on error
 	  		});
       }
-      
+
       /**
        *  Retrieve SKU data for relavent make from API
        */
       $scope.selectedModel=function(){
-    	  
+
           $rootScope.search.selectedSKU="";
           	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
           	HttpService.get(url).then(function(data){
@@ -1631,11 +1631,11 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
         	  	$scope.SKUs=data[$rootScope.search.selectedModel];
 	  		},function(data){
 	  			// on error
-	  			
+
 	  		});
       }
 
-      /** 
+      /**
        * This is for side bar product filter
        */
          $scope.applyProductFilter=function(){
@@ -1662,8 +1662,8 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
         }
 
-         /** 
-          * This is for side bar demographics filter 
+         /**
+          * This is for side bar demographics filter
           */
          $scope.applyDemographicsFilter=function(){
         	 var obj={};
@@ -1694,10 +1694,10 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
     $rootScope.name="";
 
     $rootScope.test="gopal";
-    
+
    /**
     * Check item and children active state
-    */ 
+    */
     var isActive = function(item) {
 
       if(!item) return;
@@ -1715,17 +1715,17 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
     /**
      * Load menu from json file
-     */ 
+     */
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
              (isActive(item) ? ' active' : '') ;
     };
 
     $scope.loadSidebarMenu = function() {
-    	
+
     	var menuJson = 'server/sidebar-menu.json',
         menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
-      
+
     	HttpService.get(menuURL).then(function(data){
 			// on success
     		$rootScope.menuItems = data;
@@ -1740,7 +1740,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
     /**
      * Handle sidebar collapse items
-     */ 
+     */
     $scope.addCollapse = function($index, item) {
       collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
     };
@@ -1754,12 +1754,12 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 
       /**
        * collapsed side bar doesn't toggle drop down
-       */ 
+       */
       if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
 
       /**
        * make sure the item index exists
-       */ 
+       */
       if( angular.isDefined( collapseList[$index] ) ) {
         if ( ! $scope.lastEventFromChild ) {
           collapseList[$index] = !collapseList[$index];
@@ -1794,7 +1794,7 @@ angular.module('angle').controller('SidebarController', ['$rootScope', '$scope',
 	},function(data){
 		// on error
 	});
-  	
+
   	var url = configApiClient.baseUrl + 'demographics/family/age-ranges';
   	HttpService.get(url).then(function(data){
 		// on success
@@ -1843,8 +1843,8 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
 
    $interval(callMe,1000);
 
-   /** 
-    * Remove side bar filter 
+   /**
+    * Remove side bar filter
     */
    $scope.removeFilter=function(filter){
        var indexofvar= $rootScope.filterIcons.indexOf(filter);
@@ -1855,7 +1855,7 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgStartDate=undefined;
            $rootScope.search.mfgEndDate=undefined;
-           $rootScope.filterIcons=[];          
+           $rootScope.filterIcons=[];
            $rootScope.filterIcons.splice(indexofvar,1);
            angular.forEach($rootScope.filterIcons,function(obj ,key){
                if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
@@ -1929,11 +1929,11 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 			// on error
 			$rootScope.mapProgress = false;
 	       renderMap(divId, data);
-		});      
+		});
 
 	}
-	/** 
-	 * Maximize the sales volume distribution map 
+	/**
+	 * Maximize the sales volume distribution map
 	 */
 	$scope.maximizeMap=function(){
 
@@ -1959,8 +1959,8 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 
 }]);
 
-/** 
- * Generate sales volume distribution map 
+/**
+ * Generate sales volume distribution map
  */
 function renderMap(divId, salesData){
 	var seriesData = [];
@@ -2011,7 +2011,7 @@ function renderMap(divId, salesData){
 	        marker: {
 				  fillOpacity:0.0
 			},
-			showInLegend: false,      
+			showInLegend: false,
 			tooltip: {
 		        headerFormat: '',
 	            pointFormat: zipcode == true ?
@@ -2053,7 +2053,7 @@ function renderMap(divId, salesData){
 							drawPie(point, index++);
 							if(index==5) {index = 0} ;
 						});
-					}	
+					}
 				}
 			}
       },
@@ -2071,10 +2071,10 @@ function renderMap(divId, salesData){
 	        enabled: true,
 	        buttonOptions: {
                 verticalAlign: 'bottom',
-                //x : -5	
+                //x : -5
             }
 	    },
-	    
+
 	    plotOptions: {
 	        mapbubble:{
 	            minSize:0,
@@ -2088,11 +2088,11 @@ function renderMap(divId, salesData){
 
 }
 
-/** 
- * Remove pie charts from Sales volume Distribution Map 
+/**
+ * Remove pie charts from Sales volume Distribution Map
  */
 function removePie(point) {
-	
+
 	var ser = point.series;
 	var	trackball = point.pie0;
 	if (trackball) {
@@ -2117,8 +2117,8 @@ function removePie(point) {
 
 }
 
-/** 
- * Draw pie charts in Sales volume Distribution Map 
+/**
+ * Draw pie charts in Sales volume Distribution Map
  */
 function drawPie(point, index) {
 
@@ -2206,7 +2206,7 @@ function drawPie(point, index) {
 	}
 }
 
-/** 
+/**
  * Generate Insights pie chart in mkt_manager
  */
 function renderPieChart(divId, insightsData, chartTitle){
@@ -2290,7 +2290,7 @@ function renderPieChart(divId, insightsData, chartTitle){
         }]
     });
 }
-/** 
+/**
  * Generate Sales Volumes line chart in mkt_manager
  */
 function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTitle, yAxisTitle){
@@ -2334,8 +2334,8 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 	});
 }
 
-/** 
- * Create series data object to generate line chart in mkt_manager 
+/**
+ * Create series data object to generate line chart in mkt_manager
  */
 function createLineChartSeriesDataForMktManager(data){
 	var lineChartSeriesData = [];
@@ -2357,8 +2357,8 @@ function createLineChartSeriesDataForMktManager(data){
 		return lineChartSeriesData;
 }
 
-/** 
- * xAxix data type for line chart in mkt_manager 
+/**
+ * xAxix data type for line chart in mkt_manager
  */
 function getTimeScales(data){
 	var timeScales = [];
@@ -2370,11 +2370,11 @@ function getTimeScales(data){
 
 function createLineChartSeriesDataForEngManager(data){
 	var dataStr = JSON.stringify(data);
-	
+
 	dataStr = dataStr.replace(/"product":/g, '"name":');
 	dataStr = dataStr.replace(/"avgUsage":/g, '"data":');
-	data = JSON.parse(dataStr); 
-	
+	data = JSON.parse(dataStr);
+
 	return data;
 }
 
@@ -2389,9 +2389,9 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
     var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	var userid = loginCredentails.email;
 
-	/** 
+	/**
 	 * Twitter sentiments data for notification chart in mkt_manager.
-	 * Retrieve base and score value from Notification config API 
+	 * Retrieve base and score value from Notification config API
 	 */
 	$scope.getTwitterSentiments = function(){
 		$scope.isLoading = true;
@@ -2402,7 +2402,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 			// on success
       		$scope.positiveTwitterSentimentThreshold = parseInt(data[0].PositiveScore) + parseInt(data[0].PositiveBaseline);
 			$scope.negativeTwitterSentimentThreshold = parseInt(data[0].NegativeScore) + parseInt(data[0].NegativeBaseline);
-			
+
 			var url = configApiClient.baseUrl + 'notifications/twitter-notifications-sentiments';
 	      	HttpService.get(url).then(function(data){
 				// on success
@@ -2444,9 +2444,9 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
-	/** 
+	/**
 	 * Connected machine data for Notification chart in mkt_manager.
-	 * Retrieve negative and positive tolerance value from Notification config API 
+	 * Retrieve negative and positive tolerance value from Notification config API
 	 */
 	$scope.getSpikesInConnectedMachines = function() {
 
@@ -2458,7 +2458,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 			// on success
       		$scope.spikeByConnectedMachinesIncreaseTolerance = parseInt(data[0].PositiveTolerance);
 			$scope.spikeByConnectedMachinesDecreaseTolerance = parseInt(data[0].NegativeTolerance);
-			
+
 			var url = configApiClient.baseUrl + 'notifications/spike-in-connected-machines';
 	      	HttpService.get(url).then(function(data){
 				// on success
@@ -2508,7 +2508,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
-	/** 
+	/**
 	 * Specific error count difference between today and 4 weeks ago.
 	 * Get error type from Notification config API for Notification chart in eng_manager
 	 */
@@ -2524,7 +2524,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
       		$scope.spikeBySpecificErrorsTolerance = configNotification.spikeBySpecificErrorsTolerance;
 			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype1;
 			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype1;
-			
+
 			var url = configApiClient.baseUrl + 'notifications/spikes-by-specific-errors';
 	      	HttpService.get(url).then(function(data){
 				// on success
@@ -2574,8 +2574,8 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		});
 	};
 
-	/** 
-	 * Specific error count MakeModel Tolerance between today and 4 weeks ago for Notification chart in eng_manager.  
+	/**
+	 * Specific error count MakeModel Tolerance between today and 4 weeks ago for Notification chart in eng_manager.
 	 */
 	$scope.getSpikesInSpecificErrorsByMakeModel = function() {
 
@@ -2589,7 +2589,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
       		$scope.spikeBySpecificErrorByMakeModelTolerance = configNotification.spikeBySpecificErrorByMakeModelTolerance;
 			$scope.spikeErrorTypeIncrease = data[0].IncreaseErrortype2;
 			$scope.spikeErrorTypeDecrease = data[0].DecreaseErrortype2;
-			
+
 			var url = configApiClient.baseUrl + 'notifications/spikes-by-specific-errors-by-make-model';
 	      	HttpService.get(url).then(function(data){
 				// on success
@@ -2707,7 +2707,7 @@ function renderHorizontalBarChart(divId, notificationData){
     });
 }
 
-angular.module('angle').controller('myController', ['$scope', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService', 
+angular.module('angle').controller('myController', ['$scope', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService',
                                 function ($scope, $rootScope, $window, configApiClient, HttpService) {
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
@@ -2762,7 +2762,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			$scope.sensorsList=data;
 		},function(data){
 			// on error
-			
+
 		});
 
 		var url = configApiClient.baseUrl + 'sales/charts';
@@ -2771,10 +2771,10 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			$scope.salesList=data;
 		},function(data){
 			// on error
-			
+
 		});
-	  
-	  /** 
+
+	  /**
 	   * Retrieve sensor type and sensor key data.
 	   * Set yAxix type for sensor data line chart in eng_manager
 	   */
@@ -2789,7 +2789,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			}
 			else
 					$scope.sensortype="";
-			
+
 			if( $scope.sensortype=="Average Water Usage"){
 
 				$scope.Unit="Water usage in Gallons";
@@ -2849,13 +2849,13 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 	}
 
-	
-/** 
- * Retrieve data and generate Sold vs Connected pie chart in mkt_manager 
+
+/**
+ * Retrieve data and generate Sold vs Connected pie chart in mkt_manager
  */
 $scope.plotPieChart=function(divID){
 
-	removechart(divID);
+	$scope.removechart(divID);
 	$scope.loadingText = "Loading data...";
 	$rootScope.isApplyFiterButton = true;
 	$scope.isDisabled = true;
@@ -2872,9 +2872,9 @@ $scope.plotPieChart=function(divID){
 	    	$scope.data[0]=data.unitsSold;
 	    	$scope.data[1]=data.unitsConnected;
 	    	$scope.data[2]=data.unitsSold - data.unitsConnected;
-          
+
 	    	var seriesData = [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]];
-          	
+
 	    	createPieChart(divID, seriesData);
 		},function(data){
 			// on error
@@ -2886,7 +2886,7 @@ $scope.plotPieChart=function(divID){
 	}else{
 
 		if($rootScope.applyFilterBoolean){
-			
+
 			var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
 			var param = $scope.usagedata;
 	      	HttpService.post(url, param).then(function(data){
@@ -2894,7 +2894,7 @@ $scope.plotPieChart=function(divID){
 	      		$rootScope.isApplyFiterButton = false;
 				$scope.progress = false;
 				$scope.isDisabled = false;
-	
+
 	            var totalSold = 0;
 	            var totalconnected = 0;
 	            var seriesData = [];
@@ -2916,7 +2916,7 @@ $scope.plotPieChart=function(divID){
 			$scope.isDisabled = false;
 			$rootScope.isApplyFiterButton = false;
 			$scope.progress = false;
-			
+
 			var seriesData = [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]];
 			createPieChart(divID, seriesData);
 		}
@@ -2924,8 +2924,8 @@ $scope.plotPieChart=function(divID){
 
 	}
 
-/** 
- * Retrieve data and generate Top 3 selling models bar chart in mkt_manager 
+/**
+ * Retrieve data and generate Top 3 selling models bar chart in mkt_manager
  */
 	$scope.plotBarChart=function(divId){
 		removechart(divId);
@@ -2933,7 +2933,7 @@ $scope.plotPieChart=function(divID){
 		$rootScope.isApplyFiterButton = true;
 
 		$scope.progress = true;
-		
+
 		if($rootScope.barchartData==null){
 			var url = configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false';
 			var param = null;
@@ -2960,7 +2960,7 @@ $scope.plotPieChart=function(divID){
 		}else{
 			$rootScope.barDetails = $rootScope.barchartData;
 			if($rootScope.applyFilterBoolean){
-				
+
 				var url = configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true';
 				var param = $scope.usagedata;
 		      	HttpService.post(url, param).then(function(data){
@@ -3016,9 +3016,9 @@ $scope.plotPieChart=function(divID){
 
 		}
 	}
-	
-/** 
- * Retrieve data for Sales Volumes line chart in mkt_manager 
+
+/**
+ * Retrieve data for Sales Volumes line chart in mkt_manager
  */
 	$scope.plotChartFunction = function(divId){
 		removechart(divId);
@@ -3049,7 +3049,7 @@ $scope.plotPieChart=function(divID){
 			$rootScope.applyFilterBoolean=false;
 
 		} else {
-			
+
 			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false';
 			var param = null;
 	      	HttpService.post(url, param).then(function(data){
@@ -3069,11 +3069,11 @@ $scope.plotPieChart=function(divID){
 		}
 	}
 
-/** 
+/**
  * generate line charts in eng_manager
  */
 	$scope.plotEngManagerChartFunction = function(divId,key){
-		removechart(divId);
+		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
 		$scope.progress = true;
@@ -3101,7 +3101,7 @@ $scope.plotPieChart=function(divID){
 			$rootScope.applyFilterBoolean=false;
 
 		} else {
-			
+
 			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key;
 			var param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
 						  "timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
@@ -3127,8 +3127,8 @@ $scope.plotPieChart=function(divID){
 		}
 	}
 
-/** 
- * Maximize Charts in both managers 
+/**
+ * Maximize Charts in both managers
  */
 	$scope.maximize = function(){
 		var chartParent = $("#chartParent").clone();
@@ -3221,7 +3221,7 @@ $scope.plotPieChart=function(divID){
 			$scope.plotPieChart("piecontainer");
 		}else if($scope.selectedChart=='Line Chart'){
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);        	
+         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
 		}
     });
 
@@ -3262,7 +3262,7 @@ function createPieChart(divID, seriesData) {
 }
 
 function createBarChart(divID, seriesData) {
-	
+
 	chart = new Highcharts.Chart({
         chart: {
         	renderTo: divID,
