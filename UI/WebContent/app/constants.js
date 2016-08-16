@@ -20,7 +20,17 @@
 		    'gray':                   '#dde6e9',
 		    'gray-light':             '#e4eaec',
 		    'gray-lighter':           '#edf1f2'
-		  })
+		  }).constant('iot.config.buildVersion','0.1') // updated by Grunt
+
+			.constant('iot.config.Notification', {
+				positiveTwitterSentimentThreshold: 10,
+				positiveTwitterSentimentTolerance: 10,
+				negativeTwitterSentimentThreshold: 10,
+				negativeTwitterSentimentTolerance: 10,
+				spikeByConnectedMachinesTolerance: 80,
+				spikeBySpecificErrorsTolerance: 20,
+				spikeBySpecificErrorByMakeModelTolerance: 25
+			})
 	    .constant('APP_MEDIAQUERY', {
 		    'desktopLG':             1200,
 		    'desktop':                992,
