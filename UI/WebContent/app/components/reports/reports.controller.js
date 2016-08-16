@@ -60,13 +60,13 @@
 
              $state.go('app.engmanagerview');
              $('#dashboardNav').addClass('sidebarItemActive');
-             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+             $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
              $('#reportsNav').removeClass('sidebarItemActive');
              }else{
 
              $state.go('app.singleview');
              $('#dashboardNav').addClass('sidebarItemActive');
-             $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+             $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
              $('#reportsNav').removeClass('sidebarItemActive');
                   }
     }

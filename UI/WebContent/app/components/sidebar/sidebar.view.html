@@ -1,29 +1,29 @@
 
- <link href="app/css/sidebar.css" rel="stylesheet"/>
+ <link href="css/sidebar.css" rel="stylesheet"/>
     <div class="aside-inner" >
         <nav class="sidebar">
             <div class="nav">
                 <div id="dashboardNav" class="leftbar-icon sidebarItemActive" ng-controller="MyviewController">
                     <div class="sidebarIconContainer">
-                        <a href="" ng-click="getUrl()"><img class="iconpos" src="app/img/Dashboardassets/dashboard.png"></a>
+                        <a href="" ng-click="getUrl()"><img class="iconpos" src="img/Dashboardassets/dashboard.png"></a>
                     </div>
                     <a href="" ng-click="getUrl()"style="color: inherit; text-decoration: none;"><div class="menu-text">Dashboard</div></a>
 				</div>
                 <div  id="filterNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="app/img/Dashboardassets/machine.png">
+                        <img class="iconpos" src="img/Dashboardassets/machine.png">
                     </div>
                     <div class="menu-text" translate="{{'filter'}}"></div>
                 </div>
                 <div id="demographicsNav" class="leftbar-icon">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="app/img/Dashboardassets/demographics.png">
+                        <img class="iconpos" src="img/Dashboardassets/demographics.png">
                     </div>
                     <div class="menu-text" translate="{{'demographics'}}"></div>
                 </div>
                 <div  id="reportsNav" class="leftbar-icon">
 					<div class="sidebarIconContainer">
-						<img class="iconpos" src="app/img/Dashboardassets/reports.png">
+						<img class="iconpos" src="img/Dashboardassets/reports.png">
 					</div>
 					<div class="menu-text" translate="{{'reports'}}"></div>
 				</div>
@@ -143,13 +143,13 @@
 $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
     $('#filterPanel').show();
     $('#filterNav').addClass('sidebarItemActive');
-    $('#filterNav img').attr('src','app/img/Dashboardassets/machine_hover.png');
+    $('#filterNav img').attr('src','img/Dashboardassets/machine_hover.png');
     $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
     $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
     $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 
 });
 $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
@@ -158,13 +158,13 @@ $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
     }
     $('#filterPanel').hide();
     $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
     $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
     $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
     $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
     event.stopPropagation();
 });
 
@@ -172,13 +172,13 @@ $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
 $(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", function(event) {
     $('#demographicsFilterPanel').show();
     $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
     $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
     $('#demographicsNav').addClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics_hover.png');
+    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics_hover.png');
     $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 });
 
 $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
@@ -187,13 +187,13 @@ $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", funct
     }
     $('#demographicsFilterPanel').hide();
     $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
     $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
     $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
     $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
     event.stopPropagation();
 });
 
@@ -201,33 +201,33 @@ $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", funct
 $(document).on("mouseover", "#reportsNav, #reportsPanel", function(event) {
    $('#reportsPanel').show();
    $('#filterNav').removeClass('sidebarItemActive');
-   $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+   $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
    $('#reportsNav').addClass('sidebarItemActive');
-   $('#reportsNav img').attr('src','app/img/Dashboardassets/reports_hover.png');
+   $('#reportsNav img').attr('src','img/Dashboardassets/reports_hover.png');
    $('#dashboardNav').removeClass('sidebarItemActive');
-   $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+   $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
    $('#demographicsNav').removeClass('sidebarItemActive');
-   $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+   $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
 });
 $(document).on("mouseleave", "#reportsNav, #reportsPanel", function(event) {
    if($('.md-pane-open').is(":visible")){
        return;
    }
    $('#reportsPanel').hide();
-   $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+   $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
    $('#dashboardNav').removeClass('sidebarItemActive');
-   $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
+   $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
    event.stopPropagation();
 });
 $(dashboardNav).on("click", function(){
   $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
   $('#reportsNav').removeClass('sidebarItemActive');
 
   if(event){
   $("#dashboardNav").on("mouseleave", function(){
   $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
   $('#reportsNav').removeClass('sidebarItemActive');
 
 
@@ -235,7 +235,7 @@ $(dashboardNav).on("click", function(){
      if(event){
   $("#dashboardNav").on("mouseover", function(){
   $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
   $('#reportsNav').removeClass('sidebarItemActive');
 
 
@@ -244,7 +244,7 @@ $(dashboardNav).on("click", function(){
 });
 $(dashboardNav).on("mouseover", function(){
   $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
   $('#reportsNav').removeClass('sidebarItemActive');
 
 });
@@ -255,51 +255,51 @@ $(reportsNav).on("mouseleave", function(event){
     }
     $('#reportsPanel').hide();
     $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','app/img/Dashboardassets/machine.png');
+    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
     $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
     $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','app/img/Dashboardassets/demographics.png');
+    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
     $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
     event.stopPropagation();
 });
 
 $(subpanel).on("click", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard.png');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
     $('#reportsNav').addClass('sidebarItemActive');
     $('#filterNav').removeClass('sidebarItemActive');
     $('#demographicsNav').removeClass('sidebarItemActive');
       if(event){
     $("#dashboardNav").on("mouseover", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
     $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 
 });}
       if(event){
     $("#dashboardNav").on("mouseleave", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','app/img/Dashboardassets/dashboard_hover.png');
+    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
     $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 
 });}
       if(event){
     $("#filterNav").on("mouseleave", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
     $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 
 });}
       if(event){
     $("#demographicsNav").on("mouseleave", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
     $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','app/img/Dashboardassets/reports.png');
+    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
 
 });}
 
