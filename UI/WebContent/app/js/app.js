@@ -2938,7 +2938,7 @@ $scope.plotPieChart=function(divID){
  * Retrieve data and generate Top 3 selling models bar chart in mkt_manager
  */
 	$scope.plotBarChart=function(divId){
-		removechart(divId);
+		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$rootScope.isApplyFiterButton = true;
 
@@ -3031,7 +3031,7 @@ $scope.plotPieChart=function(divID){
  * Retrieve data for Sales Volumes line chart in mkt_manager
  */
 	$scope.plotChartFunction = function(divId){
-		removechart(divId);
+		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
 		$scope.progress = true;
