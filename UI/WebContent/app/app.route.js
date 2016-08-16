@@ -94,7 +94,8 @@
 		        url: '/twitterinsights',
 		        title: 'Twitter Insights View',
 		        controller: 'TwitterInsightsController',
-		        templateUrl: helper.basepath('twitterinsights.html'),
+		       // templateUrl: helper.basepath('twitterinsights.html'),
+		        templateUrl: 'app/components/twitterinsights/twitterinsights.view.html',
 		        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
 		    })
 		    .state('app.notificationconf', {
