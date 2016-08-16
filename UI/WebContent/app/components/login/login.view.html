@@ -16,31 +16,37 @@
   
  <div style="background:0A427D !important" class="jumbotron">
  <img src="app/img/Dashboardassets/logo.png" alt="App Logo" class="img-responsive btnPendingGoals"  style="padding-left: 20px;" />
-<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;">IoT for Electronics</strong>
+<strong style="font-size: 14px; font: Roboto Light; color: #FEFEFE; display:inline;" translate="{{'app_name'}}"></strong>
   
- 
+  <ul class="nav navbar-nav pull-right" style="">
+ <select name="" ng-model="language.selected" ng-change="changeLanguage()" style="margin-top: 18px" dropdown class="dropdown">
+				<option class="option-text-style" value="" disabled selected>Language</option>
+				<option class="option-text-style" ng-repeat="(key, value) in language.available"
+					value={{key}}>{{value}}</option>
+			</select>
+ </ul>
 </div>
     <div class="container">
-       <h2><img src="app/img/Dashboardassets/iconlock.png" class="lock"   /></span> Login</h2>
+       <h2 translate="{{'login'}}"><img src="app/img/Dashboardassets/iconlock.png" class="lock"   /></span></h2>
       <form class="login-form" ng-submit="postForm()" name="userForm" novalidate >
        
          
-        <label >Username</label>
+        <label translate="{{'username'}}"></label>
         
         <input type="email" id="inputUsername" class="form-control" name="email" placeholder="Email" required autofocus ng-model="inputData.username"pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" ng-minlength="5" required></br>
      
  
-     <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email Id.</p>
+     <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" translate="{{'email_not_valid_msg'}}"></p>
      
-        <label for=>Password</label>
+        <label for=>{{'password' | translate}}</label>
       
         <input type="password" id="inputPassword"  name="password" class="form-control" placeholder="Password" required ng-model="inputData.password">
-                                 <p ng-show="userForm.password.$touched && userForm.password.$invalid" class="help-block">The password is required.</p> 
+                                 <p ng-show="userForm.password.$touched && userForm.password.$invalid" class="help-block" translate="{{'password_required_msg'}}"></p> 
                               <br>
                
                               <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
-                              <a href="#" class="pull-left forgot-password" ><u>Forgot Password </u></a>
-     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$touched && userForm.email.$invalid) ||(userForm.password.$touched && userForm.password.$invalid) " >Login</button>
+                              <a href="#" class="pull-left forgot-password" translate="{{'forgot_password_msg'}}"><u></u></a>
+     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$touched && userForm.email.$invalid) ||(userForm.password.$touched && userForm.password.$invalid) " translate="{{'login'}}"></button>
       </form>
     </div> 
   </body>
