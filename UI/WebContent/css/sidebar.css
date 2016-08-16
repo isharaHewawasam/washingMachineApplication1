@@ -1,0 +1,201 @@
+   .leftbar-icon{
+
+        z-index: 899988;
+
+        height:71px;
+        border-bottom:1px solid #4E4E4E;
+        margin-top: 0px;
+        color: #979797;
+
+     }
+
+    .sidebarItemActive {
+         background-color: #4A88C9;
+        color: #fff;
+    }
+
+.sidebarItemActive::after {    display: block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    float: none;
+    z-index: auto;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    content: "";
+    cursor: default;
+    opacity: 1;
+    top: 5px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 18px solid rgba(0,0,0,0);
+    border-right: 26px solid rgb(250,250,250);
+    border-left: 0 solid;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    font: normal 100%/normal Arial, Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: 50% 50% 0;
+    transform-origin: 50% 50% 0;
+    position: relative;
+    float: right;
+    z-index: 999;
+    font-size: 30px;
+    margin-top: -54px;
+    margin-right: -13px;
+}
+    .md-datepicker-calendar-pane {
+        z-index: 1151;
+        width: 310px;
+    }
+
+    .element-margin{
+        margin-bottom: 0px;
+        padding: 10px;
+
+    }
+
+    .menu-text{
+        font-family: Roboto;light;
+        font-size:11px;
+        color: inherit;
+        text-align: center
+
+    }
+
+    .sidebarIconContainer {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .iconpos{
+        width: 32px;
+        height: 32px;
+    }
+    .fontSubText{
+         text-align: left;
+        font-family: Roboto;light;
+        font-size:14px;
+           margin-bottom: 0px;
+        padding: 10px;
+
+    }
+
+#filterPanel,#reportsPanel {
+    background: #000;
+    width: 231px;
+    height: auto;
+    position: relative;
+    z-index: 888;
+    overflow-x: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+
+}
+
+    #calenderPanel {
+    background: #000;
+    width: 231px;
+    height: auto;
+    position: relative;
+    z-index: 888;
+    overflow-x: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+
+}
+	#demographicsFilterPanel {
+    background: #000;
+    width: 231px;
+    height: auto;
+    position: relative;
+    z-index: 888;
+    overflow-x: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+
+}
+
+    .divSpacePad{
+
+        padding: 10px;
+    }
+    .divSpacePad1{
+
+        padding: 10px;
+    }
+     .datepickerdemo md-content {
+            padding-bottom: 200px;
+         }
+        .datepickerdemo .validation-messages {
+            font-size: 11px;
+            color: darkred;
+            margin: 10px 0 0 25px;
+         }
+
+    .searchbtn{
+     padding-bottom:8px ;
+        width:180px;
+        font-family: Roboto;light;
+        font-size:14px;
+        padding-top: 9px;
+       margin-left: 12px;
+    }
+
+
+    .clearfltrbtn{
+
+        width:auto;
+        font-family: Roboto;light;
+        font-size:12px;
+
+    }
+ #filterPanel{
+	margin-left:69px;
+	top: 135px;
+	background:#fff;
+	display:none;
+}
+ .divSpacePad{
+  width:100%;;
+  background:#e7eef6;
+
+}
+.form-control{
+	height:32px;
+}
+#demographicsFilterPanel{
+	margin-left:69px;
+	top: 215px;
+	background:#fff;
+	display:none;
+}
+#reportsPanel{
+	margin-left:69px;
+	 top: 295px;
+	 background:#fff;
+	 display:none;
+}
+#clickView{
+	margin-left:-5px;
+}
+.fontSubText{
+	width:100%;
+}
