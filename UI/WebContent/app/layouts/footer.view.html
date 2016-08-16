@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<link href="app/css/footer.css" rel="stylesheet" />
+
+<div id="footrallign">
+<span class="footertab">
+<button type="button" class="btn btn-link btn-sm tabbtn" data-toggle="modal" data-target="#aboutus-modal" translate="about_us_title"></button>
+<div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="aboutUsLabel">
+  <div class="modal-dialog modal-vertical-centered tab_modal" id="aboutus-modal" role="document" >
+    <div class="modal-content tab_modal_content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="aboutUsLabel" translate="about_us_title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>{{'about_us_content' | translate}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" translate="{{'close'}}"></button>
+
+      </div>
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal   -->
+</span>
+
+
+<span class="footertab">
+<button type="button" class="btn btn-link btn-sm tabbtn"  data-toggle="modal" data-target="#terms-modal" translate="terms_of_service_title"></button>
+<div class="modal fade" id="terms-modal" tabindex="-1" role="dialog" data-backdrop="false"aria-labelledby="termsLabel">
+  <div class="modal-dialog modal-vertical-centered tab_modal" id="terms-modal" role="document" >
+    <div class="modal-content tab_modal_content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="termsLabel" translate="terms_of_service_title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>{{'terms_of_service_content' | translate}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" translate="{{'close'}}"></button>
+          </div>
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+</span>
+
+<span  class="footertab">
+<button type="button" class="btn btn-link btn-sm tabbtn"  data-toggle="modal" data-target="#terms-modal" translate="privacy_policy_title"></button>
+<div class="modal fade" id="policy-modal" tabindex="-1" role="dialog" data-backdrop="false">
+<div class="vertical-alignment-helper">
+  <div class="modal-dialog modal-vertical-centered tab_modal" id="policy-modal" role="document" >
+    <div class="modal-content tab_modal_content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" translate="privacy_policy_title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>{{'privacy_policy_content | translate'}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" translate="{{'close'}}"></button>
+      
+      </div>
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+  </div>
+</div><!-- .modal -->
+
+</span>
+<span class="bottom_content" translate="{{'copyrights'}}"></span>
+</div>
+
+
+</html>
