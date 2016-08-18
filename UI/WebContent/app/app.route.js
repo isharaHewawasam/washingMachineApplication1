@@ -23,7 +23,8 @@
 		    .state('app', {
 		        url: '/app',
 		        abstract: true,
-		        templateUrl: helper.basepath('app.html'),
+		      //  templateUrl: helper.basepath('app.html'),
+		        templateUrl: 'app/components/config/app.html',
 		        controller: 'AppController',
 		        resolve: helper.resolveFor('modernizr', 'icons')
 		    })
