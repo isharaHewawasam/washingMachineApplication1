@@ -574,3 +574,19 @@ var reportType = function(view_name){
 };
 
 Filter.prototype.reportType = reportType;
+
+//
+var isReportyTypeSALES_BY_REGION_AND_PRODUCT = function(){
+  return this.report_type === 7;
+};
+
+
+Filter.prototype.isReportyTypeSALES_BY_REGION_AND_PRODUCT = isReportyTypeSALES_BY_REGION_AND_PRODUCT;
+
+
+//
+var isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT = function(){
+  return this.report_type === 8;
+};
+
+Filter.prototype.isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT = isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT;
