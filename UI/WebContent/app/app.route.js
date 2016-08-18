@@ -30,7 +30,8 @@
 
 		    .state('page', {
 		        url: '/page',
-		        templateUrl: 'app/views/page.html',
+		        //templateUrl: 'app/views/page.html',
+		        templateUrl: 'app/components/login/logout.view.html',
 		        resolve: helper.resolveFor('modernizr', 'icons'),
 		        controller: ["$rootScope", function($rootScope) {
 		            $rootScope.app.layout.isBoxed = false;
@@ -82,13 +83,15 @@
 		        url: '/myownview',
 		        title: 'My own view',
 				    controller: 'MyController',
-		        templateUrl: helper.basepath('myownview.html')
+		      //  templateUrl: helper.basepath('myownview.html')
+		        templateUrl: 'app/layouts/myownview.html',
 		    })
 		    .state('app.submenu', {
 		        url: '/submenu',
 		        title: 'Submenu',
 
-		        templateUrl: helper.basepath('submenu.html')
+		       // templateUrl: helper.basepath('submenu.html')
+		        templateUrl: 'app/layouts/submenu.html',
 		    })
 		    .state('app.twitterinsights', {
 		        url: '/twitterinsights',
