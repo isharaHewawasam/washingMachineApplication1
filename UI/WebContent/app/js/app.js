@@ -2354,7 +2354,9 @@ function createLineChartSeriesDataForMktManager(data){
 
 			var unitsSoldDataForItem = [];
 			for (var j=0; j<data.length; j++){
-				unitsSoldDataForItem.push(data[j].sales[i].unitsSold);
+				if (data[j].sales[i]) {
+					unitsSoldDataForItem.push(data[j].sales[i].unitsSold);
+				}
 			}
 				obj={
 		    			name:data[0].sales[i].item,
