@@ -453,9 +453,10 @@
 					<div class="maxtbody">
 						<div class="tableScroll">
 							<table class="table table-condensed" ng-if="griddata.length > 0">
-								<div ng-show="isDisabled||isError||isNoDataFound"
+								<div ng-show="isDisabled||isError"
 									class="text-center col-md-4 col-md-offset-4 maxgridnodata"
 									>{{msg}}</div>
+									<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in griddata">
 										<td class="text-center" >{{itm.make}}</td>
@@ -522,9 +523,10 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed" ng-if="griddata.length > 0">
-								<div ng-show="isLoadingFilters||isError||isNoDataFound"
+								<div ng-show="isLoadingFilters||isError"
 									class="text-center col-md-4 col-md-offset-4 maxgridnodata "
 									>{{msg}}</div>
+									<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in griddata">
 										<td class="text-center"">{{itm.make}}</td>

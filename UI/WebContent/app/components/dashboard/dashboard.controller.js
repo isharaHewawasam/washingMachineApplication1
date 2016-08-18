@@ -494,8 +494,9 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.isLoadingFilters = false;
              if(!data || data.data.length === 0){
-    
+            	 $scope.isNoDataFound = true;
              } else {
+            	 $scope.isNoDataFound = false;
                 $scope.griddata=data.data;
              }
         },function(data){
@@ -512,8 +513,9 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.isLoadingFilters = false;
             if(!data || data.length === 0){
-
+            	$scope.isNoDataFound = true;
             } else {
+            	$scope.isNoDataFound = false;
                 $scope.eng_griddata=data;
             }
         },function(data){
