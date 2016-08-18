@@ -82,7 +82,7 @@ function mix_res(sales_result, connected_buffer) {
     for (var each_conn_item in connected_buffer) {
       if ( are_same(sales_result[each_sales_item], connected_buffer[each_conn_item]) ) {
         //console.log("same");
-        sales_result[each_sales_item].unitsConnected  = connected_buffer[each_sales_item].unitsConnected;
+        sales_result[each_sales_item].unitsConnected  = connected_buffer[each_conn_item].unitsConnected;
       }
     }
   }
@@ -101,7 +101,7 @@ function are_same(item1, item2) {
     city_match = (item1.city === item2.city);  
   }
   
-  if ( (item1.state !== undefined) && (item2.state !== undefined) ) {
+  if ( (item1.zip_code !== undefined) && (item2.state !== undefined) ) {
     zip_match = (item1.zip_code === item2.zip_code);  
   }
   
@@ -129,6 +129,9 @@ function setRegionLocations(response, callback) {
 */
 
 function setRegionLocations(payload,response, callback) {
+for(var idx = 0; idx < 20; idx++) {
+    //console.log(JSON.stringify(response[idx]));
+  }
   
   geo_location.getAll(function(){
     for (var each_item in response) {

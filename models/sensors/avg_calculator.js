@@ -165,11 +165,19 @@ function sortResult(sort, data) {
 var addOrUpdateUsages = function(params, new_usage) {
   //console.log("Add usage " + JSON.stringify(params.buffer));
   var xxx_007 = params.xxx_007 !== undefined ? true : false;
+  var all_match = false;
   
-  if(usageExists(params.payload, params.buffer, new_usage, xxx_007)) {
+  if(usageExists(params.payload, params.buffer, new_usage, xxx_007, params.filter)) {
     //console.log("Existing : " + JSON.stringify(new_usage));
     for(var each_usage in params.buffer) {
-      if( (params.buffer[each_usage].make == new_usage.make) && (params.buffer[each_usage].model == new_usage.model) ) {
+      if (params.filter.isReportyTypeSALES_BY_REGION_AND_PRODUCT() ||
+        params.filter.isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT()
+        ){
+          all_match = (params.buffer[each_usage].state == new_usage.state) && (params.buffer[each_usage].city == new_usage.city);
+        } else {
+          all_match = (params.buffer[each_usage].make == new_usage.make) && (params.buffer[each_usage].model == new_usage.model);
+        }
+      if( all_match ) {
         if (params.buffer[each_usage].hasOwnProperty(params.statsKeyName)) {
           switch(params.stats) {
             case "sum":
@@ -197,12 +205,23 @@ var addOrUpdateUsages = function(params, new_usage) {
 };
 
 //Rem : xxx_007
-var usageExists = function(payload, usages, usage_to_find, xxx_007) { 
+var usageExists = function(payload, usages, usage_to_find, xxx_007, filter) { 
   //if (filter.isFilterCategoryNone()) return true;
   //console.log("avg_calc.usageExists : " + JSON.stringify(usage_to_find));
   for(var each_usage in usages) {    
     //console.log("1:" + JSON.stringify(usages[each_usage]));
     //console.log("2:" + JSON.stringify(usage_to_find));
+  var isReportTypeSalesMap = filter.isReportyTypeSALES_BY_REGION_AND_PRODUCT() || 
+                               filter.isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT();
+    if (isReportTypeSalesMap) {
+      var isRegionMatching = usages[each_usage].state == usage_to_find.state &&
+                             usages[each_usage].city == usage_to_find.city;
+      if (isRegionMatching) {
+        return true;
+      } else {
+        continue;
+      }
+    }
     
     if(!do_make_and_model_match(usages[each_usage], usage_to_find)) continue; 
     
@@ -281,10 +300,15 @@ var fillRecord = function(result, params) {
   record.model = result.key[params.key_maps.key.MODEL]; 
   record.sku = result.key[params.key_maps.key.SKU];
 
-  if( (params.filter.isFilterCategoryNone()) || 
-      (params.filter.isFilterCategoryByRegion()) ||
-      (params.filter.isFilterCategoryMixed())
-    ) {
+  var isReportTypeSalesMap = params.filter.isReportyTypeSALES_BY_REGION_AND_PRODUCT() ||
+                             params.filter.isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT();
+ 
+  
+  if (params.filter.isFilterCategoryNone() || 
+      params.filter.isFilterCategoryByRegion() ||
+      params.filter.isFilterCategoryMixed() ||
+      isReportTypeSalesMap ) 
+      {
       record.state = result.key[params.key_maps.key.STATE];
       record.city = result.key[params.key_maps.key.CITY];
       record.zip_code = result.key[params.key_maps.key.ZIP_CODE]; 

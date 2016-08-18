@@ -30,12 +30,15 @@ exports.getData = function(payload, callback) {
                };
   
   avg.getSum(params, function(err, result) {
-    
-  
     var response = {};
+    //console.log(JSON.stringify(result));
     response.description = "Sales Volume for " + Filter.filterDescription();
-    response.data = processResult(result.sort(sortResponse("time_scale")));
-    sortResponsefrommake(response);
+    if (result.length === 0) { //means did not got any data for the filter
+      response.data = [];
+    } else { //got data for the filter 
+      response.data = processResult(result.sort(sortResponse("time_scale")));
+      sortResponsefrommake(response);
+    }
     callback(err, response);
   });      
 };
