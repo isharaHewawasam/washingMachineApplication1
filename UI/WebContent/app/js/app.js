@@ -2952,6 +2952,7 @@ $scope.plotPieChart=function(divID){
 	      		$scope.progress = false;
 				$rootScope.isApplyFiterButton = false;
 		    	$rootScope.barchartData=data;
+		    	var barChartDes = $rootScope.barchartData.description.substring(23,27);
 	    		var seriesData = [{
 		            name: $rootScope.barchartData.sales[0].item,
 		            data: [$rootScope.barchartData.sales[0].unitsSold]
@@ -2962,7 +2963,7 @@ $scope.plotPieChart=function(divID){
 		            name: $rootScope.barchartData.sales[2].item,
 		            data: [$rootScope.barchartData.sales[2].unitsSold]
 		        }];
-	    		createBarChart(divId, seriesData);
+	    		createBarChart(divId, seriesData, barChartDes);
 			},function(data){
 				// on error
 				 $rootScope.isApplyFiterButton = false;
@@ -2985,7 +2986,7 @@ $scope.plotPieChart=function(divID){
 					else{
 						$rootScope.barchartData=$rootScope.barDetails;
 					}
-
+					var barChartDes = $rootScope.barchartData.description.substring(23,27);
 			    	var seriesData = [{
 			            name: $rootScope.barchartData.sales[0].item,
 			            data: [$rootScope.barchartData.sales[0].unitsSold]
@@ -2996,7 +2997,7 @@ $scope.plotPieChart=function(divID){
 			            name: $rootScope.barchartData.sales[2].item,
 			            data: [$rootScope.barchartData.sales[2].unitsSold]
 			        }];
-			    	createBarChart(divId, seriesData);
+			    	createBarChart(divId, seriesData, barChartDes);
 				},function(data){
 					// on error
 					$scope.progress = false;
@@ -3008,6 +3009,7 @@ $scope.plotPieChart=function(divID){
 				$scope.progress = false;
 
 				$rootScope.isApplyFiterButton = false;
+				var barChartDes = $rootScope.barchartData.description.substring(23,27);
 				var seriesData = [{
 		            name: $rootScope.barchartData.sales[0].item,
 		            data: [$rootScope.barchartData.sales[0].unitsSold]
@@ -3021,7 +3023,7 @@ $scope.plotPieChart=function(divID){
 		            data: [$rootScope.barchartData.sales[2].unitsSold]
 
 		        }];
-				createBarChart(divId, seriesData);
+				createBarChart(divId, seriesData, barChartDes);
 			}
 
 		}
@@ -3271,7 +3273,7 @@ function createPieChart(divID, seriesData) {
     });
 }
 
-function createBarChart(divID, seriesData) {
+function createBarChart(divID, seriesData, barChartDes) {
 
 	chart = new Highcharts.Chart({
         chart: {
@@ -3286,7 +3288,7 @@ function createBarChart(divID, seriesData) {
         	},
         xAxis: {
             categories: [
-                '2016'
+               barChartDes
             ],
             crosshair: true
         },
