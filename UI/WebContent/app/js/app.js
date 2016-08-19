@@ -3219,7 +3219,7 @@ $scope.plotPieChart=function(divID){
 
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotBarChart("hiddenDiv #bar");
+         	$scope.plotBarChart("bar");
          }
 
 	};
