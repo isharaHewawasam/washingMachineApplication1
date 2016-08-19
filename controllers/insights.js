@@ -21,7 +21,7 @@ module.exports.getAuthentication = function(req, res, next) {
 					helper.sendResponse(res, err, array);
 				}
 				else if(username=="eng_manager@bluemix.com"){
-					var array={"name":"John Smith","username":username,"role":"eng_manager","rolename":"Engineer Manager","response":"Success"}
+					var array={"name":"John Smith","username":username,"role":"eng_manager","rolename":"Engineering Manager","response":"Success"}
 					helper.sendResponse(res, err, array);
 				}
 				

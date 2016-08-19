@@ -51,7 +51,7 @@ if((window.location.hash=="#/app/twitterinsights"&&rolename=="Marketing Manager"
 $rootScope.isApplyFiterButton = true;
 $state.go('app.singleview');
 $scope.notificationAlertFlag = false;
-}else if((window.location.hash=="#/app/notificationconf"&&rolename=="Engineer Manager")||(window.location.hash=="#/app/reports"&&rolename=="Engineer Manager")){
+}else if((window.location.hash=="#/app/notificationconf"&&rolename=="Engineering Manager")||(window.location.hash=="#/app/reports"&&rolename=="Engineering Manager")){
 $rootScope.isApplyFiterButton = true;
 $state.go('app.engmanagerview');
 $scope.notificationAlertFlag = false;
