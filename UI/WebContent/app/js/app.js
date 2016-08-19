@@ -3087,6 +3087,9 @@ $scope.plotPieChart=function(divID){
  * generate line charts in eng_manager
  */
 	$scope.plotEngManagerChartFunction = function(divId,key){
+		
+		console.log('in plotEngManagerChartFunction');
+		
 		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
@@ -3095,7 +3098,8 @@ $scope.plotPieChart=function(divID){
 		var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		var obj={};
 
-		if($rootScope.applyFilterBoolean){
+/*		if($rootScope.applyFilterBoolean){
+			console.log('in if');
 			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true';
 			var param = $scope.usagedata;
 	      	HttpService.post(url, param).then(function(data){
@@ -3114,12 +3118,17 @@ $scope.plotPieChart=function(divID){
 			});
 			$rootScope.applyFilterBoolean=false;
 
-		} else {
-
+		} else {*/
+			var param = $scope.usagedata;
 			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key;
-			var param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
-						  "timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
-						 "relative": {"unit": "d","value": 7}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+			var param;
+			if ($scope.usagedata) {
+				param = $scope.usagedata;
+			} else {
+				param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
+						"timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
+						"relative": {"unit": "d","value": 7}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+			}
 			HttpService.post(url, param).then(function(data){
 				// on success
 	      		$scope.isDisabled = false;
@@ -3138,7 +3147,7 @@ $scope.plotPieChart=function(divID){
 		    	$scope.isDisabled = false;
 		    	$scope.progress = false;
 			});
-		}
+//		}
 	}
 
 /**
