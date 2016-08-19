@@ -2940,6 +2940,7 @@ $scope.plotPieChart=function(divID){
  * Retrieve data and generate Top 3 selling models bar chart in mkt_manager
  */
 	$scope.plotBarChart=function(divId){
+		console.log('in plotBarChart');
 		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$rootScope.isApplyFiterButton = true;
@@ -2947,6 +2948,7 @@ $scope.plotPieChart=function(divID){
 		$scope.progress = true;
 
 		if($rootScope.barchartData==null){
+			console.log('in top3SellingModels group false');
 			var url = configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false';
 			var param = null;
 	      	HttpService.post(url, param).then(function(data){
@@ -2971,9 +2973,10 @@ $scope.plotPieChart=function(divID){
 				 $rootScope.isApplyFiterButton = false;
 			});
 		}else{
+			console.log('in top3SellingModels group true');
 			$rootScope.barDetails = $rootScope.barchartData;
 			if($rootScope.applyFilterBoolean){
-
+				console.log('top3SellingModels on apply filter click');
 				var url = configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true';
 				var param = $scope.usagedata;
 		      	HttpService.post(url, param).then(function(data){
@@ -2982,12 +2985,14 @@ $scope.plotPieChart=function(divID){
 					$rootScope.isApplyFiterButton = false;
 					// To prevent the top 3 selling models chart from updating according to the side-bar product filter
 					//Made this change because we cannot plot the chart if the user select Make and Model
-					if(($rootScope.search.selectedMake) == undefined ){
+//					if(($rootScope.search.selectedMake) == undefined ){
+						console.log('in if selectedMake is undefined');
 						$rootScope.barchartData=data;
-					}
-					else{
+//					}
+					/*else{
+						console.log('in else selectedMake is undefined');
 						$rootScope.barchartData=$rootScope.barDetails;
-					}
+					}*/
 					var barChartDes = $rootScope.barchartData.description.substring(23,27);
 			    	var seriesData = [{
 			            name: $rootScope.barchartData.sales[0].item,
@@ -3008,6 +3013,7 @@ $scope.plotPieChart=function(divID){
 				$rootScope.applyFilterBoolean=false;
 			}
 			else{
+				console.log('top3SellingModels on not apply filter click');
 				$scope.progress = false;
 
 				$rootScope.isApplyFiterButton = false;
@@ -3087,8 +3093,6 @@ $scope.plotPieChart=function(divID){
  * generate line charts in eng_manager
  */
 	$scope.plotEngManagerChartFunction = function(divId,key){
-		
-		console.log('in plotEngManagerChartFunction');
 		
 		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
