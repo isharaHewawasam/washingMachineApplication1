@@ -2907,15 +2907,17 @@ $scope.plotPieChart=function(divID){
 				$scope.progress = false;
 				$scope.isDisabled = false;
 
-	            var totalSold = 0;
-	            var totalconnected = 0;
-	            var seriesData = [];
-	            for(var i=0;i<data.length;i++){
-	              totalSold +=data[i].unitsSold;
-	              totalconnected += data[i].unitsConnected ;
-	            }
-	            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
-	            createPieChart(divID, seriesData);
+				var seriesData = [];
+				if (data && data.length > 0) {
+		            var totalSold = 0;
+		            var totalconnected = 0;		            
+		            for(var i=0;i<data.length;i++){
+		              totalSold +=data[i].unitsSold;
+		              totalconnected += data[i].unitsConnected ;
+		            }
+		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
+				} 
+				createPieChart(divID, seriesData);
 			},function(data){
 				// on error
 				$rootScope.isApplyFiterButton = false;
@@ -2957,7 +2959,9 @@ $scope.plotPieChart=function(divID){
 				$rootScope.isApplyFiterButton = false;
 		    	$rootScope.barchartData=data;
 		    	var barChartDes = $rootScope.barchartData.description.substring(23,27);
-	    		var seriesData = [{
+		    	var seriesData = [];
+				if ($rootScope.barchartData.sales.length > 0) {
+					seriesData = [{
 		            name: $rootScope.barchartData.sales[0].item,
 		            data: [$rootScope.barchartData.sales[0].unitsSold]
 		        }, {
@@ -2967,6 +2971,7 @@ $scope.plotPieChart=function(divID){
 		            name: $rootScope.barchartData.sales[2].item,
 		            data: [$rootScope.barchartData.sales[2].unitsSold]
 		        }];
+				}
 	    		createBarChart(divId, seriesData, barChartDes);
 			},function(data){
 				// on error
@@ -2994,16 +2999,20 @@ $scope.plotPieChart=function(divID){
 						$rootScope.barchartData=$rootScope.barDetails;
 					}*/
 					var barChartDes = $rootScope.barchartData.description.substring(23,27);
-			    	var seriesData = [{
-			            name: $rootScope.barchartData.sales[0].item,
-			            data: [$rootScope.barchartData.sales[0].unitsSold]
-			        }, {
-			            name: $rootScope.barchartData.sales[1].item,
-			            data: [$rootScope.barchartData.sales[1].unitsSold]
-			        }, {
-			            name: $rootScope.barchartData.sales[2].item,
-			            data: [$rootScope.barchartData.sales[2].unitsSold]
-			        }];
+					
+					var seriesData = [];
+					if ($rootScope.barchartData.sales.length > 0) {
+				    	seriesData = [{
+				            name: $rootScope.barchartData.sales[0].item,
+				            data: [$rootScope.barchartData.sales[0].unitsSold]
+				        }, {
+				            name: $rootScope.barchartData.sales[1].item,
+				            data: [$rootScope.barchartData.sales[1].unitsSold]
+				        }, {
+				            name: $rootScope.barchartData.sales[2].item,
+				            data: [$rootScope.barchartData.sales[2].unitsSold]
+				        }];
+					}
 			    	createBarChart(divId, seriesData, barChartDes);
 				},function(data){
 					// on error
@@ -3055,7 +3064,10 @@ $scope.plotPieChart=function(divID){
 				// on success
 	      		$scope.isDisabled = false;
 				$rootScope.isApplyFiterButton = false;
-				var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+				var lineChartSeriesData = [];
+				if (data.data.length > 0) {
+					lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+				}
 				var timeScales = getTimeScales(data.data);
 				$scope.progress = false;
 		    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
@@ -3076,7 +3088,10 @@ $scope.plotPieChart=function(divID){
 				// on success
 	      		$scope.isDisabled = false;
 				$rootScope.isApplyFiterButton = false;
-				var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+				var lineChartSeriesData = [];
+				if (data.data.length > 0) {
+					lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+				}
 				var timeScales = getTimeScales(data.data);
 				$scope.progress = false;
 		    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
