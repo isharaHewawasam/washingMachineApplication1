@@ -34,7 +34,8 @@ function getStats(params, callback) {
 	    if(err) {
         
 	    	callback(err, null);
-	    } else {  
+	    } else {
+        
         if (params.filter.groupLevel() == 0) {
           callback(err, result);
           return;
@@ -54,7 +55,7 @@ function getStats(params, callback) {
           }   
         }      
         
-        
+        //console.log("1231321323");
         callback(err, params.buffer);
 	    }
 	  });
@@ -396,13 +397,14 @@ var fillRecord = function(result, params) {
 
 var doesRecordFallsInFilter = function(params, keys) {
   //filter.setPayload(payload);
-  
+  //console.log("Inside doesRecordFallsInFilter");
   
   if(params.filter.isFilterCategoryNone()) {
     return true;
   }
   
-  if ( params.filter.isFilterByRelativeTimescale() ) {
+  if (params.filter.isFilterCategoryByRelativeTimescale()
+      && params.filter.isFilterByRelativeTimescale() ) {
     //console.log("filter by relative");
     //no need to check/validate here since startkey and endkey for views
     //are used

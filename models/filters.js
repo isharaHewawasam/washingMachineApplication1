@@ -47,9 +47,10 @@ var REPORT_TYPE = {
   "USER_AGE": 13,
   "USER_FAMILY_MEMBERS_COUNT": 14,
   "USER_INCOME": 15,
-  "RELATIVE_TIME_SCALE": 16
+  "SENSOR_LINE_CHART": 16
 };
 
+//"RELATIVE_TIME_SCALE": 16
 module.exports.REPORT_TYPE = REPORT_TYPE;
 
 var Filter = function Filter(payload, view_name){
@@ -58,6 +59,7 @@ var Filter = function Filter(payload, view_name){
   this.filter_category = FILTER_CATEGORY.NONE;
   this.filter_type = FILTER.NONE;
   this.report_type = view_name;    
+  this.isRelativeFilterSelected_ = false;
 
   if((payload === null) || (payload === undefined)) return;  
   if((payload.region === undefined) && (payload.timescale === undefined)) return;
@@ -69,6 +71,7 @@ var Filter = function Filter(payload, view_name){
     }
     
     if ((payload.productAttrs.models) && (payload.productAttrs.models.length)) {
+      //console.log("bvbvbvbvbvbc");
        this.filter_type = FILTER.BY_MODEL;  
     }
     
@@ -113,7 +116,9 @@ var Filter = function Filter(payload, view_name){
     }
     
     if ((payload.timescale.relative) && (payload.timescale.relative.unit == "d")) {
-       this.filter_type = FILTER.BY_LAST_TIME_SCALE; 
+      //console.log("Filter type = relative time scale");
+       //this.filter_type = FILTER.BY_LAST_TIME_SCALE; 
+       this.isRelativeFilterSelected_ = true;
        this.relative_unit = payload.timescale.relative.unit;
        this.relative_value = payload.timescale.relative.value;
     }
@@ -150,7 +155,9 @@ var Filter = function Filter(payload, view_name){
   
   //Mixed
   //console.log("xxx " + this.filter_type);
-  this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
+  //if (this.filter_type != FILTER.BY_LAST_TIME_SCALE) {
+    this.filter_type = isFilterCategoryMixed_(payload) ? FILTER.MIXED : this.filter_type;
+  //}
   //If no filter is applied set to by state
   
   //console.log("Ffdsgjggghj " + this.filter_type);
@@ -175,6 +182,7 @@ var Filter = function Filter(payload, view_name){
       this.filter_category = FILTER_CATEGORY.BY_YEAR;
       break;
     case FILTER.BY_LAST_TIME_SCALE:
+       //console.log("filter category = relative time scale");
       this.filter_category = FILTER_CATEGORY.BY_LAST_TIME_SCALE;
       break;  
     case FILTER.BY_USER_INCOME:
@@ -183,6 +191,7 @@ var Filter = function Filter(payload, view_name){
       this.filter_category = FILTER_CATEGORY.BY_FAMILY;
       break;  
     case FILTER.MIXED:
+     console.log("filter category = mixed");
       this.filter_category = FILTER_CATEGORY.MIXED;
       break;
     default:
@@ -255,15 +264,24 @@ var isFilterCategoryMixed_ = function(payload) {
   }
   //console.log("2 " + filtersCount);
   // year
-  if (payload.timescale) {
+  //commented on 20/08/2016 11:57
+  /*if (payload.timescale) {
     if( (payload.timescale.years.length > 0) ||
         (payload.timescale.quarters.length > 0) ||   
         (payload.timescale.months.length > 0) ||
-        (payload.timescale.relative) ) {
+        (payload.timescale.relative && payload.timescale.relative.unit == "d") ) {
+          console.log("hi****************");
+        filtersCount++;  
+    }        
+  }*/
+  
+  if (payload.timescale) {
+    if( (payload.timescale.years.length > 0) ||
+        (payload.timescale.quarters.length > 0) ||   
+        (payload.timescale.months.length > 0) ){
         filtersCount++;  
     }        
   }
-  
   //console.log("3 " + filtersCount);
   if ( (payload.age && payload.age.length > 0) ||
        (payload.family_members_count && payload.family_members_count.length > 0) ||
@@ -307,6 +325,28 @@ Filter.prototype.filterDescription = function() {
 
 Filter.prototype.groupLevel = function(){
   if(this.filter_category === FILTER_CATEGORY.MIXED) return 15;
+  
+  if (this.report_type == REPORT_TYPE.SENSOR_LINE_CHART) {
+      console.log("Group level : REPORT_TYPE.SENSOR_LINE_CHART");
+      console.log("Filter type : " + this.filter_type);
+      if ( this.isFilterByMake() ) return 2; 
+      if ( this.isFilterByModel() ) return 3;
+      if ( this.isFilterBySKU() ) return 4;
+      
+      if ( this.isFilterByState() ) return 5;  
+      if ( this.isFilterByCity() ) return 6;
+      if ( this.isFilterByZipCode() ) return 7; 
+      
+      if ( this.isFilterByUserAge() ) return 8;  
+      if ( this.isFilterByUserFamilyMembersCount() ) return 9;
+      if ( this.isFilterByUserIncome() ) return 10; 
+      
+      //console.log("dfsfsfsf");
+      return 3;  
+  }
+  //} else {
+    if(this.filter_category === FILTER_CATEGORY.MIXED) return 15;
+  //}
      
   if (this.isFilterByNone()) {
     switch(this.report_type) {
@@ -333,7 +373,8 @@ Filter.prototype.groupLevel = function(){
       case REPORT_TYPE.CONNECTED_BY_STATE:
       case REPORT_TYPE.INSIGHTS:
         return 1;        
-      case REPORT_TYPE.RELATIVE_TIME_SCALE:
+      case REPORT_TYPE.SENSOR_LINE_CHART:
+        console.log("SENSOR_LINE_CHART");
         return 3;   
       default:
         return -1;      
@@ -407,10 +448,23 @@ Filter.prototype.groupLevel = function(){
       
       if ( this.isFilterByMfgDate() ) return 13;
       break;         
-    case  REPORT_TYPE.RELATIVE_TIME_SCALE:
+    case  REPORT_TYPE.SENSOR_LINE_CHART:
+      console.log("Group level : REPORT_TYPE.SENSOR_LINE_CHART");
+      if ( this.isFilterByMake() ) return 2; 
+      if ( this.isFilterByModel() ) return 3;
+      if ( this.isFilterBySKU() ) return 4;
+      
+      if ( this.isFilterByState() ) return 4;  
+      if ( this.isFilterByCity() ) return 5;
+      if ( this.isFilterByZipCode() ) return 6; 
+      
+      if ( this.isFilterByUserAge() ) return 7;  
+      if ( this.isFilterByUserFamilyMembersCount() ) return 8;
+      if ( this.isFilterByUserIncome() ) return 9; 
       return 3;
       break;     
     default:  
+     console.log("default")
       if ( this.isFilterByMake() ) return 1; 
       if ( this.isFilterByModel() ) return 2;
       if ( this.isFilterBySKU() ) return 3;
@@ -564,7 +618,8 @@ var isFilterByUserAge = function(){
 Filter.prototype.isFilterByUserAge = isFilterByUserAge;
 
 var isFilterByRelativeTimescale = function(){
-  return this.filter_type === FILTER.BY_LAST_TIME_SCALE;
+  //return this.filter_type === FILTER.BY_LAST_TIME_SCALE;
+  return this.isRelativeFilterSelected_;
 };
 
 Filter.prototype.isFilterByRelativeTimescale = isFilterByRelativeTimescale;
@@ -580,9 +635,7 @@ var isReportyTypeSALES_BY_REGION_AND_PRODUCT = function(){
   return this.report_type === 7;
 };
 
-
 Filter.prototype.isReportyTypeSALES_BY_REGION_AND_PRODUCT = isReportyTypeSALES_BY_REGION_AND_PRODUCT;
-
 
 //
 var isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT = function(){
@@ -590,3 +643,10 @@ var isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT = function(){
 };
 
 Filter.prototype.isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT = isReportyTypeCONNECTED_BY_REGION_AND_PRODUCT;
+
+//
+var isRelativeFilterSelected = function(){
+  return this.isRelativeFilterSelected_;
+};
+
+Filter.prototype.isRelativeFilterSelected = isRelativeFilterSelected;

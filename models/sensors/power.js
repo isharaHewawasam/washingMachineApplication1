@@ -2,23 +2,26 @@
 var avg = require('./avg_calculator');
 var relative_timescale_utility = require('./utility/relative_timescale');
 
-exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, callback) {
+exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, stats_key_name, callback) {
   var SENSOR_NAME = "Power";
   var FilterModule = require("../filters");
   var KeyMap = require("../view_keys_mapping");
-  
-  var Filter = new FilterModule(payload, 1);
   var key_map = new KeyMap();
   
-  if (Filter.isFilterCategoryByYear()) {
-    key_map.setReportType2SensorByYear();
-  } else if (Filter.isFilterCategoryByFamily()) {
-    key_map.setReportType2SensorByFamily();
-  } else if (Filter.isFilterByRelativeTimescale()) {
-    Filter.reportType(16);
-    key_map.setReportType2RelativeTimescale();  
+  if (group_by_timescale) {
+    var Filter = new FilterModule(payload, 16);
+  
+    key_map.setReportType2RelativeTimescale(); 
   } else {
-    key_map.setReportType2Sensor();
+    var Filter = new FilterModule(payload, 1);
+      
+    if (Filter.isFilterCategoryByYear()) {
+      key_map.setReportType2SensorByYear();
+    } else if (Filter.isFilterCategoryByFamily()) {
+      key_map.setReportType2SensorByFamily()
+    } else {
+     key_map.setReportType2Sensor();
+    }
   }
   
   var params = { 
@@ -38,13 +41,13 @@ exports.getAverageUsage = function(payload, averagesBuffer, stats_key_name, call
                   "key_maps": key_map
                };
   
-  if (Filter.isFilterByRelativeTimescale()) {
+  if (group_by_timescale) {
     relative_timescale_utility.setStartEndKeysFromRelativeTimeScale(payload.timescale.relative, params);
     params.statsKeyNameX = "Date";
   }
   
   avg.getAverage(params, function(err, result) {
-    if (Filter.isFilterByRelativeTimescale()) {
+    if (group_by_timescale) {
       var final_result = relative_timescale_utility.processResultForRelativeTimeScale(payload.timescale.relative, result);
       callback(err, final_result);
     } else {

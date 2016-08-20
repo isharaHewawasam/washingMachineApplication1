@@ -9,7 +9,6 @@ var avgKeys = {
     "temperature": "avg-temperature",
     "detergent": "avg-detergent-usage",
     "humidity": "avg-humidity",
-    "weight": "avg-weight",
     "load": "avg-load"
 };
 

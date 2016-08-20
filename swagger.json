@@ -73,7 +73,7 @@
             "type": "string"
           },
           {
-            "name": "group",
+            "name": "group_by_timescale",
             "in": "query",
             "description": "Whether data will be groped by States, Cities etc or not",
             "required": true,
@@ -1130,7 +1130,14 @@
             "description": "Washing Machine, Date and Region information",
             "required": false,
             "type": "string"
-          }              
+          },
+          {
+            "name": "group_by_timescale",
+            "in": "query",
+            "description": "Group by days, months or year",
+            "required": false,
+            "type": "boolean"
+          }                  
         ],      
         "responses": {
           "default": {

@@ -1,6 +1,6 @@
 var payload = {
   "productAttrs": {
-    "makes": [],
+    "makes": [{"value": "Make1"}],
     "models": [],
     "skus": [],
     "mfg_date": {
@@ -18,7 +18,7 @@ var payload = {
     },
     "relative": {
       "unit": "d",
-      "value": 7
+      "value": 0
     }
   },
   "region": {
