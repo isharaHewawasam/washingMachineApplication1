@@ -1,0 +1,53 @@
+.container-canvas {
+        /* This could be done in one single declaration. See the extended sample. */
+        margin-right: auto;
+        margin-left: auto;
+    margin-top: 18%;
+    
+}
+.circle {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 5px;
+}
+.circle-color-sold{
+	background: #97bbcd;	
+}
+.circle-color-connected{
+	background: #dcdcdc;	
+}
+.padding-zero{
+	
+}
+.chart-label{
+	font-family: Roboto;light;
+	font-size:13px;
+	color:#222222;	
+	height: 32px;
+	text-align: center;
+	margin: 0px auto;
+}
+#hiddenDiv
+{
+	border: 1px solid #777;
+}
+.progress-chart{
+
+    display: block;
+    height: 75%;
+    text-align: center;
+    padding-top: 15%;
+    font-size: 10px;
+    border-bottom-color: transparent;
+    background-color: transparent;
+   
+}
+.notbold{
+    font-weight:normal
+}
+#dropdown{
+         	color: blue;
+         	border:0;
+         	  }

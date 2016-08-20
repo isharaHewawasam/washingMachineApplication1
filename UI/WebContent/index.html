@@ -7,23 +7,23 @@
    <meta name="description" content="{{app.description}}">
    <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
    <title ng-bind="$state.current.data.title"></title>
-   
-   <link rel="shortcut icon" href="app/img/favicon.ico" type="image/x-icon" />
-   
-   <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
-   <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
+
+   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+
+   <link rel="stylesheet" href="css/app.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="css/app-rtl.css" data-ng-if="app.layout.isRTL">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-   <link rel="stylesheet" href="app/css/charts.css">
+   <link rel="stylesheet" href="css/charts.css">
    <link rel="stylesheet" href="app/js/bootstrap/css/bootstrap.css">
    <link href="app/js/bootstrap/css/bootstrap-multiselect.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.css">
    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
-   <link href="app/css/style.css" rel="stylesheet">
+   <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat}">
    <div data-ui-view="" data-autoscroll="false" class="wrapper"></div>
-   	
+
    	<!-- Plugin -->
    	<script type="text/javascript" src="app/js/jquery/jquery-2.2.3.js"></script>
 	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -41,8 +41,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.5.8/angular-resource.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>	
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+
 	<!-- Highchart plugin -->
 	<script type="text/javascript" src="app/js/highcharts/highcharts.src.js"></script>
 	<script src="http://code.highcharts.com/highcharts-more.js"></script>
@@ -53,11 +55,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.js"></script>
 	<script src="https://code.highcharts.com/maps/modules/data.js"></script>
     <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script> 
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.2/proj4.js"></script>
     <script src="https://code.highcharts.com/mapdata/custom/north-america.js"></script>
-	<script	src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script> 
-   
+	<script	src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+
   <!--  <script src="js/base.js"></script> -->
    <script src="app/app.module.js"></script>
    <script src="app/constants.js"></script>
@@ -66,40 +68,56 @@
    <script src="app/app.config.js"></script>
    <script src="app/app.route.js"></script>
    <script src="app/app.run.js"></script>
-   
+
    <script src="app/components/config/config.js"></script>
-   
+
    <!-- Components -->
    <script src="app/components/login/login.controller.js"></script>
-   
-   
-   
-   
+   <script src="app/components/reports/reports.controller.js"></script>
+   <script src="app/components/dashboard/dashboard.controller.js"></script>
+   <script src="app/components/sidebar/sidebar.controller.js"></script>
+   <script src="app/components/topnavbar/topnavbar.controller.js"></script>
+   <script src="app/components/notification/notification.controller.js"></script>
+   <script src="app/components/twitterinsights/twitterinsights.controller.js"></script>
+
+
    <script src="app/js/app.js"></script>
    <script src="app/js/factory/httpservice.js"></script>
-   <script src="app/js/twitterinsights.js"></script>
-   <script src="app/js/notificationconfiguration.js"></script>
-   
-   <script src="app/components/notification/notification_config_thresholds.js"></script>
+  <!--  <script src="app/js/twitterinsights.js"></script> -->
+ <!--   <script src="app/js/notificationconfiguration.js"></script> -->
+
+   <!--<script src="app/components/notification/notification_config_thresholds.js"></script>-->
    <script src="http://maps.googleapis.com/maps/api/js"></script>
-   
-	
-	
+
+
+
 	<script type="text/javascript" src="app/js/Chart.min.js"></script>
 	<script type="text/javascript" src="app/js/angular-chart.min.js"></script>
-	
-	 
-    
-    
-    
-	
-	
-	
+
+
+
+
+
+
+
+
 	<script src="app/js/html2canvas.js"></script>
 	<script src="app/js/pdfmake.min.js"></script>
-	<script src="app/js/reportconfig.js"></script>	
-	
-	
+	<!--  <script src="app/js/reportconfig.js"></script>-->
+
+
+	<!-- String localization plugins -->
+	<script src="https://cdn.rawgit.com/SlexAxton/messageformat.js/v0.3.0/messageformat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-interpolation-messageformat/2.10.0/angular-translate-interpolation-messageformat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.10.0/angular-translate-storage-cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.10.0/angular-translate-storage-local.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-url/2.10.0/angular-translate-loader-url.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.10.0/angular-translate-loader-static-files.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.10.0/angular-translate-handler-log.js"></script>
+
 </body>
 
 </html>

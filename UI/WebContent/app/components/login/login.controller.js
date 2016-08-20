@@ -5,9 +5,16 @@
 	    .module('angle')
 	    .controller('LoginController', LoginController);
 	
-	LoginController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService'];
+	LoginController.$inject = ['$scope', '$state','$rootScope','$window', '$translate', 'iot.config.ApiClient', 'HttpService'];
 	
-	function LoginController($scope, $state,$rootScope,$window, configApiClient, HttpService) {
+	function LoginController($scope, $state,$rootScope,$window, $translate, configApiClient, HttpService) {
+		
+		$scope.language = {};
+		$scope.language.available= {"en": "English","fr": "French"};
+
+		$scope.changeLanguage = function() {
+			$translate.use($scope.language.selected);
+		}
 		
 		$rootScope.credentials = {};
 		$scope.postForm = function() {

@@ -650,3 +650,4 @@ var isRelativeFilterSelected = function(){
 };
 
 Filter.prototype.isRelativeFilterSelected = isRelativeFilterSelected;
+
