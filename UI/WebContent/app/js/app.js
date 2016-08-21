@@ -1957,6 +1957,10 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#mapNormal1").removeClass("hidden");
 
          $("#map-maxcontainer").height(660);
+         $scope.showMap();
+      
+
+
 
     $("#hiddenDivMap").removeClass("hidden");
 
@@ -1968,6 +1972,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 
          
           $("#mapNormal1").height(355);
+
 
 
     });
