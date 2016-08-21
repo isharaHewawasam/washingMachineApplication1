@@ -17,8 +17,8 @@ var payload = {
       "end_date": "string"
     },
     "relative": {
-      "unit": "",
-      "value": 0
+      "unit": "d",
+      "value": 30
     }
   },
   "region": {
