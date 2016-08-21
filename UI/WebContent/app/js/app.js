@@ -2744,7 +2744,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 
     $scope.init = function() {
-      $scope.relativeTimeScale = "2";
+      $scope.relativeTimeScale = "3";
     };
     
 	  $rootScope.setUsageData=function(usagedata){
