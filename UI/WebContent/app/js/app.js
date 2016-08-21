@@ -3312,7 +3312,7 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
 
-         	$scope.plotChartFunction("hiddenDiv #container");
+         	$scope.plotChartFunction("#container");
 
 
      	}if($scope.selectedChart=='Line Chart'){
@@ -3329,7 +3329,7 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
      	}
 
      	if($scope.selectedChart=='Pie'){
@@ -3343,7 +3343,7 @@ $scope.plotPieChart=function(divID){
 
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotPieChart("piecontainer");
+         	$scope.plotPieChart("#pie");
          }
 
      	if($scope.selectedChart=='Bar'){
@@ -3357,7 +3357,7 @@ $scope.plotPieChart=function(divID){
 
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotBarChart("bar");
+         	$scope.plotBarChart("#bar");
          }
 
 	};
@@ -3366,14 +3366,14 @@ $scope.plotPieChart=function(divID){
 		$("#hiddenDiv").addClass("hidden");
 		if($scope.selectedChart=='Multiline'){
 
-			$scope.plotChartFunction("container");
+			$scope.plotChartFunction("#container");
 		}else if($scope.selectedChart=='Bar'){
-			$scope.plotBarChart("bar");
+			$scope.plotBarChart("#bar");
 		}else if($scope.selectedChart=='Pie'){
-			$scope.plotPieChart("piecontainer");
+			$scope.plotPieChart("#pie");
 		}else if($scope.selectedChart=='Line Chart'){
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
 		}
     });
 
