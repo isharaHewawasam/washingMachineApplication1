@@ -227,9 +227,31 @@
 
 	</div>
 
-	<div class="col-lg-4" ng-controller="mapController"
+	<div class="col-lg-4" >
+		<div class="panel panel-default hidden " id="mapNormal1" ng-controller="mapController"
+		ng-init="plotMapFunction('map-maxcontainer')">
+		<div class="panel-heading md-body-2" id="mapMaximizedlinner">
+				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
+					class="pull-right col-md-1"
+					src="img/Dashboardassets/icon_maximize.png"
+					ng-click="maximizeMap()"></img> <img id="mapMinImg"
+					class="pull-right hidden col-md-1 "
+					src="img/Dashboardassets/close.png"></img> <img
+					class="pull-right col-md-1" id="mapinfo"
+					src="img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
+					data-trigger="hover"></img>
+			</div>
+			<div class="map-maxDiv">
+				<span ng-show="mapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
+				</span>
+				<div id="map-maxcontainer"></div>
+			</div>
+		</div>
+		<div class="panel panel-default" id="mapNormal" ng-controller="mapController"
 		ng-init="plotMapFunction('map-container')">
-		<div class="panel panel-default" id="mapNormal">
 			<div class="panel-heading md-body-2" id="mapNormalinner">
 				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"

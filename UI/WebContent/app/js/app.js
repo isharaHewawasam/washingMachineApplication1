@@ -1945,27 +1945,32 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 	/**
 	 * Maximize the sales volume distribution map
 	 */
-	$scope.maximizeMap=function(){
+    /*Code For maximizing function*/
+    $scope.maximizeMap=function(){
+        var mapNormal = $("#mapNormal1").clone();
 
-		var mapNormal = $("#mapNormal").clone();
+        $("#hiddenDivMap").empty();
+        $("#hiddenDivMap").append(mapNormal);
 
-	    $("#hiddenDivMap").empty();
-	    $("#hiddenDivMap").append(mapNormal);
-	    $("#hiddenDivMap").removeClass("hidden");
-	    $("#mapMaxImg").addClass("hidden");
-	    $("#map-container").height(660);
-	    $("#mapMinImg").removeClass("hidden");
+        $("#hiddenDivMap #mapMaxImg").addClass("hidden");
+        $("#hiddenDivMap #mapMinImg").removeClass("hidden");
+        $("#mapNormal1").removeClass("hidden");
 
-        renderMap("#map-container",salesDataSet );
-	 }
+         $("#map-maxcontainer").height(660);
 
-	$("body").on("click"," #mapMinImg",function(){
-	    var elem = $("#map-container");
-	    $("#hiddenDivMap").empty();
-	    $("#hiddenDivMap").addClass("hidden");
-	    elem.addClass("map-mapDiv");
-        renderMap("#map-container",salesDataSet );
-	});
+    $("#hiddenDivMap").removeClass("hidden");
+
+    }
+
+    $("body").on("click","#mapMinImg",function(){
+        $("#hiddenDivMap").empty();
+        $("#hiddenDivMap").addClass("hidden");
+
+         
+          $("#mapNormal1").height(355);
+
+
+    });
 
 }]);
 
@@ -2095,6 +2100,70 @@ function renderMap(divId, salesData){
 	    series: seriesData
 
 	});
+    /*coded For Maximized map*/
+    $('#map-maxcontainer').highcharts('Map', {
+         chart: {
+               spacingLeft     : 5,
+               spacingRight    : 2,
+               spacingTop      : 2,
+               spacingBottom   : 2,
+               events: {
+                         redraw: function() {
+
+                               var chart = this;
+                               var series = this.series;
+                               if(chart.series[2]){
+                                     var points = series[2].points;
+                                     var index = 0;
+                                     Highcharts.each(points, function (point) {
+                                           removePie(point);
+                                           drawPie(point, index++);
+                                           if(index==5) index = 0 ;
+                                     });
+                               }
+                         },
+                 load: function () {
+
+                               var chart = this;
+                               if(chart.series[2]){
+                                     var points = chart.series[2].points;
+                                     var index = 0;
+                                     Highcharts.each(points, function (point) {
+                                           drawPie(point, index++);
+                                           if(index==5) {index = 0} ;
+                                     });
+                               }
+                         }
+                   }
+         },
+         credits:{
+             enabled:false
+         },
+           exporting: {
+             enabled: false
+           },
+           title: {
+               text: ''
+           },
+
+           mapNavigation: {
+               enabled: true,
+               buttonOptions: {
+                   verticalAlign: 'bottom',
+                   //x : -5
+               }
+           },
+
+           plotOptions: {
+               mapbubble:{
+                   minSize:0,
+                   maxSize:0
+               }
+           },
+
+           series: seriesData
+
+       });
 
 }
 
@@ -3243,7 +3312,7 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
 
-         	$scope.plotChartFunction("hiddenDiv #container");
+         	$scope.plotChartFunction("#container");
 
 
      	}if($scope.selectedChart=='Line Chart'){
@@ -3260,7 +3329,7 @@ $scope.plotPieChart=function(divID){
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
      	}
 
      	if($scope.selectedChart=='Pie'){
@@ -3274,7 +3343,7 @@ $scope.plotPieChart=function(divID){
 
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotPieChart("piecontainer");
+         	$scope.plotPieChart("#pie");
          }
 
      	if($scope.selectedChart=='Bar'){
@@ -3288,7 +3357,7 @@ $scope.plotPieChart=function(divID){
 
          	$("#hiddenDiv #maximize").addClass("hidden");
          	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotBarChart("bar");
+         	$scope.plotBarChart("#bar");
          }
 
 	};
@@ -3297,14 +3366,14 @@ $scope.plotPieChart=function(divID){
 		$("#hiddenDiv").addClass("hidden");
 		if($scope.selectedChart=='Multiline'){
 
-			$scope.plotChartFunction("container");
+			$scope.plotChartFunction("#container");
 		}else if($scope.selectedChart=='Bar'){
-			$scope.plotBarChart("bar");
+			$scope.plotBarChart("#bar");
 		}else if($scope.selectedChart=='Pie'){
-			$scope.plotPieChart("piecontainer");
+			$scope.plotPieChart("#pie");
 		}else if($scope.selectedChart=='Line Chart'){
 
-         	$scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
 		}
     });
 
