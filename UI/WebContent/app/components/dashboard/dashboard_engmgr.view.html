@@ -155,7 +155,7 @@
 	<!-- START dashboard main content-->
 
 
-	<div class="col-lg-4 " ng-controller="myController">
+	<div class="col-lg-4 " ng-controller="myController" ng-init="init()">
 		<div class="chart-chartDiv" id="chartParent">
 			<div class="chart-filterDiv " id="chartFilterDivId">
 				<select ng-class="{'chart-selectStyle2': isActive1}"
@@ -176,20 +176,21 @@
 				</select> <select ng-class="{'chart-selectStyle2': isActive2}"
 					ng-click="activeButton(2)" id="second-chart-select"
 					class="chart-selectStyle col-md-3 chart-border salesname"
+          ng-model='relativeTimeScale'
 					>
-					<option class="chart-option-text-style" value="">Last 1
+					<option class="chart-option-text-style" value="1">Last 1
 						day
-					<option class="chart-option-text-style" value="" selected>Last
+					<option class="chart-option-text-style" value="2" selected="selected">Last
 						7 days
-					<option class="chart-option-text-style" value="">Last 30
+					<option class="chart-option-text-style" value="3">Last 30
 						days
-					<option class="chart-option-text-style" value="">Last 3
+					<option class="chart-option-text-style" value="4">Last 3
 						months
-					<option class="chart-option-text-style" value="">Last 6
+					<option class="chart-option-text-style" value="5">Last 6
 						months
-					<option class="chart-option-text-style" value="">Last 1
+					<option class="chart-option-text-style" value="6">Last 1
 						year
-					<option class="chart-option-text-style" value="">Last 3
+					<option class="chart-option-text-style" value="7">Last 3
 						years
 				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"

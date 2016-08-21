@@ -11,6 +11,8 @@ module.exports.getCharts = function(req, res, next) {
 };
 
 module.exports.getReportData = function(req, res, next) {
+  require('../middle_ware/sanitize_request').removeRelativeFilters(req);
+  
   var report_name = req.swagger.params.report_name === undefined ? null : req.swagger.params.report_name.value;
   var group = req.swagger.params.group === undefined ? true : req.swagger.params.group.value;  
   

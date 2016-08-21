@@ -72,7 +72,6 @@ app.use(function(req, res, next){
   console.log("URL : " + req.originalUrl);
   console.log("Request Body : " + JSON.stringify(req.body));
   
-  
   require('./middle_ware/sanitize_request').sanitize(req.body);
   console.log("Request after sanitizing: " + JSON.stringify(req.body));
   

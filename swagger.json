@@ -73,7 +73,7 @@
             "type": "string"
           },
           {
-            "name": "group_by_timescale",
+            "name": "group",
             "in": "query",
             "description": "Whether data will be groped by States, Cities etc or not",
             "required": true,

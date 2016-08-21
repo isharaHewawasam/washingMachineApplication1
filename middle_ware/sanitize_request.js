@@ -12,6 +12,7 @@ exports.sanitize = function(request) {
     sanitizeNode(keys[idx]);
     idx++;
   }
+  
 };
 
 var sanitizeNode = function(node) {
@@ -39,4 +40,17 @@ var sanitizeArray = function(array) {
 
 var sanitizeKey = function(node, key){
   //if (node[key].value == null || node[key].value == "") delete node[key];
+}
+
+exports.removeRelativeFilters = function(req) {
+  if (req.body.timescale === undefined) return;
+  if (req.body.timescale.relative === undefined) return;
+  
+  var group_by_timescale = req.swagger.params.group_by_timescale === undefined ? false : req.swagger.params.group_by_timescale.value;
+  
+  if (!group_by_timescale) {
+      if (req.body.timescale.relative) {
+        req.body.timescale.relative = {};  
+      }
+  }
 }

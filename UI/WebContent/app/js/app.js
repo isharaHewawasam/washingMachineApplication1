@@ -2727,6 +2727,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	$scope.selectedChart="";
 	$scope.seneorkey="";
 	$scope.Unit="";
+  //$scope.relativeTimeScale = 1;
 	$rootScope.baseUrl=configApiClient.baseUrl;
 	$scope.EngchartTypes=['Line Chart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
@@ -2742,8 +2743,13 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	                    [28, 48, 40, 19]];
 
 
+    $scope.init = function() {
+      $scope.relativeTimeScale = "2";
+    };
+    
 	  $rootScope.setUsageData=function(usagedata){
 		  $scope.usagedata=usagedata;
+      $scope.usagedata.timescale.relative.unit = $scope.relativeTimeScale;
 
 		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
           var rolename = loginCredentails.Role;
@@ -3139,14 +3145,49 @@ $scope.plotPieChart=function(divID){
 
 		} else {*/
 			var param = $scope.usagedata;
-			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key;
+			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key + '&group_by_timescale=true';
 			var param;
 			if ($scope.usagedata) {
 				param = $scope.usagedata;
+       
+        switch($scope.usagedata.timescale.relative.unit) {
+          case "1":
+            break;
+          case "2":
+            param.timescale.relative.unit = "d";
+            param.timescale.relative.value = 7;
+            break;
+          case "3":
+            param.timescale.relative.unit = "d";
+            param.timescale.relative.value = 30;
+            break;  
+          case "4":
+            param.timescale.relative.unit = "m";
+            param.timescale.relative.value = 3;
+            break;
+          case "5":
+            param.timescale.relative.unit = "m";
+            param.timescale.relative.value = 6;
+            break;  
+          case "6":
+            param.timescale.relative.unit = "y";
+            param.timescale.relative.value = 1;
+            break;     
+           case "7":
+            param.timescale.relative.unit = "y";
+            param.timescale.relative.value = 3;
+            break;                 
+          default:
+           param.timescale.relative.unit = "d";
+            param.timescale.relative.value = 7;
+            break;          
+        }
+        
+        //alert(JSON.stringify($scope.usagedata));
 			} else {
 				param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
 						"timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
-						"relative": {"unit": "d","value": 7}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+						"relative": {"unit": "d","value": 30}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
 			}
 			HttpService.post(url, param).then(function(data){
 				// on success
