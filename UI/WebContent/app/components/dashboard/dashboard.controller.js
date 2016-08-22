@@ -259,6 +259,7 @@
         }
 
        $rootScope.mkt_griddata_filter=[];
+       $scope.isReportAvailableForDownload = false;
         $scope.isNoDataFound = false;
         $scope.isError =  false;
         $scope.isOnFilter = false;
@@ -276,6 +277,7 @@
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
                 $scope.isReportFiltering = false;
+                $scope.isReportAvailableForDownload = true;
             }
         },function(data){
             // on error
@@ -534,6 +536,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.griddata=[];
             $scope.eng_griddata=[];
             $scope.mkt_griddata=[];
+            $scope.isReportAvailableForDownload = false;
 
 
             var url = configApiClient.baseUrl +  "usage";
@@ -553,15 +556,7 @@ $rootScope.isApplyFiterButton = true;
                 // on error
             });
 
-            ///////////////////////Report on load
-            var url = configApiClient.baseUrl +  "usage";
-            HttpService.get(url).then(function(data){
-                // on success
-                $scope.mkt_griddata=data.data;
-                $rootScope.isOnLoad=true;
-            },function(data){
-                // on error
-            });
+           
 
         var quarterMonthMapping = JSON.parse('{'
                                         +'"Quarter1":["Jan","Feb","Mar"],'
@@ -690,6 +685,17 @@ $rootScope.isApplyFiterButton = true;
               $("#gridNormal").height(355);
 
 
+        });
+        
+        ///////////////////////Report on load
+        var url = configApiClient.baseUrl +  "usage";
+        HttpService.get(url).then(function(data){
+            // on success
+            $scope.mkt_griddata=data.data;
+            $rootScope.isOnLoad=true;
+            $scope.isReportAvailableForDownload = true;
+        },function(data){
+            // on error
         });
 
 
