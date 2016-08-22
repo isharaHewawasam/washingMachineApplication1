@@ -478,6 +478,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 		    	 if (data && data.length != 0) {
 
 			    	 var mostFaultDataStr = JSON.stringify(data);
@@ -511,6 +512,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 		    	 if (data && data.length != 0) {
 			    	 var leastFaultDataStr = JSON.stringify(data);
 
@@ -544,6 +546,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 		    	 if (data && data.length != 0) {
 			    	 var commonFaultDataStr = JSON.stringify(data.faults);
 			    	 commonFaultDataStr = commonFaultDataStr.replace(/"no_of_faults":/g, '"y":');
@@ -575,6 +578,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 				 if (data.data && data.data.length != 0) {
 					 var mostUsedProductDataStr = JSON.stringify(data.data);
 
@@ -607,6 +611,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 		    	 if (data && data.length != 0) {
 
 			    	 var mostUsedCyclesDataStr = JSON.stringify(data);
@@ -640,7 +645,8 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
-
+				$scope.isError = false
+				
 		    	 if (data && data.length != 0) {
 
 		    		 var total = 0;
@@ -685,6 +691,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 			HttpService.get(url).then(function(data){
 				// on success
 				$scope.isLoading = false;
+				$scope.isError = false;
 		    	 if (data && data.length != 0) {
 			    	 var twitterDataStr = JSON.stringify(data);
 
@@ -1935,9 +1942,11 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
       		renderMap(divId, data);
             salesDataSet = data;
             $rootScope.mapProgress = false;
+            $scope.isError = false;
 		},function(data){
 			// on error
 			$rootScope.mapProgress = false;
+			$scope.isError = true;
 	       renderMap(divId, data);
 		});
 
@@ -2470,7 +2479,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
     $scope.isError = false;
     $scope.msg1 = "Loading.....Please wait";
     $scope.msg2="No Data Found";
-    $scope.msg3 = "Service is Unavailable";
+    $scope.msg3 = "Network Issue";
 
     var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
 	var userid = loginCredentails.email;
@@ -2493,6 +2502,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 	      	HttpService.get(url).then(function(data){
 				// on success
 	      		$scope.isLoading = false;
+	      		$scope.isError = false;
 		    	 if (data || data.length != 0) {
 
 		    	 	 var i=data.length;
@@ -2549,6 +2559,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 	      	HttpService.get(url).then(function(data){
 				// on success
 	      		$scope.isLoading = false;
+	      		$scope.isError = false;
 		    	 if (data || data.length != 0) {
 
 		    		 // Calculate the difference between connected machines as of today and the connected machines 4 weeks ago.
@@ -2615,6 +2626,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 	      	HttpService.get(url).then(function(data){
 				// on success
 	      		$scope.isLoading = false;
+	      		$scope.isError = false;
 		    	 if (data || data.length != 0) {
 
 		    		 // Calculate the difference between a specific error type count as of today and the error count 4 weeks ago.
@@ -2680,6 +2692,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 	      	HttpService.get(url).then(function(data){
 				// on success
 	      		$scope.isLoading = false;
+	      		$scope.isError = false;
 		    	 if (data || data.length != 0) {
 		    		 var i=data.length;
 		    		 while (i--){
@@ -2960,6 +2973,7 @@ $scope.plotPieChart=function(divID){
       		$rootScope.isApplyFiterButton = false;
 	    	$scope.isDisabled = false;
 	    	$scope.progress = false;
+	    	$scope.isError = false;
 	    	$scope.data=[];
 	    	$scope.data[0]=data.unitsSold;
 	    	$scope.data[1]=data.unitsConnected;
@@ -2974,6 +2988,7 @@ $scope.plotPieChart=function(divID){
 	    	$scope.progress = false;
 	    	$scope.isDisabled = false;
 	        $scope.progress = false;
+	        $scope.isError = true;
 		});
 	}else{
 
@@ -2986,6 +3001,7 @@ $scope.plotPieChart=function(divID){
 	      		$rootScope.isApplyFiterButton = false;
 				$scope.progress = false;
 				$scope.isDisabled = false;
+				$scope.isError = false;
 
 				var seriesData = [];
 				if (data && data.length > 0) {
@@ -3003,6 +3019,7 @@ $scope.plotPieChart=function(divID){
 				$rootScope.isApplyFiterButton = false;
 		    	$scope.isDisabled = false;
 		    	$scope.progress = false;
+		    	$scope.isError = true;
 			});
 			$rootScope.applyFilterBoolean=false;
 		}
@@ -3010,7 +3027,7 @@ $scope.plotPieChart=function(divID){
 			$scope.isDisabled = false;
 			$rootScope.isApplyFiterButton = false;
 			$scope.progress = false;
-
+			$scope.isError = true;
 			var seriesData = [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]];
 			createPieChart(divID, seriesData);
 		}
@@ -3037,6 +3054,7 @@ $scope.plotPieChart=function(divID){
 				// on success
 	      		$scope.progress = false;
 				$rootScope.isApplyFiterButton = false;
+				$scope.isError = false;
 		    	$rootScope.barchartData=data;
 		    	var barChartDes = $rootScope.barchartData.description.substring(23,27);
 		    	var seriesData = [];
@@ -3056,6 +3074,7 @@ $scope.plotPieChart=function(divID){
 			},function(data){
 				// on error
 				 $rootScope.isApplyFiterButton = false;
+				 $scope.isError = true;
 			});
 		}else{
 			console.log('in top3SellingModels group true');
@@ -3068,6 +3087,7 @@ $scope.plotPieChart=function(divID){
 					// on success
 		      		$scope.progress = false;
 					$rootScope.isApplyFiterButton = false;
+					$scope.isError = false;
 					// To prevent the top 3 selling models chart from updating according to the side-bar product filter
 					//Made this change because we cannot plot the chart if the user select Make and Model
 //					if(($rootScope.search.selectedMake) == undefined ){
@@ -3098,13 +3118,14 @@ $scope.plotPieChart=function(divID){
 					// on error
 					$scope.progress = false;
 		            $rootScope.isApplyFiterButton = false;
+		            $scope.isError = true;
 				});
 				$rootScope.applyFilterBoolean=false;
 			}
 			else{
 				console.log('top3SellingModels on not apply filter click');
 				$scope.progress = false;
-
+				$scope.isError = false;
 				$rootScope.isApplyFiterButton = false;
 				var barChartDes = $rootScope.barchartData.description.substring(23,27);
 				var seriesData = [{
@@ -3144,6 +3165,7 @@ $scope.plotPieChart=function(divID){
 				// on success
 	      		$scope.isDisabled = false;
 				$rootScope.isApplyFiterButton = false;
+				$scope.isError = false;
 				var lineChartSeriesData = [];
 				if (data.data.length > 0) {
 					lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
@@ -3156,6 +3178,7 @@ $scope.plotPieChart=function(divID){
 				$scope.isDisabled = false;
 				$scope.progress = false;
 				$rootScope.isApplyFiterButton = false;
+				$scope.isError = true;
 			});
 
 			$rootScope.applyFilterBoolean=false;
@@ -3167,6 +3190,7 @@ $scope.plotPieChart=function(divID){
 	      	HttpService.post(url, param).then(function(data){
 				// on success
 	      		$scope.isDisabled = false;
+	      		$scope.isError = false;
 				$rootScope.isApplyFiterButton = false;
 				var lineChartSeriesData = [];
 				if (data.data.length > 0) {
@@ -3180,6 +3204,7 @@ $scope.plotPieChart=function(divID){
 				$rootScope.isApplyFiterButton = false;
 		    	$scope.isDisabled = false;
 		    	$scope.progress = false;
+		    	$scope.isError = true;
 			});
 		}
 	}
@@ -3267,6 +3292,7 @@ $scope.plotPieChart=function(divID){
 				// on success
 	      		$scope.isDisabled = false;
 				$rootScope.isApplyFiterButton = false;
+				$scope.isError = false;
 				if(data && data.length > 0){
 					var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 					$scope.progress = false;
@@ -3280,6 +3306,7 @@ $scope.plotPieChart=function(divID){
 				$rootScope.isApplyFiterButton = false;
 		    	$scope.isDisabled = false;
 		    	$scope.progress = false;
+		    	$scope.isError = true;
 			});
 //		}
 	}

@@ -2,3 +2,8 @@
    pointer-events: none;
    cursor: default;
 }
+
+.errorClass {
+	text-align: center;
+	padding-top: 40%;
+}
