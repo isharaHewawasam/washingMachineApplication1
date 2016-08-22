@@ -511,7 +511,7 @@ $rootScope.isApplyFiterButton = true;
         $scope.isLoadingFilters = true;
         $scope.msg1 = "Applying Filters... Please wait";
         $scope.msg2 = "No Data Found";
-        $scope.msg3 =  "Service is Unavailable";
+        $scope.msg3 =  "Network Issue";
         $scope.msg = $scope.msg1;
 
         //for grid mkt_mgr
@@ -554,34 +554,67 @@ $rootScope.isApplyFiterButton = true;
           
     };
 
-
-
-
-            // load all usage data on dashboard
-            $scope.griddata=[];
-            $scope.eng_griddata=[];
-            $scope.mkt_griddata=[];
-            $scope.isReportAvailableForDownload = false;
-
-
-            var url = configApiClient.baseUrl +  "usage";
-            HttpService.get(url).then(function(data){
-                // on success
+    function usageLoad() {
+    	$scope.griddata=[];
+        $scope.isNoDataFound = false;
+        $scope.isError =  false;
+        $scope.isLoadingFilters = true;
+        $scope.msg1 = "Applying Filters... Please wait";
+        $scope.msg2 = "No Data Found";
+        $scope.msg3 =  "Network Issue";
+        $scope.msg = $scope.msg1;
+    	
+    	var url = configApiClient.baseUrl +  'usage';
+        var param = $scope.usagedata;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $scope.isLoadingFilters = false;
+             if(!data || data.data.length === 0){
+            	 $scope.isNoDataFound = true;
+             } else {
+            	 $scope.isNoDataFound = false;
                 $scope.griddata=data.data;
-            },function(data){
-                // on error
-            });
-            
-            var url = configApiClient.baseUrl + "sensors/data";
-            var param = null;
-            HttpService.post(url, param).then(function(data){
-                // on success
-                 $scope.eng_griddata=data; //.states: array name--check in browser
-            },function(data){
-                // on error
-            });
-
-           
+             }
+        },function(data){
+            // on error
+            $scope.isLoadingFilters = false;
+            $scope.isError = true;
+            $scope.msg = $scope.msg3;
+        });
+    }
+    
+    usageLoad();
+    
+    function sensorsDataLoad() {
+        $scope.eng_griddata=[];
+        $scope.isNoDataFound = false;
+        $scope.isError =  false;
+        $scope.isLoadingFilters = true;
+        $scope.msg1 = "Applying Filters... Please wait";
+        $scope.msg2 = "No Data Found";
+        $scope.msg3 =  "Network Issue";
+        $scope.msg = $scope.msg1;
+    	
+    	var url = configApiClient.baseUrl + 'sensors/data';
+        var param = null;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $scope.isLoadingFilters = false;
+            if(!data || data.length === 0){
+            	$scope.isNoDataFound = true;
+            } else {
+            	$scope.isNoDataFound = false;
+                $scope.eng_griddata=data;
+            }
+        },function(data){
+            // on error
+            $scope.isLoadingFilters = false;
+            $scope.isError = true;
+            $scope.msg = $scope.msg3;
+        });
+    	
+    }
+    sensorsDataLoad();
 
         var quarterMonthMapping = JSON.parse('{'
                                         +'"Quarter1":["Jan","Feb","Mar"],'
@@ -656,6 +689,7 @@ $rootScope.isApplyFiterButton = true;
     
      $scope.cities;
      $scope.selectCities=function(){
+    	 $scope.cities = undefined;
          $scope.region.cities=undefined;
          $scope.region.zip_codes=undefined;
          $scope.zips=[];

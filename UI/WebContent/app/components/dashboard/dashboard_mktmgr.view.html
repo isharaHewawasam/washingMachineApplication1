@@ -199,29 +199,36 @@
 					data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 					data-trigger="hover"></img>
 			</div>
+			
+			<span ng-show="progress" class="progress-chart"> <img alt=""
+				src="img/icon-load.gif" width="25%" ;height="25%">
+			</span>
+			
 			<div ng-if="selectedChart=='Pie'" class="graphDiv"
 				ng-init="plotPieChart('piecontainer')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
 				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="piecontainer"></div>
 			</div>
 
+			
+
 			<div ng-if="selectedChart=='Bar'" class="graphDiv"
 				ng-init="plotBarChart('bar')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
 				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="bar"></div>
 			</div>
 
 			<div ng-if="selectedChart=='Multiline'" class="graphDiv"
 				ng-init="plotChartFunction('container')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
 				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="container"></div>
 			</div>

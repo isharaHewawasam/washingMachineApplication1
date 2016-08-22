@@ -1969,8 +1969,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     	$scope.zoomMap('map-maxcontainer');
     	$scope.showMaxMap('map-maxcontainer');
         $("#map-maxcontainer").height(660);
-       
-       
+      
 
     $("#hiddenDivMap").removeClass("hidden");
 
@@ -1979,12 +1978,14 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     $("body").on("click","#mapMinImg",function(){
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
-        $scope.zoomMap('map-container');
+
          
           $("#mapNormal1").height(355);
 
 
+
     });
+
 }]);
 
 /**
@@ -2869,14 +2870,22 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 
 		});
 
-		var url = configApiClient.baseUrl + 'sales/charts';
-		HttpService.get(url).then(function(data){
-			// on success
-			$scope.salesList=data;
-		},function(data){
-			// on error
-
-		});
+		loadCharts = function(){
+			console.log('in loadCharts');
+			$scope.progress = true;
+			var url = configApiClient.baseUrl + 'sales/charts';
+			HttpService.get(url).then(function(data){
+				// on success
+				$scope.progress = false;
+				$scope.salesList=data;
+			},function(data){
+				$scope.progress = false;
+				// on error
+	
+			});
+		}
+		
+		loadCharts();
 
 	  /**
 	   * Retrieve sensor type and sensor key data.
@@ -2936,16 +2945,18 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	  }
 
 	$scope.disp=function(index){
-		if(index==0)
+		if(index==0){
 			$scope.selectedSales=""+0;
+			$scope.progress = false;
+		}
 
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
-
 			 $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
 			 $scope.selectedChart=$scope.chartTypes[0];
 		}
-		else
+		else {
 				$scope.chartTypes="";
+		}
 
 	}
 
@@ -3897,14 +3908,12 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
-angular.module('angle').controller('MyviewController', ['$scope', '$window', function($scope, $window) {
+angular.module('angle').controller('MyviewController', ['$scope', function($scope) {
 	  /* controller code */
 
-	  $scope.getUrl = function(){  
-		var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
-		var rolename = loginCredentails.Role;
-		
-	    if(rolename == "Engineering Manager"){
+	  $scope.getUrl = function(){
+
+	    if(localStorage.getItem('rolename') == "Engineer Manager"){
 	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
 	    }
 	    else{
