@@ -693,7 +693,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(twitterDataStr);
 
-					 renderPieChart(divId, data, 'Twitter Handles');
+					 renderPieChart(divId, data, 'Twitter Sentiments');
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
