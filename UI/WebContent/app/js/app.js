@@ -1964,12 +1964,13 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#hiddenDivMap #mapMaxImg").addClass("hidden");
         $("#hiddenDivMap #mapMinImg").removeClass("hidden");
         $("#mapNormal1").removeClass("hidden");
-
-         $("#map-maxcontainer").height(660);
-         $scope.showMap();
-      
-
-
+       // $scope.showMap();
+        renderMap("#map-maxcontainer",salesDataSet);
+    	$scope.zoomMap('map-maxcontainer');
+    	$scope.showMaxMap('map-maxcontainer');
+        $("#map-maxcontainer").height(660);
+       
+       
 
     $("#hiddenDivMap").removeClass("hidden");
 
@@ -1978,14 +1979,12 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     $("body").on("click","#mapMinImg",function(){
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
-
+        $scope.zoomMap('map-container');
          
           $("#mapNormal1").height(355);
 
 
-
     });
-
 }]);
 
 /**

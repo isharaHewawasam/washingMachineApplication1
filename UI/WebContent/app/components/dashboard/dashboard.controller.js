@@ -318,6 +318,31 @@
              $rootScope.mapProgress = false;
         });
     }
+	
+	//For Maximized map
+    $scope.showMaxMap = function () {
+        $scope.removechart('map-maxcontainer');
+        $scope.loadingText = "Loading data...";
+
+
+        $rootScope.mapProgress = true;
+        var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
+        var param = $scope.usagedata;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $rootScope.mapProgress = false;
+
+            if(!data || data.length === 0){
+                 renderMap("#map-container", []);
+            }  else{
+                renderMap("map-container", data);
+                $scope.zoomMap('map-maxcontainer');
+            }
+        },function(data){
+            // on error
+             $rootScope.mapProgress = false;
+        });
+        }
 
     $scope.zoomMap = function (id) {
         var selectedState = $scope.region.states;
