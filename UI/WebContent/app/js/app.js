@@ -1872,13 +1872,11 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
            $rootScope.search.selectedSKU=undefined;
            $rootScope.search.mfgStartDate=undefined;
            $rootScope.search.mfgEndDate=undefined;
-           $rootScope.filterIcons=[];
-           $rootScope.filterIcons.splice(indexofvar,1);
-           angular.forEach($rootScope.filterIcons,function(obj ,key){
-               if(obj.key=="model" || obj.key=="sku" || obj.key=="mfg-start-date" || obj.key=="mfg-end-date"){
-                   $rootScope.filterIcons.splice(key,1);
-               }
-           });
+           for(var i = $rootScope.filterIcons.length -1; i >= 0 ; i--){
+	    	    if($rootScope.filterIcons[i].key=="make" || $rootScope.filterIcons[i].key=="model" || $rootScope.filterIcons[i].key=="sku" || $rootScope.filterIcons[i].key=="mfg-start-date" || $rootScope.filterIcons[i].key=="mfg-end-date"){
+	    	    	$rootScope.filterIcons.splice(i,1);
+	    	    }
+	    	}
        }else if(filter.key=="mfg-start-date"){
        	$rootScope.search.mfgStartDate=undefined;
            $rootScope.filterIcons.splice(indexofvar,1);
