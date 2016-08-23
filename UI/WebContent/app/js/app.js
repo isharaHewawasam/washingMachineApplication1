@@ -3112,16 +3112,15 @@ $scope.plotPieChart=function(divID){
 					
 					var seriesData = [];
 					if ($rootScope.barchartData.sales.length > 0) {
-				    	seriesData = [{
-				            name: $rootScope.barchartData.sales[0].item,
-				            data: [$rootScope.barchartData.sales[0].unitsSold]
-				        }, {
-				            name: $rootScope.barchartData.sales[1].item,
-				            data: [$rootScope.barchartData.sales[1].unitsSold]
-				        }, {
-				            name: $rootScope.barchartData.sales[2].item,
-				            data: [$rootScope.barchartData.sales[2].unitsSold]
-				        }];
+				    	
+						for (i=0; i< $rootScope.barchartData.sales.length; i++){
+							var obj={
+					    			name:$rootScope.barchartData.sales[i].item,
+					    			data:[$rootScope.barchartData.sales[i].unitsSold]
+					    	}
+							seriesData.push(obj);
+							obj={};
+						}
 					}
 			    	createBarChart(divId, seriesData, barChartDes);
 				},function(data){
