@@ -1978,7 +1978,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     $("body").on("click","#mapMinImg",function(){
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
-
+		$scope.zoomMap('map-container');
          
           $("#mapNormal1").height(355);
 
