@@ -11,6 +11,7 @@
 		//Clear filter on dashboard load
         $rootScope.search={};
         $rootScope.filterIcons=[];
+        $rootScope.isReportAvailableForDownload = false;
 
         var monthNames = [
           "January", "February", "March",
@@ -259,7 +260,7 @@
         }
 
        $rootScope.mkt_griddata_filter=[];
-       $scope.isReportAvailableForDownload = false;
+       $rootScope.isReportAvailableForDownload = false;
         $scope.isNoDataFound = false;
         $scope.isError =  false;
         $scope.isOnFilter = false;
@@ -278,7 +279,7 @@
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
                 $scope.isReportFiltering = false;
-                $scope.isReportAvailableForDownload = true;
+                $rootScope.isReportAvailableForDownload = true;
                 $scope.isNoDataFound = false;
             }
         },function(data){
@@ -758,7 +759,7 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.mkt_griddata=data.data;
             $rootScope.isOnLoad=true;
-            $scope.isReportAvailableForDownload = true;
+            $rootScope.isReportAvailableForDownload = true;
         },function(data){
             // on error
         });
