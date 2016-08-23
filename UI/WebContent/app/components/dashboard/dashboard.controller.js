@@ -272,17 +272,20 @@
             if(!data || data.data.length === 0){
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
+                $scope.isNoDataFound = true;
             } else {
                 $rootScope.mkt_griddata_filter=data.data;
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
                 $scope.isReportFiltering = false;
                 $scope.isReportAvailableForDownload = true;
+                $scope.isNoDataFound = false;
             }
         },function(data){
             // on error
             $scope.isError = true;
             $scope.isReportFiltering = false;
+            $scope.isNoDataFound = false;
         });
     }
     //end iniReport
@@ -531,6 +534,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.isLoadingFilters = false;
             $scope.isError = true;
             $scope.msg = $scope.msg3;
+            $scope.isNoDataFound = false;
         });
 
         //For grid from eng manager
@@ -540,9 +544,9 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.isLoadingFilters = false;
             if(!data || data.length === 0){
-            	$scope.isNoDataFound = true;
+            	$scope.isNoDataFoundEng = true;
             } else {
-            	$scope.isNoDataFound = false;
+            	$scope.isNoDataFoundEng = false;
                 $scope.eng_griddata=data;
             }
         },function(data){
@@ -550,6 +554,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.isLoadingFilters = false;
             $scope.isError = true;
             $scope.msg = $scope.msg3;
+            $scope.isNoDataFoundEng = false;
         });
           
     };
@@ -587,7 +592,7 @@ $rootScope.isApplyFiterButton = true;
     
     function sensorsDataLoad() {
         $scope.eng_griddata=[];
-        $scope.isNoDataFound = false;
+        $scope.isNoDataFoundEng = false;
         $scope.isError =  false;
         $scope.isLoadingFilters = true;
         $scope.msg1 = "Applying Filters... Please wait";
@@ -601,9 +606,9 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.isLoadingFilters = false;
             if(!data || data.length === 0){
-            	$scope.isNoDataFound = true;
+            	$scope.isNoDataFoundEng = true;
             } else {
-            	$scope.isNoDataFound = false;
+            	$scope.isNoDataFoundEng = false;
                 $scope.eng_griddata=data;
             }
         },function(data){
@@ -611,6 +616,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.isLoadingFilters = false;
             $scope.isError = true;
             $scope.msg = $scope.msg3;
+            $scope.isNoDataFoundEng = false;
         });
     	
     }
