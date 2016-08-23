@@ -2817,9 +2817,10 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	$scope.EngchartTypes=['Line Chart'];
 	  $scope.selectedChart=$scope.EngchartTypes[0];
 
-	$scope.linechartData=null;
+//	$scope.linechartData=null;
 	  $rootScope.piechartData = null;
 	  $rootScope.barchartData=null;
+	  $rootScope.linechartData=null;
 	  $scope.lineChartSeriesData=[];
 	  $scope.barLabels = ['Q1 2016', 'Q2 2016', 'Q3 2016', 'Q4 2016'];
 	  $scope.barSeries = ['Sold', 'Connected'];
@@ -3000,7 +3001,7 @@ $scope.plotPieChart=function(divID){
 		});
 	}else{
 
-		if($rootScope.applyFilterBoolean){
+//		if($rootScope.applyFilterBoolean){
 
 			var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
 			var param = $scope.usagedata;
@@ -3030,7 +3031,7 @@ $scope.plotPieChart=function(divID){
 		    	$scope.isError = true;
 			});
 			$rootScope.applyFilterBoolean=false;
-		}
+		/*}
 		else{
 			$scope.isDisabled = false;
 			$rootScope.isApplyFiterButton = false;
@@ -3038,7 +3039,7 @@ $scope.plotPieChart=function(divID){
 			$scope.isError = true;
 			var seriesData = [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]];
 			createPieChart(divID, seriesData);
-		}
+		}*/
 	 }
 
 	}
@@ -3053,105 +3054,46 @@ $scope.plotPieChart=function(divID){
 		$rootScope.isApplyFiterButton = true;
 
 		$scope.progress = true;
-
-		if($rootScope.barchartData==null){
-			console.log('in top3SellingModels group false');
-			var url = configApiClient.baseUrl +'sales?report_name=top3SellingModels&group=false';
-			var param = null;
-	      	HttpService.post(url, param).then(function(data){
-				// on success
-	      		$scope.progress = false;
-				$rootScope.isApplyFiterButton = false;
-				$scope.isError = false;
-		    	$rootScope.barchartData=data;
-		    	var barChartDes = $rootScope.barchartData.description.substring(23,27);
-		    	var seriesData = [];
-				if ($rootScope.barchartData.sales.length > 0) {
-					seriesData = [{
-		            name: $rootScope.barchartData.sales[0].item,
-		            data: [$rootScope.barchartData.sales[0].unitsSold]
-		        }, {
-		            name: $rootScope.barchartData.sales[1].item,
-		            data: [$rootScope.barchartData.sales[1].unitsSold]
-		        }, {
-		            name: $rootScope.barchartData.sales[2].item,
-		            data: [$rootScope.barchartData.sales[2].unitsSold]
-		        }];
-				}
-	    		createBarChart(divId, seriesData, barChartDes);
-			},function(data){
-				// on error
-				 $rootScope.isApplyFiterButton = false;
-				 $scope.isError = true;
-			});
-		}else{
-			console.log('in top3SellingModels group true');
-			$rootScope.barDetails = $rootScope.barchartData;
-			if($rootScope.applyFilterBoolean){
-				console.log('top3SellingModels on apply filter click');
-				var url = configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true';
-				var param = $scope.usagedata;
-		      	HttpService.post(url, param).then(function(data){
-					// on success
-		      		$scope.progress = false;
-					$rootScope.isApplyFiterButton = false;
-					$scope.isError = false;
-					// To prevent the top 3 selling models chart from updating according to the side-bar product filter
-					//Made this change because we cannot plot the chart if the user select Make and Model
+		$rootScope.barDetails = $rootScope.barchartData;
+		var url = configApiClient.baseUrl + 'sales?report_name=top3SellingModels&group=true';
+		var param = $scope.usagedata;
+      	HttpService.post(url, param).then(function(data){
+			// on success
+      		$scope.progress = false;
+			$rootScope.isApplyFiterButton = false;
+			$scope.isError = false;
+			// To prevent the top 3 selling models chart from updating according to the side-bar product filter
+			//Made this change because we cannot plot the chart if the user select Make and Model
 //					if(($rootScope.search.selectedMake) == undefined ){
-						console.log('in if selectedMake is undefined');
-						$rootScope.barchartData=data;
+				console.log('in if selectedMake is undefined');
+				$rootScope.barchartData=data;
 //					}
-					/*else{
-						console.log('in else selectedMake is undefined');
-						$rootScope.barchartData=$rootScope.barDetails;
-					}*/
-					var barChartDes = $rootScope.barchartData.description.substring(23,27);
-					
-					var seriesData = [];
-					if ($rootScope.barchartData.sales.length > 0) {
-				    	
-						for (i=0; i< $rootScope.barchartData.sales.length; i++){
-							var obj={
-					    			name:$rootScope.barchartData.sales[i].item,
-					    			data:[$rootScope.barchartData.sales[i].unitsSold]
-					    	}
-							seriesData.push(obj);
-							obj={};
-						}
-					}
-			    	createBarChart(divId, seriesData, barChartDes);
-				},function(data){
-					// on error
-					$scope.progress = false;
-		            $rootScope.isApplyFiterButton = false;
-		            $scope.isError = true;
-				});
-				$rootScope.applyFilterBoolean=false;
+			/*else{
+				console.log('in else selectedMake is undefined');
+				$rootScope.barchartData=$rootScope.barDetails;
+			}*/
+			var barChartDes = $rootScope.barchartData.description.substring(23,27);
+			
+			var seriesData = [];
+			if ($rootScope.barchartData.sales.length > 0) {
+		    	
+				for (i=0; i< $rootScope.barchartData.sales.length; i++){
+					var obj={
+			    			name:$rootScope.barchartData.sales[i].item,
+			    			data:[$rootScope.barchartData.sales[i].unitsSold]
+			    	}
+					seriesData.push(obj);
+					obj={};
+				}
 			}
-			else{
-				console.log('top3SellingModels on not apply filter click');
-				$scope.progress = false;
-				$scope.isError = false;
-				$rootScope.isApplyFiterButton = false;
-				var barChartDes = $rootScope.barchartData.description.substring(23,27);
-				var seriesData = [{
-		            name: $rootScope.barchartData.sales[0].item,
-		            data: [$rootScope.barchartData.sales[0].unitsSold]
-
-		        }, {
-		            name: $rootScope.barchartData.sales[1].item,
-		            data: [$rootScope.barchartData.sales[1].unitsSold]
-
-		        }, {
-		            name: $rootScope.barchartData.sales[2].item,
-		            data: [$rootScope.barchartData.sales[2].unitsSold]
-
-		        }];
-				createBarChart(divId, seriesData, barChartDes);
-			}
-
-		}
+	    	createBarChart(divId, seriesData, barChartDes);
+		},function(data){
+			// on error
+			$scope.progress = false;
+            $rootScope.isApplyFiterButton = false;
+            $scope.isError = true;
+		});
+		$rootScope.applyFilterBoolean=false;
 	}
 
 /**
@@ -3164,56 +3106,29 @@ $scope.plotPieChart=function(divID){
 		$scope.progress = true;
 		$rootScope.isApplyFiterButton = true;
 		var obj={};
-
-		if($rootScope.applyFilterBoolean){
-			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true';
-			var param = $scope.usagedata;
-	      	HttpService.post(url, param).then(function(data){
-				// on success
-	      		$scope.isDisabled = false;
-				$rootScope.isApplyFiterButton = false;
-				$scope.isError = false;
-				var lineChartSeriesData = [];
-				if (data.data.length > 0) {
-					lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-				}
-				var timeScales = getTimeScales(data.data);
-				$scope.progress = false;
-		    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
-			},function(data){
-				// on error
-				$scope.isDisabled = false;
-				$scope.progress = false;
-				$rootScope.isApplyFiterButton = false;
-				$scope.isError = true;
-			});
-
-			$rootScope.applyFilterBoolean=false;
-
-		} else {
-
-			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=false';
-			var param = null;
-	      	HttpService.post(url, param).then(function(data){
-				// on success
-	      		$scope.isDisabled = false;
-	      		$scope.isError = false;
-				$rootScope.isApplyFiterButton = false;
-				var lineChartSeriesData = [];
-				if (data.data.length > 0) {
-					lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-				}
-				var timeScales = getTimeScales(data.data);
-				$scope.progress = false;
-		    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
-			},function(data){
-				// on error
-				$rootScope.isApplyFiterButton = false;
-		    	$scope.isDisabled = false;
-		    	$scope.progress = false;
-		    	$scope.isError = true;
-			});
-		}
+		
+		var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true';
+		var param = $scope.usagedata;
+      	HttpService.post(url, param).then(function(data){
+			// on success
+      		$rootScope.linechartData = data;
+      		$scope.isDisabled = false;
+      		$scope.isError = false;
+			$rootScope.isApplyFiterButton = false;
+			var lineChartSeriesData = [];
+			if (data.data.length > 0) {
+				lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
+			}
+			var timeScales = getTimeScales(data.data);
+			$scope.progress = false;
+	    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
+		},function(data){
+			// on error
+			$rootScope.isApplyFiterButton = false;
+	    	$scope.isDisabled = false;
+	    	$scope.progress = false;
+	    	$scope.isError = true;
+		});
 	}
 
 /**
@@ -3228,94 +3143,70 @@ $scope.plotPieChart=function(divID){
 		$rootScope.isApplyFiterButton = true;
 		var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		var obj={};
-
-/*		if($rootScope.applyFilterBoolean){
-			console.log('in if');
-			var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true';
-			var param = $scope.usagedata;
-	      	HttpService.post(url, param).then(function(data){
-				// on success
-	      		$scope.isDisabled = false;
-				$rootScope.isApplyFiterButton = false;
-				var lineChartSeriesData = createLineChartSeriesDataForMktManager(data.data);
-				var timeScales = getTimeScales(data.data);
-				$scope.progress = false;
-		    	renderLineChart(divId, timeScales, lineChartSeriesData, $scope.sensortype, 'Time Scale', $scope.Unit);
-			},function(data){
-				// on error
-				$scope.isDisabled = false;
-				$scope.progress = false;
-				$rootScope.isApplyFiterButton = false;
-			});
-			$rootScope.applyFilterBoolean=false;
-
-		} else {*/
 			var param = $scope.usagedata;
 			var url = configApiClient.baseUrl + 'sensors/data?sensor_name=' + key + '&group_by_timescale=true';
 			var param;
 			if ($scope.usagedata) {
 				param = $scope.usagedata;
        
-        switch($scope.usagedata.timescale.relative.unit) {
-          case "1":
-            break;
-          case "2":
-            param.timescale.relative.unit = "d";
-            param.timescale.relative.value = 7;
-            break;
-          case "3":
-            param.timescale.relative.unit = "d";
-            param.timescale.relative.value = 30;
-            break;  
-          case "4":
-            param.timescale.relative.unit = "m";
-            param.timescale.relative.value = 3;
-            break;
-          case "5":
-            param.timescale.relative.unit = "m";
-            param.timescale.relative.value = 6;
-            break;  
-          case "6":
-            param.timescale.relative.unit = "y";
-            param.timescale.relative.value = 1;
-            break;     
-           case "7":
-            param.timescale.relative.unit = "y";
-            param.timescale.relative.value = 3;
-            break;                 
-          default:
-           param.timescale.relative.unit = "d";
-            param.timescale.relative.value = 7;
-            break;          
-        }
+	        switch($scope.usagedata.timescale.relative.unit) {
+	          case "1":
+	            break;
+	          case "2":
+	            param.timescale.relative.unit = "d";
+	            param.timescale.relative.value = 7;
+	            break;
+	          case "3":
+	            param.timescale.relative.unit = "d";
+	            param.timescale.relative.value = 30;
+	            break;  
+	          case "4":
+	            param.timescale.relative.unit = "m";
+	            param.timescale.relative.value = 3;
+	            break;
+	          case "5":
+	            param.timescale.relative.unit = "m";
+	            param.timescale.relative.value = 6;
+	            break;  
+	          case "6":
+	            param.timescale.relative.unit = "y";
+	            param.timescale.relative.value = 1;
+	            break;     
+	           case "7":
+	            param.timescale.relative.unit = "y";
+	            param.timescale.relative.value = 3;
+	            break;                 
+	          default:
+	           param.timescale.relative.unit = "d";
+	            param.timescale.relative.value = 7;
+	            break;          
+	        }
         
-        //alert(JSON.stringify($scope.usagedata));
+		} else {
+			param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
+					"timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
+					"relative": {"unit": "d","value": 30}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+		}
+		HttpService.post(url, param).then(function(data){
+			// on success
+      		$scope.isDisabled = false;
+			$rootScope.isApplyFiterButton = false;
+			$scope.isError = false;
+			if(data && data.length > 0){
+				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
+				$scope.progress = false;
+		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
-				param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
-						"timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
-						"relative": {"unit": "d","value": 30}},"region": {"states": [],"cities": [],"zip_codes": []},"age": [],"family_members_count": [],"income": []};
+				$scope.progress = false;
+		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
-			HttpService.post(url, param).then(function(data){
-				// on success
-	      		$scope.isDisabled = false;
-				$rootScope.isApplyFiterButton = false;
-				$scope.isError = false;
-				if(data && data.length > 0){
-					var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
-					$scope.progress = false;
-			    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
-				} else {
-					$scope.progress = false;
-			    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
-				}
-			},function(data){
-				// on error
-				$rootScope.isApplyFiterButton = false;
-		    	$scope.isDisabled = false;
-		    	$scope.progress = false;
-		    	$scope.isError = true;
-			});
-//		}
+		},function(data){
+			// on error
+			$rootScope.isApplyFiterButton = false;
+	    	$scope.isDisabled = false;
+	    	$scope.progress = false;
+	    	$scope.isError = true;
+		});
 	}
 
 /**
