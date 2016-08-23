@@ -11,7 +11,7 @@
 
 
 		$scope.showPerSign = false;
-
+		$scope.selectedDay;
 		$scope.twitter_insights_griddata = [];
 
 		$("#gridAdjustHeight").height(400);
@@ -60,10 +60,46 @@
 				// on error
 			});
 		};
-
+		 /**
+		  * For filter Twitter Insights grid
+		  */
+		$scope.loadDayFilterData = function () {
+			if($scope.selectedDay == 0){
+				var url = configApiClient.baseUrl + "twitter/innerpage/twitter-insights";				
+				HttpService.get(url).then(function(data){					
+					// on success
+					$scope.twitter_insights_griddata = data.data;
+				},function(data){					
+					// on error
+				});
+			}
+			else if($scope.selectedDay == 5){
+				var url = configApiClient.baseUrl + "twitter/innerpage/dayfilterbyfive";				
+				HttpService.get(url).then(function(data){
+					// on success
+					$scope.twitter_insights_griddata = data.data;
+				},function(data){					
+					// on error
+				});
+			}
+			else if ($scope.selectedDay == 10){
+				var url = configApiClient.baseUrl + "twitter/innerpage/dayfilterbyten";
+				HttpService.get(url).then(function(data){
+					// on success
+					$scope.twitter_insights_griddata = data.data;
+				},function(data){
+					// on error
+				});
+			}
+			
+		};		
+		
 		$scope.loadTwitterInsightsData('');
-
-		$scope.days = [{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];
+		
+		/*$scope.days = [{"day": "0", "desc": "Days"},{"day": "5", "desc": "Last 5 Days"}, {"day": "10", "desc": "Last 10 Days"}];*/
+		
+		$scope.days  = {"0": "All","5": "Last 5 Days","10": "Last 10 Days"};	
+		
 
 	  /**
 	   * Session handling-Return back to Dashboard
@@ -174,6 +210,7 @@
 	 * @param {String} twitter_sentiments - Data set for Twitter Sentiment charts
 	 */
 	function getTwitterSentiments (divId, twitter_sentiments) {
+
 		 var positive 	= twitter_sentiments.sentimate_positive;
 		 var pos_other	= (100-positive);
 		 var negative 	= twitter_sentiments.sentimate_neutral;
@@ -288,7 +325,7 @@
 	 * @param {String} innerText - Twitter Sentiments pie chart inner text
 	 */
 	function renderTwitterSentimentsPieChart(divId, insightsData, innerText){
-
+		
 		var colorCode = ['#339933', '#808080']; // For Positive
 		if(divId == 'twitter_sentiments_neg'){
 			colorCode = ['#FF0000', '#808080']; // For Negative
