@@ -49,7 +49,7 @@
                
                               <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
                               <a href="#" class="pull-left forgot-password" translate="{{'forgot_password_msg'}}"><u></u></a>
-     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$touched && userForm.email.$invalid) ||(userForm.password.$touched && userForm.password.$invalid) " translate="{{'login'}}"></button>
+     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$untouched  && userForm.email.$invalid) ||(userForm.password.$untouched && userForm.password.$invalid) " translate="{{'login'}}"></button>
       </form>
     </div> 
   </body>
