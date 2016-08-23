@@ -3908,12 +3908,14 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
-angular.module('angle').controller('MyviewController', ['$scope', function($scope) {
+angular.module('angle').controller('MyviewController', ['$scope', '$window', function($scope, $window) {
 	  /* controller code */
 
 	  $scope.getUrl = function(){
+		var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+		var rolename = loginCredentails.Role;
 
-	    if(localStorage.getItem('rolename') == "Engineer Manager"){
+	    if(rolename == "Engineering Manager"){
 	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
 	    }
 	    else{
