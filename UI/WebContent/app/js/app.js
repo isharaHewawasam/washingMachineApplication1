@@ -3022,8 +3022,13 @@ $scope.plotPieChart=function(divID){
 		            var totalSold = 0;
 		            var totalconnected = 0;
 		            for(var i=0;i<data.length;i++){
-		              totalSold +=data[i].unitsSold;
-		              totalconnected += data[i].unitsConnected ;
+		             // Check whether unitsConnected is not defined in the api response (unitsConnected value is empty in db)
+		             if (data[i].unitsConnected){
+			              totalSold +=data[i].unitsSold;
+			              totalconnected += data[i].unitsConnected ;
+		             } else {
+		            	 totalSold +=data[i].unitsSold;
+		             }
 		            }
 		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]];
                 $rootScope.maxPieChartData=seriesData;
