@@ -165,24 +165,8 @@
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
 					<option class="chart-option-text-style" ng-if="$index!=0"
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
-				</select> <select ng-disabled="{'chart-selectStyle2': isActive2}"
-					ng-click="activeButton(2)" id="second-chart-select"
-					class="chart-selectStyle col-md-3 chart-border salesname">
-					<option class="chart-option-text-style" selected value="">Last
-						1 day
-					<option class="chart-option-text-style" value="">Last 7
-						days
-					<option class="chart-option-text-style" value="">Last 30
-						days
-					<option class="chart-option-text-style" value="">Last 3
-						months
-					<option class="chart-option-text-style" value="">Last 6
-						months
-					<option class="chart-option-text-style" value="">Last 1
-						year
-					<option class="chart-option-text-style" value="">Last 3
-						years
-				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
+				</select> 
+				 <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
 					class="chart-selectStyle col-md-3 salesname "
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart">
