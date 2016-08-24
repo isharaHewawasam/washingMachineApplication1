@@ -646,7 +646,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 				// on success
 				$scope.isLoading = false;
 				$scope.isError = false
-				
+
 		    	 if (data && data.length != 0) {
 
 		    		 var total = 0;
@@ -1972,6 +1972,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
 
+
     $("#hiddenDivMap").removeClass("hidden");
 
     }
@@ -1980,7 +1981,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
 		$scope.zoomMap('map-container');
-         
+
           $("#mapNormal1").height(355);
 
 
@@ -2835,7 +2836,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
     $scope.init = function() {
       $scope.relativeTimeScale = "3";
     };
-    
+
 	  $rootScope.setUsageData=function(usagedata){
 		  $scope.usagedata=usagedata;
       $scope.usagedata.timescale.relative.unit = $scope.relativeTimeScale;
@@ -2883,10 +2884,10 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			},function(data){
 				$scope.progress = false;
 				// on error
-	
+
 			});
 		}
-		
+
 		loadCharts();
 
 	  /**
@@ -2992,6 +2993,7 @@ $scope.plotPieChart=function(divID){
 	    	$scope.data[2]=data.unitsSold - data.unitsConnected;
 
 	    	var seriesData = [["Connected",$scope.data[1]],["Disconnected",$scope.data[2]]];
+        $rootScope.maxPieChartData=seriesData;
 
 	    	createPieChart(divID, seriesData);
 		},function(data){
@@ -3018,13 +3020,14 @@ $scope.plotPieChart=function(divID){
 				var seriesData = [];
 				if (data && data.length > 0) {
 		            var totalSold = 0;
-		            var totalconnected = 0;		            
+		            var totalconnected = 0;
 		            for(var i=0;i<data.length;i++){
 		              totalSold +=data[i].unitsSold;
 		              totalconnected += data[i].unitsConnected ;
 		            }
-		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]]
-				} 
+		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]];
+                $rootScope.maxPieChartData=seriesData;
+				}
 				createPieChart(divID, seriesData);
 			},function(data){
 				// on error
@@ -3076,10 +3079,10 @@ $scope.plotPieChart=function(divID){
 				$rootScope.barchartData=$rootScope.barDetails;
 			}*/
 			var barChartDes = $rootScope.barchartData.description.substring(23,27);
-			
+
 			var seriesData = [];
 			if ($rootScope.barchartData.sales.length > 0) {
-		    	
+
 				for (i=0; i< $rootScope.barchartData.sales.length; i++){
 					var obj={
 			    			name:$rootScope.barchartData.sales[i].item,
@@ -3088,6 +3091,8 @@ $scope.plotPieChart=function(divID){
 					seriesData.push(obj);
 					obj={};
 				}
+        $rootScope.maxBarChartData=seriesData;
+         $rootScope.maxBarDes=barChartDes;
 			}
 	    	createBarChart(divId, seriesData, barChartDes);
 		},function(data){
@@ -3109,7 +3114,7 @@ $scope.plotPieChart=function(divID){
 		$scope.progress = true;
 		$rootScope.isApplyFiterButton = true;
 		var obj={};
-		
+
 		var url = configApiClient.baseUrl + 'sales?report_name=salesVolume&group=true';
 		var param = $scope.usagedata;
       	HttpService.post(url, param).then(function(data){
@@ -3124,6 +3129,8 @@ $scope.plotPieChart=function(divID){
 			}
 			var timeScales = getTimeScales(data.data);
 			$scope.progress = false;
+      $rootScope.timeScales=timeScales;
+       $rootScope.maxLineChartData=lineChartSeriesData;
 	    	renderLineChart(divId, timeScales, lineChartSeriesData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 		},function(data){
 			// on error
@@ -3138,7 +3145,7 @@ $scope.plotPieChart=function(divID){
  * generate line charts in eng_manager
  */
 	$scope.plotEngManagerChartFunction = function(divId,key){
-		
+
 		$scope.removechart(divId);
 		$scope.loadingText = "Loading data...";
 		$scope.isDisabled = true;
@@ -3151,7 +3158,7 @@ $scope.plotPieChart=function(divID){
 			var param;
 			if ($scope.usagedata) {
 				param = $scope.usagedata;
-       
+
 	        switch($scope.usagedata.timescale.relative.unit) {
 	          case "1":
 	            break;
@@ -3162,7 +3169,7 @@ $scope.plotPieChart=function(divID){
 	          case "3":
 	            param.timescale.relative.unit = "d";
 	            param.timescale.relative.value = 30;
-	            break;  
+	            break;
 	          case "4":
 	            param.timescale.relative.unit = "m";
 	            param.timescale.relative.value = 3;
@@ -3170,21 +3177,21 @@ $scope.plotPieChart=function(divID){
 	          case "5":
 	            param.timescale.relative.unit = "m";
 	            param.timescale.relative.value = 6;
-	            break;  
+	            break;
 	          case "6":
 	            param.timescale.relative.unit = "y";
 	            param.timescale.relative.value = 1;
-	            break;     
+	            break;
 	           case "7":
 	            param.timescale.relative.unit = "y";
 	            param.timescale.relative.value = 3;
-	            break;                 
+	            break;
 	          default:
 	           param.timescale.relative.unit = "d";
 	            param.timescale.relative.value = 7;
-	            break;          
+	            break;
 	        }
-        
+
 		} else {
 			param = {"productAttrs": {"makes": [],"models": [],"skus": [],"mfg_date": {"start_date":"","end_date": ""}},
 					"timescale": {"years": [],"quarters": [],"months": [],"date": {"start_date": "string","end_date": "string"},
@@ -3215,105 +3222,188 @@ $scope.plotPieChart=function(divID){
 /**
  * Maximize Charts in both managers
  */
-	$scope.maximize = function(){
-		var chartParent = $("#chartParent").clone();
+ $scope.maximize = function(){
 
-		//give new IDs for identification
-		chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
-		chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
-		chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
+      if($scope.selectedChart=='Multiline'){
+        var chartParent = $("#chartParent3").clone();
 
-     	$("#hiddenDiv").empty();
-     	$("#hiddenDiv").append(chartParent);
+          $("#hiddenDiv").empty();
+             $("#hiddenDiv").append(chartParent);
 
-     	//remove the elements with new ID
-		 $("#filter1").remove();
-		 $("#filter2").remove();
-		 $("#filter3").remove();
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+             $("#chartParent3").removeClass("hidden");
 		 
 		//For notifications help icon in maximized views
 		// $('[data-toggle="popover"]').popover()
 		 
-     	$("#hiddenDiv").removeClass("hidden");
-     	$("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
-     	if($scope.selectedChart=='Multiline'){
-     		$("#hiddenDiv #container").removeClass("graphDiv");
-     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+           //   $("#maxpiecontainer").height(500);
 
-         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+         $("#hiddenDiv").removeClass("hidden")
 
-         	$("#hiddenDiv #container").addClass("graphDiv-maximize");
-         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+           //give new IDs for identification
+           chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+           chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
 
-         	$("#hiddenDiv #maximize").addClass("hidden");
-         	$("#hiddenDiv #close").removeClass("hidden");
+    $("#hiddenDiv").empty();
+    $("#hiddenDiv").append(chartParent);
 
-         	$scope.plotChartFunction("#container");
+    //remove the elements with new ID
+           $("#filter1").remove();
+           $("#filter2").remove();
+           $("#filter3").remove();
+
+    $("#hiddenDiv").removeClass("hidden");
+    $("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
 
 
-     	}if($scope.selectedChart=='Line Chart'){
+             $("#hiddenDiv #container").removeClass("graphDiv");
+             $("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+
+             $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+
+             $("#hiddenDiv #container").addClass("graphDiv-maximize");
+             $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+
+ /*            $scope.plotChartFunction("hiddenDiv #container");*/
+
+             $("#container").height(500);
+             renderLineChart("maxcontainer", $rootScope.timeScales, $rootScope.maxLineChartData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 
 
-     		$("#hiddenDiv #container").removeClass("graphDiv");
-     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+      }if($scope.selectedChart=='Line Chart'){
 
-         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
 
-         	$("#hiddenDiv #container").addClass("graphDiv-maximize");
-         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+             $("#hiddenDiv #container").removeClass("graphDiv");
+             $("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
 
-         	$("#hiddenDiv #maximize").addClass("hidden");
-         	$("#hiddenDiv #close").removeClass("hidden");
+             $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
 
-         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
-     	}
+             $("#hiddenDiv #container").addClass("graphDiv-maximize");
+             $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
 
-     	if($scope.selectedChart=='Pie'){
-     		$("#hiddenDiv #piecontainer").removeClass("graphDiv");
-     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
 
-         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+             $scope.plotEngManagerChartFunction('#hiddenDiv #container', $scope.seneorkey);
+      }
 
-         	$("#hiddenDiv #piecontainer").addClass("graphDiv-maximize");
-         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+      if($scope.selectedChart=='Pie'){
 
-         	$("#hiddenDiv #maximize").addClass("hidden");
-         	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotPieChart("#pie");
-         }
 
-     	if($scope.selectedChart=='Bar'){
-     		$("#hiddenDiv #bar").removeClass("graphDiv");
-     		$("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+        var chartParent = $("#chartParent1").clone();
 
-         	$("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+          $("#hiddenDiv").empty();
+             $("#hiddenDiv").append(chartParent);
 
-         	$("#hiddenDiv #bar").addClass("graphDiv-maximize");
-         	$("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+             $("#chartParent1").removeClass("hidden");
 
-         	$("#hiddenDiv #maximize").addClass("hidden");
-         	$("#hiddenDiv #close").removeClass("hidden");
-         	$scope.plotBarChart("#bar");
-         }
+         $("#hiddenDiv").removeClass("hidden")
 
-	};
-	$("body").on("click","#hiddenDiv #close",function(){
-		$("#hiddenDiv").empty();
-		$("#hiddenDiv").addClass("hidden");
-		if($scope.selectedChart=='Multiline'){
+           //give new IDs for identification
+           chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+           chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
 
-			$scope.plotChartFunction("#container");
-		}else if($scope.selectedChart=='Bar'){
-			$scope.plotBarChart("#bar");
-		}else if($scope.selectedChart=='Pie'){
-			$scope.plotPieChart("#pie");
-		}else if($scope.selectedChart=='Line Chart'){
+    $("#hiddenDiv").empty();
+    $("#hiddenDiv").append(chartParent);
 
-         	$scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
-		}
-    });
+    //remove the elements with new ID
+           $("#filter1").remove();
+           $("#filter2").remove();
+           $("#filter3").remove();
 
-}]);
+    $("#hiddenDiv").removeClass("hidden");
+    $("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
+
+                $("#hiddenDiv #piecontainer").removeClass("graphDiv");
+                $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv");
+          $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+ //
+         $("#hiddenDiv #piecontainer").addClass("graphDiv-maximize");
+         $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+ //
+          $("#hiddenDiv #maximize").addClass("hidden");
+          $("#hiddenDiv #close").removeClass("hidden");
+ //         $scope.plotPieChart("#pie");
+            $("#maxpiecontainer").height(500);
+             createPieChart("maxpiecontainer", $rootScope.maxPieChartData);
+             /*plotMaxPieChart("maxpiecontainer");*/
+          }
+
+      if($scope.selectedChart=='Bar'){
+
+        var chartParent = $("#chartParent2").clone();
+
+          $("#hiddenDiv").empty();
+             $("#hiddenDiv").append(chartParent);
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+             $("#chartParent2").removeClass("hidden");
+
+           //   $("#maxpiecontainer").height(500);
+
+         $("#hiddenDiv").removeClass("hidden")
+
+           //give new IDs for identification
+           chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+           chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
+
+    $("#hiddenDiv").empty();
+    $("#hiddenDiv").append(chartParent);
+
+    //remove the elements with new ID
+           $("#filter1").remove();
+           $("#filter2").remove();
+           $("#filter3").remove();
+
+    $("#hiddenDiv").removeClass("hidden");
+    $("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
+
+             //alert("bar max");
+             $("#hiddenDiv #bar").removeClass("graphDiv");
+             $("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+
+             $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+
+             $("#hiddenDiv #bar").addClass("graphDiv-maximize");
+             $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+          // $scope.plotBarChart("hiddenDiv #bar");
+             $("#maxbarcontainer").height(500);
+             /*plotMaxBarChart("maxbarcontainer");*/
+             createBarChart("maxbarcontainer", $rootScope.maxBarChartData, $rootScope.maxBarDes);
+          }
+
+       };
+       $("body").on("click","#hiddenDiv #close",function(){
+             $("#hiddenDiv").empty();
+             $("#hiddenDiv").addClass("hidden");
+             if($scope.selectedChart=='Multiline'){
+
+                   $scope.plotChartFunction("#container");
+             }else if($scope.selectedChart=='Bar'){
+                   $scope.plotBarChart("bar");
+             }else if($scope.selectedChart=='Pie'){
+                   $scope.plotPieChart("pie");
+             }else if($scope.selectedChart=='Line Chart'){
+
+             $scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
+             }
+     });
+
+ }]);
+
 
 function createPieChart(divID, seriesData) {
     // Create the chart
