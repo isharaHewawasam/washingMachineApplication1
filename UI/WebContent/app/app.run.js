@@ -51,12 +51,19 @@
 		};
 		
 		console.log('$window.localStorage.loginCredentails : ', $window.localStorage.loginCredentails);
-		if(!loginService($window.localStorage.loginCredentails)) {
+		/*if(!loginService($window.localStorage.loginCredentails)) {
 			console.log('in if');
 			$location.path('/login');
 		} else {
 			console.log('in else');
-		}
+		}*/
+		
+		$rootScope.$on('$stateChangeSuccess', function(evt, to, params) {
+			if(!$window.localStorage.loginCredentails) {
+				evt.preventDefault();
+				$state.go('page.login');
+			}
+	    });
 		
 	}
 })();
