@@ -4073,8 +4073,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   -webkit-overflow-scrolling: touch;
 }
 .navbar-collapse.in {
-  overflow-y: auto;
+  overflow-y: visible;
 }
+
+.wrapper {
+  overflow-y: hidden;
+}
+
 @media (min-width: 768px) {
   .navbar-collapse {
     width: auto;
@@ -12036,7 +12041,7 @@ display : block;
 
 .filter-filterDiv{
 	width:1920px;
-	height: 48px;
+	min-height: 48px;
 	background-color: #E7EEF6;
 	vertical-align: middle;
 	display:table-cell;
@@ -12241,10 +12246,12 @@ display : block;
 	padding-top: 4px;
 }
 
+/* Commented out to fixed responsibe UI 
 .col-lg-2 {
     width: 30%;
     float: left;
 }
+*/
 
 .twitter_arrow_red {
 	color: red !important;

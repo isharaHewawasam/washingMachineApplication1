@@ -1,13 +1,32 @@
 <!-- START Top Navbar-->
 <link href="css/topnavbar.css" rel="stylesheet" />
-<nav  role="navigation" class="navbar topnavbar" ng-controller="TopnavbarController" >
+<nav  role="navigation" class="navbar topnavbar" ng-controller="TopnavbarController">
 	<!-- START navbar header-->
-	<div class="navbar-header"></div>
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          		<a href="#" class="navbar-brand" >
+						<div class="logodive" style="width:230px; margin-left: 14px; margin-top: 9px">
+							<div style="float: left">
+							<img src="img/logo.png" alt="App Logo" class="img-responsive logo"  />
+							</div>
+							<div style="float: left">
+								<strong class="captionfont" translate="{{'app_name'}}"></strong>
+							</div>
+						</div>
+				</a>
+
+      	
+	</div>
 	<!-- END navbar header-->
 	<!-- START Nav wrapper-->
-	<div class="nav-wrapper" >
-		<ul class="nav navbar-nav pull-left navstyle" >
-			<!-- Search icon-->
+	<div class="collapse navbar-collapse nav-wrapper" id="navbar" style="overflow-y: visible;">
+		<!-- <ul class="nav navbar-nav pull-left navstyle" >
+			
 			<li class="navitem">
 				<div class="navbar-header "
 					>
@@ -17,12 +36,12 @@
 
 						</div>
 					</a>
-				</div> <!-- START Alert menu-->
+				</div> 
 			</li>
 			<li class="captiondiv">
-			<strong class="captionfont" translate="{{'app_name'}}"></strong>
+			<strong class="captionfont" translate="{{'app_name'}}"></strong> 
 			</li>
-		</ul>
+		</ul> -->
 
 		<ul class="nav navbar-nav pull-right" >
 		<li class="downloadicon">

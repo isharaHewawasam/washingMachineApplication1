@@ -22,8 +22,16 @@
 }
 
 #filterdive {
-	position: absolute;
-	z-index: 99;
+	position: relative;
+	min-height: 48px;
+	z-index: 0;
+}
+
+@media (min-width: 992px) {
+  #filterdive {
+   	position: absolute;
+   	z-index: 99;
+  }
 }
 
 #filterDivId {
@@ -38,6 +46,7 @@
 	font-size: 15px;
 	margin: auto;
 	margin-left: 15px;
+	margin-right: 0px;
 	color: #FFFFFF;
 }
 
@@ -272,24 +281,33 @@
 	margin-right: 30px;
 }
 
+
+.reportnvwidth {
+	
+	margin-left: 15px !important;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
 .reportnvwidth1 {
-	max-width: 200px;
+	
 	margin-left: 15px;
 	padding-right: 0px;
 	padding-left: 0px;
 }
 
+
 .reportnvwidth2 {
-	max-width: 200px;
+	
 	margin-left: 15px !important;
 	padding-right: 0px;
 	padding-left: 0px;
 }
 
 .reportnvwidth3 {
-	max-width: 134px;
+	
 	padding-right: 0px;
-	padding-left: 50px;
+	/* padding-left: 50px; */
 	padding-top: 10px;
 }
 
@@ -308,15 +326,64 @@
 .todatepicker {
 	max-width: 150px;
 	padding-right: 0px;
-	padding-left: 80px;
+	/* padding-left: 80px; */
 	padding-top: 10px;
 }
 
 .todatedive {
-	max-width: 150px;
+	margin-left: 15px !important;
 	padding-right: 0px;
 	padding-left: 0px;
 	padding-bottom: 10px;
+}
+
+@media (min-width: 992px) {
+  .reportnvwidth1 {
+		max-width: 100%;
+		margin-left: 15px;
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+	
+	.reportnvwidth2 {
+		max-width: 100%;
+		margin-left: 15px !important;
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+	
+	.reportnvwidth3 {
+		max-width: 100%;
+		padding-right: 0px;
+		padding-left: 50px;
+		padding-top: 10px;
+	}
+	
+	.datepicker {
+		max-width: 150px;
+		margin-left: 15px !important;
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+	
+	.internaldate {
+		padding-top: 0;
+		height: 35px;
+	}
+	
+	.todatepicker {
+		max-width: 150px;
+		padding-right: 0px;
+		padding-left: 80px;
+		padding-top: 10px;
+	}
+	
+	.todatedive {
+		max-width: 150px;
+		padding-right: 0px;
+		padding-left: 0px;
+		padding-bottom: 10px;
+	}
 }
 
 .reportfiltrdv {

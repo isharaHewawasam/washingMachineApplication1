@@ -6,12 +6,12 @@
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
-<h3>
 
+<h3>
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
-
+	
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
@@ -19,20 +19,21 @@
 		<a href="#" translate="{{'dashboard'}}"></a>
 	</div>
 
-
+	
+	
 </h3>
 
 
 
-<div class="row col-lg-12  filter-filterDiv" id="filterdive">
+<div class="row col-lg-12 nopadding  filter-filterDiv" id="filterdive">
 
 
 
 
 
-	<div class=" col-lg-10" id="filterDivId">
+	<div class=" col-lg-10 nopadding" id="filterDivId">
 
-		<div class="col-lg-2 filterItem">
+		<div class="col-lg-2 filterItem nopadding">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
 				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
@@ -47,7 +48,7 @@
 
 		</div>
 
-		<div class="col-lg-2 filterItem">
+		<div class="col-lg-2 filterItem nopadding">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
