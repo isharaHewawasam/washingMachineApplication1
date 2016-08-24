@@ -3459,9 +3459,9 @@ $scope.plotPieChart=function(divID){
 
                    $scope.plotChartFunction("#container");
              }else if($scope.selectedChart=='Bar'){
-                   $scope.plotBarChart("bar");
+                   $scope.plotBarChart("#bar");
              }else if($scope.selectedChart=='Pie'){
-                   $scope.plotPieChart("pie");
+                   $scope.plotPieChart("#pie");
              }else if($scope.selectedChart=='Line Chart'){
 
              $scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
