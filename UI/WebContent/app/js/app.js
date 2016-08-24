@@ -3327,7 +3327,7 @@ $scope.plotPieChart=function(divID){
 
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
-             $("#container").height(500);
+             $("#maxengcontainer").height(500);
              renderLineChart("maxengcontainer",$rootScope.timeScales, $rootScope.maxLineChartData, $scope.sensortype, 'Days', $scope.Unit);
 
 
