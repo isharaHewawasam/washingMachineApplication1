@@ -153,6 +153,15 @@ $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
 
 });
 $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
+	var e = event.toElement || event.relatedTarget;
+	if(e){
+	    if (e.parentNode == this || e == this) {
+	       return;
+	    }
+	}else{
+		return;
+	}
+    
     if($('.md-pane-open').is(":visible")){
         return;
     }
@@ -182,7 +191,15 @@ $(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", functi
 });
 
 $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
-    if($('.md-pane-open').is(":visible")){
+	var e = event.toElement || event.relatedTarget;
+	if(e){
+	    if (e.parentNode == this || e == this) {
+	       return;
+	    }
+	}else{
+		return;
+	}
+	if($('.md-pane-open').is(":visible")){
         return;
     }
     $('#demographicsFilterPanel').hide();

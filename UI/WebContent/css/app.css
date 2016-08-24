@@ -12045,7 +12045,7 @@ display : block;
 
 .filter-filterDiv{
 	width:1920px;
-	min-height: 48px;
+	height: 48px;
 	background-color: #E7EEF6;
 	vertical-align: middle;
 	display:table-cell;
