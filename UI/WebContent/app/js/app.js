@@ -3241,10 +3241,7 @@ $scope.plotPieChart=function(divID){
 
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
-             $("#chartParent3").removeClass("hidden");
-
-		//For notifications help icon in maximized views
-		// $('[data-toggle="popover"]').popover()
+             $("#chartParent3").removeClass("hidden");		
 
            //   $("#maxpiecontainer").height(500);
 
@@ -3281,6 +3278,10 @@ $scope.plotPieChart=function(divID){
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
              $("#maxcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+             
              renderLineChart("maxcontainer", $rootScope.timeScales, $rootScope.maxLineChartData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 
 
@@ -3328,6 +3329,10 @@ $scope.plotPieChart=function(divID){
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
              $("#maxengcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+     		 
              renderLineChart("maxengcontainer",$rootScope.timeScales, $rootScope.maxLineChartData, $scope.sensortype, 'Days', $scope.Unit);
 
 
@@ -3386,6 +3391,10 @@ $scope.plotPieChart=function(divID){
           $("#hiddenDiv #close").removeClass("hidden");
  //         $scope.plotPieChart("#pie");
             $("#maxpiecontainer").height(500);
+            
+          //For notifications help icon in maximized views
+    		 $('[data-toggle="popover"]').popover()
+    		 
              createPieChart("maxpiecontainer", $rootScope.maxPieChartData);
              /*plotMaxPieChart("maxpiecontainer");*/
           }
@@ -3434,6 +3443,10 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #close").removeClass("hidden");
           // $scope.plotBarChart("hiddenDiv #bar");
              $("#maxbarcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+     		 
              /*plotMaxBarChart("maxbarcontainer");*/
              createBarChart("maxbarcontainer", $rootScope.maxBarChartData, $rootScope.maxBarDes);
           }

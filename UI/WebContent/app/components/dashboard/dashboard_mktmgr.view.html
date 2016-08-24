@@ -234,27 +234,45 @@
 				<div id="container"></div>
 			</div>
 			<!--for maximization-->
-			<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1"><img id="close"
-			class=" col-md-1 image-margin close-image-size hidden pull-right"
-			src="img/Dashboardassets/close.png" ng-click="closing()">
-			                        <span ng-show="progress" class="progress-chart"> <img alt=""
-			                              src="img/icon-load.gif" width="25%" ;height="25%">
-			                        </span>
-			                        <div id="maxpiecontainer"></div>
-			                  </div>
+							<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1">	
+								  <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div>  
+								  <span ng-show="progress" class="progress-chart"> <img alt=""
+					                    src="img/icon-load.gif" width="25%" ;height="25%">
+					              </span>
+					              <div id="maxpiecontainer"></div>
+			                </div>
 
-			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent2"><img id="close"
-												class=" col-md-1 image-margin close-image-size hidden pull-right"
-												src="img/Dashboardassets/close.png" ng-click="closing()">
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent2">
+			                      <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div>  
 			                        <span ng-show="progress" class="progress-chart"> <img alt=""
 			                              src="img/icon-load.gif" width="25%" ;height="25%">
 			                        </span>
 			                        <div id="maxbarcontainer"></div>
 			                  </div>
 
-			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent3"><img id="close"
-												class=" col-md-1 image-margin close-image-size hidden pull-right"
-												src="img/Dashboardassets/close.png" ng-click="closing()">
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent3">
+			                      <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div> 
 			                        <span ng-show="progress" class="progress-chart"> <img alt=""
 			                              src="img/icon-load.gif" width="25%" ;height="25%">
 			                        </span>
