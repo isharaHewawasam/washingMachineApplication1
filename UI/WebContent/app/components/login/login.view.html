@@ -27,7 +27,10 @@
  </ul>
 </div>
     <div class="container">
-       <h2 translate="{{'login'}}"><img src="img/Dashboardassets/iconlock.png" class="lock"   /></span></h2>
+      <div align="center">
+	       <h2><img src="img/Dashboardassets/iconlock.png" class="lock"   /></h2>  
+	       <h2 translate="{{'login'}}" ></h2>    
+	   </div>  
       <form class="login-form" ng-submit="postForm()" name="userForm" novalidate >
        
          
@@ -46,7 +49,7 @@
                
                               <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
                               <a href="#" class="pull-left forgot-password" translate="{{'forgot_password_msg'}}"><u></u></a>
-     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$touched && userForm.email.$invalid) ||(userForm.password.$touched && userForm.password.$invalid) " translate="{{'login'}}"></button>
+     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$untouched  && userForm.email.$invalid) ||(userForm.password.$untouched && userForm.password.$invalid) " translate="{{'login'}}"></button>
       </form>
     </div> 
   </body>

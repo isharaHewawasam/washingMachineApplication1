@@ -165,14 +165,14 @@
                  </tbody>
 
                </table>
-
+         
             </div>
 
 
 
     <!--   END panel -->
     </div>
-    <button type="button"  class="mb-sm btn btn-primary searchbtn" id="downloadreport" ng-click="downloadReport()" ng-if="!isEngManager" translate="{{'download_report'}}"></button>
+    <button type="button"  class="mb-sm btn btn-primary searchbtn" id="downloadreport" ng-disabled="!isReportAvailableForDownload" ng-click="downloadReport()" ng-if="!isEngManager" translate="{{'download_report'}}"></button>
 
       </div>
 

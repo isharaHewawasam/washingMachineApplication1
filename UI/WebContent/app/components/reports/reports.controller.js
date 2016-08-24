@@ -38,6 +38,7 @@
                         content: [{
                             image: data,
                             width: 500,
+                            height: 200,
                         }]
                     };
                     pdfMake.createPdf(docDefinition).download("reports.pdf");

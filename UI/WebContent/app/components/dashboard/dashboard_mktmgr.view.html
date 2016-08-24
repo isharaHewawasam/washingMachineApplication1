@@ -39,7 +39,7 @@
 				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="state in states"
 					value={{state.name}}>{{state.name}}</option>
@@ -54,7 +54,7 @@
 				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="city in cities"
 					value={{city.city}}>{{city.city}}
@@ -79,13 +79,13 @@
 				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style"
 					ng-repeat="sales_year in sales_years" value={{sales_year.year}}>{{sales_year.year}}
 
 
-				
+
 			</select>
 
 		</div>
@@ -96,7 +96,7 @@
 				<option class="option-text-style" value="" selected disabled translate="{{'quarter'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="quarter in quarters"
 					value={{quarter.id}}>{{quarter.value}}
@@ -110,7 +110,7 @@
 				<option class="option-text-style" value="" selected disabled translate="{{'month'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="month in months"
 					value={{month.id}}>{{month.value}}
@@ -200,29 +200,68 @@
 					data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 					data-trigger="hover"></img>
 			</div>
+
+			<span ng-show="progress" class="progress-chart"> <img alt=""
+				src="img/icon-load.gif" width="25%" ;height="25%">
+			</span>
+
 			<div ng-if="selectedChart=='Pie'" class="graphDiv"
 				ng-init="plotPieChart('piecontainer')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="piecontainer"></div>
 			</div>
 
+
+
 			<div ng-if="selectedChart=='Bar'" class="graphDiv"
 				ng-init="plotBarChart('bar')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="bar"></div>
 			</div>
 
 			<div ng-if="selectedChart=='Multiline'" class="graphDiv"
 				ng-init="plotChartFunction('container')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="container"></div>
 			</div>
+			<!--for maximization-->
+			<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1"><img id="close"
+			class=" col-md-1 image-margin close-image-size hidden pull-right"
+			src="img/Dashboardassets/close.png" ng-click="closing()">
+			                        <span ng-show="progress" class="progress-chart"> <img alt=""
+			                              src="img/icon-load.gif" width="25%" ;height="25%">
+			                        </span>
+			                        <div id="maxpiecontainer"></div>
+			                  </div>
+
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent2"><img id="close"
+												class=" col-md-1 image-margin close-image-size hidden pull-right"
+												src="img/Dashboardassets/close.png" ng-click="closing()">
+			                        <span ng-show="progress" class="progress-chart"> <img alt=""
+			                              src="img/icon-load.gif" width="25%" ;height="25%">
+			                        </span>
+			                        <div id="maxbarcontainer"></div>
+			                  </div>
+
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent3"><img id="close"
+												class=" col-md-1 image-margin close-image-size hidden pull-right"
+												src="img/Dashboardassets/close.png" ng-click="closing()">
+			                        <span ng-show="progress" class="progress-chart"> <img alt=""
+			                              src="img/icon-load.gif" width="25%" ;height="25%">
+			                        </span>
+			                        <div id="maxcontainer"></div>
+			                  </div>
+
+			<!--for max end-->
 
 		</div>
 
@@ -236,11 +275,11 @@
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeMap()"></img> <img id="mapMinImg"
-					class="pull-right hidden col-md-1 "
+					class="pull-right col-md-1 "
 					src="img/Dashboardassets/close.png"></img> <img
 					class="pull-right col-md-1" id="mapinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
 					data-trigger="hover"></img>
 			</div>
@@ -248,6 +287,7 @@
 				<span ng-show="mapProgress" class="progress-chart"> <img
 					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-maxcontainer"></div>
 			</div>
 		</div>
@@ -271,6 +311,7 @@
 				<span ng-show="mapProgress" class="progress-chart"> <img
 					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-container"></div>
 			</div>
 		</div>
@@ -299,16 +340,16 @@
 				<div class="col-lg-6 insiteinner" >
 
 					<div class="col-lg-6" id="nav1">
-						
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-					
 
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								>
@@ -316,8 +357,8 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-						
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 							>
@@ -325,14 +366,14 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-				
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								>
 								<h2 class="mv-lg">4</h2>
 							</div>
-					
+
 					</div>
 
 					<div class="col-lg-6" id="nav2" >
@@ -399,14 +440,14 @@
 					</div>
 
 					<div class="col-lg-6" id="nav3" >
-						
+
 							<img src='img/Dashboardassets/twitter.png' alt=''
 							id="twitericon" /> <img
 								ng-click="loadTwitterinsights()"
 								src="img/Dashboardassets/icon_arrow.png"
 								id="twiterarrow"
 								 />
-				
+
 
 
 					</div>
@@ -433,22 +474,22 @@
 
 	<div class="col-lg-8">
 		<!-- START panel -->
-		<div class="panel panel-default hidden " id="gridNormal1"
+		<div class="panel panel-default datagrid hidden " id="gridNormal1"
 			>
 			<div class="panel-heading md-body-2"
 				id="maximisedgridhead">
 				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1  "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 				<img class="pull-right col-md-1"
 					id="gridinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
 					data-trigger="hover"></img>
 			</div>
@@ -502,17 +543,16 @@
 					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
-		<div class="panel panel-default" id="gridNormal"
-			>
+		<div class="panel panel-default datagrid" id="gridNormal">
 			<div class="panel-heading md-body-2"
 			id="normalgridhead">
 				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 				<img class="pull-right col-md-1"
 						id="gridinfo"
@@ -596,7 +636,7 @@
 			</div>
 
 			<!-- START list group-->
-			<div 
+			<div
 				class="panel panel-default notflist">
 				<div class="list-group">
 					<div class="list-group-item">
@@ -614,7 +654,7 @@
 									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_positives_increase_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -628,7 +668,7 @@
 									<small class="text-pink pull-right ml">{{itm.twitter_positives_decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_positives_decrease_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -642,7 +682,7 @@
 									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_negatives_increase_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -656,7 +696,7 @@
 									<small class="text-greens pull-right ml">{{itm.twitter_negatives_decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_negatives_decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -668,7 +708,7 @@
 							<div class="media-box-body"
 								ng-show="isLoading||isError||isNoDataDB">
 								<span
-							
+
 								 class="isLoading"
 									ng-show="isLoading" class="glyphicon glyphicon-alert "
 									aria-hidden="true"> <span class="sr-only">Error:</span>
@@ -698,7 +738,7 @@
 									<small class="text-pink pull-right ml">{{itm.decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.decrease_spike" type="pink"
-										class="progress-xs m0 notifprogress" 
+										class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
 	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"
@@ -711,7 +751,7 @@
 									<small class="text-greens pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.increase_spike" type="greens"
-										class="progress-xs m0 notifprogress" 
+										class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
 	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"

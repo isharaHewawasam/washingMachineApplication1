@@ -6669,6 +6669,10 @@ now {
 .panel.panel-default {
   border-top-width: 3px;
 }
+.panel.panel-default.datagrid {
+  border-top-width: 3px;
+  padding: 15px;	/* added for Data grid's left padding */
+}
 .well {
   border: 1px solid #dde6e9;
 }
