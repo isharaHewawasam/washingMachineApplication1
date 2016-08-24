@@ -48,7 +48,7 @@
 
 
 
-             var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+             var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
              var rolename = loginCredentails.Role;
              var roleKey   = loginCredentails.roleKey;
 

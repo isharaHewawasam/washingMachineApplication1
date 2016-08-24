@@ -9,7 +9,7 @@
 
 	function TopnavbarController($rootScope,$scope, $state, $window, $localStorage, $translate, configApiClient, HttpService) {
 
-var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
 $scope.rolename=loginCredentails.Role;
 $scope.names=loginCredentails.Name;
 $scope.notificationAlertFlag = false;
@@ -62,7 +62,7 @@ $scope.notificationAlertFlag = false;
 
 
 $scope.logOut=function(){
-delete $window.sessionStorage.loginCredentails;
+delete $window.localStorage.loginCredentails;
 $state.go('page.login');
 }
 

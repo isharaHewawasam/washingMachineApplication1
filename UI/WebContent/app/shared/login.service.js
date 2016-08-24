@@ -7,7 +7,7 @@
 
 	function loginService() { 
 		return function(isLogin){
-			  
+			  console.log('isLogin : ', isLogin);
 			  if(isLogin) return true;
 			  return false;  
 		};

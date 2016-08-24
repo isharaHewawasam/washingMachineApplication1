@@ -39,7 +39,7 @@
 	 				} else if(data.role == 'eng_manager') {
 	 					$state.go('app.engmanagerview');
 	 				}
-	 				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
+	 				$window.localStorage.loginCredentails = angular.toJson($rootScope.credentials);
 	 			} else {
 	 				$scope.errorMsg = data;
 	 			}

@@ -145,7 +145,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     });
 
 }]).run(['$logincheck', '$window', '$location',function($logincheck, $window, $location){
-	  if(!$logincheck($window.sessionStorage.loginCredentails)) {
+	  if(!$logincheck($window.localStorage.loginCredentails)) {
 		  $location.path('/login');
 	  }
 }]);
@@ -271,7 +271,7 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
  				} else if(data.role == 'eng_manager') {
  					$state.go('app.engmanagerview');
  				}
- 				$window.sessionStorage.loginCredentails = angular.toJson($rootScope.credentials);
+ 				$window.localStorage.loginCredentails = angular.toJson($rootScope.credentials);
  			} else {
  				$scope.errorMsg = data;
  			}
@@ -286,7 +286,7 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
 
 // angular.module('angle').controller('TopnavbarController', ['$rootScope','$scope', '$state', '$window', '$localStorage', '$translate', "iot.config.ApiClient", 'HttpService',
 //                                        function($rootScope,$scope, $state, $window, $localStorage, $translate, configApiClient, HttpService) {
-// 	var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+// 	var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
 // 	$scope.rolename=loginCredentails.Role;
 // 	$scope.names=loginCredentails.Name;
 // 	$scope.notificationAlertFlag = false;
@@ -339,7 +339,7 @@ angular.module('angle').controller('LoginFormController', ['$scope', '$state','$
 //
 //
 // 	$scope.logOut=function(){
-// 		delete $window.sessionStorage.loginCredentails;
+// 		delete $window.localStorage.loginCredentails;
 // 		$state.go('page.login');
 //  	}
 //
@@ -2483,7 +2483,7 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
     $scope.msg2="No Data Found";
     $scope.msg3 = "Network Issue";
 
-    var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+    var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
 	var userid = loginCredentails.email;
 
 	/**
@@ -2841,7 +2841,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 		  $scope.usagedata=usagedata;
       $scope.usagedata.timescale.relative.unit = $scope.relativeTimeScale;
 
-		  var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+		  var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
           var rolename = loginCredentails.Role;
           var roleKey  = loginCredentails.roleKey;
 
@@ -3962,7 +3962,7 @@ angular.module('angle').controller('MyviewController', ['$scope', '$window', fun
 	  /* controller code */
 
 	  $scope.getUrl = function(){
-		var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+		var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
 		var rolename = loginCredentails.Role;
 
 	    if(rolename == "Engineering Manager"){
