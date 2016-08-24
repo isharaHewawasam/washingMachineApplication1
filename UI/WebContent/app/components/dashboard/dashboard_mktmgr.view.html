@@ -245,11 +245,11 @@
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeMap()"></img> <img id="mapMinImg"
-					class="pull-right hidden col-md-1 "
+					class="pull-right col-md-1 "
 					src="img/Dashboardassets/close.png"></img> <img
 					class="pull-right col-md-1" id="mapinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
 					data-trigger="hover"></img>
 			</div>
@@ -459,7 +459,7 @@
 				<img class="pull-right col-md-1"
 					id="gridinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
 					data-trigger="hover"></img>
 			</div>
@@ -513,8 +513,7 @@
 					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
-		<div class="panel panel-default datagrid" id="gridNormal"
-			>
+		<div class="panel panel-default datagrid" id="gridNormal">
 			<div class="panel-heading md-body-2"
 			id="normalgridhead">
 				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"

@@ -13,6 +13,7 @@
         $rootScope.filterIcons=[];
         $rootScope.isReportAvailableForDownload = false;
 
+        
         var monthNames = [
           "January", "February", "March",
           "April", "May", "June", "July",
@@ -732,7 +733,8 @@ $rootScope.isApplyFiterButton = true;
             $("#gridNormal1").removeClass("hidden");
 
              $(".maxtbody").height(300);
-
+             //For notifications help icon in maximized views
+             $('[data-toggle="popover"]').popover()
 
 
 

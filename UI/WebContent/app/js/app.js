@@ -1949,6 +1949,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 		});
 
 	}
+	
 	/**
 	 * Maximize the sales volume distribution map
 	 */
@@ -1967,7 +1968,9 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     	$scope.zoomMap('map-maxcontainer');
     	$scope.showMaxMap('map-maxcontainer');
         $("#map-maxcontainer").height(660);
-      
+        
+      //For notifications help icon in maximized views
+        $('[data-toggle="popover"]').popover()
 
     $("#hiddenDivMap").removeClass("hidden");
 
@@ -3227,7 +3230,10 @@ $scope.plotPieChart=function(divID){
 		 $("#filter1").remove();
 		 $("#filter2").remove();
 		 $("#filter3").remove();
-
+		 
+		//For notifications help icon in maximized views
+		// $('[data-toggle="popover"]').popover()
+		 
      	$("#hiddenDiv").removeClass("hidden");
      	$("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
      	if($scope.selectedChart=='Multiline'){
