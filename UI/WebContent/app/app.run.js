@@ -50,8 +50,12 @@
 			picture : 'app/img/user/02.jpg'
 		};
 		
-		if(!loginService($window.sessionStorage.loginCredentails)) {
+		console.log('$window.localStorage.loginCredentails : ', $window.localStorage.loginCredentails);
+		if(!loginService($window.localStorage.loginCredentails)) {
+			console.log('in if');
 			$location.path('/login');
+		} else {
+			console.log('in else');
 		}
 		
 	}
