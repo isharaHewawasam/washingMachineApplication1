@@ -37,8 +37,8 @@
                     var docDefinition = {
                         content: [{
                             image: data,
-                            width: 500,
-                            height: 200,
+                            width: 550,
+                            height: 350,
                         }]
                     };
                     pdfMake.createPdf(docDefinition).download("reports.pdf");

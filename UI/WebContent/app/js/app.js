@@ -1949,7 +1949,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 		});
 
 	}
-	
+
 	/**
 	 * Maximize the sales volume distribution map
 	 */
@@ -1968,7 +1968,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     	$scope.zoomMap('map-maxcontainer');
     	$scope.showMaxMap('map-maxcontainer');
         $("#map-maxcontainer").height(660);
-        
+
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
 
@@ -3022,8 +3022,13 @@ $scope.plotPieChart=function(divID){
 		            var totalSold = 0;
 		            var totalconnected = 0;
 		            for(var i=0;i<data.length;i++){
-		              totalSold +=data[i].unitsSold;
-		              totalconnected += data[i].unitsConnected ;
+		             // Check whether unitsConnected is not defined in the api response (unitsConnected value is empty in db)
+		             if (data[i].unitsConnected){
+			              totalSold +=data[i].unitsSold;
+			              totalconnected += data[i].unitsConnected ;
+		             } else {
+		            	 totalSold +=data[i].unitsSold;
+		             }
 		            }
 		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]];
                 $rootScope.maxPieChartData=seriesData;
@@ -3205,9 +3210,13 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
+        $rootScope.timeScales=days;
+         $rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
+        $rootScope.timeScales=timeScales;
+         $rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
 		},function(data){
@@ -3232,11 +3241,8 @@ $scope.plotPieChart=function(divID){
 
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
-             $("#chartParent3").removeClass("hidden");
-		 
-		//For notifications help icon in maximized views
-		// $('[data-toggle="popover"]').popover()
-		 
+             $("#chartParent3").removeClass("hidden");		
+
            //   $("#maxpiecontainer").height(500);
 
          $("#hiddenDiv").removeClass("hidden")
@@ -3271,11 +3277,42 @@ $scope.plotPieChart=function(divID){
 
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
-             $("#container").height(500);
+             $("#maxcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+             
              renderLineChart("maxcontainer", $rootScope.timeScales, $rootScope.maxLineChartData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 
 
       }if($scope.selectedChart=='Line Chart'){
+        var chartParent = $("#chartParent4").clone();
+
+          $("#hiddenDiv").empty();
+             $("#hiddenDiv").append(chartParent);
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+             $("#chartParent4").removeClass("hidden");
+
+
+         $("#hiddenDiv").removeClass("hidden")
+
+           //give new IDs for identification
+           chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+           chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
+
+    $("#hiddenDiv").empty();
+    $("#hiddenDiv").append(chartParent);
+
+    //remove the elements with new ID
+           $("#filter1").remove();
+           $("#filter2").remove();
+           $("#filter3").remove();
+
+    $("#hiddenDiv").removeClass("hidden");
+    $("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
 
 
              $("#hiddenDiv #container").removeClass("graphDiv");
@@ -3289,7 +3326,28 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
 
-             $scope.plotEngManagerChartFunction('#hiddenDiv #container', $scope.seneorkey);
+ /*            $scope.plotChartFunction("hiddenDiv #container");*/
+
+             $("#maxengcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+     		 
+             renderLineChart("maxengcontainer",$rootScope.timeScales, $rootScope.maxLineChartData, $scope.sensortype, 'Days', $scope.Unit);
+
+
+          /*   $("#hiddenDiv #container").removeClass("graphDiv");
+             $("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+
+             $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+
+             $("#hiddenDiv #container").addClass("graphDiv-maximize");
+             $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+
+             $scope.plotEngManagerChartFunction('#hiddenDiv #container', $scope.seneorkey);*/
       }
 
       if($scope.selectedChart=='Pie'){
@@ -3333,6 +3391,10 @@ $scope.plotPieChart=function(divID){
           $("#hiddenDiv #close").removeClass("hidden");
  //         $scope.plotPieChart("#pie");
             $("#maxpiecontainer").height(500);
+            
+          //For notifications help icon in maximized views
+    		 $('[data-toggle="popover"]').popover()
+    		 
              createPieChart("maxpiecontainer", $rootScope.maxPieChartData);
              /*plotMaxPieChart("maxpiecontainer");*/
           }
@@ -3381,6 +3443,10 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #close").removeClass("hidden");
           // $scope.plotBarChart("hiddenDiv #bar");
              $("#maxbarcontainer").height(500);
+             
+           //For notifications help icon in maximized views
+     		 $('[data-toggle="popover"]').popover()
+     		 
              /*plotMaxBarChart("maxbarcontainer");*/
              createBarChart("maxbarcontainer", $rootScope.maxBarChartData, $rootScope.maxBarDes);
           }
