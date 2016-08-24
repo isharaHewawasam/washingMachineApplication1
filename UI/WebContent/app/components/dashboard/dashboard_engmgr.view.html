@@ -6,14 +6,14 @@
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3>
-	
+
 
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
 
 	<div class="pull-right" >
-    
+
 
       {{'app_dashboard_last_updated_text' | translate}} {{currentDate}}
    </div>
@@ -201,7 +201,7 @@
 						ng-init="dispChart(selectedChart)"
 						ng-repeat="chart in EngchartTypes" value="{{chart}}">{{chart}}</option>
 				</select> <img id="maximize" class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
@@ -222,6 +222,16 @@
 			</div>
 
 		</div>
+		<!--for maximization-->
+		<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent4"><img id="close"
+		class=" col-md-1 image-margin close-image-size hidden pull-right"
+		src="img/Dashboardassets/close.png" ng-click="closing()">
+														<span ng-show="progress" class="progress-chart"> <img alt=""
+																	src="img/icon-load.gif" width="25%" ;height="25%">
+														</span>
+														<div id="maxengcontainer"></div>
+											</div>
+						<!--for max end -->
 
 	</div>
 
@@ -306,16 +316,16 @@
 				<div class="col-lg-6 insiteinner">
 
 					<div class="col-lg-6" id="nav1" >
-						
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-				
 
-						
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
@@ -323,14 +333,14 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-					
-						
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
 								<h2 class="mv-lg">3</h2>
 							</div>
-						
+
 					</div>
 
 					<div class="col-lg-6" id="nav2" style="height: 100%;">
@@ -409,11 +419,11 @@
 				id="maximisedgridhead">
 				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-				
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 					<img class="pull-right col-md-1"
 							id="gridinfo"
@@ -488,11 +498,11 @@
 					id="normalgridhead">
 				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 					<img class="pull-right col-md-1"
 						id="gridinfo"
@@ -566,7 +576,7 @@
 	</div>
 	<!-- END dashboard main content-->
 	<!-- START dashboard sidebar-->
-	
+
 
 	<!-- START dashboard sidebar-->
 	<aside class="col-lg-4" >
@@ -586,7 +596,7 @@
 
 			</div>
 
-			<div 
+			<div
 				class="panel panel-default notflist">
 				<!-- START list group-->
 				<div class="list-group">
@@ -621,7 +631,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Spike: {{spikeBySpecificErrorsTolerance - itm.decrease_spike}}% less than tolerance"
 										data-trigger="hover"></progressbar>
@@ -662,7 +672,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.increase_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{itm.increase_spike - spikeBySpecificErrorByMakeModelTolerance | number:0}}% greater than tolerance"
@@ -676,7 +686,7 @@
 									<small class="text-greens pull-right ml">{{itm.decrease_spike | number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{spikeBySpecificErrorByMakeModelTolerance - itm.decrease_spike}}% less than tolerance"

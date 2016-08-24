@@ -1949,7 +1949,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 		});
 
 	}
-	
+
 	/**
 	 * Maximize the sales volume distribution map
 	 */
@@ -1968,7 +1968,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     	$scope.zoomMap('map-maxcontainer');
     	$scope.showMaxMap('map-maxcontainer');
         $("#map-maxcontainer").height(660);
-        
+
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
 
@@ -3205,9 +3205,13 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
+        $rootScope.timeScales=days;
+         $rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
+        $rootScope.timeScales=timeScales;
+         $rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
 		},function(data){
@@ -3233,10 +3237,10 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
              $("#chartParent3").removeClass("hidden");
-		 
+
 		//For notifications help icon in maximized views
 		// $('[data-toggle="popover"]').popover()
-		 
+
            //   $("#maxpiecontainer").height(500);
 
          $("#hiddenDiv").removeClass("hidden")
@@ -3276,6 +3280,33 @@ $scope.plotPieChart=function(divID){
 
 
       }if($scope.selectedChart=='Line Chart'){
+        var chartParent = $("#chartParent4").clone();
+
+          $("#hiddenDiv").empty();
+             $("#hiddenDiv").append(chartParent);
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+             $("#chartParent4").removeClass("hidden");
+
+
+         $("#hiddenDiv").removeClass("hidden")
+
+           //give new IDs for identification
+           chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
+           chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
+
+    $("#hiddenDiv").empty();
+    $("#hiddenDiv").append(chartParent);
+
+    //remove the elements with new ID
+           $("#filter1").remove();
+           $("#filter2").remove();
+           $("#filter3").remove();
+
+    $("#hiddenDiv").removeClass("hidden");
+    $("#hiddenDiv #chartParent").removeClass("chart-chartDiv");
 
 
              $("#hiddenDiv #container").removeClass("graphDiv");
@@ -3289,7 +3320,24 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
 
-             $scope.plotEngManagerChartFunction('#hiddenDiv #container', $scope.seneorkey);
+ /*            $scope.plotChartFunction("hiddenDiv #container");*/
+
+             $("#container").height(500);
+             renderLineChart("maxengcontainer",$rootScope.timeScales, $rootScope.maxLineChartData, $scope.sensortype, 'Days', $scope.Unit);
+
+
+          /*   $("#hiddenDiv #container").removeClass("graphDiv");
+             $("#hiddenDiv #chartFilterDivId").removeClass("chart-filterDiv");
+
+             $("#hiddenDiv #chartParent").addClass("chartDiv-maximize");
+
+             $("#hiddenDiv #container").addClass("graphDiv-maximize");
+             $("#hiddenDiv #chartFilterDivId").addClass("chart-filterDiv-maximize");
+
+             $("#hiddenDiv #maximize").addClass("hidden");
+             $("#hiddenDiv #close").removeClass("hidden");
+
+             $scope.plotEngManagerChartFunction('#hiddenDiv #container', $scope.seneorkey);*/
       }
 
       if($scope.selectedChart=='Pie'){
