@@ -3210,13 +3210,13 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
-        $rootScope.timeScales=days;
-         $rootScope.maxLineChartData=lineChartSeriesData;
+				$rootScope.timeScales=days;
+				$rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
-        $rootScope.timeScales=timeScales;
-         $rootScope.maxLineChartData=lineChartSeriesData;
+//				$rootScope.timeScales=timeScales;
+				$rootScope.maxLineChartData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
 		},function(data){
