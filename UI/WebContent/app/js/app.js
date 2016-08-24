@@ -3280,7 +3280,7 @@ $scope.plotPieChart=function(divID){
 
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
-             $("#container").height(500);
+             $("#maxcontainer").height(500);
              renderLineChart("maxcontainer", $rootScope.timeScales, $rootScope.maxLineChartData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 
 
