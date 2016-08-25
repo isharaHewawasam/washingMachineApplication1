@@ -736,22 +736,14 @@ $rootScope.isApplyFiterButton = true;
              //For notifications help icon in maximized views
              $('[data-toggle="popover"]').popover()
 
-
-
-        $("#gridMax").removeClass("hidden");
-
-
-
-
+             $("#gridMax").removeClass("hidden");
         }
 
         $("body").on("click","#gridCloseImg",function(){
             $("#gridMax").empty();
             $("#gridMax").addClass("hidden");
-
              
-              $("#gridNormal").height(355);
-
+              $("#gridNormal").height(321);
 
         });
         
