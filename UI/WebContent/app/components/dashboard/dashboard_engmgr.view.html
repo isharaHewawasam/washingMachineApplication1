@@ -6,14 +6,14 @@
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
 <h3>
-	
+
 
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
 
 	<div class="pull-right" >
-    
+
 
       {{'app_dashboard_last_updated_text' | translate}} {{currentDate}}
    </div>
@@ -173,26 +173,8 @@
 					<option class="chart-option-text-style" ng-if="$index!=0"
 						ng-repeat="sensor in sensorsList track by $index"
 						value="{{$index}}">{{sensor.displayName}}</option>
-				</select> <select ng-class="{'chart-selectStyle2': isActive2}"
-					ng-click="activeButton(2)" id="second-chart-select"
-					class="chart-selectStyle col-md-3 chart-border salesname"
-          ng-model='relativeTimeScale'
-					>
-					<option class="chart-option-text-style" value="1">Last 1
-						day
-					<option class="chart-option-text-style" value="2" selected="selected">Last
-						7 days
-					<option class="chart-option-text-style" value="3">Last 30
-						days
-					<option class="chart-option-text-style" value="4">Last 3
-						months
-					<option class="chart-option-text-style" value="5">Last 6
-						months
-					<option class="chart-option-text-style" value="6">Last 1
-						year
-					<option class="chart-option-text-style" value="7">Last 3
-						years
-				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
+				</select>
+				<select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
 					class="chart-selectStyle col-md-3 salesname"
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart"
@@ -201,7 +183,7 @@
 						ng-init="dispChart(selectedChart)"
 						ng-repeat="chart in EngchartTypes" value="{{chart}}">{{chart}}</option>
 				</select> <img id="maximize" class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
@@ -210,53 +192,88 @@
 						id="infoicons"
 						src="img/Dashboardassets/help.png"
 						data-toggle="popover" data-placement="left"
-						data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+						data-content="Chart Area provides a distribution of information through line Chart which illustrates the selections made in the Top and Side Bar Filters."
 						data-trigger="hover"></img>
 			</div>
 
 			<div class="graphDiv">
 				<span ng-show="progress" class="progress-chart"><img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%"> </span>
-				<div id="container" ></div>
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
+				<div id="container"></div>
 			</div>
 
-		</div>
+
+		<!--for maximization-->
+		<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent4">\
+		     <div class="chart-filterDiv " id="chartFilterDivId">
+				<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+				<img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+					 src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+			    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+				     data-placement="bottom" data-content="Chart Area provides a distribution of information through line Chart which illustrates the selections made in the Top and Side Bar Filters."
+				     data-trigger="hover"></img>
+			 </div>  
+			 <span ng-show="progress" class="progress-chart"> <img alt="" src="img/icon-load.gif" width="25%" ;height="25%"></span> 
+		     <div id="maxengcontainer"></div>
+	    </div>
+		<!--for max end -->
 
 	</div>
+</div>
 
-	<div class="col-lg-4" ng-controller="mapController"
-		ng-init="plotMapFunction('map-container')">
-		<div class="panel panel-default" 
-			id="mapNormal">
+	<!-- Start Editing For Map Maximizing -->
+      <div class="col-lg-4" >
+            <div class="panel panel-default hidden " id="mapNormal1" ng-controller="mapController"
+            ng-init="plotMapFunction('map-maxcontainer')">
+            <div class="panel-heading md-body-2" id="mapMaximizedlinner">
+                        <b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
+                              class="pull-right col-md-1"
+                              src="img/Dashboardassets/icon_maximize.png"
+                              ng-click="maximizeMap()"></img> <img id="mapMinImg"
+                              class="pull-right hidden col-md-1 "
+                              src="img/Dashboardassets/close.png"></img> <img
+                              class="pull-right col-md-1" id="mapinfo"
+                              src="img/Dashboardassets/help.png" data-toggle="popover"
+                              data-placement="bottom"
+                              data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
+                              data-trigger="hover"></img>
+                  </div>
+                  <div class="map-maxDiv">
+                        <span ng-show="mapProgress" class="progress-chart"> <img
+                              id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
+                        </span>
+                        <div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
+                        <div id="map-maxcontainer"></div>
+                  </div>
+            </div>
+            <div class="panel panel-default" id="mapNormal" ng-controller="mapController"
+            ng-init="plotMapFunction('map-container')">
+                  <div class="panel-heading md-body-2" id="mapNormalinner">
+                        <b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
+                              class="pull-right col-md-1"
+                              src="img/Dashboardassets/icon_maximize.png"
+                              ng-click="maximizeMap()"></img> <img id="mapMinImg"
+                              class="pull-right hidden col-md-1 "
+                              src="img/Dashboardassets/close.png"></img> <img
+                              class="pull-right col-md-1" id="mapinfo"
+                              src="img/Dashboardassets/help.png" data-toggle="popover"
+                              data-placement="left"
+                              data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
+                              data-trigger="hover"></img>
+                  </div>
 
-			<div class="panel-heading md-body-2"
-				 id="mapNormalinner">
-				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
-					class="pull-right col-md-1"
-					
-					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="maximizeMap()"></img> <img id="mapMinImg"
-					class="pull-right hidden col-md-1 "
-					
-					src="img/Dashboardassets/close.png"></img>
-					<img class="pull-right col-md-1"
-						id="mapinfo"
-						src="img/Dashboardassets/help.png"
-						data-toggle="popover" data-placement="left"
-						data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
-						data-trigger="hover"></img>
-			</div>
-			<div class="map-mapDiv"
-			>
+                  <div class="map-mapDiv">
+                        <span ng-show="mapProgress" class="progress-chart"> <img
+                              id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
+                        </span>
+                        <div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
+                        <div id="map-container"></div>
+                  </div>
+            </div>
+      </div>
+      <!-- End of Editing For Map Maximizing -->
 
-				<span ng-show="mapProgress" class="progress-chart"> <img
-					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
-				</span>
-				<div id="map-container" ></div>
-			</div>
-
-		</div>
-	</div>
 
 
 	<div class="col-lg-4 insite" >
@@ -286,16 +303,16 @@
 				<div class="col-lg-6 insiteinner">
 
 					<div class="col-lg-6" id="nav1" >
-						
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-				
 
-						
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
@@ -303,14 +320,14 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-					
-						
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								style="width: 25px; height: 175px">
 								<h2 class="mv-lg">3</h2>
 							</div>
-						
+
 					</div>
 
 					<div class="col-lg-6" id="nav2" style="height: 100%;">
@@ -384,21 +401,21 @@
 
 	<div class="col-lg-8">
 		<!-- START panel -->
-<div class="panel panel-default hidden" id="gridNormal1">
+<div class="panel panel-default datagrid hidden" id="gridNormal1">
 			<div class="panel-heading md-body-2"
 				id="maximisedgridhead">
 				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-				
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 					<img class="pull-right col-md-1"
 							id="gridinfo"
 						src="img/Dashboardassets/help.png"
-						data-toggle="popover" data-placement="left"
+						data-toggle="popover" data-placement="bottom"
 						data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
 						data-trigger="hover"></img>
 			</div>
@@ -436,8 +453,9 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed">
-							<div ng-show="isDisabled||isError" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
-							<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+							<div ng-show="isDisabled" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}} hhg</div>
+							<div ng-show="isNoDataFoundEng" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+							<div ng-show="isError" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg3}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
@@ -462,16 +480,16 @@
 					{{'records_found_text' | translate}}</label>
 			</div>
 		</div>
-		<div class="panel panel-default" id="gridNormal" >
+		<div class="panel panel-default datagrid" id="gridNormal" >
 			<div class="panel-heading md-body-2"
 					id="normalgridhead">
 				{{'data_grid_title' | translate}}<img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 					<img class="pull-right col-md-1"
 						id="gridinfo"
@@ -514,8 +532,9 @@
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed">
-							<div ng-show="isLoadingFilters||isError" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
-							<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+							<div ng-show="isLoadingFilters" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
+							<div ng-show="isNoDataFoundEng" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+							<div ng-show="isError" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg3}}</div>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in eng_griddata">
 										<td class="text-center">{{itm.make}}</td>
@@ -544,7 +563,7 @@
 	</div>
 	<!-- END dashboard main content-->
 	<!-- START dashboard sidebar-->
-	
+
 
 	<!-- START dashboard sidebar-->
 	<aside class="col-lg-4" >
@@ -552,19 +571,19 @@
 		<!-- START messages and activity-->
 		<div class="panel panel-default" id="notifheight">
 			<div class="panel-heading">
-				<div class="panel-title md-body-2"
-				id="notificationtitl" translate="{{'notifications_title'}}">
-					<img class="pull-right col-md-1"
-						id="notfinfo"
-						src="img/Dashboardassets/help.png"
-						data-toggle="popover" data-placement="left"
+				<div class="pull-right ">
+					<img class="col-md-1" id="insiteinfo"
+						src="img/Dashboardassets/help.png" data-toggle="popover"
+						data-placement="left"
 						data-content="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid."
-						data-trigger="hover">
+						data-trigger="hover"></img>
 				</div>
+			
+				<div class="panel-title md-body-2" id="notificationtitl" translate="{{'notifications_title'}}"></div>
 
 			</div>
 
-			<div 
+			<div
 				class="panel panel-default notflist">
 				<!-- START list group-->
 				<div class="list-group">
@@ -599,7 +618,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Spike: {{spikeBySpecificErrorsTolerance - itm.decrease_spike}}% less than tolerance"
 										data-trigger="hover"></progressbar>
@@ -640,7 +659,7 @@
 										| number:0}}%</small> <br>
 									<progressbar
 										value="itm.increase_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{itm.increase_spike - spikeBySpecificErrorByMakeModelTolerance | number:0}}% greater than tolerance"
@@ -654,7 +673,7 @@
 									<small class="text-greens pull-right ml">{{itm.decrease_spike | number:0}}%</small> <br>
 									<progressbar
 										value="itm.decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.make}} <br>
 								Model: {{itm.model}} <br> Spike: {{spikeBySpecificErrorByMakeModelTolerance - itm.decrease_spike}}% less than tolerance"
@@ -694,5 +713,19 @@
 	</aside>
 	<!-- END dashboard sidebar-->
 </div>
-</div>
-</div>
+
+
+ <script>
+         $(document).on("mouseover", function(event) {
+        	  
+        	   
+        	   $('#dashboardNav').addClass('sidebarItemActive');
+        	 //  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+        	   $('#reportsNav').removeClass('sidebarItemActive');
+        	  // $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+        	 
+        	});
+         
+         </script>
+         </div>
+         </div>

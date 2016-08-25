@@ -6,12 +6,12 @@
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
-<h3>
 
+<h3>
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
-
+	
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
@@ -19,26 +19,27 @@
 		<a href="#" translate="{{'dashboard'}}"></a>
 	</div>
 
-
+	
+	
 </h3>
 
 
 
-<div class="row col-lg-12  filter-filterDiv" id="filterdive">
+<div class="row col-lg-12 nopadding  filter-filterDiv" id="filterdive">
 
 
 
 
 
-	<div class=" col-lg-10" id="filterDivId">
+	<div class=" col-lg-10 nopadding" id="filterDivId">
 
-		<div class="col-lg-2 filterItem">
+		<div class="col-lg-2 filterItem nopadding">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
 				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="state in states"
 					value={{state.name}}>{{state.name}}</option>
@@ -47,13 +48,13 @@
 
 		</div>
 
-		<div class="col-lg-2 filterItem">
+		<div class="col-lg-2 filterItem nopadding">
 			<select name="" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="city in cities"
 					value={{city.city}}>{{city.city}}
@@ -78,13 +79,13 @@
 				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style"
 					ng-repeat="sales_year in sales_years" value={{sales_year.year}}>{{sales_year.year}}
 
 
-				
+
 			</select>
 
 		</div>
@@ -95,7 +96,7 @@
 				<option class="option-text-style" value="" selected disabled translate="{{'quarter'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="quarter in quarters"
 					value={{quarter.id}}>{{quarter.value}}
@@ -109,7 +110,7 @@
 				<option class="option-text-style" value="" selected disabled translate="{{'month'}}">
 
 
-				
+
 				<option class="option-text-style" value="">All
 				<option class="option-text-style" ng-repeat="month in months"
 					value={{month.id}}>{{month.value}}
@@ -164,24 +165,8 @@
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
 					<option class="chart-option-text-style" ng-if="$index!=0"
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
-				</select> <select ng-disabled="{'chart-selectStyle2': isActive2}"
-					ng-click="activeButton(2)" id="second-chart-select"
-					class="chart-selectStyle col-md-3 chart-border salesname">
-					<option class="chart-option-text-style" selected value="">Last
-						1 day
-					<option class="chart-option-text-style" value="">Last 7
-						days
-					<option class="chart-option-text-style" value="">Last 30
-						days
-					<option class="chart-option-text-style" value="">Last 3
-						months
-					<option class="chart-option-text-style" value="">Last 6
-						months
-					<option class="chart-option-text-style" value="">Last 1
-						year
-					<option class="chart-option-text-style" value="">Last 3
-						years
-				</select> <select ng-class="{'chart-selectStyle2': isActive3}"
+				</select> 
+				 <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
 					class="chart-selectStyle col-md-3 salesname "
 					ng-change="dispChart(selectedChart)" ng-model="selectedChart">
@@ -199,29 +184,86 @@
 					data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 					data-trigger="hover"></img>
 			</div>
+
+			<span ng-show="progress" class="progress-chart"> <img alt=""
+				src="img/icon-load.gif" width="25%" ;height="25%">
+			</span>
+
 			<div ng-if="selectedChart=='Pie'" class="graphDiv"
 				ng-init="plotPieChart('piecontainer')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="piecontainer"></div>
 			</div>
 
+
+
 			<div ng-if="selectedChart=='Bar'" class="graphDiv"
 				ng-init="plotBarChart('bar')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="bar"></div>
 			</div>
 
 			<div ng-if="selectedChart=='Multiline'" class="graphDiv"
 				ng-init="plotChartFunction('container')">
-				<span ng-show="progress" class="progress-chart"> <img alt=""
+				<!-- <span ng-show="progress" class="progress-chart"> <img alt=""
 					src="img/icon-load.gif" width="25%" ;height="25%">
-				</span>
+				</span> -->
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="container"></div>
 			</div>
+			<!--for maximization-->
+							<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1">	
+								  <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div>  
+								  <span ng-show="progress" class="progress-chart"> <img alt=""
+					                    src="img/icon-load.gif" width="25%" ;height="25%">
+					              </span>
+					              <div id="maxpiecontainer"></div>
+			                </div>
+
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent2">
+			                      <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div>  
+			                        <span ng-show="progress" class="progress-chart"> <img alt=""
+			                              src="img/icon-load.gif" width="25%" ;height="25%">
+			                        </span>
+			                        <div id="maxbarcontainer"></div>
+			                  </div>
+
+			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent3">
+			                      <div class="chart-filterDiv " id="chartFilterDivId">
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
+									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
+							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
+							             data-trigger="hover"></img>
+								  </div> 
+			                        <span ng-show="progress" class="progress-chart"> <img alt=""
+			                              src="img/icon-load.gif" width="25%" ;height="25%">
+			                        </span>
+			                        <div id="maxcontainer"></div>
+			                  </div>
+
+			<!--for max end-->
 
 		</div>
 
@@ -235,11 +277,11 @@
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeMap()"></img> <img id="mapMinImg"
-					class="pull-right hidden col-md-1 "
+					class="pull-right col-md-1 "
 					src="img/Dashboardassets/close.png"></img> <img
 					class="pull-right col-md-1" id="mapinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Bubble denoting a place, Map marks the distribution of sold washing machines to identify the corresponding locations."
 					data-trigger="hover"></img>
 			</div>
@@ -247,6 +289,7 @@
 				<span ng-show="mapProgress" class="progress-chart"> <img
 					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-maxcontainer"></div>
 			</div>
 		</div>
@@ -270,6 +313,7 @@
 				<span ng-show="mapProgress" class="progress-chart"> <img
 					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
 				</span>
+				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-container"></div>
 			</div>
 		</div>
@@ -298,16 +342,16 @@
 				<div class="col-lg-6 insiteinner" >
 
 					<div class="col-lg-6" id="nav1">
-						
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-					
 
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								>
@@ -315,8 +359,8 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-						
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 							>
@@ -324,14 +368,14 @@
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-				
-					
+
+
 							<div
 								class="alert-warning media-box-object img-circle thumb32 text-center"
 								>
 								<h2 class="mv-lg">4</h2>
 							</div>
-					
+
 					</div>
 
 					<div class="col-lg-6" id="nav2" >
@@ -398,14 +442,14 @@
 					</div>
 
 					<div class="col-lg-6" id="nav3" >
-						
+
 							<img src='img/Dashboardassets/twitter.png' alt=''
 							id="twitericon" /> <img
 								ng-click="loadTwitterinsights()"
 								src="img/Dashboardassets/icon_arrow.png"
 								id="twiterarrow"
 								 />
-				
+
 
 
 					</div>
@@ -432,22 +476,22 @@
 
 	<div class="col-lg-8">
 		<!-- START panel -->
-		<div class="panel panel-default hidden " id="gridNormal1"
+		<div class="panel panel-default datagrid hidden " id="gridNormal1"
 			>
 			<div class="panel-heading md-body-2"
 				id="maximisedgridhead">
 				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1  "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 				<img class="pull-right col-md-1"
 					id="gridinfo"
 					src="img/Dashboardassets/help.png" data-toggle="popover"
-					data-placement="left"
+					data-placement="bottom"
 					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
 					data-trigger="hover"></img>
 			</div>
@@ -501,17 +545,16 @@
 					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
-		<div class="panel panel-default" id="gridNormal"
-			>
+		<div class="panel panel-default datagrid" id="gridNormal">
 			<div class="panel-heading md-body-2"
 			id="normalgridhead">
 				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
 					class="pull-right col-md-1"
-					
+
 					src="img/Dashboardassets/icon_maximize.png"
 					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
-					
+
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
 				<img class="pull-right col-md-1"
 						id="gridinfo"
@@ -582,20 +625,20 @@
 		<!-- START messages and activity-->
 		<div class="panel panel-default" id="notifheight">
 			<div class="panel-heading">
-				<div class="panel-title md-body-2"
-					id="notificationtitl" translate="{{'notifications_title'}}">
-					<img class="pull-right col-md-1"
-						id="notfinfo"
+				<div class="pull-right ">
+					<img class="col-md-1" id="insiteinfo"
 						src="img/Dashboardassets/help.png" data-toggle="popover"
 						data-placement="left"
 						data-content="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid."
 						data-trigger="hover"></img>
 				</div>
+				
+				<div class="panel-title md-body-2" id="notificationtitl" translate="{{'notifications_title'}}"></div>
 
 			</div>
 
 			<!-- START list group-->
-			<div 
+			<div
 				class="panel panel-default notflist">
 				<div class="list-group">
 					<div class="list-group-item">
@@ -613,7 +656,7 @@
 									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_positives_increase_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -627,7 +670,7 @@
 									<small class="text-pink pull-right ml">{{itm.twitter_positives_decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_positives_decrease_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -641,7 +684,7 @@
 									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_negatives_increase_spike"
-										type="pink" class="progress-xs m0 notifprogress" 
+										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -655,7 +698,7 @@
 									<small class="text-greens pull-right ml">{{itm.twitter_negatives_decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_negatives_decrease_spike"
-										type="greens" class="progress-xs m0 notifprogress" 
+										type="greens" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
 	                     Count: {{itm.twitter_count}}"
@@ -667,7 +710,7 @@
 							<div class="media-box-body"
 								ng-show="isLoading||isError||isNoDataDB">
 								<span
-							
+
 								 class="isLoading"
 									ng-show="isLoading" class="glyphicon glyphicon-alert "
 									aria-hidden="true"> <span class="sr-only">Error:</span>
@@ -697,7 +740,7 @@
 									<small class="text-pink pull-right ml">{{itm.decrease_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.decrease_spike" type="pink"
-										class="progress-xs m0 notifprogress" 
+										class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
 	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"
@@ -710,7 +753,7 @@
 									<small class="text-greens pull-right ml">{{itm.increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.increase_spike" type="greens"
-										class="progress-xs m0 notifprogress" 
+										class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
 										data-content="Make: {{itm.Make}} <br> Model: {{itm.Model}} <br>
 	                     Reason: {{itm.Reason}} <br> Date: {{itm.date}}"
@@ -749,4 +792,19 @@
 	<!-- END dashboard sidebar-->
 </div>
 </div>
+
+  <script>
+         $(document).on("mouseover", function(event) {
+        	  
+        	   
+        	   $('#dashboardNav').addClass('sidebarItemActive');
+        	 //  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+        	   $('#reportsNav').removeClass('sidebarItemActive');
+        	   
+        	  // $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+        	 
+        	});
+         
+         
+         </script>
 </div>

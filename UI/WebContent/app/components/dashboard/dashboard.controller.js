@@ -11,7 +11,9 @@
 		//Clear filter on dashboard load
         $rootScope.search={};
         $rootScope.filterIcons=[];
+        $rootScope.isReportAvailableForDownload = false;
 
+        
         var monthNames = [
           "January", "February", "March",
           "April", "May", "June", "July",
@@ -259,6 +261,7 @@
         }
 
        $rootScope.mkt_griddata_filter=[];
+       $rootScope.isReportAvailableForDownload = false;
         $scope.isNoDataFound = false;
         $scope.isError =  false;
         $scope.isOnFilter = false;
@@ -271,16 +274,20 @@
             if(!data || data.data.length === 0){
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
+                $scope.isNoDataFound = true;
             } else {
                 $rootScope.mkt_griddata_filter=data.data;
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
                 $scope.isReportFiltering = false;
+                $rootScope.isReportAvailableForDownload = true;
+                $scope.isNoDataFound = false;
             }
         },function(data){
             // on error
             $scope.isError = true;
             $scope.isReportFiltering = false;
+            $scope.isNoDataFound = false;
         });
     }
     //end iniReport
@@ -316,6 +323,31 @@
              $rootScope.mapProgress = false;
         });
     }
+	
+	//For Maximized map
+    $scope.showMaxMap = function () {
+        $scope.removechart('map-maxcontainer');
+        $scope.loadingText = "Loading data...";
+
+
+        $rootScope.mapProgress = true;
+        var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
+        var param = $scope.usagedata;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $rootScope.mapProgress = false;
+
+            if(!data || data.length === 0){
+                 renderMap("#map-container", []);
+            }  else{
+                renderMap("map-container", data);
+                $scope.zoomMap('map-maxcontainer');
+            }
+        },function(data){
+            // on error
+             $rootScope.mapProgress = false;
+        });
+        }
 
     $scope.zoomMap = function (id) {
         var selectedState = $scope.region.states;
@@ -484,7 +516,7 @@ $rootScope.isApplyFiterButton = true;
         $scope.isLoadingFilters = true;
         $scope.msg1 = "Applying Filters... Please wait";
         $scope.msg2 = "No Data Found";
-        $scope.msg3 =  "Service is Unavailable";
+        $scope.msg3 =  "Network Issue";
         $scope.msg = $scope.msg1;
 
         //for grid mkt_mgr
@@ -504,6 +536,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.isLoadingFilters = false;
             $scope.isError = true;
             $scope.msg = $scope.msg3;
+            $scope.isNoDataFound = false;
         });
 
         //For grid from eng manager
@@ -513,9 +546,9 @@ $rootScope.isApplyFiterButton = true;
             // on success
             $scope.isLoadingFilters = false;
             if(!data || data.length === 0){
-            	$scope.isNoDataFound = true;
+            	$scope.isNoDataFoundEng = true;
             } else {
-            	$scope.isNoDataFound = false;
+            	$scope.isNoDataFoundEng = false;
                 $scope.eng_griddata=data;
             }
         },function(data){
@@ -523,45 +556,73 @@ $rootScope.isApplyFiterButton = true;
             $scope.isLoadingFilters = false;
             $scope.isError = true;
             $scope.msg = $scope.msg3;
+            $scope.isNoDataFoundEng = false;
         });
           
     };
 
-
-
-
-            // load all usage data on dashboard
-            $scope.griddata=[];
-            $scope.eng_griddata=[];
-            $scope.mkt_griddata=[];
-
-
-            var url = configApiClient.baseUrl +  "usage";
-            HttpService.get(url).then(function(data){
-                // on success
+    function usageLoad() {
+    	$scope.griddata=[];
+        $scope.isNoDataFound = false;
+        $scope.isError =  false;
+        $scope.isLoadingFilters = true;
+        $scope.msg1 = "Applying Filters... Please wait";
+        $scope.msg2 = "No Data Found";
+        $scope.msg3 =  "Network Issue";
+        $scope.msg = $scope.msg1;
+    	
+    	var url = configApiClient.baseUrl +  'usage';
+        var param = $scope.usagedata;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $scope.isLoadingFilters = false;
+             if(!data || data.data.length === 0){
+            	 $scope.isNoDataFound = true;
+             } else {
+            	 $scope.isNoDataFound = false;
                 $scope.griddata=data.data;
-            },function(data){
-                // on error
-            });
-            
-            var url = configApiClient.baseUrl + "sensors/data";
-            var param = null;
-            HttpService.post(url, param).then(function(data){
-                // on success
-                 $scope.eng_griddata=data; //.states: array name--check in browser
-            },function(data){
-                // on error
-            });
-
-            ///////////////////////Report on load
-            var url = configApiClient.baseUrl +  "usage";
-            HttpService.get(url).then(function(data){
-                // on success
-                $scope.mkt_griddata=data.data;
-                $rootScope.isOnLoad=true;
-            },function(data){
-                // on error
-            });
+             }
+        },function(data){
+            // on error
+            $scope.isLoadingFilters = false;
+            $scope.isError = true;
+            $scope.msg = $scope.msg3;
+        });
+    }
+    
+    usageLoad();
+    
+    function sensorsDataLoad() {
+        $scope.eng_griddata=[];
+        $scope.isNoDataFoundEng = false;
+        $scope.isError =  false;
+        $scope.isLoadingFilters = true;
+        $scope.msg1 = "Applying Filters... Please wait";
+        $scope.msg2 = "No Data Found";
+        $scope.msg3 =  "Network Issue";
+        $scope.msg = $scope.msg1;
+    	
+    	var url = configApiClient.baseUrl + 'sensors/data';
+        var param = null;
+        HttpService.post(url, param).then(function(data){
+            // on success
+            $scope.isLoadingFilters = false;
+            if(!data || data.length === 0){
+            	$scope.isNoDataFoundEng = true;
+            } else {
+            	$scope.isNoDataFoundEng = false;
+                $scope.eng_griddata=data;
+            }
+        },function(data){
+            // on error
+            $scope.isLoadingFilters = false;
+            $scope.isError = true;
+            $scope.msg = $scope.msg3;
+            $scope.isNoDataFoundEng = false;
+        });
+    	
+    }
+    sensorsDataLoad();
 
         var quarterMonthMapping = JSON.parse('{'
                                         +'"Quarter1":["Jan","Feb","Mar"],'
@@ -636,6 +697,7 @@ $rootScope.isApplyFiterButton = true;
     
      $scope.cities;
      $scope.selectCities=function(){
+    	 $scope.cities = undefined;
          $scope.region.cities=undefined;
          $scope.region.zip_codes=undefined;
          $scope.zips=[];
@@ -671,7 +733,8 @@ $rootScope.isApplyFiterButton = true;
             $("#gridNormal1").removeClass("hidden");
 
              $(".maxtbody").height(300);
-
+             //For notifications help icon in maximized views
+             $('[data-toggle="popover"]').popover()
 
 
 
@@ -690,6 +753,17 @@ $rootScope.isApplyFiterButton = true;
               $("#gridNormal").height(355);
 
 
+        });
+        
+        ///////////////////////Report on load
+        var url = configApiClient.baseUrl +  "usage";
+        HttpService.get(url).then(function(data){
+            // on success
+            $scope.mkt_griddata=data.data;
+            $rootScope.isOnLoad=true;
+            $rootScope.isReportAvailableForDownload = true;
+        },function(data){
+            // on error
         });
 
 

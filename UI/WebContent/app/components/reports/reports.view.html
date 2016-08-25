@@ -20,54 +20,54 @@
 
 
 
-            <div class=" col-lg-10"  id="filterDivId" >
-
-               <div class="col-lg-2 reportnvwidth"  >
-                  <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
-                  <option class="option-text-style" value="" disabled selected translate="{{'states'}}">
-                    <option class="option-text-style" value="" >All
-                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option>
-                  </select>
-
-
-               </div>
-
-               <div class="col-lg-2 reportnvwidth2" >
-                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities"   >
-                    <option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
-                    <option class="option-text-style" value="" >All
-                              <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
-
-                  </select>
-
-               </div>
-
-
-
-
-                <div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
-
-                   <div class="col-lg-2 reportnvwidth2" >
-                  <md-datepicker class=" filter-selectStyle internaldate"  ng-model="myDate"> </md-datepicker>
-              </div>
-               <div class="col-lg-2 todatepicker" translate="{{'to'}}"></div>
-
-                <div class="col-lg-2 todatedive">
-
-                <md-datepicker  class=" filter-selectStyle internaldate"  ng-model="myDate1" > </md-datepicker>
-
-             </div>
-
-
-
-
-
-            </div>
+	            <div class=" col-lg-10"  id="filterDivId" >
+	
+	               <div class="col-lg-2 reportnvwidth"  >
+	                  <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
+	                  <option class="option-text-style" value="" disabled selected translate="{{'states'}}">
+	                    <option class="option-text-style" value="" >All
+	                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option>
+	                  </select>
+	
+	
+	               </div>
+	
+	               <div class="col-lg-2 reportnvwidth2" >
+	                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities"   >
+	                    <option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
+	                    <option class="option-text-style" value="" >All
+	                              <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
+	
+	                  </select>
+	
+	               </div>
+	
+	
+	
+	
+	                <div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
+	
+	                <div class="col-lg-2 reportnvwidth2" >
+	                  	<md-datepicker class=" filter-selectStyle internaldate"  ng-model="myDate"> </md-datepicker>
+	              	</div>
+	                <div class="col-lg-2 todatepicker" translate="{{'to'}}"></div>
+	
+	                <div class="col-lg-2 todatedive">
+	
+	                	<md-datepicker  class=" filter-selectStyle internaldate"  ng-model="myDate1" > </md-datepicker>
+	
+	             	</div>
+	
+	
+	
+	
+	
+	            </div>
                <div class="col-lg-2 reportfiltrdv " >
              		<button ng-disabled="isReportFiltering" class="btn btn-default pull-right "   id="applyFilter" ng-click="iniReport()" translate="{{'apply_filter'}}"></button>
 
-            </div>
-              </div>
+            	</div>
+   </div>
 
 
 
@@ -165,14 +165,14 @@
                  </tbody>
 
                </table>
-
+         
             </div>
 
 
 
     <!--   END panel -->
     </div>
-    <button type="button"  class="mb-sm btn btn-primary searchbtn" id="downloadreport" ng-click="downloadReport()" ng-if="!isEngManager" translate="{{'download_report'}}"></button>
+    <button type="button"  class="mb-sm btn btn-primary searchbtn" id="downloadreport" ng-disabled="!isReportAvailableForDownload" ng-click="downloadReport()" ng-if="!isEngManager" translate="{{'download_report'}}"></button>
 
       </div>
 
@@ -189,3 +189,15 @@
 
 
          </div>
+         <script>
+         $(document).on("mouseover", function(event) {
+        	  
+        	   
+        	   $('#reportsNav').addClass('sidebarItemActive');
+        	   $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
+        	   $('#dashboardNav').removeClass('sidebarItemActive');
+        	  // $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
+        	 
+        	});
+         
+         </script>

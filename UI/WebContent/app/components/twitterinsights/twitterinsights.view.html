@@ -38,24 +38,17 @@
 			<div class="col-lg-2
 				style="float:left; max-width: 150px; margin-left: 22px; padding-right: 0px; padding-left: 0px;">
 				<select name="" class="form-control filter-selectStyle"
-					ng-model="region.states" ng-change="selectCities()">
-					<option class="option-text-style" value="" disabled selected translate="{{'days'}}">
-					<option class="option-text-style" ng-repeat="day in days"
-						value={{day.day}}>{{day.desc}}</option>
-				</select>
-			</div>
-
-			<!-- <div class="col-lg-2
+					ng-model="selectedDay" ng-change="loadDayFilterData()">									
+					<option class="option-text-style" value="" disabled selected translate="{{'days'}}">>
+					<option class="option-text-style"  ng-repeat="(key, value) in days" value={{key}}>{{value}}</option>				  
+				</select>  				
+		</div>
+		    <!-- <div class="col-lg-2
 				style="float:right; max-width: 150px; margin-left: 22px; padding-right: 0px; padding-left: 0px;">
 				<div class="filter-selectStyle">
 					<div class="export-button"><img src="img/Dashboardassets/export.png" alt=""> Export</div>
 				</div>
 			</div> -->
-
-
-
-
-		</div>
 
 	</div>
 
@@ -142,7 +135,8 @@
 
 
 			<div class="panel-body" id="gridHideNodata">
-				<div id="tableTitle" translate="{{'twitter_insights'}}">
+				<div id="tableTitle">
+					<span translate="{{'twitter_insights'}}"></span>
 					<img class="col-md-1 pull-right"
 						style="padding: 0px; height: 15px; width: 15px;margin-right: 5px;margin-top:5px;"
 						src="img/Dashboardassets/help.png"
@@ -151,6 +145,7 @@
 						data-trigger="hover"></img>
 
 				</div>
+				
 				<!--   START table-responsive -->
 				<div class="panel panel-default">
 

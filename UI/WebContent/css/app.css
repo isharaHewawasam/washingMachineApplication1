@@ -4073,8 +4073,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   -webkit-overflow-scrolling: touch;
 }
 .navbar-collapse.in {
-  overflow-y: auto;
+  overflow-y: visible;
 }
+
+.wrapper {
+  overflow-y: hidden;
+}
+
 @media (min-width: 768px) {
   .navbar-collapse {
     width: auto;
@@ -6663,6 +6668,10 @@ now {
 }
 .panel.panel-default {
   border-top-width: 3px;
+}
+.panel.panel-default.datagrid {
+  border-top-width: 3px;
+  padding: 15px;	/* added for Data grid's left padding */
 }
 .well {
   border: 1px solid #dde6e9;
@@ -12108,6 +12117,11 @@ display : block;
 	font-size:14px;
 	color:#222222;
 }
+.option-text-style-disable{
+	font-family: Roboto;light;
+	font-size:14px;
+	color:#d4d4d4;
+}
 
 .multiselect-container>li>a>label {
   padding: 4px 20px 3px 20px;
@@ -12241,10 +12255,12 @@ display : block;
 	padding-top: 4px;
 }
 
+/* Commented out to fixed responsibe UI 
 .col-lg-2 {
     width: 30%;
     float: left;
 }
+*/
 
 .twitter_arrow_red {
 	color: red !important;

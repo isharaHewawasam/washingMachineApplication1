@@ -1,6 +1,6 @@
 
  <link href="css/sidebar.css" rel="stylesheet"/>
-    <div class="aside-inner" >
+    <div class="aside-inner">
         <nav class="sidebar">
             <div class="nav">
                 <div id="dashboardNav" class="leftbar-icon sidebarItemActive" ng-controller="MyviewController">
@@ -30,7 +30,7 @@
             </div>
         </nav>
     </div>
-    <div id="filterPanel" >
+    <div id="filterPanel" style="display: none;">
         <div class="divSpacePad1">
             <label translate="{{'products'}}"></label>
 
@@ -85,7 +85,7 @@
 
     </div>
 
-    <div id="demographicsFilterPanel">
+    <div id="demographicsFilterPanel" style="display: none;">
 
         <div class="divSpacePad1">
             <label translate="{{'demographics'}}"></label>
@@ -124,7 +124,7 @@
     </div>
     <!--reports-->
 
-<div id="reportsPanel" ng-controller="reportController">
+<div id="reportsPanel" ng-controller="reportController" style="display: none;">
                       <div class="divSpacePad1">
                            <label translate="{{'reports'}}"></label>
                        </div>
@@ -153,6 +153,15 @@ $(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
 
 });
 $(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
+	var e = event.toElement || event.relatedTarget;
+	if(e){
+	    if (e.parentNode == this || e == this) {
+	       return;
+	    }
+	}else{
+		return;
+	}
+    
     if($('.md-pane-open').is(":visible")){
         return;
     }
@@ -182,7 +191,15 @@ $(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", functi
 });
 
 $(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
-    if($('.md-pane-open').is(":visible")){
+	var e = event.toElement || event.relatedTarget;
+	if(e){
+	    if (e.parentNode == this || e == this) {
+	       return;
+	    }
+	}else{
+		return;
+	}
+	if($('.md-pane-open').is(":visible")){
         return;
     }
     $('#demographicsFilterPanel').hide();
@@ -265,7 +282,7 @@ $(reportsNav).on("mouseleave", function(event){
     event.stopPropagation();
 });
 
-$(subpanel).on("click", function(){
+/*$(subpanel).on("click", function(){
     $('#dashboardNav').removeClass('sidebarItemActive');
     $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
     $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
@@ -304,6 +321,7 @@ $(subpanel).on("click", function(){
 });}
 
 
-});
+});*/
+
 
 </script>

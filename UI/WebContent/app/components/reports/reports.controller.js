@@ -37,7 +37,8 @@
                     var docDefinition = {
                         content: [{
                             image: data,
-                            width: 500,
+                            width: 550,
+                            height: 350,
                         }]
                     };
                     pdfMake.createPdf(docDefinition).download("reports.pdf");
@@ -47,7 +48,7 @@
 
 
 
-             var loginCredentails = angular.fromJson($window.sessionStorage.loginCredentails);
+             var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
              var rolename = loginCredentails.Role;
              var roleKey   = loginCredentails.roleKey;
 
