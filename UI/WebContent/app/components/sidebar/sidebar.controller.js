@@ -14,9 +14,31 @@
   	$scope.makeData;
       $scope.valArr=[2,3,4,56,7567,2345];
         $rootScope.filterIcons=[];
-
-
-
+        $scope.activeTab = null;
+        
+        $scope.onMouseOver = function(tab) {
+        	$scope.activeTab = tab;
+        }
+        
+        $scope.onMouseLeave = function(tab, event) {
+        	
+        	if(event) {
+        		var e = event.toElement || event.relatedTarget;
+        		if(e){
+        		    if (e.parentNode == this || e == this) {
+        		    	return;
+        		    }
+        		}else{
+        			return;
+        		}
+        	    if($('.md-pane-open').is(":visible")){
+        	        return;
+        	    }
+        	}
+        	
+        	$scope.activeTab = null;
+        }
+        
   	$scope.getCall=function(p){
   	}
 
@@ -252,7 +274,8 @@
 
               $rootScope.setUsageObjectFromSidebar(obj);
               $scope.createIconArray();
-              document.getElementById('filterPanel').style.display = 'none';
+//              document.getElementById('filterPanel').style.display = 'none';
+              $scope.activeTab = null;
               $rootScope.tryit();
 
           }
@@ -278,7 +301,8 @@
          	 	}
                $rootScope.setUsageObjectFromSidebar(obj);
                $scope.createIconArray();
-               document.getElementById('demographicsFilterPanel').style.display = 'none';
+//               document.getElementById('demographicsFilterPanel').style.display = 'none';
+               $scope.activeTab = null;
                $rootScope.tryit();
 
            };

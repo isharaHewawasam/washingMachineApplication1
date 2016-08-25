@@ -1,36 +1,40 @@
-
  <link href="css/sidebar.css" rel="stylesheet"/>
     <div class="aside-inner">
         <nav class="sidebar">
             <div class="nav">
-                <div id="dashboardNav" class="leftbar-icon sidebarItemActive" ng-controller="MyviewController">
+                <div id="dashboardNav" class="leftbar-icon" ng-controller="MyviewController"
+                	ng-class="{'sidebarItemActive': ((currentState == 'app.singleview' || currentState == 'app.engmanagerview') && !activeTab)}" ng-mouseover="onMouseOver()" ng-mouseleave="onMouseLeave()">
                     <div class="sidebarIconContainer">
-                        <a href="" ng-click="getUrl()"><img class="iconpos" src="img/Dashboardassets/dashboard.png"></a>
+                        <a href="" ng-click="getUrl()">
+                        <img class="iconpos" ng-src="{{(currentState == 'app.singleview' || activeTab == 'dashboard') ? 'img/Dashboardassets/dashboard_hover.png' : 'img/Dashboardassets/dashboard.png'}}"></a>
                     </div>
                     <a href="" ng-click="getUrl()"style="color: inherit; text-decoration: none;"><div class="menu-text">Dashboard</div></a>
 				</div>
-                <div  id="filterNav" class="leftbar-icon">
+                <div id="filterNav" class="leftbar-icon" ng-class="{'sidebarItemActive': (activeTab == 'product')}"
+                	ng-mouseover="onMouseOver('product')" ng-mouseleave="onMouseLeave()">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="img/Dashboardassets/machine.png">
+                        <img class="iconpos" ng-src="{{activeTab == 'product' ? 'img/Dashboardassets/machine_hover.png' : 'img/Dashboardassets/machine.png'}}">
                     </div>
                     <div class="menu-text" translate="{{'filter'}}"></div>
                 </div>
-                <div id="demographicsNav" class="leftbar-icon">
+                <div id="demographicsNav" class="leftbar-icon" ng-class="{'sidebarItemActive': (activeTab == 'demographic')}" 
+                	ng-mouseover="onMouseOver('demographic')" ng-mouseleave="onMouseLeave()">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" src="img/Dashboardassets/demographics.png">
+                        <img class="iconpos" ng-src="{{activeTab == 'demographic' ? 'img/Dashboardassets/demographics_hover.png' : 'img/Dashboardassets/demographics.png'}}">
                     </div>
                     <div class="menu-text" translate="{{'demographics'}}"></div>
                 </div>
-                <div  id="reportsNav" class="leftbar-icon">
+                <div ng-class="{'sidebarItemActive': (activeTab == 'report')}" id="reportsNav" class="leftbar-icon" 
+                	ng-mouseover="onMouseOver('report')" ng-mouseleave="onMouseLeave($event)">
 					<div class="sidebarIconContainer">
-						<img class="iconpos" src="img/Dashboardassets/reports.png">
+						<img class="iconpos" ng-src="{{activeTab == 'report' ? 'img/Dashboardassets/reports_hover.png' : 'img/Dashboardassets/reports.png'}}">
 					</div>
 					<div class="menu-text" translate="{{'reports'}}"></div>
 				</div>
             </div>
         </nav>
     </div>
-    <div id="filterPanel" style="display: none;">
+    <div id="filterPanel" ng-show="activeTab == 'product'"  ng-mouseover="onMouseOver('product')" ng-mouseleave="onMouseLeave($event)">
         <div class="divSpacePad1">
             <label translate="{{'products'}}"></label>
 
@@ -85,7 +89,7 @@
 
     </div>
 
-    <div id="demographicsFilterPanel" style="display: none;">
+    <div id="demographicsFilterPanel" ng-show="activeTab == 'demographic'"  ng-mouseover="onMouseOver('demographic')" ng-mouseleave="onMouseLeave($event)">
 
         <div class="divSpacePad1">
             <label translate="{{'demographics'}}"></label>
@@ -124,204 +128,15 @@
     </div>
     <!--reports-->
 
-<div id="reportsPanel" ng-controller="reportController" style="display: none;">
-                      <div class="divSpacePad1">
-                           <label translate="{{'reports'}}"></label>
-                       </div>
-                        <div  class="divSpacePad">
-                           <span translate="{{'washing_machine_status_reports'}}"></span>
-                       </div>
-                                             <div id="subpanel" style="width:100%; " class="fontSubText">
+<div id="reportsPanel" ng-show="activeTab == 'report'" ng-mouseover="onMouseOver('report')" ng-mouseleave="onMouseLeave($event)" ng-controller="reportController">
+       <div class="divSpacePad1">
+            <label translate="{{'reports'}}"></label>
+        </div>
+         <div  class="divSpacePad">
+            <span translate="{{'washing_machine_status_reports'}}"></span>
+        </div>
+                              <div id="subpanel" style="width:100%; " class="fontSubText">
 
-                          <button ng-disabled="isEngManager" id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
-                       </div>
- </div>
-
-
-<script>
-
-$(document).on("mouseover", "#filterNav, #filterPanel", function(event) {
-    $('#filterPanel').show();
-    $('#filterNav').addClass('sidebarItemActive');
-    $('#filterNav img').attr('src','img/Dashboardassets/machine_hover.png');
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-    $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
-    $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-
-});
-$(document).on("mouseleave", "#filterNav, #filterPanel", function(event) {
-	var e = event.toElement || event.relatedTarget;
-	if(e){
-	    if (e.parentNode == this || e == this) {
-	       return;
-	    }
-	}else{
-		return;
-	}
-    
-    if($('.md-pane-open').is(":visible")){
-        return;
-    }
-    $('#filterPanel').hide();
-    $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
-    $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-    $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
-    $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-    event.stopPropagation();
-});
-
-
-$(document).on("mouseover", "#demographicsNav, #demographicsFilterPanel", function(event) {
-    $('#demographicsFilterPanel').show();
-    $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-    $('#demographicsNav').addClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics_hover.png');
-    $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-});
-
-$(document).on("mouseleave", "#demographicsNav, #demographicsFilterPanel", function(event) {
-	var e = event.toElement || event.relatedTarget;
-	if(e){
-	    if (e.parentNode == this || e == this) {
-	       return;
-	    }
-	}else{
-		return;
-	}
-	if($('.md-pane-open').is(":visible")){
-        return;
-    }
-    $('#demographicsFilterPanel').hide();
-    $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
-    $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-    $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
-    $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-    event.stopPropagation();
-});
-
-//reports
-$(document).on("mouseover", "#reportsNav, #reportsPanel", function(event) {
-   $('#reportsPanel').show();
-   $('#filterNav').removeClass('sidebarItemActive');
-   $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
-   $('#reportsNav').addClass('sidebarItemActive');
-   $('#reportsNav img').attr('src','img/Dashboardassets/reports_hover.png');
-   $('#dashboardNav').removeClass('sidebarItemActive');
-   $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-   $('#demographicsNav').removeClass('sidebarItemActive');
-   $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
-});
-$(document).on("mouseleave", "#reportsNav, #reportsPanel", function(event) {
-   if($('.md-pane-open').is(":visible")){
-       return;
-   }
-   $('#reportsPanel').hide();
-   $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-   $('#dashboardNav').removeClass('sidebarItemActive');
-   $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-   event.stopPropagation();
-});
-$(dashboardNav).on("click", function(){
-  $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-  $('#reportsNav').removeClass('sidebarItemActive');
-
-  if(event){
-  $("#dashboardNav").on("mouseleave", function(){
-  $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-  $('#reportsNav').removeClass('sidebarItemActive');
-
-
-});}
-     if(event){
-  $("#dashboardNav").on("mouseover", function(){
-  $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-  $('#reportsNav').removeClass('sidebarItemActive');
-
-
-});}
-
-});
-$(dashboardNav).on("mouseover", function(){
-  $('#dashboardNav').addClass('sidebarItemActive');
-  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-  $('#reportsNav').removeClass('sidebarItemActive');
-
-});
-$(reportsNav).on("mouseleave", function(event){
-
-  if($('.md-pane-open').is(":visible")){
-        return;
-    }
-    $('#reportsPanel').hide();
-    $('#filterNav').removeClass('sidebarItemActive');
-    $('#filterNav img').attr('src','img/Dashboardassets/machine.png');
-    $('#dashboardNav').addClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-    $('#demographicsNav').removeClass('sidebarItemActive');
-    $('#demographicsNav img').attr('src','img/Dashboardassets/demographics.png');
-    $('#reportsNav').removeClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-    event.stopPropagation();
-});
-
-$(subpanel).on("click", function(){
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-    $('#reportsNav').addClass('sidebarItemActive');
-    $('#filterNav').removeClass('sidebarItemActive');
-    $('#demographicsNav').removeClass('sidebarItemActive');
-      if(event){
-    $("#dashboardNav").on("mouseover", function(){
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-    $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-
-});}
-      if(event){
-    $("#dashboardNav").on("mouseleave", function(){
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard_hover.png');
-    $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-
-});}
-      if(event){
-    $("#filterNav").on("mouseleave", function(){
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-
-});}
-      if(event){
-    $("#demographicsNav").on("mouseleave", function(){
-    $('#dashboardNav').removeClass('sidebarItemActive');
-    $('#reportsNav').addClass('sidebarItemActive');
-    $('#reportsNav img').attr('src','img/Dashboardassets/reports.png');
-
-});}
-
-
-});
-
-
-</script>
+           <button ng-disabled="isEngManager" id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
+        </div>
+</div>
