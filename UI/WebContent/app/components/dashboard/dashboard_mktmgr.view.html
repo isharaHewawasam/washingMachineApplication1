@@ -175,7 +175,7 @@
 						value="{{chart}}">{{chart}}</option>
 				</select> <img id="maximize" class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="maximize()"></img> <img id="close"
+					ng-click="progress || maximize()"></img> <img id="close"
 					class=" col-md-1 image-margin close-image-size hidden pull-right"
 					src="img/Dashboardassets/close.png" ng-click="closing()">
 				<img class="col-md-1 pull-right" id="infoicons"
@@ -299,7 +299,7 @@
 				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="maximizeMap()"></img> <img id="mapMinImg"
+					ng-click="mapProgress || maximizeMap()"></img> <img id="mapMinImg"
 					class="pull-right hidden col-md-1 "
 					src="img/Dashboardassets/close.png"></img> <img
 					class="pull-right col-md-1" id="mapinfo"
@@ -484,7 +484,7 @@
 					class="pull-right col-md-1"
 
 					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1  "
 
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
@@ -552,7 +552,7 @@
 					class="pull-right col-md-1"
 
 					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="maximizeGrid()"></img> <img id="gridCloseImg"
+					ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
 					class="pull-right hidden col-md-1 "
 
 					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
