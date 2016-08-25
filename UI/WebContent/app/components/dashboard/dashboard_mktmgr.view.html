@@ -271,9 +271,8 @@
 	</div>
 
 	<div class="col-lg-4" >
-		<div class="panel panel-default hidden " id="mapNormal1" ng-controller="mapController"
-		ng-init="plotMapFunction('map-maxcontainer')">
-		<div class="panel-heading md-body-2" id="mapMaximizedlinner">
+		<div class="panel panel-default hidden" id="mapNormal1" ng-controller="mapController">
+			<div class="panel-heading md-body-2" id="mapMaximizedlinner">
 				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
@@ -287,8 +286,8 @@
 					data-trigger="hover"></img>
 			</div>
 			<div class="map-maxDiv">
-				<span ng-show="mapProgress" class="progress-chart"> <img
-					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
+				<span ng-show="maxMapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="img/icon-load.gif" width="15%";height="15%">
 				</span>
 				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-maxcontainer"></div>

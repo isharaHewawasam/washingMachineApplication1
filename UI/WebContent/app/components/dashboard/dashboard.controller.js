@@ -330,12 +330,12 @@
         $scope.loadingText = "Loading data...";
 
 
-        $rootScope.mapProgress = true;
+        $rootScope.maxMapProgress = true;
         var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
         var param = $scope.usagedata;
         HttpService.post(url, param).then(function(data){
             // on success
-            $rootScope.mapProgress = false;
+            $rootScope.maxMapProgress = false;
 
             if(!data || data.length === 0){
                  renderMap("#map-container", []);
@@ -345,7 +345,7 @@
             }
         },function(data){
             // on error
-             $rootScope.mapProgress = false;
+             $rootScope.maxMapProgress = false;
         });
         }
 

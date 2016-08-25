@@ -1931,7 +1931,7 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
 angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
                                 function($scope,$rootScope, configApiClient, HttpService){
     $scope.salesDataSet;
-	$scope.plotMapFunction = function(divId){
+    $scope.plotMapFunction = function(divId){
 		$rootScope.mapProgress = true;
 		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
 		var param = null;
@@ -1955,7 +1955,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 	 */
     /*Code For maximizing function*/
     $scope.maximizeMap=function(){
-        var mapNormal = $("#mapNormal1").clone();
+		var mapNormal = $("#mapNormal1").clone();
 
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").append(mapNormal);
@@ -1971,8 +1971,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
-
-
+        
     $("#hiddenDivMap").removeClass("hidden");
 
     }
@@ -1982,7 +1981,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#hiddenDivMap").addClass("hidden");
 		$scope.zoomMap('map-container');
 
-          $("#mapNormal1").height(355);
+          $("#mapNormal1").height(707);
 
 
 
