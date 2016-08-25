@@ -2813,13 +2813,13 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	$scope.usagedata=null;
 	$rootScope.selectedSales="";
 	$scope.selectedSales;
-	$scope.selectedChart="";
+	$scope.selectedChart="Pie";
 	$scope.seneorkey="";
 	$scope.Unit="";
   //$scope.relativeTimeScale = 1;
 	$rootScope.baseUrl=configApiClient.baseUrl;
 	$scope.EngchartTypes=['Line Chart'];
-	  $scope.selectedChart=$scope.EngchartTypes[0];
+	  //$scope.selectedChart=$scope.EngchartTypes[0];
 
 //	$scope.linechartData=null;
 	  $rootScope.piechartData = null;
@@ -2879,10 +2879,10 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			var url = configApiClient.baseUrl + 'sales/charts';
 			HttpService.get(url).then(function(data){
 				// on success
-				$scope.progress = false;
+				//$scope.progress = false;
 				$scope.salesList=data;
 			},function(data){
-				$scope.progress = false;
+				//$scope.progress = false;
 				// on error
 
 			});
@@ -2950,9 +2950,9 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 	$scope.disp=function(index){
 		if(index==0){
 			$scope.selectedSales=""+0;
-			$scope.progress = false;
+			//$scope.progress = false;
 		}
-
+		
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
 			 $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
 			 $scope.selectedChart=$scope.chartTypes[0];
@@ -2960,7 +2960,6 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 		else {
 				$scope.chartTypes="";
 		}
-
 	}
 
 	$scope.dispChart=function(selectedChart){
