@@ -12117,6 +12117,11 @@ display : block;
 	font-size:14px;
 	color:#222222;
 }
+.option-text-style-disable{
+	font-family: Roboto;light;
+	font-size:14px;
+	color:#d4d4d4;
+}
 
 .multiselect-container>li>a>label {
   padding: 4px 20px 3px 20px;
