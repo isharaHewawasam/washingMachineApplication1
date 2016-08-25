@@ -12,7 +12,7 @@
 
 		var host;
 		if(location.hostname == 'localhost') {
-			host= 'ibm-iot.mybluemix.net';
+			host= 'localhost:3000';
 		} else {
 			host = location.hostname;
 		}
