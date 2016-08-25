@@ -134,7 +134,7 @@ function doGetDataLogging(err, result, params, view_params, view_name) {
     console.log("Design Doc name " + params.view.designDocName); 
     console.log("View name " + view_name);    
     console.log("view params " + JSON.stringify(view_params));
-    console.log("No records  " + result.rows.length);
+    //console.log("No records  " + result.rows.length);
     //console.log("Data " + JSON.stringify(result.rows));
     console.log("============================================");
 }
