@@ -1,12 +1,11 @@
 Express server listening on port 3000
+URL : /api/v1/login/authentication
+Request Body : {"username":"eng_manager@bluemix.com","password":"test123"}
+Request after sanitizing: {"username":"eng_manager@bluemix.com","password":"test123"}
+Sending Response
 URL : /api/v1/config/makes
 Request Body : {}
 Request after sanitizing: {}
-URL : /api/v1/usage
-Request Body : {}
-Request after sanitizing: {}
-grop level : 2
-Sending usage query request to Usage Thu Aug 25 2016 17:18:11 GMT+0530 (India Standard Time)
 URL : /api/v1/demographics/family/age-ranges
 Request Body : {}
 Request after sanitizing: {}
@@ -15,6 +14,11 @@ URL : /api/v1/demographics/family/income-ranges
 Request Body : {}
 Request after sanitizing: {}
 Sending Response
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 25 2016 17:23:47 GMT+0530 (India Standard Time)
 URL : /api/v1/demographics/family/members-count
 Request Body : {}
 Request after sanitizing: {}
@@ -25,34 +29,49 @@ Request after sanitizing: {}
 URL : /api/v1/sensors/data
 Request Body : {}
 Request after sanitizing: {}
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {}
+Request after sanitizing: {}
+Exception in sales_map::removeUnwantedKeys
+[TypeError: Cannot set property 'years' of undefined]
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {}
+Request after sanitizing: {}
+Exception in sales_map::removeUnwantedKeys
+[TypeError: Cannot set property 'years' of undefined]
+Received usage query response Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Sending Response
+Time : Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+Sending Response
 URL : /api/v1/config/states
 Request Body : {}
 Request after sanitizing: {}
 URL : /api/v1/config/sales/years
 Request Body : {}
 Request after sanitizing: {}
-Sending Response
-URL : /api/v1/usage
-Request Body : {}
-Request after sanitizing: {}
-grop level : 2
-Sending usage query request to Usage Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Received usage query response Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Usage view name averages
-Usage view params {"reduce":true,"group_level":2}
-Usage records form cloudant 9
-============================================
-Completed processing total water load records Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Sending favtoure day query request Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Sending Response
-Sending Response
-Time : Thu Aug 25 2016 17:18:12 GMT+0530 (India Standard Time)
-Average Water Usage
-Design Doc name averages
-View name averageWaterUsage
+Time : Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
 view params {"reduce":true,"group":true,"group_level":2}
-No records  9
+============================================
+Time : Thu Aug 25 2016 17:23:48 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":2}
 ============================================
 { State: 
    { 'AZ,Arizona': 1456,
@@ -65,35 +84,47 @@ No records  9
      'WA,Washington': 739,
      'WI,Wisconsin': 350 } }
 Sending Response
+Sending Response
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 25 2016 17:23:49 GMT+0530 (India Standard Time)
 URL : /api/v1/sensors
 Request Body : {}
 Request after sanitizing: {}
 Sending Response
+Time : Thu Aug 25 2016 17:23:49 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averagePowerUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
 URL : /api/v1/sales/charts
 Request Body : {}
 Request after sanitizing: {}
 Sending Response
-URL : /api/v1/sales?report_name=soldVsConnected&group=true
-Request Body : {}
-Request after sanitizing: {}
-Exception in sales_map::removeUnwantedKeys
-[TypeError: Cannot set property 'years' of undefined]
-URL : /api/v1/sales?report_name=soldVsConnected&group=true
-Request Body : {}
-Request after sanitizing: {}
-Exception in sales_map::removeUnwantedKeys
-[TypeError: Cannot set property 'years' of undefined]
 URL : /api/v1/insights/most-fault-models
 Request Body : {}
 Request after sanitizing: {}
-Received usage query response Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Usage view name averages
-Usage view params {"reduce":true,"group_level":2}
-Usage records form cloudant 9
+Received favoutire day : Thu Aug 25 2016 17:23:49 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 144
+=========================================
+Sending favtoure time query request Thu Aug 25 2016 17:23:49 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":2}
 ============================================
-Completed processing total water load records Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Sending favtoure day query request Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
 { total_rows: 29,
   bookmark: 'g2o',
   rows: [],
@@ -112,33 +143,32 @@ Sending Response
 URL : /api/v1/insights/least-fault-models
 Request Body : {}
 Request after sanitizing: {}
-Time : Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Average Water Usage
+Time : Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Average Temperature Usage
 Design Doc name averages
-View name averagePowerUsage
+View name averageTemperatureUsage
 view params {"reduce":true,"group":true,"group_level":2}
-No records  9
 ============================================
-Received favoutire day : Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Favourite day view name : WashDayByMakeAndModel
-Favourite day params : {"reduce":true,"group":true,"group_level":4}
-Favourite day records from cloudant : 144
-=========================================
-Sending favtoure time query request Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Sold Washing Machines by Region
-Design Doc name sales
-View name salesByRegionAndProduct
-view params {"reduce":true,"group":true,"group_level":2}
-No records  29
+Received usage query response Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
 ============================================
-Time : Thu Aug 25 2016 17:18:13 GMT+0530 (India Standard Time)
-Sold Washing Machines by Region
-Design Doc name sales
-View name salesByRegionAndProduct
-view params {"reduce":true,"group":true,"group_level":2}
-No records  29
-============================================
+Completed processing total water load records Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 25 2016 17:23:50 GMT+0530 (India Standard Time)
+Received favoutire time : Thu Aug 25 2016 17:23:51 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
+Favourite wash time records from cloudant : 225
+========================================
+Processing favourites started : Thu Aug 25 2016 17:23:51 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:23:51 GMT+0530 (India Standard Time)
+Sending response
+Sending Response
+URL : /api/v1/insights/most-common-fault
+Request Body : {}
+Request after sanitizing: {}
 { total_rows: 29,
   bookmark: 'g2o',
   rows: [],
@@ -154,68 +184,25 @@ No records  29
         Model8: 3,
         Model9: 2 } } }
 Sending Response
-URL : /api/v1/insights/most-common-fault
-Request Body : {}
-Request after sanitizing: {}
-Time : Thu Aug 25 2016 17:18:14 GMT+0530 (India Standard Time)
-Average Temperature Usage
-Design Doc name averages
-View name averageTemperatureUsage
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
-Received favoutire day : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Favourite day view name : WashDayByMakeAndModel
-Favourite day params : {"reduce":true,"group":true,"group_level":4}
-Favourite day records from cloudant : 144
-=========================================
-Sending favtoure time query request Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Connected Washing Machines by Region
-Design Doc name sales
-View name connectedByRegionAndProduct
-view params {"reduce":true,"group":true,"group_level":2}
-No records  29
-============================================
-Time : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Connected Washing Machines by Region
-Design Doc name sales
-View name connectedByRegionAndProduct
-view params {"reduce":true,"group":true,"group_level":2}
-No records  29
-============================================
-Received favoutire time : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Favourite wash time view name : WashTimeByMakeAndModel
-Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
-Favourite wash time records from cloudant : 225
-========================================
-Processing favourites started : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Processing favourites completed : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
-Sending response
-Sending Response
 URL : /api/v1/notifications/configurations/settings
 Request Body : {"Username":"eng_manager@bluemix.com"}
 Request after sanitizing: {"Username":"eng_manager@bluemix.com"}
-Sending Response
-URL : /api/v1/notifications/configurations/settings
-Request Body : {"Username":"eng_manager@bluemix.com"}
-Request after sanitizing: {"Username":"eng_manager@bluemix.com"}
-Time : Thu Aug 25 2016 17:18:15 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:52 GMT+0530 (India Standard Time)
 Average Wash Cycle Duration
 Design Doc name averages
 View name averageWashCycleDuration
 view params {"reduce":true,"group":true,"group_level":2}
-No records  9
 ============================================
-Received favoutire time : Thu Aug 25 2016 17:18:16 GMT+0530 (India Standard Time)
-Favourite wash time view name : WashTimeByMakeAndModel
-Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
-Favourite wash time records from cloudant : 225
-========================================
-Processing favourites started : Thu Aug 25 2016 17:18:16 GMT+0530 (India Standard Time)
-Processing favourites completed : Thu Aug 25 2016 17:18:16 GMT+0530 (India Standard Time)
-Sending response
+Received favoutire day : Thu Aug 25 2016 17:23:52 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 144
+=========================================
+Sending favtoure time query request Thu Aug 25 2016 17:23:52 GMT+0530 (India Standard Time)
 Sending Response
+URL : /api/v1/notifications/configurations/settings
+Request Body : {"Username":"eng_manager@bluemix.com"}
+Request after sanitizing: {"Username":"eng_manager@bluemix.com"}
 { total_rows: 2,
   offset: 0,
   rows: 
@@ -231,19 +218,14 @@ Request Body : {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"st
 Request after sanitizing: {"productAttrs":{"makes":[],"models":[],"skus":[],"mfg_date":{"start_date":"","end_date":""}},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"string","end_date":"string"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"age":[],"family_members_count":[],"income":[]}
 Group level : REPORT_TYPE.SENSOR_LINE_CHART
 Filter type : 0
-URL : /api/v1/notifications/notification-alert
-Request Body : {}
-Request after sanitizing: {}
+Time : Thu Aug 25 2016 17:23:53 GMT+0530 (India Standard Time)
+Average Wash Cycles
+Design Doc name averages
+View name averageWashCycles
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+db opened
 Sending Response
-URL : /api/v1/notifications/spikes-by-specific-errors
-Request Body : {}
-Request after sanitizing: {}
-Sending Response
-URL : /api/v1/usage
-Request Body : {}
-Request after sanitizing: {}
-grop level : 2
-Sending usage query request to Usage Thu Aug 25 2016 17:18:16 GMT+0530 (India Standard Time)
 { total_rows: 2,
   offset: 0,
   rows: 
@@ -254,73 +236,411 @@ Sending usage query request to Usage Thu Aug 25 2016 17:18:16 GMT+0530 (India St
        key: [Object],
        value: 1 } ] }
 Sending Response
-URL : /api/v1/notifications/spikes-by-specific-errors-by-make-model
+URL : /api/v1/notifications/spikes-by-specific-errors
 Request Body : {}
 Request after sanitizing: {}
-Time : Thu Aug 25 2016 17:18:17 GMT+0530 (India Standard Time)
-Average Wash Cycles
-Design Doc name averages
-View name averageWashCycles
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
-Time : Thu Aug 25 2016 17:18:17 GMT+0530 (India Standard Time)
-Average Water Usage
-Design Doc name averages
-View name averageWaterUsageByDate
-view params {"reduce":true,"group":true,"group_level":3,"startkey":["2016-07-26"],"endkey":["2016-08-25"]}
-No records  23
-============================================
-Group level : REPORT_TYPE.SENSOR_LINE_CHART
-Filter type : 0
 Sending Response
-Received usage query response Thu Aug 25 2016 17:18:18 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:18 GMT+0530 (India Standard Time)
-Usage view name averages
-Usage view params {"reduce":true,"group_level":2}
-Usage records form cloudant 9
-============================================
-Completed processing total water load records Thu Aug 25 2016 17:18:18 GMT+0530 (India Standard Time)
-Sending favtoure day query request Thu Aug 25 2016 17:18:18 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:18 GMT+0530 (India Standard Time)
-Average Detergent Usage
-Design Doc name averages
-View name averageDetergentUsage
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
+URL : /api/v1/notifications/notification-alert
+Request Body : {}
+Request after sanitizing: {}
+Sending Response
+URL : /api/v1/usage
+Request Body : {}
+Request after sanitizing: {}
+grop level : 2
+Sending usage query request to Usage Thu Aug 25 2016 17:23:53 GMT+0530 (India Standard Time)
 db opened
 Sending Response
-db opened
-Sending Response
-Sending Response
-Time : Thu Aug 25 2016 17:18:19 GMT+0530 (India Standard Time)
-Average Humidity
-Design Doc name averages
-View name averageHumidity
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
-Received favoutire day : Thu Aug 25 2016 17:18:19 GMT+0530 (India Standard Time)
-Favourite day view name : WashDayByMakeAndModel
-Favourite day params : {"reduce":true,"group":true,"group_level":4}
-Favourite day records from cloudant : 144
-=========================================
-Sending favtoure time query request Thu Aug 25 2016 17:18:19 GMT+0530 (India Standard Time)
-Time : Thu Aug 25 2016 17:18:20 GMT+0530 (India Standard Time)
-Average Humidity
-Design Doc name averages
-View name averageLoad
-view params {"reduce":true,"group":true,"group_level":2}
-No records  9
-============================================
-Sending Response
-Received favoutire time : Thu Aug 25 2016 17:18:21 GMT+0530 (India Standard Time)
+Received favoutire time : Thu Aug 25 2016 17:23:54 GMT+0530 (India Standard Time)
 Favourite wash time view name : WashTimeByMakeAndModel
 Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
 Favourite wash time records from cloudant : 225
 ========================================
-Processing favourites started : Thu Aug 25 2016 17:18:21 GMT+0530 (India Standard Time)
-Processing favourites completed : Thu Aug 25 2016 17:18:21 GMT+0530 (India Standard Time)
+Processing favourites started : Thu Aug 25 2016 17:23:54 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:23:54 GMT+0530 (India Standard Time)
 Sending response
 Sending Response
+URL : /api/v1/notifications/spikes-by-specific-errors-by-make-model
+Request Body : {}
+Request after sanitizing: {}
+Time : Thu Aug 25 2016 17:23:54 GMT+0530 (India Standard Time)
+Average Detergent Usage
+Design Doc name averages
+View name averageDetergentUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+Time : Thu Aug 25 2016 17:23:54 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsageByDate
+view params {"reduce":true,"group":true,"group_level":3,"startkey":["2016-07-26"],"endkey":["2016-08-25"]}
+============================================
+Group level : REPORT_TYPE.SENSOR_LINE_CHART
+Filter type : 0
+Sending Response
+Received usage query response Thu Aug 25 2016 17:23:55 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:55 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 25 2016 17:23:55 GMT+0530 (India Standard Time)
+Sending favtoure day query request Thu Aug 25 2016 17:23:55 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:55 GMT+0530 (India Standard Time)
+Average Humidity
+Design Doc name averages
+View name averageHumidity
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+Sending Response
+Received favoutire day : Thu Aug 25 2016 17:23:56 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":4}
+Favourite day records from cloudant : 144
+=========================================
+Sending favtoure time query request Thu Aug 25 2016 17:23:56 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:23:56 GMT+0530 (India Standard Time)
+Average Humidity
+Design Doc name averages
+View name averageLoad
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+Sending Response
+Received favoutire time : Thu Aug 25 2016 17:23:58 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":4}
+Favourite wash time records from cloudant : 225
+========================================
+Processing favourites started : Thu Aug 25 2016 17:23:58 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:23:58 GMT+0530 (India Standard Time)
+Sending response
+Sending Response
+URL : /api/v1/config/makes/models?make_names=Make2
+Request Body : {}
+Request after sanitizing: {}
+URL : /api/v1/sensors/data?sensor_name=avg-water-usage&group_by_timescale=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+URL : /api/v1/usage
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+URL : /api/v1/sensors/data
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+Sending Response
+Group level : REPORT_TYPE.SENSOR_LINE_CHART
+Filter type : 2
+default
+Hell2 {"productAttrs":{"makes":[{"value":"Make2"}],"models":[{"value":"Model4"},{"value":"Model5"},{"value":"Model6"}],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[]}
+default
+grop level : 2
+default
+Sending usage query request to Usage Thu Aug 25 2016 17:24:02 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:03 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":4}
+============================================
+Time : Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Received usage query response Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":2}
+Usage records form cloudant 9
+============================================
+Completed processing total water load records Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+default
+Sending favtoure day query request Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:04 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsageByDate
+view params {"reduce":true,"group":true,"group_level":3,"startkey":["2016-07-26"],"endkey":["2016-08-25"]}
+============================================
+Group level : REPORT_TYPE.SENSOR_LINE_CHART
+Filter type : 2
+Sending Response
+Time : Thu Aug 25 2016 17:24:05 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":4}
+============================================
+Time : Thu Aug 25 2016 17:24:05 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averagePowerUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Received favoutire day : Thu Aug 25 2016 17:24:05 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":3}
+Favourite day records from cloudant : 65
+=========================================
+default
+Sending favtoure time query request Thu Aug 25 2016 17:24:05 GMT+0530 (India Standard Time)
+db opened
+Sending Response
+Time : Thu Aug 25 2016 17:24:06 GMT+0530 (India Standard Time)
+Average Temperature Usage
+Design Doc name averages
+View name averageTemperatureUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Received favoutire time : Thu Aug 25 2016 17:24:07 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":3}
+Favourite wash time records from cloudant : 140
+========================================
+Processing favourites started : Thu Aug 25 2016 17:24:07 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:24:07 GMT+0530 (India Standard Time)
+Sending response
+Sending Response
+Time : Thu Aug 25 2016 17:24:07 GMT+0530 (India Standard Time)
+Average Wash Cycle Duration
+Design Doc name averages
+View name averageWashCycleDuration
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Time : Thu Aug 25 2016 17:24:08 GMT+0530 (India Standard Time)
+Average Wash Cycles
+Design Doc name averages
+View name averageWashCycles
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Time : Thu Aug 25 2016 17:24:10 GMT+0530 (India Standard Time)
+Average Detergent Usage
+Design Doc name averages
+View name averageDetergentUsage
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+Time : Thu Aug 25 2016 17:24:11 GMT+0530 (India Standard Time)
+Average Humidity
+Design Doc name averages
+View name averageHumidity
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+default
+URL : /api/v1/sensors/data?sensor_name=avg-water-usage&group_by_timescale=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+filter category = mixed
+filter category = mixed
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+filter category = mixed
+filter category = mixed
+URL : /api/v1/usage
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+filter category = mixed
+filter category = mixed
+grop level : 15
+Sending usage query request to Usage Thu Aug 25 2016 17:24:11 GMT+0530 (India Standard Time)
+URL : /api/v1/sensors/data
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":2}]}
+filter category = mixed
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:12 GMT+0530 (India Standard Time)
+Average Humidity
+Design Doc name averages
+View name averageLoad
+view params {"reduce":true,"group":true,"group_level":2}
+============================================
+default
+Sending Response
+Time : Thu Aug 25 2016 17:24:12 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsageByDate
+view params {"reduce":true,"group":true,"group_level":15,"startkey":["2016-07-26"],"endkey":["2016-08-25"]}
+============================================
+Sending Response
+Time : Thu Aug 25 2016 17:24:14 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Received usage query response Thu Aug 25 2016 17:24:15 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:15 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":15}
+Usage records form cloudant 2075
+============================================
+Completed processing total water load records Thu Aug 25 2016 17:24:15 GMT+0530 (India Standard Time)
+filter category = mixed
+Sending favtoure day query request Thu Aug 25 2016 17:24:15 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:18 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averagePowerUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Received favoutire day : Thu Aug 25 2016 17:24:18 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":16}
+Favourite day records from cloudant : 2094
+=========================================
+filter category = mixed
+Sending favtoure time query request Thu Aug 25 2016 17:24:18 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:19 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+URL : /api/v1/sensors/data?sensor_name=avg-water-usage&group_by_timescale=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+filter category = mixed
+filter category = mixed
+URL : /api/v1/sales?report_name=soldVsConnected&group=true
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+filter category = mixed
+filter category = mixed
+URL : /api/v1/usage
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+filter category = mixed
+filter category = mixed
+grop level : 15
+Sending usage query request to Usage Thu Aug 25 2016 17:24:21 GMT+0530 (India Standard Time)
+Received favoutire time : Thu Aug 25 2016 17:24:21 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":16}
+Favourite wash time records from cloudant : 2094
+========================================
+Processing favourites started : Thu Aug 25 2016 17:24:21 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:24:21 GMT+0530 (India Standard Time)
+Sending response
+Sending Response
+URL : /api/v1/sensors/data
+Request Body : {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+Request after sanitizing: {"productAttrs":{"makes":[{"value":"Make2"}],"models":[],"skus":[],"mfg_date":{},"mfgStartDate":[],"mfgEndDate":[]},"timescale":{"years":[],"quarters":[],"months":[],"date":{"start_date":"01/01/2015","end_date":"01/01/2016"},"relative":{"unit":"d","value":30}},"region":{"states":[],"cities":[],"zip_codes":[]},"income":[],"age":[],"family_members_count":[{"value":3}]}
+filter category = mixed
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:21 GMT+0530 (India Standard Time)
+Average Temperature Usage
+Design Doc name averages
+View name averageTemperatureUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:22 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsageByDate
+view params {"reduce":true,"group":true,"group_level":15,"startkey":["2016-07-26"],"endkey":["2016-08-25"]}
+============================================
+Sending Response
+Time : Thu Aug 25 2016 17:24:24 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averageWaterUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:25 GMT+0530 (India Standard Time)
+Average Wash Cycle Duration
+Design Doc name averages
+View name averageWashCycleDuration
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Received usage query response Thu Aug 25 2016 17:24:25 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:25 GMT+0530 (India Standard Time)
+Usage view name averages
+Usage view params {"reduce":true,"group_level":15}
+Usage records form cloudant 2075
+============================================
+Completed processing total water load records Thu Aug 25 2016 17:24:25 GMT+0530 (India Standard Time)
+filter category = mixed
+Sending favtoure day query request Thu Aug 25 2016 17:24:25 GMT+0530 (India Standard Time)
+Time : Thu Aug 25 2016 17:24:26 GMT+0530 (India Standard Time)
+Connected Washing Machines by Region
+Design Doc name sales
+View name connectedByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+Time : Thu Aug 25 2016 17:24:28 GMT+0530 (India Standard Time)
+Average Wash Cycles
+Design Doc name averages
+View name averageWashCycles
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Received favoutire day : Thu Aug 25 2016 17:24:28 GMT+0530 (India Standard Time)
+Favourite day view name : WashDayByMakeAndModel
+Favourite day params : {"reduce":true,"group":true,"group_level":16}
+Favourite day records from cloudant : 2094
+=========================================
+filter category = mixed
+Sending favtoure time query request Thu Aug 25 2016 17:24:28 GMT+0530 (India Standard Time)
+db opened
+Sending Response
+Time : Thu Aug 25 2016 17:24:28 GMT+0530 (India Standard Time)
+Average Water Usage
+Design Doc name averages
+View name averagePowerUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:28 GMT+0530 (India Standard Time)
+Sold Washing Machines by Region
+Design Doc name sales
+View name salesByRegionAndProduct
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Received favoutire time : Thu Aug 25 2016 17:24:31 GMT+0530 (India Standard Time)
+Favourite wash time view name : WashTimeByMakeAndModel
+Favourite wash time params : {"reduce":true,"group":true,"group_level":16}
+Favourite wash time records from cloudant : 2094
+========================================
+Processing favourites started : Thu Aug 25 2016 17:24:31 GMT+0530 (India Standard Time)
+Processing favourites completed : Thu Aug 25 2016 17:24:31 GMT+0530 (India Standard Time)
+Sending response
+Sending Response
+Time : Thu Aug 25 2016 17:24:31 GMT+0530 (India Standard Time)
+Average Detergent Usage
+Design Doc name averages
+View name averageDetergentUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
+Time : Thu Aug 25 2016 17:24:32 GMT+0530 (India Standard Time)
+Average Temperature Usage
+Design Doc name averages
+View name averageTemperatureUsage
+view params {"reduce":true,"group":true,"group_level":15}
+============================================
+filter category = mixed
