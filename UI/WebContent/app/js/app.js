@@ -3939,7 +3939,7 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
 }]);
-angular.module('angle').controller('MyviewController', ['$scope', '$window', function($scope, $window) {
+angular.module('angle').controller('MyviewController', ['$scope', '$window','$state', function($scope, $window, $state) {
 	  /* controller code */
 
 	  $scope.getUrl = function(){
@@ -3947,10 +3947,11 @@ angular.module('angle').controller('MyviewController', ['$scope', '$window', fun
 		var rolename = loginCredentails.Role;
 
 	    if(rolename == "Engineering Manager"){
-	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');	       
 	    }
 	    else{
-	      $('#dashboardNav a').attr('href','#/app/singleview');
+	      $('#dashboardNav a').attr('href','#/app/singleview');	    	
 	    }
+	    
 	  }
 }]);

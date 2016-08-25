@@ -16,6 +16,8 @@ var bodyParser = require('body-parser');
 var utility = require("./middle_ware/utility");
 
 app.use(serveStatic("./UI/WebContent"));
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
