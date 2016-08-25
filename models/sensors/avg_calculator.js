@@ -50,6 +50,7 @@ function getStats(params, callback) {
          
           for(var row in result.rows) {
               if(doesRecordFallsInFilter(params, result.rows[row].key)) {
+                //console.log("Adding record");
                 addOrUpdateUsages(params, fillRecord(result.rows[row], params));
               }        
           }   
@@ -86,12 +87,12 @@ var getData = function(params, callback) {
   var view_params = { reduce: true, group: true, group_level: group_level, "startkey": params.start_key, "endkey": params.end_key };  
   //var view_name = params.filter.isFilterCategoryByYear() ? params.view.byYear : params.view.default;
   var view_name = null;
-  if (params.filter.isFilterCategoryByYear()) {
-    view_name = params.view.byYear;
+  if (params.filter.isFilterByRelativeTimescale()) {
+    view_name = params.view.byDate;  
   } else if (params.filter.isFilterCategoryByFamily()) {
     view_name = params.view.byFamily;
-  } else if (params.filter.isFilterByRelativeTimescale()) {
-    view_name = params.view.byDate;  
+  } else if (params.filter.isFilterCategoryByYear()) {
+    view_name = params.view.byYear;
   } else {
     view_name = params.view.default;
   }
@@ -472,7 +473,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   if(params.filter.isFilterCategoryByFamily()) {
     //console.log("Keys : " + JSON.stringify(keys));
-    //console.log("Age key id :" + keys[params.key_maps.key.MEMBERS]);
+    //console.log("Age key id :" + keys[params.key_maps.key.AGE]);
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&

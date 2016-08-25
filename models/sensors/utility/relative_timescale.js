@@ -23,8 +23,8 @@ exports.processResultForRelativeTimeScale = function processResultForRelativeTim
       //var date = new Date(date_parts[2], date_parts[1], date_parts[0]);
       //date_partsj[0] = day
       
-      //record.avgUsage[new Date(result[each_row].Date).getDay()] = result[each_row].avgUsage;
-      record.avgUsage[new Date(result[each_row].Date).getMonth()] = result[each_row].avgUsage;
+      record.avgUsage[new Date(result[each_row].Date).getDay()] = result[each_row].avgUsage;
+      //record.avgUsage[new Date(result[each_row].Date).getMonth()] = result[each_row].avgUsage;
       //record.avgUsage[date.getDay()] = result[each_row].avgUsage;
       final_result.push(record);
     }

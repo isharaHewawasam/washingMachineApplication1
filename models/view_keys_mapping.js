@@ -74,7 +74,7 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       this.key.STATS_KEY_X = 0;
       this.key.MAKE = 1; this.key.MODEL = 2; this.key.SKU = 3;
       this.key.STATE = 4; this.key.CITY = 5; this.key.ZIP_CODE = 6;
-      this.key.YEAR = 7; this.key.MONTH = 8; this.key.QUARTER = 9;
+      this.key.AGE = 7; this.key.MEMBERS = 8; this.key.INCOME = 9;
       break;        
     default:
       console.log("Invalid report key");
