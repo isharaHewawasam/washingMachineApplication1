@@ -57,11 +57,13 @@ function sortResponse(name){
 
 //sort response from make and model combination
 function sortResponsefrommake(response){
-    
-    response.data[0].sales.sort(sortResponse("item"));
-    response.data[1].sales.sort(sortResponse("item"));
-    response.data[2].sales.sort(sortResponse("item"));
-    response.data[3].sales.sort(sortResponse("item"));
+    for(var i=0;i<response.data.length;i++){
+      response.data[i].sales.sort(sortResponse("item"));
+    }
+    //response.data[0].sales.sort(sortResponse("item"));
+    //response.data[1].sales.sort(sortResponse("item"));
+    //response.data[2].sales.sort(sortResponse("item"));
+    //response.data[3].sales.sort(sortResponse("item"));
 
   }
 
