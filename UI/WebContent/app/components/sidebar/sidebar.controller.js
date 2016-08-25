@@ -17,10 +17,18 @@
         $scope.activeTab = null;
         
         $scope.onMouseOver = function(tab) {
+        	console.log('on mouse hver');
         	$scope.activeTab = tab;
+        	if(!tab){
+        		$scope.hoverDashboard = true;
+        	}
         }
         
-        $scope.onMouseLeave = function(tab, event) {
+        $scope.onMouseLeave = function(event) {
+        	
+        	if(!$scope.activeTab){
+        		$scope.hoverDashboard = false;
+        	}
         	
         	if(event) {
         		var e = event.toElement || event.relatedTarget;
