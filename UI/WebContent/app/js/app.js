@@ -3948,12 +3948,10 @@ angular.module('angle').controller('MyviewController', ['$scope', '$window','$st
 		var rolename = loginCredentails.Role;
 
 	    if(rolename == "Engineering Manager"){
-	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
-	        //$state.go('app.engmanagerview');
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');	       
 	    }
 	    else{
-	      $('#dashboardNav a').attr('href','#/app/singleview');
-	    	// $state.go('app.singleview');
+	      $('#dashboardNav a').attr('href','#/app/singleview');	    	
 	    }
 	    
 	  }
