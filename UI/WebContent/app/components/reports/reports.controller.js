@@ -10,11 +10,9 @@
 	function reportController($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 		
 		$scope.getReports=function(){
-        $rootScope.isReportFiltering = true;
-
-        $state.go('app.reports');
-
-                                 };
+             $rootScope.isReportFiltering = true;
+             $state.go('app.reports');
+           };
 
             //api call for washing machine status
       $scope.r_griddata=[];
@@ -29,24 +27,72 @@
 			$rootScope.isReportFiltering = false;
 		});
 		
-          //  Download Washing Machine Status report
-            $scope.downloadReport=function(){
-                html2canvas(document.getElementById('gridHideNodata'), {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 550,
-                            height: 350,
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("reports.pdf");
+      	 //  Download Washing Machine Status report
+        $scope.downloadReport=function(){
+        	var ShowLabel = true;
+        	var CSV = '';    
+        	var ReportTitle = "                Washing Machine Status Report";   
+        	var fileName = "Report";            
+        	
+            CSV += ReportTitle + '\r\n\n';
+           
+        	if (ShowLabel) {
+                var row = "";                
+               
+                for (var index in $scope.r_griddata[0]) {                
+                    row += index + ',';                       
                 }
-            });
+                row = row.slice(5, -1);     
+                CSV += row + '\r\n';                
+            }           	
+        	
+            for (var i = 0; i < $scope.r_griddata.length; i++) {
+            	var row = "";    
+                for (var index in $scope.r_griddata[i]) {
+                	if(index == "sold"){
+                		continue
+                		}
+                    row += '"' + $scope.r_griddata[i][index] + '",';                        
+                }
+                row.slice(10, row.length - 1);                     
+                CSV += row + '\r\n';
             }
-
-
+               
+            if (CSV == '') {        
+                alert("Invalid data");
+                return;
+            }              
+            
+            //Initialize file format you want csv or xls
+            var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);        
+            
+            //this will generate a temp <a /> tag
+            var link = document.createElement("a");  
+            link.href = uri;               
+            
+            link.style = "visibility:hidden";
+            link.download = fileName + ".csv";
+            
+            //this part will append the anchor tag and remove it after automatic click
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+           /* html2canvas(document.getElementById('gridHideNodata'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 550,
+                        height: 350,
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("reports.pdf");
+            }
+        });*/
+        	
+        }
 
              var loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
              var rolename = loginCredentails.Role;

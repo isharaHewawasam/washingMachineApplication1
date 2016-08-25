@@ -104,7 +104,7 @@
 	  /**
 	   * Session handling-Return back to Dashboard
 	   */
-		$scope.loadDashboard = function() {
+		$scope.loadDashboard = function() {			
 			$rootScope.isApplyFiterButton = true;
 			$state.go('app.singleview');
 		};

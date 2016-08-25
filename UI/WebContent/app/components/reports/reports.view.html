@@ -7,10 +7,13 @@
 
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
-	<div id="dashboardNav" ng-controller="reportController">
+	<!-- <div id="dashboardNav" ng-controller="reportController">
 		<a ng-click="openReport()" translate="{{'dashboard_title'}}"></a> <span>></span>
-		<a href="#" translate="{{'reports'}}"></a>
-	</div>
+		<span> {{'reports' | translate}} </span>
+	</div> -->
+	    <a href="#/app/singleview" style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()" translate="{{'dashboard_title'}}"></a> 
+         <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;"> > </span>
+		<a href="#" style="font-size: 14px; font: Roboto Light; color: #222222" translate="{{'dashboard'}}"></a>
 
 
 </h3>
@@ -45,7 +48,7 @@
 	
 	
 	
-	                <div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
+	                <!--<div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
 	
 	                <div class="col-lg-2 reportnvwidth2" >
 	                  	<md-datepicker class=" filter-selectStyle internaldate"  ng-model="myDate"> </md-datepicker>
@@ -56,7 +59,7 @@
 	
 	                	<md-datepicker  class=" filter-selectStyle internaldate"  ng-model="myDate1" > </md-datepicker>
 	
-	             	</div>
+	             	</div>-->
 	
 	
 	
@@ -128,8 +131,7 @@
              <table  class="table table-striped table-bordered table-hover" border=0 id="pagination">
                  <tr>
                     <strong> <div id="reportgridtittle" translate="{{'washing_machine_status_reports'}}"></div></strong>
-
-
+     
           </tr>
           <div class="tbody">
             <div class="tbody">
@@ -189,7 +191,7 @@
 
 
          </div>
-         <script>
+        <!--  <script>
          $(document).on("mouseover", function(event) {
         	  
         	   
@@ -200,4 +202,4 @@
         	 
         	});
          
-         </script>
+         </script> -->
