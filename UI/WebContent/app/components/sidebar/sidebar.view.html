@@ -24,10 +24,10 @@
                     </div>
                     <div class="menu-text" translate="{{'demographics'}}"></div>
                 </div>
-                <div ng-class="{'sidebarItemActive': (activeTab == 'report'), 'disablePointerEvent' : (currentState == 'app.notificationconf')}" id="reportsNav" class="leftbar-icon" 
+                <div ng-class="{'sidebarItemActive': (currentState == 'app.reports' || activeTab == 'report'), 'disablePointerEvent' : (currentState == 'app.notificationconf')}" id="reportsNav" class="leftbar-icon" 
                 	ng-mouseover="onMouseOver('report')" ng-mouseleave="onMouseLeave($event)">
 					<div class="sidebarIconContainer">
-						<img class="iconpos" ng-src="{{activeTab == 'report' ? 'img/Dashboardassets/reports_hover.png' : 'img/Dashboardassets/reports.png'}}">
+						<img class="iconpos" ng-src="{{(currentState == 'app.reports' || activeTab == 'report') ? 'img/Dashboardassets/reports_hover.png' : 'img/Dashboardassets/reports.png'}}">
 					</div>
 					<div class="menu-text" translate="{{'reports'}}"></div>
 				</div>
