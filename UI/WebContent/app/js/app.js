@@ -2818,7 +2818,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
   //$scope.relativeTimeScale = 1;
 	$rootScope.baseUrl=configApiClient.baseUrl;
 	$scope.EngchartTypes=['Line Chart'];
-	  //$scope.selectedChart=$scope.EngchartTypes[0];
+	$scope.selectedChart=$scope.EngchartTypes[0];
 
 //	$scope.linechartData=null;
 	  $rootScope.piechartData = null;
@@ -3445,7 +3445,7 @@ $scope.plotPieChart=function(divID){
                    $scope.plotPieChart("piecontainer");
              }else if($scope.selectedChart=='Line Chart'){
 
-             $scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
+             $scope.plotEngManagerChartFunction('container', $scope.seneorkey);
              }
      });
 
