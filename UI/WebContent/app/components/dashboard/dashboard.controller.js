@@ -315,6 +315,7 @@
             if(!data || data.length === 0){
                  renderMap("map-container", []);
             }  else{
+            	salesDataSet = data;
                 renderMap("map-container", data);
                 $scope.zoomMap('map-container');
             }
@@ -338,7 +339,7 @@
             $rootScope.maxMapProgress = false;
 
             if(!data || data.length === 0){
-                 renderMap("#map-container", []);
+                 renderMap("map-container", []);
             }  else{
                 renderMap("map-container", data);
                 $scope.zoomMap('map-maxcontainer');

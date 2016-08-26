@@ -1928,8 +1928,8 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
    };
 }]);
 
-angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
-                                function($scope,$rootScope, configApiClient, HttpService){
+angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService', '$timeout',
+                                function($scope,$rootScope, configApiClient, HttpService, $timeout){
     $scope.salesDataSet;
     $scope.plotMapFunction = function(divId){
 		$rootScope.mapProgress = true;
@@ -1956,19 +1956,26 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     /*Code For maximizing function*/
     $scope.maximizeMap=function(){
 		var mapNormal = $("#mapNormal1").clone();
-
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").append(mapNormal);
-
         $("#hiddenDivMap #mapMaxImg").addClass("hidden");
         $("#hiddenDivMap #mapMinImg").removeClass("hidden");
         $("#mapNormal1").removeClass("hidden");
-       // $scope.showMap();
-        renderMap("#map-maxcontainer",salesDataSet);
-    	$scope.zoomMap('map-maxcontainer');
-    	$scope.showMaxMap('map-maxcontainer');
+        //$scope.showMap();
+        $('div#map-maxcontainer').css({'width': '100%'});
         $("#map-maxcontainer").height(660);
-
+        //renderMap("#map-maxcontainer",salesDataSet);
+        
+        var maxMap = $timeout(function() {
+        	renderMap("map-maxcontainer",salesDataSet);
+        	$scope.zoomMap("map-maxcontainer");
+        }, 100); // sets a latency Threshold
+        
+        $scope.zoomMap('map-maxcontainer');
+    	//$scope.showMaxMap('map-maxcontainer');
+        //$("#map-maxcontainer").height(660);
+        
+        
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
         
@@ -1979,7 +1986,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     $("body").on("click","#mapMinImg",function(){
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
-		$scope.zoomMap('map-container');
+		//$scope.zoomMap('map-container');
 
           $("#mapNormal1").height(707);
 
@@ -2051,7 +2058,74 @@ function renderMap(divId, salesData){
 		    },
 	    }]
 	}
+	var chart = new  Highcharts.Map({
+		chart: {
+			  renderTo		: divId,
+	    	  spacingLeft 	: 5,
+	    	  spacingRight 	: 2,
+	    	  spacingTop 	: 2,
+	    	  spacingBottom	: 2,
+	    	  events: {
+					redraw: function() {
 
+						var chart = this;
+						var series = this.series;
+						if(chart.series[2]){
+							var points = series[2].points;
+							var index = 0;
+							Highcharts.each(points, function (point) {
+								removePie(point);
+								drawPie(point, index++);
+								if(index==5) index = 0 ;
+							});
+						}
+					},
+	              load: function () {
+
+						var chart = this;
+						if(chart.series[2]){
+							var points = chart.series[2].points;
+							var index = 0;
+							Highcharts.each(points, function (point) {
+								drawPie(point, index++);
+								if(index==5) {index = 0} ;
+							});
+						}
+					}
+				}
+	      },
+	      credits:{
+	      	enabled:false
+	      },
+		    exporting: {
+		    	enabled: false
+		    },
+		    title: {
+		        text: ''
+		    },
+
+		    mapNavigation: {
+		        enabled: true,
+		        buttonOptions: {
+	                verticalAlign: 'bottom',
+	                //x : -5
+	            }
+		    },
+
+		    plotOptions: {
+		        mapbubble:{
+		            minSize:0,
+		            maxSize:0
+		        }
+		    },
+
+		    series: seriesData
+		
+	});
+	
+	return;
+	
+	/*
     $('#map-container').highcharts('Map', {
       chart: {
     	  spacingLeft 	: 5,
@@ -2114,72 +2188,74 @@ function renderMap(divId, salesData){
 
 	    series: seriesData
 
-	});
-    /*coded For Maximized map*/
-    $('#map-maxcontainer').highcharts('Map', {
-         chart: {
-               spacingLeft     : 5,
-               spacingRight    : 2,
-               spacingTop      : 2,
-               spacingBottom   : 2,
-               events: {
-                         redraw: function() {
-
-                               var chart = this;
-                               var series = this.series;
-                               if(chart.series[2]){
-                                     var points = series[2].points;
-                                     var index = 0;
-                                     Highcharts.each(points, function (point) {
-                                           removePie(point);
-                                           drawPie(point, index++);
-                                           if(index==5) index = 0 ;
-                                     });
-                               }
-                         },
-                 load: function () {
-
-                               var chart = this;
-                               if(chart.series[2]){
-                                     var points = chart.series[2].points;
-                                     var index = 0;
-                                     Highcharts.each(points, function (point) {
-                                           drawPie(point, index++);
-                                           if(index==5) {index = 0} ;
-                                     });
-                               }
-                         }
-                   }
-         },
-         credits:{
-             enabled:false
-         },
-           exporting: {
-             enabled: false
-           },
-           title: {
-               text: ''
-           },
-
-           mapNavigation: {
-               enabled: true,
-               buttonOptions: {
-                   verticalAlign: 'bottom',
-                   //x : -5
-               }
-           },
-
-           plotOptions: {
-               mapbubble:{
-                   minSize:0,
-                   maxSize:0
-               }
-           },
-
-           series: seriesData
-
-       });
-
+	});*/
+    
+    
+	    /*coded For Maximized map*/
+	/*    $('#map-maxcontainer').highcharts('Map', {
+	         chart: {
+	               spacingLeft     : 5,
+	               spacingRight    : 2,
+	               spacingTop      : 2,
+	               spacingBottom   : 2,
+	               events: {
+	                         redraw: function() {
+	
+	                               var chart = this;
+	                               var series = this.series;
+	                               if(chart.series[2]){
+	                                     var points = series[2].points;
+	                                     var index = 0;
+	                                     Highcharts.each(points, function (point) {
+	                                           removePie(point);
+	                                           drawPie(point, index++);
+	                                           if(index==5) index = 0 ;
+	                                     });
+	                               }
+	                         },
+	                 load: function () {
+	
+	                               var chart = this;
+	                               if(chart.series[2]){
+	                                     var points = chart.series[2].points;
+	                                     var index = 0;
+	                                     Highcharts.each(points, function (point) {
+	                                           drawPie(point, index++);
+	                                           if(index==5) {index = 0} ;
+	                                     });
+	                               }
+	                         }
+	                   }
+	         },
+	         credits:{
+	             enabled:false
+	         },
+	           exporting: {
+	             enabled: false
+	           },
+	           title: {
+	               text: ''
+	           },
+	
+	           mapNavigation: {
+	               enabled: true,
+	               buttonOptions: {
+	                   verticalAlign: 'bottom',
+	                   //x : -5
+	               }
+	           },
+	
+	           plotOptions: {
+	               mapbubble:{
+	                   minSize:0,
+	                   maxSize:0
+	               }
+	           },
+	
+	           series: seriesData
+	
+	       });
+    */
 }
 
 /**
