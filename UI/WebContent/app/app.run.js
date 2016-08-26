@@ -52,6 +52,13 @@
 		
 		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 			$rootScope.currentState = toState.name;
+			
+			if (toState.name == 'app.notificationconf' || toState.name == 'app.twitterinsights' || toState.name == 'app.reports') {
+				$rootScope.isDisableSideBar = true;
+			} else {
+				$rootScope.isDisableSideBar = false;
+			}
+			
 			if(!$window.localStorage.loginCredentails) {
 				event.preventDefault();
 				$state.go('page.login');

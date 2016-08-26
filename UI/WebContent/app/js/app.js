@@ -3211,12 +3211,12 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
-        $scope.maxLineChartEngTimeScales=days;
-         $scope.maxLineChartEngData=lineChartSeriesData;
+				$scope.maxLineChartEngTimeScales=days;
+				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
-				$scope.maxLineChartEngTimeScales=timeScales;
+//				$scope.maxLineChartEngTimeScales=timeScales;
 				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
