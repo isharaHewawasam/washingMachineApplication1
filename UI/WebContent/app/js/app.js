@@ -2424,6 +2424,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 	         series: {
 	            }
 	        },
+	        exporting: {
+		    	enabled: false
+		    },
 	    series:seriesData
 	});
 }
@@ -3473,6 +3476,9 @@ function createPieChart(divID, seriesData) {
         tooltip: {
             pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
         },
+        exporting: {
+	    	enabled: false
+	    },
         series: [{
             name: 'Browsers',
              data: seriesData,
@@ -3518,6 +3524,9 @@ function createBarChart(divID, seriesData, barChartDes) {
             shared: true,
             useHTML: true
         },
+        exporting: {
+	    	enabled: false
+	    },
         plotOptions: {
             column: {
                 pointPadding: 0.2,
