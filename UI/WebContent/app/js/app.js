@@ -488,7 +488,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostFaultDataStr);
 
-					 renderPieChart(divId, data, 'Most Fault');
+					 renderPieChart(divId, data, 'Most Fault',28);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -521,7 +521,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(leastFaultDataStr);
 
-					 renderPieChart(divId, data, 'Least Fault');
+					 renderPieChart(divId, data, 'Least Fault',35);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -554,7 +554,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(commonFaultDataStr);
 
-					 renderPieChart(divId, data, 'Common Fault');
+					 renderPieChart(divId, data, 'Common Fault',42);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -587,7 +587,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedProductDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Models');
+					 renderPieChart(divId, data, 'Most Used Models',34);
 				 } else {
 					 $scope.isNoDataDB = true;
 					 $scope.msg = $scope.msg2;
@@ -621,7 +621,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedCyclesDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Wash Cycles');
+					 renderPieChart(divId, data, 'Most Used Wash Cycles',40);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -662,7 +662,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 						 data = JSON.parse(notConnectedDataStr);
 
-						 renderPieChart(divId, data, 'Not Connected Machines');
+						 renderPieChart(divId, data, 'Not Connected Machines',48);
 		    	 	} else {
 		    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
 		    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
@@ -700,7 +700,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(twitterDataStr);
 
-					 renderPieChart(divId, data, 'Twitter Sentiments');
+					 renderPieChart(divId, data, 'Twitter Sentiments',26);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -2303,7 +2303,7 @@ function drawPie(point, index) {
 /**
  * Generate Insights pie chart in mkt_manager
  */
-function renderPieChart(divId, insightsData, chartTitle){
+function renderPieChart(divId, insightsData, chartTitle,y){
 
 	var pieChart = new Highcharts.Chart({
         chart: {
@@ -2339,7 +2339,7 @@ function renderPieChart(divId, insightsData, chartTitle){
                 color: '#0099cc'
             },
             floating: true,
-            y: 24,
+            y: y,
             x: 15
         },
         tooltip: {
@@ -2424,6 +2424,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 	         series: {
 	            }
 	        },
+	        exporting: {
+		    	enabled: false
+		    },
 	    series:seriesData
 	});
 }
@@ -3208,12 +3211,12 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
-        $scope.maxLineChartEngTimeScales=days;
-         $scope.maxLineChartEngData=lineChartSeriesData;
+				$scope.maxLineChartEngTimeScales=days;
+				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
-				$scope.maxLineChartEngTimeScales=timeScales;
+//				$scope.maxLineChartEngTimeScales=timeScales;
 				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
@@ -3473,6 +3476,9 @@ function createPieChart(divID, seriesData) {
         tooltip: {
             pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
         },
+        exporting: {
+	    	enabled: false
+	    },
         series: [{
             name: 'Browsers',
              data: seriesData,
@@ -3518,6 +3524,9 @@ function createBarChart(divID, seriesData, barChartDes) {
             shared: true,
             useHTML: true
         },
+        exporting: {
+	    	enabled: false
+	    },
         plotOptions: {
             column: {
                 pointPadding: 0.2,
