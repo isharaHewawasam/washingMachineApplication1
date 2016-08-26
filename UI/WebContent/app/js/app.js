@@ -587,7 +587,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedProductDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Models',34);
+					 renderPieChart(divId, data, 'Most Used Models',36);
 				 } else {
 					 $scope.isNoDataDB = true;
 					 $scope.msg = $scope.msg2;
@@ -621,7 +621,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedCyclesDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Wash Cycles',40);
+					 renderPieChart(divId, data, 'Most Used Wash Cycles',44);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -662,7 +662,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 						 data = JSON.parse(notConnectedDataStr);
 
-						 renderPieChart(divId, data, 'Not Connected Machines',48);
+						 renderPieChart(divId, data, 'Not Connected Machines',45);
 		    	 	} else {
 		    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
 		    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
@@ -700,7 +700,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(twitterDataStr);
 
-					 renderPieChart(divId, data, 'Twitter Sentiments',26);
+					 renderPieChart(divId, data, 'Twitter Sentiments',30);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
