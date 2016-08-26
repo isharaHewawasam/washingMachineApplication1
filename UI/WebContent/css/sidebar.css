@@ -168,7 +168,7 @@
 
     }
  #filterPanel{
-	margin-left:69px;
+	margin-left:74px;
 	top: 135px;
 	background:#fff;
 	/* display:none; */
@@ -182,13 +182,13 @@
 	height:32px;
 }
 #demographicsFilterPanel{
-	margin-left:69px;
+	margin-left:74px;
 	top: 215px;
 	background:#fff;
 	/* display:none; */
 }
 #reportsPanel{
-	margin-left:69px;
+	margin-left:74px;
 	 top: 295px;
 	 background:#fff;
 	 /* display:none; */
