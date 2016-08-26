@@ -398,7 +398,7 @@
 
 #gridAdjustHeight {
 	height: auto;
-	margin-left: -15px;
+	margin-left: 0px; /* changed to resolved the defect 5286 */
 }
 
 #reportgridtittle {
