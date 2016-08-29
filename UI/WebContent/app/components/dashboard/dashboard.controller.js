@@ -733,7 +733,7 @@ $rootScope.isApplyFiterButton = true;
             $("#gridMax #gridCloseImg").removeClass("hidden");
             $("#gridNormal1").removeClass("hidden");
 
-             $(".maxtbody").height(300);
+            // $(".maxtbody").height(300);
              //For notifications help icon in maximized views
              $('[data-toggle="popover"]').popover()
 
@@ -744,7 +744,7 @@ $rootScope.isApplyFiterButton = true;
             $("#gridMax").empty();
             $("#gridMax").addClass("hidden");
              
-              $("#gridNormal").height(321);
+           //   $("#tbody").height(355);
 
         });
         
