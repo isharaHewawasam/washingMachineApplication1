@@ -1,6 +1,6 @@
 'use strict';
 
-var use_default_key;;
+//var use_default_key;;
 
 exports.getSensors = function(callback) {
   callback(null, require("./sensor_names").sensors);  
@@ -17,118 +17,117 @@ exports.getSensorsAvgUsage = function(sensor_name, group_by_timescale, payload, 
 };
 
 function getAvgUsageBySensor(sensor_name, group_by_timescale, payload, callback) {
-  use_default_key = false;
-  
   if(sensor_name) {
+    var stats_key_name = "avgUsage";
     var averages = [];    
     var avg_keys = require("./sensor_names").avgKeys;
     
     switch(sensor_name) {
       case avg_keys.water: //Water
-        getAvgWaterUsage(payload, group_by_timescale, averages, callback, false); return;
+        getAvgWaterUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return;
       case avg_keys.power: //Power
-        getAvgPowerUsage(payload, group_by_timescale, averages, callback, false); return;
+        getAvgPowerUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return;
       case avg_keys.washCyclesDuration: //Wash Cycles Duration
-        getAvgWashCycleDuration(payload, group_by_timescale, averages, callback, false); return;
+        getAvgWashCycleDuration(payload, group_by_timescale, averages, stats_key_name, callback, false); return;
       case avg_keys.washCycles: //Wash Cycles
-        getAvgWashCycles(payload, group_by_timescale, averages, callback, false); return; 
+        getAvgWashCycles(payload, group_by_timescale, averages, stats_key_name, callback, false); return; 
       case avg_keys.temperature: //Temperature
-        getAvgTemperatureUsage(payload, group_by_timescale, averages, callback, false); return;
+        getAvgTemperatureUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return;
       case avg_keys.detergent: //Detergent
-        getAvgDetergentUsage(payload, group_by_timescale, averages, callback, false); return;   
+        getAvgDetergentUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return;   
       case avg_keys.humidity: //Humidity
-        getAvgHumidityUsage(payload, group_by_timescale, averages, callback, false); return; 
+        getAvgHumidityUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return; 
       case avg_keys.load: //Load
-        getAvgLoadUsage(payload, group_by_timescale, averages, callback, false); return;        
+        getAvgLoadUsage(payload, group_by_timescale, averages, stats_key_name, callback, false); return;        
       default:
-        callback("Invalid sensor attribute", null); return;
+        callback("Invalid sensor attribute", stats_key_name); return;
     }
   }    
 }
 
 function getAvgUsage(payload, group_by_timescale, callback) {  
-  use_default_key = true;
+  //use_default_key = true;
   var averages = [];
   
-  getAvgWaterUsage(payload, group_by_timescale, averages, callback, true);
+  getAvgWaterUsage(payload, group_by_timescale, averages, null, callback, true);
 }
 
 function getStatsKeyName() {
-  return use_default_key ? null : "avgUsage";
+  //return use_default_key ? null : "avgUsage";
 }
 
-function getAvgWaterUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./water").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgWaterUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./water").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
-      getAvgPowerUsage(payload, group_by_timescale, averages, callback, call_next_function);
+      getAvgPowerUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);
     }
   });
 }
 
-function getAvgPowerUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./power").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgPowerUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./power").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
-      getAvgTemperatureUsage(payload, group_by_timescale, averages, callback, call_next_function);
+      getAvgTemperatureUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);
     }
   });
 }
 
-function getAvgTemperatureUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./temperature").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgTemperatureUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./temperature").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
-      getAvgWashCycleDuration(payload, group_by_timescale, averages, callback, call_next_function);
+      getAvgWashCycleDuration(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);
     }
   });
 }
 
-function getAvgWashCycleDuration(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./wash_cycle_duration").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgWashCycleDuration(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./wash_cycle_duration").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
-      getAvgWashCycles(payload, group_by_timescale, averages, callback, call_next_function);
+      getAvgWashCycles(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);
     }
   });
 }
 
-function getAvgWashCycles(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./wash_cycles").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgWashCycles(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./wash_cycles").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {
-      getAvgDetergentUsage(payload, group_by_timescale, averages, callback, call_next_function);
+      getAvgDetergentUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);
     }
   });
 }
 
-function getAvgDetergentUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./detergent").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {
+function getAvgDetergentUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./detergent").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {
     if(err || !call_next_function) {
       callback(err, result);
     } else {    
-      getAvgHumidityUsage(payload, group_by_timescale, averages, callback, call_next_function);   
+      getAvgHumidityUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);   
     }
   });
 }
 
-function getAvgHumidityUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./humidity").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {      
+function getAvgHumidityUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./humidity").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {      
     if(err || !call_next_function) {
       callback(err, result);
     } else {    
-     getAvgLoadUsage(payload, group_by_timescale, averages, callback, call_next_function);  
+     getAvgLoadUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function);  
     }  
   });
 }
 
-function getAvgLoadUsage(payload, group_by_timescale, averages, callback, call_next_function) {
-  require("./load").getAverageUsage(payload, group_by_timescale, averages, getStatsKeyName(), function(err, result) {      
+function getAvgLoadUsage(payload, group_by_timescale, averages, stats_key_name, callback, call_next_function) {
+  require("./load").getAverageUsage(payload, group_by_timescale, averages, stats_key_name, function(err, result) {      
     callback(err, result);  
   });
 }

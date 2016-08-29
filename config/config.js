@@ -2,7 +2,7 @@
 //Copy this file as config and modify when deployed to new server and then start the app
 //also dont chk modifed file in repo
 module.exports = {
-  "host": "ibm-iot.mybluemix.net:3000",
+  "host": "localhost:3000",
   "local_host": "localhost:3000",
   "cloud-host": "ibm-iot.mybluemix.net",
   "SalesDatabase": {

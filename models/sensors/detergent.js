@@ -51,6 +51,8 @@ exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, 
       var final_result = relative_timescale_utility.processResultForRelativeTimeScale(payload.timescale.relative, result);
       callback(err, final_result);
     } else {
+      console.log("#####Detergent");
+      console.log(JSON.stringify(result));
       callback(err, result);
     }
   });        
