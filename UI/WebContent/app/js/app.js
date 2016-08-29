@@ -488,7 +488,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostFaultDataStr);
 
-					 renderPieChart(divId, data, 'Most Fault');
+					 renderPieChart(divId, data, 'Most Fault',28);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -521,7 +521,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(leastFaultDataStr);
 
-					 renderPieChart(divId, data, 'Least Fault');
+					 renderPieChart(divId, data, 'Least Fault',25);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -554,7 +554,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(commonFaultDataStr);
 
-					 renderPieChart(divId, data, 'Common Fault');
+					 renderPieChart(divId, data, 'Common Fault',20);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -587,7 +587,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedProductDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Models');
+					 renderPieChart(divId, data, 'Most Used Models',25);
 				 } else {
 					 $scope.isNoDataDB = true;
 					 $scope.msg = $scope.msg2;
@@ -621,7 +621,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedCyclesDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Wash Cycles');
+					 renderPieChart(divId, data, 'Most Used Wash Cycles',20);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -662,7 +662,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 						 data = JSON.parse(notConnectedDataStr);
 
-						 renderPieChart(divId, data, 'Not Connected Machines');
+						 renderPieChart(divId, data, 'Not Connected Machines',15);
 		    	 	} else {
 		    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
 		    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
@@ -700,7 +700,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(twitterDataStr);
 
-					 renderPieChart(divId, data, 'Twitter Sentiments');
+					 renderPieChart(divId, data, 'Twitter Sentiments',30);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -1928,10 +1928,10 @@ angular.module('angle').controller('filterIconController',['$rootScope','$scope'
    };
 }]);
 
-angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService',
-                                function($scope,$rootScope, configApiClient, HttpService){
+angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.config.ApiClient', 'HttpService', '$timeout',
+                                function($scope,$rootScope, configApiClient, HttpService, $timeout){
     $scope.salesDataSet;
-	$scope.plotMapFunction = function(divId){
+    $scope.plotMapFunction = function(divId){
 		$rootScope.mapProgress = true;
 		var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
 		var param = null;
@@ -1943,6 +1943,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
             $scope.isError = false;
 		},function(data){
 			// on error
+			salesDataSet = [];
 			$rootScope.mapProgress = false;
 			$scope.isError = true;
 	       renderMap(divId, data);
@@ -1955,24 +1956,31 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 	 */
     /*Code For maximizing function*/
     $scope.maximizeMap=function(){
-        var mapNormal = $("#mapNormal1").clone();
-
+		var mapNormal = $("#mapNormal1").clone();
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").append(mapNormal);
-
         $("#hiddenDivMap #mapMaxImg").addClass("hidden");
         $("#hiddenDivMap #mapMinImg").removeClass("hidden");
         $("#mapNormal1").removeClass("hidden");
-       // $scope.showMap();
-        renderMap("#map-maxcontainer",salesDataSet);
-    	$scope.zoomMap('map-maxcontainer');
-    	$scope.showMaxMap('map-maxcontainer');
+        //$scope.showMap();
+        $('div#map-maxcontainer').css({'width': '100%'});
+        //$('div#map-maxcontainer').css({'height': '100%'});
         $("#map-maxcontainer").height(660);
-
+        //renderMap("#map-maxcontainer",salesDataSet);
+        
+        var maxMap = $timeout(function() {
+        	renderMap("map-maxcontainer",salesDataSet);
+        	$scope.zoomMap("map-maxcontainer");
+        }, 100); // sets a latency Threshold
+        
+        $scope.zoomMap('map-maxcontainer');
+    	//$scope.showMaxMap('map-maxcontainer');
+        //$("#map-maxcontainer").height(660);
+        
+        
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
-
-
+        
     $("#hiddenDivMap").removeClass("hidden");
 
     }
@@ -1980,9 +1988,9 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
     $("body").on("click","#mapMinImg",function(){
         $("#hiddenDivMap").empty();
         $("#hiddenDivMap").addClass("hidden");
-		$scope.zoomMap('map-container');
+		//$scope.zoomMap('map-container');
 
-          $("#mapNormal1").height(355);
+          $("#mapNormal1").height(707);
 
 
 
@@ -2052,7 +2060,74 @@ function renderMap(divId, salesData){
 		    },
 	    }]
 	}
+	var chart = new  Highcharts.Map({
+		chart: {
+			  renderTo		: divId,
+	    	  spacingLeft 	: 5,
+	    	  spacingRight 	: 2,
+	    	  spacingTop 	: 2,
+	    	  spacingBottom	: 2,
+	    	  events: {
+					redraw: function() {
 
+						var chart = this;
+						var series = this.series;
+						if(chart.series[2]){
+							var points = series[2].points;
+							var index = 0;
+							Highcharts.each(points, function (point) {
+								removePie(point);
+								drawPie(point, index++);
+								if(index==5) index = 0 ;
+							});
+						}
+					},
+	              load: function () {
+
+						var chart = this;
+						if(chart.series[2]){
+							var points = chart.series[2].points;
+							var index = 0;
+							Highcharts.each(points, function (point) {
+								drawPie(point, index++);
+								if(index==5) {index = 0} ;
+							});
+						}
+					}
+				}
+	      },
+	      credits:{
+	      	enabled:false
+	      },
+		    exporting: {
+		    	enabled: false
+		    },
+		    title: {
+		        text: ''
+		    },
+
+		    mapNavigation: {
+		        enabled: true,
+		        buttonOptions: {
+	                verticalAlign: 'bottom',
+	                //x : -5
+	            }
+		    },
+
+		    plotOptions: {
+		        mapbubble:{
+		            minSize:0,
+		            maxSize:0
+		        }
+		    },
+
+		    series: seriesData
+		
+	});
+	
+	return;
+	
+	/*
     $('#map-container').highcharts('Map', {
       chart: {
     	  spacingLeft 	: 5,
@@ -2115,72 +2190,74 @@ function renderMap(divId, salesData){
 
 	    series: seriesData
 
-	});
-    /*coded For Maximized map*/
-    $('#map-maxcontainer').highcharts('Map', {
-         chart: {
-               spacingLeft     : 5,
-               spacingRight    : 2,
-               spacingTop      : 2,
-               spacingBottom   : 2,
-               events: {
-                         redraw: function() {
-
-                               var chart = this;
-                               var series = this.series;
-                               if(chart.series[2]){
-                                     var points = series[2].points;
-                                     var index = 0;
-                                     Highcharts.each(points, function (point) {
-                                           removePie(point);
-                                           drawPie(point, index++);
-                                           if(index==5) index = 0 ;
-                                     });
-                               }
-                         },
-                 load: function () {
-
-                               var chart = this;
-                               if(chart.series[2]){
-                                     var points = chart.series[2].points;
-                                     var index = 0;
-                                     Highcharts.each(points, function (point) {
-                                           drawPie(point, index++);
-                                           if(index==5) {index = 0} ;
-                                     });
-                               }
-                         }
-                   }
-         },
-         credits:{
-             enabled:false
-         },
-           exporting: {
-             enabled: false
-           },
-           title: {
-               text: ''
-           },
-
-           mapNavigation: {
-               enabled: true,
-               buttonOptions: {
-                   verticalAlign: 'bottom',
-                   //x : -5
-               }
-           },
-
-           plotOptions: {
-               mapbubble:{
-                   minSize:0,
-                   maxSize:0
-               }
-           },
-
-           series: seriesData
-
-       });
-
+	});*/
+    
+    
+	    /*coded For Maximized map*/
+	/*    $('#map-maxcontainer').highcharts('Map', {
+	         chart: {
+	               spacingLeft     : 5,
+	               spacingRight    : 2,
+	               spacingTop      : 2,
+	               spacingBottom   : 2,
+	               events: {
+	                         redraw: function() {
+	
+	                               var chart = this;
+	                               var series = this.series;
+	                               if(chart.series[2]){
+	                                     var points = series[2].points;
+	                                     var index = 0;
+	                                     Highcharts.each(points, function (point) {
+	                                           removePie(point);
+	                                           drawPie(point, index++);
+	                                           if(index==5) index = 0 ;
+	                                     });
+	                               }
+	                         },
+	                 load: function () {
+	
+	                               var chart = this;
+	                               if(chart.series[2]){
+	                                     var points = chart.series[2].points;
+	                                     var index = 0;
+	                                     Highcharts.each(points, function (point) {
+	                                           drawPie(point, index++);
+	                                           if(index==5) {index = 0} ;
+	                                     });
+	                               }
+	                         }
+	                   }
+	         },
+	         credits:{
+	             enabled:false
+	         },
+	           exporting: {
+	             enabled: false
+	           },
+	           title: {
+	               text: ''
+	           },
+	
+	           mapNavigation: {
+	               enabled: true,
+	               buttonOptions: {
+	                   verticalAlign: 'bottom',
+	                   //x : -5
+	               }
+	           },
+	
+	           plotOptions: {
+	               mapbubble:{
+	                   minSize:0,
+	                   maxSize:0
+	               }
+	           },
+	
+	           series: seriesData
+	
+	       });
+    */
 }
 
 /**
@@ -2304,7 +2381,7 @@ function drawPie(point, index) {
 /**
  * Generate Insights pie chart in mkt_manager
  */
-function renderPieChart(divId, insightsData, chartTitle){
+function renderPieChart(divId, insightsData, chartTitle,y){
 
 	var pieChart = new Highcharts.Chart({
         chart: {
@@ -2340,7 +2417,7 @@ function renderPieChart(divId, insightsData, chartTitle){
                 color: '#0099cc'
             },
             floating: true,
-            y: 24,
+            y: y,
             x: 15
         },
         tooltip: {
@@ -2425,6 +2502,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
 	         series: {
 	            }
 	        },
+	        exporting: {
+		    	enabled: false
+		    },
 	    series:seriesData
 	});
 }
@@ -2819,7 +2899,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
   //$scope.relativeTimeScale = 1;
 	$rootScope.baseUrl=configApiClient.baseUrl;
 	$scope.EngchartTypes=['Line Chart'];
-	  //$scope.selectedChart=$scope.EngchartTypes[0];
+	$scope.selectedChart=$scope.EngchartTypes[0];
 
 //	$scope.linechartData=null;
 	  $rootScope.piechartData = null;
@@ -3209,12 +3289,12 @@ $scope.plotPieChart=function(divID){
 			if(data && data.length > 0){
 				var lineChartSeriesData = createLineChartSeriesDataForEngManager(data);
 				$scope.progress = false;
-        $scope.maxLineChartEngTimeScales=days;
-         $scope.maxLineChartEngData=lineChartSeriesData;
+				$scope.maxLineChartEngTimeScales=days;
+				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, lineChartSeriesData, $scope.sensortype, 'Days', $scope.Unit);
 			} else {
 				$scope.progress = false;
-				$scope.maxLineChartEngTimeScales=timeScales;
+//				$scope.maxLineChartEngTimeScales=timeScales;
 				$scope.maxLineChartEngData=lineChartSeriesData;
 		    	renderLineChart(divId, days, [], $scope.sensortype, 'Days', $scope.Unit);
 			}
@@ -3446,7 +3526,7 @@ $scope.plotPieChart=function(divID){
                    $scope.plotPieChart("piecontainer");
              }else if($scope.selectedChart=='Line Chart'){
 
-             $scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
+             $scope.plotEngManagerChartFunction('container', $scope.seneorkey);
              }
      });
 
@@ -3474,6 +3554,9 @@ function createPieChart(divID, seriesData) {
         tooltip: {
             pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
         },
+        exporting: {
+	    	enabled: false
+	    },
         series: [{
             name: 'Browsers',
              data: seriesData,
@@ -3519,6 +3602,9 @@ function createBarChart(divID, seriesData, barChartDes) {
             shared: true,
             useHTML: true
         },
+        exporting: {
+	    	enabled: false
+	    },
         plotOptions: {
             column: {
                 pointPadding: 0.2,
@@ -3948,12 +4034,10 @@ angular.module('angle').controller('MyviewController', ['$scope', '$window','$st
 		var rolename = loginCredentails.Role;
 
 	    if(rolename == "Engineering Manager"){
-	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
-	        //$state.go('app.engmanagerview');
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');	       
 	    }
 	    else{
-	      $('#dashboardNav a').attr('href','#/app/singleview');
-	    	// $state.go('app.singleview');
+	      $('#dashboardNav a').attr('href','#/app/singleview');	    	
 	    }
 	    
 	  }

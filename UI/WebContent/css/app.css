@@ -6671,7 +6671,6 @@ now {
 }
 .panel.panel-default.datagrid {
   border-top-width: 3px;
-  padding: 15px;	/* added for Data grid's left padding */
 }
 .well {
   border: 1px solid #dde6e9;
@@ -7131,7 +7130,7 @@ body {
 }
 .aside-collapsed .wrapper > .aside,
 .aside-collapsed .wrapper > .aside > .aside-inner {
-  width: 70px;
+  width: 75px;
 }
 .aside-collapsed .wrapper > .aside > .nav-floating {
   margin-left: 70px;
@@ -11921,7 +11920,7 @@ body {
 	position: absolute;
 	width:78% !important;
 	height:80% !important;
-	top: 10%;
+	top: 12%;
 	left: 10%;
 	background-color: #ffffff;
 	border: 1px solid #d4d4d4;
@@ -12017,7 +12016,7 @@ body {
 .somediv {
 	position: absolute;
 	width: 80%;
-	top: 10%;
+	top: 12%;
 	left: 10%;
 	background-color: #ffffff;
 	z-index:99;
@@ -12226,7 +12225,11 @@ display : block;
 
 .thumb33 {
   width: 32px !important;
-  height: 160px !important;
+  height: 163px !important;
+}
+#nav33{
+	width:25px;
+	height:180px;
 }
 
 .insights-insightsDiv{
@@ -12424,4 +12427,8 @@ display : block;
     display:table;
     height: 100%;
     width: 100%;
+}
+
+.notificationBodyDiv .form-select-style {
+	width: 17%;
 }

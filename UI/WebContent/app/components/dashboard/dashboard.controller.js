@@ -311,15 +311,17 @@
         HttpService.post(url, param).then(function(data){
             // on success
             $rootScope.mapProgress = false;
-
+            salesDataSet = [];
             if(!data || data.length === 0){
                  renderMap("map-container", []);
             }  else{
+            	salesDataSet = data;
                 renderMap("map-container", data);
                 $scope.zoomMap('map-container');
             }
         },function(data){
             // on error
+        	salesDataSet = [];
              $rootScope.mapProgress = false;
         });
     }
@@ -330,22 +332,22 @@
         $scope.loadingText = "Loading data...";
 
 
-        $rootScope.mapProgress = true;
+        $rootScope.maxMapProgress = true;
         var url = configApiClient.baseUrl + 'sales?report_name=soldVsConnected&group=true';
         var param = $scope.usagedata;
         HttpService.post(url, param).then(function(data){
             // on success
-            $rootScope.mapProgress = false;
+            $rootScope.maxMapProgress = false;
 
             if(!data || data.length === 0){
-                 renderMap("#map-container", []);
+                 renderMap("map-container", []);
             }  else{
                 renderMap("map-container", data);
                 $scope.zoomMap('map-maxcontainer');
             }
         },function(data){
             // on error
-             $rootScope.mapProgress = false;
+             $rootScope.maxMapProgress = false;
         });
         }
 
@@ -732,7 +734,7 @@ $rootScope.isApplyFiterButton = true;
             $("#gridMax #gridCloseImg").removeClass("hidden");
             $("#gridNormal1").removeClass("hidden");
 
-             $(".maxtbody").height(300);
+            // $(".maxtbody").height(300);
              //For notifications help icon in maximized views
              $('[data-toggle="popover"]').popover()
 
@@ -743,7 +745,7 @@ $rootScope.isApplyFiterButton = true;
             $("#gridMax").empty();
             $("#gridMax").addClass("hidden");
              
-              $("#gridNormal").height(321);
+           //   $("#tbody").height(355);
 
         });
         

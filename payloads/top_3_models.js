@@ -18,7 +18,7 @@ var payload = {
     },
     "relative": {
       "unit": "d",
-      "value": 30
+      "value": 7
     }
   },
   "region": {

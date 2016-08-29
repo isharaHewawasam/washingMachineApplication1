@@ -50,17 +50,17 @@
 			picture : 'app/img/user/02.jpg'
 		};
 		
-		console.log('$window.localStorage.loginCredentails : ', $window.localStorage.loginCredentails);
-		/*if(!loginService($window.localStorage.loginCredentails)) {
-			console.log('in if');
-			$location.path('/login');
-		} else {
-			console.log('in else');
-		}*/
-		
-		$rootScope.$on('$stateChangeSuccess', function(evt, to, params) {
+		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+			$rootScope.currentState = toState.name;
+			
+			if (toState.name == 'app.notificationconf' || toState.name == 'app.twitterinsights' || toState.name == 'app.reports') {
+				$rootScope.isDisableSideBar = true;
+			} else {
+				$rootScope.isDisableSideBar = false;
+			}
+			
 			if(!$window.localStorage.loginCredentails) {
-				evt.preventDefault();
+				event.preventDefault();
 				$state.go('page.login');
 			}
 	    });

@@ -38,10 +38,10 @@
 
 	  /**
 	   * Delete Twitter Insight rows.
-	   */
+	   
 		$scope.deleteTwitterInsights = function() {
 		};
-
+		*/
 		$scope.tweetsData = {};
 
 	  /**

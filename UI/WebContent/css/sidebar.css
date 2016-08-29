@@ -168,10 +168,10 @@
 
     }
  #filterPanel{
-	margin-left:69px;
+	margin-left:74px;
 	top: 135px;
 	background:#fff;
-	display:none;
+	/* display:none; */
 }
  .divSpacePad{
   width:100%;;
@@ -182,20 +182,24 @@
 	height:32px;
 }
 #demographicsFilterPanel{
-	margin-left:69px;
+	margin-left:74px;
 	top: 215px;
 	background:#fff;
-	display:none;
+	/* display:none; */
 }
 #reportsPanel{
-	margin-left:69px;
+	margin-left:74px;
 	 top: 295px;
 	 background:#fff;
-	 display:none;
+	 /* display:none; */
 }
 #clickView{
 	margin-left:-5px;
 }
 .fontSubText{
 	width:100%;
+}
+.disablePointerEvent{
+	pointer-events: none;
+	cursor: default;
 }

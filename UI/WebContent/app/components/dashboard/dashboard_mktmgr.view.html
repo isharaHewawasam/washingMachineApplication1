@@ -14,12 +14,11 @@
 	
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
-	<!-- <div  id="dashboardNav" ng-controller="MyviewController"> -->
-		<a href="#/app/singleview" style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()" translate="{{'dashboard_title'}}"></a> 
+	 <div  id="dashboardNav" ng-controller="MyviewController"> 
+		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
          <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">  > </span>
-		<a href="#" style="font-size: 14px; font: Roboto Light; color: #222222" translate="{{'dashboard'}}"></a>
-	<!-- </div> -->
-
+		<span> {{'dashboard' | translate}} </span>
+	 </div>
 	
 	
 </h3>
@@ -272,9 +271,8 @@
 	</div>
 
 	<div class="col-lg-4" >
-		<div class="panel panel-default hidden " id="mapNormal1" ng-controller="mapController"
-		ng-init="plotMapFunction('map-maxcontainer')">
-		<div class="panel-heading md-body-2" id="mapMaximizedlinner">
+		<div class="panel panel-default hidden" id="mapNormal1" ng-controller="mapController">
+			<div class="panel-heading md-body-2" id="mapMaximizedlinner">
 				<b translate="{{'map_title'}}"></b> <img id="mapMaxImg"
 					class="pull-right col-md-1"
 					src="img/Dashboardassets/icon_maximize.png"
@@ -288,9 +286,9 @@
 					data-trigger="hover"></img>
 			</div>
 			<div class="map-maxDiv">
-				<span ng-show="mapProgress" class="progress-chart"> <img
-					id="loading" alt="" src="img/icon-load.gif" width="25%";height="25%">
-				</span>
+				<!-- <span ng-show="maxMapProgress" class="progress-chart"> <img
+					id="loading" alt="" src="img/icon-load.gif" width="15%";height="15%">
+				</span> -->
 				<div class="errorClass" ng-show="isError"><b>{{msg3}}</b></div>
 				<div id="map-maxcontainer"></div>
 			</div>
@@ -344,39 +342,38 @@
 				<div class="col-lg-6 insiteinner" >
 
 					<div class="col-lg-6" id="nav1">
-
-							<div
+					<div id="nav33">
+					<div
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">1</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-
-
-
-							<div
-								class="alert-warning media-box-object img-circle thumb32 text-center"
-								>
+					</div>
+					<div id="nav33">
+					<div
+								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">2</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-
-
-							<div
-								class="alert-warning media-box-object img-circle thumb32 text-center"
-							>
+					</div>
+					<div id="nav33">
+					<div
+								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">3</h2>
 							</div>
 							<img src="img/Dashboardassets/lines.jpg" class="thumb33"
 								alt="Image" class="insitelines" />
-
-
-							<div
-								class="alert-warning media-box-object img-circle thumb32 text-center"
-								>
+					</div>
+					<div id="nav33">
+					<div
+								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">4</h2>
 							</div>
+							
+					</div>
+							
 
 					</div>
 
@@ -794,19 +791,4 @@
 	<!-- END dashboard sidebar-->
 </div>
 </div>
-
-<!--   <script>
-         $(document).on("mouseover", function(event) {
-        	  
-        	   
-        	   $('#dashboardNav').addClass('sidebarItemActive');
-        	 //  $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-        	   $('#reportsNav').removeClass('sidebarItemActive');
-        	   
-        	  // $('#dashboardNav img').attr('src','img/Dashboardassets/dashboard.png');
-        	 
-        	});
-         
-         
-         </script> -->
 </div>
