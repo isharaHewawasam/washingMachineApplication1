@@ -12227,6 +12227,10 @@ display : block;
   width: 32px !important;
   height: 163px !important;
 }
+#nav33{
+	width:25px;
+	height:180px;
+}
 
 .insights-insightsDiv{
 	height:200px;
