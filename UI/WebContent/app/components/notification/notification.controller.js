@@ -9,7 +9,7 @@
 	
 	function NotificationConfController($rootScope, $scope, $state, $window, $localStorage, configApiClient, HttpService) {
 		
-
+		$scope.loader = {};
 
 
 
@@ -46,13 +46,19 @@
 
 		}
 		
-		var url = configApiClient.baseUrl + 'config/makes';
-		HttpService.get(url).then(function(data){
-			// on success
-			 $scope.makes=data.makes;
-		},function(data){
-			// on error
-		});
+		function loadMake() {
+			$scope.loader.isMakeBox = true;
+			var url = configApiClient.baseUrl + 'config/makes';
+			HttpService.get(url).then(function(data){
+				// on success
+				 $scope.makes=data.makes;
+				 $scope.loader.isMakeBox = false;
+			},function(data){
+				// on error
+				$scope.loader.isMakeBox = false;
+			});
+		}
+		loadMake();
 		
 		/*$http({url:configApiClient.baseUrl + 'config/makes',
 			method: "GET", Accept: "text/plain"}).success(function(data, status) {
@@ -66,22 +72,25 @@
 	 * Retrieve model names for relevant make 
 	 */
 			$scope.selectedMake=function(){
-			$rootScope.search.selectedModel="";
-			var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
-			HttpService.get(url).then(function(data){
-				// on success
-				$scope.models=data[$rootScope.search.selectedMake];
-			},function(data){
-				// on error
-			});
-			
-			/*$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
-			method: "GET", Accept: "text/plain"}).success(function(data, status) {
-
-			 $scope.models=data[$rootScope.search.selectedMake];
-			}). error(function(data, status) {
-
-			});*/
+				$scope.loader.isModelBox = true;
+				$rootScope.search.selectedModel="";
+				var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
+				HttpService.get(url).then(function(data){
+					// on success
+					$scope.models=data[$rootScope.search.selectedMake];
+					$scope.loader.isModelBox = false;
+				},function(data){
+					// on error
+					$scope.loader.isModelBox = false;
+				});
+				
+				/*$http({url:configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake,
+				method: "GET", Accept: "text/plain"}).success(function(data, status) {
+	
+				 $scope.models=data[$rootScope.search.selectedMake];
+				}). error(function(data, status) {
+	
+				});*/
 
 			}
 			var monthNames = [

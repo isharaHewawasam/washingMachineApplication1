@@ -12094,7 +12094,13 @@ display : block;
 .filter-selectStyle::-ms-expand {	display: none; }
 
 #filterDivId .form-control{
-	background-image:url('../img/Dashboardassets/dropdown_arrow.png') !important;
+	 background-image:url('../img/Dashboardassets/dropdown_arrow.png');
+}
+
+.selectboxLoader {
+	background-image: url("../img/Dashboardassets/dropdown_arrow.png"), url("http://www.hsi.com.hk/HSI-Net/pages/images/en/share/ajax-loader.gif") !important;
+    pointer-events: none;
+	background-repeat: no-repeat;
 }
 
 .filter-selectStyle > img {

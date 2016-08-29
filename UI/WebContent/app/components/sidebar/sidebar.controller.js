@@ -9,6 +9,8 @@
 
 	function SidebarController($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 
+		$scope.loader = {};
+		
     $rootScope.intete=1;
   	$scope.make;
   	$scope.makeData;
@@ -17,7 +19,6 @@
         $scope.activeTab = null;
         
         $scope.onMouseOver = function(tab) {
-        	console.log('on mouse hver');
         	$scope.activeTab = tab;
         	if(!tab){
         		$scope.hoverDashboard = true;
@@ -25,9 +26,13 @@
         }
         
         $scope.onMouseLeave = function(event) {
-        	
         	if(!$scope.activeTab){
         		$scope.hoverDashboard = false;
+        	}
+        	
+        	if($scope.isOnSelect) {
+        		$scope.isOnSelect = false;
+        		return;
         	}
         	
         	if(event) {
@@ -45,6 +50,13 @@
         	}
         	
         	$scope.activeTab = null;
+        }
+        
+        $scope.onSidebarOptionChange = function(){
+//        	console.log('onSidebarOptionChange : ', self);
+        	/*console.log('onSidebarOptionChange event : ', event);
+        	self.focus();*/
+        	$scope.isOnSelect = true;
         }
         
   	$scope.getCall=function(p){
@@ -233,14 +245,17 @@
        * Retrieve model names for relavent make from API
        */
         $scope.selectedMake=function(){
+        	$scope.loader.isModelBox = true;
             $rootScope.search.selectedModel="";
             $rootScope.search.selectedSKU="";
             var url = configApiClient.baseUrl + 'config/makes/models?make_names='+$rootScope.search.selectedMake;
             HttpService.get(url).then(function(data){
   	  			// on success
           	  	$scope.models=data[$rootScope.search.selectedMake];
+          	  	$scope.loader.isModelBox = false;
   	  		},function(data){
   	  			// on error
+  	  			$scope.loader.isModelBox = false;
   	  		});
         }
 
@@ -249,14 +264,16 @@
          */
         $scope.selectedModel=function(){
 
+        	$scope.loader.isSkuBox = true;
             $rootScope.search.selectedSKU="";
             	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
             	HttpService.get(url).then(function(data){
   	  			// on success
           	  	$scope.SKUs=data[$rootScope.search.selectedModel];
+          	  	$scope.loader.isSkuBox = false;
   	  		},function(data){
   	  			// on error
-
+  	  			$scope.loader.isSkuBox = false;
   	  		});
         }
 
@@ -414,13 +431,19 @@
         return (typeof $index === 'string') && !($index.indexOf('-') < 0);
       }
 
-      var url = configApiClient.baseUrl + 'config/makes';
-    	HttpService.get(url).then(function(data){
-  		// on success
-    		 $scope.makes=data.makes;
-  	},function(data){
-  		// on error
-  	});
+      function loadMake() {
+	 	$scope.loader.isMakeBox = true;
+		var url = configApiClient.baseUrl + 'config/makes';
+		HttpService.get(url).then(function(data){
+		// on success
+			 $scope.makes=data.makes;
+			 $scope.loader.isMakeBox = false;
+		},function(data){
+			// on error
+			$scope.loader.isMakeBox = false;
+		});
+	  }
+      loadMake();
 
     	var url = configApiClient.baseUrl + 'demographics/family/age-ranges';
     	HttpService.get(url).then(function(data){
@@ -430,30 +453,48 @@
   		// on error
   	});
 
-    	var url = configApiClient.baseUrl + 'demographics/family/income-ranges';
-    	HttpService.get(url).then(function(data){
-  		// on success
-    		$scope.demoIncomeRange=data;
-  	},function(data){
-  		// on error
-  	});
+    	function loadIncomeRange(){
+    		$scope.loader.isIncomeRangeBox = true;
+	    	var url = configApiClient.baseUrl + 'demographics/family/income-ranges';
+	    	HttpService.get(url).then(function(data){
+	  		// on success
+	    		$scope.demoIncomeRange=data;
+	    		$scope.loader.isIncomeRangeBox = false;
+		  	},function(data){
+		  		// on error
+		  		$scope.loader.isIncomeRangeBox = false;
+		  	});
+    	}
+    	loadIncomeRange();
 
-    	var url = configApiClient.baseUrl + 'demographics/family/members-count';
-    	HttpService.get(url).then(function(data){
-  		// on success
-    		$scope.demoMembersCount=data;
-  	},function(data){
-  		// on error
-  	});
+    	function loadFamilyMembersCount(){
+    		$scope.loader.isFamilyMemberBox = true;
+	    	var url = configApiClient.baseUrl + 'demographics/family/members-count';
+	    	HttpService.get(url).then(function(data){
+	  		// on success
+	    		$scope.demoMembersCount=data;
+	    		$scope.loader.isFamilyMemberBox = false;
+		  	},function(data){
+		  		// on error
+		  		$scope.loader.isFamilyMemberBox = false;
+		  	});
+    	}
+    	loadFamilyMembersCount();
 
-    	var url = configApiClient.baseUrl + 'config/manufacture/years';
-    	HttpService.get(url).then(function(data){
-  		// on success
-    		$scope.years=data.years;
-  	},function(data){
-  		// on error
-  	});
-
+    	function loadAge(){
+    		$scope.loader.isAgeBox = true;
+	    	var url = configApiClient.baseUrl + 'config/manufacture/years';
+	    	HttpService.get(url).then(function(data){
+	  		// on success
+	    		$scope.years=data.years;
+	    		$scope.loader.isAgeBox = false;
+		  	},function(data){
+		  		// on error
+		  		$scope.loader.isAgeBox = false;
+		  	});
+    	}
+    	loadAge();
+    	
       $scope.selectMake=function()
       {
       	alert("SELECTED");

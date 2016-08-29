@@ -35,10 +35,10 @@
 
 
 
-	<div  class=" col-lg-10"  id="filterDivId" id="filterDivId">
+	<div  class=" col-lg-10"  id="filterDivId">
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle"
 				ng-model="region.states" ng-change="selectCities()">
 				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
@@ -53,7 +53,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isCityBox}" class="form-control filter-selectStyle"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
@@ -68,7 +68,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isZipBox}" class="form-control filter-selectStyle"
 				ng-model="region.zip_codes">
 				<option class="option-text-style" value="" disabled selected translate="{{'zip_code'}}">
 				<option class="option-text-style" value="">All
@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isYearBox}" class="form-control filter-selectStyle"
 				ng-model="timescale.years">
 				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 

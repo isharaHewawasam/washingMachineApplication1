@@ -73,10 +73,10 @@
 					Make
 				</div>
 				<div class="col-lg-2 form-select-style">
-				<select name="" class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
-				<option class="option-text-style" value="" disabled selected>Select Make
-				<option class="option-text-style" ng-repeat="make in makes"
-						value={{make.name}}>{{make.name}}</option>
+				<select name="" ng-class="{'sidebarSelectField': loader.isMakeBox}" class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
+					<option class="option-text-style" value="" disabled selected>Select Make
+					<option class="option-text-style" ng-repeat="make in makes"
+							value={{make.name}}>{{make.name}}</option>
 				</select>
 				</div>
 				<div class="col-lg-5">
@@ -87,10 +87,10 @@
 					Model
 				</div>
 				<div class="col-lg-2 form-select-style">
-				<select name="" class="form-control" ng-model="search.selectedModel"  ng-change="selectedModel()">
-				<option class="option-text-style" value="" disabled selected>Select Model
-				<option class="option-text-style" ng-repeat="model in models"
-						value={{model.model}}>{{model.model}}</option>
+				<select name="" ng-class="{'sidebarSelectField': loader.isModelBox}" class="form-control" ng-model="search.selectedModel"  ng-change="selectedModel()">
+					<option class="option-text-style" value="" disabled selected>Select Model
+					<option class="option-text-style" ng-repeat="model in models"
+							value={{model.model}}>{{model.model}}</option>
 				</select>
 				</div>
 				<div class="col-lg-5">

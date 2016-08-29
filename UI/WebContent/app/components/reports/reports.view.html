@@ -23,7 +23,7 @@
 	            <div class=" col-lg-10"  id="filterDivId" >
 	
 	               <div class="col-lg-2 reportnvwidth"  >
-	                  <select name="" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
+	                  <select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
 	                  <option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 	                    <option class="option-text-style" value="" >All
 	                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option>
@@ -33,7 +33,7 @@
 	               </div>
 	
 	               <div class="col-lg-2 reportnvwidth2" >
-	                  <select name="" class="form-control filter-selectStyle"  ng-model="region.cities"   >
+	                  <select name="" ng-class="{'selectboxLoader': loader.isCityBox}" class="form-control filter-selectStyle"  ng-model="region.cities"   >
 	                    <option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 	                    <option class="option-text-style" value="" >All
 	                              <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}

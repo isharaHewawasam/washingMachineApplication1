@@ -46,14 +46,14 @@
 
 
         <div class="form-group element-margin">
-            <select class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
+            <select ng-class="{'sidebarSelectField': loader.isMakeBox}" class="form-control" ng-model="search.selectedMake" ng-change="selectedMake()">
                 <option class="option-text-style" value="" disabled selected translate="{{'make'}}"></option>
                 <option class="option-text-style" ng-repeat="make in makes"   value={{make.name}}>{{make.name}}</option>
             </select>
         </div>
 
         <div class="form-group element-margin">
-           <select  class="form-control" ng-model="search.selectedModel" ng-change="selectedModel()">
+           <select ng-class="{'sidebarSelectField': loader.isModelBox}" class="form-control" ng-model="search.selectedModel" ng-change="selectedModel()">
                 <option class="option-text-style" value="" disabled selected translate="{{'type'}}"></option>
                 <option class="option-text-style" ng-repeat="model in models"   value={{model.model}}>{{model.model}}</option>
             </select>
@@ -65,7 +65,7 @@
 
         <div class="form-group element-margin">
 
-            <select  class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
+            <select ng-class="{'sidebarSelectField': loader.isSkuBox}" class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
                 <option class="option-text-style" value="" disabled selected>SKU</option>
                 <option class="option-text-style" ng-repeat="SKU in SKUs | filter : skuFilter"   value={{SKU.sku}}>{{SKU.sku}}</option>
             </select>
@@ -103,7 +103,7 @@
 
 
         <div class="form-group element-margin">
-           <select class="form-control" ng-model="search.incomeRange">
+           <select ng-class="{'sidebarSelectField': loader.isIncomeRangeBox}" class="form-control" ng-model="search.incomeRange">
                 <option class="option-text-style" value="" disabled selected translate="{{'income_range'}}"></option>
 
                 <option class="option-text-style" ng-repeat="income in demoIncomeRange" value={{income}}>{{income.range}}</option>
@@ -111,14 +111,14 @@
         </div>
 
         <div class="form-group element-margin">
-            <select  class="form-control" ng-model="search.occupation">
+            <select ng-class="{'sidebarSelectField': loader.isFamilyMemberBox}" class="form-control" ng-model="search.occupation">
                 <option class="option-text-style" value="" disabled selected translate="{{'family_members'}}"></option>
                 <option class="option-text-style" ng-repeat="count in demoMembersCount" value={{count}}>{{count.range}}</option>
             </select>
         </div>
 
         <div class="form-group element-margin">
-             <select  class="form-control" ng-model="search.ageGroup">
+             <select ng-class="{'sidebarSelectField': loader.isAgeBox}" class="form-control" ng-model="search.ageGroup" ng-change="onSidebarOptionChange()">
                 <option class="option-text-style" value="" disabled selected translate="{{'age_group'}}"></option>
                 <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age}}>{{age.range}}</option>
             </select>

@@ -14,6 +14,8 @@
         $rootScope.isReportAvailableForDownload = false;
 
         
+        $scope.loader = {};
+        
         var monthNames = [
           "January", "February", "March",
           "April", "May", "June", "July",
@@ -672,33 +674,48 @@ $rootScope.isApplyFiterButton = true;
             $scope.timescale.months=undefined;
             $scope.months=quarterMonthMap[$scope.timescale.quarters];
         }
+        
+        function loadStates() {
+        	$scope.loader.isStateBox = true;
+	        var url = configApiClient.baseUrl + 'config/states';
+	        HttpService.get(url).then(function(data){
+	             // on success
+	        	$scope.loader.isStateBox = false;
+	             $scope.states=data.states;
+	             //Using this array in renderMap function to zoom the map
+	             salesDataJoin = [];
+	             if($scope.states){
+	                 $.each($scope.states, function () {
+	                     salesDataJoin.push(this);
+	                 });
+	             }
+	        },function(data){
+	            // on error
+	        	$scope.loader.isStateBox = false;
+	        });
+        }
+        
+        loadStates();
 
-        var url = configApiClient.baseUrl + 'config/states';
-        HttpService.get(url).then(function(data){
-             // on success
-             $scope.states=data.states;
-             //Using this array in renderMap function to zoom the map
-             salesDataJoin = [];
-             if($scope.states){
-                 $.each($scope.states, function () {
-                     salesDataJoin.push(this);
-                 });
-             }
-        },function(data){
-            // on error
-        });
-
-        var url = configApiClient.baseUrl + 'config/sales/years';
-        HttpService.get(url).then(function(data){
-             // on success
-            $scope.sales_years=data.sales_years;
-        },function(data){
-            // on error
-        });
+        function loadYear() {
+        	$scope.loader.isYearBox = true;
+	        var url = configApiClient.baseUrl + 'config/sales/years';
+	        HttpService.get(url).then(function(data){
+	             // on success
+	            $scope.sales_years=data.sales_years;
+	            $scope.loader.isYearBox = false;
+	        },function(data){
+	            // on error
+	        	$scope.loader.isYearBox = false;
+	        });
+        }
+        
+        loadYear();
         
     
      $scope.cities;
      $scope.selectCities=function(){
+    	 $scope.loader.isCityBox = true;
     	 $scope.cities = undefined;
          $scope.region.cities=undefined;
          $scope.region.zip_codes=undefined;
@@ -708,18 +725,23 @@ $rootScope.isApplyFiterButton = true;
          HttpService.get(url).then(function(data){
              // on success
              $scope.cities=data[$scope.region.states];
+             $scope.loader.isCityBox = false;
          },function(data){
+        	 $scope.loader.isCityBox = false;
             // on error
          });
     }
      $scope.selectZip=function(){
 
+    	 $scope.loader.isZipBox = true;
          $scope.region.zip_codes=undefined;
          var url = configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities;
          HttpService.get(url).then(function(data){
              // on success
              $scope.zips = data[$scope.region.cities];
+             $scope.loader.isZipBox = false;
          },function(data){
+        	 $scope.loader.isZipBox = false;
             // on error
          });
     }
