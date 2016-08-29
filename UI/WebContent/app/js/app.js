@@ -1943,6 +1943,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
             $scope.isError = false;
 		},function(data){
 			// on error
+			salesDataSet = [];
 			$rootScope.mapProgress = false;
 			$scope.isError = true;
 	       renderMap(divId, data);
@@ -1963,7 +1964,8 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#mapNormal1").removeClass("hidden");
         //$scope.showMap();
         $('div#map-maxcontainer').css({'width': '100%'});
-        $("#map-maxcontainer").height(660);
+        $('div#map-maxcontainer').css({'height': '100%'});
+        //$("#map-maxcontainer").height(660);
         //renderMap("#map-maxcontainer",salesDataSet);
         
         var maxMap = $timeout(function() {

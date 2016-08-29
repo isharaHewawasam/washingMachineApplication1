@@ -311,7 +311,7 @@
         HttpService.post(url, param).then(function(data){
             // on success
             $rootScope.mapProgress = false;
-
+            salesDataSet = [];
             if(!data || data.length === 0){
                  renderMap("map-container", []);
             }  else{
@@ -321,6 +321,7 @@
             }
         },function(data){
             // on error
+        	salesDataSet = [];
              $rootScope.mapProgress = false;
         });
     }
