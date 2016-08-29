@@ -1964,8 +1964,8 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#mapNormal1").removeClass("hidden");
         //$scope.showMap();
         $('div#map-maxcontainer').css({'width': '100%'});
-        $('div#map-maxcontainer').css({'height': '100%'});
-        //$("#map-maxcontainer").height(660);
+        //$('div#map-maxcontainer').css({'height': '100%'});
+        $("#map-maxcontainer").height(660);
         //renderMap("#map-maxcontainer",salesDataSet);
         
         var maxMap = $timeout(function() {
