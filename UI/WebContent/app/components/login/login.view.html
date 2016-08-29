@@ -39,7 +39,7 @@
         <input type="email" id="inputUsername" class="form-control" name="email" placeholder="Email" required autofocus ng-model="inputData.username"pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" ng-minlength="5" required></br>
      
  
-     <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" translate="{{'email_not_valid_msg'}}"></p>
+      <p ng-show="(userForm.email.$invalid && !userForm.email.$pristine) || (userForm.$dirty && userForm.email.$invalid)" class="help-block" translate="{{'email_not_valid_msg'}}"></p>
      
         <label for=>{{'password' | translate}}</label>
       
@@ -49,7 +49,7 @@
                
                               <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
                               <a href="#" class="pull-left forgot-password" translate="{{'forgot_password_msg'}}"><u></u></a>
-     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$untouched  && userForm.email.$invalid) ||(userForm.password.$untouched && userForm.password.$invalid) " translate="{{'login'}}"></button>
+     	<button class="btn btn-primary" type="submit" ng-disabled="(userForm.email.$untouched  && userForm.email.$invalid) || (userForm.$dirty && userForm.email.$invalid) || userForm.password.$invalid" translate="{{'login'}}"></button>
       </form>
     </div> 
   </body>
