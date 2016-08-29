@@ -3242,7 +3242,7 @@ $scope.plotPieChart=function(divID){
 			var param;
 			if ($scope.usagedata) {
 				param = $scope.usagedata;
-
+         
 	        switch($scope.usagedata.timescale.relative.unit) {
 	          case "1":
 	            break;
@@ -3272,7 +3272,7 @@ $scope.plotPieChart=function(divID){
 	            break;
 	          default:
 	           param.timescale.relative.unit = "d";
-	            param.timescale.relative.value = 7;
+	            param.timescale.relative.value = 30;
 	            break;
 	        }
 
