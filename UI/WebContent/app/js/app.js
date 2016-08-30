@@ -3111,6 +3111,8 @@ $scope.plotPieChart=function(divID){
 		            }
 		            seriesData = [["Connected",totalconnected],["Disconnected",(totalSold - totalconnected)]];
                 $scope.maxPieChartData=seriesData;
+				} else {
+					$scope.maxPieChartData=[];
 				}
 				createPieChart(divID, seriesData);
 			},function(data){
@@ -3177,6 +3179,8 @@ $scope.plotPieChart=function(divID){
 				}
 				$scope.maxBarChartData=seriesData;
 				$scope.maxBarDes=barChartDes;
+			} else {
+				$scope.maxBarChartData = [];
 			}
 	    	createBarChart(divId, seriesData, barChartDes);
 		},function(data){
@@ -3526,7 +3530,7 @@ $scope.plotPieChart=function(divID){
                    $scope.plotPieChart("#piecontainer");
              }else if($scope.selectedChart=='Line Chart'){
 
-             $scope.plotEngManagerChartFunction('container', $scope.seneorkey);
+             $scope.plotEngManagerChartFunction('#container', $scope.seneorkey);
              }
      });
 
