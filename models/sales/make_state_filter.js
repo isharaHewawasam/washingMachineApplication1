@@ -222,3 +222,109 @@ exports.getDataforstate = function(payload, drilldown, callback) {
         }
     });
 };
+
+//get data for state and city
+exports.getDataforstateandCity = function(payload, drilldown, callback) {
+    var optionsAlldata = {q: '*:*',group_level: 3};
+    var optionsforConnected = {q: '*:*',group_level: 3};
+
+    db.view('sales', 'salesByStateandCity', optionsAlldata, function(err, resultall) {
+            if (err) {
+                  console.error(err);
+                  return callback(err, null);
+            } else {
+                  db.view('sales', 'connectedByStateandCity', optionsforConnected, function(err, result) {
+                    if(err){
+                      console.log(err);
+                      return callback(err, null);
+                    }
+                    else{
+                      var payloadState=payload.region.states[0].value;
+                      var payloadCity=payload.region.cities[0].value;
+                
+                      var soldArray=[];
+                      var connectedArray=[];
+                      var aggregateArray=[];
+                      var aggregateArraynew=[];
+
+                      for(var i=0;i<resultall.rows.length;i++){
+                        if(payloadState==resultall.rows[i].key[0]&&payloadCity==resultall.rows[i].key[1]){
+                            soldArray.push({'state':resultall.rows[i].key[0],'city':resultall.rows[i].key[1],'zipcode':resultall.rows[i].key[2],
+                                        'unitsSold':resultall.rows[i].value});
+                        }
+                        
+                      }
+
+                      for(var i=0;i<result.rows.length;i++){
+                        if(payloadState==result.rows[i].key[0]&&payloadCity==result.rows[i].key[1]){
+                            connectedArray.push({'state':result.rows[i].key[0],'city':result.rows[i].key[1],'zipcode':result.rows[i].key[2],
+                                        'unitsConnected':result.rows[i].value});
+                        }                    
+                      }   
+
+                      for(var i=0;i<soldArray.length;i++){
+                        for(var j=0;j<connectedArray.length;j++){
+                            if(soldArray[i].state==connectedArray[j].state&&soldArray[i].city==connectedArray[j].city
+                                &&soldArray[i].zipcode==connectedArray[j].zipcode){
+                                aggregateArray.push({'state':soldArray[i].state,'city':soldArray[i].city,
+                                                            'zipcode':soldArray[i].zipcode,'unitsSold':soldArray[i].unitsSold,
+                                                            'unitsConnected':connectedArray[j].unitsConnected});
+                            }
+                        }
+                      }
+                      var lat_long = null;
+                      db_geocode.open(config.RegionLatituesLongitudes, function(err) {
+
+                        if (!err) {
+                            db_geocode.read_all(function(err, data) {
+                                lat_long = data;
+                                for (var i = 0; i < lat_long.rows.length; i++) {
+                                for(var j=0;j<aggregateArray.length;j++){
+                                    if(lat_long.rows[i].doc.states.name==aggregateArray[j].state){
+                                    for (var k = 0; k < lat_long.rows[i].doc.states.cities.length; k++) {
+                                        //console.log(lat_long.rows[i].doc.states.cities[k].zipCodes.length);
+                                        if (lat_long.rows[i].doc.states.cities[k].name == aggregateArray[j].city) {
+                                            for(var l=0;l<lat_long.rows[i].doc.states.cities[k].zipCodes.length;l++){
+                                                if(lat_long.rows[i].doc.states.cities[k].zipCodes[l].zipCode==aggregateArray[j].zipcode){
+                                                    console.log(lat_long.rows[i].doc.states.cities[k].zipCodes[l]);
+                                                    var lat = lat_long.rows[i].doc.states.cities[k].zipCodes[l].latitude;
+                                                    var longi = lat_long.rows[i].doc.states.cities[k].zipCodes[l].longitude;
+                                                    var zipcode=lat_long.rows[i].doc.states.cities[k].zipCodes[l].zipCode;
+                                                    aggregateArraynew.push({
+                                                        'state': aggregateArray[j].state,
+                                                        'city': aggregateArray[j].city,
+                                                        'unitsSold': aggregateArray[j].unitsSold,
+                                                        'unitsConnected': aggregateArray[j].unitsConnected,
+                                                        'zip_code':zipcode,
+                                                        'latitude': lat,
+                                                        'longitude': longi
+                                                        });
+                                                    }
+                                                
+                                                    
+                                                    }
+                                        
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                return callback(err, aggregateArraynew);
+                                console.log("db opened");
+
+                            });
+                        } 
+                        else {
+                            console.log("Error while connecting to coordinates database");
+                            console.log(err);
+                        }
+                        });
+                    }
+
+                  });
+                  
+            }
+      });
+
+
+};

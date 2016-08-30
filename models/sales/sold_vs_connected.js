@@ -42,6 +42,15 @@ exports.getData = function(payload, drill_down, callback) {
       });
     }
 
+    else if(payload.productAttrs.makes[0]==undefined&&payload.region.states[0]!==undefined&&payload.productAttrs.models[0]==undefined&&
+      payload.productAttrs.skus[0]==undefined&&payload.timescale.years[0]==undefined&&payload.timescale.quarters[0]==undefined&&
+      payload.timescale.months[0]==undefined&&payload.region.cities[0]!==undefined&&payload.region.zip_codes[0]==undefined&&
+      payload.income[0]==undefined&&payload.age[0]==undefined&&payload.family_members_count[0]==undefined){
+      require("./make_state_filter").getDataforstateandCity(payload, drill_down, function(err, sales_result){
+        callback(err,sales_result);
+      });
+    }
+
     else{
       require("./sales_map").getData(payload, drill_down, function(err, sales_result) {
       if (sales_result) {
