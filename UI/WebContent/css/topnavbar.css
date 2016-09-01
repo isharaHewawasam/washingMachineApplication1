@@ -49,7 +49,9 @@
 
 .alertimag {
 	padding-left: 10px;
-	padding-top: 16px
+	padding-top: 16px;
+	opacity: 0.3;
+    filter: alpha(opacity=40);
 }
 
 .notificationcount {
