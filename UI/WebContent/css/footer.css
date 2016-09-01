@@ -23,6 +23,8 @@
 	font: Roboto; Light;
 	color: #003A77;
 	text-decoration: underline;
+	padding-right: 20px;
+	margin-top : -5px;
 }
 
 .tab_modal {
@@ -40,6 +42,51 @@
 	font-size: 12px;
 	font: Roboto; Light;
 	color: #222222;
-	padding-right: 20px;
+	padding-left: 20px;
 	float: right;
+}
+
+#myModal {
+    font-family: 'Roboto', sans-serif;
+    z-index: 3000;
+    margin-top: 50px;
+}
+
+#myModal .scorlldialog {
+    height: 500px;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    padding-left: 30px;
+    padding-right: 20px;
+    line-height: 1.6;
+}
+
+#myModal .header {
+    font-size: 1.5em;
+}
+
+.fade {
+    z-index: 100 !important;
+}
+
+#mymodal .modal-backdrop.fade.in {
+    z-index: 999999;
+}
+
+.btn-position {
+    position: relative;
+    top: -9px;
+}
+
+#buildingSelect:disabled {
+    cursor: progress;
+}
+
+#anlFlrSel:disabled {
+    cursor: progress;
+}
+
+#spinnerDiv {
+    /*margin: 0 auto;
+	position: relative;*/
 }

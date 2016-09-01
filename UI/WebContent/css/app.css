@@ -5828,6 +5828,7 @@ button.close {
   .modal-dialog {
     width: 600px;
     margin: 30px auto;
+    z-index: 99999;
   }
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -12392,6 +12393,7 @@ display : block;
    vertical-align: middle;
 }
 
+/*
 .modal-dialog {
 	margin-top: -10px;
     position: fixed;
@@ -12404,7 +12406,7 @@ display : block;
     padding:30px;
     transform: translate(-100%, 100%);
     vertical-align: middle;
-}
+} 
 .modal-content {
     background-color: #fefefe;
     margin: 0 auto;
@@ -12420,10 +12422,10 @@ display : block;
     transform: translate(-100%, 100%);
     vertical-align: middle;
     z-index: 99;
-   }
+   } */
 .modal-body {padding: 2px 16px;
 	height:400px
-}
+} 
 .modal-vertical-centered {
   transform: translate(0, 50%) /* important; */
   -ms-transform: translate(0, 50%) /* important; IE 9 */
