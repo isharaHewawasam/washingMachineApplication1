@@ -1,40 +1,42 @@
  <link href="css/sidebar.css" rel="stylesheet"/>
-    <div class="aside-inner">
+    <div id="sidebarPanelIcons" class="aside-inner">
         <nav class="sidebar">
             <div class="nav">
                 <div id="dashboardNav" class="leftbar-icon" ng-controller="MyviewController"
-                	ng-class="{'sidebarItemActive': ((currentState == 'app.singleview' || currentState == 'app.engmanagerview' || hoverDashboard) && !activeTab)}" ng-mouseover="onMouseOver()" ng-mouseleave="onMouseLeave($event)">
+                	ng-class="{'sidebarItemActive': ((currentState == 'app.singleview' || currentState == 'app.engmanagerview') && activeTab == 'dashboard')}" 
+                	ng-mouseover="onMouseOver('dashboard')" ng-mouseLeave="onMouseLeave()" ng-click="onSideBarMenuClick('dashboard')">
                     <div class="sidebarIconContainer">
                         <a href="" ng-click="getUrl()">
-                        <img class="iconpos" ng-src="{{((currentState == 'app.singleview' || currentState == 'app.engmanagerview' || hoverDashboard) && !activeTab) ? 'img/Dashboardassets/dashboard_hover.png' : 'img/Dashboardassets/dashboard.png'}}"></a>
+                        <img class="iconpos" ng-src="{{(currentState != 'app.reports' && activeTab == 'dashboard'|| hoverTab == 'dashboard') ? 'img/Dashboardassets/dashboard_hover.png' : 'img/Dashboardassets/dashboard.png'}}"></a>
                     </div>
                     <a href="" ng-click="getUrl()"style="color: inherit; text-decoration: none;"><div class="menu-text">Dashboard</div></a>
 				</div>
                 <div id="filterNav" class="leftbar-icon" ng-class="{'sidebarItemActive': (activeTab == 'product'), 'disablePointerEvent' : isDisableSideBar}"
-                	ng-mouseover="onMouseOver('product')" ng-mouseleave="onMouseLeave($event)">
+                	ng-mouseover="onMouseOver('product')" ng-mouseLeave="onMouseLeave()" ng-click="onSideBarMenuClick('product')">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" ng-src="{{activeTab == 'product' ? 'img/Dashboardassets/machine_hover.png' : 'img/Dashboardassets/machine.png'}}">
+                        <img class="iconpos" ng-src="{{(activeTab == 'product' || hoverTab == 'product') ? 'img/Dashboardassets/machine_hover.png' : 'img/Dashboardassets/machine.png'}}">
                     </div>
                     <div class="menu-text" translate="{{'filter'}}"></div>
                 </div>
                 <div id="demographicsNav" class="leftbar-icon" ng-class="{'sidebarItemActive': (activeTab == 'demographic'), 'disablePointerEvent' : isDisableSideBar}" 
-                	ng-mouseover="onMouseOver('demographic')" ng-mouseleave="onMouseLeave($event)">
+                	ng-mouseover="onMouseOver('demographic')" ng-mouseLeave="onMouseLeave()" ng-click="onSideBarMenuClick('demographic')">
                     <div class="sidebarIconContainer">
-                        <img class="iconpos" ng-src="{{activeTab == 'demographic' ? 'img/Dashboardassets/demographics_hover.png' : 'img/Dashboardassets/demographics.png'}}">
+                        <img class="iconpos" ng-src="{{(activeTab == 'demographic' || hoverTab == 'demographic') ? 'img/Dashboardassets/demographics_hover.png' : 'img/Dashboardassets/demographics.png'}}">
                     </div>
                     <div class="menu-text" translate="{{'demographics'}}"></div>
                 </div>
-                <div ng-class="{'sidebarItemActive': (currentState == 'app.reports' || activeTab == 'report'), 'disablePointerEvent' : isDisableSideBar}" id="reportsNav" class="leftbar-icon" 
-                	ng-mouseover="onMouseOver('report')" ng-mouseleave="onMouseLeave($event)">
+                <div ng-class="{'sidebarItemActive': (currentState == 'app.reports' || activeTab == 'report'), 'disablePointerEvent' : (isDisableSideBar || loginCredentails.roleKey == 'eng_manager')}" id="reportsNav" class="leftbar-icon" 
+                	ng-mouseover="onMouseOver('report')" ng-mouseLeave="onMouseLeave()" ng-click="onSideBarMenuClick('report')">
 					<div class="sidebarIconContainer">
-						<img class="iconpos" ng-src="{{(currentState == 'app.reports' || activeTab == 'report') ? 'img/Dashboardassets/reports_hover.png' : 'img/Dashboardassets/reports.png'}}">
+						<img class="iconpos" ng-src="{{(currentState == 'app.reports' || activeTab == 'report' || hoverTab == 'report') ? 'img/Dashboardassets/reports_hover.png' : 'img/Dashboardassets/reports.png'}}">
 					</div>
 					<div class="menu-text" translate="{{'reports'}}"></div>
 				</div>
             </div>
         </nav>
     </div>
-    <div id="filterPanel" ng-show="activeTab == 'product'"  ng-mouseover="onMouseOver('product')" ng-mouseleave="onMouseLeave($event)">
+    <section id="sidebarFilterPanel">
+    <div id="filterPanel" ng-show="activeTab == 'product'">
         <div class="divSpacePad1">
             <label translate="{{'products'}}"></label>
 
@@ -89,7 +91,7 @@
 
     </div>
 
-    <div id="demographicsFilterPanel" ng-show="activeTab == 'demographic'"  ng-mouseover="onMouseOver('demographic')" ng-mouseleave="onMouseLeave($event)">
+    <div id="demographicsFilterPanel" ng-show="activeTab == 'demographic'">
 
         <div class="divSpacePad1">
             <label translate="{{'demographics'}}"></label>
@@ -118,7 +120,7 @@
         </div>
 
         <div class="form-group element-margin">
-             <select ng-class="{'sidebarSelectField': loader.isAgeBox}" class="form-control" ng-model="search.ageGroup" ng-change="onSidebarOptionChange()">
+             <select ng-class="{'sidebarSelectField': loader.isAgeBox}" class="form-control" ng-model="search.ageGroup">
                 <option class="option-text-style" value="" disabled selected translate="{{'age_group'}}"></option>
                 <option class="option-text-style" ng-repeat="age in demoAgeRange" value={{age}}>{{age.range}}</option>
             </select>
@@ -128,7 +130,7 @@
     </div>
     <!--reports-->
 
-<div id="reportsPanel" ng-show="activeTab == 'report'" ng-mouseover="onMouseOver('report')" ng-mouseleave="onMouseLeave($event)" ng-controller="reportController">
+<div id="reportsPanel" ng-show="(activeTab == 'report' && currentState != 'app.reports')" ng-controller="reportController">
        <div class="divSpacePad1">
             <label translate="{{'reports'}}"></label>
         </div>
@@ -140,3 +142,4 @@
            <button ng-disabled="isEngManager" id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
         </div>
 </div>
+</section>

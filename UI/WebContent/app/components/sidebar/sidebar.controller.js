@@ -5,18 +5,30 @@
 	    .module('angle')
 	    .controller('SidebarController', SidebarController);
 
-	SidebarController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService'];
+	SidebarController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', '$document'];
 
-	function SidebarController($scope, $state,$rootScope,$window, configApiClient, HttpService) {
+	function SidebarController($scope, $state,$rootScope,$window, configApiClient, HttpService, $document) {
 
 		$scope.loader = {};
-		
-    $rootScope.intete=1;
-  	$scope.make;
-  	$scope.makeData;
-      $scope.valArr=[2,3,4,56,7567,2345];
-        $rootScope.filterIcons=[];
-        $scope.activeTab = null;
+			
+	    $rootScope.intete=1;
+	  	$scope.make;
+	  	$scope.makeData;
+	  	$scope.valArr=[2,3,4,56,7567,2345];
+	    $rootScope.filterIcons=[];
+	    $scope.activeTab = 'dashboard';
+	    
+	    $(document).click(function(event) { 
+	        if((!$(event.target).closest('#sidebarPanelIcons').length) && (!$(event.target).closest('#sidebarFilterPanel').length)){
+	        	$scope.activeTab = 'dashboard';
+	            $scope.hoverTab = $scope.activeTab;
+	            sameMenu = $scope.activeTab;
+	        }   
+	    })
+	    
+	    $scope.loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
+    
+        /*$scope.activeTab = null;
         
         $scope.onMouseOver = function(tab) {
         	$scope.activeTab = tab;
@@ -50,13 +62,29 @@
         	}
         	
         	$scope.activeTab = null;
+        }*/
+        
+        /*$scope.onSidebarOptionChange = function(){
+        	$scope.isOnSelect = true;
+        }*/
+    
+        var sameMenu = null;
+        $scope.onSideBarMenuClick = function(menu){
+        	$scope.activeTab = menu;
+        	if(sameMenu == menu) {
+        		$scope.activeTab = 'dashboard';
+        		sameMenu = null;
+        	}else{
+        		sameMenu = menu;
+        	}
         }
         
-        $scope.onSidebarOptionChange = function(){
-//        	console.log('onSidebarOptionChange : ', self);
-        	/*console.log('onSidebarOptionChange event : ', event);
-        	self.focus();*/
-        	$scope.isOnSelect = true;
+        $scope.onMouseOver = function(menu) {
+        	$scope.hoverTab = menu;
+        }
+        
+        $scope.onMouseLeave = function() {
+        	$scope.hoverTab = $scope.activeTab;
         }
         
   	$scope.getCall=function(p){
@@ -95,6 +123,9 @@
   		 }
 
            $rootScope.setUsageObjectFromSidebar(obj);
+           $scope.activeTab = 'dashboard';
+           $scope.hoverTab = $scope.activeTab;
+           sameMenu = $scope.activeTab;
            $rootScope.tryit();
         }
 
@@ -121,6 +152,9 @@
     	 	}
 
           $rootScope.setUsageObjectFromSidebar(obj);
+          $scope.activeTab = 'dashboard';
+          $scope.hoverTab = $scope.activeTab;
+          sameMenu = $scope.activeTab;
           $rootScope.tryit();
        }
 
@@ -300,7 +334,9 @@
               $rootScope.setUsageObjectFromSidebar(obj);
               $scope.createIconArray();
 //              document.getElementById('filterPanel').style.display = 'none';
-              $scope.activeTab = null;
+              $scope.activeTab = 'dashboard';
+              $scope.hoverTab = $scope.activeTab;
+              sameMenu = $scope.activeTab;
               $rootScope.tryit();
 
           }
@@ -327,7 +363,9 @@
                $rootScope.setUsageObjectFromSidebar(obj);
                $scope.createIconArray();
 //               document.getElementById('demographicsFilterPanel').style.display = 'none';
-               $scope.activeTab = null;
+               $scope.activeTab = 'dashboard';
+               $scope.hoverTab = $scope.activeTab;
+               sameMenu = $scope.activeTab;
                $rootScope.tryit();
 
            };
