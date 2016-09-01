@@ -30,6 +30,7 @@ function getStats(params, callback) {
   //keys_map = params.key_maps;
   
   //if (params.filter === undefined) console.log("filter not defined");
+  console.log("Params :::::::::" + JSON.stringify(params))
 	  getData(params, function(err, result) {   
 	    if(err) {
         
@@ -105,7 +106,6 @@ var getData = function(params, callback) {
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
     
     doGetDataLogging(err, result, params, view_params, view_name);    
-    
     //sort result is sorting if set
     //sortResult(params.sort, result.rows)
     //get top rows if top is set
@@ -483,6 +483,7 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if(params.filter.isFilterCategoryMixed()) {
+    
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
@@ -499,6 +500,9 @@ var doesRecordFallsInFilter = function(params, keys) {
 }
 
 var isItemPresent = function(array, key_name, item, isRange, ranges){  
+  //console.log("Array::"+array);
+  //console.log("=====================================");
+  //console.log("item:::"+item);
   if(array == undefined || array.length == 0) return true;
   
   for (var array_item in array) {    
@@ -513,7 +517,8 @@ var isItemPresent = function(array, key_name, item, isRange, ranges){
         }
       }
     } else {
-      if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
+
+      if(item && array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
     }      
   }
   
