@@ -214,7 +214,7 @@
  	-moz-appearance: none;
   	-webkit-appearance: none;
     background-image: url('../img/ajax-loader.gif') !important;
-    background-position: right center;
-    pointer-events: none;
-    background-repeat: no-repeat;
+    background-position: right center !important;
+    pointer-events: none !important;
+    background-repeat: no-repeat !important;
 }

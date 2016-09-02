@@ -5,9 +5,9 @@
 	    .module('angle')
 	    .controller('SidebarController', SidebarController);
 
-	SidebarController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', '$document'];
+	SidebarController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService', '$document', '$q'];
 
-	function SidebarController($scope, $state,$rootScope,$window, configApiClient, HttpService, $document) {
+	function SidebarController($scope, $state,$rootScope,$window, configApiClient, HttpService, $document, $q) {
 
 		$scope.loader = {};
 			
@@ -19,7 +19,8 @@
 	    $scope.activeTab = 'dashboard';
 	    
 	    $(document).click(function(event) { 
-	        if((!$(event.target).closest('#sidebarPanelIcons').length) && (!$(event.target).closest('#sidebarFilterPanel').length)){
+	        if((!$(event.target).closest('#sidebarPanelIcons').length) && (!$(event.target).closest('#sidebarFilterPanel').length)
+	        		 && (!$(event.target).closest('.md-autocomplete-suggestions-container').length)){
 	        	$scope.activeTab = 'dashboard';
 	            $scope.hoverTab = $scope.activeTab;
 	            sameMenu = $scope.activeTab;
@@ -28,6 +29,32 @@
 	    
 	    $scope.loginCredentails = angular.fromJson($window.localStorage.loginCredentails);
     
+	    /** Auto Complete Start **/
+		$scope.noCache 		 = true;
+		$scope.isDisabled    = true;
+		
+		/**
+	     * Search for states.
+	     */
+	    $scope.querySearch = function(query) {
+	    	var results = query ? $scope.states.filter( $scope.createFilterFor(query) ) : $scope.states,
+	          deferred;
+	    	  return (results ? results : '');
+	    }
+
+	    /**
+	     * Create filter function for a query string
+	     */
+	    $scope.createFilterFor = function(query) {
+	    	var lowercaseQuery = angular.lowercase(query);
+	    	return function filterFn(state) {
+	    	  //return (state.value.indexOf(lowercaseQuery) === 0);
+	    	  var lowercaseSKU = angular.lowercase(state.sku);
+	    	  return (lowercaseSKU.indexOf(lowercaseQuery) != -1);
+	    	};
+	    }
+		/** Auto Complete End **/
+	    
         /*$scope.activeTab = null;
         
         $scope.onMouseOver = function(tab) {
@@ -104,7 +131,7 @@
   	 * clear side bar product filter selections
   	 */
       $scope.clearfilter1 = function(){
-
+    	  $scope.isDisabled    = true;  
       	 $scope.clearFilterIcons(1);
   		 var obj={};
   		 obj.selectedMake=$rootScope.search.selectedMake;
@@ -279,6 +306,7 @@
        * Retrieve model names for relavent make from API
        */
         $scope.selectedMake=function(){
+        	$scope.isDisabled    = true;	
         	$scope.loader.isModelBox = true;
             $rootScope.search.selectedModel="";
             $rootScope.search.selectedSKU="";
@@ -297,17 +325,20 @@
          *  Retrieve SKU data for relavent make from API
          */
         $scope.selectedModel=function(){
-
+        	$scope.isDisabled    = true;
         	$scope.loader.isSkuBox = true;
             $rootScope.search.selectedSKU="";
             	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
             	HttpService.get(url).then(function(data){
   	  			// on success
           	  	$scope.SKUs=data[$rootScope.search.selectedModel];
+          	  	$scope.states = $scope.SKUs;
           	  	$scope.loader.isSkuBox = false;
+          	    $scope.isDisabled    = false;
   	  		},function(data){
   	  			// on error
   	  			$scope.loader.isSkuBox = false;
+  	  			$scope.isDisabled    = false;
   	  		});
         }
 

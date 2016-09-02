@@ -62,16 +62,39 @@
         </div>
 
         <div class="form-group element-margin">
-            <input type="text" ng-model="skuFilter" class="form-control" placeholder="{{'sku_search' | translate}}" >
+            <!-- <input type="text" ng-model="skuFilter" class="form-control" placeholder="{{'sku_search' | translate}}" > -->
+            <form ng-submit="$event.preventDefault()">
+            	<md-autocomplete
+            		  ng-disabled="isDisabled"
+            		  ng-class="{'sidebarSelectField': loader.isSkuBox}"
+            		  md-no-cache="noCache"	
+			          md-selected-item="selectedItem"
+			          
+			          md-search-text="search.selectedSKU"
+			          
+			          md-items="item in querySearch(search.selectedSKU)"
+			          md-item-text="item.sku"
+			          md-min-length="0"
+			          placeholder="{{'sku_search' | translate}}"
+			          md-menu-class="mycustomcss">
+			        <md-item-template>
+		          		<span id="skuitemid" md-highlight-text="search.selectedSKU" md-highlight-flags="^i">{{item.sku}}</span>
+		        	</md-item-template>
+		        <md-not-found>
+		          	No result found.
+		        </md-not-found>
+		      </md-autocomplete>
+	      	</form>
+	      	
         </div>
 
-        <div class="form-group element-margin">
+        <!-- <div class="form-group element-margin">
 
             <select ng-class="{'sidebarSelectField': loader.isSkuBox}" class="form-control" ng-model="search.selectedSKU" ng-change="selectedSKU()">
                 <option class="option-text-style" value="" disabled selected>SKU</option>
                 <option class="option-text-style" ng-repeat="SKU in SKUs | filter : skuFilter"   value={{SKU.sku}}>{{SKU.sku}}</option>
             </select>
-        </div>
+        </div> -->
 
         <!-- Temporally hide mfg start and end dates till databases are updated with MfDate -->
         <div class="form-group element-margin" ng-hide="true">
