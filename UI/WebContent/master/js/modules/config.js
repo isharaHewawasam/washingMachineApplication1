@@ -14,9 +14,9 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   // default route
   $urlRouterProvider.otherwise('/app/singleview');
 
-  // 
+  //
   // Application Routes
-  // -----------------------------------   
+  // -----------------------------------
   $stateProvider
     .state('app', {
         url: '/app',
@@ -35,12 +35,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'Submenu',
         templateUrl: helper.basepath('submenu.html')
     })
-    // 
+    //
     // CUSTOM RESOLVES
     //   Add your own resolves properties
     //   following this object extend
     //   method
-    // ----------------------------------- 
+    // -----------------------------------
     // .state('app.someroute', {
     //   url: '/some_url',
     //   templateUrl: 'path_to_template.html',
@@ -79,7 +79,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 }]).config(['$translateProvider', function ($translateProvider) {
 
     $translateProvider.useStaticFilesLoader({
-        prefix : 'app/i18n/',
+        prefix : 'vendor/i18n/',
         suffix : '.json'
     });
     $translateProvider.preferredLanguage('en');
