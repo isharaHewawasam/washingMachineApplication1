@@ -2,26 +2,26 @@
 //Copy this file as config and modify when deployed to new server and then start the app
 //also dont chk modifed file in repo
 module.exports = {
-  "host": "ibm-iot.mybluemix.net",
+  "host": "ibm-iot.mybluemix.net:3000",
   "local_host": "localhost:3000",
   "cloud-host": "ibm-iot.mybluemix.net",
   "SalesDatabase": {
      "provider": "Cloudant",
-	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "host": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "port": 443,
-	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
-	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
-	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "user": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix",
+	   "Password": "b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491",
+	   "url": "https://cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix:b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491@cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	  "dbNameOld": "erpsalesdata",
     "dbName": "erpsaleswithstatecode"
    },
    "WashDailyAggregateDatabase": {
      "provider": "Cloudant",
-	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "host": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "port": 443,
-	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
-	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
-	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "user": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix",
+	   "Password": "b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491",
+	   "url": "https://cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix:b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491@cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "dbName":"devicedata_v1",
 	   "dbName_1000": "changeddevicedata1000",
      "dbName_1lac": "devicedatanew",
@@ -29,29 +29,29 @@ module.exports = {
    },
    "RegionLatituesLongitudes": {
      "provider": "Cloudant",
-	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "host": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "port": 443,
-	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
-	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
-	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "user": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix",
+	   "Password": "b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491",
+	   "url": "https://cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix:b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491@cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "dbName": "dbgeocode"
    },
    "DeviceData1000": {
      "provider": "Cloudant",
-	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "host": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "port": 443,
-	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
-	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
-	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "user": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix",
+	   "Password": "b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491",
+	   "url": "https://cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix:b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491@cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "dbName": "washdatafailedwashes"
    },
    "NotificationConfig": {
      "provider": "Cloudant",
-	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "host": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "port": 443,
-	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
-	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
-	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
+	   "user": "cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix",
+	   "Password": "b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491",
+	   "url": "https://cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix:b19ce390696f85adbf717d16f8932eda82d24abe379816ed5c8757f605cf6491@cf7a7fa8-910e-4f7f-90f8-0c1a70e6d052-bluemix.cloudant.com",
 	   "dbName": "notificationconfigdb"
    } 
 };
