@@ -7,23 +7,21 @@ exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, 
   var FilterModule = require("../filters");
   var KeyMap = require("../view_keys_mapping");
   var key_map = new KeyMap();
-  
   if (group_by_timescale) {
     var Filter = new FilterModule(payload, 16);
-  
-    key_map.setReportType2RelativeTimescale(); 
+    key_map.setReportType2RelativeTimescale();
+
   } else {
     var Filter = new FilterModule(payload, 1);
       
     if (Filter.isFilterCategoryByYear()) {
       key_map.setReportType2SensorByYear();
     } else if (Filter.isFilterCategoryByFamily()) {
-      key_map.setReportType2SensorByFamily()
+      key_map.setReportType2SensorByFamily();
     } else {
      key_map.setReportType2Sensor();
     }
   }
-  
   var params = { 
                  "description": "Average Water Usage",
                  "payload": payload,
@@ -41,11 +39,11 @@ exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, 
                   "key_maps": key_map
                };
   
+
   if (group_by_timescale) {
     relative_timescale_utility.setStartEndKeysFromRelativeTimeScale(payload.timescale.relative, params);
     params.statsKeyNameX = "Date";
   }
-  
   avg.getAverage(params, function(err, result) {
     if (group_by_timescale) {
       var final_result = relative_timescale_utility.processResultForRelativeTimeScale(payload.timescale.relative, result);
