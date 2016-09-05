@@ -472,6 +472,9 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   if(params.filter.isFilterCategoryMixed()) {
     var d=new Date(keys[params.key_maps.key.YEAR]);
+    var quater=Math.floor((d.getMonth() + 3) / 3);
+    var month=d.getMonth();
+
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
@@ -479,8 +482,8 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
             isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
             isItemPresent(params.payload.timescale.years, "value", d.getFullYear()) &&
-            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
-            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]) && 
+            isItemPresent(params.payload.timescale.quarters, "value", quater) &&
+            isItemPresent(params.payload.timescale.months, "value", month) && 
             isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
             isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
             isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges) 
