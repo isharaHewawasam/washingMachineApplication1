@@ -735,6 +735,7 @@ $rootScope.isApplyFiterButton = true;
 
     	 $scope.loader.isZipBox = true;
          $scope.region.zip_codes=undefined;
+         $scope.zips=[];
          var url = configApiClient.baseUrl + "config/cities/zipcodes?cities_names="+$scope.region.cities;
          HttpService.get(url).then(function(data){
              // on success
