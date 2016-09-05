@@ -11,6 +11,7 @@
 		
 		$scope.language = {};
 		$scope.language.available= {"en": "English","fr": "French"};
+		$scope.language.selected = undefined;
 
 		$scope.changeLanguage = function() {
 			$translate.use($scope.language.selected);
