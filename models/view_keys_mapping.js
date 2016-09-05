@@ -13,7 +13,7 @@ var ViewKeysMappings = function() {
   this.REPORT_TYPE.SENSOR_BY_FAMILY = 8;
   this.REPORT_TYPE.MOST_USED_WM = 9;
   this.REPORT_TYPE.INSIGHTS = 10;
-  this.REPORT_TYPE_BY_LAST_TIME_SCALE = 11;
+  this.REPORT_TYPE.REPORT_TYPE_BY_LAST_TIME_SCALE = 11;
   this.key = {};
 };
 
@@ -72,9 +72,10 @@ ViewKeysMappings.prototype.setKeys = function(report_type) {
       break;  
     case this.REPORT_TYPE.REPORT_TYPE_BY_LAST_TIME_SCALE:
       this.key.STATS_KEY_X = 0;
-      this.key.MAKE = 1; this.key.MODEL = 2; this.key.SKU = 3;
-      this.key.STATE = 4; this.key.CITY = 5; this.key.ZIP_CODE = 6;
-      this.key.AGE = 7; this.key.MEMBERS = 8; this.key.INCOME = 9;
+      this.key.YEAR=0;this.key.MAKE=1;this.key.MODEL=2;
+      this.key.SKU = 3;this.key.STATE=4;this.key.CITY=5;
+      this.key.ZIP_CODE=6;this.key.AGE=7;this.key.MEMBERS=8;
+      this.key.INCOME=9;
       break;        
     default:
       console.log("Invalid report key");

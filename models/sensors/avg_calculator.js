@@ -5,7 +5,6 @@ var utility = require("../../middle_ware/utility");
 
 //var filter = null;
 //var keys_map = null;
-
 exports.getSum = function(params, callback) {  
   params.stats = "sum";
   if (params.top !== undefined) {
@@ -30,7 +29,6 @@ function getStats(params, callback) {
   //keys_map = params.key_maps;
   
   //if (params.filter === undefined) console.log("filter not defined");
-  console.log("Params :::::::::" + JSON.stringify(params))
 	  getData(params, function(err, result) {   
 	    if(err) {
         
@@ -48,10 +46,8 @@ function getStats(params, callback) {
             params.buffer.push(fillRecord(result.rows[row], params));
           }
         } else {
-         
           for(var row in result.rows) {
               if(doesRecordFallsInFilter(params, result.rows[row].key)) {
-                //console.log("Adding record");
                 addOrUpdateUsages(params, fillRecord(result.rows[row], params));
               }        
           }   
@@ -82,7 +78,7 @@ var getData = function(params, callback) {
      callback("Database ref not set", null);
      return;
    }
- 
+  console.log(params.group_level);
   //filter.setPayload(params.payload);  
   var group_level = (params.group_level === undefined) ? params.filter.groupLevel() : params.group_level;
   var view_params = { reduce: true, group: true, group_level: group_level, "startkey": params.start_key, "endkey": params.end_key };  
@@ -104,7 +100,6 @@ var getData = function(params, callback) {
   //params.keys_map.dumpReportType();
   
   db.view(params.view.designDocName, view_name, view_params, function(err, result) {
-    
     doGetDataLogging(err, result, params, view_params, view_name);    
     //sort result is sorting if set
     //sortResult(params.sort, result.rows)
@@ -399,7 +394,6 @@ var fillRecord = function(result, params) {
 var doesRecordFallsInFilter = function(params, keys) {
   //filter.setPayload(payload);
   //console.log("Inside doesRecordFallsInFilter");
-  
   if(params.filter.isFilterCategoryNone()) {
     return true;
   }
@@ -451,9 +445,6 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if ( params.filter.isFilterCategoryByRegion() ) {
-     // console.log("keys : " + keys);
-      //console.log("params.key_maps.key.ZIP_CODE : " + params.key_maps.key.ZIP_CODE);
-      //console.log("==================================");
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
               isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) && 
@@ -472,8 +463,6 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
   }
   if(params.filter.isFilterCategoryByFamily()) {
-    //console.log("Keys : " + JSON.stringify(keys));
-    //console.log("Age key id :" + keys[params.key_maps.key.AGE]);
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
@@ -481,44 +470,34 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
             isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
   }
-  
   if(params.filter.isFilterCategoryMixed()) {
-    
+    var d=new Date(keys[params.key_maps.key.YEAR]);
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
             isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
             isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
             isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
-            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.years, "value", d.getFullYear()) &&
             isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
             isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]) && 
             isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
             isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
-            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
-  }          
+            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges) 
+        }          
 }
 
-var isItemPresent = function(array, key_name, item, isRange, ranges){  
-  //console.log("Array::"+array);
-  //console.log("=====================================");
-  //console.log("item:::"+item);
+var isItemPresent = function(array, key_name, item, isRange, ranges){ 
   if(array == undefined || array.length == 0) return true;
-  
   for (var array_item in array) {    
     if (isRange) {
       for (var each_item in ranges) {
         if (ranges[each_item].id == array[array_item][key_name]) {
-          //console.log("Age range id : " + array[array_item][key_name]);
-          //console.log("Range : " + JSON.stringify(ranges[each_item].range));
-          //console.log("Key : " + item + "/" + "Start : " + ranges[each_item].start + "/" + "End : " + ranges[each_item].end);
-          //console.log("Falling in rage : " + (item >= ranges[each_item].start && item <= ranges[each_item].end));
           return (item >= ranges[each_item].start && item <= ranges[each_item].end);
         }
       }
     } else {
-
-      if(item && array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
+      if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
     }      
   }
   
