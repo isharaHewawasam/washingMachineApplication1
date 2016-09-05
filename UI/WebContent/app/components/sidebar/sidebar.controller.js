@@ -139,6 +139,7 @@
   		 obj.selectedSKU=$rootScope.search.selectedSKU;
   		 obj.mfgStartDate=$rootScope.search.mfgStartDate;
   		 obj.mfgEndDate=$rootScope.search.mfgEndDate;
+  		 $scope.selectedMake();
   		 if ($rootScope.search.incomeRange) {
   		 	obj.incomeRange=JSON.parse($rootScope.search.incomeRange).id;
   		 }
