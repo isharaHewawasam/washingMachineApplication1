@@ -44,7 +44,7 @@
         <label for=>{{'password' | translate}}</label>
       
         <input type="password" id="inputPassword"  name="password" class="form-control" placeholder="Password" required ng-model="inputData.password">
-                                 <p ng-show="userForm.password.$touched && userForm.password.$invalid" class="help-block" translate="{{'password_required_msg'}}"></p> 
+                                 <p ng-show="userForm.password.$touched && userForm.password.$invalid && !errorMsg" class="help-block" translate="{{'password_required_msg'}}"></p> 
                               <br>
                
                               <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>

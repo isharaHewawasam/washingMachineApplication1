@@ -43,11 +43,12 @@
 	 				$window.localStorage.loginCredentails = angular.toJson($rootScope.credentials);
 	 			} else {
 	 				$scope.errorMsg = data;
+	 				$scope.inputData.password = "";
 	 			}
 			},function(data){
 				// on error
 				console.log("error in login :", data);
-	            $scope.errorMsg = 'Network issue, please try after some time.';
+	            $scope.errorMsg = 'Network issue, please try after some time.';           
 			});
 		}
 		
