@@ -43,13 +43,19 @@
         	var fileName = "Washing Machine Status Report";            
         	
             CSV += ReportTitle + '\r\n\n';
-           
+            
         	if (ShowLabel) {
                 var row = "";              
                
                 for (var index in report_data[0]) {                
                     row += index + ',';                       
-                }                 
+                }               
+                row = row.replace("make", "Make");
+                row = row.replace("model", "Model");
+                row = row.replace("totalLoad", "Total Loads");
+                row = row.replace("popularDay", "Most Popular Wash Day");
+                row = row.replace("popularTime", "Most Popular Time of Day");
+            	
                 CSV += row + '\r\n';                    
             }
         	
