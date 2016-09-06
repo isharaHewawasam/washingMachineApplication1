@@ -279,6 +279,7 @@
                 $scope.isNoDataFound = true;
             } else {
                 $rootScope.mkt_griddata_filter=data.data;
+                $rootScope.report_griddata=$rootScope.mkt_griddata_filter;
                 $rootScope.isOnFilter=true;
                 $rootScope.isOnLoad=false;
                 $scope.isReportFiltering = false;
@@ -777,6 +778,7 @@ $rootScope.isApplyFiterButton = true;
         HttpService.get(url).then(function(data){
             // on success
             $scope.mkt_griddata=data.data;
+            $rootScope.report_griddata = $scope.mkt_griddata;
             $rootScope.isOnLoad=true;
             $rootScope.isReportAvailableForDownload = true;
         },function(data){
