@@ -455,12 +455,15 @@ var doesRecordFallsInFilter = function(params, keys) {
   }
   
   if ( params.filter.isFilterCategoryByYear() ) {
+    var d=new Date(keys[params.key_maps.key.YEAR]);
+    var quater=Math.floor((d.getMonth() + 3) / 3);
+    var month=d.getMonth();
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
-            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
-            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
-            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
+            isItemPresent(params.payload.timescale.years, "value", d.getFullYear()) &&
+            isItemPresent(params.payload.timescale.quarters, "value", quater) &&
+            isItemPresent(params.payload.timescale.months, "value", month);
   }
   if(params.filter.isFilterCategoryByFamily()) {
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
@@ -474,7 +477,6 @@ var doesRecordFallsInFilter = function(params, keys) {
     var d=new Date(keys[params.key_maps.key.YEAR]);
     var quater=Math.floor((d.getMonth() + 3) / 3);
     var month=d.getMonth();
-
     return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
@@ -501,6 +503,7 @@ var isItemPresent = function(array, key_name, item, isRange, ranges){
       }
     } else {
       if(array[array_item][key_name].toString().toUpperCase() === item.toString().toUpperCase()) return true 
+      
     }      
   }
   
