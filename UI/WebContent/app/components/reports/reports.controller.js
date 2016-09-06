@@ -28,36 +28,40 @@
 		});
 		
       	 //  Download Washing Machine Status report
-        $scope.downloadReport=function(){
+        $scope.downloadReport=function(){        	
+        	var report_data = angular.copy($rootScope.report_griddata);        	
+        	
+        	for(var i = 0; i < report_data.length; i++) {
+        	    delete report_data[i]['sold'];
+        	    delete report_data[i]['sku'];
+        	    delete report_data[i]['state'];
+        	    delete report_data[i]['city'];  	   
+        	}        	
         	var ShowLabel = true;
         	var CSV = '';    
         	var ReportTitle = "                Washing Machine Status Report";   
-        	var fileName = "Report";            
+        	var fileName = "Washing Machine Status Report";            
         	
             CSV += ReportTitle + '\r\n\n';
            
         	if (ShowLabel) {
-                var row = "";                
+                var row = "";              
                
-                for (var index in $scope.r_griddata[0]) {                
+                for (var index in report_data[0]) {                
                     row += index + ',';                       
-                }
-                row = row.slice(5, -1);     
-                CSV += row + '\r\n';                
-            }           	
+                }                 
+                CSV += row + '\r\n';                    
+            }
         	
-            for (var i = 0; i < $scope.r_griddata.length; i++) {
+            for (var i = 0; i < report_data.length; i++) {
             	var row = "";    
-                for (var index in $scope.r_griddata[i]) {
-                	if(index == "sold"){
-                		continue
-                		}
-                    row += '"' + $scope.r_griddata[i][index] + '",';                        
-                }
-                row.slice(10, row.length - 1);                     
+                for (var index in report_data[i]) {         	 
+                    row += '"' + report_data[i][index] + '",';              
+                }               
+                row.slice(10, row.length - 1);                
                 CSV += row + '\r\n';
             }
-               
+           
             if (CSV == '') {        
                 alert("Invalid data");
                 return;
