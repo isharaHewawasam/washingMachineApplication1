@@ -36,7 +36,8 @@ exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, 
                   "statsKeyName": stats_key_name == null ? "avg" + SENSOR_NAME + "Usage" : stats_key_name,
                   "databaseType": "sensorDailyAggregate",
                   "filter": Filter,
-                  "key_maps": key_map
+                  "key_maps": key_map,
+                  "group_by_timescale":group_by_timescale
                };
   
 
