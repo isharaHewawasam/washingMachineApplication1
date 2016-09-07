@@ -18,12 +18,16 @@ $scope.roleKey=loginCredentails.roleKey;
 /**
 * Define the available language list in ui and change the language according to user requests
 */
-$scope.language.available = {"en": "English",
-"fr": "French"};
-$scope.language.selected = undefined;
+$scope.language.available = {"en": "English","fr": "French"};
+if ($rootScope.current_language == undefined) {
+	$scope.language.selected = undefined;
+} else {
+	$scope.language.selected = $rootScope.current_language;
+}
 
 $scope.changeLanguage = function() {
 $translate.use($scope.language.selected);
+$rootScope.current_language = $scope.language.selected;
 }
 
 /**

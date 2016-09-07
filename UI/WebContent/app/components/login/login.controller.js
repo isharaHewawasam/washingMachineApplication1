@@ -11,10 +11,15 @@
 		
 		$scope.language = {};
 		$scope.language.available= {"en": "English","fr": "French"};
-		$scope.language.selected = undefined;
+		if ($rootScope.current_language == undefined){
+			$scope.language.selected = undefined;
+		} else {
+			$scope.language.selected = $rootScope.current_language;
+		}
 
 		$scope.changeLanguage = function() {
 			$translate.use($scope.language.selected);
+			$rootScope.current_language = $scope.language.selected;
 		}
 		
 		$rootScope.credentials = {};

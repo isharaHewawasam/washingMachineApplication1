@@ -426,7 +426,7 @@ angular.module('angle').controller('AppController',
       // list of available languages
       available: {
         'en':       'English',
-        'es_AR':    'EspaÃ±ol'
+        'fr':    'French'
       },
       // display always the current ui language
       init: function () {
