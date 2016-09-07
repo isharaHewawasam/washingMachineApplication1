@@ -34,14 +34,12 @@ function getStats(params, callback) {
         
 	    	callback(err, null);
 	    } else {
-        
         if (params.filter.groupLevel() == 0) {
           callback(err, result);
           return;
         }
         
         if((params.payload === null) || (params.payload === undefined)){
-          
           for(var row in result.rows) {
             params.buffer.push(fillRecord(result.rows[row], params));
           }
@@ -51,8 +49,7 @@ function getStats(params, callback) {
                 addOrUpdateUsages(params, fillRecord(result.rows[row], params));
               }        
           }   
-        }      
-        
+        }        
         //console.log("1231321323");
         callback(err, params.buffer);
 	    }
@@ -436,9 +433,7 @@ var doesRecordFallsInFilter = function(params, keys) {
     }
   }
   
-  
   if ( params.filter.isFilterCategoryByProduct() ) {
-    //console.log(JSON.stringify(keys));
        return isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
               isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) &&
               isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU])
@@ -453,18 +448,39 @@ var doesRecordFallsInFilter = function(params, keys) {
               isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE])
     
   }
-  
+
   if ( params.filter.isFilterCategoryByYear() ) {
-    var d=new Date(keys[params.key_maps.key.YEAR]);
-    var quater=Math.floor((d.getMonth() + 3) / 3);
-    var month=d.getMonth();
-    return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
+    if(params.group_by_timescale==false){
+      return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
-            isItemPresent(params.payload.timescale.years, "value", d.getFullYear()) &&
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
+    }
+    else if(params.group_by_timescale){
+      var d=new Date(keys[params.key_maps.key.YEAR]);
+      var year=d.getFullYear();
+      var quater=Math.floor((d.getMonth() + 3) / 3);
+      var month=d.getMonth();
+      return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
+            isItemPresent(params.payload.timescale.years, "value", year) &&
             isItemPresent(params.payload.timescale.quarters, "value", quater) &&
             isItemPresent(params.payload.timescale.months, "value", month);
+    }
+    else{
+      return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE])  && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]);
+    }
+    
   }
+ 
   if(params.filter.isFilterCategoryByFamily()) {
     return  isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
@@ -473,11 +489,27 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
             isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
   }
+
   if(params.filter.isFilterCategoryMixed()) {
-    var d=new Date(keys[params.key_maps.key.YEAR]);
-    var quater=Math.floor((d.getMonth() + 3) / 3);
-    var month=d.getMonth();
-    return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
+    if(params.group_by_timescale==false){
+      return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
+            isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
+            isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
+            isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]) && 
+            isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
+            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges) 
+    }
+    else if(params.group_by_timescale){
+      var d=new Date(keys[params.key_maps.key.YEAR]);
+      var quater=Math.floor((d.getMonth() + 3) / 3);
+      var month=d.getMonth();
+      return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
             isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
             isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
             isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
@@ -488,8 +520,24 @@ var doesRecordFallsInFilter = function(params, keys) {
             isItemPresent(params.payload.timescale.months, "value", month) && 
             isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
             isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
+            isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges)
+    }
+    else{
+      return  ( params.payload.productAttrs.makes && isItemPresent(params.payload.productAttrs.makes, "value", keys[params.key_maps.key.MAKE]) ) && 
+            isItemPresent(params.payload.productAttrs.models, "value", keys[params.key_maps.key.MODEL]) && 
+            isItemPresent(params.payload.productAttrs.skus, "value", keys[params.key_maps.key.SKU]) &&
+            isItemPresent(params.payload.region.states, "value", keys[params.key_maps.key.STATE]) && 
+            isItemPresent(params.payload.region.cities, "value", keys[params.key_maps.key.CITY]) &&  
+            isItemPresent(params.payload.region.zip_codes, "value", keys[params.key_maps.key.ZIP_CODE]) &&
+            isItemPresent(params.payload.timescale.years, "value", keys[params.key_maps.key.YEAR]) &&
+            isItemPresent(params.payload.timescale.quarters, "value", keys[params.key_maps.key.QUARTER]) &&
+            isItemPresent(params.payload.timescale.months, "value", keys[params.key_maps.key.MONTH]) && 
+            isItemPresent(params.payload.age, "value", keys[params.key_maps.key.AGE], true, require("../demographics/data/age-ranges").ageRanges) &&
+            isItemPresent(params.payload.family_members_count, "value", keys[params.key_maps.key.MEMBERS]) &&
             isItemPresent(params.payload.income, "value", keys[params.key_maps.key.INCOME], true, require("../demographics/data/income-ranges").incomeRanges) 
-        }          
+    }
+    
+  }        
 }
 
 var isItemPresent = function(array, key_name, item, isRange, ranges){ 
