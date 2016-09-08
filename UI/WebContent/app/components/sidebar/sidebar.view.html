@@ -40,7 +40,7 @@
         <div class="divSpacePad1">
             <label translate="{{'products'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()" translate="{{'clear_filter'}}"></button>
+            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()" translate="{{'clear_filter'}}" ng-disabled="isApplyFiterButton"></button>
         </div>
         <div class="divSpacePad">
             <span translate="{{'search_by_product'}}"></span>
@@ -110,7 +110,7 @@
 
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()" translate="{{'apply_filter'}}"></button>
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()" translate="{{'apply_filter'}}" ng-disabled="isApplyFiterButton"></button>
 
     </div>
 
@@ -119,7 +119,7 @@
         <div class="divSpacePad1">
             <label translate="{{'demographics'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()" translate="{{'clear_filter'}}"></button>
+            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()" translate="{{'clear_filter'}}" ng-disabled="isApplyFiterButton"></button>
         </div>
 
         <div  class="divSpacePad">
@@ -149,7 +149,7 @@
             </select>
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()" translate="{{'apply_filter'}}"></button>
+        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()" translate="{{'apply_filter'}}" ng-disabled="isApplyFiterButton"></button>
     </div>
     <!--reports-->
 
