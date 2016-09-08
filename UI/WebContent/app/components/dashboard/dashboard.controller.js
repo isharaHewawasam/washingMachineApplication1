@@ -1,21 +1,21 @@
 (function() {
 	'use strict';
-	
+
 	angular
 	    .module('angle')
 	    .controller('DashboardController', DashboardController);
-	
+
 	DashboardController.$inject = ['$scope', '$state','$rootScope','$window', 'iot.config.ApiClient', 'HttpService'];
-	
+
 	function DashboardController($scope, $state,$rootScope,$window, configApiClient, HttpService) {
 		//Clear filter on dashboard load
         $rootScope.search={};
         $rootScope.filterIcons=[];
         $rootScope.isReportAvailableForDownload = false;
 
-        
+
         $scope.loader = {};
-        
+
         var monthNames = [
           "January", "February", "March",
           "April", "May", "June", "July",
@@ -328,7 +328,7 @@
              $rootScope.mapProgress = false;
         });
     }
-	
+
 	//For Maximized map
     $scope.showMaxMap = function () {
         $scope.removechart('map-maxcontainer');
@@ -519,6 +519,7 @@ $rootScope.isApplyFiterButton = true;
         $scope.isNoDataFound = false;
         $scope.isError =  false;
         $scope.isLoadingFilters = true;
+				$scope.isLoadingFilters_Eng = true;
         $scope.msg1 = "Applying Filters... Please wait";
         $scope.msg2 = "No Data Found";
         $scope.msg3 =  "Network Issue";
@@ -556,6 +557,7 @@ $rootScope.isApplyFiterButton = true;
             	$scope.isNoDataFoundEng = false;
                 $scope.eng_griddata=data;
             }
+							$scope.isLoadingFilters_Eng = false;
         },function(data){
             // on error
             $scope.isLoadingFilters = false;
@@ -563,7 +565,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.msg = $scope.msg3;
             $scope.isNoDataFoundEng = false;
         });
-          
+
     };
 
     function usageLoad() {
@@ -575,7 +577,7 @@ $rootScope.isApplyFiterButton = true;
         $scope.msg2 = "No Data Found";
         $scope.msg3 =  "Network Issue";
         $scope.msg = $scope.msg1;
-    	
+
     	var url = configApiClient.baseUrl +  'usage';
         var param = $scope.usagedata;
         HttpService.post(url, param).then(function(data){
@@ -594,9 +596,9 @@ $rootScope.isApplyFiterButton = true;
             $scope.msg = $scope.msg3;
         });
     }
-    
+
     usageLoad();
-    
+
     function sensorsDataLoad() {
         $scope.eng_griddata=[];
         $scope.isNoDataFoundEng = false;
@@ -606,7 +608,7 @@ $rootScope.isApplyFiterButton = true;
         $scope.msg2 = "No Data Found";
         $scope.msg3 =  "Network Issue";
         $scope.msg = $scope.msg1;
-    	
+
     	var url = configApiClient.baseUrl + 'sensors/data';
         var param = null;
         HttpService.post(url, param).then(function(data){
@@ -625,7 +627,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.msg = $scope.msg3;
             $scope.isNoDataFoundEng = false;
         });
-    	
+
     }
     sensorsDataLoad();
 
@@ -675,7 +677,7 @@ $rootScope.isApplyFiterButton = true;
             $scope.timescale.months=undefined;
             $scope.months=quarterMonthMap[$scope.timescale.quarters];
         }
-        
+
         function loadStates() {
         	$scope.loader.isStateBox = true;
 	        var url = configApiClient.baseUrl + 'config/states';
@@ -695,7 +697,7 @@ $rootScope.isApplyFiterButton = true;
 	        	$scope.loader.isStateBox = false;
 	        });
         }
-        
+
         loadStates();
 
         function loadYear() {
@@ -710,10 +712,10 @@ $rootScope.isApplyFiterButton = true;
 	        	$scope.loader.isYearBox = false;
 	        });
         }
-        
+
         loadYear();
-        
-    
+
+
      $scope.cities;
      $scope.selectCities=function(){
     	 $scope.loader.isCityBox = true;
@@ -721,7 +723,7 @@ $rootScope.isApplyFiterButton = true;
          $scope.region.cities=undefined;
          $scope.region.zip_codes=undefined;
          $scope.zips=[];
-         
+
          var url = configApiClient.baseUrl + "config/states/cities?state_names="+$scope.region.states;
          HttpService.get(url).then(function(data){
              // on success
@@ -768,11 +770,11 @@ $rootScope.isApplyFiterButton = true;
         $("body").on("click","#gridCloseImg",function(){
             $("#gridMax").empty();
             $("#gridMax").addClass("hidden");
-             
+
            //   $("#tbody").height(355);
 
         });
-        
+
         ///////////////////////Report on load
         var url = configApiClient.baseUrl +  "usage";
         HttpService.get(url).then(function(data){
@@ -786,7 +788,7 @@ $rootScope.isApplyFiterButton = true;
         });
 
 
-		
-		
+
+
 	}
 })();
