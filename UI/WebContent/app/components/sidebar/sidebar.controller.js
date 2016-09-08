@@ -223,13 +223,27 @@
       		$rootScope.filterIcons = tempArr;
       	}
       }
-
+      /**
+       * validate selected SKU values
+       */
+     
+      $scope.checkExistence = function() { 
+    	  $scope.existenceSKUs = false; 
+    	    var i = null;
+    	    for (i = 0; $scope.SKUs.length > i; i += 1) {
+    	        if ($rootScope.search.selectedSKU === $scope.SKUs[i].sku) {   	
+    	        	$scope.existenceSKUs = true;    	        	
+    	        }
+    	    }    	   
+    	};
+    	
       /**
        * create side bar filter seclection array
        */
      $scope.createIconArray=function(){
           $scope.someArr=[];
-
+          $scope.checkExistence();
+          
           if($rootScope.search.selectedMake && $rootScope.search.selectedMake.length != 0)
               $scope.someArr.push(
                   {
@@ -244,15 +258,15 @@
                       value:$rootScope.search.selectedModel,
                       key:"model"
                   }
-              );
-
-          if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0)
+              );        
+        	
+          if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0 && $scope.existenceSKUs){       
               $scope.someArr.push(
                   {
                       value:$rootScope.search.selectedSKU,
                       key:"sku"
                   });
-
+          }
           if($rootScope.search.mfgStartDate && $rootScope.search.mfgStartDate.length != 0)
           	$scope.someArr.push(
           			{
@@ -332,7 +346,7 @@
             	var url = configApiClient.baseUrl + 'config/models/skus?model_names='+$rootScope.search.selectedModel;
             	HttpService.get(url).then(function(data){
   	  			// on success
-          	  	$scope.SKUs=data[$rootScope.search.selectedModel];
+          	  	$scope.SKUs=data[$rootScope.search.selectedModel];         
           	  	$scope.states = $scope.SKUs;
           	  	$scope.loader.isSkuBox = false;
           	    $scope.isDisabled    = false;
@@ -347,10 +361,13 @@
          * This is for side bar product filter
          */
            $scope.applyProductFilter=function(){
+        	 $scope.checkExistence();
           	 var obj={};
            	obj.selectedMake=$rootScope.search.selectedMake;
          	 	obj.selectedModel=$rootScope.search.selectedModel;
-         	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+         	 	if($scope.existenceSKUs){         	 		
+         	 		obj.selectedSKU=$rootScope.search.selectedSKU;         	 		
+         	 	}          	 	
          	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
          	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
        		if ($rootScope.search.incomeRange) {
@@ -376,11 +393,11 @@
            /**
             * This is for side bar demographics filter
             */
-           $scope.applyDemographicsFilter=function(){
+           $scope.applyDemographicsFilter=function(){        	
           	 var obj={};
-           	obj.selectedMake=$rootScope.search.selectedMake;
-         	 	obj.selectedModel=$rootScope.search.selectedModel;
-         	 	obj.selectedSKU=$rootScope.search.selectedSKU;
+           	    obj.selectedMake=$rootScope.search.selectedMake;
+         	 	obj.selectedModel=$rootScope.search.selectedModel;         	 	        	 		
+         	 	obj.selectedSKU=$rootScope.search.selectedSKU;         	 	
          	 	obj.mfgStartDate=$rootScope.search.mfgStartDate;
          	 	obj.mfgEndDate=$rootScope.search.mfgEndDate;
        		if ($rootScope.search.incomeRange) {
