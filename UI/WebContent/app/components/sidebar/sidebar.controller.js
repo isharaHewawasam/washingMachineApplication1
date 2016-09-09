@@ -242,7 +242,10 @@
        */
      $scope.createIconArray=function(){
           $scope.someArr=[];
-          $scope.checkExistence();
+          
+          if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0) {
+        	  $scope.checkExistence();
+          }
           
           if($rootScope.search.selectedMake && $rootScope.search.selectedMake.length != 0)
               $scope.someArr.push(
@@ -361,7 +364,9 @@
          * This is for side bar product filter
          */
            $scope.applyProductFilter=function(){
-        	 $scope.checkExistence();
+        	 if($rootScope.search.selectedSKU && $rootScope.search.selectedSKU.length != 0) {
+        		 $scope.checkExistence();
+        	 }
           	 var obj={};
            	obj.selectedMake=$rootScope.search.selectedMake;
          	 	obj.selectedModel=$rootScope.search.selectedModel;
