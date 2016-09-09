@@ -454,6 +454,13 @@ angular.module('angle').controller('AppController',
       $event.stopPropagation();
     };
 
+	$rootScope.displayTermsAndConditions = function(){
+    	$rootScope.isDisableSideBarForFooter = true;
+    };
+    
+    $rootScope.closeTermsAndConditions = function(){
+    	$rootScope.isDisableSideBarForFooter = false;
+    }
 }]);
 
 
