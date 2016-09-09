@@ -1962,25 +1962,26 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#hiddenDivMap #mapMaxImg").addClass("hidden");
         $("#hiddenDivMap #mapMinImg").removeClass("hidden");
         $("#mapNormal1").removeClass("hidden");
+    //    $("#mapNormal1").height(660);
         //$scope.showMap();
         $('div#map-maxcontainer').css({'width': '100%'});
         //$('div#map-maxcontainer').css({'height': '100%'});
         $("#map-maxcontainer").height(660);
         //renderMap("#map-maxcontainer",salesDataSet);
-        
+
         var maxMap = $timeout(function() {
         	renderMap("map-maxcontainer",salesDataSet);
         	$scope.zoomMap("map-maxcontainer");
         }, 100); // sets a latency Threshold
-        
+
         $scope.zoomMap('map-maxcontainer');
     	//$scope.showMaxMap('map-maxcontainer');
         //$("#map-maxcontainer").height(660);
-        
-        
+
+
       //For notifications help icon in maximized views
         $('[data-toggle="popover"]').popover()
-        
+
     $("#hiddenDivMap").removeClass("hidden");
 
     }
@@ -1990,7 +1991,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
         $("#hiddenDivMap").addClass("hidden");
 		//$scope.zoomMap('map-container');
 
-          $("#mapNormal1").height(707);
+          $("#mapNormal1").height(660);
 
 
 
@@ -2122,11 +2123,11 @@ function renderMap(divId, salesData){
 		    },
 
 		    series: seriesData
-		
+
 	});
-	
+
 	return;
-	
+
 	/*
     $('#map-container').highcharts('Map', {
       chart: {
@@ -2191,8 +2192,8 @@ function renderMap(divId, salesData){
 	    series: seriesData
 
 	});*/
-    
-    
+
+
 	    /*coded For Maximized map*/
 	/*    $('#map-maxcontainer').highcharts('Map', {
 	         chart: {
@@ -2202,7 +2203,7 @@ function renderMap(divId, salesData){
 	               spacingBottom   : 2,
 	               events: {
 	                         redraw: function() {
-	
+
 	                               var chart = this;
 	                               var series = this.series;
 	                               if(chart.series[2]){
@@ -2216,7 +2217,7 @@ function renderMap(divId, salesData){
 	                               }
 	                         },
 	                 load: function () {
-	
+
 	                               var chart = this;
 	                               if(chart.series[2]){
 	                                     var points = chart.series[2].points;
@@ -2238,7 +2239,7 @@ function renderMap(divId, salesData){
 	           title: {
 	               text: ''
 	           },
-	
+
 	           mapNavigation: {
 	               enabled: true,
 	               buttonOptions: {
@@ -2246,16 +2247,16 @@ function renderMap(divId, salesData){
 	                   //x : -5
 	               }
 	           },
-	
+
 	           plotOptions: {
 	               mapbubble:{
 	                   minSize:0,
 	                   maxSize:0
 	               }
 	           },
-	
+
 	           series: seriesData
-	
+
 	       });
     */
 }
@@ -3032,7 +3033,7 @@ angular.module('angle').controller('myController', ['$scope', '$rootScope', '$wi
 			$scope.selectedSales=""+0;
 			//$scope.progress = false;
 		}
-		
+
 		if($scope.selectedSales != '' && $scope.selectedSales != null && $scope.selectedSales != undefined){
 			 $scope.chartTypes=$scope.salesList[$scope.selectedSales].chartTypes;
 			 $scope.selectedChart=$scope.chartTypes[0];
@@ -3246,7 +3247,7 @@ $scope.plotPieChart=function(divID){
 			var param;
 			if ($scope.usagedata) {
 				param = $scope.usagedata;
-         
+
 	        switch($scope.usagedata.timescale.relative.unit) {
 	          case "1":
 	            break;
@@ -3324,7 +3325,7 @@ $scope.plotPieChart=function(divID){
 
              $("#hiddenDiv #maximize").addClass("hidden");
              $("#hiddenDiv #close").removeClass("hidden");
-             $("#chartParent3").removeClass("hidden");		
+             $("#chartParent3").removeClass("hidden");
 
            //   $("#maxpiecontainer").height(500);
 
@@ -3359,10 +3360,10 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #close").removeClass("hidden");
 
              $("#maxcontainer").height(500);
-             
+
            //For notifications help icon in maximized views
      		 $('[data-toggle="popover"]').popover()
-             
+
              renderLineChart("maxcontainer", $scope.timeScales, $scope.maxLineChartData, 'Sales Volumes', 'Time Scale', 'Units Sold');
 
 
@@ -3410,10 +3411,10 @@ $scope.plotPieChart=function(divID){
  /*            $scope.plotChartFunction("hiddenDiv #container");*/
 
              $("#maxengcontainer").height(500);
-             
+
            //For notifications help icon in maximized views
      		 $('[data-toggle="popover"]').popover()
-     		 
+
              renderLineChart("maxengcontainer",$scope.maxLineChartEngTimeScales, $scope.maxLineChartEngData, $scope.sensortype, 'Days', $scope.Unit);
       }
 
@@ -3430,11 +3431,11 @@ $scope.plotPieChart=function(divID){
              $("#chartParent1").removeClass("hidden");
 
              $("#hiddenDiv").removeClass("hidden")
-             
+
            //give new IDs for identification
            chartParent.find('#first-chart-select').attr({id: "filter1", name: "filter1"});
            chartParent.find('#second-chart-select').attr({id: "filter2", name: "filter2"});
-           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});		
+           chartParent.find('#third-chart-select').attr({id: "filter3", name: "filter3"});
 
            $("#hiddenDiv").empty();
            $("#hiddenDiv").append(chartParent);
@@ -3458,10 +3459,10 @@ $scope.plotPieChart=function(divID){
           $("#hiddenDiv #close").removeClass("hidden");
  //         $scope.plotPieChart("#pie");
             $("#maxpiecontainer").height(500);
-            
+
           //For notifications help icon in maximized views
     		 $('[data-toggle="popover"]').popover()
-    		 
+
              createPieChart("maxpiecontainer", $scope.maxPieChartData);
           }
 
@@ -3509,10 +3510,10 @@ $scope.plotPieChart=function(divID){
              $("#hiddenDiv #close").removeClass("hidden");
           // $scope.plotBarChart("hiddenDiv #bar");
              $("#maxbarcontainer").height(500);
-             
+
            //For notifications help icon in maximized views
      		 $('[data-toggle="popover"]').popover()
-     		 
+
              /*plotMaxBarChart("maxbarcontainer");*/
              createBarChart("maxbarcontainer", $scope.maxBarChartData, $scope.maxBarDes);
           }
@@ -4038,11 +4039,11 @@ angular.module('angle').controller('MyviewController', ['$scope', '$window','$st
 		var rolename = loginCredentails.Role;
 
 	    if(rolename == "Engineering Manager"){
-	        $('#dashboardNav a').attr('href','#/app/engmanagerview');	       
+	        $('#dashboardNav a').attr('href','#/app/engmanagerview');
 	    }
 	    else{
-	      $('#dashboardNav a').attr('href','#/app/singleview');	    	
+	      $('#dashboardNav a').attr('href','#/app/singleview');
 	    }
-	    
+
 	  }
 }]);
