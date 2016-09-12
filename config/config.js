@@ -13,7 +13,7 @@ module.exports = {
 	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
 	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
 	  "dbNameOld": "erpsalesdata",
-    "dbName": "erpsaleswithstatecode"
+    "dbName": "erpsales_miele_v2"
    },
    "WashDailyAggregateDatabase": {
      "provider": "Cloudant",
@@ -22,7 +22,7 @@ module.exports = {
 	   "user": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix",
 	   "Password": "e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4",
 	   "url": "https://b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix:e0cddb23f5b90a6f590053fb3504e18dd3d6081354d53b6ec0a1c9afcc1054d4@b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
-	   "dbName":"devicedata_v1",
+	   "dbName":"devicedata_miele_v3",
 	   "dbName_1000": "changeddevicedata1000",
      "dbName_1lac": "devicedatanew",
      "dbName_1k": "newupdate1000data"
