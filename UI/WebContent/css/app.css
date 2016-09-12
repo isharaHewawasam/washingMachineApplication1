@@ -7423,7 +7423,7 @@ body {
   /* fixes chrome jump */
   margin-bottom: 0;
   border-radius: 0;
-  background-color: #0A427D;
+  background-color: #e60000;
   z-index: 1050;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
@@ -7447,7 +7447,7 @@ body {
   position: relative;
 }
 .topnavbar .navbar-header {
-  background-color: #0A427D;
+  background-color: #e60000;
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23b7e5', endColorstr='#ff51c6ea', GradientType=1);
 }
@@ -7523,7 +7523,7 @@ body {
 }
 .nav-wrapper {
   padding: 0 15px;
-  background-color: #0A427D;
+  background-color: #e60000;
   height: 100%; vertical-align: middle;
 }
 
