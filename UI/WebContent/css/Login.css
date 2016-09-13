@@ -42,10 +42,12 @@ h2 {
 	background: #be3838;
 	color: #ffffff;
 	float: right;
+	border-color:#be3838;
 }
 
 .btn:hover {
-	color: #ffffff;
+	background: #be3838;
+	border-color:#be3838;
 }
 
 .carousel-inner>.item>a>img,.carousel-inner>.item>img,.img-responsive,.thumbnail a>img,.thumbnail>img
