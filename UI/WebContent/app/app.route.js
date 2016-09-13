@@ -61,7 +61,7 @@
 		        controller: 'DashboardController',
 		      //  templateUrl: helper.basepath('singleview.html'),
 						templateUrl: 'app/components/dashboard/dashboard_mktmgr.view.html',
-		        data:{title: 'IoT for Electronics - Marketing Manager Dashboard'}
+		        data:{title: 'Connected Washing Machines'}
 		    })
 
 		    .state('app.engmanagerview', {
@@ -70,7 +70,7 @@
 		        controller: 'DashboardController',
 		        //templateUrl: helper.basepath('engmanagerview.html'),
 						templateUrl: 'app/components/dashboard/dashboard_engmgr.view.html',
-		        data:{title: 'IoT for Electronics - Engineering Manager Dashboard'}
+		        data:{title: 'Connected Washing Machines'}
 		    })
 		    .state('app.reports', {
 		        url: '/reports',
