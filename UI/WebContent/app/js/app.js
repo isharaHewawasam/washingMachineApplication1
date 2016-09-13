@@ -2421,7 +2421,8 @@ function renderPieChart(divId, insightsData, chartTitle,y){
             x: 15
         },
         tooltip: {
-            pointFormat: '<b>{point.percentage:.1f}%</b>'
+            pointFormat: '<b>{point.percentage:.1f}%</b>',
+			backgroundColor: '#F2F2F2'
         },
         legend: {
             align: 'left',
@@ -2486,6 +2487,9 @@ function renderLineChart(divId, xAxisCategories, seriesData, chartTitle, xAxisTi
                 fontWeight: 'normal',
                 symbolRadius: 4
             }
+        },
+		 tooltip: {
+        	backgroundColor: '#F2F2F2'
         },
 	    xAxis: {
             title: {

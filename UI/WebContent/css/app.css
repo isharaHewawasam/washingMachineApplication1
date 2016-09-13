@@ -18,7 +18,7 @@ html {
 body {
   margin: 0;
 }
-tr:nth-child(even) {background: #E7EEF6}
+tr:nth-child(even) {background: #F6E7E7}
 #dropdown{
           color: blue;
           border:0;
