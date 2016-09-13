@@ -11920,7 +11920,7 @@ body {
 .map-somediv {
 	position: absolute;
 	width:78% !important;
-	height:80% !important;
+	height:709px; !important;
 	top: 12%;
 	left: 10%;
 	background-color: #ffffff;
@@ -12265,7 +12265,7 @@ display : block;
 	padding-top: 4px;
 }
 
-/* Commented out to fixed responsibe UI 
+/* Commented out to fixed responsibe UI
 .col-lg-2 {
     width: 30%;
     float: left;
@@ -12406,7 +12406,7 @@ display : block;
     padding:30px;
     transform: translate(-100%, 100%);
     vertical-align: middle;
-} 
+}
 .modal-content {
     background-color: #fefefe;
     margin: 0 auto;
@@ -12425,7 +12425,7 @@ display : block;
    } */
 .modal-body {padding: 2px 16px;
 	height:400px
-} 
+}
 .modal-vertical-centered {
   transform: translate(0, 50%) /* important; */
   -ms-transform: translate(0, 50%) /* important; IE 9 */
