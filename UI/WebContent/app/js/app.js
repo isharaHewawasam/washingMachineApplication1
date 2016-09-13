@@ -2414,7 +2414,7 @@ function renderPieChart(divId, insightsData, chartTitle,y){
             useHTML: true,
             align: 'left',
             style: {
-                color: '#0099cc'
+                color: '#be3838'
             },
             floating: true,
             y: y,

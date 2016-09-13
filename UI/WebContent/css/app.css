@@ -7681,7 +7681,7 @@ body {
 .sidebar {
   height: 100%;
   padding-bottom: 20px;
-  background-color: #141414;
+  background-color: #29211f;
   overflow-x: hidden;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -11144,6 +11144,7 @@ body {
 .mv-lg {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
+  color: #be3838;
 }
 .mh-lg {
   margin-left: 15px !important;
@@ -12288,7 +12289,7 @@ display : block;
 	padding : 6px;
 	max-width: 500px;
 	margin-left: 22px !important padding-left:0px;
-	color: #5d9cec;
+	color: #be3838;
 	font-size: 17px;
 }
 

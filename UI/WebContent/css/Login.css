@@ -26,7 +26,7 @@ h2 {
 	color: inherit;
 	display: inline-block;
 	width: 100%;
-	background-color: #0A427D
+	background-color: #e60000;
 }
 
 .help-block {
@@ -39,7 +39,7 @@ h2 {
 
 .btn {
 	border-radius: 0;
-	background: #0A427D;
+	background: #be3838;
 	color: #ffffff;
 	float: right;
 }

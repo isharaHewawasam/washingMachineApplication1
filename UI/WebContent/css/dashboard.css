@@ -40,7 +40,7 @@
 
 #applyFilter {
 	min-width: 114px;
-	background-color: #4C74E2;
+	background-color: #be3838;
 	height: 34px;
 	font-family: Roboto;
 	font-size: 15px;
@@ -65,11 +65,11 @@
 
 #formarray {
 	height: 26px;
-	background: #91aed3;
+	background: #be3838;
 	padding: 4px;
 	margin: 1px;
 	display: inline-block;
-	color: fff;
+	color: #fff;
 	border-radius: 2px !important;
 	font-size: 11pt;
 }

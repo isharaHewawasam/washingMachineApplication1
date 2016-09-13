@@ -10,13 +10,13 @@
      }
 
 	.leftbar-icon:hover {
-    	border: 2px solid #4A88C9;
+    	border: 2px solid #be3838;
         color: #fff;
     }
 
     .sidebarItemActive {
-         background-color: #4A88C9;
-        color: #fff;
+         background-color: #4a4747;
+        color: #ff3f15;
     }
 
 .sidebarItemActive::after {    display: block;
