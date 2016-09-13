@@ -17,11 +17,11 @@ module.exports.getAuthentication = function(req, res, next) {
 		if(username=="mkt_manager@bluemix.com"||username=="eng_manager@bluemix.com"){
 			if(password=="test123"){
 				if(username=="mkt_manager@bluemix.com"){
-					var array={"name":"John Smith","username":username,"role":"mkt_manager","rolename":"Marketing Manager","response":"Success"}
+					var array={"name":"Hans Schmidt","username":username,"role":"mkt_manager","rolename":"Marketing Manager","response":"Success"}
 					helper.sendResponse(res, err, array);
 				}
 				else if(username=="eng_manager@bluemix.com"){
-					var array={"name":"John Smith","username":username,"role":"eng_manager","rolename":"Engineering Manager","response":"Success"}
+					var array={"name":"Hans Schmidt","username":username,"role":"eng_manager","rolename":"Engineering Manager","response":"Success"}
 					helper.sendResponse(res, err, array);
 				}
 				

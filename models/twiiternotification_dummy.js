@@ -1,10 +1,10 @@
 module.exports.twitternotifications = [
                          {      
-                               "name":"Model3",
+                               "name":"WDA111",
                                "full_count":160,
                                "twitter_count":120,              	
-                        	 "Model": "Model3",
-                        	 "Make": "Make1",
+                        	 "Model": "WDA111",
+                        	 "Make": "Miele",
                                "Description":"Twitter sentiments",
                                "Value":70,
                                "Cutoff":"02/06/2016-10/07/2016",
@@ -21,11 +21,11 @@ module.exports.twitternotifications = [
 
 module.exports.twitternotificationsspike = [
                          {      
-                               "name":"Model3",
+                               "name":"WDA111",
                                "current_connected_machines":80,
                                "previous_connected_machines":50,               
-                               "Model": "Model3",
-                               "Make": "Make1",
+                               "Model": "WDA111",
+                               "Make": "Miele",
                                "Description":"Washing machine connectivity status",
                                "Value":10,
                                "Cutoff":"02/06/2016-10/07/2016",
@@ -40,11 +40,11 @@ module.exports.twitternotificationsspike = [
 
 module.exports.twitternotificationsspikeerror = [
                          {      
-                               "name":"Model3",
+                               "name":"WDA111",
                                "current_error_count":80,
                                "previous_error_count":50,               
-                               "Model": "Model3",
-                               "Make": "Make1",
+                               "Model": "WDA111",
+                               "Make": "Miele",
                                "Description":"Washing machine connectivity status",
                                "Value":10,
                                "Cutoff":"02/06/2016-10/07/2016",
@@ -60,23 +60,23 @@ module.exports.twitternotificationsspikeerror = [
 
 module.exports.twitternotificationsspikeerrorbymake = [
                          {      
-                               "make":"Make1",
-                               "model":"Model2",
+                               "make":"Miele",
+                               "model":"WDA101",
                                "reason":"Not happy with the programs",
                                "current_error_count":30,
                                "previous_error_count":25,
                                "error_type":"Sensor"
                          },
                          {      
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "reason":"Errors",
                                "current_error_count":70,
                                "previous_error_count":55,
                                "error_type":"Software"
                          },{      
-                               "make":"Make3",
-                               "model":"Model8",
+                               "make":"Miele",
+                               "model":"W3048",
                                "reason":"Errors",
                                "current_error_count":60,
                                "previous_error_count":45,
@@ -91,8 +91,8 @@ module.exports.twitternotificationsspikeerrorbymake = [
 module.exports.twitterinnerpageTwitterinsights = [
                          {      
                                "tweetsid":1,              
-                               "make":"Make1",
-                               "model":"Model3",
+                               "make":"Miele",
+                               "model":"WDA111",
                                "tweets":50,
                                "likes":190,
                                "dislikes":18,
@@ -101,8 +101,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                          {        
                                "tweetsid":2,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":40,
                                "likes":160,
                                "dislikes":12,
@@ -111,8 +111,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                          {        
                                "tweetsid":3,             
-                               "make":"Make3",
-                               "model":"Model8",
+                               "make":"Miele",
+                               "model":"W3048",
                                "tweets":50,
                                "likes":190,
                                "dislikes":150,
@@ -121,8 +121,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                          {        
                                "tweetsid":4,             
-                               "make":"Make3",
-                               "model":"Model7",
+                               "make":"Miele",
+                               "model":"W5748",
                                "tweets":60,
                                "likes":200,
                                "dislikes":10,
@@ -131,8 +131,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                           {        
                                "tweetsid":5,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":45,
                                "likes":127,
                                "dislikes":5,
@@ -141,8 +141,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                          {       
                                "tweetsid":6,              
-                               "make":"Make1",
-                               "model":"Model2",
+                               "make":"Miele",
+                               "model":"WDA101",
                                "tweets":25,
                                "likes":50,
                                "dislikes":15,
@@ -151,8 +151,8 @@ module.exports.twitterinnerpageTwitterinsights = [
                          },
                          {        
                                "tweetsid":7,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":90,
                                "likes":200,
                                "dislikes":20,
@@ -164,8 +164,8 @@ module.exports.twitterinnerpageTwitterinsights = [
 module.exports.twitterinnerpageTwitterinsightsfiveday=[
                                {      
                                "tweetsid":1,              
-                               "make":"Make1",
-                               "model":"Model3",
+                               "make":"Miele",
+                               "model":"WDA111",
                                "tweets":50,
                                "likes":190,
                                "dislikes":18,
@@ -174,8 +174,8 @@ module.exports.twitterinnerpageTwitterinsightsfiveday=[
                          },
                          {        
                                "tweetsid":2,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":40,
                                "likes":160,
                                "dislikes":12,
@@ -184,8 +184,8 @@ module.exports.twitterinnerpageTwitterinsightsfiveday=[
                          },
                          {        
                                "tweetsid":3,             
-                               "make":"Make3",
-                               "model":"Model8",
+                               "make":"Miele",
+                               "model":"W3048",
                                "tweets":50,
                                "likes":190,
                                "dislikes":150,
@@ -197,8 +197,8 @@ module.exports.twitterinnerpageTwitterinsightsfiveday=[
 module.exports.twitterinnerpageTwitterinsightstenday=[
                                {      
                                "tweetsid":1,              
-                               "make":"Make1",
-                               "model":"Model3",
+                               "make":"Miele",
+                               "model":"WDA111",
                                "tweets":50,
                                "likes":190,
                                "dislikes":18,
@@ -207,8 +207,8 @@ module.exports.twitterinnerpageTwitterinsightstenday=[
                          },
                          {        
                                "tweetsid":2,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":40,
                                "likes":160,
                                "dislikes":12,
@@ -217,8 +217,8 @@ module.exports.twitterinnerpageTwitterinsightstenday=[
                          },
                          {        
                                "tweetsid":3,             
-                               "make":"Make3",
-                               "model":"Model8",
+                               "make":"Miele",
+                               "model":"W3048",
                                "tweets":50,
                                "likes":190,
                                "dislikes":150,
@@ -227,8 +227,8 @@ module.exports.twitterinnerpageTwitterinsightstenday=[
                          },
                          {        
                                "tweetsid":4,             
-                               "make":"Make3",
-                               "model":"Model7",
+                               "make":"Miele",
+                               "model":"W5748",
                                "tweets":60,
                                "likes":200,
                                "dislikes":10,
@@ -237,8 +237,8 @@ module.exports.twitterinnerpageTwitterinsightstenday=[
                          },
                           {        
                                "tweetsid":5,             
-                               "make":"Make2",
-                               "model":"Model5",
+                               "make":"Miele",
+                               "model":"WMB120",
                                "tweets":45,
                                "likes":127,
                                "dislikes":5,
@@ -247,8 +247,8 @@ module.exports.twitterinnerpageTwitterinsightstenday=[
                          },
                          {       
                                "tweetsid":6,              
-                               "make":"Make1",
-                               "model":"Model2",
+                               "make":"Miele",
+                               "model":"WDA101",
                                "tweets":25,
                                "likes":50,
                                "dislikes":15,
