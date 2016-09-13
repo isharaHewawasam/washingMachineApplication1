@@ -15,12 +15,11 @@ exports.getMostFaultModels = function(callback) {
     	console.log(err);
     	callback(err, null)
     } else {  
-   	
+   	console.log(result);
 	  var all_models = {'models': []};
-	  var modelCount_array = [result.counts.Model.Model1, result.counts.Model.Model2, result.counts.Model.Model3,
-	  			 result.counts.Model.Model4, result.counts.Model.Model5,result.counts.Model.Model6,
-	  			result.counts.Model.Model7,result.counts.Model.Model8,result.counts.Model.Model9];
-    console.log(result);
+	  var modelCount_array = [result.counts.Model.WDA101, result.counts.Model.WDA111, result.counts.Model.WDA211,
+	  			 result.counts.Model.WMB120, result.counts.Model.WKB120,result.counts.Model.W5748,
+	  			result.counts.Model.W3048,result.counts.Model.W2819iRE];
 	  	function predicatBy(prop){
    			return function(a,b){
       			if( a[prop] > b[prop]){
@@ -40,7 +39,7 @@ exports.getMostFaultModels = function(callback) {
 	  }	
 
 	  var sortedArray=all_models.models.sort(predicatBy("no_of_faults"));
-	  var leastDataArray=[sortedArray[8],sortedArray[7],sortedArray[6]];
+	  var leastDataArray=[sortedArray[7],sortedArray[6],sortedArray[5]];
 
       callback(err, leastDataArray);
     }
@@ -62,9 +61,9 @@ exports.getLeastFaultModels = function(callback) {
 	  
 	  
 
-	  var modelCount_array = [result.counts.Model.Model1, result.counts.Model.Model2, result.counts.Model.Model3,
-	  			 result.counts.Model.Model4, result.counts.Model.Model5,result.counts.Model.Model6,
-	  			result.counts.Model.Model7,result.counts.Model.Model8,result.counts.Model.Model9];
+	  var modelCount_array = [result.counts.Model.WDA101, result.counts.Model.WDA111, result.counts.Model.WDA211,
+           result.counts.Model.WMB120, result.counts.Model.WKB120,result.counts.Model.W5748,
+          result.counts.Model.W3048,result.counts.Model.W2819iRE];
 	  
     console.log(result);
 	  function predicatBy(prop){
