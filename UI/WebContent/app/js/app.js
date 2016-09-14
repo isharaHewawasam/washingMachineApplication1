@@ -3560,7 +3560,7 @@ function createPieChart(divID, seriesData) {
             }
         },
         tooltip: {
-            pointFormat:' percentage: <b> {point.percentage:.1f}%</b> ,<br> count:  <b>{point.y}</b>'
+            pointFormat:' <b style="color:black;">percentage:</b> <b style="color:#ab1818;"> {point.percentage:.1f}%</b> ,<br> <b style="color:black;">count: </b> <b style="color:#ab1818;">{point.y}</b>'
         },
         exporting: {
 	    	enabled: false
@@ -3572,7 +3572,7 @@ function createPieChart(divID, seriesData) {
             innerSize: '80%',
             showInLegend:true,
             dataLabels: {
-                enabled: false
+            enabled: false
             }
         }]
     });
