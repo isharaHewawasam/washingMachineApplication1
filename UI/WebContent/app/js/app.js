@@ -2012,14 +2012,21 @@ function renderMap(divId, salesData){
 		salesDataStr = salesDataStr.replace(/"unitsSold":/g, '"z":');
 
 		salesData = JSON.parse(salesDataStr);
-
-	    var zipcode;
+	    var zipcode;      
 	    if(salesDataStr.includes("zip_code")){
 	        zipcode = true;
+          
 	    }else{
 	       zipcode = false;
 	    }
 
+      var unitsConnected;
+      if(salesDataStr.includes("unitsConnected")){
+          unitsConnected = true;
+      }else{
+         unitsConnected = false;
+      }
+     
 	    seriesData = [{
 
 	        mapData: Highcharts.maps['countries/us/us-all'],
@@ -2051,13 +2058,12 @@ function renderMap(divId, salesData){
 				  fillOpacity:0.0
 			},
 			showInLegend: false,
-			tooltip: {
+			/*tooltip: {
 		        headerFormat: '',
-	            pointFormat: zipcode == true ?
+	            pointFormat: zipcode == true  ?
 	                      '<b>Sales vs Connected</b><br> City: {point.city},<br>Zip_Code: {point.zip_code},<br> <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
 	                  : '<b>Sales vs Connected</b><br> City: {point.city}, <br>Units Sold: {point.z}, <br>Units Connected: {point.unitsConnected}'
-
-		    },
+       */
 	    }]
 	}
 	var chart = new  Highcharts.Map({
@@ -2120,7 +2126,26 @@ function renderMap(divId, salesData){
 		            maxSize:0
 		        }
 		    },
-
+        tooltip: {
+           headerFormat: '',
+           formatter: function() {
+            var pointFormatzz;
+              if(zipcode & unitsConnected){            
+                   pointFormatzz= '<b>Sales vs Connected</b><br> City: '+ this.point.city + ', <br>Zip_Code: ' + this.point.zip_code +',<br> <br>Units Sold:' + this.point.z +', <br>Units Connected:' + this.point.unitsConnected; 
+                 }         
+              else if(!zipcode & unitsConnected){
+                pointFormatzz =  '<b>Sales vs Connected</b><br> City: '+ this.point.city + ',<br> <br>Units Sold:' + this.point.z +', <br>Units Connected:' + this.point.unitsConnected; 
+              }
+               else if(zipcode & !unitsConnected){
+                pointFormatzz = '<b>Sales vs Connected</b><br> City: '+ this.point.city + ', <br>Zip_Code: ' + this.point.zip_code +',<br> <br>Units Sold:' + this.point.z +', <br>Units Connected: 0' ; 
+              } 
+              else{
+                pointFormatzz = '<b>Sales vs Connected</b><br> City: '+ this.point.city + ',<br> <br>Units Sold:' + this.point.z +', <br>Units Connected: 0' ;              
+              }
+              return pointFormatzz;
+            }
+            
+        },
 		    series: seriesData
 		
 	});
