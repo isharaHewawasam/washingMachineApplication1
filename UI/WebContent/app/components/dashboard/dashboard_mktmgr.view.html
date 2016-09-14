@@ -649,7 +649,7 @@
 							<div class="media-box-body clearfix" ng-repeat="itm in data"
 								ng-show="data.length">
 								<div ng-if="itm.twitter_positives_increase_spike">
-									<p class="text-warning m0" translate="{{'twitter_increase_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{positiveTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
+									<p class="text-warning m0" >
 										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
 										above {{positiveTwitterSentimentThreshold}}%</p>
 									<small class="text-greens pull-right ml">{{itm.twitter_positives_increase_spike
@@ -677,15 +677,15 @@
 									<br>
 								</div>
 								<div ng-if="itm.twitter_negatives_increase_spike">
-									<p class="text-warning m0" translate="{{'twitter_increase_spike_msg'}}" translate-values="{ response_type: '{{itm.twitter_response_type}}', make: '{{itm.Make}}', model: '{{itm.Model}}', threshold: '{{negativeTwitterSentimentThreshold}}' }">{{itm.twitter_response_type}}
-										Twitter sentiment score for {{itm.Make}} - {{itm.Model}} is
+									<p class="text-warning m0" >
+										Negative Twitter sentiment score for Whirlpool - WFW9290FW  is
 										above {{negativeTwitterSentimentThreshold}}%</p>
 									<small class="text-pink pull-right ml">{{itm.twitter_negatives_increase_spike
 										| number:0}}%</small> <br>
 									<progressbar value="itm.twitter_negatives_increase_spike"
 										type="pink" class="progress-xs m0 notifprogress"
 										data-toggle="popover" data-placement="top" data-html="true"
-										data-content="Model: {{itm.name}} <br> Make: {{itm.Make}} <br>
+										data-content="Model: WFW9290FW   <br> Make: Whirlpool  <br>
 	                     Count: {{itm.twitter_count}}"
 										data-trigger="hover"></progressbar>
 									<br>
