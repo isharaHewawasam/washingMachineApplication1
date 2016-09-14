@@ -11,7 +11,7 @@
 
 	.leftbar-icon:hover {
     	border: 2px solid #be3838;
-        color: #fff;
+        color: #ff3f15;
     }
 
     .sidebarItemActive {
@@ -180,7 +180,7 @@
 }
  .divSpacePad{
   width:100%;;
-  background:#e7eef6;
+  background:#eeeaea;
 
 }
 .form-control{
