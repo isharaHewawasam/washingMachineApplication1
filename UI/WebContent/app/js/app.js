@@ -2448,7 +2448,7 @@ function renderPieChart(divId, insightsData, chartTitle,y){
                     enabled: false
                 },
                 showInLegend: true,
-                colors: divId != 'twitter-handle-container'?['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#5DADE2', '#D6EAF8'],
+                colors: divId != 'twitter-handle-container'?['#0099cc', '#339933', '#ffcc00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']: ['#f0b823', '#8f8c8c'],
                 size: 10,
                 center: ['50%', '50%']
             }
@@ -3555,7 +3555,8 @@ function createPieChart(divID, seriesData) {
         },
         plotOptions: {
             pie: {
-                shadow: false
+                shadow: false,
+                colors: ['#f0b823', '#4a4747']
             }
         },
         tooltip: {

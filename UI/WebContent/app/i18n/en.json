@@ -60,7 +60,7 @@
   "specific_errors_spike_msg":"{{error_type}} related errors are increased by {{spike | number:0}}% in last 4 weeks",
   "specific_errors_by_make_model_spike_msg": "{{error_type}} related errors are increased by {{spike | number:0}}% for {{make}} - {{model}} in last 4 weeks",
   "data_grid_title": "Washing Machines Status",
-  "total_loads": "Total Loads (lbs)",
+  "total_loads": "Avg Loads (lbs)",
   "most_popular_wash_day": "Most Popular Wash Day",
   "most_popular_time_of_day": "Most Popular Time of Day",
   "water_used": "Water Used",
