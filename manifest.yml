@@ -1,6 +1,6 @@
 applications:
 - path: .
-  memory: 2GB
+  memory: 3GB
   instances: 2
   domain: mybluemix.net
   name: ibm-iot
