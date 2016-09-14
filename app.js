@@ -72,10 +72,10 @@ process.on('uncaughtException', LogExcpetion);
 
 app.use(function(req, res, next){
   console.log("URL : " + req.originalUrl);
-  console.log("Request Body : " + JSON.stringify(req.body));
+  //console.log("Request Body : " + JSON.stringify(req.body));
   
   require('./middle_ware/sanitize_request').sanitize(req.body);
-  console.log("Request after sanitizing: " + JSON.stringify(req.body));
+  //console.log("Request after sanitizing: " + JSON.stringify(req.body));
   
   next();
 });
@@ -173,6 +173,7 @@ console.error = console.log;
                       http.createServer(app).listen(serverPort, '0.0.0.0', function() {   
                       //getAllLatLong();          
                       console.log('Express server listening on port ' + serverPort);
+
                    });
                 
                   }  

@@ -11,7 +11,7 @@ exports.getAllStates = function(callback) {
     } else {  
 	  var all_states = {'states': []};
 		
-    console.log(result.counts);
+    //console.log(result.counts);
     var states = [];
 	  for(var state in result.counts.State) {	  
       //console.log("x " + JSON.stringify(result.counts.State));

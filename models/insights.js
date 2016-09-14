@@ -15,7 +15,6 @@ exports.getMostFaultModels = function(callback) {
     	console.log(err);
     	callback(err, null)
     } else {  
-   	console.log(result);
 	  var all_models = {'models': []};
 	  var modelCount_array = [result.counts.Model.WDA101, result.counts.Model.WDA111, result.counts.Model.WDA211,
 	  			 result.counts.Model.WMB120, result.counts.Model.WKB120,result.counts.Model.W5748,
@@ -65,7 +64,6 @@ exports.getLeastFaultModels = function(callback) {
            result.counts.Model.WMB120, result.counts.Model.WKB120,result.counts.Model.W5748,
           result.counts.Model.W3048,result.counts.Model.W2819iRE];
 	  
-    console.log(result);
 	  function predicatBy(prop){
    			return function(a,b){
       			if( a[prop] > b[prop]){

@@ -80,9 +80,9 @@ var getData = function(payload, callback) {
     console.log("Received usage query response " + Date());
     console.log("Time : " + Date());
     console.log("Usage view name " + view_name);    
-    console.log("Usage view params " + JSON.stringify(params));
+    //console.log("Usage view params " + JSON.stringify(params));
     //console.log("Usage records form cloudant " + JSON.stringify(result.rows));
-    console.log("Usage records form cloudant " + result.rows.length);
+    //console.log("Usage records form cloudant " + result.rows.length);
     console.log("============================================");
     callback(err, result);
   });
@@ -93,9 +93,9 @@ var addOrUpdateUsages = function(payload, usages, new_usage) {
     for(var each_usage in usages) {
       //console.log("Beforexxx");
       if( (each_usage.make == new_usage.make) && (each_usage.model == new_usage.model) ) {
-        console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
+        //console.log("Beforevvv " + JSON.stringify(usages[each_usage]));
         usages[each_usage].totalLoad = (usages[each_usage].totalLoad + new_usage.totalLoad)/2;
-        console.log("After " + JSON.stringify(new_usage));
+        //console.log("After " + JSON.stringify(new_usage));
         return;
       }
     }

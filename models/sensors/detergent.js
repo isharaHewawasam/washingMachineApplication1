@@ -52,7 +52,6 @@ exports.getAverageUsage = function(payload, group_by_timescale, averagesBuffer, 
       callback(err, final_result);
     } else {
       console.log("#####Detergent");
-      console.log(JSON.stringify(result));
       callback(err, result);
     }
   });        

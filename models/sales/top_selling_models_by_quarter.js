@@ -10,7 +10,6 @@ exports.getData = function(payload, callback) {
   var key_map = require("../view_keys_mapping"); 
    
   validatePayload(payload); 
-  console.log("pyfds " + JSON.stringify(payload));
   //filter.setReportType2SoldVsConnected();
   
   filter.setReportType2Sales();

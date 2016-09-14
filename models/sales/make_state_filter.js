@@ -207,7 +207,6 @@ exports.getDataforstate = function(payload, drilldown, callback) {
                               }
                             }
                             return callback(err, aggregateArraynew);
-                            console.log(aggregateArraynew);
                             console.log("db opened");
 
                         });
@@ -286,7 +285,7 @@ exports.getDataforstateandCity = function(payload, drilldown, callback) {
                                         if (lat_long.rows[i].doc.states.cities[k].name == aggregateArray[j].city) {
                                             for(var l=0;l<lat_long.rows[i].doc.states.cities[k].zipCodes.length;l++){
                                                 if(lat_long.rows[i].doc.states.cities[k].zipCodes[l].zipCode==aggregateArray[j].zipcode){
-                                                    console.log(lat_long.rows[i].doc.states.cities[k].zipCodes[l]);
+                                                    //console.log(lat_long.rows[i].doc.states.cities[k].zipCodes[l]);
                                                     var lat = lat_long.rows[i].doc.states.cities[k].zipCodes[l].latitude;
                                                     var longi = lat_long.rows[i].doc.states.cities[k].zipCodes[l].longitude;
                                                     var zipcode=lat_long.rows[i].doc.states.cities[k].zipCodes[l].zipCode;

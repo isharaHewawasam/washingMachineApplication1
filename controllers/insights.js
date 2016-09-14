@@ -182,7 +182,6 @@ module.exports.getNotificationconfigsettings = function(req, res, next) {
 		var userName=req.body.Username;
 		
 		var responseArray=[];
-		console.log(result);
 		for(var i=0;i<result.rows.length;i++){
 			var usernamedb=result.rows[i].key[0].UserName;
 

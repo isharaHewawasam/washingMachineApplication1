@@ -2792,7 +2792,6 @@ angular.module('angle').controller('notificationController', ['$rootScope', '$sc
 		    				 data.splice(i, 1);
 		    			 }
 		    		 }
-
 		    		 $scope.data = data;
 
 		    		 if (data.length == 0){
