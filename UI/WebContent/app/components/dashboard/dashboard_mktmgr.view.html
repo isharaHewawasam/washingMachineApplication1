@@ -569,7 +569,7 @@
 				<div id="gridAdjustHeight" class="panel panel-default">
 
 
-					<!-- <div class="tableHeader">
+					<div class="tableHeader">
 
 						<p class="text-center" translate="{{'make'}}"></p>
 						<p class="text-center" translate="{{'model'}}">
@@ -583,7 +583,7 @@
 						</p>
 						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
-					</div> -->
+					</div>
 					<div class="tbody">
 						<div class="tableScroll">
 							<table class="table table-condensed" ng-if="griddata.length > 0">
@@ -592,18 +592,6 @@
 									>{{msg}}</div>
 									<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
 								<tbody id="tabody">
-									<tr style="position:absolute; background-color: white; width:98.38%;" >
-										<td class="text-center" translate="{{'make'}}" style="font-weight:bold; font-size:14px;"></td>
-										<td class="text-center" translate="{{'model'}}" style="font-weight:bold; font-size:14px;"></td>
-										<td class="text-center" translate="{{'total_loads'}}" style="font-weight:bold; font-size:14px;"></td>
-										<td class="text-center" translate="{{'most_popular_wash_day'}}" style="font-weight:bold; font-size:14px;"></td>
-										<td class="text-center" translate="{{'most_popular_time_of_day'}}" style="font-weight:bold; font-size:14px;"></td>
-
-
-									</tr>
-									<tr>
-										<td>empty row</td>
-									</tr>
 									<tr ng-repeat="itm in griddata">
 										<td class="text-center"">{{itm.make}}</td>
 										<td class="text-center">{{itm.model}}</td>
