@@ -1,0 +1,55 @@
+{
+  "name": "angu-fixed-header-table",
+  "version": "1.2.1",
+  "description": "AngularJS fixed header scrollable table directive",
+  "main": "angu-fixed-header-table.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "http://pointblankdevelopment.com.au/blog/angularjs-fixed-header-scrollable-table-directive",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cornflourblue/angu-fixed-header-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cornflourblue/angu-fixed-header-table/issues"
+  },
+  "keywords": [
+    "AngularJS",
+    "Fixed Header Table"
+  ],
+  "author": {
+    "name": "Jason Watmore",
+    "email": "jason@pointblankdevelopment.com.au"
+  },
+  "dependencies": {
+    "angular": ">=1.2.16"
+  },
+  "license": "MIT",
+  "_id": "angu-fixed-header-table@1.2.1",
+  "scripts": {},
+  "_shasum": "3b884aa909c9f4b93ac7516dcd1132d8545ffd28",
+  "_from": "angu-fixed-header-table@latest",
+  "_npmVersion": "3.3.9",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "cornflourblue",
+    "email": "jason@pointblankdevelopment.com.au"
+  },
+  "dist": {
+    "shasum": "3b884aa909c9f4b93ac7516dcd1132d8545ffd28",
+    "tarball": "https://registry.npmjs.org/angu-fixed-header-table/-/angu-fixed-header-table-1.2.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "cornflourblue",
+      "email": "jason@pointblankdevelopment.com.au"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/angu-fixed-header-table/-/angu-fixed-header-table-1.2.1.tgz"
+}

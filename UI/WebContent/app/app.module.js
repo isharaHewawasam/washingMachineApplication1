@@ -14,6 +14,7 @@
 	          'ngResource', 
 	          'ui.utils', 
 	          'ngMaterial',
-	          'ngMessages'
+	          'ngMessages',
+	          'anguFixedHeaderTable'
 	      ]);
 })();
