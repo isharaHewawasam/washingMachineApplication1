@@ -3,6 +3,8 @@
 //also dont chk modifed file in repo
 module.exports = {
   "host": "ibm-iot.mybluemix.net",
+  "java_server_clm_port": "8888",
+  "java_server_clm_host": "localhost",
   "local_host": "localhost:3000",
   "cloud-host": "ibm-iot.mybluemix.net",
   "SalesDatabase": {
