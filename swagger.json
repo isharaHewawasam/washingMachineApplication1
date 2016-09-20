@@ -9,6 +9,40 @@
   "host": "localhost:3000",
   "basePath": "/api/v1",
   "paths": {
+   "/secure-gateway": {
+      "post": {
+        "x-swagger-router-controller": "secure_gateway_http",
+        "operationId": "getApis",
+        "tags": ["WorkItem"],
+        "description": "Returns WorkItem State",
+        "parameters": [
+          {
+            "name": "work_item",
+            "in": "body",
+            "description": "Work Item Details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WorkItemBody"
+            }
+          }
+        ],            
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/WorkItem"
+            }
+          }
+        }
+      }
+    },
     "/config/states": {
       "get": {
         "x-swagger-router-controller": "config",
@@ -1236,6 +1270,26 @@
         },
         "no_of_faults": {
           "type": "integer"
+        }
+      }
+    },
+     "WorkItem": {
+      "properties": {
+        "state": {
+          "type": "string"
+        }
+      }
+    },
+    "WorkItemBody": {
+      "properties": {
+        "work_item_summary": {                   
+           "type": "string"                    
+        },
+        "work_item_type": {                   
+           "type": "string"                    
+        },
+        "work_item_description": {                   
+           "type": "string"                    
         }
       }
     },
