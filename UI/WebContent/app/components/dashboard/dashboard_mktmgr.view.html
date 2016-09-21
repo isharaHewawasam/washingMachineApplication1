@@ -1,4 +1,29 @@
+<script>
+$(document).ready(function(){
 
+    /* Get browser */
+    $.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
+
+    /* Detect Chrome */
+    if($.browser.chrome){
+        /* Do something for Chrome at this point */
+        alert("You are using chrome!");
+       	$(".tableHeader").css("padding-right", "2%");
+        
+        /* Finally, if it is Chrome then jQuery thinks it's 
+           Safari so we have to tell it isn't */
+        $.browser.safari = false;
+    }
+
+    /* Detect Safari */
+    if($.browser.safari){
+        /* Do something for Safari */
+        alert("You are using Safari!");
+        $(".tableHeader").css("padding-right", "0");
+    }
+
+});
+</script>
 <link href="css/charts.css" rel="stylesheet" />
 <link href="css/mkttable.css" rel="stylesheet" />
 <link href="css/dashboard.css" rel="stylesheet" />
@@ -639,7 +664,7 @@
                    <th sortable-header col="extent">Replace %</th>
                    
               </tr> -->
-              <tr style="position:static; background-color: white; padding-right:2% !important; font-weight:bold;" class="tableHeader">
+              <tr style="position:static; background-color: white;  !important; font-weight:bold;" class="tableHeader">
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">
