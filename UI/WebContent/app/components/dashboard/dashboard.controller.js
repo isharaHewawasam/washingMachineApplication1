@@ -323,9 +323,10 @@
                 $scope.zoomMap('map-container');
             }
         },function(data){
-            // on error
-        	salesDataSet = [];
+            // on error        	 
+        	 salesDataSet = [];
              $rootScope.mapProgress = false;
+             $scope.isError = true;             
         });
     }
 
@@ -350,7 +351,9 @@
             }
         },function(data){
             // on error
+        	salesDataSet = [];
              $rootScope.maxMapProgress = false;
+             $scope.isError = true;  
         });
         }
 

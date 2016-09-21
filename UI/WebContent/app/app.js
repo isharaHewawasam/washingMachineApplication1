@@ -1953,7 +1953,7 @@ angular.module('angle').controller('mapController',['$scope','$rootScope', 'iot.
 			salesDataSet = [];
 			$rootScope.mapProgress = false;
 			$scope.isError = true;
-	       renderMap(divId, data);
+	      //renderMap(divId, data);
 		});
 
 	}
