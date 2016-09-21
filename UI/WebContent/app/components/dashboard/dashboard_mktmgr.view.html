@@ -6,13 +6,15 @@ else if (navigator.userAgent.search("Chrome") >= 0) {
 	$(".tableHeader").css("padding-right", "2%");
 }
 else if (navigator.userAgent.search("Firefox") >= 0) {
-	alert('Firefox');
+	//alert('Firefox');
+	$("#gridNormal tr").css("display", "inline-table");
+	    //display: inline-table;
 }
 else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
 	$(".tableHeader").css("padding-right", "0%");
 }
 else if (navigator.userAgent.search("Opera") >= 0) {
-	alert('Opera');
+	//alert('Opera');
 }
 </script>
 <link href="css/charts.css" rel="stylesheet" />
