@@ -6,7 +6,17 @@
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
+		<style>
+			#parent {
+				height: 150px;
+			}
+		</style>
 
+		<script>
+			$(document).ready(function() {
+				$("#fixTable").tableHeadFixer(); 
+			});
+		</script>
 <h3>
 	<!-- START Language list-->
 
@@ -630,21 +640,10 @@
                   </div> -->
                   <div id="parent">
   <scrollable-table >
-      <table class="table table-striped table-bordered "  style="height:190px;" id="fixTable" >
-          <thead>
-             <!--  <tr>
-                   <th sortable-header col="facility">Facility</th>
-                   <th sortable-header col="code">Unit code</th>
-                   <th sortable-header col="cost">Cost</th>
-                   <th sortable-header col="conditionRating">Condition score</th>
-                   <th sortable-header col="extent">Replace %</th>
-                   
-              </tr> -->
-              
-              
-          </thead>
+      <table class="table table-striped table-bordered " id="fixTable" style="height:190px;'">
+   
           <tbody>
-          <tr style="background-color: white;  font-weight:bold;" class="tableHeader">
+          <tr style="position:static; background-color: white;  font-weight:bold;" class="tableHeader">
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">
@@ -862,9 +861,3 @@
 </div>
 </div>
 </div>
-		<script>
-			$(document).ready(function() {
-				$("#fixTable").tableHeadFixer(); 
-				alert('');
-			});
-		</script>
