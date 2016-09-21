@@ -1,4 +1,20 @@
-
+<script>
+if (navigator.userAgent.search("MSIE") >= 0) {
+    alert('IE');
+}
+else if (navigator.userAgent.search("Chrome") >= 0) {
+	alert('Chrome');
+}
+else if (navigator.userAgent.search("Firefox") >= 0) {
+	alert('Firefox');
+}
+else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+	alert('Safari');
+}
+else if (navigator.userAgent.search("Opera") >= 0) {
+	alert('Opera');
+}
+</script>
 <link href="css/charts.css" rel="stylesheet" />
 <link href="css/mkttable.css" rel="stylesheet" />
 <link href="css/dashboard.css" rel="stylesheet" />
