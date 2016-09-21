@@ -18,7 +18,7 @@
 }
 #gridNormal .tableScroll
 {
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     height: 100%;
     width: 100%;
 }
@@ -61,7 +61,7 @@ width: 100%;
     background-color: #ffffff;
     color: #222;
     font-size: 1.1em;
-    /* padding-right: 17px; */
+    padding-right: 17px;
 }
 
 #gridNormal .tableFooter
