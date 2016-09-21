@@ -628,8 +628,8 @@
                         <label class="pull-right      " ng-if="griddata.length > 0"
                               id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
                   </div> -->
-                  <div>
-  <scrollable-table id="parent">
+                  <div id="parent">
+  <scrollable-table >
       <table class="table table-striped table-bordered "  style="height:190px;" id="fixTable" >
           <thead>
              <!--  <tr>
@@ -644,7 +644,7 @@
               
           </thead>
           <tbody>
-          <tr style="position:static; background-color: white;  font-weight:bold;" class="tableHeader">
+          <tr style="background-color: white;  font-weight:bold;" class="tableHeader">
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">
