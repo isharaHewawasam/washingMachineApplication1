@@ -1,15 +1,15 @@
 <script>
 if (navigator.userAgent.search("MSIE") >= 0) {
-    alert('IE');
+    
 }
 else if (navigator.userAgent.search("Chrome") >= 0) {
-	alert('Chrome');
+	$(".tableHeader").css("padding-right", "2%");
 }
 else if (navigator.userAgent.search("Firefox") >= 0) {
 	alert('Firefox');
 }
 else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-	alert('Safari');
+	$(".tableHeader").css("padding-right", "0%");
 }
 else if (navigator.userAgent.search("Opera") >= 0) {
 	alert('Opera');
