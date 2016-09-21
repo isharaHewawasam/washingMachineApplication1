@@ -1,44 +1,4 @@
-#gridNormal .tbody
-{
-    overflow-y: auto;
-    box-sizing: border-box;
-    width: 100%;
-    height: 211px;
-    position: relative;
 
-}
-#gridNormal1 .maxtbody
-{
-    overflow-y: auto;
-    box-sizing: border-box;
-    width: 100%;
-    height: 300px;
-    position: relative;
-
-}
-#gridNormal .tableScroll
-{
-    overflow-y: scroll;
-    height: 100%;
-    width: 100%;
-}
-#gridNormal1 .tableScroll
-{
-    overflow-y: scroll;
-    height: 100%;
-    width: 100%;
-} 
-
-#gridNormal tr {
-    width: 100%;
-    display: flex;
-	    border-bottom: 1px solid rgba(0, 128, 0, 0.15);
-}
-#gridNormal1 tr {
-    width: 100%;
-    display: flex;
-	    border-bottom: 1px solid rgba(0, 128, 0, 0.15);
-}
 
 #gridNormal td {
    width:20%;
@@ -132,20 +92,5 @@ width: 20%;
 	background-color: #B1C5DB !important;
 }
 
-.table-bordered tbody::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-}
 
-.table-bordered tbody::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #F5F5F5;
-}
-
-.table-bordered tbody::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
-}
 
