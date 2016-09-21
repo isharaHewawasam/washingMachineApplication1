@@ -6,7 +6,7 @@
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
 <div class="hidden gridMaximize" id="gridMax"></div>
-		
+
 <h3>
 	<!-- START Language list-->
 
@@ -501,8 +501,6 @@
 				<div id="gridAdjustHeight" class="panel panel-default">
 
 
-					
-					<div class="maxtbody">
 					<div class="tableHeader">
 
 						<p class="text-center" translate="{{'make'}}"></p>
@@ -517,6 +515,7 @@
 						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
 					</div>
+					<div class="maxtbody">
 						<div class="tableScroll">
 							<table class="table table-condensed" ng-if="griddata.length > 0">
 								<div ng-show="isDisabled||isError"
@@ -628,22 +627,30 @@
                         <label class="pull-right      " ng-if="griddata.length > 0"
                               id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
                   </div> -->
-                  <div >
+                  <div  style="" class="">
   <scrollable-table >
-      <table class="table-striped table-bordered " style="height:190px;'">
-   
-          <tbody>
-          
-          <tr style="position:static; background-color: white;  font-weight:bold;" class="tableHeader">
-          <div class="fixedheader">
+      <table class="table table-striped table-bordered " fixed-header style="height:190px;'">
+          <thead>
+             <!--  <tr>
+                   <th sortable-header col="facility">Facility</th>
+                   <th sortable-header col="code">Unit code</th>
+                   <th sortable-header col="cost">Cost</th>
+                   <th sortable-header col="conditionRating">Condition score</th>
+                   <th sortable-header col="extent">Replace %</th>
+                   
+              </tr> -->
+              <tr style="position:static; background-color: white;  font-weight:bold;" class="tableHeader">
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">
                                                                   </td>
                                                             <td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
                                                             <td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
-</div>
+
                                                       </tr>
+              
+          </thead>
+          <tbody>
              <tr style="display:none;"> 
                                                             <td class="text-center""></td>
                                                             <td class="text-center"></td>
