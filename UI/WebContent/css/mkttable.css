@@ -91,5 +91,36 @@ width: 20%;
 	background-color: #B1C5DB !important;
 }
 
+table
+{
+                width: 500px;
+                border-collapse: collapse !important;
+}
+
+thead
+{
+                display: block !important;
+                width: 500px !important;
+                overflow: auto !important;
+                color: #fff !important;
+                background: #000 !important;
+}
+
+tbody
+{
+                display: block !important;
+                width: 500px !important;
+                height: 200px !important;
+                background: pink !important;
+                overflow: auto !important;
+}
+
+th,td
+{
+                padding: .5em 1em !important;
+                text-align: left !important;
+                vertical-align: top !important;
+                border-left: 1px solid #fff !important;
+}
 
 
