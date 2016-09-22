@@ -27,7 +27,7 @@
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-} 
+}
 
 #gridNormal tr {
     width: 100%;
@@ -44,7 +44,13 @@
     width:20% !important;
     padding: 5px 10px 5px 10px;
     border-right: 1px solid #c1c1c1;
-      
+
+}
+#gridNormal1 td {
+    width:20% !important;
+    padding: 5px 10px 5px 10px;
+    border-right: 1px solid #c1c1c1;
+
 }
 
 #gridNormal1 table
@@ -90,6 +96,3 @@ width: 20%;
 .highlightRow {
 	background-color: #B1C5DB !important;
 }
-
-
-

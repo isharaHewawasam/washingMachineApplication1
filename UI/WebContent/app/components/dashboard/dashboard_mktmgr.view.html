@@ -1,6 +1,6 @@
 <script>
 if (navigator.userAgent.search("MSIE") >= 0) {
-    
+
 }
 else if (navigator.userAgent.search("Chrome") >= 0) {
 	$(".tableHeader").css("padding-right", "2%");
@@ -30,16 +30,16 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
-	
+
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
-	 <div  id="dashboardNav" ng-controller="MyviewController"> 
-		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
+	 <div  id="dashboardNav" ng-controller="MyviewController">
+		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a>
          <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">  > </span>
 		<span> {{'dashboard' | translate}} </span>
 	 </div>
-	
-	
+
+
 </h3>
 
 
@@ -184,7 +184,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
 					<option class="chart-option-text-style" ng-if="$index!=0"
 						ng-repeat="sales in salesList track by $index" value="{{$index}}">{{sales.name}}</option>
-				</select> 
+				</select>
 				 <select ng-class="{'chart-selectStyle2': isActive3}"
 					ng-click="activeButton(3)" id="third-chart-select"
 					class="chart-selectStyle col-md-3 salesname "
@@ -238,15 +238,15 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 				<div id="container"></div>
 			</div>
 			<!--for maximization-->
-							<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1">	
+							<div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent1">
 								  <div class="chart-filterDiv " id="chartFilterDivId">
-								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
 									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
-									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+									         src="img/Dashboardassets/close.png" ng-click="closing()">
 					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
 							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 							             data-trigger="hover"></img>
-								  </div>  
+								  </div>
 								  <span ng-show="progress" class="progress-chart"> <img alt=""
 					                    src="img/icon-load.gif" width="25%" ;height="25%">
 					              </span>
@@ -255,13 +255,13 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 
 			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent2">
 			                      <div class="chart-filterDiv " id="chartFilterDivId">
-								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
 									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
-									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+									         src="img/Dashboardassets/close.png" ng-click="closing()">
 					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
 							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 							             data-trigger="hover"></img>
-								  </div>  
+								  </div>
 			                        <span ng-show="progress" class="progress-chart"> <img alt=""
 			                              src="img/icon-load.gif" width="25%" ;height="25%">
 			                        </span>
@@ -270,13 +270,13 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 
 			                  <div class="chart-chartDiv hidden graphDiv-maximize" id="chartParent3">
 			                      <div class="chart-filterDiv " id="chartFilterDivId">
-								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">						    
+								  		<img id="maximize" class="pull-right col-md-1" src="img/Dashboardassets/icon_maximize.png" ng-click="maximize()">
 									    <img id="close" class=" col-md-1 image-margin close-image-size hidden pull-right"
-									         src="img/Dashboardassets/close.png" ng-click="closing()">				                        
+									         src="img/Dashboardassets/close.png" ng-click="closing()">
 					                    <img class="col-md-1 pull-right" id="infoicons" src="img/Dashboardassets/help.png" data-toggle="popover"
 							             data-placement="bottom" data-content="Chart Area provides a distribution of information through Bar and Pie Charts which illustrates the selections made in the Top and Side Bar Filters."
 							             data-trigger="hover"></img>
-								  </div> 
+								  </div>
 			                        <span ng-show="progress" class="progress-chart"> <img alt=""
 			                              src="img/icon-load.gif" width="25%" ;height="25%">
 			                        </span>
@@ -390,9 +390,9 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 								class="alert-warning media-box-object img-circle thumb32 text-center">
 								<h2 class="mv-lg">4</h2>
 							</div>
-							
+
 					</div>
-							
+
 
 					</div>
 
@@ -520,7 +520,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 				<div id="gridAdjustHeight" class="panel panel-default">
 
 
-					<div class="tableHeader">
+					<!-- <div class="tableHeader">
 
 						<p class="text-center" translate="{{'make'}}"></p>
 						<p class="text-center" translate="{{'model'}}"></span>
@@ -533,7 +533,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 						</p>
 						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
-					</div>
+					</div> -->
 					<div class="maxtbody">
 						<div class="tableScroll">
 							<table class="table table-condensed" ng-if="griddata.length > 0">
@@ -541,6 +541,18 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 									class="text-center col-md-4 col-md-offset-4 maxgridnodata"
 									>{{msg}}</div>
 									<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+                  <thead>
+										<tr style="font-weight:bold;" >
+											<td class="text-center" translate="{{'make'}}"></td>
+											<td class="text-center" translate="{{'model'}}"></td>
+											<td class="text-center" translate="{{'total_loads'}}">
+										</td>
+											<td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
+											<td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
+
+										</tr>
+
+									</thead>
 								<tbody id="tabody">
 									<tr ng-repeat="itm in griddata">
 										<td class="text-center" >{{itm.make}}</td>
@@ -563,135 +575,87 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
 			</div>
 		</div>
-		<div class="panel panel-default datagrid" id="gridNormal">
-                  <div class="panel-heading md-body-2"
-                  id="normalgridhead">
-                        <b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
-                              class="pull-right col-md-1"
+    <div class="panel panel-default datagrid" id="gridNormal">
+			<div class="panel-heading md-body-2"
+			id="normalgridhead">
+				<b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
+					class="pull-right col-md-1"
 
-                              src="img/Dashboardassets/icon_maximize.png"
-                              ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
-                              class="pull-right hidden col-md-1 "
+					src="img/Dashboardassets/icon_maximize.png"
+					ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
+					class="pull-right hidden col-md-1 "
 
-                              src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
-                        <img class="pull-right col-md-1"
-                                    id="gridinfo"
-                              src="img/Dashboardassets/help.png" data-toggle="popover"
-                              data-placement="left"
-                              data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
-                              data-trigger="hover"></img>
-                  </div>
-
-
-                  <!-- <div class="panel-body" id="gridHideNodata">
-                          START table-responsive
-                        <div id="gridAdjustHeight" class="panel panel-default">
+					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+				<img class="pull-right col-md-1"
+						id="gridinfo"
+					src="img/Dashboardassets/help.png" data-toggle="popover"
+					data-placement="left"
+					data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+					data-trigger="hover"></img>
+			</div>
 
 
-                              <div class="tableHeader">
+			<div class="panel-body" id="gridHideNodata">
+				<!--   START table-responsive -->
+				<div id="gridAdjustHeight" class="panel panel-default">
 
-                                    <p class="text-center" translate="{{'make'}}"></p>
-                                    <p class="text-center" translate="{{'model'}}">
-                                          </span>
-                                    </p>
-                                    <p class="text-center" translate="{{'total_loads'}}">
-                                          </span>
-                                    </p>
-                                    <p class="text-center" translate="{{'most_popular_wash_day'}}">
-                                          </span>
-                                    </p>
-                                    <p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
-                              </div>
-                              <div class="tbody">
-                                    <div class="tableScroll">
-                                    <scrollable-table watch="visibleProjects">
-                                          <table class="table table-condensed" ng-if="griddata.length > 0">
-                                                <div ng-show="isLoadingFilters||isError"
-                                                      class="text-center col-md-4 col-md-offset-4 maxgridnodata "
-                                                      >{{msg}}</div>
-                                                      <div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
-                                                <thead style="position:absolute; background-color: white; width:98.38%; font-weight:bold;">
-                                                <tr style="position:absolute; background-color: white; width:98.38%; font-weight:bold;">
-                                                            <td class="text-center" translate="{{'make'}}"></td>
-                                                            <td class="text-center" translate="{{'model'}}"></td>
-                                                            <td class="text-center" translate="{{'total_loads'}}">
-                                                                  </td>
-                                                            <td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
-                                                            <td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
+					<!-- <div class="tableHeader">
 
-                                                      </tr>
-                                                      </thead>
-                                                      <tbody id="tabody">
-                                                      <tr>
-                                                      <td>empty row</td>
-                                                      </tr>
-                                                      <tr ng-repeat="itm in griddata" style="">
-                                                            <td class="text-center"">{{itm.make}}</td>
-                                                            <td class="text-center">{{itm.model}}</td>
-                                                            <td class="text-center">{{itm.totalLoad |
-                                                                  number:2}}</td>
-                                                            <td class="text-center">{{itm.popularDay}}</td>
-                                                            <td class="text-center">{{itm.popularTime}}</td>
+						<p class="text-center" translate="{{'make'}}"></p>
+						<p class="text-center" translate="{{'model'}}">
+							</span>
+						</p>
+						<p class="text-center" translate="{{'total_loads'}}">
+							</span>
+						</p>
+						<p class="text-center" translate="{{'most_popular_wash_day'}}">
+							</span>
+						</p>
+						<p class="text-center" translate="{{'most_popular_time_of_day'}}"></p>
 
-                                                      </tr>
-                                                </tbody>
-                                          </table>
-                                    </scrollable-table>
-                                    </div>
-                              </div>
-                        </div>
+					</div> -->
+					<div class="tbody">
+						<div class="tableScroll">
+							<table class="table table-condensed" ng-if="griddata.length > 0">
+								<div ng-show="isLoadingFilters||isError"
+									class="text-center col-md-4 col-md-offset-4 maxgridnodata "
+									>{{msg}}</div>
+									<div ng-show="isNoDataFound" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
+									<thead>
+										<tr style="font-weight:bold;" >
+											<td class="text-center" translate="{{'make'}}"></td>
+											<td class="text-center" translate="{{'model'}}"></td>
+											<td class="text-center" translate="{{'total_loads'}}">
+										</td>
+											<td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
+											<td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
 
-                             END table-responsive
-                        <label class="pull-right      " ng-if="griddata.length > 0"
-                              id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
-                  </div> -->
-                  <div  style="" class="">
-  <scrollable-table >
-      <table class="table table-striped table-bordered " fixed-header style="height:190px;'">
-          <thead>
-             <!--  <tr>
-                   <th sortable-header col="facility">Facility</th>
-                   <th sortable-header col="code">Unit code</th>
-                   <th sortable-header col="cost">Cost</th>
-                   <th sortable-header col="conditionRating">Condition score</th>
-                   <th sortable-header col="extent">Replace %</th>
-                   
-              </tr> -->
-              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader">
-                                                            <td class="text-center" translate="{{'make'}}"></td>
-                                                            <td class="text-center" translate="{{'model'}}"></td>
-                                                            <td class="text-center" translate="{{'total_loads'}}">
-                                                                  </td>
-                                                            <td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
-                                                            <td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
+										</tr>
 
-                                                      </tr>
-              
-          </thead>
-          <tbody>
-            
-          
-             <tr ng-repeat="itm in griddata" style=""> 
-                                                            <td class="text-center"">{{itm.make}}</td>
-                                                            <td class="text-center">{{itm.model}}</td>
-                                                            <td class="text-center">{{itm.totalLoad |
-                                                                  number:2}}</td>
-                                                            <td class="text-center">{{itm.popularDay}}</td>
-                                                            <td class="text-center">{{itm.popularTime}}</td>
+									</thead>
+								<tbody id="tabody">
+									<tr ng-repeat="itm in griddata">
+										<td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.totalLoad |
+											number:2}}</td>
+										<td class="text-center">{{itm.popularDay}}</td>
+										<td class="text-center">{{itm.popularTime}}</td>
 
-                                                      </tr>
-          </tbody>
-      </table>
-    </scrollable-table>
-    <div>
-      
-        
-    </div>
-     <label style="margin-top:20px;" class="pull-right      " ng-if="griddata.length > 0"
-                              id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
-</div>
-            </div>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+				<!--      END table-responsive -->
+				<label class="pull-right 	" ng-if="griddata.length > 0"
+					id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
+			</div>
+		</div>
 
 		<!--   END panel -->
 	</div>
@@ -711,7 +675,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
 						data-content="Configurable observations are notified through the Notification area to keep alert the user in case of attention to be paid."
 						data-trigger="hover"></img>
 				</div>
-				
+
 				<div class="panel-title md-body-2" id="notificationtitl" translate="{{'notifications_title'}}"></div>
 
 			</div>
