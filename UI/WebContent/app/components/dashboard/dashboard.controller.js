@@ -746,21 +746,20 @@
 
         var url = configApiClient.baseUrl + 'secure-gateway';
         var param = {
-            "work_item_summary": "string",
-            "work_item_type": "string",
-            "work_item_description": "string"
+            "work_item_summary": $scope.WOSummary,
+            "work_item_type": $scope.WOType,
+            "work_item_description": $scope.WODescription
         };
         HttpService.post(url, param).then(function(data){
             // on success
             if(!data || data.length === 0){
-               // $scope.isNoDataFoundEng = true;
+                $('#WOModal').modal('hide');
             } else {
-                //$scope.isNoDataFoundEng = false;
-                //$scope.eng_griddata=data;
+
             }
         },function(data){
             // on error
-
+            $('#WOModal').modal('hide');
         });
     }
 
