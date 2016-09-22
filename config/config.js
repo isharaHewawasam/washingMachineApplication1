@@ -2,11 +2,11 @@
 //Copy this file as config and modify when deployed to new server and then start the app
 //also dont chk modifed file in repo
 module.exports = {
-  "host": "ibm-iot.mybluemix.net",
+  "host": "ibm-iot-clm.mybluemix.net",
   "java_server_clm_port": "8888",
   "java_server_clm_host": "localhost",
   "local_host": "localhost:3000",
-  "cloud-host": "ibm-iot.mybluemix.net",
+  "cloud-host": "ibm-iot-clm.mybluemix.net",
   "SalesDatabase": {
      "provider": "Cloudant",
 	   "host": "b1611753-b3bf-47ce-95f7-0c67cc1a61a7-bluemix.cloudant.com",
