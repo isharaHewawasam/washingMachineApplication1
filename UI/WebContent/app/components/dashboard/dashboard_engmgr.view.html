@@ -22,6 +22,7 @@
 		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
          <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">  > </span>
 		<span> {{'dashboard' | translate}} </span>
+		<button class="btn btn-xs btn-default" translate="{{'POST_WO_ITEM'}}" data-toggle="modal" data-target="#WOModal"></button>
 	 </div>
 
 </h3>
@@ -713,3 +714,52 @@
 </div>
          </div>
          </div>
+
+
+<!-- Modal -->
+<div id="WOModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Create Work Item</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputSummary" class="col-sm-2 control-label">Summary</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputSummary" placeholder="Summary" ng-model="WOSummary">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputType" class="col-sm-2 control-label">Type</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="inputType" ng-model="WOType">
+								<option value="defect">Defect</option>
+								<option value="error">Error</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputDesc" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="5" id="inputDesc" ng-model="WODescription" placeholder="Description"></textarea>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="postWOItem()">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	
+
 	angular
 	    .module('angle')
 	    .controller('DashboardController', DashboardController);
@@ -30,19 +30,12 @@
 
 
    $scope.currentDate=monthNames[monthIndex] + ' ' + day + ', ' +  year+ ', ' +date.toLocaleTimeString();
-
-
-
     $scope.sidebarObj={};
     $scope.sidebarObj.selectedMake="";
     $scope.sidebarObj.selectedModel="";
     $scope.sidebarObj.selectedSKU="";
     $scope.sidebarObj.mfgStartDate="";
     $scope.sidebarObj.mfgEndDate="";
-
-
-
-
     $scope.region=[];
     $scope.timescale=[];
 
@@ -376,10 +369,9 @@
 
 
     $rootScope.tryit = function() {
-
         $scope.isLoadingFilters = true;
-    $scope.isReportFiltering = false;
-$rootScope.isApplyFiterButton = true;
+        $scope.isReportFiltering = false;
+        $rootScope.isApplyFiterButton = true;
         $scope.test = true;
         $rootScope.applyFilterBoolean=true;
         $scope.usagedata={
@@ -744,6 +736,32 @@ $rootScope.isApplyFiterButton = true;
         	 $scope.loader.isZipBox = false;
             // on error
          });
+    }
+
+    $scope.WOSummary="";
+    $scope.WOType="defect";
+    $scope.WODescription="";
+    $scope.postWOItem = function(){
+        debugger;
+
+        var url = configApiClient.baseUrl + 'secure-gateway';
+        var param = {
+            "work_item_summary": "string",
+            "work_item_type": "string",
+            "work_item_description": "string"
+        };
+        HttpService.post(url, param).then(function(data){
+            // on success
+            if(!data || data.length === 0){
+               // $scope.isNoDataFoundEng = true;
+            } else {
+                //$scope.isNoDataFoundEng = false;
+                //$scope.eng_griddata=data;
+            }
+        },function(data){
+            // on error
+
+        });
     }
 
      $scope.maximizeGrid=function(){

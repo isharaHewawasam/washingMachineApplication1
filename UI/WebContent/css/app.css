@@ -12440,3 +12440,7 @@ display : block;
 .notificationBodyDiv .form-select-style {
 	width: 17%;
 }
+
+#WOModal .modal-body {
+  height: auto;
+}

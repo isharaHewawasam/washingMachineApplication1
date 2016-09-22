@@ -94,5 +94,6 @@
   "copyrights": "Copyright 2016 . All rights reserved",
   "BUTTON_LANG_AR": "Arabic",
   "BUTTON_LANG_FR": "French",
-  "BUTTON_LANG_EN": "English"
+  "BUTTON_LANG_EN": "English",
+  "POST_WO_ITEM":"POST"
 }
