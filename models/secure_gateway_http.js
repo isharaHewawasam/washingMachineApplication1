@@ -12,7 +12,7 @@ exports.getApis = function(params,callback) {
 		console.log('CONNECTED TO: ' + HOST + ':' + PORT);
 		// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
 	    var workitem = params.work_item.originalValue;
-		client.write(JSON.stringify(workitem));
+		client.write(JSON.stringify(workitem)+'\n');
 	});
 
 	// Add a 'data' event handler for the client socket

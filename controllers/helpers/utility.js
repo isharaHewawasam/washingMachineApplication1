@@ -11,6 +11,7 @@ module.exports.sendResponse = function sendResponse(response, err, result) {
     console.log("Sending Response");
     //console.log("Response data : " + JSON.stringify(result || {}, null, 2));
     response.statusCode = 200;      
-    response.end(JSON.stringify(result || {}, null, 2));
+    //response.end(JSON.stringify(result || {}, null, 2));
+	response.end();
   }  
 }
