@@ -13,7 +13,6 @@
         $rootScope.filterIcons=[];
         $rootScope.isReportAvailableForDownload = false;
 
-        
         $scope.loader = {};
         
         var monthNames = [
@@ -763,6 +762,9 @@
         },function(data){
             // on error
             $('#WOModal').modal('hide');
+            $scope.WOSummary="";
+            $scope.WOType="defect";
+            $scope.WODescription="";
         });
     }
 
