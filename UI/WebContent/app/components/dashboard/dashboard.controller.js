@@ -754,6 +754,9 @@
             // on success
             if(!data || data.length === 0){
                 $('#WOModal').modal('hide');
+                $scope.WOSummary="";
+                $scope.WOType="defect";
+                $scope.WODescription="";
             } else {
 
             }
@@ -762,6 +765,13 @@
             $('#WOModal').modal('hide');
         });
     }
+
+        $scope.postWOItemCancel = function(){
+            $scope.WOSummary="";
+            $scope.WOType="defect";
+            $scope.WODescription="";
+            $('#WOModal').modal('hide');
+        }
 
      $scope.maximizeGrid=function(){
             var gridNormal = $("#gridNormal1").clone();
