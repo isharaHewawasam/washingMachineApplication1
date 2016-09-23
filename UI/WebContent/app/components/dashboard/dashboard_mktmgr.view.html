@@ -3,15 +3,17 @@ if (navigator.userAgent.search("MSIE") >= 0) {
     
 }
 else if (navigator.userAgent.search("Chrome") >= 0) {
-	$(".tableHeader").css("padding-right", "2%");
+	 /* $(".tableHeader").css("padding-right", "2%"); */
 }
 else if (navigator.userAgent.search("Firefox") >= 0) {
-	//alert('Firefox');
 	$("#gridNormal tr").css("display", "inline-table");
-	$(".tableHeader").css("display", "flex");
+	$(".tableHeader").css("display", "flex"); 
+	$(".tableHeader").css("padding-right", "1.8%");
 	    //display: inline-table;
 }
 else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+	$("#gridNormal tr").css("display", "inline-table");
+	$(".tableHeader").css("display", "flex");
 	$(".tableHeader").css("padding-right", "0%");
 }
 else if (navigator.userAgent.search("Opera") >= 0) {
@@ -658,7 +660,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
                    <th sortable-header col="extent">Replace %</th>
                    
               </tr> -->
-              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader">
+              <tr style="position:static; background-color: white; font-weight:bold;" class="tableHeader">
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">

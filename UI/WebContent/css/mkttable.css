@@ -84,8 +84,50 @@ width: 20%;
     font-size: 12px;
         border-right: 1px solid #c1c1c1;
         border-bottom: 1px solid #c1c1c1;
-            font-weight: 600;
+            font-weight: 600; 
 }
+
+@media screen and (max-width: 1920px){
+    #gridNormal .tableHeader{
+            padding-right: 1.4%;
+    }
+  }
+  
+  @media screen and (max-width: 1600px){
+    #gridNormal .tableHeader{
+            padding-right: 1.7%;
+    }
+  }
+  
+  @media screen and (max-width: 1440px){
+    #gridNormal .tableHeader{
+            padding-right: 1.9%;
+    }
+  }
+  
+  @media screen and (max-width: 1336px){
+    #gridNormal .tableHeader{
+            padding-right: 2%;
+    }
+  }
+  
+  @media screen and (max-width: 1280px){
+    #gridNormal .tableHeader{
+            padding-right: 2.2%;
+    }
+  }
+  
+  @media screen and (max-width: 1024px){
+    #gridNormal .tableHeader{
+            padding-right: 2.4%;
+    }
+  }
+
+  @media screen and (max-width: 800px){
+    #gridNormal .tableHeader{
+            padding-right: 2.5%;
+    }
+  }
 
 .highlightRow {
 	background-color: #B1C5DB !important;
