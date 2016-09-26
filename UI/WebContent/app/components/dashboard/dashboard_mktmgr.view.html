@@ -4,36 +4,38 @@ if (navigator.userAgent.search("MSIE") >= 0) {
 }
 else if (navigator.userAgent.search("Chrome") >= 0) {
 	
-	if (screen.width >= 1920) {
-		$(".tableHeader").css("padding-right", "1.4%");
-	} else if (screen.width < 1920 && screen.width >= 1600){
-		$(".tableHeader").css("padding-right", "1.5%");
-	}
-	else {
-		$(".tableHeader").css("padding-right", "2%");
-	}
+                if (screen.width >= 1920) {
+                                $(".tableHeader").css("padding-right", "1.4%");
+                } else if (screen.width < 1920 && screen.width >= 1600){
+                                $(".tableHeader").css("padding-right", "1.5%");
+                }
+                else {
+                                $(".tableHeader").css("padding-right", "2%");
+                }
 }
 else if (navigator.userAgent.search("Firefox") >= 0) {
-	//alert('Firefox');
-    	if (screen.width >= 1920) {
+                //alert('Firefox');
+                if (screen.width >= 1920) {
             alert('1920');
-		$(".tableHeader").css("padding-right", "1.4%");
-	} else if (screen.width < 1920 && screen.width >= 1600){
-		 $(".tableHeader").css("padding-right", "1.5%");
-	}
-	else {
-		$(".tableHeader").css("padding-right", "2%");
-	}
-	$("#gridNormal tr").css("display", "inline-table");
-	$(".tableHeader").css("display", "flex");
-	    //display: inline-table;
+                                $(".tableHeader").css("padding-right", "1.4%");
+                } else if (screen.width < 1920 && screen.width >= 1600){
+                                $(".tableHeader").css("padding-right", "1.5%");
+                }
+                else {
+                	//alert('1366');
+                                $(".tableHeader").css("padding-right", "2%");
+                }
+                $("#gridNormal tr").css("display", "inline-table");
+                $(".tableHeader").css("display", "flex");
+                    //display: inline-table;
+   
    
 }
 else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-	$(".tableHeader").css("padding-right", "0%");
+                $(".tableHeader").css("padding-right", "0%");
 }
 else if (navigator.userAgent.search("Opera") >= 0) {
-	//alert('Opera');
+                //alert('Opera');
 }
 
 
