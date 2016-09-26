@@ -5,9 +5,9 @@
         .module('angle')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$scope', '$state', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService'];
+    DashboardController.$inject = ['$scope', '$state', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService','$timeout'];
 
-    function DashboardController($scope, $state, $rootScope, $window, configApiClient, HttpService) {
+    function DashboardController($scope, $state, $rootScope, $window, configApiClient, HttpService,$timeout) {
         //Clear filter on dashboard load
         $rootScope.search = {};
         $rootScope.filterIcons = [];
@@ -733,8 +733,13 @@
                 HttpService.post(url, param).then(function (data) {
                     // on success
                     if (!data || data.length === 0) {
-                        $('#WOModal').modal('hide');
+                        $scope.WOStatusSuccessMSg = "Work Item created successfully.";
                         $scope.clearWOItemField();
+                        $timeout(function () {
+                            $scope.WOStatusSuccessMSg = "";
+                            $('#WOModal').modal('hide');
+                        }, 3000);
+
                     }
                 }, function (data) {
                     // on error

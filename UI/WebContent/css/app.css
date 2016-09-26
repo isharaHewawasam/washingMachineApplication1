@@ -12454,3 +12454,8 @@ display : block;
   margin-right: 5px;
   display: none;
 }
+
+.woItemSuccessMsg{
+  color:green;
+  float: left;
+}
