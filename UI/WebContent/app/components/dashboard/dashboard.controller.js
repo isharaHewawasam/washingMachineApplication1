@@ -725,9 +725,9 @@
                 var param = {
                     "work_item_summary": $scope.WOSummary,
                     "work_item_type": $scope.WOType,
-                    "work_item_description": $scope.WODescription
-                    /*"work_item_priority": $scope.WOPriority,
-                     "work_item_severity": $scope.WOSeverity*/
+                    "work_item_description": $scope.WODescription,
+                    "work_item_priority": $scope.WOPriority,
+                     "work_item_severity": $scope.WOSeverity
                 };
                 $(".woItemResponseLoader").show();
                 HttpService.post(url, param).then(function (data) {
