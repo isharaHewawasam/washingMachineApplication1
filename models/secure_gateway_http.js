@@ -7,7 +7,7 @@ var PORT = config.java_server_clm_port;
 
 exports.getApis = function(params,callback) {
 	var client = new net.Socket();
-
+    var responseData;
 	client.connect(PORT, HOST, function() {
 		console.log('CONNECTED TO: ' + HOST + ':' + PORT);
 		// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
@@ -21,14 +21,15 @@ exports.getApis = function(params,callback) {
 		client.setTimeout(1 * 60 * 1000);
 		console.log('Data Received : ' + data);
 		// Close the client socket completely
-		callback(null, data);
+		responseData = data;
+		//callback(null, responseData);
 		client.destroy();
 
 	});
 
 	// Add a 'close' event handler for the client socket
 	client.on('close', function() {
-		callback(null, null);
+		callback(null, responseData);
 		console.log('Connection closed');
 	});
 
