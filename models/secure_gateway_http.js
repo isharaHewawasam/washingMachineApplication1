@@ -28,6 +28,7 @@ exports.getApis = function(params,callback) {
 
 	// Add a 'close' event handler for the client socket
 	client.on('close', function() {
+		callback(null, null);
 		console.log('Connection closed');
 	});
 
