@@ -738,7 +738,7 @@
                         $timeout(function () {
                             $scope.WOStatusSuccessMSg = "";
                             $('#WOModal').modal('hide');
-                        }, 1000);
+                        }, 100);
 
                     }
                 }, function (data) {
