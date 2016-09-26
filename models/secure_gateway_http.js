@@ -18,7 +18,7 @@ exports.getApis = function(params,callback) {
 	// Add a 'data' event handler for the client socket
 	// data is what the server sent to this socket
 	client.on('data', function(data) {
-		socket.setTimeout(1 * 60 * 1000);
+		client.setTimeout(1 * 60 * 1000);
 		console.log('Data Received : ' + data);
 		// Close the client socket completely
 		callback(null, data);
