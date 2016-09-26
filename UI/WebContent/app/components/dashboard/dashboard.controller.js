@@ -738,6 +738,9 @@
                     }
                 }, function (data) {
                     // on error
+                    //debugger;
+                    $scope.WOStatusMSg = "Server error.";
+                    $(".woItemResponseLoader").hide();
                     console.log( "Create work item:"+data);
                 });
             }
