@@ -1,47 +1,18 @@
 <script>
-if (navigator.userAgent.search("MSIE") >= 0) {
-    
-}
-else if (navigator.userAgent.search("Chrome") >= 0) {
-	
-                if (screen.width >= 1920) {
-                                $(".tableHeader").css("padding-right", "1.4%");
-                } else if (screen.width < 1920 && screen.width >= 1600){
-                                $(".tableHeader").css("padding-right", "1.5%");
-                }
-                else {
-                                $(".tableHeader").css("padding-right", "2%");
-                }
-}
-else if (navigator.userAgent.search("Firefox") >= 0) {
-                //alert('Firefox');
-                if (screen.width >= 1920) {
-            alert('1920');
-                                $(".tableHeader").css("padding-right", "1.4%");
-                } else if (screen.width < 1920 && screen.width >= 1600){
-                                $(".tableHeader").css("padding-right", "1.5%");
-                }
-                else {
-                	//alert('1366');
-                                $(".tableHeader").css("padding-right", "2%");
-                }
-                $("#gridNormal tr").css("display", "inline-table");
-                $(".tableHeader").css("display", "flex");
-                    //display: inline-table;
-   
-   
-}
-else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-                $(".tableHeader").css("padding-right", "0%");
-}
-else if (navigator.userAgent.search("Opera") >= 0) {
-                //alert('Opera');
-}
+			$(document).ready(function() {
+				$("#fixTable").tableHeadFixer(); 
+			});
+		</script>
 
-
-</script>
-
-
+<style>
+			#parent {
+				height: 300px;
+			}
+            td, th{
+                border-right: 1px solid #c1c1c1;
+                vertical-align: top !important;
+            }
+		</style>
 <link href="css/charts.css" rel="stylesheet" />
 <link href="css/mkttable.css" rel="stylesheet" />
 <link href="css/dashboard.css" rel="stylesheet" />
@@ -672,7 +643,34 @@ else if (navigator.userAgent.search("Opera") >= 0) {
                   </div> -->
                   <div  style="" class="">
   <scrollable-table >
-      <table class="table table-striped table-bordered " fixed-header style="height:190px;'">
+  <div id="parent">
+  	<table id="fixTable" class="table">
+  		<thead>
+				<tr>
+				<th class="text-center" translate="{{'make'}}"></th>
+                                                            <th class="text-center" translate="{{'model'}}"></th>
+                                                            <th class="text-center" translate="{{'total_loads'}}">
+                                                                  </th>
+                                                            <th class="text-center" translate="{{'most_popular_wash_day'}}"></th>
+                                                            <th class="text-center" translate="{{'most_popular_time_of_day'}}"></th>
+				</tr>				
+		</thead>
+				<tbody>
+					 <tr ng-repeat="itm in griddata"> 
+                                                            <td class="text-center"">{{itm.make}}</td>
+                                                            <td class="text-center">{{itm.model}}</td>
+                                                            <td class="text-center">{{itm.totalLoad |
+                                                                  number:2}}</td>
+                                                            <td class="text-center">{{itm.popularDay}}</td>
+                                                            <td class="text-center">{{itm.popularTime}}</td>
+
+                                                      </tr>
+					
+					</tbody>
+  	</table>
+  </div>
+  
+      <table class="table table-striped table-bordered " fixed-header style="height:190px; display:none">
           <thead>
              <!--  <tr>
                    <th sortable-header col="facility">Facility</th>
@@ -682,7 +680,7 @@ else if (navigator.userAgent.search("Opera") >= 0) {
                    <th sortable-header col="extent">Replace %</th>
                    
               </tr> -->
-              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader">
+              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader" >
                                                             <td class="text-center" translate="{{'make'}}"></td>
                                                             <td class="text-center" translate="{{'model'}}"></td>
                                                             <td class="text-center" translate="{{'total_loads'}}">
