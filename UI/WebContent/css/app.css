@@ -12444,3 +12444,13 @@ display : block;
 #WOModal .modal-body {
   height: auto;
 }
+
+.woItemMsg {
+  float: left;
+  color: red;
+}
+
+.woItemResponseLoader {
+  margin-right: 5px;
+  display: none;
+}
