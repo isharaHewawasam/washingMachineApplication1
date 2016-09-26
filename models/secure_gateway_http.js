@@ -11,7 +11,7 @@ exports.getApis = function(params,callback) {
 	var errorData = null;
 	client.connect(PORT, HOST, function() {
 		console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-		client.setTimeout(1 * 60 * 1000);
+		client.setTimeout(1 * 60 *60* 1000);
 		// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
 	    var workitem = params.work_item.originalValue;
 		client.write(JSON.stringify(workitem)+'\n');
