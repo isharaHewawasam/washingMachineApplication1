@@ -10,6 +10,7 @@ exports.getApis = function(params,callback) {
     var responseData;
 	client.connect(PORT, HOST, function() {
 		console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+		client.setTimeout(1 * 60 * 1000);
 		// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
 	    var workitem = params.work_item.originalValue;
 		client.write(JSON.stringify(workitem)+'\n');
@@ -18,7 +19,6 @@ exports.getApis = function(params,callback) {
 	// Add a 'data' event handler for the client socket
 	// data is what the server sent to this socket
 	client.on('data', function(data) {
-		client.setTimeout(1 * 60 * 1000);
 		console.log('Data Received : ' + data);
 		// Close the client socket completely
 		responseData = data;
