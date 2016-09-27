@@ -1,0 +1,128 @@
+/*********** top navbar *************************/
+
+/* top navbar color */
+.top-nav-bar, .topnavbar .navbar-header {
+	background-color: #0A427D; /* change here */
+	padding: 0 15px;
+	height: 100%;
+	vertical-align: middle;
+}
+/* top navbar-below border color */
+.topnavbar {
+	
+	background: #0A427D;   /* change here  */
+}
+/********************* sidebar styles ***********************/
+
+/* sidebar color */
+.sidebar {
+	height: 100%;
+	padding-bottom: 20px;
+	background-color: #141414; /* change here */
+	overflow-x: hidden;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+/* sidebar item background color */
+.sidebarItemActive {
+	background-color: #4A88C9; /* change here */
+	color: #fff;    /* change here for font color */
+}
+/* sidebar item hover color-border color and font color */
+.leftbar-icon:hover {
+	border: 2px solid #4A88C9; /* change here */
+	color: #fff; /* change here for font color */
+}
+
+/* sidebar item font color bottom line color */
+/* .leftbar-icon {
+	z-index: 899988;
+	height: 71px;
+	border-bottom: 1px solid #4E4E4E; #4E4E4E
+	margin-top: 0px;
+    color: #979797;  #979797
+} */
+/* sidebar panel color */
+.divSpacePad {
+	width: 100%;;
+	background: #e7eef6; /* change here */
+	 color: black; /* change here for font color */
+}
+/* sidebar buttons and other buttons */
+#panelbuttons, #downloadreport {
+  color: #fff;     /* change here for font color */
+  background-color: #337ab7;  /* change here   */
+  border-color: #2e6da4;     /* change here */
+}
+/***************** top filter bar and breadcrum colors *******************/
+ #top_filter_background {
+	
+	background-color: #E7EEF6;  /* change here */
+} 
+
+.dashboard_title:hover{
+	font-size: 14px; 
+	font: Roboto Light; 
+	color: #0F64BC;                /* change here*/
+}
+.dashboard_title{
+	font-size: 14px; 
+	font: Roboto Light; 
+	color: #0F64BC;                  /* change here*/
+}
+
+/****************** login page css **********************/
+/* forgot password color */
+#forgotpw{
+	 color: #337ab7;    
+}
+/* topbar color */
+#logintopbar{
+	background-color: #0A427D;  
+}
+/* table strip color */
+tr:nth-child(even) {
+	background: #E7EEF6;
+	}
+/* title in breadcrum in twitter and notification pages */	
+#sub_heading{
+	color: #5d9cec;    
+}
+/* background color in bredcrum in twitter and notification pages */
+.breadcrum_notification {
+	 position: relative;
+	min-height: 48px;
+	min-width: 1980px;
+	z-index: 0; 
+	background-color: #E7EEF6;  /* #change here */
+}
+ .breadcrum_twitter{
+	/* width:1880px; */
+	height: 48px;
+	 background-color: #E7EEF6; /* change here */
+	vertical-align: middle;
+	display:table-cell;
+	padding-left:15px;
+    padding-top:7px;
+} 
+/* twitter sentiments color in twitter page */
+#tw_sentiments{
+	color: #23b7e5; 
+}
+/* selected items color from sidebar */
+#formarray {
+	height: 26px;
+	background: #91aed3;    /* change here */
+	padding: 4px;
+	margin: 1px;
+	display: inline-block;
+	color: fff;
+	border-radius: 2px !important;
+	font-size: 11pt;
+}
+#applyFilter {
+  color: #fff;  /* change here for font color */
+  background-color: #4c74E2;  
+  /* border-color: #2e6da4;  */    
+}
+

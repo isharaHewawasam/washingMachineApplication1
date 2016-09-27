@@ -18,7 +18,7 @@ html {
 body {
   margin: 0;
 }
-tr:nth-child(even) {background: #E7EEF6}
+/* tr:nth-child(even) {background: #E7EEF6} */
 #dropdown{
           color: blue;
           border:0;
@@ -7447,7 +7447,7 @@ body {
   position: relative;
 }
 .topnavbar .navbar-header {
-  background-color: #0A427D;
+  /* background-color: #0A427D; */
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23b7e5', endColorstr='#ff51c6ea', GradientType=1);
 }
@@ -7523,7 +7523,7 @@ body {
 }
 .nav-wrapper {
   padding: 0 15px;
-  background-color: #0A427D;
+  /* background-color: #0A427D; */
   height: 100%; vertical-align: middle;
 }
 
@@ -12044,9 +12044,9 @@ display : block;
 /* filter fragment css */
 
 .filter-filterDiv{
-	width:1920px;
+	width:1980px;
 	height: 48px;
-	background-color: #E7EEF6;
+	 /* background-color: #E7EEF6;  */
 	vertical-align: middle;
 	display:table-cell;
 	padding-left:0px;
@@ -12290,6 +12290,7 @@ display : block;
 	margin-left: 22px !important padding-left:0px;
 	color: #5d9cec;
 	font-size: 17px;
+	padding-top : 14px;
 }
 
 .notificationContainer {

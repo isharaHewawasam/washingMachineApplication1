@@ -1,5 +1,6 @@
 <h3 style="padding-top: 20px; padding-bottom: 10px; margin-bottom: 0px">
 	<link href="css/charts.css" rel="stylesheet" />
+	<link href="css/branding/colors.css" rel="stylesheet" />
 	<!-- START Language list-->
 
 	<!-- END Language list    -->
@@ -9,12 +10,12 @@
    </div>
 
 	<div id="dashboardNav" ng-controller="MyviewController">
-		<a ng-click="getUrl()"
-			style="font-size: 14px; font: Roboto Light; color: #0F64BC;">{{'dashboard_title' | translate}}</a> 
+		<a class="dashboard_title" ng-click="getUrl()"
+			style="">{{'dashboard_title' | translate}}</a> 
 			<span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
 			></span>
-			<a ng-click="loadTwitterInsights()" ng-if="showTwitterInsightsLink"
-			style="font-size: 14px; font: Roboto Light; color: #0F64BC;">
+			<a class="dashboard_title" ng-click="loadTwitterInsights()" ng-if="showTwitterInsightsLink"
+			style="">
 			{{'twitter_insights' | translate}}</a>
 			<span ng-if="showTwitterInsightsLink"
 			style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">
@@ -31,9 +32,9 @@
 
 
 
-	<div  class=" col-lg-12"  id="filterDivId" style=" margin-left: inherit">
+	<div  class=" col-lg-12 breadcrum_notification"  id="filterDivId" style=" margin-left: inherit; margin-top: -8px">
 
-		<div class="col-lg-12 filterItem notificationHeader" translate="{{'notification_configuration_title'}}"></div>
+		<div id="sub_heading" class="col-lg-12 filterItem notificationHeader" translate="{{'notification_configuration_title'}}"></div>
 
 
 	</div>
@@ -112,8 +113,8 @@
 			</div>
 
 			<div style="width:95%; position: absolute; bottom: 30px; text-align: right;">
-				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()" translate="{{'save'}}"></button>
-        		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()" translate="{{'cancel'}}"></button>
+				<button id="panelbuttons" type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()" translate="{{'save'}}"></button>
+        		<button id="panelbuttons" type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()" translate="{{'cancel'}}"></button>
         	</div>
 
 		</div>
@@ -190,8 +191,8 @@
 			</div>
 
 			<div style="width:95%; position: absolute; bottom: 30px; text-align: right">
-				<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()" translate="{{'save'}}"></button>
-        		<button type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()" translate="{{'cancel'}}"></button>
+				<button id="panelbuttons" type="button" class="mb-sm btn btn-primary searchbtn" ng-click="saveNotificationConfig()" translate="{{'save'}}"></button>
+        		<button id="panelbuttons" type="button" class="mb-sm btn btn-primary searchbtn" ng-click="cancelNotificationConfig()" translate="{{'cancel'}}"></button>
         	</div>
 		</div>
 

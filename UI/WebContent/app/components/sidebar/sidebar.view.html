@@ -1,4 +1,5 @@
  <link href="css/sidebar.css" rel="stylesheet"/>
+ <link href="css/branding/colors.css" rel="stylesheet" />
     <div id="sidebarPanelIcons" class="aside-inner">
         <nav class="sidebar">
             <div class="nav">
@@ -40,7 +41,7 @@
         <div class="divSpacePad1">
             <label translate="{{'products'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()" translate="{{'clear_filter'}}"></button>
+            <button id="panelbuttons" class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter1()" translate="{{'clear_filter'}}"></button>
         </div>
         <div class="divSpacePad">
             <span translate="{{'search_by_product'}}"></span>
@@ -110,7 +111,7 @@
 
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()" translate="{{'apply_filter'}}"></button>
+        <button id="panelbuttons" type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyProductFilter()" translate="{{'apply_filter'}}"></button>
 
     </div>
 
@@ -119,7 +120,7 @@
         <div class="divSpacePad1">
             <label translate="{{'demographics'}}"></label>
 
-            <button  class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()" translate="{{'clear_filter'}}"></button>
+            <button id="panelbuttons" class="btn btn-primary clearfltrbtn pull-right" ng-click="clearfilter2()" translate="{{'clear_filter'}}"></button>
         </div>
 
         <div  class="divSpacePad">
@@ -149,7 +150,7 @@
             </select>
         </div>
 
-        <button type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()" translate="{{'apply_filter'}}"></button>
+        <button id="panelbuttons" type="button"  class="mb-sm btn btn-primary searchbtn" ng-click="applyDemographicsFilter()" translate="{{'apply_filter'}}"></button>
     </div>
     <!--reports-->
 
@@ -162,7 +163,7 @@
         </div>
                               <div id="subpanel" style="width:100%; " class="fontSubText">
 
-           <button ng-disabled="isEngManager" id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
+           <button id="panelbuttons" ng-disabled="isEngManager" id="clickView" class="mb-sm btn btn-primary searchbtn" ng-click="getReports()" translate="{{'view_report'}}"></button>
         </div>
 </div>
 </section>

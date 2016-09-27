@@ -3,7 +3,7 @@
 	border: 0;
 }
 
-#dashboardNav a {
+/* #dashboardNav a {
 	color: #222222;
 	font-size: 14px;
 	font: Roboto Light;
@@ -11,7 +11,7 @@
 
 #dashboardNav a:first-child {
 	color: #0F64BC;
-}
+} */
 
 #dashboardNav span {
 	font-size: 14px;
@@ -40,7 +40,7 @@
 
 #applyFilter {
 	min-width: 114px;
-	background-color: #4C74E2;
+	/* background-color: #4C74E2; */
 	height: 34px;
 	font-family: Roboto;
 	font-size: 15px;
@@ -63,7 +63,7 @@
 	width: 100% auto;
 }
 
-#formarray {
+/* #formarray {
 	height: 26px;
 	background: #91aed3;
 	padding: 4px;
@@ -72,7 +72,7 @@
 	color: fff;
 	border-radius: 2px !important;
 	font-size: 11pt;
-}
+} */
 
 #filetclose {
 	color: #fff;

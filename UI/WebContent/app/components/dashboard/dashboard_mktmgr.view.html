@@ -1,4 +1,4 @@
-
+<link href="css/branding/colors.css" rel="stylesheet" />
 <link href="css/charts.css" rel="stylesheet" />
 <link href="css/mkttable.css" rel="stylesheet" />
 <link href="css/dashboard.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
 	 <div  id="dashboardNav" ng-controller="MyviewController"> 
-		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
+		<a class="dashboard_title" style="" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
          <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">  > </span>
 		<span> {{'dashboard' | translate}} </span>
 	 </div>
@@ -25,13 +25,13 @@
 
 
 
-<div class="row col-lg-12 nopadding  filter-filterDiv" id="filterdive">
+<div class="row col-lg-12 nopadding  filter-filterDiv  " id="top_filter_background" style="width:101.7%;"> 
 
 
 
 
 
-	<div class=" col-lg-10 nopadding" id="filterDivId">
+	<div class=" col-lg-10 nopadding" id="filterDivId" style="">
 
 		<div class="col-lg-2 filterItem nopadding">
 			<select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle"
