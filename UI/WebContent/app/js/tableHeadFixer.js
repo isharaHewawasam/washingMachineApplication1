@@ -221,16 +221,16 @@
 				var element = $(element);
 				var parent = $(element).parent();
 
-				var elementBackground = element.css("background-color");
-				elementBackground = (elementBackground == "transparent" || elementBackground == "rgba(0, 0, 0, 0)") ? null : elementBackground;
+				//var elementBackground = element.css("background-color");
+				//elementBackground = (elementBackground == "transparent" || elementBackground == "rgba(0, 0, 0, 0)") ? null : elementBackground;
 
-				var parentBackground = parent.css("background-color");
-				parentBackground = (parentBackground == "transparent" || parentBackground == "rgba(0, 0, 0, 0)") ? null : parentBackground;
+				//var parentBackground = parent.css("background-color");
+				//parentBackground = (parentBackground == "transparent" || parentBackground == "rgba(0, 0, 0, 0)") ? null : parentBackground;
 
-				var background = parentBackground ? parentBackground : "white";
-				background = elementBackground ? elementBackground : background;
+				//var background = parentBackground ? parentBackground : "white";
+				//background = elementBackground ? elementBackground : background;
 
-				element.css("background-color", background);
+				//element.css("background-color", background);
 			});
 		}
 

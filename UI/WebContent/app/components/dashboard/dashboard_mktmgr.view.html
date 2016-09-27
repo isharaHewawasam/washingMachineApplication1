@@ -8,11 +8,18 @@
 			#parent {
 				height: 300px;
 			}
-            td, th{
-                border-right: 1px solid #c1c1c1;
+            td, th, tr{
+                border-left: 1px solid #c1c1c1 !important;
                 vertical-align: top !important;
-                background-color:transparent !important;
+              
             }
+           .bgcolorTable{
+            background:#fff url(../../../img/user/tablebg.png) !important;
+            background-repeat: no-repeat !important;
+           	background-position: right !important;
+           	border: 0px !important;
+           	 border-bottom: 2px solid #c1c1c1 !important;
+           }
 		</style>
 <link href="css/charts.css" rel="stylesheet" />
 <link href="css/mkttable.css" rel="stylesheet" />
@@ -648,24 +655,21 @@
   	<table id="fixTable" class="table">
   		<thead>
 				<tr>
-				<th class="text-center" translate="{{'make'}}"></th>
-                                                            <th class="text-center" translate="{{'model'}}"></th>
-                                                            <th class="text-center" translate="{{'total_loads'}}">
-                                                                  </th>
-                                                            <th class="text-center" translate="{{'most_popular_wash_day'}}"></th>
-                                                            <th class="text-center" translate="{{'most_popular_time_of_day'}}"></th>
+					<th class="text-center bgcolorTable"  translate="{{'make'}}"></th>
+		            <th class="text-center bgcolorTable" translate="{{'model'}}"></th>
+		            <th class="text-center bgcolorTable" translate="{{'total_loads'}}"></th>
+					<th class="text-center bgcolorTable" translate="{{'most_popular_wash_day'}}"></th>
+		            <th class="text-center bgcolorTable" translate="{{'most_popular_time_of_day'}}"></th>
 				</tr>				
 		</thead>
 				<tbody>
-					 <tr ng-repeat="itm in griddata"> 
-                                                            <td class="text-center"">{{itm.make}}</td>
-                                                            <td class="text-center">{{itm.model}}</td>
-                                                            <td class="text-center">{{itm.totalLoad |
-                                                                  number:2}}</td>
-                                                            <td class="text-center">{{itm.popularDay}}</td>
-                                                            <td class="text-center">{{itm.popularTime}}</td>
-
-                                                      </tr>
+					<tr ng-repeat="itm in griddata"> 
+	                    <td class="text-center"">{{itm.make}}</td>
+	                    <td class="text-center">{{itm.model}}</td>
+	                    <td class="text-center">{{itm.totalLoad | number:2}}</td>
+						<td class="text-center">{{itm.popularDay}}</td>
+	                    <td class="text-center">{{itm.popularTime}}</td>
+					</tr>
 					
 					</tbody>
   	</table>
