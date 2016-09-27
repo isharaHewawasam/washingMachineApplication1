@@ -39,7 +39,7 @@
 #gridNormal td {
     width:20% !important;
     padding: 5px 10px 5px 10px;
-    border-right: 1px solid #c1c1c1;
+   /* border-right: 1px solid #c1c1c1;*/
       
 }
 
@@ -78,8 +78,8 @@ width: 20%;
     overflow-wrap: break-word;
     box-sizing: border-box;
     font-size: 12px;
-        border-right: 1px solid #c1c1c1;
-        border-bottom: 1px solid #c1c1c1;
+       /* border-right: 1px solid #c1c1c1;
+        border-bottom: 1px solid #c1c1c1;*/
             font-weight: 600; 
 }
 
