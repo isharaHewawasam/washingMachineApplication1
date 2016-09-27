@@ -12451,7 +12451,7 @@ display : block;
 
 .woItemResponseLoader {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 45%;
   z-index: 1;
   display: none;
