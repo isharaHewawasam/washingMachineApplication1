@@ -5,9 +5,9 @@
         .module('angle')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$scope', '$state', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService','$timeout'];
+    DashboardController.$inject = ['$scope', '$state', '$rootScope', '$window', 'iot.config.ApiClient', 'HttpService','$timeout','$location'];
 
-    function DashboardController($scope, $state, $rootScope, $window, configApiClient, HttpService,$timeout) {
+    function DashboardController($scope, $state, $rootScope, $window, configApiClient, HttpService,$timeout,$location) {
         //Clear filter on dashboard load
         $rootScope.search = {};
         $rootScope.filterIcons = [];
@@ -729,6 +729,10 @@
                     "work_item_priority": $scope.WOPriority,
                      "work_item_severity": $scope.WOSeverity
                 };
+                var host = $location.host();
+                var description = param.work_item_description +" IOT Dashboard : "+host;
+                param.work_item_description = description;
+                //alert(param.work_item_description);
                 $(".woItemResponseLoader").show();
                 HttpService.post(url, param).then(function (data) {
                     // on success
