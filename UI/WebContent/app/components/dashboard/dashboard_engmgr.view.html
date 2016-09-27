@@ -721,6 +721,9 @@
 
 		<!-- Modal content-->
 		<div class="modal-content">
+			<span class="woItemResponseLoader">
+					<img src="img/icon-load.gif">
+			</span>
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Create Work Item</h4>
@@ -775,16 +778,19 @@
 							<textarea class="form-control" rows="5" id="inputDesc" ng-model="WODescription" placeholder="Description"></textarea>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12 woItemMsgContainer">
+							<span class="woItemMsg">{{WOStatusMSg}}</span>
+							<span class="woItemSuccessMsg">{{WOStatusSuccessMSg}}</span>
+						</div>
+					</div>
+
 				</form>
 
 			</div>
 			<div class="modal-footer">
-				<label class="woItemMsg">{{WOStatusMSg}}</label>
-				<label class="woItemSuccessMsg">{{WOStatusSuccessMSg}}</label>
-				<span class="woItemResponseLoader">
-					<img src="img/ajax-loader.gif">
-				</span>
-				<button type="button" class="btn btn-default" ng-click="postWOItem()">Submit</button>
+				<button type="button" class="btn btn-primary" ng-click="postWOItem()">Submit</button>
 				<button type="button" class="btn btn-default" ng-click="postWOItemCancel()">Cancel</button>
 			</div>
 		</div>
