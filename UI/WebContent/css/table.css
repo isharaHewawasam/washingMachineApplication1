@@ -29,13 +29,13 @@
     width: 100%;
 }
 #gridNormal tr {
-    width: 100%;
-    display: flex;
+    /* width: 100%;
+    display: flex; */
 	    border-bottom: 1px solid rgba(0, 128, 0, 0.15);
 }
 #gridNormal1 tr {
-    width: 100%;
-    display: flex;
+    /* width: 100%;
+    display: flex; */
 	    border-bottom: 1px solid rgba(0, 128, 0, 0.15);
 }
 

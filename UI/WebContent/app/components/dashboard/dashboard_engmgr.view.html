@@ -1,5 +1,25 @@
+<script>
+	$(document).ready(function() {
+		$("#fixTable").tableHeadFixer(); 
+	});
+</script>
+
+<style>
+	#parent {
+		height: 300px;
+	}
+	#parent_max{
+		height: 300px;
+	}
+    td, th{
+        border-right: 1px solid #c1c1c1;
+        vertical-align: top !important;
+        background-color:transparent !important; 
+    }
+</style>
 <link href="css/charts.css" rel="stylesheet" />
-<link href="css/table.css" rel="stylesheet" />
+<!-- <link href="css/mkttable.css" rel="stylesheet" />  -->
+ <link href="css/table.css" rel="stylesheet" /> 
 <link href="css/dashboard.css" rel="stylesheet" />
 <div class="somediv hidden" id="hiddenDiv"></div>
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
@@ -419,8 +439,8 @@
 			</div>
 
 
-			<div class="panel-body" id="gridHideNodata">
-				<!--   START table-responsive -->
+			<!-- <div class="panel-body" id="gridHideNodata">
+				  START table-responsive
 				<div id="gridAdjustHeight" class="panel panel-default">
 					
 					<div class="tbody">
@@ -474,69 +494,33 @@
 						</div>
 					</div>
 				</div>
-				<!--      END table-responsive -->
+				     END table-responsive
 				<label class="pull-right " ng-if="eng_griddata.length > 0" id="maxfootr">{{eng_griddata.length}}
 					{{'records_found_text' | translate}}</label>
-			</div>
-		</div>
-		<div class="panel panel-default datagrid" id="gridNormal" >
-			<div class="panel-heading md-body-2"
-					id="normalgridhead">
-				{{'data_grid_title' | translate}}<img id="gridMaxImg"
-					class="pull-right col-md-1"
-
-					src="img/Dashboardassets/icon_maximize.png"
-					ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
-					class="pull-right hidden col-md-1 "
-
-					src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
-					<img class="pull-right col-md-1"
-						id="gridinfo"
-						src="img/Dashboardassets/help.png"
-						data-toggle="popover" data-placement="left"
-						data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
-						data-trigger="hover"></img>
-			</div>
-
-
-			<div class="panel-body" id="gridHideNodata">
-				<!--   START table-responsive -->
-				<div id="gridAdjustHeight" class="panel panel-default">
-					<div class="tableHeader">
-						<p class="text-center" translate="{{'make'}}"></p>
-						<p class="text-center" translate="{{'model'}}"></p>
-						<p class="text-center">
-							{{'water_used' | translate}}<span class='notbold'> (G)</span>
-						</p>
-						<p class="text-center">
-							{{'energy_used' | translate}}<span class='notbold'> (kw)</span>
-						</p>
-						<p class="text-center">
-							{{'wash_cycle' | translate}}<span class='notbold'> (min)</span>
-						</p>
-						<p class="text-center">{{'wash_cycles' | translate}}</p>
-						<p class="text-center">
-							{{'temperature' | translate}}<span class='notbold'> (f)</span>
-						</p>
-						<p class="text-center">
-							{{'detergent_used' | translate}}<span class='notbold'> (gms)</span>
-						</p>
-						<p class="text-center">
-							{{'humidity' | translate}}<span class='notbold'> (%)</span>
-						</p>
-						<p class="text-center">
-							{{'load' | translate}}<span class='notbold'> (kgs)</span>
-						</p>
-					</div>
-					<div class="tbody">
-						<div class="tableScroll">
-							<table class="table table-condensed">
-							<div ng-show="isLoadingFilters" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg}}</div>
-							<div ng-show="isNoDataFoundEng" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg2}}</div>
-							<div ng-show="isError" class="text-center col-md-4 col-md-offset-4 maxgridnodata">{{msg3}}</div>
-								<tbody id="tabody">
-									<tr ng-repeat="itm in eng_griddata">
-										<td class="text-center">{{itm.make}}</td>
+			</div> -->
+			
+			
+			<div  style="" class="">
+  					<scrollable-table >
+  						<div id="parent_max">
+  							<table id="fixTable_max" class="table">
+  								<thead>
+									<tr>
+										<th class="text-center" translate="{{'make'}}"></th>
+                                        <th class="text-center" translate="{{'model'}}"></th>
+                                        <th class="text-center">{{'water_used' | translate}}<span class='notbold'> (G)</span></th>
+                                        <th class="text-center">{{'energy_used' | translate}}<span class='notbold'> (kw)</span></th>
+                                        <th class="text-center">{{'wash_cycle' | translate}}<span class='notbold'> (min)</span></th>
+                                        <th class="text-center">{{'wash_cycles' | translate}}</th>
+                                        <th class="text-center">{{'temperature' | translate}}<span class='notbold'> (f)</span></th>
+                                        <th class="text-center">{{'detergent_used' | translate}}<span class='notbold'> (gms)</span></th>
+                                        <th class="text-center">{{'humidity' | translate}}<span class='notbold'> (%)</span></th>
+                                        <th class="text-center">{{'load' | translate}}<span class='notbold'> (kgs)</span></th>
+									</tr>				
+								</thead>
+							<tbody>
+					 			<tr ng-repeat="itm in eng_griddata"> 
+                                                            <td class="text-center">{{itm.make}}</td>
 										<td class="text-center">{{itm.model}}</td>
 										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
 										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
@@ -546,18 +530,152 @@
 										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
 										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
 										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
-									</tr>
-								</tbody>
-							</table>
-
-						</div>
-					</div>
-				</div>
-				<!--      END table-responsive -->
-				<label class="pull-right " ng-if="eng_griddata.length > 0" id="gridfootermsg">{{eng_griddata.length}}
-					{{'records_found_text' | translate}}</label>
-			</div>
+								</tr>
+					
+							</tbody>
+  					</table>
+  			</div>
+  
+      <table class="table table-striped table-bordered " fixed-header style="height:190px; display:none">
+          <thead>
+              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader" >
+                                        <td class="text-center" translate="{{'make'}}"></td>
+                                        <td class="text-center" translate="{{'model'}}"></td>
+                                        <td class="text-center">{{'water_used' | translate}}<span class='notbold'> (G)</span></td>
+                                        <td class="text-center">{{'energy_used' | translate}}<span class='notbold'> (kw)</span></td>
+                                        <td class="text-center">{{'wash_cycle' | translate}}<span class='notbold'> (min)</span></td>
+                                        <td class="text-center">{{'wash_cycles' | translate}}</td>
+                                        <td class="text-center">{{'temperature' | translate}}<span class='notbold'> (f)</span></td>
+                                        <td class="text-center">{{'detergent_used' | translate}}<span class='notbold'> (gms)</span></td>
+                                        <td class="text-center">{{'humidity' | translate}}<span class='notbold'> (%)</span></td>
+                                        <td class="text-center">{{'load' | translate}}<span class='notbold'> (kgs)</span></td>
+               </tr>
+              
+          </thead>
+          <tbody>
+            
+          
+             		<tr ng-repeat="itm in eng_griddata" style=""> 
+                                        <td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
+			 		</tr>
+          </tbody>
+      </table>
+    </scrollable-table>
+    <div>
+      
+        
+    </div>
+     <label style="margin-top:20px;" class="pull-right      " ng-if="eng_griddata.length > 0"
+                              id="gridfootermsg">{{eng_griddata.length}} {{'records_found_text' | translate}}</label>
+</div>
 		</div>
+		
+		
+		<div class="panel panel-default datagrid" id="gridNormal">
+                  <div class="panel-heading md-body-2"
+                  id="normalgridhead">
+                        <b>{{'data_grid_title' | translate}}</b> <img id="gridMaxImg"
+                              class="pull-right col-md-1"
+
+                              src="img/Dashboardassets/icon_maximize.png"
+                              ng-click="isLoadingFilters || maximizeGrid()"></img> <img id="gridCloseImg"
+                              class="pull-right hidden col-md-1 "
+
+                              src="img/Dashboardassets/close.png" ng-click="closeGrid()"></img>
+                        <img class="pull-right col-md-1"
+                                    id="gridinfo"
+                              src="img/Dashboardassets/help.png" data-toggle="popover"
+                              data-placement="left"
+                              data-content="Includes the filtered records of selections from most common type of machines to the consumptions it made to fulfill a wash."
+                              data-trigger="hover"></img>
+                  </div>
+                  <div  style="" class="">
+  					<scrollable-table >
+  						<div id="parent">
+  							<table id="fixTable" class="table">
+  								<thead>
+									<tr>
+										<th class="text-center" translate="{{'make'}}"></th>
+                                        <th class="text-center" translate="{{'model'}}"></th>
+                                        <th class="text-center">{{'water_used' | translate}}<span class='notbold'> (G)</span></th>
+                                        <th class="text-center">{{'energy_used' | translate}}<span class='notbold'> (kw)</span></th>
+                                        <th class="text-center">{{'wash_cycle' | translate}}<span class='notbold'> (min)</span></th>
+                                        <th class="text-center">{{'wash_cycles' | translate}}</th>
+                                        <th class="text-center">{{'temperature' | translate}}<span class='notbold'> (f)</span></th>
+                                        <th class="text-center">{{'detergent_used' | translate}}<span class='notbold'> (gms)</span></th>
+                                        <th class="text-center">{{'humidity' | translate}}<span class='notbold'> (%)</span></th>
+                                        <th class="text-center">{{'load' | translate}}<span class='notbold'> (kgs)</span></th>
+									</tr>				
+								</thead>
+							<tbody>
+					 			<tr ng-repeat="itm in eng_griddata"> 
+                                                            <td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
+								</tr>
+					
+							</tbody>
+  					</table>
+  			</div>
+  
+      <table class="table table-striped table-bordered " fixed-header style="height:190px; display:none">
+          <thead>
+              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader" >
+                                        <td class="text-center" translate="{{'make'}}"></td>
+                                        <td class="text-center" translate="{{'model'}}"></td>
+                                        <td class="text-center">{{'water_used' | translate}}<span class='notbold'> (G)</span></td>
+                                        <td class="text-center">{{'energy_used' | translate}}<span class='notbold'> (kw)</span></td>
+                                        <td class="text-center">{{'wash_cycle' | translate}}<span class='notbold'> (min)</span></td>
+                                        <td class="text-center">{{'wash_cycles' | translate}}</td>
+                                        <td class="text-center">{{'temperature' | translate}}<span class='notbold'> (f)</span></td>
+                                        <td class="text-center">{{'detergent_used' | translate}}<span class='notbold'> (gms)</span></td>
+                                        <td class="text-center">{{'humidity' | translate}}<span class='notbold'> (%)</span></td>
+                                        <td class="text-center">{{'load' | translate}}<span class='notbold'> (kgs)</span></td>
+               </tr>
+              
+          </thead>
+          <tbody>
+            
+          
+             		<tr ng-repeat="itm in eng_griddata" style=""> 
+                                        <td class="text-center">{{itm.make}}</td>
+										<td class="text-center">{{itm.model}}</td>
+										<td class="text-center">{{itm.avgWaterUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgPowerUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCycleDurationUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgWashCyclesUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgTemperatureUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgDetergentUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgHumidityUsage | number:2}}</td>
+										<td class="text-center">{{itm.avgLoadUsage | number:2}}</td>
+			 		</tr>
+          </tbody>
+      </table>
+    </scrollable-table>
+    <div>
+      
+        
+    </div>
+     <label style="margin-top:20px;" class="pull-right      " ng-if="eng_griddata.length > 0"
+                              id="gridfootermsg">{{eng_griddata.length}} {{'records_found_text' | translate}}</label>
+</div>
+            </div>
 		<!--   END panel -->
 	</div>
 	<!-- END dashboard main content-->

@@ -761,6 +761,7 @@ $rootScope.isApplyFiterButton = true;
              $('[data-toggle="popover"]').popover()
 
              $("#gridMax").removeClass("hidden");
+             $("#fixTable_max").tableHeadFixer();
         }
 
         $("body").on("click","#gridCloseImg",function(){

@@ -8,11 +8,14 @@
 			#parent {
 				height: 300px;
 			}
+			#parent_max {
+				height: 300px;
+			}
             td, th, tr{
-                border-right: 1px solid #c1c1c1 !important;
-                vertical-align: top !important;
-              
-            }
+		        border-right: 1px solid #c1c1c1 !important;
+		        vertical-align: top !important;
+		        
+		    }		    
            .bgcolorTable{
             background:#fff url(../../../img/user/tablebg.png) !important;
             background-repeat: no-repeat !important;
@@ -518,8 +521,8 @@
 			</div>
 
 
-			<div class="panel-body" id="gridHideNodata">
-				<!--   START table-responsive -->
+			<!-- <div class="panel-body" id="gridHideNodata">
+				  START table-responsive
 				<div id="gridAdjustHeight" class="panel panel-default">
 
 
@@ -561,10 +564,83 @@
 					</div>
 				</div>
 
-				<!--      END table-responsive -->
+				     END table-responsive
 				<label class="pull-right " ng-if="griddata.length > 0"
 					id="maxfootr">{{griddata.length}} {{'records_found_text' | translate}}</label>
-			</div>
+			</div> -->
+			
+			<div  style="" class="">
+  <scrollable-table >
+  <div id="parent_max">
+  	<table id="fixTable_max" class="table">
+  		<thead>
+				<tr>
+															<th class="text-center" translate="{{'make'}}"></th>
+                                                            <th class="text-center" translate="{{'model'}}"></th>
+                                                            <th class="text-center" translate="{{'total_loads'}}">
+                                                                  </th>
+                                                            <th class="text-center" translate="{{'most_popular_wash_day'}}"></th>
+                                                            <th class="text-center" translate="{{'most_popular_time_of_day'}}"></th>
+				</tr>				
+		</thead>
+				<tbody>
+					 <tr ng-repeat="itm in griddata"> 
+                                                            <td class="text-center"">{{itm.make}}</td>
+                                                            <td class="text-center">{{itm.model}}</td>
+                                                            <td class="text-center">{{itm.totalLoad |
+                                                                  number:2}}</td>
+                                                            <td class="text-center">{{itm.popularDay}}</td>
+                                                            <td class="text-center">{{itm.popularTime}}</td>
+
+                                                      </tr>
+					
+					</tbody>
+  	</table>
+  </div>
+  
+      <table class="table table-striped table-bordered " fixed-header style="height:190px; display:none">
+          <thead>
+             <!--  <tr>
+                   <th sortable-header col="facility">Facility</th>
+                   <th sortable-header col="code">Unit code</th>
+                   <th sortable-header col="cost">Cost</th>
+                   <th sortable-header col="conditionRating">Condition score</th>
+                   <th sortable-header col="extent">Replace %</th>
+                   
+              </tr> -->
+              <tr style="position:static; background-color: white; padding-right:2%; font-weight:bold;" class="tableHeader" >
+                                                            <td class="text-center" translate="{{'make'}}"></td>
+                                                            <td class="text-center" translate="{{'model'}}"></td>
+                                                            <td class="text-center" translate="{{'total_loads'}}">
+                                                                  </td>
+                                                            <td class="text-center" translate="{{'most_popular_wash_day'}}"></td>
+                                                            <td class="text-center" translate="{{'most_popular_time_of_day'}}"></td>
+
+                                                      </tr>
+              
+          </thead>
+          <tbody>
+            
+          
+             <tr ng-repeat="itm in griddata" style=""> 
+                                                            <td class="text-center"">{{itm.make}}</td>
+                                                            <td class="text-center">{{itm.model}}</td>
+                                                            <td class="text-center">{{itm.totalLoad |
+                                                                  number:2}}</td>
+                                                            <td class="text-center">{{itm.popularDay}}</td>
+                                                            <td class="text-center">{{itm.popularTime}}</td>
+
+                                                      </tr>
+          </tbody>
+      </table>
+    </scrollable-table>
+    <div>
+      
+        
+    </div>
+     <label style="margin-top:20px;" class="pull-right      " ng-if="griddata.length > 0"
+                              id="gridfootermsg">{{griddata.length}} {{'records_found_text' | translate}}</label>
+</div>
 		</div>
 		<div class="panel panel-default datagrid" id="gridNormal">
                   <div class="panel-heading md-body-2"
