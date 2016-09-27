@@ -12451,8 +12451,8 @@ display : block;
 
 .woItemResponseLoader {
   position: absolute;
-  top: 30%;
-  left: 35%;
+  top: 45%;
+  left: 45%;
   z-index: 1;
   display: none;
 }
@@ -12472,6 +12472,6 @@ display : block;
 #WOModal .modal-header {
   padding-top: 12px;
   padding-bottom: 10px;
-  background: #0b2f54;
+  background: #337ab7;
   color: #ffffff;
 }
