@@ -468,7 +468,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 		$scope.msg3 = "Service is Unavailable";
 
 	/**
-	 * Load "Most Fault" data from API file for eng_manager Insights
+	 * Load "lt" data from API file for eng_manager Insights
 	 */
 	  $scope.getMostFaults = function(divId) {
 		  	$scope.isLoading = true;
@@ -488,7 +488,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostFaultDataStr);
 
-					 renderPieChart(divId, data, 'Most Fault',28);
+					 renderPieChart(divId, data, 'Most Fault',32);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -521,7 +521,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(leastFaultDataStr);
 
-					 renderPieChart(divId, data, 'Least Fault',25);
+					 renderPieChart(divId, data, 'Least Fault',27);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -554,7 +554,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(commonFaultDataStr);
 
-					 renderPieChart(divId, data, 'Common Fault',20);
+					 renderPieChart(divId, data, 'Common Fault',24);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -587,7 +587,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedProductDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Models',25);
+					 renderPieChart(divId, data, 'Most Used Models',27);
 				 } else {
 					 $scope.isNoDataDB = true;
 					 $scope.msg = $scope.msg2;
@@ -621,7 +621,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(mostUsedCyclesDataStr);
 
-					 renderPieChart(divId, data, 'Most Used Wash Cycles',20);
+					 renderPieChart(divId, data, 'Most Used Wash Cycles',22);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -662,7 +662,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 						 data = JSON.parse(notConnectedDataStr);
 
-						 renderPieChart(divId, data, 'Not Connected Machines',15);
+						 renderPieChart(divId, data, 'Not Connected Machines',17);
 		    	 	} else {
 		    	 		document.getElementById(divId).innerHTML = "<h4 style='padding-left:8%;padding-top:2%;color:rgb(0, 153, 204);font-family: Lucida Sans Unicode'>Not Connected Machines</h4>" +
 		    	 		"<span	style='display: block; height: 50%; text-align: center; padding-top: 10%; padding-bottom: 15%; border-bottom-color: transparent; color: #4C74E2; background-color: transparent; font-size: 20px' class='glyphicon glyphicon-alert'> <span class='sr-only'>Error:</span>All machines are connected </span>";
@@ -700,7 +700,7 @@ angular.module('angle').controller('InfiniteScrollController', ["$scope", '$root
 
 					 data = JSON.parse(twitterDataStr);
 
-					 renderPieChart(divId, data, 'Twitter Sentiments',30);
+					 renderPieChart(divId, data, 'Twitter Sentiments',32);
 		    	 } else {
 		    		 $scope.isNoDataDB = true;
 		    		 $scope.msg = $scope.msg2;
@@ -2401,6 +2401,11 @@ function renderPieChart(divId, insightsData, chartTitle,y){
             					this.series[0].data[0].totalComments + '</b></div>');
             		}
             	}
+            },
+            style: {
+                fontFamily: 'Roboto; Medium;',
+                fontSize: '14px',
+                fontColor: '0F64BC'
             }
         },
         credits: {

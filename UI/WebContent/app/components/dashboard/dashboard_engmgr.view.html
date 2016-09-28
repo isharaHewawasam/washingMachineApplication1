@@ -2,6 +2,7 @@
 <link href="css/table.css" rel="stylesheet" />
 <link href="css/dashboard.css" rel="stylesheet" />
 <link href="css/branding/colors.css" rel="stylesheet" />
+<link href="css/branding/font.css" rel="stylesheet" />
 <div class="somediv hidden" id="hiddenDiv"></div>
 <div class="chart-somediv hidden" id="hiddenDiv"></div>
 <div class="map-somediv hidden" id="hiddenDivMap"></div>
@@ -39,7 +40,7 @@
 	<div  class=" col-lg-10"  id="filterDivId">
 
 		<div class="col-lg-2 filterItem">
-			<select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle top_dropdown"
 				ng-model="region.states" ng-change="selectCities()">
 				<option class="option-text-style" value="" disabled selected translate="{{'states'}}">
 
@@ -54,7 +55,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" ng-class="{'selectboxLoader': loader.isCityBox}" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isCityBox}" class="form-control filter-selectStyle top_dropdown"
 				ng-model="region.cities" ng-change="selectZip()">
 				<option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
 
@@ -69,7 +70,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" ng-class="{'selectboxLoader': loader.isZipBox}" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isZipBox}" class="form-control filter-selectStyle top_dropdown"
 				ng-model="region.zip_codes">
 				<option class="option-text-style" value="" disabled selected translate="{{'zip_code'}}">
 				<option class="option-text-style" value="">All
@@ -81,7 +82,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" ng-class="{'selectboxLoader': loader.isYearBox}" class="form-control filter-selectStyle"
+			<select name="" ng-class="{'selectboxLoader': loader.isYearBox}" class="form-control filter-selectStyle top_dropdown"
 				ng-model="timescale.years">
 				<option class="option-text-style" value="" disabled selected translate="{{'year'}}">
 
@@ -98,7 +99,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" class="form-control filter-selectStyle top_dropdown"
 				ng-model="timescale.quarters" ng-change="quarterMonths()">
 				<option class="option-text-style" value="" selected disabled translate="{{'quarter'}}">
 
@@ -112,7 +113,7 @@
 		</div>
 
 		<div class="col-lg-2 filterItem">
-			<select name="" class="form-control filter-selectStyle"
+			<select name="" class="form-control filter-selectStyle top_dropdown"
 				ng-model="timescale.months">
 				<option class="option-text-style" value="" selected disabled translate="{{'month'}}">
 
@@ -286,7 +287,7 @@
 						data-trigger="hover"></img>
 				</div>
 
-				<div class="panel-title md-body-2 insitetitle"
+				<div class="panel-title md-body-2 insitetitle component_title" 
 					translate="{{'insights_title'}}"></div>
 			</div>
 
@@ -480,9 +481,9 @@
 			</div>
 		</div>
 		<div class="panel panel-default datagrid" id="gridNormal" >
-			<div class="panel-heading md-body-2"
+			<div class="panel-heading md-body-2" 
 					id="normalgridhead">
-				{{'data_grid_title' | translate}}<img id="gridMaxImg"
+				<b class="component_title">{{'data_grid_title' | translate}}</b><img id="gridMaxImg"
 					class="pull-right col-md-1"
 
 					src="img/Dashboardassets/icon_maximize.png"
@@ -578,7 +579,7 @@
 						data-trigger="hover"></img>
 				</div>
 			
-				<div class="panel-title md-body-2" id="notificationtitl" translate="{{'notifications_title'}}"></div>
+				<div class="panel-title md-body-2 component_title" id="notificationtitl" translate="{{'notifications_title'}}"></div>
 
 			</div>
 

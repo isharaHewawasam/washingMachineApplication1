@@ -43,7 +43,7 @@
 	/* background-color: #4C74E2; */
 	height: 34px;
 	font-family: Roboto;
-	font-size: 15px;
+	/* font-size: 15px; */
 	margin: auto;
 	margin-left: 15px;
 	margin-right: 0px;
@@ -154,8 +154,8 @@
 }
 
 .insitetitle {
-	font-family: Roboto;
-	font-size: 15px;
+	/* font-family: Roboto;
+	font-size: 15px; */
 }
 
 #insitescroll {
@@ -251,10 +251,10 @@
 	height: 355px;
 }
 
-#notificationtitl {
+/* #notificationtitl {
 	font-family: Roboto;
-	font-size: 15px;
-}
+	font-size: 25px;
+} */
 
 .notflist {
 	height: 310px;

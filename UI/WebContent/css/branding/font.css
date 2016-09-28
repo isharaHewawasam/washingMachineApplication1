@@ -1,0 +1,33 @@
+/***************** top filter bar and breadcrum fonts *******************/
+.dashboard_title{
+	font-size: 14px; 
+	font-family: Roboto; Light;
+	              
+}
+.dashboard_title:hover{
+	font-size: 14px; 
+	font-family: Roboto; Light;
+	              }
+	              
+/* font of drop downs ex: states,cities etc */	         
+.top_dropdown{
+	font-size:14px;
+    font-family: Roboto; Light;     /* font-family: "Times New Roman" */
+	
+}
+/* font of username */
+.user{
+	font-size:14px;
+	font-family: Roboto; Light;
+}
+/* font of apply filter button */
+#applyFilter {
+	 font-size: 15px; 
+	 font-family: Roboto; Medium;
+}
+/*********************** dashboard titles ********************************/
+/* insights,notification,washing machine status title  */
+.component_title{
+	font-size: 15px; 
+	font-family: Roboto; Medium;
+}
