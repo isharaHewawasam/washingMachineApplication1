@@ -21,22 +21,20 @@ exports.getApis = function(params,callback) {
 	// data is what the server sent to this socket
 	client.on('data', function(data) {
 		console.log('Data Received : ' + data);
-		// Close the client socket completely
 		responseData = data;
-		//callback(null, responseData);
+     // Close the client socket completely
 		client.destroy();
 
 	});
 
 	// Add a 'close' event handler for the client socket
 	client.on('close', function() {
-		 console.log('responseData : ' + responseData);
+		console.log('errorData : ' + errorData);
+		console.log('responseData : ' + responseData);
 		if (responseData == null && errorData == null ){
-        console.log('responseData1 : ' + responseData);
 		callback("Error", null);
 		}
 		else if (responseData != null){
-			 console.log('responseData2 : ' + responseData);
 		callback(null, responseData);
 		}
 		console.log('Connection closed');
