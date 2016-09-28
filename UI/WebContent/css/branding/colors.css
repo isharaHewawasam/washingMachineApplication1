@@ -48,7 +48,7 @@
 	background: #e7eef6; /* change here */
 	 color: black; /* change here for font color */
 }
-/* sidebar buttons and other buttons */
+/* sidebar buttons and other buttons(including login) */
 #panelbuttons, #downloadreport {
   color: #fff;     /* change here for font color */
   background-color: #337ab7;  /* change here   */
@@ -125,5 +125,13 @@ tr:nth-child(even) {
   color: #fff;  /* change here for font color */
   background-color: #4c74E2;  
    border-color: #4c74E2;     /* #2e6da4 */
+}
+/* footer- terms & conditions color */
+#footerbtn{
+	color: #003A77;
+} 
+/* color of flag msgs */
+.isLoading{
+	color: #4C74E2;       
 }
 
