@@ -9,14 +9,14 @@
 	<div class="pull-right">{{'app_dashboard_last_updated_text' | translate}} {{currentDate}}</div>
 
 	<div  id="dashboardNav" ng-controller="MyviewController"> 
-		<a style="font-size: 14px; font: Roboto Light; color: #0F64BC;" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
+		<a class="dashboard_title" style="" ng-click="getUrl()">{{'dashboard_title' | translate}}</a> 
          <span style="font-size: 14px; font: Roboto; color: #222222; padding-left: 15px; padding-right: 15px;">  > </span>
 		<span> {{'reports' | translate}} </span>
 	 </div>
 
 </h3>
 
-<div class="row col-lg-12  filter-filterDiv" id="filterdive" ng-controller="DashboardController">
+<!-- <div class="row col-lg-12  filter-filterDiv" id="#top_filter_background" ng-controller="DashboardController">
 
 
 
@@ -46,7 +46,7 @@
 	
 	
 	
-	                <!--<div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
+	                <div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
 	
 	                <div class="col-lg-2 reportnvwidth2" >
 	                  	<md-datepicker class=" filter-selectStyle internaldate"  ng-model="myDate"> </md-datepicker>
@@ -57,7 +57,7 @@
 	
 	                	<md-datepicker  class=" filter-selectStyle internaldate"  ng-model="myDate1" > </md-datepicker>
 	
-	             	</div>-->
+	             	</div>
 	
 	
 	
@@ -68,7 +68,64 @@
              		<button ng-disabled="isReportFiltering" class="btn btn-default pull-right "   id="applyFilter" ng-click="iniReport()" translate="{{'apply_filter'}}"></button>
 
             	</div>
-   </div>
+   </div> -->
+   <div class="row col-lg-12 nopadding  filter-filterDiv " id="top_filter_background" ng-controller="DashboardController" style="width:101.7%;">
+
+
+
+
+
+	<div class=" col-lg-10"  id="filterDivId" >
+	
+	               <div class="col-lg-2 reportnvwidth"  >
+	                  <select name="" ng-class="{'selectboxLoader': loader.isStateBox}" class="form-control filter-selectStyle"   ng-model="region.states" ng-change="selectCities()"   >
+	                  <option class="option-text-style" value="" disabled selected translate="{{'states'}}">
+	                    <option class="option-text-style" value="" >All
+	                     <option class="option-text-style" ng-repeat="state in states"   value={{state.name}}>{{state.name}}</option>
+	                  </select>
+	
+	
+	               </div>
+	
+	               <div class="col-lg-2 reportnvwidth2" >
+	                  <select name="" ng-class="{'selectboxLoader': loader.isCityBox}" class="form-control filter-selectStyle"  ng-model="region.cities"   >
+	                    <option class="option-text-style" value="" disabled selected translate="{{'cities'}}">
+	                    <option class="option-text-style" value="" >All
+	                              <option class="option-text-style" ng-repeat="city in cities" value={{city.city}} >{{city.city}}
+	
+	                  </select>
+	
+	               </div>
+	
+	
+	
+	
+	                <!-- <div class="col-lg-2 reportnvwidth3" translate="{{'from'}}"></div>
+	
+	                <div class="col-lg-2 reportnvwidth2" >
+	                  	<md-datepicker class=" filter-selectStyle internaldate"  ng-model="myDate"> </md-datepicker>
+	              	</div>
+	                <div class="col-lg-2 todatepicker" translate="{{'to'}}"></div>
+	
+	                <div class="col-lg-2 todatedive">
+	
+	                	<md-datepicker  class=" filter-selectStyle internaldate"  ng-model="myDate1" > </md-datepicker>
+	
+	             	</div> -->
+	
+	
+	
+	
+	
+	            </div>
+               <div class="col-lg-2 reportfiltrdv " >
+             		<button ng-disabled="isReportFiltering" class="btn btn-default pull-right "   id="applyFilter" ng-click="iniReport()" translate="{{'apply_filter'}}"></button>
+
+            	</div>
+	
+
+
+</div>
 
 
 

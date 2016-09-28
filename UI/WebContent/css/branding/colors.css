@@ -57,18 +57,18 @@
 /***************** top filter bar and breadcrum colors *******************/
  #top_filter_background {
 	
-	background-color: #E7EEF6;  /* change here */
+	background-color: #E7EEF6;  /* change here for breadcrum background color in dashboard and reports */
 } 
 
 .dashboard_title:hover{
 	font-size: 14px; 
 	font: Roboto Light; 
-	color: #0F64BC;                /* change here*/
+	color: #0F64BC;                /* change here to change title font color when hovering*/
 }
 .dashboard_title{
 	font-size: 14px; 
 	font: Roboto Light; 
-	color: #0F64BC;                  /* change here*/
+	color: #0F64BC;                  /* change here to change title font color*/
 }
 
 /****************** login page css **********************/
@@ -76,7 +76,7 @@
 #forgotpw{
 	 color: #337ab7;    
 }
-/* topbar color */
+/* topbar background color */
 #logintopbar{
 	background-color: #0A427D;  
 }
@@ -84,7 +84,7 @@
 tr:nth-child(even) {
 	background: #E7EEF6;
 	}
-/* title in breadcrum in twitter and notification pages */	
+/* title in breadcrum in twitter and notification pages-font color */	
 #sub_heading{
 	color: #5d9cec;    
 }
@@ -105,7 +105,7 @@ tr:nth-child(even) {
 	padding-left:15px;
     padding-top:7px;
 } 
-/* twitter sentiments color in twitter page */
+/* twitter sentiments font color in twitter page */
 #tw_sentiments{
 	color: #23b7e5; 
 }
@@ -116,13 +116,14 @@ tr:nth-child(even) {
 	padding: 4px;
 	margin: 1px;
 	display: inline-block;
-	color: fff;
+	color: fff;    /* change here for font color */
 	border-radius: 2px !important;
 	font-size: 11pt;
 }
+/* apply filter button color-in dashboard and reports page */
 #applyFilter {
   color: #fff;  /* change here for font color */
   background-color: #4c74E2;  
-  /* border-color: #2e6da4;  */    
+   border-color: #4c74E2;     /* #2e6da4 */
 }
 
