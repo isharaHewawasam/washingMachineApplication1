@@ -792,3 +792,87 @@
 </div>
 </div>
 </div>
+
+<!-- Modal -->
+<div id="WOModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<span class="woItemResponseLoader">
+					<img src="img/creating image.gif">
+			</span>
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Create Workitem</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputSummary" class="col-sm-2 control-label">Summary</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputSummary" placeholder="Summary" ng-model="WOSummary">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputType" class="col-sm-2 control-label">Type</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="inputType" ng-model="WOType">
+								<option value="defect">Defect</option>
+								<option value="task">Task</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputPriority" class="col-sm-2 control-label">Priority</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="inputPriority" ng-model="WOPriority">
+								<option value="High">High</option>
+								<option value="Medium">Medium</option>
+								<option value="Low">Low</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputSeverity" class="col-sm-2 control-label">Severity</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="inputSeverity" ng-model="WOSeverity">
+								<option value="Blocker">Blocker</option>
+								<option value="Critical">Critical</option>
+								<option value="Major">Major</option>
+								<option value="Normal">Normal</option>
+								<option value="Minor">Minor</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputDesc" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="5" id="inputDesc" ng-model="WODescription" placeholder="Description"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12 woItemMsgContainer">
+							<span class="woItemMsg">{{WOStatusMSg}}</span>
+							<span class="woItemSuccessMsg">{{WOStatusSuccessMSg}}</span>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="postWOItem()">Submit</button>
+				<button type="button" class="btn btn-default" ng-click="postWOItemCancel()">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+

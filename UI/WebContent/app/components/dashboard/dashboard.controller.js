@@ -729,8 +729,7 @@
                     "work_item_priority": $scope.WOPriority,
                      "work_item_severity": $scope.WOSeverity
                 };
-                var host = $location.host();
-                var description = param.work_item_description +"\n\n IOT Dashboard :\n\n http://"+host;
+                var description = param.work_item_description +"\n\n IOT Dashboard :\n\n "+$location.protocol()+"://"+$location.host();
                 //var description = param.work_item_description +" IOT Dashboard : http://"+host;
                 param.work_item_description = description;
                 //alert(param.work_item_description);

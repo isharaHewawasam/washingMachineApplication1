@@ -15,8 +15,6 @@
         $scope.notificationAlertFlag = false;
         $scope.roleKey = loginCredentails.roleKey;
 
-        $scope.currentView =$state.current.title;
-
         /**
          * Define the available language list in ui and change the language according to user requests
          */
